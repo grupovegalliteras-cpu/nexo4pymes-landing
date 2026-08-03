@@ -1,0 +1,12 @@
+# ===================================================================
+# ESTE ARCHIVO ES SOLO PARA LA PREVISUALIZACION EN *.vercel.app
+#
+# Bloquea a los buscadores para que la URL temporal de Vercel no
+# acabe indexada y compitiendo con nexo4pymes.com.
+#
+# >> BORRAR ESTE ARCHIVO al conectar el dominio real, o la web
+# >> real tampoco saldra en Google.
+# ===================================================================
+
+User-agent: *
+Disallow: /

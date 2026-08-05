@@ -8,6 +8,11 @@
      ÍNDICE DEL BLOG
      Al publicar un post nuevo hay que añadir su tarjeta aquí
      (busca "AÑADIR POSTS AQUI") y su URL en sitemap.xml.
+
+     TODAS las rutas van absolutas (/assets/..., /blog/...) a propósito.
+     Esta página se sirve en /blog SIN barra final, así que los enlaces
+     relativos se resuelven contra la raíz y no contra /blog/: con
+     "post.html" el navegador pide /post.html y sale un 404.
      ========================================================= -->
 
 <title>Blog sobre automatización para pymes | Nexo4Pymes</title>
@@ -32,32 +37,32 @@
 <meta name="twitter:image" content="https://nexo4pymes.com/assets/og-automatizacion-pymes.jpg">
 <meta name="twitter:image:alt" content="Nexo4Pymes, automatización de procesos con IA para pymes y autónomos">
 
-<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon-180.png">
-<link rel="icon" type="image/png" sizes="512x512" href="../assets/favicon-512.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon-180.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512.png">
 <meta name="theme-color" content="#0E3B36">
 
-<link rel="preload" href="../assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 <style>
 @font-face{font-family:'Fraunces';font-style:normal;font-weight:500 700;font-display:swap;
-  src:url(../assets/fonts/fraunces-latin-ext.woff2) format('woff2');
+  src:url(/assets/fonts/fraunces-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
 @font-face{font-family:'Fraunces';font-style:normal;font-weight:500 700;font-display:swap;
-  src:url(../assets/fonts/fraunces-latin.woff2) format('woff2');
+  src:url(/assets/fonts/fraunces-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
 @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:swap;
-  src:url(../assets/fonts/space-grotesk-latin-ext.woff2) format('woff2');
+  src:url(/assets/fonts/space-grotesk-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
 @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:swap;
-  src:url(../assets/fonts/space-grotesk-latin.woff2) format('woff2');
+  src:url(/assets/fonts/space-grotesk-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;
-  src:url(../assets/fonts/ibm-plex-mono-600-latin-ext.woff2) format('woff2');
+  src:url(/assets/fonts/ibm-plex-mono-600-latin-ext.woff2) format('woff2');
   unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;}
 @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;
-  src:url(../assets/fonts/ibm-plex-mono-600-latin.woff2) format('woff2');
+  src:url(/assets/fonts/ibm-plex-mono-600-latin.woff2) format('woff2');
   unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
 
 :root{
@@ -142,7 +147,7 @@ footer .contenedor{max-width:900px}
 <header class="cabecera">
   <div class="barra">
     <a class="logo" href="/" aria-label="Nexo4Pymes, inicio">
-      <img src="../assets/logo.png" width="164" height="160" alt="Logotipo de Nexo4Pymes" fetchpriority="high">
+      <img src="/assets/logo.png" width="164" height="160" alt="Logotipo de Nexo4Pymes" fetchpriority="high">
       <span class="marca">Nexo<span>4</span>Pymes</span>
     </a>
     <a class="volver" href="/">Volver a la web</a>
@@ -168,7 +173,7 @@ footer .contenedor{max-width:900px}
       <li class="post">
         <span class="etiqueta">Diagnóstico previo · 5 min</span>
         <h2>
-          <a href="por-que-diagnosticar-antes-de-automatizar.html">
+          <a href="/blog/por-que-diagnosticar-antes-de-automatizar">
             Por qué automatizar sin diagnosticar antes puede hundirte el negocio
           </a>
         </h2>
@@ -178,7 +183,7 @@ footer .contenedor{max-width:900px}
           perdiendo clientes, las tres formas típicas de estropearlo y cuándo la respuesta
           correcta es no automatizar.
         </p>
-        <a class="leer" href="por-que-diagnosticar-antes-de-automatizar.html">Leer el artículo →</a>
+        <a class="leer" href="/blog/por-que-diagnosticar-antes-de-automatizar">Leer el artículo →</a>
       </li>
     </ul>
 
@@ -205,7 +210,7 @@ footer .contenedor{max-width:900px}
 
 <footer>
   <div class="contenedor">
-    <img class="pie-logo" src="../assets/logo-lockup-dark.png" width="480" height="306" loading="lazy"
+    <img class="pie-logo" src="/assets/logo-lockup-dark.png" width="480" height="306" loading="lazy"
          alt="Nexo4Pymes — Automatizamos tu negocio, potenciamos tu futuro">
     <p style="margin:0">
       Automatización de procesos con IA para pymes y autónomos. Diagnóstico primero,

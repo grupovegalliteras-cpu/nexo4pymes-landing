@@ -315,9 +315,9 @@ footer li{margin-bottom:6px}
   footer .cols{grid-template-columns:2fr 1fr 1fr}
   .medido{max-width:760px}
 }
-/* El menú horizontal solo aparece cuando caben los 5 enlaces en una línea.
+/* El menú horizontal solo aparece cuando caben los 6 enlaces en una línea.
    Por debajo se mantiene el menú desplegable. */
-@media (min-width:820px){
+@media (min-width:930px){
   .nav{display:block}
   .menu-btn{display:none}
   .nav-movil{display:none !important}
@@ -345,6 +345,7 @@ footer li{margin-bottom:6px}
       <a href="#como-trabajamos">Cómo trabajamos</a>
       <a href="#que-automatizar">Qué automatizamos</a>
       <a href="#preguntas-frecuentes">Preguntas</a>
+      <a href="blog/">Blog</a>
       <a href="#contacto">Contacto</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navMovil" aria-label="Abrir menú">
@@ -358,6 +359,7 @@ footer li{margin-bottom:6px}
     <a href="#que-automatizar">Qué automatizamos</a>
     <a href="#a-quien-ayudamos">A quién ayudamos</a>
     <a href="#preguntas-frecuentes">Preguntas frecuentes</a>
+    <a href="blog/">Blog</a>
     <a href="#contacto">Contacto</a>
   </nav>
 </header>
@@ -853,7 +855,54 @@ footer li{margin-bottom:6px}
   </div>
 </section>
 
-<!-- ============ 8. CTA FINAL ============ -->
+<!-- ============ 8. BLOG ============ -->
+<!-- Sección visible para que el blog se encuentre desde la portada sin
+     tener que bajar hasta la mitad. Al publicar un post nuevo, añade su
+     tarjeta aquí (máximo 3) y actualiza también blog/index.html. -->
+<section id="blog">
+  <div class="contenedor">
+    <span class="antetitulo">Blog</span>
+    <h2>Automatización para pymes, explicada sin tecnicismos</h2>
+    <p class="lead medido">
+      Artículos sobre qué se puede automatizar en un negocio pequeño, en qué orden conviene
+      hacerlo y qué errores salen caros.
+    </p>
+
+    <div class="rejilla">
+      <article class="tarjeta">
+        <span class="fase-num">Diagnóstico previo · 5 min</span>
+        <h3 style="margin-top:.5em">
+          <a href="blog/por-que-diagnosticar-antes-de-automatizar.html" style="color:inherit;text-decoration:none">
+            Por qué automatizar sin diagnosticar antes puede hundirte el negocio
+          </a>
+        </h3>
+        <p>
+          La automatización no arregla un proceso, lo amplifica. El caso del taller que se
+          llenó la agenda y acabó perdiendo clientes, las tres formas típicas de estropearlo
+          y cuándo la respuesta correcta es no automatizar.
+        </p>
+        <p style="margin-bottom:0">
+          <a href="blog/por-que-diagnosticar-antes-de-automatizar.html"><strong>Leer el artículo →</strong></a>
+        </p>
+      </article>
+
+      <article class="tarjeta" style="background:var(--teal-claro);border-color:#C9E0DA">
+        <span class="fase-num" style="background:#fff">En preparación</span>
+        <h3 style="margin-top:.5em">Próximos artículos</h3>
+        <ul style="margin:0;padding-left:20px;color:var(--texto-suave)">
+          <li>Qué es un diagnóstico de procesos y qué te llevas de él</li>
+          <li>Cómo automatizar la atención de WhatsApp en un negocio pequeño</li>
+          <li>Recordatorios de citas automáticos: cómo reducir las ausencias</li>
+        </ul>
+        <p style="margin:1.1em 0 0">
+          <a href="blog/"><strong>Ver todos los artículos →</strong></a>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. CTA FINAL ============ -->
 <section id="contacto" class="cta">
   <div class="contenedor medido">
     <span class="antetitulo" style="color:#12E2B0">Contacto</span>
@@ -942,6 +991,7 @@ footer li{margin-bottom:6px}
           <li><a href="#diagnostico-antes">Diagnóstico previo</a></li>
           <li><a href="#que-automatizar">Qué automatizamos</a></li>
           <li><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>
+          <li><a href="blog/">Blog</a></li>
           <li><a href="veterinarias.html">Clínicas veterinarias</a></li>
         </ul>
       </div>

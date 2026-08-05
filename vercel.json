@@ -1,7 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": false,
-  "_comentario_rewrites": "Se usan rewrites en vez de cleanUrls a proposito. cleanUrls redirige CUALQUIER .html a su version sin extension, y eso rompe el archivo de verificacion de Google Search Console (google42520b19cee7a62e.html), que Google exige servir con 200 en su ruta exacta. Con rewrites se consiguen las mismas URLs limpias sin tocar el resto de .html.",
   "rewrites": [
     { "source": "/veterinarias", "destination": "/veterinarias.html" },
     { "source": "/legal", "destination": "/legal.html" }

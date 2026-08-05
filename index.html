@@ -1246,7 +1246,18 @@ ESTRUCTURA DEL SITIO (todo comparte carpeta y assets)
   sitemap.xml .......... las tres URLs, referenciado desde robots.txt
   robots.txt ........... permite indexar todo. OJO: antes llevaba
                          "Disallow: /"; si vuelve, Google deja de ver la web.
-  vercel.json .......... cabeceras de caché + cleanUrls (quita el .html)
+  vercel.json .......... cabeceras de caché + rewrites de /veterinarias y /legal
+                         NO activar "cleanUrls": redirige CUALQUIER .html a su
+                         versión sin extensión y tumba la verificación de
+                         Google Search Console, que exige servir
+                         google42520b19cee7a62e.html con 200 en su ruta exacta.
+                         Los rewrites dan las mismas URLs limpias sin ese efecto.
+                         Tampoco se pueden meter claves inventadas (ni comentarios)
+                         en vercel.json: Vercel valida contra su esquema y falla
+                         el despliegue entero con "should NOT have additional
+                         property".
+  google42520b19cee7a62e.html ... verificacion de Google Search Console. No borrar:
+                         si desaparece, Google desverifica la propiedad.
   assets/ .............. logos, favicons y fuentes comunes. Dos imágenes OG:
                          og-automatizacion-pymes.jpg → esta página
                          og-image.jpg → veterinarias

@@ -3,7 +3,8 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/veterinarias", "destination": "/veterinarias.html" },
-    { "source": "/legal", "destination": "/legal.html" }
+    { "source": "/legal", "destination": "/legal.html" },
+    { "source": "/blog/:slug", "destination": "/blog/:slug.html" }
   ],
   "headers": [
     {

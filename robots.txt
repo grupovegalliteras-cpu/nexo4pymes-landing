@@ -1,12 +1,10 @@
-# ===================================================================
-# ESTE ARCHIVO ES SOLO PARA LA PREVISUALIZACION EN *.vercel.app
+# Nexo4Pymes — indexacion permitida en todo el sitio.
 #
-# Bloquea a los buscadores para que la URL temporal de Vercel no
-# acabe indexada y compitiendo con nexo4pymes.com.
-#
-# >> BORRAR ESTE ARCHIVO al conectar el dominio real, o la web
-# >> real tampoco saldra en Google.
-# ===================================================================
+# Este archivo llevaba "Disallow: /" para que la URL temporal de Vercel
+# no se indexara. Ese bloqueo se ha retirado al publicar: si vuelve,
+# Google deja de ver la web entera, incluida la pagina de posicionamiento.
 
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://nexo4pymes.com/sitemap.xml

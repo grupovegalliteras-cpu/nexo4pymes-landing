@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nexo4Pymes — Automatización con IA para clínicas veterinarias</title>
+<meta name="description" content="Automatizamos citas, recordatorios de vacunas y el WhatsApp saturado de vuestra clínica veterinaria. Oferta de lanzamiento: diagnóstico inicial por 150€, solo 3 plazas.">
+<link rel="canonical" href="https://nexo4pymes.com/veterinarias">
+
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/favicon-512.png">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nexo4pymes.com/veterinarias">
+<meta property="og:site_name" content="Nexo4Pymes">
+<meta property="og:title" content="Nexo4Pymes — Automatización con IA para clínicas veterinarias">
+<meta property="og:description" content="Que no se os pierda ni una cita por WhatsApp. Oferta de lanzamiento: diagnóstico por 150€, solo 3 plazas.">
+<meta property="og:image" content="https://nexo4pymes.com/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nexo4Pymes — automatización con IA para clínicas veterinarias">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nexo4Pymes — Automatización con IA para clínicas veterinarias">
+<meta name="twitter:description" content="Que no se os pierda ni una cita por WhatsApp. Oferta de lanzamiento: diagnóstico por 150€, solo 3 plazas.">
+<meta name="twitter:image" content="https://nexo4pymes.com/assets/og-image.jpg">
+
+<link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* Fuentes autoalojadas desde assets/fonts/ en vez de Google Fonts por CDN:
+     evita enviar la IP de cada visitante a un tercero (RGPD) y quita una
+     petición externa. Fraunces y Space Grotesk son variables — un archivo
+     por subset cubre todos sus pesos. Descargadas de Google Fonts (SIL OFL 1.1). */
+
+  /* latin-ext */
+  @font-face{
+    font-family:'Fraunces'; font-style:normal; font-weight:500 700; font-display:swap;
+    src:url(assets/fonts/fraunces-latin-ext.woff2) format('woff2');
+    unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face{
+    font-family:'Fraunces'; font-style:normal; font-weight:500 700; font-display:swap;
+    src:url(assets/fonts/fraunces-latin.woff2) format('woff2');
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face{
+    font-family:'Space Grotesk'; font-style:normal; font-weight:400 700; font-display:swap;
+    src:url(assets/fonts/space-grotesk-latin-ext.woff2) format('woff2');
+    unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face{
+    font-family:'Space Grotesk'; font-style:normal; font-weight:400 700; font-display:swap;
+    src:url(assets/fonts/space-grotesk-latin.woff2) format('woff2');
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face{
+    font-family:'IBM Plex Mono'; font-style:normal; font-weight:400; font-display:swap;
+    src:url(assets/fonts/ibm-plex-mono-400-latin-ext.woff2) format('woff2');
+    unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face{
+    font-family:'IBM Plex Mono'; font-style:normal; font-weight:400; font-display:swap;
+    src:url(assets/fonts/ibm-plex-mono-400-latin.woff2) format('woff2');
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face{
+    font-family:'IBM Plex Mono'; font-style:normal; font-weight:500; font-display:swap;
+    src:url(assets/fonts/ibm-plex-mono-500-latin-ext.woff2) format('woff2');
+    unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face{
+    font-family:'IBM Plex Mono'; font-style:normal; font-weight:500; font-display:swap;
+    src:url(assets/fonts/ibm-plex-mono-500-latin.woff2) format('woff2');
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face{
+    font-family:'IBM Plex Mono'; font-style:normal; font-weight:600; font-display:swap;
+    src:url(assets/fonts/ibm-plex-mono-600-latin-ext.woff2) format('woff2');
+    unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face{
+    font-family:'IBM Plex Mono'; font-style:normal; font-weight:600; font-display:swap;
+    src:url(assets/fonts/ibm-plex-mono-600-latin.woff2) format('woff2');
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  :root{
+    --cream:#F7F5F1;
+    --cream-2:#EFEBE3;
+    --bottle:#0E3B36;
+    --bottle-2:#0A2B27;
+    --teal:#1C6E63;
+    --coral:#E8623A;
+    --coral-dark:#C74E2B;
+    --ink:#1A1A1A;
+    --white:#FFFFFF;
+    --max:1120px;
+    --sec-pad-y: 56px;
+    --sec-pad-x: 20px;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Space Grotesk',system-ui,-apple-system,sans-serif;
+    font-size:15px;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  ::selection{background:rgba(232,98,58,0.22);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--coral); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- layout helpers ---------- */
+  .wrap{max-width:var(--max); margin:0 auto;}
+  .sec{padding:var(--sec-pad-y) var(--sec-pad-x); position:relative;}
+  .sec-alt{background:var(--cream-2);}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--coral);
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin:0;
+    font-weight:600;
+  }
+  h2.h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(24px, 6vw, 34px);
+    letter-spacing:-0.015em;
+    margin:10px 0 0;
+    color:var(--bottle-2);
+    line-height:1.2;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky; top:0; z-index:40;
+    display:flex; align-items:center;
+    padding:12px 20px;
+    background:rgba(247,245,241,0.85);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(14,59,54,0.1);
+  }
+  header .logo-box{margin-right:auto; display:flex; align-items:center; gap:10px; min-width:0;}
+  header img.logo{height:36px; width:auto; border-radius:6px; display:block; flex:none;}
+  header .wordmark{
+    font-family:'Fraunces',serif; font-weight:700; font-size:16px;
+    color:var(--bottle-2); white-space:nowrap; letter-spacing:-0.01em;
+  }
+  header .wordmark span{color:var(--coral);}
+  .header-cta-mobile{display:none; margin-right:12px;}
+  .desktop-nav{display:none; gap:28px; align-items:center;}
+  .desktop-nav a{text-decoration:none; font-size:14px; white-space:nowrap; transition:color .2s ease;}
+  .desktop-nav a:not(.btn):hover{color:var(--teal);}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--coral); color:var(--white); font-weight:600;
+    text-decoration:none; border-radius:999px;
+    box-shadow:0 4px 14px rgba(232,98,58,0.28);
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+    border:none; cursor:pointer;
+  }
+  .btn:hover{background:var(--coral-dark); transform:translateY(-2px); box-shadow:0 8px 22px rgba(232,98,58,0.4);}
+  .btn-nav{font-size:13px; padding:9px 16px;}
+  .btn-lg{font-size:16px; padding:15px 26px; box-shadow:0 6px 20px rgba(232,98,58,0.32);}
+  .btn-lg:hover{box-shadow:0 10px 28px rgba(232,98,58,0.42);}
+  .btn .arrow{display:inline-block; transition:transform .2s ease;}
+  .btn:hover .arrow{transform:translateX(4px);}
+  .btn-outline{
+    border:1px solid rgba(14,59,54,0.3); color:var(--bottle-2);
+    font-weight:600; text-decoration:none; border-radius:999px;
+    background:transparent; transition:background .2s ease;
+    display:inline-flex; align-items:center; justify-content:center;
+  }
+  .btn-outline:hover{background:rgba(14,59,54,0.06);}
+
+  /* Mobile menu toggle */
+  .menu-toggle{
+    display:flex; align-items:center; justify-content:center;
+    width:40px; height:40px; background:none; border:none; cursor:pointer;
+    color:var(--bottle-2); flex-shrink:0;
+  }
+  .menu-toggle svg{width:24px; height:24px;}
+  .mobile-nav{
+    position:fixed; inset:0 0 auto 0; top:0;
+    background:var(--cream);
+    z-index:50;
+    padding:16px 20px 24px;
+    transform:translateY(-110%);
+    transition:transform .3s ease;
+    box-shadow:0 10px 30px rgba(0,0,0,0.12);
+  }
+  .mobile-nav.open{transform:translateY(0);}
+  .mobile-nav-top{display:flex; align-items:center; margin-bottom:24px;}
+  .mobile-nav-top img{height:36px;}
+  .mobile-nav-top .close-btn{margin-left:auto; background:none; border:none; width:40px; height:40px; display:flex; align-items:center; justify-content:center; color:var(--bottle-2); cursor:pointer;}
+  .mobile-nav a{
+    display:block; padding:16px 4px; text-decoration:none; color:var(--bottle-2);
+    font-size:18px; font-weight:600; border-bottom:1px solid rgba(14,59,54,0.1);
+    font-family:'Fraunces',serif;
+  }
+  .mobile-nav .btn{margin-top:20px; width:100%; padding:16px; font-size:16px;}
+  body.nav-open{overflow:hidden;}
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:44px; padding-bottom:48px; overflow:hidden;}
+  .dot-grid{position:absolute; inset:0; background-image:radial-gradient(rgba(14,59,54,0.13) 1.5px, transparent 1.5px); background-size:22px 22px; pointer-events:none;}
+  .hero-grid{
+    max-width:var(--max); margin:0 auto; position:relative;
+    display:grid; grid-template-columns:1fr; gap:36px; align-items:center;
+  }
+  .hero-badge{
+    display:inline-flex; font-family:'IBM Plex Mono',monospace;
+    border:1px solid rgba(14,59,54,0.3); color:var(--bottle);
+    font-size:10.5px; letter-spacing:0.03em; padding:6px 14px;
+    border-radius:999px; margin-bottom:18px; text-align:center;
+  }
+  h1.hero-h1{
+    font-family:'Fraunces',serif; font-weight:600;
+    font-size:clamp(30px, 8.5vw, 54px); line-height:1.12;
+    letter-spacing:-0.02em; margin:0; max-width:16ch; color:var(--bottle-2);
+  }
+  h1.hero-h1 span{color:var(--coral);}
+  .hero-copy p.desc{font-size:16px; opacity:.78; max-width:52ch; margin:18px 0 0;}
+  .hero-actions{display:flex; gap:12px; margin-top:26px; flex-wrap:wrap;}
+  .hero-actions .btn, .hero-actions .btn-outline{flex:1 1 auto; min-width:0;}
+  .hero-micro{font-family:'IBM Plex Mono',monospace; font-size:11.5px; margin-top:16px; opacity:.55;}
+  .hero-img{max-width:300px; margin:0 auto; border-radius:22px; overflow:hidden; box-shadow:0 16px 36px rgba(14,59,54,0.16); border:1px solid rgba(14,59,54,0.08);}
+  .hero-img img{width:100%; display:block;}
+
+  /* ---------- grids ---------- */
+  .grid-3{display:grid; grid-template-columns:1fr; gap:16px; margin-top:36px;}
+  .card{
+    display:flex; flex-direction:column; gap:10px; padding:22px;
+    background:var(--white); border:1px solid rgba(14,59,54,0.08);
+    border-radius:18px; transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .card:hover{transform:translateY(-4px); box-shadow:0 14px 30px rgba(14,59,54,0.1); border-color:rgba(232,98,58,0.35);}
+  .card svg{width:22px; height:22px; stroke:var(--teal); stroke-width:1.8; fill:none;}
+  .card .num{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:12.5px; color:var(--coral);}
+  .card .title{font-family:'Fraunces',serif; font-weight:600; font-size:17px; color:var(--bottle-2);}
+  .card p{font-size:13.5px; opacity:.72; margin:0;}
+  .problem-line{margin-top:28px; font-size:14px; color:var(--bottle); font-weight:600;}
+
+  /* ---------- demo section ---------- */
+  .demo-grid{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:1fr; gap:30px; align-items:center;}
+  .demo-img{max-width:300px; margin:0 auto; border-radius:22px; overflow:hidden; box-shadow:0 16px 36px rgba(14,59,54,0.16); border:1px solid rgba(14,59,54,0.08);}
+  .demo-img img{width:100%; display:block;}
+  .demo-text p{opacity:.78; margin:14px 0 0; font-size:15px;}
+  .demo-text ul{margin:16px 0 0; padding-left:20px; font-size:14px; opacity:.78; display:flex; flex-direction:column; gap:9px;}
+
+  /* ---------- diagnostico ---------- */
+  .diag-grid{max-width:var(--max); margin:0 auto; display:grid; grid-template-columns:1fr; gap:30px; margin-top:36px;}
+  .price-card{
+    background:var(--white); padding:26px; border-radius:18px;
+    border:1px solid rgba(14,59,54,0.08); box-shadow:0 14px 34px rgba(14,59,54,0.1);
+  }
+  .price-badge{display:inline-flex; font-family:'IBM Plex Mono',monospace; background:rgba(232,98,58,0.1); color:var(--coral-dark); font-size:11px; padding:4px 12px; border-radius:999px;}
+  .price-row{display:flex; align-items:baseline; gap:12px; margin-top:16px; flex-wrap:wrap;}
+  .price-num{font-family:'Fraunces',serif; font-weight:600; font-size:clamp(32px,8vw,44px); color:var(--bottle-2);}
+  .price-sub{opacity:.5; font-size:13px;}
+
+  /* ---------- launch offer: struck-through price ---------- */
+  .price-old{
+    position:relative; font-family:'Fraunces',serif; font-weight:600;
+    font-size:clamp(20px,4.5vw,26px); color:var(--ink); opacity:.42;
+  }
+  .price-old::after{
+    content:''; position:absolute; left:0; top:52%; height:2px; width:0%;
+    background:var(--coral-dark);
+    transition:width .5s ease .35s;
+  }
+  .price-card.in-view .price-old::after{width:105%;}
+  .price-new{
+    font-family:'Fraunces',serif; font-weight:700;
+    font-size:clamp(34px,8vw,46px); color:var(--coral-dark);
+    opacity:0; transform:translateY(6px);
+    transition:opacity .5s ease .9s, transform .5s ease .9s;
+  }
+  .price-card.in-view .price-new{opacity:1; transform:translateY(0);}
+  .price-badge.launch{
+    background:var(--coral); color:var(--white); font-weight:700; gap:6px; align-items:center;
+  }
+  .price-badge.launch .dot{
+    width:6px; height:6px; border-radius:999px; background:var(--white);
+    animation:pulseDot 1.6s ease infinite;
+  }
+  @keyframes pulseDot{0%,100%{opacity:1;} 50%{opacity:.35;}}
+  .slots-left{
+    display:flex; align-items:center; gap:8px; margin-top:10px;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--coral-dark); font-weight:600;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .price-old::after{transition:none;} .price-new{transition:none; opacity:1; transform:none;}
+    .price-badge.launch .dot{animation:none;}
+  }
+  .price-card > p{font-size:13.5px; opacity:.72; margin:14px 0 0;}
+  .price-hr{height:1px; border:0; margin:18px 0; background:rgba(14,59,54,0.12);}
+  .checklist{display:flex; flex-direction:column; gap:12px; font-size:14px;}
+  .checklist div{display:flex; gap:10px;}
+  .checklist svg{width:18px; height:18px; stroke:var(--teal); stroke-width:2; fill:none; flex:none; margin-top:2px;}
+  .price-card .btn{width:100%; margin-top:26px; padding:14px 20px; font-size:14px;}
+  .diag-side h4{font-family:'Fraunces',serif; font-weight:600; font-size:19px; margin:0; color:var(--bottle-2);}
+  .diag-side p{opacity:.78; margin:10px 0 0; font-size:14.5px;}
+  .diag-side hr{height:1px; border:0; margin:22px 0; background:rgba(14,59,54,0.12);}
+
+  /* ---------- sobre nosotros ---------- */
+  .about-wrap{max-width:800px; margin:0 auto;}
+  .about-wrap p{font-size:15.5px; opacity:.78; margin:16px 0 0;}
+  .social-row{display:flex; gap:16px; align-items:center; margin-top:22px;}
+  .social-row a{color:var(--bottle); display:flex; transition:color .2s ease;}
+  .social-row a:hover{color:var(--coral);}
+
+  /* ---------- faq ---------- */
+  .faq-wrap{max-width:800px; margin:0 auto;}
+  .faq-list{margin-top:28px; display:flex; flex-direction:column; gap:12px;}
+  .faq-item{padding:18px 20px; background:var(--white); border:1px solid rgba(14,59,54,0.08); border-radius:14px;}
+  .faq-item .q{font-family:'Fraunces',serif; font-weight:600; font-size:16px; color:var(--bottle-2);}
+  .faq-item .a{font-size:13.5px; opacity:.72; margin:8px 0 0;}
+
+  /* ---------- closing banner ---------- */
+  .banner{background:var(--bottle-2); color:var(--cream);}
+  .banner .wrap h2{color:var(--cream); max-width:18ch;}
+  .banner p{max-width:50ch; opacity:.82; margin:14px 0 0; font-size:15px;}
+  .banner .btn{margin-top:24px; padding:14px 24px; font-size:14px;}
+
+  /* ---------- footer ---------- */
+  footer{padding:26px 20px; background:var(--bottle-2); border-top:1px solid rgba(247,245,241,0.12);}
+  footer .footer-inner{display:flex; flex-direction:column; align-items:flex-start; gap:16px;}
+  footer .footer-logo{height:34px; width:auto; opacity:.95;}
+  footer .footer-text{display:flex; flex-direction:column; gap:8px; font-size:12.5px; color:var(--cream); opacity:.7;}
+  footer a{color:var(--coral); text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+  footer .footer-legal{display:flex; gap:14px; flex-wrap:wrap;}
+  /* Enlace de vuelta a la pagina general de pymes. Va aqui, en el pie de la
+     landing, para que Google llegue a esa pagina desde la raiz del sitio. */
+  footer .footer-cross{
+    display:flex; flex-wrap:wrap; gap:4px 8px; align-items:baseline;
+    font-size:13px; color:var(--cream); opacity:.75; line-height:1.5;
+    padding-bottom:20px; margin-bottom:20px;
+    border-bottom:1px solid rgba(247,245,241,0.12);
+  }
+
+  /* ---------- scroll reveal ---------- */
+  [data-reveal]{opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease;}
+  [data-reveal].in-view{opacity:1; transform:translateY(0);}
+
+  /* =====================================================
+     SMALL-TO-MEDIUM PHONES (>= 420px) — fits header CTA
+  ===================================================== */
+  @media (min-width:420px){
+    .header-cta-mobile{display:inline-flex;}
+  }
+
+  /* =====================================================
+     TABLET / SMALL DESKTOP  (>= 640px)
+  ===================================================== */
+  @media (min-width:640px){
+    :root{--sec-pad-x:32px;}
+    .grid-3{grid-template-columns:repeat(3,1fr);}
+    .hero-actions .btn, .hero-actions .btn-outline{flex:0 1 auto;}
+  }
+
+  /* =====================================================
+     DESKTOP (>= 900px)
+  ===================================================== */
+  @media (min-width:900px){
+    :root{--sec-pad-y:72px; --sec-pad-x:48px;}
+    header{padding:16px 48px;}
+    header img.logo{height:44px;}
+    header .wordmark{font-size:19px;}
+    .desktop-nav{display:flex;}
+    .menu-toggle{display:none;}
+    .header-cta-mobile{display:none;}
+    h2.h2{font-size:34px;}
+
+    .hero{padding-top:64px; padding-bottom:64px;}
+    .hero-grid{grid-template-columns:1.1fr 0.9fr; gap:64px;}
+    .hero-badge{font-size:11px;}
+
+    .demo-grid{grid-template-columns:0.9fr 1.1fr; gap:64px;}
+    footer{padding:26px 48px;}
+    footer .footer-inner{flex-direction:row; align-items:center; justify-content:space-between;}
+    footer .footer-text{flex-direction:row; gap:16px; align-items:center;}
+    .diag-grid{grid-template-columns:1.1fr 0.9fr; gap:64px; align-items:start;}
+    .price-card{padding:34px;}
+  }
+
+  @media (min-width:1000px){
+    .grid-3{gap:20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-box">
+    <a href="/" style="display:flex; align-items:center; gap:10px; text-decoration:none;" aria-label="Nexo4Pymes, ir a la web principal">
+      <img class="logo" src="assets/logo.png" alt="Nexo4Pymes" id="headerLogo">
+      <span class="wordmark">Nexo<span>4</span>Pymes</span>
+    </a>
+  </div>
+  <nav class="desktop-nav">
+    <a href="#como-funciona">Cómo funciona</a>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#faq">Preguntas</a>
+    <a class="btn btn-nav" href="https://calendly.com/grupovegalliteras/demo-15-minutos" target="_blank" rel="noopener">Llamada gratis</a>
+  </nav>
+  <a class="btn btn-nav header-cta-mobile" href="https://calendly.com/grupovegalliteras/demo-15-minutos" target="_blank" rel="noopener">Llamada gratis</a>
+  <button class="menu-toggle" id="menuOpenBtn" aria-label="Abrir menú" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-top">
+    <img src="assets/logo.png" alt="Nexo4Pymes">
+    <button class="close-btn" id="menuCloseBtn" aria-label="Cerrar menú">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <a href="#como-funciona" class="nav-link">Cómo funciona</a>
+  <a href="#diagnostico" class="nav-link">Diagnóstico</a>
+  <a href="#faq" class="nav-link">Preguntas</a>
+  <a class="btn" href="https://calendly.com/grupovegalliteras/demo-15-minutos" target="_blank" rel="noopener">Agendar llamada gratis</a>
+</div>
+
+<section id="top" class="sec hero">
+  <div class="dot-grid"></div>
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <div class="hero-badge">AUTOMATIZACIÓN CON IA PARA CLÍNICAS VETERINARIAS</div>
+      <h1 class="hero-h1"><span>Que no se os pierda</span> ni una cita por WhatsApp</h1>
+      <p class="desc">Automatizamos la gestión de citas, los recordatorios de vacunas y desparasitaciones, y el WhatsApp saturado de vuestra clínica — sin tocar nada hasta hacer un diagnóstico real de cómo trabajáis hoy.</p>
+      <div class="hero-actions">
+        <a href="https://calendly.com/grupovegalliteras/demo-15-minutos" target="_blank" rel="noopener" class="btn btn-lg">Agendar llamada gratis de 15 min<span class="arrow">→</span></a>
+        <a href="#diagnostico" class="btn-outline" style="padding:15px 26px; font-size:16px;">Ver el diagnóstico</a>
+      </div>
+      <p class="hero-micro">Sin compromiso · Diagnóstico de pago desde 150€ (oferta de lanzamiento), nunca gratis, para que sea un análisis real</p>
+      <!-- EDITAR A MANO: cuando se agoten las 3 plazas de lanzamiento, cambiar "150€" por el precio estándar (250–450€) -->
+    </div>
+    <div class="hero-img">
+      <img src="assets/inbox-real.jpg" alt="Bandeja de WhatsApp con varias familias esperando respuesta para pedir cita en la clínica">
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">El problema</p>
+    <h2 class="h2" style="max-width:24ch;">Cada mensaje sin responder es una cita que se va a la competencia</h2>
+    <div class="grid-3">
+      <div class="card" data-reveal>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <div class="title">WhatsApp saturado</div>
+        <p>Citas, dudas y pedidos se mezclan en un solo chat. Nadie da abasto a responder a tiempo durante el día.</p>
+      </div>
+      <div class="card" data-reveal>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18"/><path d="M9 16l2 2 4-4"/></svg>
+        <div class="title">Vacunas que se olvidan</div>
+        <p>Sin recordatorios proactivos, las revisiones y desparasitaciones se pasan de fecha — e ingresos que no vuelven.</p>
+      </div>
+      <div class="card" data-reveal>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M3 6h18v14H3z"/></svg>
+        <div class="title">Agenda manual</div>
+        <p>Cuadrar horarios a mano o con herramientas que no se hablan entre sí cuesta tiempo del equipo clínico.</p>
+      </div>
+    </div>
+    <p class="problem-line">Cada mensaje de WhatsApp sin responder a tiempo es, potencialmente, una cita perdida.</p>
+  </div>
+</section>
+
+<section id="como-funciona" class="sec sec-alt">
+  <div class="wrap">
+    <p class="eyebrow">Cómo funciona</p>
+    <h2 class="h2">Primero diagnóstico. Después, automatización.</h2>
+    <p style="max-width:60ch; opacity:.78; margin:14px 0 0; font-size:15px;">Automatizar un proceso mal diseñado solo amplifica el problema. Por eso nunca empezamos por la tecnología: empezamos por entender cómo trabaja realmente vuestra clínica.</p>
+    <div class="grid-3">
+      <div class="card" data-reveal>
+        <div class="num">01</div>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="margin:10px 0;"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <div class="title">Diagnóstico</div>
+        <p>Auditamos ventas, marketing, gestión interna y administración. Mapa claro de cómo funciona hoy la clínica.</p>
+      </div>
+      <div class="card" data-reveal>
+        <div class="num">02</div>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="margin:10px 0;"><path d="M9 20l-5-2V4l5 2 6-2 5 2v14l-5-2-6 2z"/><path d="M9 6v14M15 4v14"/></svg>
+        <div class="title">Roadmap</div>
+        <p>Oportunidades priorizadas por impacto y esfuerzo, con riesgos y coste estimado de cada fase.</p>
+      </div>
+      <div class="card" data-reveal>
+        <div class="num">03</div>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" style="margin:10px 0;"><path d="M4.5 16.5c-1.5 1.5-2 5-2 5s3.5-.5 5-2c.8-.8 1-2.5-.5-4a2.3 2.3 0 0 0-4-.5zM12 15l-3-3a22 22 0 0 1 8-8c3-1 5.5-1 5.5-1s0 2.5-1 5.5a22 22 0 0 1-8 8z"/></svg>
+        <div class="title">Implementación</div>
+        <p>Se construye fase a fase — agente de WhatsApp, recordatorios y CRM — solo lo que ya está priorizado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="demo-grid">
+    <div class="demo-img">
+      <img src="assets/luna-chat-real.jpg" alt="Conversación real de WhatsApp donde Luna, el agente, confirma una cita de vacunación">
+    </div>
+    <div class="demo-text" data-reveal>
+      <p class="eyebrow">La demo</p>
+      <h2 class="h2">Luna, el agente que responde por vosotros</h2>
+      <p>Agenda, modifica y cancela citas directamente en vuestro Google Calendar, consulta el historial del paciente y escala a una persona del equipo cuando hace falta. Nunca da diagnósticos médicos ni agenda una urgencia por chat.</p>
+      <ul>
+        <li>Recordatorios de vacunas y desparasitaciones 7 días antes, con opción de agendar desde el mismo mensaje</li>
+        <li>Recordatorios de cita a 24h y 1h antes</li>
+        <li>Búsqueda de cita siempre por identificador único — nunca por teléfono o nombre, para evitar errores</li>
+      </ul>
+      <a href="https://calendly.com/grupovegalliteras/demo-15-minutos" target="_blank" rel="noopener" class="btn-outline" style="margin-top:26px; padding:12px 24px; font-size:14px;">Pedir una demo en la llamada</a>
+    </div>
+  </div>
+</section>
+
+<section id="diagnostico" class="sec sec-alt">
+  <div class="wrap">
+    <p class="eyebrow">La oferta</p>
+    <h2 class="h2">Diagnóstico inicial</h2>
+    <div class="diag-grid">
+      <div class="price-card" data-reveal>
+        <div class="price-badge launch"><span class="dot"></span>Oferta de lanzamiento</div>
+        <div class="price-row">
+          <span class="price-old">250–450€</span>
+          <span class="price-new">150€</span>
+        </div>
+        <p style="font-size:13px; opacity:.6; margin-top:4px;">Precio único, sin importar el tamaño de la clínica</p>
+        <!-- EDITAR A MANO: quedan X de 3 plazas a este precio. Actualizar el número conforme se confirmen clínicas. -->
+        <div class="slots-left">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+          Quedan 3 de 3 plazas — solo para las primeras clínicas
+        </div>
+        <p>Un diagnóstico de pago obliga a un análisis serio — y os quedáis con el documento aunque no sigáis a la fase de implementación.</p>
+        <hr class="price-hr">
+        <div class="checklist">
+          <div><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Auditoría de procesos: ventas, marketing, gestión interna y administración</div>
+          <div><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Oportunidades de automatización priorizadas por impacto y esfuerzo</div>
+          <div><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Puntos de riesgo si se automatiza sin control</div>
+          <div><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Roadmap de implementación por fases, con coste estimado</div>
+        </div>
+        <a href="https://calendly.com/grupovegalliteras/demo-15-minutos" target="_blank" rel="noopener" class="btn">Agendar llamada gratis de 15 min<span class="arrow">→</span></a>
+      </div>
+      <div class="diag-side" data-reveal>
+        <h4>Duración: 3-4 días</h4>
+        <p>Entregable: un documento con diagrama, hallazgos y roadmap. Es vuestro, se use o no para la siguiente fase.</p>
+        <hr>
+        <h4>Después, si encaja</h4>
+        <p>La implementación se vende fase a fase del roadmap, no todo de golpe. Cada automatización tiene un rango típico de 500–3.000€ según su complejidad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre-nosotros" class="sec">
+  <div class="about-wrap" data-reveal>
+    <p class="eyebrow">Sobre nosotros</p>
+    <h2 class="h2">Un equipo pequeño, de Mallorca</h2>
+    <p>Somos Nexo4Pymes: automatizamos procesos con IA para pymes y autónomos. Trabajamos con un número limitado de clínicas a la vez para poder dar seguimiento cercano a cada una — nada de vender una plantilla genérica y desaparecer.</p>
+    <div class="social-row">
+      <a href="https://instagram.com/nexo4pymes" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://facebook.com/nexo4pymes" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 8.5h2V5.2c-.4-.05-1.5-.2-2.7-.2-2.7 0-4.3 1.6-4.3 4.5v2.3H7.3V15H10v9h3v-9h2.7l.4-3.2H13V9.9c0-.9.3-1.4 1.5-1.4z"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="sec sec-alt">
+  <div class="faq-wrap">
+    <p class="eyebrow">Preguntas frecuentes</p>
+    <h2 class="h2">Antes de escribirnos</h2>
+    <div class="faq-list">
+      <div class="faq-item" data-reveal>
+        <div class="q">¿Qué incluye exactamente el diagnóstico?</div>
+        <p class="a">Una auditoría de vuestros procesos actuales (ventas, marketing, gestión interna y administración), las oportunidades de automatización priorizadas, los riesgos de automatizar sin control y un roadmap con coste estimado por fase.</p>
+      </div>
+      <div class="faq-item" data-reveal>
+        <div class="q">¿Y si no queremos seguir con la implementación?</div>
+        <p class="a">El documento del diagnóstico es vuestro igualmente. No hay compromiso de continuar a la fase de implementación.</p>
+      </div>
+      <div class="faq-item" data-reveal>
+        <div class="q">¿El agente de WhatsApp sustituye al equipo?</div>
+        <p class="a">No. Gestiona citas, dudas frecuentes y recordatorios, y escala a una persona del equipo cuando hace falta — nunca da diagnósticos médicos ni agenda urgencias por chat.</p>
+      </div>
+      <div class="faq-item" data-reveal>
+        <div class="q">¿Es compatible con el software que ya usamos?</div>
+        <p class="a">Se revisa en el diagnóstico. El agente se integra con Google Calendar y una hoja de cálculo como CRM; si usáis otro software veterinario, valoramos la integración caso a caso.</p>
+      </div>
+      <div class="faq-item" data-reveal>
+        <div class="q">¿Cuánto tarda todo el proceso?</div>
+        <p class="a">El diagnóstico se entrega en 3-4 días. La implementación se planifica fase a fase según el roadmap acordado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec banner" data-reveal>
+  <div class="wrap">
+    <h2 class="h2">Empecemos por entender cómo trabaja vuestra clínica hoy</h2>
+    <p>15 minutos, sin compromiso, para ver si el diagnóstico encaja con vosotros.</p>
+    <a href="https://calendly.com/grupovegalliteras/demo-15-minutos" target="_blank" rel="noopener" class="btn">Agendar llamada gratis de 15 min<span class="arrow">→</span></a>
+  </div>
+</section>
+
+<footer>
+  <!-- Enlace de vuelta a la pagina general. Anchor descriptivo a proposito:
+       ayuda a posicionar "automatizacion de procesos para pymes". -->
+  <div class="wrap footer-cross">
+    <span>¿No tienes una clínica veterinaria?</span>
+    <a href="/">Mira cómo automatizamos procesos en pymes y autónomos de otros sectores</a>
+  </div>
+  <div class="wrap footer-inner">
+    <img src="assets/logo-lockup-dark.png" alt="Nexo4Pymes — Automatización con IA, potenciamos tu futuro" class="footer-logo">
+    <div class="footer-text">
+      <div>Automatización de procesos con IA para pymes y autónomos</div>
+      <a href="mailto:grupovegalliteras@gmail.com">grupovegalliteras@gmail.com</a>
+      <div class="footer-legal">
+        <a href="legal.html#aviso">Aviso legal</a>
+        <a href="legal.html#privacidad">Privacidad</a>
+        <a href="legal.html#cookies">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://nexo4pymes.com/#business",
+      "name": "Nexo4Pymes",
+      "url": "https://nexo4pymes.com/",
+      "image": "https://nexo4pymes.com/assets/og-image.jpg",
+      "logo": "https://nexo4pymes.com/assets/logo.png",
+      "description": "Automatización de procesos con IA para pymes y autónomos, especializada en clínicas veterinarias: gestión de citas por WhatsApp, recordatorios de vacunas y desparasitaciones.",
+      "email": "grupovegalliteras@gmail.com",
+      "priceRange": "150€-3000€",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "Islas Baleares",
+        "addressCountry": "ES"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "España"
+      },
+      "sameAs": [
+        "https://instagram.com/nexo4pymes",
+        "https://facebook.com/nexo4pymes"
+      ],
+      "makesOffer": {
+        "@type": "Offer",
+        "name": "Diagnóstico inicial",
+        "description": "Auditoría de procesos (ventas, marketing, gestión interna y administración), oportunidades de automatización priorizadas, puntos de riesgo y roadmap de implementación por fases con coste estimado. Se entrega en 3-4 días.",
+        "price": "150",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/LimitedAvailability"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://nexo4pymes.com/veterinarias#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Qué incluye exactamente el diagnóstico?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Una auditoría de vuestros procesos actuales (ventas, marketing, gestión interna y administración), las oportunidades de automatización priorizadas, los riesgos de automatizar sin control y un roadmap con coste estimado por fase."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Y si no queremos seguir con la implementación?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "El documento del diagnóstico es vuestro igualmente. No hay compromiso de continuar a la fase de implementación."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿El agente de WhatsApp sustituye al equipo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Gestiona citas, dudas frecuentes y recordatorios, y escala a una persona del equipo cuando hace falta — nunca da diagnósticos médicos ni agenda urgencias por chat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Es compatible con el software que ya usamos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Se revisa en el diagnóstico. El agente se integra con Google Calendar y una hoja de cálculo como CRM; si usáis otro software veterinario, valoramos la integración caso a caso."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto tarda todo el proceso?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "El diagnóstico se entrega en 3-4 días. La implementación se planifica fase a fase según el roadmap acordado."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+  // Mobile menu
+  var menuOpenBtn = document.getElementById('menuOpenBtn');
+  var menuCloseBtn = document.getElementById('menuCloseBtn');
+  var mobileNav = document.getElementById('mobileNav');
+  var body = document.body;
+
+  function openMenu(){
+    mobileNav.classList.add('open');
+    body.classList.add('nav-open');
+    menuOpenBtn.setAttribute('aria-expanded','true');
+  }
+  function closeMenu(){
+    mobileNav.classList.remove('open');
+    body.classList.remove('nav-open');
+    menuOpenBtn.setAttribute('aria-expanded','false');
+  }
+  menuOpenBtn.addEventListener('click', openMenu);
+  menuCloseBtn.addEventListener('click', closeMenu);
+  mobileNav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeMenu);
+  });
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if(id.length > 1){
+        var target = document.querySelector(id);
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      }
+    });
+  });
+
+  // Scroll reveal
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('[data-reveal]');
+  if(reduced){
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  } else if('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.15});
+    revealEls.forEach(function(el){ obs.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
+</script>
+
+</body>
+</html>

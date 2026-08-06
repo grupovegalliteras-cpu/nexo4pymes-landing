@@ -738,7 +738,10 @@ footer li{margin-bottom:6px}
              el pie lo dice para no vender como prueba lo que no lo es. -->
         <div>
           <div class="vet-captura">
-            <img src="assets/inbox-real.jpg" width="700" height="1450" loading="lazy" decoding="async"
+            <!-- width/height = dimensiones reales del archivo (700x1431). Si las
+                 cambias sin mirar el JPEG, el navegador reserva un hueco del
+                 tamano equivocado y la pagina da un salto al cargar la imagen. -->
+            <img src="assets/inbox-real.jpg" width="700" height="1431" loading="lazy" decoding="async"
                  alt="Bandeja de WhatsApp de una clínica veterinaria con nueve mensajes sin responder pidiendo cita">
           </div>
           <p class="vet-pie">Ejemplo ilustrativo del caso veterinario</p>

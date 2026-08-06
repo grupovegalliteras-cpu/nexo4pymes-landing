@@ -311,6 +311,23 @@ section{padding:52px 0}
 .campo input::placeholder,.campo textarea::placeholder{color:#7B948E}
 .legal{font-size:.82rem;color:#9BB2AC;margin:0}
 .legal a{color:var(--mint)}
+/* Alternativas de envío del formulario (fondo oscuro del CTA) */
+.envio-alt{
+  margin-top:6px;padding:18px;border:1px solid #21524B;border-radius:10px;background:#06201C
+}
+.envio-alt-titulo{margin:0 0 14px;font-size:.95rem;font-weight:600;color:#fff}
+.envio-alt-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+/* line-height explícito: si no, el <button> de copiar queda más bajo que los
+   dos <a> y en escritorio, que van en fila, se ve el escalón. */
+.envio-alt-btns .btn{padding:11px 18px;font-size:.94rem;line-height:1.5}
+/* Variante del botón secundario legible sobre fondo oscuro: el .btn-secundario
+   normal usa texto verde botella, invisible aquí. */
+.btn-oscuro{color:#D6E3E0;border-color:#2E625A;background:transparent;font-family:inherit}
+.btn-oscuro:hover{border-color:var(--mint);color:#fff;text-decoration:none}
+@media (min-width:560px){
+  .envio-alt-btns{flex-direction:row;flex-wrap:wrap}
+  .envio-alt-btns .btn{flex:1 1 auto}
+}
 .contacto-directo{margin-top:26px;font-size:.95rem}
 .contacto-directo a{color:var(--mint);font-weight:600}
 
@@ -961,6 +978,21 @@ footer li{margin-bottom:6px}
         No compartimos tus datos con terceros ni te apuntamos a ninguna lista de correo.
       </p>
       <p class="legal" id="formEstado" role="status" aria-live="polite"></p>
+
+      <!-- Alternativas de envío. Solo se muestran si NO hay endpoint configurado
+           (ver ENDPOINT_FORMULARIO en el JS). Existen porque el mailto: a secas
+           no funciona en un ordenador sin programa de correo asociado, que es el
+           caso de casi todo el que lee el correo en la web: el navegador no hace
+           nada y el visitante se cree que ha enviado el mensaje. -->
+      <div class="envio-alt" id="envioAlt" hidden>
+        <p class="envio-alt-titulo">Tu mensaje está listo. Elige cómo enviarlo:</p>
+        <div class="envio-alt-btns">
+          <a class="btn btn-claro" id="envioGmail" href="#" target="_blank" rel="noopener">Enviar con Gmail</a>
+          <a class="btn btn-secundario btn-oscuro" id="envioCorreo" href="#">Mi programa de correo</a>
+          <button type="button" class="btn btn-secundario btn-oscuro" id="envioCopiar">Copiar el mensaje</button>
+        </div>
+        <p class="legal" id="envioAviso" role="status" aria-live="polite"></p>
+      </div>
     </form>
 
     <!-- Mismo email que usa la landing de veterinarias.
@@ -1065,26 +1097,101 @@ footer li{margin-bottom:6px}
     Array.prototype.forEach.call(aparecen, function(el){ obs.observe(el); });
   }
 
-  // Formulario: por defecto abre el cliente de correo.
-  // PERSONALIZAR: sustituir por fetch() al endpoint real cuando lo tengas.
+  // ---------------------------------------------------------------
+  // FORMULARIO DE CONTACTO
+  //
+  // PERSONALIZAR: pega aquí la URL del endpoint (Formspree, Basin, Brevo,
+  // tu backend...) y el formulario pasará a enviar de verdad por POST.
+  //
+  // !! AL RELLENARLO, ACTUALIZA legal.html !!
+  // La política de privacidad dice hoy que el sitio "no incorpora formularios
+  // propios de recogida de datos". Eso es cierto MIENTRAS esto esté vacío,
+  // porque sin endpoint no se envía nada a ningún servidor. En cuanto pongas
+  // una URL empiezas a tratar datos personales a través de un encargado y hay
+  // que declararlo: qué datos, con qué base legal y qué proveedor los procesa.
+  //
+  // Mientras esté vacío se muestran las alternativas de envío manual. NO se
+  // vuelve al mailto: automático de antes: en un ordenador sin programa de
+  // correo asociado no hacía absolutamente nada y el visitante se quedaba
+  // creyendo que había enviado el mensaje.
+  var ENDPOINT_FORMULARIO = '';
+
+  var DESTINO = 'grupovegalliteras@gmail.com';
   var form = document.getElementById('formContacto');
   var estado = document.getElementById('formEstado');
+  var alt = document.getElementById('envioAlt');
+  var altAviso = document.getElementById('envioAviso');
+  var boton = form.querySelector('button[type="submit"]');
+
+  function textoDelMensaje(d){
+    return 'Nombre y negocio: ' + d.nombre + '\nContacto: ' + d.email +
+           (d.mensaje ? '\n\n' + d.mensaje : '');
+  }
+  function asunto(d){ return 'Solicitud de llamada informativa - ' + d.nombre; }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
-    var nombre = form.nombre.value.trim();
-    var email = form.email.value.trim();
-    var mensaje = form.mensaje.value.trim();
-    if(!nombre || !email){
+    var d = {
+      nombre: form.nombre.value.trim(),
+      email: form.email.value.trim(),
+      mensaje: form.mensaje.value.trim()
+    };
+    if(!d.nombre || !d.email){
       estado.textContent = 'Rellena al menos tu nombre y un dato de contacto.';
       return;
     }
-    var cuerpo = 'Nombre y negocio: ' + nombre + '\nContacto: ' + email + '\n\n' + mensaje;
-    estado.textContent = 'Abriendo tu programa de correo para enviar la solicitud...';
-    // PERSONALIZAR: email de destino
-    window.location.href = 'mailto:grupovegalliteras@gmail.com'
-      + '?subject=' + encodeURIComponent('Solicitud de llamada informativa - ' + nombre)
-      + '&body=' + encodeURIComponent(cuerpo);
+
+    if(ENDPOINT_FORMULARIO){
+      boton.disabled = true;
+      estado.textContent = 'Enviando...';
+      fetch(ENDPOINT_FORMULARIO, {
+        method: 'POST',
+        headers: {'Accept':'application/json','Content-Type':'application/json'},
+        body: JSON.stringify(d)
+      }).then(function(r){
+        if(!r.ok) throw new Error('HTTP ' + r.status);
+        form.reset();
+        estado.textContent = 'Recibido. Te contestamos en cuanto lo leamos.';
+      }).catch(function(){
+        // Nunca se da por enviado algo que ha fallado: se ofrece la salida manual.
+        estado.textContent = 'No hemos podido enviarlo. Prueba con una de estas opciones:';
+        mostrarAlternativas(d);
+      }).then(function(){ boton.disabled = false; });
+      return;
+    }
+
+    estado.textContent = '';
+    mostrarAlternativas(d);
   });
+
+  function mostrarAlternativas(d){
+    var cuerpo = textoDelMensaje(d);
+    var su = encodeURIComponent(asunto(d));
+    var bo = encodeURIComponent(cuerpo);
+
+    document.getElementById('envioGmail').href =
+      'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(DESTINO) +
+      '&su=' + su + '&body=' + bo;
+    document.getElementById('envioCorreo').href =
+      'mailto:' + DESTINO + '?subject=' + su + '&body=' + bo;
+
+    var copiar = document.getElementById('envioCopiar');
+    copiar.onclick = function(){
+      var texto = 'Para: ' + DESTINO + '\nAsunto: ' + asunto(d) + '\n\n' + cuerpo;
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(texto).then(function(){
+          altAviso.textContent = 'Copiado. Pégalo en un correo a ' + DESTINO;
+        }, function(){
+          altAviso.textContent = 'No se ha podido copiar. Escríbenos a ' + DESTINO;
+        });
+      } else {
+        altAviso.textContent = 'Copia este texto y mándalo a ' + DESTINO + ':\n' + texto;
+      }
+    };
+
+    alt.hidden = false;
+    alt.scrollIntoView({block:'nearest'});
+  }
 })();
 </script>
 

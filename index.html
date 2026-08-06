@@ -205,6 +205,12 @@ section{padding:52px 0}
   display:flex;align-items:center;justify-content:center;margin-bottom:14px
 }
 
+/* Aparición al hacer scroll. Mismo patrón que la landing de veterinarias.
+   Si el visitante pide movimiento reducido, el JS marca todo como visible
+   de entrada y esto no llega a aplicarse. */
+[data-reveal]{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+[data-reveal].in-view{opacity:1;transform:translateY(0)}
+
 /* Fases */
 .fase{
   background:#fff;border:1px solid var(--linea);border-left:4px solid var(--teal);
@@ -245,6 +251,18 @@ section{padding:52px 0}
 .vet-bloque strong{color:var(--mint)}
 .vet-bloque p:last-of-type{margin-bottom:0}
 .vet-acciones{display:flex;flex-direction:column;gap:12px;margin-top:22px;align-items:flex-start}
+/* Captura del caso veterinario. La imagen es de ESTE sector, por eso vive
+   dentro del bloque de especialización y no suelta por la página: en una
+   página para todos los sectores daría a entender que solo hacemos clínicas. */
+.vet-grid{display:grid;gap:26px;align-items:center}
+.vet-captura{
+  max-width:210px;margin:0 auto;border-radius:18px;overflow:hidden;
+  box-shadow:0 16px 36px rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.10)
+}
+.vet-captura img{width:100%;display:block}
+.vet-pie{
+  font-size:.78rem;color:#8FA6A1;text-align:center;margin:10px 0 0;line-height:1.45
+}
 .btn-oferta{background:var(--coral-dark);color:#fff}
 .btn-oferta:hover{background:#A83F21;color:#fff;text-decoration:none}
 .vet-plazas{
@@ -321,6 +339,8 @@ footer li{margin-bottom:6px}
   .aviso{padding:34px}
   .vet-bloque{padding:32px}
   .vet-acciones{flex-direction:row;align-items:center;gap:20px}
+  .vet-grid{grid-template-columns:1fr 230px;gap:38px}
+  .vet-captura{max-width:230px}
   footer .cols{grid-template-columns:2fr 1fr 1fr}
   .medido{max-width:760px}
 }
@@ -336,6 +356,9 @@ footer li{margin-bottom:6px}
   *{transition:none !important}
 }
 </style>
+<!-- Sin JavaScript, [data-reveal] se quedaría en opacity:0 y media página
+     quedaría en blanco. Esto lo anula: sin JS se ve todo, sin animación. -->
+<noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 
@@ -427,30 +450,24 @@ footer li{margin-bottom:6px}
     <span class="antetitulo">Qué hacemos</span>
     <h2>Automatizar tareas con IA, explicado sin tecnicismos</h2>
     <p>
-      En cualquier pyme hay un montón de trabajo que no da dinero pero hay que hacer sí o sí:
-      contestar el mismo mensaje veinte veces al día, llamar para confirmar una cita,
-      recordar a un cliente que tiene un presupuesto sin responder, mandar el aviso de
-      revisión, pedir una reseña, avisar de una factura vencida o preparar el informe del mes.
-      Son tareas pequeñas, pero se comen las horas de la persona que debería estar atendiendo
-      clientes o vendiendo.
+      En cualquier pyme hay trabajo que no da dinero pero hay que hacer igualmente: contestar
+      el mismo mensaje veinte veces al día, confirmar citas por teléfono, perseguir
+      presupuestos sin respuesta, reclamar facturas vencidas. Tareas pequeñas que se comen
+      las horas de quien debería estar vendiendo.
     </p>
     <p>
-      <strong>Nuestro trabajo es que esas tareas ocurran solas.</strong> Montamos sistemas que se
-      encargan de la parte repetitiva —recibir, clasificar, responder, recordar, avisar y
-      registrar— y dejan en manos de tu equipo solo lo que de verdad necesita una persona:
-      decidir, atender y cerrar. La inteligencia artificial es la herramienta que usamos para
-      que esos sistemas entiendan un mensaje escrito por un cliente real, con sus prisas y sus
-      faltas de ortografía, y sepan qué hacer con él.
+      <strong>Nuestro trabajo es que ocurran solas.</strong> Montamos sistemas que reciben,
+      clasifican, responden y avisan, y dejan a tu equipo lo que sí necesita una persona:
+      decidir, atender y cerrar.
     </p>
     <p>
-      No vendemos un programa ni te pedimos que cambies de software. Trabajamos <strong>encima
-      de lo que ya usas</strong>: tu agenda, tu programa de gestión, tu WhatsApp, tu correo,
-      tu hoja de cálculo. Si ya tienes herramientas que funcionan, las conectamos entre ellas;
-      si hay huecos, los cubrimos. Y si una tarea no merece la pena automatizarla, te lo
-      decimos antes de cobrarte por ella.
+      La inteligencia artificial es lo que permite que ese sistema entienda el mensaje de un
+      cliente real —con sus prisas y sus faltas de ortografía— y sepa qué hacer con él. No
+      vendemos un programa ni te pedimos que cambies de software: trabajamos <strong>encima de
+      lo que ya usas</strong>.
     </p>
 
-    <div class="rejilla rejilla-3">
+    <div class="rejilla rejilla-3" data-reveal>
       <article class="tarjeta">
         <div class="icono" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C6E63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.1A8.4 8.4 0 0 1 4 11.5a8.5 8.5 0 0 1 8.5-8.5 8.4 8.4 0 0 1 8.5 8.5z"/></svg>
@@ -486,42 +503,38 @@ footer li{margin-bottom:6px}
       que tu negocio necesita. Trabajamos siempre en el mismo orden.
     </p>
 
-    <div class="fase">
+    <div class="fase" data-reveal>
       <span class="fase-num">Fase 1 · Diagnóstico</span>
       <h3>Mapeamos cómo funciona hoy tu negocio</h3>
       <p>
-        Nos sentamos contigo y con las personas que hacen el trabajo del día a día para dibujar
-        el recorrido real: qué pasa desde que un cliente te escribe hasta que paga y se va.
-        Dónde entran los mensajes, quién los contesta, cómo se agenda, qué se apunta y dónde,
-        qué se olvida, qué se repite dos veces y qué se queda esperando.
+        Nos sentamos contigo y con quien hace el trabajo del día a día para dibujar el
+        recorrido real: qué pasa desde que un cliente escribe hasta que paga y se va.
       </p>
       <ul>
-        <li>Cómo entran y se atienden las consultas de clientes.</li>
+        <li>Cómo entran y se atienden las consultas.</li>
         <li>Cómo se gestionan citas, presupuestos y seguimientos.</li>
-        <li>Qué herramientas usáis ya y qué información vive en cada una.</li>
-        <li>Qué tareas repetitivas consumen más horas de tu equipo.</li>
+        <li>Qué herramientas usáis y qué información vive en cada una.</li>
+        <li>Qué tareas repetitivas consumen más horas.</li>
         <li>Cuál es vuestra capacidad real de atender más trabajo.</li>
       </ul>
       <p style="margin-top:1em">
-        El resultado es un documento con los puntos de fricción detectados, qué se puede
-        automatizar, qué conviene arreglar antes y en qué orden hacerlo. Ese documento es tuyo,
-        aunque después no sigas con nosotros.
+        El resultado es un documento con los puntos de fricción, qué se puede automatizar y en
+        qué orden. Es tuyo, aunque después no sigas con nosotros.
       </p>
     </div>
 
-    <div class="fase">
+    <div class="fase" data-reveal>
       <span class="fase-num">Fase 2 · Implementación por fases</span>
       <h3>Montamos lo que ha salido del diagnóstico, poco a poco</h3>
       <p>
         No lo automatizamos todo de golpe. Empezamos por lo que más tiempo libera con menos
-        riesgo, lo dejamos funcionando, lo revisamos con datos reales y solo entonces pasamos
-        al siguiente bloque. Así el negocio nunca se para y tú vas viendo el efecto de cada
-        cambio antes de invertir en el siguiente.
+        riesgo, lo dejamos funcionando y solo entonces pasamos al siguiente bloque. Así el
+        negocio nunca se para.
       </p>
       <ul>
         <li>Montaje conectado a las herramientas que ya usas.</li>
         <li>Periodo de prueba supervisado antes de dejarlo suelto.</li>
-        <li>Formación sencilla para tu equipo, sin manuales de cien páginas.</li>
+        <li>Formación sencilla, sin manuales de cien páginas.</li>
         <li>Ajustes y seguimiento una vez está en marcha.</li>
       </ul>
     </div>
@@ -532,49 +545,35 @@ footer li{margin-bottom:6px}
 <section id="diagnostico-antes">
   <div class="contenedor medido">
     <span class="antetitulo">Nuestra forma de verlo</span>
-    <h2>Por qué diagnosticar antes de automatizar</h2>
+    <!-- H2 deliberadamente distinto del titular del post del blog.
+         Antes decía "Por qué diagnosticar antes de automatizar", casi calcado al
+         H1 del artículo ("Por qué automatizar sin diagnosticar antes puede hundirte
+         el negocio") y desarrollando el mismo argumento con el mismo ejemplo: las
+         dos URLs competían por la misma búsqueda. Ahora la portada enuncia el
+         principio y el desarrollo vive solo en el post. No lo vuelvas a igualar. -->
+    <h2>Automatizar un proceso que no funciona multiplica el problema</h2>
     <p>
-      Esta es la parte que más nos diferencia y la que más nos cuesta explicar en una llamada
-      de cinco minutos, así que la dejamos escrita: <strong>automatizar sin diagnosticar antes
-      es peligroso.</strong>
-    </p>
-    <p>
-      La razón es sencilla. La automatización no arregla un proceso, lo <em>amplifica</em>.
-      Coge lo que ya haces y lo hace más rápido, más veces y sin descanso. Si el proceso está
-      bien montado, multiplicas el resultado bueno. Si está mal montado, multiplicas el
-      problema. Un cuello de botella automatizado no desaparece: se convierte en un cuello de
-      botella que se llena solo, a todas horas y sin que nadie lo frene.
+      La automatización no arregla un proceso, lo <em>amplifica</em>. Coge lo que ya haces y lo
+      hace más rápido, más veces y sin descanso. Si el proceso está bien montado, multiplicas
+      el resultado bueno. Si está mal montado, multiplicas el problema.
     </p>
 
-    <div class="aviso">
-      <h3>Un ejemplo fácil de entender</h3>
+    <div class="aviso" data-reveal>
+      <h3>Un ejemplo en una línea</h3>
       <p>
-        Imagina un taller que quiere más clientes y automatiza la captación de citas: un
-        sistema que responde al instante por WhatsApp, ofrece huecos y confirma la reserva.
-        Sobre el papel, perfecto. La agenda se llena en dos semanas.
+        Un taller automatiza la captación de citas y llena la agenda en dos semanas. Nadie miró
+        antes <strong>cuántos coches puede atender al día</strong>: ahora hay el doble de citas
+        y los mismos dos mecánicos.
       </p>
       <p>
-        El problema es que nadie miró antes <strong>cuántos coches puede atender ese taller al
-        día de verdad</strong>. Ahora hay el doble de citas y los mismos dos mecánicos. Los
-        clientes esperan, las entregas se retrasan, el teléfono echa humo con quejas, el equipo
-        trabaja agobiado y el mes siguiente llegan las reseñas de una estrella. La
-        automatización funcionó de maravilla: hizo su trabajo a la perfección y por eso rompió
-        el negocio más rápido.
-      </p>
-      <p>
-        Con un diagnóstico previo, ese mismo taller habría visto que su problema no era captar
-        más citas, sino los huecos muertos de la agenda y los clientes que no aparecen. La
-        automatización correcta era otra —recordatorios y reprogramación automática— y le
-        habría dado más ingresos sin añadir ni una hora de trabajo.
+        La automatización funcionó a la perfección. Por eso rompió el negocio más rápido.
       </p>
     </div>
 
     <p style="margin-top:26px">
-      Por eso nunca vendemos automatizaciones sueltas por catálogo. Primero entendemos el
-      negocio, después decidimos qué automatizar y en qué orden. A veces la conclusión del
-      diagnóstico es que hay que ordenar algo antes de automatizarlo, y a veces es que una
-      tarea concreta no merece la pena tocarla. Preferimos decírtelo a montarte algo que
-      dentro de tres meses te dé más problemas de los que te quita.
+      Por eso no vendemos automatizaciones sueltas por catálogo. A veces la conclusión del
+      diagnóstico es que hay que ordenar algo antes de tocarlo, o que una tarea no merece la
+      pena automatizarla. Preferimos decírtelo.
     </p>
 
     <!-- Enlace al post que desarrolla este argumento. Anchor descriptivo a propósito:
@@ -598,20 +597,20 @@ footer li{margin-bottom:6px}
     <span class="antetitulo">Qué se puede automatizar</span>
     <h2>Cuatro áreas del negocio donde suele haber trabajo repetitivo</h2>
     <p class="lead medido">
-      Estos son los tipos de automatización que implementamos con más frecuencia. Cuáles tienen
-      sentido en tu caso concreto sale del diagnóstico, no de esta lista.
+      Los tipos de automatización que implementamos con más frecuencia. Cuáles tienen sentido
+      en tu caso sale del diagnóstico, no de esta lista.
     </p>
 
-    <div class="rejilla">
+    <div class="rejilla" data-reveal>
       <article class="tarjeta area">
         <div class="icono" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C6E63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
         </div>
         <h3>Ventas y captación de clientes</h3>
         <ul>
-          <li><strong>Atención automática de WhatsApp:</strong> respuesta inmediata a las consultas que llegan por WhatsApp a cualquier hora, con la información que pide el cliente y el paso a una persona cuando hace falta.</li>
-          <li><strong>Gestión y recordatorio de citas:</strong> reservar, confirmar, recordar y reprogramar citas sin llamadas manuales, para reducir los clientes que no aparecen.</li>
-          <li><strong>Seguimiento de presupuestos sin respuesta:</strong> avisos automáticos al cliente que pidió precio y no ha vuelto a contestar, en lugar de darlo por perdido.</li>
+          <li><strong>Atención automática de WhatsApp:</strong> respuesta inmediata a cualquier hora, con paso a una persona cuando hace falta.</li>
+          <li><strong>Gestión y recordatorio de citas:</strong> reservar, confirmar y reprogramar sin llamadas manuales, para reducir las ausencias.</li>
+          <li><strong>Seguimiento de presupuestos sin respuesta:</strong> avisos al cliente que pidió precio y no ha vuelto, en vez de darlo por perdido.</li>
         </ul>
       </article>
 
@@ -621,8 +620,8 @@ footer li{margin-bottom:6px}
         </div>
         <h3>Marketing y reputación</h3>
         <ul>
-          <li><strong>Publicación automática en redes sociales:</strong> mantener presencia constante sin depender de que alguien se acuerde de publicar cada semana.</li>
-          <li><strong>Solicitud automática de reseñas de Google:</strong> pedir la valoración al cliente en el momento adecuado, justo después de un servicio bien terminado.</li>
+          <li><strong>Publicación automática en redes sociales:</strong> presencia constante sin depender de que alguien se acuerde.</li>
+          <li><strong>Solicitud automática de reseñas de Google:</strong> pedir la valoración justo después de un servicio bien terminado.</li>
         </ul>
       </article>
 
@@ -632,9 +631,9 @@ footer li{margin-bottom:6px}
         </div>
         <h3>Operaciones y servicio</h3>
         <ul>
-          <li><strong>Avisos y seguimientos post-servicio:</strong> el mensaje de revisión, mantenimiento o control que hoy se manda solo cuando alguien tiene un rato libre.</li>
-          <li><strong>Notificaciones internas:</strong> que la persona correcta se entere en el momento de lo que le afecta, sin cadenas de mensajes ni notas en papel.</li>
-          <li><strong>Triaje de mensajes urgentes:</strong> distinguir lo que puede esperar de lo que no y avisar de inmediato cuando entra algo urgente.</li>
+          <li><strong>Avisos y seguimientos post-servicio:</strong> el mensaje de revisión o mantenimiento que hoy se manda cuando alguien tiene un rato.</li>
+          <li><strong>Notificaciones internas:</strong> que la persona correcta se entere a tiempo, sin cadenas de mensajes ni notas en papel.</li>
+          <li><strong>Triaje de mensajes urgentes:</strong> distinguir lo que puede esperar de lo que no, y avisar al momento.</li>
         </ul>
       </article>
 
@@ -644,9 +643,9 @@ footer li{margin-bottom:6px}
         </div>
         <h3>Administración y control</h3>
         <ul>
-          <li><strong>Recordatorios de facturas pendientes:</strong> avisos de cobro que salen solos, sin la incomodidad de tener que reclamar a mano.</li>
-          <li><strong>Informes automáticos periódicos:</strong> el resumen de la semana o del mes en tu correo, sin montarlo a mano cada vez.</li>
-          <li><strong>Alertas de stock:</strong> aviso antes de quedarte sin lo que más vendes o sin material para trabajar.</li>
+          <li><strong>Recordatorios de facturas pendientes:</strong> avisos de cobro que salen solos, sin tener que reclamar a mano.</li>
+          <li><strong>Informes automáticos periódicos:</strong> el resumen del mes en tu correo, sin montarlo cada vez.</li>
+          <li><strong>Alertas de stock:</strong> aviso antes de quedarte sin lo que más vendes.</li>
         </ul>
       </article>
     </div>
@@ -659,33 +658,23 @@ footer li{margin-bottom:6px}
     <span class="antetitulo">A quién ayudamos</span>
     <h2>Automatización para pymes y autónomos de cualquier sector</h2>
     <p>
-      Trabajamos con negocios pequeños y medianos que tienen algo en común: mucho contacto
-      directo con el cliente, una agenda o una cartera de trabajos que gestionar, y un equipo
-      corto que no da abasto con la parte administrativa.
+      Trabajamos con negocios pequeños que tienen algo en común: mucho contacto directo con el
+      cliente, una agenda que gestionar y un equipo corto que no da abasto con la parte
+      administrativa.
     </p>
     <p>
-      <strong>Nuestra especialidad son las clínicas veterinarias.</strong> Es el sector donde
-      más a fondo hemos trabajado y donde mejor conocemos el día a día: la agenda que se
-      descuadra, el WhatsApp que no para, los recordatorios de vacunas y revisiones, y las
-      urgencias que hay que distinguir de lo que puede esperar. Eso no nos limita a las
-      veterinarias, al contrario: la mecánica de fondo —cómo entra el trabajo, cómo se gestiona
-      y dónde se atasca— se repite en todos los negocios de esta página, y lo aprendido en un
-      sector nos ahorra tiempo en el siguiente.
+      <strong>Nuestra especialidad son las clínicas veterinarias</strong>, el sector donde mejor
+      conocemos el día a día. Eso no nos limita: la mecánica de fondo —cómo entra el trabajo,
+      cómo se gestiona y dónde se atasca— se repite en todos los demás.
     </p>
-    <p>
-      Una <strong>clínica veterinaria</strong> o un <strong>centro de fisioterapia</strong>
-      pierden dinero cada vez que un paciente no acude a su cita. Un <strong>taller
-      mecánico</strong> necesita avisar de revisiones y de vehículos listos para recoger. Una
-      <strong>gestoría</strong> o un <strong>despacho de abogados</strong> viven de perseguir
-      documentación y plazos. Un <strong>gimnasio</strong> o un centro deportivo se juegan el
-      negocio en las renovaciones y en las bajas que se podrían haber evitado con un mensaje a
-      tiempo. Un <strong>comercio</strong> o una <strong>tienda online</strong> reciben las
-      mismas cinco preguntas cien veces al mes. Una <strong>peluquería</strong>, un
-      <strong>centro de estética</strong>, una <strong>academia</strong>, un
-      <strong>instalador</strong> o una <strong>empresa de reformas</strong> se pasan el día
-      mandando presupuestos que después nadie sigue.
-    </p>
-    <ul class="sectores">
+    <!-- Aquí había un párrafo de 113 palabras emparejando cada sector con su
+         dolor típico (el taller que avisa de revisiones, la gestoría que persigue
+         plazos...). Se eliminó: repetía en prosa la misma lista que ya está
+         debajo en etiquetas y era el bloque de texto más denso de la página.
+         Ese long-tail por sector lo trabaja el clúster 3 del blog, con un post
+         por sector, que es donde tiene sitio para desarrollarse. No lo recuperes
+         aquí en forma de párrafo. -->
+    <ul class="sectores" data-reveal>
       <li>Clínicas veterinarias</li>
       <li>Clínicas y centros de salud</li>
       <li>Talleres y automoción</li>
@@ -699,10 +688,9 @@ footer li{margin-bottom:6px}
       <li>Hostelería</li>
     </ul>
     <p style="margin-top:24px">
-      Si tu sector no está en la lista, no pasa nada: el diagnóstico es el mismo para todos,
-      porque lo que analizamos es cómo entra el trabajo, cómo se gestiona y dónde se atasca.
-      Y si trabajas solo, tampoco te descartes: los autónomos suelen ser quienes más notan el
-      cambio, porque cada hora que dedican a tareas administrativas es una hora que no facturan.
+      Si tu sector no está en la lista, da igual: lo que analizamos es cómo entra el trabajo y
+      dónde se atasca. Y si trabajas solo, tampoco te descartes: cada hora que un autónomo
+      dedica a administrar es una hora que no factura.
     </p>
     <p>
       <!-- Localidad tomada de legal.html e index.html, que sitúan el domicilio
@@ -722,23 +710,39 @@ footer li{margin-bottom:6px}
          clínicas veterinarias" debe ganarla la landing, no esta página. Si
          aquí le diéramos el mismo peso, las dos competirían entre sí en Google.
          ============================================================ -->
-    <div class="vet-bloque">
-      <h3>¿Tienes una clínica veterinaria?</h3>
-      <p>
-        Tenemos una página hecha solo para vosotros, con los casos concretos de una clínica:
-        el WhatsApp que se satura en hora punta, las citas que se pierden, los recordatorios de
-        vacunas y revisiones que hay que ir mandando a mano y las urgencias que no pueden
-        esperar en la cola del resto de mensajes.
-      </p>
-      <p>
-        Ahora mismo tenemos abierta una <strong>oferta de lanzamiento del diagnóstico</strong>
-        para las primeras clínicas que entren.
-      </p>
-      <div class="vet-acciones">
-        <a class="btn btn-oferta" href="veterinarias.html">Ver la oferta de lanzamiento</a>
-        <!-- EDITAR A MANO: cuando se agoten las plazas de lanzamiento, borra esta línea
-             y quita la mención a la oferta del párrafo de arriba y del hero. -->
-        <p class="vet-plazas">Plazas limitadas</p>
+    <div class="vet-bloque" data-reveal>
+      <div class="vet-grid">
+        <div>
+          <h3>¿Tienes una clínica veterinaria?</h3>
+          <p>
+            Tenemos una página hecha solo para vosotros: el WhatsApp que se satura en hora
+            punta, las citas que se pierden, los recordatorios de vacunas y las urgencias que
+            no pueden esperar en la cola.
+          </p>
+          <p>
+            Ahora mismo tenemos abierta una <strong>oferta de lanzamiento del diagnóstico</strong>
+            para las primeras clínicas que entren.
+          </p>
+          <div class="vet-acciones">
+            <a class="btn btn-oferta" href="veterinarias.html">Ver la oferta de lanzamiento</a>
+            <!-- EDITAR A MANO: cuando se agoten las plazas de lanzamiento, borra esta línea
+                 y quita la mención a la oferta del párrafo de arriba y del hero. -->
+            <p class="vet-plazas">Plazas limitadas</p>
+          </div>
+        </div>
+        <!-- Única imagen de contenido de la página, y va aquí a propósito: la
+             captura es de un caso veterinario (mascotas, vacunas), así que solo
+             es honesta dentro del bloque que habla de veterinarias. Suelta por
+             la página daría a entender que únicamente trabajamos ese sector.
+             Es una recreación para ilustrar, no la conversación de un cliente:
+             el pie lo dice para no vender como prueba lo que no lo es. -->
+        <div>
+          <div class="vet-captura">
+            <img src="assets/inbox-real.jpg" width="700" height="1450" loading="lazy" decoding="async"
+                 alt="Bandeja de WhatsApp de una clínica veterinaria con nueve mensajes sin responder pidiendo cita">
+          </div>
+          <p class="vet-pie">Ejemplo ilustrativo del caso veterinario</p>
+        </div>
       </div>
     </div>
   </div>
@@ -877,7 +881,7 @@ footer li{margin-bottom:6px}
       hacerlo y qué errores salen caros.
     </p>
 
-    <div class="rejilla">
+    <div class="rejilla" data-reveal>
       <article class="tarjeta">
         <span class="fase-num">Diagnóstico previo · 5 min</span>
         <h3 style="margin-top:.5em">
@@ -917,9 +921,8 @@ footer li{margin-bottom:6px}
     <span class="antetitulo" style="color:#12E2B0">Contacto</span>
     <h2>¿Quieres saber qué se podría automatizar en tu negocio?</h2>
     <p class="lead">
-      Escríbenos y hablamos sin compromiso. En una primera conversación nos cuentas cómo
-      funciona tu negocio y te decimos con franqueza si vemos margen de mejora, qué implicaría
-      el diagnóstico y si tiene sentido en tu caso. Si no lo tiene, también te lo diremos.
+      Escríbenos y hablamos sin compromiso. Nos cuentas cómo funciona tu negocio y te decimos
+      con franqueza si vemos margen de mejora. Si no lo vemos, también te lo diremos.
     </p>
 
     <!-- PERSONALIZAR: sustituye el manejador JS por el endpoint real de tu formulario
@@ -1037,6 +1040,27 @@ footer li{margin-bottom:6px}
 
   // Año del pie
   document.getElementById('anio').textContent = new Date().getFullYear();
+
+  // Aparición al hacer scroll (mismo patrón que la landing de veterinarias).
+  // Importante: si el navegador no soporta IntersectionObserver o el visitante
+  // pide movimiento reducido, se marca todo como visible de inmediato. Sin ese
+  // camino de salida los bloques con [data-reveal] se quedarían en opacity:0
+  // y la página aparecería medio vacía.
+  var reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var aparecen = document.querySelectorAll('[data-reveal]');
+  if(reducido || !('IntersectionObserver' in window)){
+    Array.prototype.forEach.call(aparecen, function(el){ el.classList.add('in-view'); });
+  } else {
+    var obs = new IntersectionObserver(function(entradas){
+      entradas.forEach(function(entrada){
+        if(entrada.isIntersecting){
+          entrada.target.classList.add('in-view');
+          obs.unobserve(entrada.target);
+        }
+      });
+    }, {threshold:.12});
+    Array.prototype.forEach.call(aparecen, function(el){ obs.observe(el); });
+  }
 
   // Formulario: por defecto abre el cliente de correo.
   // PERSONALIZAR: sustituir por fetch() al endpoint real cuando lo tengas.
@@ -1286,6 +1310,29 @@ ESPECIALIZACIÓN VETERINARIA — CÓMO ESTÁ PLANTEADA
   oferta de lanzamiento y el precio se ve al llegar a la landing. Así esta
   página no ancla un precio para el resto de sectores. Si prefieres mostrarlo,
   está en el bloque .vet-bloque, es una línea.
+
+CANIBALIZACIÓN RESUELTA (agosto 2026) — NO LA REINTRODUZCAS
+  La sección 4 se titulaba "Por qué diagnosticar antes de automatizar" y
+  desarrollaba en 374 palabras el mismo argumento y el mismo ejemplo del taller
+  que el post /blog/por-que-diagnosticar-antes-de-automatizar, cuyo H1 es
+  "Por qué automatizar sin diagnosticar antes puede hundirte el negocio".
+  Dos URLs del mismo dominio compitiendo por la misma búsqueda.
+  Ahora la portada ENUNCIA el principio ("Automatizar un proceso que no
+  funciona multiplica el problema", ~164 palabras) y el DESARROLLO vive solo
+  en el post, enlazado al final de la sección. Si algún día reescribes esa
+  sección, no le devuelvas el titular del post.
+
+DENSIDAD — POR QUÉ ESTA PÁGINA ES MÁS CORTA DE LO QUE ERA
+  En agosto de 2026 se recortó de 2.208 a 1.542 palabras visibles porque la
+  página era un muro de texto: 14 párrafos de más de 45 palabras (el mayor de
+  113) y cero imágenes en el cuerpo. Sigue muy por encima de las 900-1.200
+  palabras que pedía el encargo, así que el recorte no cuesta posicionamiento.
+  Regla para futuras ediciones: ningún párrafo por encima de 45 palabras.
+  El long-tail por sector que se quitó de aquí lo trabaja el clúster 3 del blog.
+  La única imagen del cuerpo es la captura veterinaria, y está DENTRO del
+  bloque de especialización: es de ese sector y fuera de ahí daría a entender
+  que solo trabajamos clínicas. Si algún día hay capturas de otros sectores,
+  ese es el momento de repartir imágenes por el resto de secciones.
 
 SEO LOCAL
   Región tomada de la landing de veterinarias: Islas Baleares. Si queréis

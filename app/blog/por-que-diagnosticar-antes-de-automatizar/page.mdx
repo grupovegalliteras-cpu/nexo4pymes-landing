@@ -1,0 +1,156 @@
+import Link from "next/link";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { esquemaArticulo } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+
+export const metadata = {
+  title: "Por qué automatizar sin diagnosticar antes puede hundirte el negocio",
+  description:
+    "La automatización no arregla un proceso, lo amplifica. El caso del taller que se llenó la agenda y acabó perdiendo clientes, las tres formas típicas de estropearlo y cuándo la respuesta correcta es no automatizar.",
+  alternates: { canonical: "/blog/por-que-diagnosticar-antes-de-automatizar" },
+};
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-suave">
+  <Link href="/" className="text-teal">Inicio</Link> › <Link href="/blog" className="text-teal">Blog</Link> › Por qué diagnosticar antes de automatizar
+</nav>
+
+<p className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-teal">Diagnóstico previo · 5 min de lectura</p>
+
+# Por qué automatizar sin diagnosticar antes puede hundirte el negocio
+
+<p className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-bottle">
+  La idea de automatizar suena siempre bien: menos trabajo repetitivo, más tiempo libre, más
+  clientes atendidos. Y funciona. El problema es el orden en que se hacen las cosas, porque
+  automatizar un proceso que no entiendes del todo no lo arregla: lo acelera.
+</p>
+
+## La automatización no arregla un proceso, lo amplifica
+
+Esta es la idea que conviene entender antes de gastarse un euro. Una automatización no juzga si lo que hace tiene sentido. Coge lo que ya haces y lo repite más rápido, más veces y sin cansarse. Si el proceso está bien montado, multiplicas el resultado bueno. Si está mal montado, **multiplicas el problema**.
+
+Un cuello de botella automatizado no desaparece. Se convierte en un cuello de botella que se llena solo, a todas horas, sin que nadie lo frene. Antes, cuando alguien de tu equipo cogía el teléfono, esa persona hacía de filtro sin darse cuenta: notaba que la agenda iba justa, que el almacén andaba escaso o que ese cliente ya había llamado tres veces. Ese criterio no está escrito en ninguna parte, pero está funcionando. Cuando automatizas sin haberlo mirado, lo primero que quitas es el filtro.
+
+## El taller que se llenó la agenda y acabó perdiendo clientes
+
+Vale la pena verlo con un caso concreto, porque en abstracto todo esto suena razonable y aun así se sigue haciendo mal.
+
+Imagina un taller que quiere más trabajo y decide automatizar la captación de citas. Monta un sistema que responde al instante por WhatsApp, enseña los huecos libres y confirma la reserva sin que nadie mueva un dedo. Sobre el papel, perfecto: deja de perder a la gente que escribe a las once de la noche y ya no hay que devolver llamadas. En dos semanas tiene la agenda llena.
+
+<Destacado titulo="Lo que nadie miró antes">
+  Cuántos coches puede atender ese taller **de verdad** en un día.
+
+  Ahora hay el doble de citas y siguen siendo los mismos dos mecánicos. Los clientes esperan más
+  de lo prometido, las entregas se retrasan, el teléfono echa humo con quejas, el equipo trabaja
+  agobiado y comete más errores. Al mes siguiente empiezan a llegar las reseñas de una estrella.
+  Y las reseñas tardan mucho más en repararse que una agenda.
+
+  Fíjate en el detalle incómodo: **la automatización funcionó perfectamente**. Hizo exactamente lo
+  que se le pidió. Por eso rompió el negocio más rápido.
+</Destacado>
+
+Con un diagnóstico previo, ese mismo taller habría visto otra cosa. Su problema no era captar más citas: era que se le quedaban huecos muertos a media mañana y que una parte de los clientes no aparecía el día señalado. La automatización correcta no era captar más, era **recordar y reprogramar**. Le habría dado más ingresos con la misma plantilla y sin añadir ni una hora de trabajo.
+
+Es la misma inversión, parecido esfuerzo técnico y resultado opuesto. La diferencia no está en la tecnología: está en haber mirado el negocio antes de elegir qué automatizar.
+
+## Las tres formas típicas de estropearlo
+
+Cuando algo sale mal al automatizar, casi siempre es una de estas tres.
+
+### 1. Amplificar un cuello de botella
+
+Es el caso del taller. Automatizas la entrada de trabajo sin comprobar la capacidad de salida. Vale para citas, para presupuestos, para pedidos y para consultas. La regla es sencilla: antes de acelerar lo que entra, comprueba qué pasa con lo que ya entra hoy.
+
+### 2. Automatizar un proceso que en realidad son tres
+
+Muchas tareas que se cuentan como una sola en realidad tienen ramas: el cliente nuevo no se trata igual que el de siempre, el pedido urgente no sigue el mismo camino que el normal, y hay un par de excepciones que solo conoce la persona que lleva diez años haciéndolo. Si automatizas la versión simplificada, todo lo que no encaje se cae por un agujero. Y lo peor es que nadie se entera hasta que un cliente se queja.
+
+### 3. Escalar un error pequeño
+
+Un dato mal apuntado a mano afecta a un cliente. Ese mismo dato mal apuntado dentro de un proceso automático afecta a todos los clientes que pasen por ahí, durante semanas y en silencio. La automatización no comete más errores que una persona: comete los mismos, pero a otra escala y sin que nadie los vea a tiempo.
+
+## Qué se mira en un diagnóstico antes de tocar nada
+
+Un diagnóstico no es una reunión para que te vendan cosas. Es dibujar el recorrido real del negocio: qué pasa desde que un cliente contacta hasta que paga y se va. Lo que miramos nosotros, en concreto:
+
+- **Por dónde entra el trabajo** y quién lo atiende en cada canal.
+- **Cuál es la capacidad real** de atender más, no la teórica.
+- **Qué se repite dos veces**: datos que se apuntan en un sitio y se copian a otro.
+- **Qué se queda esperando** y por culpa de quién o de qué.
+- **Qué excepciones existen** y quién las conoce, aunque no estén escritas.
+- **Qué herramientas ya usáis** y qué información vive en cada una.
+
+De ahí sale una lista ordenada: qué se puede automatizar, qué conviene arreglar antes y en qué orden hacerlo para que cada paso pague el siguiente. Ese orden importa tanto como la lista.
+
+<Nota>
+  **Una señal de alarma útil:** si alguien te propone una automatización concreta antes de haber
+  preguntado cuántos clientes puedes atender al día, no está resolviendo tu problema. Está
+  vendiendo su producto.
+</Nota>
+
+## Cuándo no merece la pena automatizar
+
+Conviene decirlo, porque casi nadie lo dice. Hay casos en los que la respuesta correcta es no automatizar, al menos todavía:
+
+<Senales
+  items={[
+    {
+      fuerte: "El volumen es muy bajo.",
+      texto:
+        "Si una tarea ocurre tres veces al mes, el tiempo que ahorras no compensa lo que cuesta montarla y mantenerla.",
+    },
+    {
+      fuerte: "El proceso cambia cada semana.",
+      texto:
+        "Automatizar algo que aún estás definiendo es construir sobre arena. Primero se estabiliza, luego se automatiza.",
+    },
+    {
+      fuerte: "El valor está justo en el trato humano.",
+      texto:
+        "Hay conversaciones que el cliente quiere tener con una persona, y automatizarlas ahorra minutos y cuesta clientes.",
+    },
+    {
+      fuerte: "El proceso está roto.",
+      texto: "Si hoy no funciona bien a mano, automatizarlo no lo arregla. Lo pone a fallar más deprisa.",
+    },
+  ]}
+/>
+
+## Por dónde empezar si te estás planteando esto
+
+No hace falta contratar a nadie para dar el primer paso. Coge una semana normal y apunta dos cosas: **qué tareas repites** y **dónde se queda parado el trabajo**. Con eso ya vas a ver patrones que hoy se te escapan porque están repartidos entre varias personas y varios días.
+
+Después, antes de automatizar nada, hazte la pregunta del taller: si mañana entrara el doble de trabajo por esa vía, ¿podrías atenderlo? Si la respuesta es que no, el primer problema a resolver no es captar más.
+
+Y cuando toque elegir, empieza por lo que más tiempo libera con menos riesgo. Lo dejas funcionando, lo revisas con datos reales de tu negocio y solo entonces pasas al siguiente. Así el negocio no se para nunca y ves el efecto de cada cambio antes de invertir en el siguiente.
+
+<CtaPost
+  titulo="¿Quieres saber qué se podría automatizar en tu negocio?"
+  boton="Hablemos sin compromiso"
+  href="/#contacto"
+>
+  Trabajamos siempre en ese orden: primero un diagnóstico para entender cómo funciona tu negocio
+  hoy, y después la implementación por fases de lo que salga de ahí. Si del diagnóstico sale que
+  algo no merece la pena automatizar, te lo decimos.
+</CtaPost>
+
+<Nota>
+  ¿Tienes una clínica veterinaria? Es el sector que mejor conocemos y tenemos una página hecha
+  solo para eso: <Link href="/veterinarias">automatización para clínicas veterinarias</Link>.
+</Nota>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      esquemaArticulo({
+        titulo: "Por qué automatizar sin diagnosticar antes puede hundirte el negocio",
+        descripcion:
+          "La automatización no arregla un proceso, lo amplifica. El caso del taller que se llenó la agenda y acabó perdiendo clientes.",
+        url: `${marca.dominio}/blog/por-que-diagnosticar-antes-de-automatizar`,
+        fecha: "2026-08-05",
+      }),
+    ),
+  }}
+/>

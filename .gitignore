@@ -5,3 +5,12 @@ desktop.ini
 
 # Vercel
 .vercel
+
+# Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# Entorno
+.env*.local

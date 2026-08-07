@@ -1,0 +1,215 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TOKENS DE MARCA NEXO4PYMES
+   Los seis primeros colores vienen de la web anterior y no se
+   tocan: son la identidad ya publicada. El resto se añadió para
+   cubrir huecos (superficies oscuras, estados, foco).
+   ============================================================ */
+@theme {
+  --color-bottle: #0e3b36;
+  --color-bottle-900: #08221f;
+  --color-bottle-800: #0a2b27;
+  --color-bottle-700: #12524a;
+  --color-teal: #1c6e63;
+  --color-teal-claro: #e4f0ed;
+  --color-mint: #12e2b0;
+  --color-coral: #e8623a;
+  --color-coral-dark: #c74e2b;
+  --color-cream: #f7f5f1;
+  --color-cream-2: #efebe3;
+  --color-ink: #1a1a1a;
+  --color-suave: #55605c;
+  --color-linea: #e2ddd3;
+  --color-exito: #1f7a5c;
+  --color-error: #b3261e;
+  --color-aviso: #b8860b;
+
+  --font-titular: var(--fuente-titular), system-ui, sans-serif;
+  --font-texto: var(--fuente-texto), system-ui, sans-serif;
+  --font-mono: var(--fuente-mono), ui-monospace, monospace;
+
+  --radius-marca: 14px;
+
+  /* Curva de salida usada por todas las animaciones del sitio. */
+  --ease-marca: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* Compensa la cabecera fija al saltar a un ancla. */
+    scroll-padding-top: 84px;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-texto);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-titular);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Foco visible en todo el sitio: sin esto la navegación por teclado
+     es invisible sobre los fondos oscuros. */
+  :focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .oscuro :focus-visible,
+  .oscuro:focus-visible {
+    outline-color: var(--color-mint);
+  }
+
+  ::selection {
+    background: var(--color-mint);
+    color: var(--color-bottle-900);
+  }
+}
+
+@layer components {
+  /* Rejilla técnica de fondo para las secciones oscuras. */
+  .malla {
+    background-image:
+      linear-gradient(to right, rgb(18 226 176 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(18 226 176 / 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .malla-clara {
+    background-image:
+      linear-gradient(to right, rgb(14 59 54 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(14 59 54 / 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Difuminado de los bordes de la malla, para que no se corte en seco. */
+  .malla-fade {
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
+  }
+
+  .texto-degradado {
+    background: linear-gradient(96deg, #ffffff 0%, #d7f5ec 45%, var(--color-mint) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* ============================================================
+   ANIMACIONES
+   Todo lo que se mueve usa transform/opacity. Nada anima
+   width/height/top/left, que fuerzan recálculo de layout.
+   ============================================================ */
+@keyframes flotar {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -9px, 0);
+  }
+}
+
+@keyframes respirar {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes desplazar-flecha {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes pulso-punto {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bajar-indicador {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+}
+
+.anim-flotar {
+  animation: flotar 7s var(--ease-marca) infinite;
+}
+.anim-respirar {
+  animation: respirar 4.5s ease-in-out infinite;
+}
+.anim-indicador {
+  animation: bajar-indicador 1.9s ease-in-out infinite;
+}
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION
+   Un único sitio corta todo el movimiento CSS. Las animaciones
+   de JS se cortan en components/motion/usarMovimiento.ts.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

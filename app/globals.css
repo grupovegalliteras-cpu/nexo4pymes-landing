@@ -1,29 +1,39 @@
 @import "tailwindcss";
 
 /* ============================================================
-   TOKENS DE MARCA NEXO4PYMES
-   Los seis primeros colores vienen de la web anterior y no se
-   tocan: son la identidad ya publicada. El resto se añadió para
-   cubrir huecos (superficies oscuras, estados, foco).
+   TOKENS DE MARCA NEXO4PYMES — REDISEÑO PREMIUM
+   Paleta oscura azul/violeta del rediseño. Sustituye a la paleta
+   verde botella + coral de la web anterior. Se mantienen los
+   NOMBRES de variable donde el rol se parece (mint, coral, exito,
+   aviso...) para no reescribir cada clase Tailwind del proyecto,
+   aunque el valor hexadecimal cambie. bottle/bottle-900 pasan a
+   ser el fondo oscuro principal del sitio (antes verde, ahora casi
+   negro azulado): todo el sitio es oscuro, ya no hay secciones
+   "claro"/"alt" con fondo crema.
    ============================================================ */
 @theme {
-  --color-bottle: #0e3b36;
-  --color-bottle-900: #08221f;
-  --color-bottle-800: #0a2b27;
-  --color-bottle-700: #12524a;
-  --color-teal: #1c6e63;
+  --color-bottle: #05060c;
+  --color-bottle-900: #030308;
+  --color-bottle-800: #0b0e1a;
+  --color-bottle-700: #12162a;
+  --color-teal: #2ee0c4;
   --color-teal-claro: #e4f0ed;
-  --color-mint: #12e2b0;
-  --color-coral: #e8623a;
-  --color-coral-dark: #c74e2b;
+  --color-mint: #4ce0b3;
+  --color-coral: #ff6b4c;
+  --color-coral-dark: #e8552f;
   --color-cream: #f7f5f1;
   --color-cream-2: #efebe3;
-  --color-ink: #1a1a1a;
+  --color-ink: #e9ebf4;
   --color-suave: #55605c;
   --color-linea: #e2ddd3;
-  --color-exito: #1f7a5c;
-  --color-error: #b3261e;
-  --color-aviso: #b8860b;
+  --color-exito: #4ce0b3;
+  --color-error: #ff6b4c;
+  --color-aviso: #ffa98f;
+
+  /* Los dos acentos nuevos del rediseño: degradado azul → violeta en
+     CTAs, insignias, iconos y textos destacados. */
+  --color-azul: #4c7dff;
+  --color-violeta: #b06bf5;
 
   --font-titular: var(--fuente-titular), system-ui, sans-serif;
   --font-texto: var(--fuente-texto), system-ui, sans-serif;
@@ -49,7 +59,7 @@
 
   body {
     margin: 0;
-    background: var(--color-cream);
+    background: var(--color-bottle);
     color: var(--color-ink);
     font-family: var(--font-texto);
     font-size: 17px;
@@ -74,9 +84,11 @@
   }
 
   /* Foco visible en todo el sitio: sin esto la navegación por teclado
-     es invisible sobre los fondos oscuros. */
+     es invisible sobre los fondos oscuros. Todo el sitio es oscuro
+     desde el rediseño, así que el azul de marca sirve de base sin
+     necesitar la variante ".oscuro" de antes. */
   :focus-visible {
-    outline: 2px solid var(--color-teal);
+    outline: 2px solid var(--color-azul);
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -87,18 +99,19 @@
   }
 
   ::selection {
-    background: var(--color-mint);
-    color: var(--color-bottle-900);
+    background: rgb(76 125 255 / 0.35);
+    color: #ffffff;
   }
 }
 
 @layer components {
-  /* Rejilla técnica de fondo para las secciones oscuras. */
+  /* Rejilla técnica de fondo, ahora blanca y muy tenue: así se ve
+     igual de bien detrás de cualquier acento de color. */
   .malla {
     background-image:
-      linear-gradient(to right, rgb(18 226 176 / 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(18 226 176 / 0.045) 1px, transparent 1px);
-    background-size: 56px 56px;
+      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
   }
 
   .malla-clara {
@@ -113,11 +126,30 @@
     mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
   }
 
+  /* Texto en degradado azul → violeta: antetítulos, la "4" del logo,
+     cifras destacadas. */
   .texto-degradado {
-    background: linear-gradient(96deg, #ffffff 0%, #d7f5ec 45%, var(--color-mint) 100%);
+    background: linear-gradient(90deg, var(--color-azul), var(--color-violeta));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /* Variante para el titular del hero: barrido animado azul → violeta
+     → menta → azul, en bucle. */
+  .texto-degradado-sheen {
+    background: linear-gradient(
+      100deg,
+      var(--color-azul) 0%,
+      var(--color-violeta) 42%,
+      var(--color-mint) 78%,
+      var(--color-azul) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: barrer-degradado 9s linear infinite;
   }
 }
 
@@ -184,6 +216,63 @@
   }
 }
 
+@keyframes barrer-degradado {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes marquesina {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* -50%: el contenido está duplicado dentro del contenedor, así el
+       bucle no se nota al reiniciar. */
+    transform: translateX(-50%);
+  }
+}
+
+/* Manchas de color de fondo, fijas detrás de toda la página. */
+@keyframes deriva-a {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(6vw, -4vh, 0) scale(1.15);
+  }
+  66% {
+    transform: translate3d(-5vw, 5vh, 0) scale(0.92);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+@keyframes deriva-b {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  50% {
+    transform: translate3d(-8vw, 6vh, 0) scale(0.9);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+}
+
+.anim-deriva-a {
+  animation: deriva-a 26s ease-in-out infinite;
+}
+.anim-deriva-b {
+  animation: deriva-b 34s ease-in-out infinite;
+}
+.anim-deriva-a-inversa {
+  animation: deriva-a 40s ease-in-out infinite reverse;
+}
+
 .anim-flotar {
   animation: flotar 7s var(--ease-marca) infinite;
 }
@@ -192,6 +281,9 @@
 }
 .anim-indicador {
   animation: bajar-indicador 1.9s ease-in-out infinite;
+}
+.anim-marquesina {
+  animation: marquesina 38s linear infinite;
 }
 
 /* ============================================================

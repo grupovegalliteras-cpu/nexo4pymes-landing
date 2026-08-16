@@ -13,7 +13,7 @@ export const esquemaNegocio = {
     "Agencia de automatización de procesos con inteligencia artificial para pymes y autónomos. Diagnóstico primero, implementación por fases después.",
   url: marca.dominio,
   email: marca.email,
-  image: `${marca.dominio}/assets/og-automatizacion-pymes.jpg`,
+  image: `${marca.dominio}/assets/og-image.jpg`,
   address: {
     "@type": "PostalAddress",
     addressLocality: marca.localidad,

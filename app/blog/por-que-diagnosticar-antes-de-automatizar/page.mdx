@@ -10,19 +10,19 @@ export const metadata = {
   alternates: { canonical: "/blog/por-que-diagnosticar-antes-de-automatizar" },
 };
 
-<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-suave">
-  <Link href="/" className="text-teal">Inicio</Link> › <Link href="/blog" className="text-teal">Blog</Link> › Por qué diagnosticar antes de automatizar
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
+  <Link href="/" className="text-[#9FB6FF]">Inicio</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Por qué diagnosticar antes de automatizar
 </nav>
 
-<p className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-teal">Diagnóstico previo · 5 min de lectura</p>
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Diagnóstico previo · 5 min de lectura</div>
 
 # Por qué automatizar sin diagnosticar antes puede hundirte el negocio
 
-<p className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-bottle">
+<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
   La idea de automatizar suena siempre bien: menos trabajo repetitivo, más tiempo libre, más
   clientes atendidos. Y funciona. El problema es el orden en que se hacen las cosas, porque
   automatizar un proceso que no entiendes del todo no lo arregla: lo acelera.
-</p>
+</div>
 
 ## La automatización no arregla un proceso, lo amplifica
 
@@ -125,8 +125,9 @@ Y cuando toque elegir, empieza por lo que más tiempo libera con menos riesgo. L
 
 <CtaPost
   titulo="¿Quieres saber qué se podría automatizar en tu negocio?"
-  boton="Hablemos sin compromiso"
-  href="/#contacto"
+  boton="Agendar llamada gratis de 15 min"
+  href={marca.calendly}
+  externo
 >
   Trabajamos siempre en ese orden: primero un diagnóstico para entender cómo funciona tu negocio
   hoy, y después la implementación por fases de lo que salga de ahí. Si del diagnóstico sale que
@@ -135,7 +136,7 @@ Y cuando toque elegir, empieza por lo que más tiempo libera con menos riesgo. L
 
 <Nota>
   ¿Tienes una clínica veterinaria? Es el sector que mejor conocemos y tenemos una página hecha
-  solo para eso: <Link href="/veterinarias">automatización para clínicas veterinarias</Link>.
+  solo para eso: <Link href="/">automatización para clínicas veterinarias</Link>.
 </Nota>
 
 <VolverAlBlog />

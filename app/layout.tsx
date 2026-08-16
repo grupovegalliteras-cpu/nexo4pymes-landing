@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Inter, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Mono, Sora, Space_Grotesk } from "next/font/google";
 import { marca } from "@/content/marca";
 import { esquemaNegocio } from "@/lib/esquema";
 import "./globals.css";
@@ -7,14 +7,19 @@ import "./globals.css";
 /* next/font descarga y sirve las tipografías desde nuestro propio
    dominio en el build. No hay ninguna petición a Google en el
    navegador del visitante: la política de privacidad afirma justo
-   eso, y así sigue siendo cierto. */
-const titular = Space_Grotesk({
+   eso, y así sigue siendo cierto.
+
+   Rediseño: Sora pasa a ser la tipografía de titulares (antes era
+   Space Grotesk) y Space Grotesk baja a texto de cuerpo (antes Inter),
+   igual que en la maqueta del rediseño. */
+const titular = Sora({
   subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--fuente-titular",
   display: "swap",
 });
 
-const texto = Inter({
+const texto = Space_Grotesk({
   subsets: ["latin", "latin-ext"],
   variable: "--fuente-texto",
   display: "swap",

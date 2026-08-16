@@ -1,12 +1,19 @@
 import {
+  Bell,
   CalendarDays,
+  CheckCircle2,
+  Clock,
   FileText,
+  Globe,
+  Info,
+  ListChecks,
   Map,
   Megaphone,
   MessageCircle,
   Search,
   Send,
   Settings,
+  ShieldCheck,
   Syringe,
   TrendingUp,
   Wrench,
@@ -27,6 +34,13 @@ const iconos = {
   lupa: Search,
   mapa: Map,
   herramienta: Wrench,
+  reloj: Clock,
+  escudo: ShieldCheck,
+  globo: Globe,
+  verificado: CheckCircle2,
+  campana: Bell,
+  lista: ListChecks,
+  info: Info,
 } as const;
 
 export type NombreIcono = keyof typeof iconos;
@@ -51,12 +65,15 @@ export function CajaIcono({
   tono = "claro",
 }: {
   nombre: NombreIcono;
-  tono?: "claro" | "oscuro" | "coral";
+  tono?: "claro" | "oscuro" | "coral" | "azul" | "violeta" | "mint";
 }) {
   const estilos = {
     claro: "bg-teal-claro text-teal",
     oscuro: "bg-white/8 text-mint ring-1 ring-inset ring-mint/20",
     coral: "bg-coral/12 text-coral-dark",
+    azul: "bg-azul/15 text-[#9FB6FF] ring-1 ring-inset ring-azul/25",
+    violeta: "bg-violeta/15 text-[#D3B0FF] ring-1 ring-inset ring-violeta/25",
+    mint: "bg-mint/15 text-mint ring-1 ring-inset ring-mint/25",
   };
 
   return (

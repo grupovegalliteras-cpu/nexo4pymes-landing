@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${marca.dominio}/`, lastModified: hoy, changeFrequency: "monthly", priority: 1 },
     {
-      url: `${marca.dominio}/veterinarias`,
+      url: `${marca.dominio}/servicios`,
       lastModified: hoy,
       changeFrequency: "monthly",
       priority: 0.9,

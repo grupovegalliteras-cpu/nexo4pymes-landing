@@ -48,7 +48,7 @@ export function CtaMovil({
             href={href}
             target={externo ? "_blank" : undefined}
             rel={externo ? "noopener" : undefined}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-coral px-5 py-3.5 text-[15px] font-medium text-white shadow-[0_10px_30px_-12px_rgba(232,98,58,.9)]"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-br from-azul to-violeta px-5 py-3.5 text-[15px] font-medium text-white shadow-[0_10px_30px_-12px_rgba(76,125,255,.75)]"
           >
             {texto} <span aria-hidden="true">→</span>
           </a>

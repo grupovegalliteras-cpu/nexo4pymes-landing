@@ -29,13 +29,18 @@ const nextConfig = {
     // Sin estos 301 se perdería el posicionamiento acumulado.
     return [
       { source: "/index.html", destination: "/", permanent: true },
-      { source: "/veterinarias.html", destination: "/veterinarias", permanent: true },
       { source: "/legal.html", destination: "/legal", permanent: true },
       {
         source: "/blog/por-que-diagnosticar-antes-de-automatizar.html",
         destination: "/blog/por-que-diagnosticar-antes-de-automatizar",
         permanent: true,
       },
+      // /veterinarias era la landing de conversión; con el rediseño esa
+      // misma página pasó a ser la home. Se repone en enlaces de
+      // llamadas en frío ya repartidos, así que el 301 se queda para
+      // siempre, no es una migración puntual.
+      { source: "/veterinarias", destination: "/", permanent: true },
+      { source: "/veterinarias.html", destination: "/", permanent: true },
     ];
   },
 };

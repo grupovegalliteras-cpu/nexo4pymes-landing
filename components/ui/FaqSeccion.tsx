@@ -6,19 +6,19 @@ export function FaqSeccion({
   categoria,
   titular,
   preguntas,
-  tono = "alt",
+  tono = "oscuro",
 }: {
   id?: string;
   categoria: string;
   titular: string;
   preguntas: { p: string; r: string }[];
-  tono?: "claro" | "alt";
+  tono?: "oscuro" | "oscuro-hondo";
 }) {
   return (
     <Seccion id={id} tono={tono} ancho="medido">
-      <Antetitulo>{categoria}</Antetitulo>
-      <TituloSeccion className="mb-10">{titular}</TituloSeccion>
-      <Acordeon preguntas={preguntas} />
+      <Antetitulo tono="oscuro">{categoria}</Antetitulo>
+      <TituloSeccion className="mb-10 text-[#F4F6FF]">{titular}</TituloSeccion>
+      <Acordeon preguntas={preguntas} tono="oscuro" />
     </Seccion>
   );
 }

@@ -4,35 +4,67 @@ import { useEffect, useState } from "react";
 import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 import { AnimatePresence, motion } from "framer-motion";
 
-/* Barra de acción fija en móvil. Aparece cuando el hero ya ha salido
-   de pantalla: antes de eso el CTA del hero está a la vista y esto
-   solo taparía contenido.
+/* Barra de acción fija en móvil.
 
-   Se oculta al llegar al pie para no solapar el formulario/enlaces. */
+   FASE 4: antes los umbrales eran números mágicos —aparecía pasado el
+   85 % del alto de pantalla y se escondía a 320 px del final—. Con el
+   hero comprimido de 1.549 a 724 px esos números dejaron de
+   corresponder a nada: la barra salía a media pantalla del hero,
+   encima de su propio botón.
+
+   Ahora se miden los dos elementos que de verdad marcan el momento:
+
+   · aparece cuando el hero termina de salir por arriba, o sea justo
+     cuando el CTA del hero deja de estar a la vista;
+   · desaparece cuando asoma el bloque de cierre, para no poner dos
+     botones idénticos en la misma pantalla.
+
+   Si algún ancla no existe (otra página, otro montaje), cae a un
+   comportamiento razonable en vez de romperse.
+
+   Sigue siendo un listener de scroll pasivo y no un IntersectionObserver
+   a propósito: aquí hace falta leer dos posiciones en el mismo frame y
+   el coste real es una lectura de layout ya cacheada por el navegador. */
 export function CtaMovil({
   texto,
   href,
   externo = false,
   nota,
+  anclaInicio = "top",
+  anclaFin = "cierre",
 }: {
   texto: string;
   href: string;
   externo?: boolean;
   nota?: string;
+  anclaInicio?: string;
+  anclaFin?: string;
 }) {
   const [visible, setVisible] = useState(false);
   const reducido = usarMovimientoReducido();
 
   useEffect(() => {
     const alScroll = () => {
-      const y = window.scrollY;
-      const alturaTotal = document.body.scrollHeight - window.innerHeight;
-      setVisible(y > window.innerHeight * 0.85 && y < alturaTotal - 320);
+      const hero = document.getElementById(anclaInicio);
+      const fin = document.getElementById(anclaFin);
+
+      const heroFuera = hero
+        ? hero.getBoundingClientRect().bottom <= 8
+        : window.scrollY > window.innerHeight * 0.6;
+
+      const finALaVista = fin ? fin.getBoundingClientRect().top < window.innerHeight - 40 : false;
+
+      setVisible(heroFuera && !finALaVista);
     };
+
     alScroll();
     window.addEventListener("scroll", alScroll, { passive: true });
-    return () => window.removeEventListener("scroll", alScroll);
-  }, []);
+    window.addEventListener("resize", alScroll);
+    return () => {
+      window.removeEventListener("scroll", alScroll);
+      window.removeEventListener("resize", alScroll);
+    };
+  }, [anclaInicio, anclaFin]);
 
   return (
     <AnimatePresence>
@@ -53,7 +85,7 @@ export function CtaMovil({
             {texto} <span aria-hidden="true">→</span>
           </a>
           {nota && (
-            <p className="mt-1.5 text-center font-mono text-[9.5px] uppercase tracking-[0.12em] text-white/45">
+            <p className="mt-1.5 text-center font-mono text-[12px] uppercase tracking-[0.1em] text-white/50">
               {nota}
             </p>
           )}

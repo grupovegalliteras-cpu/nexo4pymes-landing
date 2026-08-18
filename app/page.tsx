@@ -8,14 +8,14 @@ import { Marquesina } from "@/components/vet/Marquesina";
 import { ProblemaVet } from "@/components/vet/ProblemaVet";
 import { ComoVaVet } from "@/components/vet/ComoVaVet";
 import { LimitesVet } from "@/components/vet/LimitesVet";
-import { PorQueNoEmpezamos } from "@/components/vet/PorQueNoEmpezamos";
+import { PruebaVet } from "@/components/vet/PruebaVet";
 import { MetodoVet } from "@/components/vet/MetodoVet";
 import { OfertaVet } from "@/components/vet/OfertaVet";
 import { GateServicios } from "@/components/vet/GateServicios";
 import { FaqSeccion } from "@/components/ui/FaqSeccion";
 import { CierreVet } from "@/components/vet/CierreVet";
-import { faqVet, marquesina, navVet } from "@/content/vet";
-import { marca, oferta } from "@/content/marca";
+import { faqVet, garantias, navVet } from "@/content/vet";
+import { marca } from "@/content/marca";
 import { esquemaFaq } from "@/lib/esquema";
 
 /* HOME — antes vivía en /veterinarias. Es la página de conversión que
@@ -67,15 +67,27 @@ export default function PaginaInicio() {
         enlacePill={{ href: "/servicios", texto: "Servicios ↗", textoMovil: "Servicios y quiénes somos ↗" }}
       />
 
+      {/* ORDEN DE LECTURA — fase 1 del rediseño mobile-first.
+          Antes: problema → demo → límites → ensayo → método → precio. Ese es el
+          orden en que uno explica su negocio, no en el que un desconocido decide
+          comprar: el precio quedaba en el píxel 9.301 (63 % del recorrido) y
+          casi nadie llegaba en móvil.
+
+          Ahora: primero se demuestra que funciona (la secuencia), después quién
+          está detrás y qué se compromete (la prueba), después cuánto cuesta y
+          qué se llevan (la oferta), y solo entonces el material que resuelve
+          dudas de quien ya está interesado (límites y método).
+
+          MetodoVet absorbió la antigua sección PorQueNoEmpezamos en la fase 3. */}
       <main id="contenido" className="relative z-10">
         <HeroVet />
-        <Marquesina items={marquesina} />
+        <Marquesina items={garantias} />
         <ProblemaVet />
         <ComoVaVet />
-        <LimitesVet />
-        <PorQueNoEmpezamos />
-        <MetodoVet />
+        <PruebaVet />
         <OfertaVet />
+        <LimitesVet />
+        <MetodoVet />
         <GateServicios />
         <FaqSeccion id="faq" categoria="Preguntas frecuentes" titular="Lo que nos preguntan siempre" preguntas={faqVet} />
         <CierreVet />
@@ -98,12 +110,9 @@ export default function PaginaInicio() {
         }}
       />
 
-      <CtaMovil
-        texto="Agendar llamada gratis"
-        href={marca.calendly}
-        externo
-        nota={oferta.ofertaActiva ? `Diagnóstico ${oferta.precio}€ · quedan ${oferta.plazasLibres} plazas` : undefined}
-      />
+      {/* Sin `nota`: iba a 9,5 px, ilegible, y robaba alto de pantalla al botón.
+          El precio y las plazas ya viven en la tarjeta de la oferta. */}
+      <CtaMovil texto="Agendar llamada gratis" href={marca.calendly} externo />
 
       <script
         type="application/ld+json"

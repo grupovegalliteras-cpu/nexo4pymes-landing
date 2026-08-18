@@ -71,14 +71,20 @@ export function Cabecera({
         <div className="relative mx-auto flex max-w-[1180px] items-center gap-3 px-5 py-3.5 sm:px-8">
           <Link
             href="/"
-            className="mr-auto flex items-center gap-2.5"
+            /* min-w además de min-h: por debajo de 380 px el logotipo se
+               oculta y el enlace se quedaba en 38 px de ancho. El área
+               pulsable llega a 44 sin agrandar la marca. */
+            className="mr-auto flex min-h-[44px] min-w-[44px] items-center gap-2.5"
             aria-label="Nexo4Pymes, inicio"
             onClick={() => setMenuAbierto(false)}
           >
             <span className="flex h-[38px] w-[38px] items-center justify-center overflow-hidden rounded-[11px] bg-gradient-to-br from-azul to-violeta shadow-[0_6px_22px_rgba(76,125,255,.4),inset_0_1px_0_rgba(255,255,255,.35)]">
               <Image src="/assets/logo.png" alt="" width={164} height={160} priority className="h-full w-full object-cover" />
             </span>
-            <span className="font-titular text-[17px] font-bold tracking-tight text-white">
+            {/* Bajo 380 px el logotipo cede su sitio al CTA: en un móvil
+                pequeño importa más poder pulsar que leer la marca dos veces
+                (ya está en el pie y en el título de la pestaña). */}
+            <span className="hidden font-titular text-[17px] font-bold tracking-tight text-white min-[380px]:inline">
               Nexo<span className="texto-degradado">4</span>Pymes
             </span>
           </Link>
@@ -104,24 +110,26 @@ export function Cabecera({
           </nav>
 
           <div className="flex items-center gap-2">
-            <span className="hidden sm:block">
-              <Boton
-                href={cta.href}
-                externo={cta.externo}
-                variante="principal"
-                magnetico
-                className="whitespace-nowrap px-5 py-2.5 text-[13.5px] font-titular font-semibold"
-              >
-                {cta.texto}
-              </Boton>
-            </span>
+            {/* Antes iba envuelto en `hidden sm:block`: por debajo de 640 px
+                no había NINGÚN CTA en la cabecera y la única acción a mano
+                era abrir el menú. Ahora está siempre, en tamaño compacto. */}
+            <Boton
+              href={cta.href}
+              externo={cta.externo}
+              variante="principal"
+              tamano="sm"
+              magnetico
+              className="whitespace-nowrap font-titular font-semibold"
+            >
+              {cta.texto}
+            </Boton>
 
             <button
               type="button"
               onClick={() => setMenuAbierto(true)}
               aria-label="Abrir menú"
               aria-expanded={menuAbierto}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/12 bg-white/4 text-white lg:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/12 bg-white/4 text-white lg:hidden"
             >
               <Menu size={19} />
             </button>
@@ -149,7 +157,7 @@ export function Cabecera({
                 type="button"
                 onClick={() => setMenuAbierto(false)}
                 aria-label="Cerrar menú"
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/12 bg-white/4 text-white"
+                className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/12 bg-white/4 text-white"
               >
                 <X size={19} />
               </button>

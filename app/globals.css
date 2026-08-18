@@ -225,17 +225,6 @@
   }
 }
 
-@keyframes marquesina {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    /* -50%: el contenido está duplicado dentro del contenedor, así el
-       bucle no se nota al reiniciar. */
-    transform: translateX(-50%);
-  }
-}
-
 /* Manchas de color de fondo, fijas detrás de toda la página. */
 @keyframes deriva-a {
   0% {
@@ -281,9 +270,6 @@
 }
 .anim-indicador {
   animation: bajar-indicador 1.9s ease-in-out infinite;
-}
-.anim-marquesina {
-  animation: marquesina 38s linear infinite;
 }
 
 /* ============================================================

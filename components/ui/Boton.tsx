@@ -36,7 +36,17 @@ const variantes: Record<Variante, string> = {
   claro: "bg-white text-bottle-900 hover:-translate-y-0.5 hover:bg-white/90",
 };
 
+/* OJO: el tamaño NO se puede sobrescribir desde `className`. Tailwind
+   ordena las utilidades por su nombre en la hoja generada, no por el
+   orden en que se escriben en el atributo class, así que `px-6` de aquí
+   gana siempre a un `px-5` pasado por fuera. La cabecera llevaba
+   `px-5 py-2.5 text-[13.5px]` en className y no se aplicaba ninguna de
+   las tres: el botón medía 24 px de padding y 15 px de texto. Si hace
+   falta otro tamaño, se añade aquí. */
 const tamanos = {
+  /* py-3 y no py-2.5: con 13 px de texto son los 44 px de alto que
+     piden la WCAG 2.5.8 y las guías de iOS. Con py-2.5 se quedaba en 41. */
+  sm: "px-4 py-3 text-[13px]",
   md: "px-6 py-3 text-[15px]",
   lg: "px-7 py-4 text-[16px] sm:text-[17px]",
 };

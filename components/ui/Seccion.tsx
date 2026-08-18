@@ -38,7 +38,7 @@ export function Seccion({
   return (
     <section
       id={id}
-      className={`relative scroll-mt-20 overflow-hidden px-5 py-20 sm:px-8 sm:py-28 ${tonos[tono]} ${className}`}
+      className={`relative scroll-mt-20 overflow-hidden px-5 py-14 sm:px-8 sm:py-28 ${tonos[tono]} ${className}`}
     >
       <div className={`relative mx-auto ${anchos[ancho]}`}>{children}</div>
     </section>

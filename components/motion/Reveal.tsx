@@ -40,6 +40,7 @@ export function Reveal({
   retraso = 0,
   duracion = 0.62,
   className,
+  id,
   as = "div",
 }: {
   children: ReactNode;
@@ -47,6 +48,8 @@ export function Reveal({
   retraso?: number;
   duracion?: number;
   className?: string;
+  /* Para que quien envuelve pueda apuntar aquí con aria-controls. */
+  id?: string;
   as?: "div" | "section" | "article" | "li" | "span";
 }) {
   const reducido = usarMovimientoReducido();
@@ -55,6 +58,7 @@ export function Reveal({
 
   return (
     <Componente
+      id={id}
       className={className}
       initial={reducido ? { opacity: 0 } : { opacity: 0, ...d }}
       whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}

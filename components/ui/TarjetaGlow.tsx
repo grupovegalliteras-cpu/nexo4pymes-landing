@@ -38,7 +38,7 @@ export function TarjetaGlow({
       onMouseEnter={() => setActivo(true)}
       onMouseLeave={() => setActivo(false)}
       className={`group relative overflow-hidden rounded-[24px] border border-white/9 bg-gradient-to-br
-                  from-white/[.065] to-white/[.015] p-7 shadow-[0_24px_60px_-24px_rgba(0,0,0,.55)]
+                  from-white/[.065] to-white/[.015] p-5 sm:p-7 shadow-[0_24px_60px_-24px_rgba(0,0,0,.55)]
                   backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-400
                   ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1.5 hover:border-white/22 ${className}`}
     >

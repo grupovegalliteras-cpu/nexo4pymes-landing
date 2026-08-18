@@ -5,7 +5,9 @@ import { marca } from "@/content/marca";
 
 export function CierreVet() {
   return (
-    <section className="relative overflow-hidden px-5 py-20 text-white sm:px-8 sm:py-28">
+    /* id="cierre": CtaMovil lo usa para esconder la barra flotante en
+       cuanto este bloque asoma y no repetir el mismo botón dos veces. */
+    <section id="cierre" className="relative overflow-hidden px-5 py-14 text-white sm:px-8 sm:py-28">
       <div className="malla malla-fade absolute inset-0 opacity-50" aria-hidden="true" />
       <div
         aria-hidden="true"

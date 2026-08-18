@@ -59,7 +59,7 @@ export default function PaginaBlog() {
         </Reveal>
 
         <Reveal retraso={0.16}>
-          <div className="rounded-[22px] border border-mint/20 bg-mint/[.05] p-6 sm:p-7">
+          <div className="rounded-tarjeta border border-mint/20 bg-mint/[.05] p-6 sm:p-7">
             <span className="inline-flex rounded-full border border-mint/25 bg-bottle-900/40 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-mint">
               En preparación
             </span>

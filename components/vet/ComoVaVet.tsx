@@ -49,9 +49,10 @@ export function ComoVaVet() {
       <div className="malla malla-fade absolute inset-0 opacity-50" aria-hidden="true" />
 
       <div className="relative max-w-[62ch]">
-        <span className="block font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-transparent [background:linear-gradient(90deg,#4CE0B3,#4C7DFF)] [background-clip:text] [-webkit-background-clip:text]">
-          {comoVaVet.categoria}
-        </span>
+        {/* Era un antetítulo con degradado propio. Ahora usa el mismo
+            Antetitulo que las demás secciones: la menta y el filete
+            bastan, y el degradado se reserva para la acción. */}
+        <Antetitulo tono="oscuro">{comoVaVet.categoria}</Antetitulo>
         <TituloSeccion className="text-[#F4F6FF]">{comoVaVet.titular}</TituloSeccion>
         <Reveal retraso={0.06}>
           <p className="mt-5 text-[17px] leading-relaxed text-white/60">{comoVaVet.subtitulo}</p>
@@ -67,7 +68,7 @@ export function ComoVaVet() {
           />
           <div
             ref={refTelefono}
-            className="relative rounded-[30px] border border-white/13 bg-gradient-to-br from-[rgba(18,22,34,.92)] to-[rgba(8,10,18,.92)] p-3 pb-4 shadow-[0_44px_100px_rgba(0,0,0,.65),inset_0_1px_0_rgba(255,255,255,.16)] backdrop-blur-xl"
+            className="relative rounded-panel border border-white/13 bg-gradient-to-br from-[rgba(18,22,34,.92)] to-[rgba(8,10,18,.92)] p-3 pb-4 shadow-[0_44px_100px_rgba(0,0,0,.65),inset_0_1px_0_rgba(255,255,255,.16)] backdrop-blur-xl"
           >
             <div className="flex items-center gap-2.5 border-b border-white/7 px-1.5 pb-3.5 pt-2">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-azul to-violeta shadow-[0_0_18px_rgba(76,125,255,.5)]">
@@ -90,7 +91,7 @@ export function ComoVaVet() {
                       key={i}
                       animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 10 }}
                       transition={{ duration: 0.5 }}
-                      className="self-center max-w-[96%] rounded-[11px] border border-dashed border-mint/40 bg-mint/8 px-3 py-2 text-center font-mono text-[11px] text-[#8FEBD3]"
+                      className="self-center max-w-[96%] rounded-caja border border-dashed border-mint/40 bg-mint/8 px-3 py-2 text-center font-mono text-[11px] text-[#8FEBD3]"
                     >
                       {b.texto}
                     </motion.div>

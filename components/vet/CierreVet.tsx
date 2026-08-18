@@ -15,7 +15,7 @@ export function CierreVet() {
       />
 
       <Reveal>
-        <div className="relative mx-auto max-w-[820px] rounded-[36px] border border-white/9 bg-gradient-to-br from-white/[.06] to-white/[.015] p-10 text-center shadow-[0_50px_130px_rgba(0,0,0,.6),inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-xl sm:p-14">
+        <div className="relative mx-auto max-w-[820px] rounded-panel border border-white/9 bg-gradient-to-br from-white/[.06] to-white/[.015] p-10 text-center shadow-[0_50px_130px_rgba(0,0,0,.6),inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-xl sm:p-14">
           <h2 className="text-[clamp(1.9rem,5vw,2.8rem)] font-semibold tracking-[-0.03em] text-[#F4F6FF]">
             {cierreVet.titular}
           </h2>

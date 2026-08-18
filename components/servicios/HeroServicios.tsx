@@ -41,7 +41,7 @@ export function HeroServicios() {
         <h1 className="mt-6 text-[clamp(2.2rem,6vw,4.4rem)] font-bold leading-[1.06] tracking-[-0.035em] text-[#F4F6FF]">
           <TextoPorPalabras texto={heroServicios.titularA} retraso={0.16} />
           <motion.span
-            className="texto-degradado-sheen block"
+            className="texto-degradado block"
             initial={reducido ? { opacity: 0 } : { opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{

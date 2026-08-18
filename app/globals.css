@@ -39,7 +39,21 @@
   --font-texto: var(--fuente-texto), system-ui, sans-serif;
   --font-mono: var(--fuente-mono), ui-monospace, monospace;
 
-  --radius-marca: 14px;
+  /* RADIOS — tres valores, no trece.
+     El sitio llegó a tener rounded-[7|10|11|16|18|20|22|24|26|28|30|34|36px]
+     repartidos a ojo. Trece radios distintos no son un sistema, son
+     deriva, y se nota aunque nadie sepa decir por qué. Ahora:
+       caja    → miniaturas, cuadros de icono, chips
+       tarjeta → tarjetas de contenido
+       panel   → contenedores grandes y bloques de cierre
+     Las píldoras y los botones siguen con rounded-full. */
+  --radius-caja: 12px;
+  --radius-tarjeta: 16px;
+  --radius-panel: 24px;
+
+  /* Suelo tipográfico móvil: ninguna microcopia baja de aquí.
+     Lo aplica el bloque del final del archivo. */
+  --text-micro: 12px;
 
   /* Curva de salida usada por todas las animaciones del sitio. */
   --ease-marca: cubic-bezier(0.22, 1, 0.36, 1);
@@ -135,22 +149,11 @@
     color: transparent;
   }
 
-  /* Variante para el titular del hero: barrido animado azul → violeta
-     → menta → azul, en bucle. */
-  .texto-degradado-sheen {
-    background: linear-gradient(
-      100deg,
-      var(--color-azul) 0%,
-      var(--color-violeta) 42%,
-      var(--color-mint) 78%,
-      var(--color-azul) 100%
-    );
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: barrer-degradado 9s linear infinite;
-  }
+  /* Aquí vivía .texto-degradado-sheen: el titular del hero con un
+     barrido de color en bucle de 9 s. Retirado. Un H1 que cambia de
+     color sin parar compite con el botón por la única mirada que hay
+     en la primera pantalla, y en móvil era el elemento que más
+     repintaba. El degradado fijo dice lo mismo y se queda quieto. */
 }
 
 /* ============================================================
@@ -216,14 +219,6 @@
   }
 }
 
-@keyframes barrer-degradado {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 200% 50%;
-  }
-}
 
 /* Manchas de color de fondo, fijas detrás de toda la página. */
 @keyframes deriva-a {
@@ -305,6 +300,30 @@
   [class*="backdrop-blur"]:not(.blur-si) {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+  }
+}
+
+/* ============================================================
+   SUELO TIPOGRÁFICO MÓVIL (fase 6)
+
+   El sitio se escribió con la escala de escritorio y en móvil bajaba
+   hasta 9,5 px: horas del teléfono simulado, chips de coste, versalitas
+   de sección. Texto de escritorio metido en una pantalla de mano.
+
+   Esto pone un suelo de 12 px a TODO lo que declare un tamaño por
+   debajo, en las cuatro páginas del sitio a la vez. Es un puente
+   deliberado: la alternativa era editar 33 usos repartidos por 19
+   archivos y volver a dejar la escala a merced del siguiente que
+   escriba un `text-[10px]` a ojo.
+
+   Verificado que no hay colisiones: en el proyecto no existe ningún
+   text-[1XXpx] ni valores en rem/% que empiecen por 9, 10 u 11.
+   ============================================================ */
+@media (max-width: 480px) {
+  [class*="text-[9"],
+  [class*="text-[10"],
+  [class*="text-[11"] {
+    font-size: var(--text-micro);
   }
 }
 

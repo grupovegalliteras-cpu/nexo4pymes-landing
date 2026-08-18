@@ -32,14 +32,14 @@ export function PruebaVet() {
       {/* ---------- PILOTO (aparece solo cuando haya datos reales) ---------- */}
       {piloto && (
         <Reveal retraso={0.1}>
-          <div className="mt-8 grid gap-5 rounded-[22px] border border-mint/20 bg-mint/[.04] p-5 sm:mt-10 sm:p-7 lg:grid-cols-[1fr_0.8fr] lg:items-center">
+          <div className="mt-8 grid gap-5 rounded-tarjeta border border-mint/20 bg-mint/[.04] p-5 sm:mt-10 sm:p-7 lg:grid-cols-[1fr_0.8fr] lg:items-center">
             <div>
               <h3 className="text-[18px] font-semibold text-[#F4F6FF] sm:text-[21px]">{piloto.titulo}</h3>
               <div className="mt-5 flex flex-wrap gap-3">
                 {piloto.cifras.map((cifra) => (
                   <div
                     key={cifra.texto}
-                    className="min-w-[132px] flex-1 rounded-[16px] border border-white/10 bg-white/[.04] px-4 py-3.5"
+                    className="min-w-[132px] flex-1 rounded-tarjeta border border-white/10 bg-white/[.04] px-4 py-3.5"
                   >
                     <div className="font-titular text-[26px] font-extrabold leading-none tracking-[-0.03em] text-mint">
                       {cifra.valor}
@@ -49,7 +49,7 @@ export function PruebaVet() {
                 ))}
               </div>
             </div>
-            <div className="overflow-hidden rounded-[16px] border border-white/10">
+            <div className="overflow-hidden rounded-tarjeta border border-white/10">
               <Image
                 src={piloto.captura}
                 alt={piloto.capturaAlt}
@@ -67,7 +67,7 @@ export function PruebaVet() {
       <div className="mt-8 grid gap-3 sm:mt-12 sm:grid-cols-3 sm:gap-4">
         {pruebaVet.compromisos.map((c, i) => (
           <Reveal key={c.titulo} retraso={i * 0.08}>
-            <div className="flex h-full gap-3.5 rounded-[18px] border border-white/9 bg-gradient-to-br from-white/[.06] to-white/[.015] p-4 sm:block sm:p-6">
+            <div className="flex h-full gap-3.5 rounded-tarjeta border border-white/9 bg-gradient-to-br from-white/[.06] to-white/[.015] p-4 sm:block sm:p-6">
               <ShieldCheck size={20} className="mt-0.5 shrink-0 text-mint sm:mb-4" aria-hidden="true" />
               <div>
                 <h3 className="text-[16px] font-semibold leading-snug text-[#F4F6FF] sm:text-[17px]">{c.titulo}</h3>

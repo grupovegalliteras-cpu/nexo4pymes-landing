@@ -19,18 +19,22 @@ export const SALIDA = [0.22, 1, 0.36, 1] as const;
 
 type Direccion = "arriba" | "abajo" | "izquierda" | "derecha" | "escala";
 
+/* FASE 6: los desplazamientos se acortan (22 → 12 px) y la duración
+   baja de 0,62 a 0,38 s. En escritorio la entrada larga se lee como
+   elegancia; en móvil, donde el pulgar va rápido y cada sección entra
+   una detrás de otra, se lee como que la página va lenta. */
 function desplazamiento(direccion: Direccion) {
   switch (direccion) {
     case "abajo":
-      return { y: -18, x: 0, scale: 1 };
+      return { y: -12, x: 0, scale: 1 };
     case "izquierda":
-      return { y: 0, x: -28, scale: 1 };
+      return { y: 0, x: -18, scale: 1 };
     case "derecha":
-      return { y: 0, x: 28, scale: 1 };
+      return { y: 0, x: 18, scale: 1 };
     case "escala":
-      return { y: 12, x: 0, scale: 0.96 };
+      return { y: 8, x: 0, scale: 0.97 };
     default:
-      return { y: 22, x: 0, scale: 1 };
+      return { y: 12, x: 0, scale: 1 };
   }
 }
 
@@ -38,7 +42,7 @@ export function Reveal({
   children,
   direccion = "arriba",
   retraso = 0,
-  duracion = 0.62,
+  duracion = 0.38,
   className,
   id,
   as = "div",
@@ -136,7 +140,7 @@ export function ItemStagger({
       y: 0,
       x: 0,
       scale: 1,
-      transition: { duration: reducido ? 0.001 : 0.55, ease: SALIDA },
+      transition: { duration: reducido ? 0.001 : 0.4, ease: SALIDA },
     },
   };
 

@@ -80,7 +80,7 @@ export function Cabecera({
             aria-label="Nexo4Pymes, inicio"
             onClick={() => setMenuAbierto(false)}
           >
-            <span className="flex h-[38px] w-[38px] items-center justify-center overflow-hidden rounded-[11px] bg-gradient-to-br from-azul to-violeta shadow-[0_6px_22px_rgba(76,125,255,.4),inset_0_1px_0_rgba(255,255,255,.35)]">
+            <span className="flex h-[38px] w-[38px] items-center justify-center overflow-hidden rounded-caja bg-gradient-to-br from-azul to-violeta shadow-[0_6px_22px_rgba(76,125,255,.4),inset_0_1px_0_rgba(255,255,255,.35)]">
               <Image src="/assets/logo.png" alt="" width={164} height={160} priority className="h-full w-full object-cover" />
             </span>
             {/* Bajo 380 px el logotipo cede su sitio al CTA: en un móvil

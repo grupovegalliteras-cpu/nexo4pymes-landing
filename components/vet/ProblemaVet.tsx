@@ -50,7 +50,7 @@ export function ProblemaVet() {
           <Reveal key={tarjeta.titulo} retraso={i * 0.08} className={i === 2 ? "sm:col-span-2" : "sm:col-span-3"}>
             <div
               className="group flex h-full items-start gap-3.5 border-b border-white/8 py-4
-                         sm:block sm:rounded-[20px] sm:border sm:border-white/9 sm:bg-gradient-to-br
+                         sm:block sm:rounded-tarjeta sm:border sm:border-white/9 sm:bg-gradient-to-br
                          sm:from-white/[.065] sm:to-white/[.015] sm:p-7 sm:shadow-[0_24px_60px_-24px_rgba(0,0,0,.55)]
                          sm:backdrop-blur-xl sm:transition-colors sm:duration-300 sm:hover:border-white/22"
             >

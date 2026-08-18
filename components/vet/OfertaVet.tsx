@@ -33,7 +33,7 @@ export function OfertaVet() {
       <div className="relative mt-12 grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
         {/* ---------- TARJETA DE PRECIO ---------- */}
         <Reveal direccion="escala">
-          <div className="relative rounded-[26px] border border-azul/35 bg-gradient-to-br from-white/[.06] to-white/[.015] p-6 shadow-[0_28px_70px_rgba(0,0,0,.45)] backdrop-blur-xl sm:p-8">
+          <div className="relative rounded-panel border border-azul/35 bg-gradient-to-br from-white/[.06] to-white/[.015] p-6 shadow-[0_28px_70px_rgba(0,0,0,.45)] backdrop-blur-xl sm:p-8">
             {oferta.ofertaActiva && (
               <span className="inline-flex items-center gap-2 rounded-full border border-azul/35 bg-azul/12 px-3.5 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.14em] text-[#9FB6FF]">
                 <span className="h-1.5 w-1.5 rounded-full bg-azul anim-respirar" />

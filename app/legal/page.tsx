@@ -29,7 +29,7 @@ const secciones = [
 
 function Pendiente({ children }: { children: React.ReactNode }) {
   return (
-    <span className="rounded-[7px] border border-aviso/28 bg-aviso/12 px-1.5 py-0.5 font-mono text-[12.5px] text-aviso">
+    <span className="rounded-caja border border-aviso/28 bg-aviso/12 px-1.5 py-0.5 font-mono text-[12.5px] text-aviso">
       {children}
     </span>
   );
@@ -37,7 +37,7 @@ function Pendiente({ children }: { children: React.ReactNode }) {
 
 function Tarjeta({ children }: { children: React.ReactNode }) {
   return (
-    <ul className="mt-4 space-y-2 rounded-[22px] border border-white/10 bg-gradient-to-br from-white/[.06] to-white/[.014] p-5 text-[15px] leading-relaxed text-white/72 shadow-[0_24px_60px_rgba(0,0,0,.4),inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-xl">
+    <ul className="mt-4 space-y-2 rounded-tarjeta border border-white/10 bg-gradient-to-br from-white/[.06] to-white/[.014] p-5 text-[15px] leading-relaxed text-white/72 shadow-[0_24px_60px_rgba(0,0,0,.4),inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-xl">
       {children}
     </ul>
   );
@@ -51,7 +51,7 @@ export default function PaginaLegal() {
       <header className="relative z-10 sticky top-0 border-b border-white/7 bg-bottle/72 backdrop-blur-2xl backdrop-saturate-150">
         <div className="mx-auto flex max-w-[900px] items-center justify-between gap-4 px-5 py-3.5 sm:px-8">
           <Link href="/" className="flex items-center gap-2.5" aria-label="Nexo4Pymes, inicio">
-            <span className="flex h-9 w-9 items-center justify-center rounded-[11px] bg-gradient-to-br from-azul to-violeta shadow-[0_6px_22px_rgba(76,125,255,.4),inset_0_1px_0_rgba(255,255,255,.35)]">
+            <span className="flex h-9 w-9 items-center justify-center rounded-caja bg-gradient-to-br from-azul to-violeta shadow-[0_6px_22px_rgba(76,125,255,.4),inset_0_1px_0_rgba(255,255,255,.35)]">
               <span className="font-titular text-[15px] font-bold text-white">4</span>
             </span>
             <span className="font-titular text-[16px] font-semibold text-white">
@@ -317,7 +317,7 @@ export default function PaginaLegal() {
                 <h3 className="mt-8 text-[18px] text-[#F4F6FF]">
                   2. Cookies que utiliza este sitio
                 </h3>
-                <p className="mt-4 rounded-[22px] border border-mint/22 bg-gradient-to-br from-mint/[.09] to-mint/[.02] p-5 text-[15.5px] leading-relaxed text-white/78 shadow-[0_24px_60px_rgba(0,0,0,.4),inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-xl">
+                <p className="mt-4 rounded-tarjeta border border-mint/22 bg-gradient-to-br from-mint/[.09] to-mint/[.02] p-5 text-[15.5px] leading-relaxed text-white/78 shadow-[0_24px_60px_rgba(0,0,0,.4),inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-xl">
                   Actualmente este sitio{" "}
                   <strong className="font-medium text-mint">
                     no instala cookies propias ni de terceros

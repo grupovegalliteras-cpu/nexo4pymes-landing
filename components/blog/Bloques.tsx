@@ -14,7 +14,7 @@ export function Destacado({
 }) {
   return (
     <Reveal direccion="escala">
-      <div className="mt-10 overflow-hidden rounded-[22px] border border-coral/25 bg-gradient-to-br from-white/[.06] to-white/[.015] backdrop-blur-xl">
+      <div className="mt-10 overflow-hidden rounded-tarjeta border border-coral/25 bg-gradient-to-br from-white/[.06] to-white/[.015] backdrop-blur-xl">
         <div className="border-l-[3px] border-coral p-6 sm:p-7">
           {titulo && (
             <div className="flex items-center gap-2.5">
@@ -77,7 +77,7 @@ export function CtaPost({
 }) {
   return (
     <Reveal direccion="escala">
-      <div className="relative mt-14 overflow-hidden rounded-[26px] border border-white/9 bg-gradient-to-br from-white/[.06] to-white/[.015] p-7 text-white shadow-[0_28px_70px_rgba(0,0,0,.42)] backdrop-blur-xl sm:p-9">
+      <div className="relative mt-14 overflow-hidden rounded-panel border border-white/9 bg-gradient-to-br from-white/[.06] to-white/[.015] p-7 text-white shadow-[0_28px_70px_rgba(0,0,0,.42)] backdrop-blur-xl sm:p-9">
         <div className="malla malla-fade absolute inset-0 opacity-60" aria-hidden="true" />
         <h2 className="relative mt-0 text-[24px] text-[#F4F6FF] sm:text-[28px]">{titulo}</h2>
         <div className="relative text-white/65 [&>p]:mt-4 [&>p]:text-[15.5px] [&>p]:leading-relaxed [&_strong]:text-[#F4F6FF]">

@@ -59,7 +59,7 @@ export function HeroVet() {
           <h1 className="mt-5 max-w-[15ch] text-[clamp(1.8rem,7vw,5.5rem)] font-bold leading-[1.06] tracking-[-0.03em] text-[#F4F6FF] sm:mt-6 sm:leading-[1.03] sm:tracking-[-0.035em]">
             <TextoPorPalabras texto={heroVet.titularA} retraso={0.16} />
             <motion.span
-              className="texto-degradado-sheen block"
+              className="texto-degradado block"
               initial={reducido ? { opacity: 0 } : { opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -116,10 +116,10 @@ export function HeroVet() {
           />
           <div
             ref={tilt.ref}
-            className="relative flex items-center gap-3.5 rounded-2xl border border-white/13 bg-gradient-to-br from-white/[.09] to-white/[.02] p-3 backdrop-blur-xl transition-transform duration-300 ease-[cubic-bezier(.2,.8,.2,1)] lg:block lg:rounded-[28px] lg:p-3.5 lg:shadow-[0_40px_90px_rgba(0,0,0,.6),0_0_0_1px_rgba(76,125,255,.14),inset_0_1px_0_rgba(255,255,255,.22)]"
+            className="relative flex items-center gap-3.5 rounded-2xl border border-white/13 bg-gradient-to-br from-white/[.09] to-white/[.02] p-3 backdrop-blur-xl transition-transform duration-300 ease-[cubic-bezier(.2,.8,.2,1)] lg:block lg:rounded-panel lg:p-3.5 lg:shadow-[0_40px_90px_rgba(0,0,0,.6),0_0_0_1px_rgba(76,125,255,.14),inset_0_1px_0_rgba(255,255,255,.22)]"
             style={{ transformStyle: "preserve-3d" }}
           >
-            <div className="w-[58px] shrink-0 overflow-hidden rounded-[10px] border border-white/8 lg:w-full lg:rounded-[18px]">
+            <div className="w-[58px] shrink-0 overflow-hidden rounded-caja border border-white/8 lg:w-full lg:rounded-tarjeta">
               <Image
                 src="/assets/inbox-real.jpg"
                 alt={heroVet.imagenAlt}

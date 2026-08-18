@@ -53,7 +53,7 @@ export function MetodoVet() {
 
       {/* ---------- POR QUÉ EL PASO 01 ES EL DIAGNÓSTICO ---------- */}
       <Reveal retraso={0.2}>
-        <div className="mt-8 rounded-[24px] border border-white/9 bg-gradient-to-br from-white/[.055] to-white/[.012] p-5 sm:mt-10 sm:p-8">
+        <div className="mt-8 rounded-panel border border-white/9 bg-gradient-to-br from-white/[.055] to-white/[.012] p-5 sm:mt-10 sm:p-8">
           <h3 className="max-w-[26ch] text-[19px] font-semibold leading-snug tracking-[-0.02em] text-[#F4F6FF] sm:text-[26px]">
             {metodoVet.porQue.titular}
           </h3>
@@ -62,7 +62,7 @@ export function MetodoVet() {
             {metodoVet.porQue.estados.map((estado) => (
               <div
                 key={estado.etiqueta}
-                className={`rounded-[16px] border p-4 ${
+                className={`rounded-tarjeta border p-4 ${
                   estado.bien ? "border-mint/25 bg-mint/[.05]" : "border-coral/25 bg-coral/[.05]"
                 }`}
               >

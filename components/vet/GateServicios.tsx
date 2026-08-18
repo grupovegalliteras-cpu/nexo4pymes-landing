@@ -7,7 +7,7 @@ export function GateServicios() {
   return (
     <Seccion tono="oscuro" ancho="ancho">
       <Reveal>
-        <div className="flex flex-col gap-8 rounded-[34px] border border-white/9 bg-gradient-to-br from-white/[.055] to-white/[.012] p-8 shadow-[0_28px_70px_rgba(0,0,0,.42)] backdrop-blur-xl sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-8 rounded-panel border border-white/9 bg-gradient-to-br from-white/[.055] to-white/[.012] p-8 shadow-[0_28px_70px_rgba(0,0,0,.42)] backdrop-blur-xl sm:p-10 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-[54ch]">
             <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-[#9FB6FF]">
               {gateServicios.categoria}

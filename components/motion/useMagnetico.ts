@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
+import { usarMovimientoReducido, usarPunteroFino } from "@/components/motion/usarMovimiento";
 
 /* ============================================================
    BOTÓN MAGNÉTICO
@@ -13,16 +13,19 @@ import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 export function useMagnetico<T extends HTMLElement>(fuerzaX = 0.22, fuerzaY = 0.3) {
   const ref = useRef<T>(null);
   const reducido = usarMovimientoReducido();
+  const fino = usarPunteroFino();
 
   const alMover = useCallback(
     (e: React.MouseEvent<T>) => {
-      if (reducido || !ref.current) return;
+      // En táctil el navegador emula mousemove al pulsar y el botón se
+      // quedaba desplazado después del toque. Sin ratón, no se mueve.
+      if (!fino || reducido || !ref.current) return;
       const r = ref.current.getBoundingClientRect();
       const x = (e.clientX - (r.left + r.width / 2)) * fuerzaX;
       const y = (e.clientY - (r.top + r.height / 2)) * fuerzaY;
       ref.current.style.transform = `translate(${x}px, ${y}px) scale(1.03)`;
     },
-    [reducido, fuerzaX, fuerzaY],
+    [fino, reducido, fuerzaX, fuerzaY],
   );
 
   const alSalir = useCallback(() => {

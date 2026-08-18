@@ -63,7 +63,9 @@ export function Cabecera({
       <header className="fixed inset-x-0 top-0 z-50">
         <div
           aria-hidden="true"
-          className={`absolute inset-0 border-b backdrop-blur-2xl backdrop-saturate-150 transition-colors duration-400 ${
+          /* blur-si: aquí el desenfoque sí trabaja, porque el contenido de
+             la página pasa literalmente por debajo. Ver globals.css. */
+          className={`blur-si absolute inset-0 border-b backdrop-blur-2xl backdrop-saturate-150 transition-colors duration-400 ${
             bajado ? "border-white/10 bg-bottle/78" : "border-white/4 bg-bottle/45"
           }`}
         />

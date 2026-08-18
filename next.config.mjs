@@ -5,6 +5,14 @@ const nextConfig = {
   // .mdx cuenta como página: así un artículo nuevo del blog es un solo
   // archivo en app/blog/<slug>/page.mdx, sin tocar nada más.
   pageExtensions: ["ts", "tsx", "mdx"],
+  images: {
+    // Por defecto Next solo genera WebP. AVIF pesa entre un 20 y un 30 %
+    // menos con la misma calidad y lo entienden Chrome, Firefox y Safari
+    // desde 2023; el navegador que no pueda con él recibe el WebP, que
+    // sigue en la lista. Importa sobre todo en la captura del hero, que
+    // es el LCP de la página.
+    formats: ["image/avif", "image/webp"],
+  },
   async headers() {
     return [
       {

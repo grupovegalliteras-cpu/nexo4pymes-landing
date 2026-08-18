@@ -26,3 +26,33 @@ export function usarMovimientoReducido(): boolean {
 
   return montado ? preferencia === true : false;
 }
+
+/* ============================================================
+   ¿HAY UN RATÓN DE VERDAD?
+   Tres efectos del sitio solo tienen sentido con puntero fino: la
+   inclinación 3D de la tarjeta del hero, el botón magnético y el
+   resplandor que sigue al cursor en las tarjetas.
+
+   En un móvil no es solo que no se vean: los navegadores táctiles
+   emulan mouseenter/mouseleave al tocar, así que el resplandor
+   dispara un render de React y pinta un degradado radial de 380 px
+   con cada toque, y el botón magnético puede quedarse desplazado
+   después de pulsarlo.
+
+   Devuelve true en el primer render, igual que asume el servidor, y
+   pasa al valor real en el primer efecto: así el HTML del cliente
+   coincide con el del servidor y no hay error de hidratación.
+   ============================================================ */
+export function usarPunteroFino(): boolean {
+  const [fino, setFino] = useState(true);
+
+  useEffect(() => {
+    const consulta = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const actualizar = () => setFino(consulta.matches);
+    actualizar();
+    consulta.addEventListener("change", actualizar);
+    return () => consulta.removeEventListener("change", actualizar);
+  }, []);
+
+  return fino;
+}

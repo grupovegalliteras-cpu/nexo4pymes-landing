@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
+import { usarMovimientoReducido, usarPunteroFino } from "@/components/motion/usarMovimiento";
 
 /* ============================================================
    INCLINACIÓN 3D
@@ -12,10 +12,13 @@ import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 export function useTilt<T extends HTMLElement>(grados = 9) {
   const ref = useRef<T>(null);
   const reducido = usarMovimientoReducido();
+  const fino = usarPunteroFino();
 
   const alMover = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
-      if (reducido || !ref.current) return;
+      // Sin ratón de verdad no se inclina nada: en táctil el navegador
+      // emula eventos de ratón al tocar y la tarjeta se quedaba torcida.
+      if (!fino || reducido || !ref.current) return;
       const r = e.currentTarget.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width - 0.5;
       const py = (e.clientY - r.top) / r.height - 0.5;
@@ -23,7 +26,7 @@ export function useTilt<T extends HTMLElement>(grados = 9) {
         -py * grados * 2
       }deg) translateZ(0)`;
     },
-    [reducido, grados],
+    [fino, reducido, grados],
   );
 
   const alSalir = useCallback(() => {

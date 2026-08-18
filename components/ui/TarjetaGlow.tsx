@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type ReactNode } from "react";
+import { usarPunteroFino } from "@/components/motion/usarMovimiento";
 
 /* ============================================================
    TARJETA CON BRILLO (equivalente a `data-glow` de la maqueta)
@@ -23,6 +24,11 @@ export function TarjetaGlow({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [activo, setActivo] = useState(false);
+  /* Sin ratón no se engancha nada. En táctil el navegador emula
+     mouseenter al tocar la tarjeta: eso disparaba un render de React y
+     pintaba un degradado radial de 380 px con cada toque, en el
+     dispositivo más lento y justo mientras el dedo hace scroll. */
+  const fino = usarPunteroFino();
 
   function mover(e: React.MouseEvent<HTMLDivElement>) {
     const caja = ref.current?.getBoundingClientRect();
@@ -34,9 +40,9 @@ export function TarjetaGlow({
   return (
     <div
       ref={ref}
-      onMouseMove={mover}
-      onMouseEnter={() => setActivo(true)}
-      onMouseLeave={() => setActivo(false)}
+      onMouseMove={fino ? mover : undefined}
+      onMouseEnter={fino ? () => setActivo(true) : undefined}
+      onMouseLeave={fino ? () => setActivo(false) : undefined}
       className={`group relative overflow-hidden rounded-[24px] border border-white/9 bg-gradient-to-br
                   from-white/[.065] to-white/[.015] p-5 sm:p-7 shadow-[0_24px_60px_-24px_rgba(0,0,0,.55)]
                   backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-400

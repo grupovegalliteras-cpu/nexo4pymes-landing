@@ -74,7 +74,7 @@ export function CtaMovil({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: reducido ? 0 : 24 }}
           transition={{ duration: reducido ? 0.001 : 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-bottle-900/92 px-4 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-3 backdrop-blur-lg sm:hidden"
+          className="blur-si fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-bottle-900/92 px-4 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-3 backdrop-blur-lg sm:hidden"
         >
           <a
             href={href}

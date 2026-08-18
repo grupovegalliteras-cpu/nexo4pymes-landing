@@ -273,6 +273,42 @@
 }
 
 /* ============================================================
+   RENDIMIENTO EN MÓVIL Y EN TÁCTIL (fase 5)
+
+   Estas reglas van FUERA de cualquier @layer a propósito: el CSS sin
+   capa gana siempre a las utilidades de Tailwind, que viven en
+   @layer utilities. Así no hace falta !important ni tocar los 27
+   sitios donde se usa el desenfoque.
+
+   El criterio combina ancho y tipo de puntero: una tablet con dedo a
+   900 px también es un dispositivo donde esto importa.
+   ============================================================ */
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+  /* Las tres manchas de color del fondo derivan en bucle infinito
+     (26 s, 34 s y 40 s) detrás de TODA la página. Cada una es un
+     radial-gradient de 60-70 vw con blur: moverlas obliga a repintar
+     una capa enorme sin parar, también mientras se hace scroll.
+     Congeladas se ven exactamente igual — el degradado sigue ahí. */
+  .anim-deriva-a,
+  .anim-deriva-b,
+  .anim-deriva-a-inversa {
+    animation: none;
+  }
+
+  /* Cada backdrop-filter obliga al navegador a leer lo que hay detrás
+     del elemento y desenfocarlo en cada frame. Detrás de estas
+     tarjetas solo hay un fondo casi negro con manchas ya difuminadas,
+     así que el efecto no se aprecia y el coste es real.
+
+     Se conserva donde de verdad hay contenido pasando por debajo:
+     cabecera y barra flotante, marcadas con .blur-si. */
+  [class*="backdrop-blur"]:not(.blur-si) {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* ============================================================
    PREFERS-REDUCED-MOTION
    Un único sitio corta todo el movimiento CSS. Las animaciones
    de JS se cortan en components/motion/usarMovimiento.ts.

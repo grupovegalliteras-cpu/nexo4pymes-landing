@@ -3,15 +3,14 @@ import { Reveal } from "@/components/motion/Reveal";
 import { TarjetaGlow } from "@/components/ui/TarjetaGlow";
 import { comoEmpezar } from "@/content/servicios";
 
-/* Antes era PreciosServicios y enseñaba las cifras. Los importes se
-   retiraron; el modelo de tres pasos se conserva porque es el que
-   explica por qué el diagnóstico se cobra. Ver el comentario largo
-   en content/servicios.ts.
+/* Antes era PreciosServicios y enseñaba cifras. Esta sección ya no
+   habla de dinero en absoluto — ver el comentario largo en
+   content/servicios.ts, que explica qué no volver a meter aquí.
 
-   Las tres tarjetas ya no muestran un número sino una palabra
-   ("Gratis", "Se paga", "Fase a fase"), así que el tamaño de letra
-   baja de 38-42 px a 26: un texto corto en el cuerpo de un número
-   quedaba desproporcionado y parecía un precio tachado. */
+   Las tres tarjetas muestran una etiqueta corta en vez de un número
+   ("15 minutos", "Por escrito", "Fase a fase"), así que el tamaño de
+   letra baja de 38-42 px a 26: un texto largo en el cuerpo de un
+   número quedaba desproporcionado. */
 
 const pasos = [comoEmpezar.paso1, comoEmpezar.paso2, comoEmpezar.paso3] as const;
 

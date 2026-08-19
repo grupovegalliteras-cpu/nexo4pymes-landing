@@ -1,5 +1,5 @@
 /* Copy de /servicios — el detalle largo de qué automatizamos, cómo
-   trabajamos y qué cuesta.
+   trabajamos y cómo se empieza.
 
    REPARTO DE CONTENIDO tras el giro de posicionamiento:
    · la lista de sectores se fue a la home (content/inicio.ts), donde
@@ -8,17 +8,18 @@
      fueron a /nosotros (content/nosotros.ts), que el brief pedía como
      página propia;
    · aquí se queda lo que de verdad es "servicios": el catálogo, el
-     método, por qué el diagnóstico va primero y los precios.
+     método, por qué el diagnóstico va primero y cómo se empieza.
 
-   Las cifras que ya viven en content/marca.ts (precio del diagnóstico,
-   precio anterior, duración) no se repiten aquí a mano: los
+   Las cifras de content/marca.ts (precio, duración) ya NO se usan en
+   esta página: se retiraron todos los importes. Solo las usa la
+   landing veterinaria. Los
    componentes que las necesitan las leen directamente de `oferta`. */
 
 export const navServicios = [
   { href: "#servicios", texto: "Servicios" },
   { href: "#metodo", texto: "Método" },
   { href: "#caso", texto: "Por qué diagnóstico" },
-  { href: "#precios", texto: "Precios" },
+  { href: "#como-empezar", texto: "Cómo se empieza" },
   { href: "#faq", texto: "Preguntas" },
 ];
 
@@ -27,13 +28,13 @@ export const heroServicios = {
   titularA: "No vendemos automatizaciones.",
   titularB: "Primero os decimos si de verdad las necesitáis.",
   parrafo:
-    "Somos Nexo4Pymes, un equipo pequeño de Mallorca. Automatizamos procesos con IA para pymes y autónomos de cualquier sector. Aquí está el detalle completo: qué hacemos exactamente, cómo trabajamos y cuánto cuesta.",
+    "Somos Nexo4Pymes, un equipo pequeño de Mallorca. Automatizamos procesos con IA para pymes y autónomos de cualquier sector. Aquí está el detalle completo: qué hacemos exactamente, cómo trabajamos y cómo se empieza.",
   cta: "Agendar llamada gratis de 15 min",
   indice: [
     { href: "#servicios", texto: "Qué automatizamos" },
     { href: "#metodo", texto: "Cómo trabajamos" },
     { href: "#caso", texto: "Por qué diagnóstico primero" },
-    { href: "#precios", texto: "Precios" },
+    { href: "#como-empezar", texto: "Cómo se empieza" },
     { href: "#faq", texto: "Preguntas" },
   ],
 };
@@ -134,17 +135,17 @@ export const metodoServicios = {
   pasos: [
     {
       num: "1",
-      meta: "15 minutos · gratis",
+      meta: "15 minutos · videollamada",
       titulo: "Llamada inicial",
       texto:
-        "Nos contáis cómo funciona el negocio hoy y qué es lo que más os quema. Nosotros os decimos, con honestidad, si esto encaja con vosotros o no. Si no encaja, se acaba aquí y no habéis pagado nada.",
+        "Nos contáis cómo funciona el negocio hoy y qué es lo que más os quema. Nosotros os decimos, con honestidad, si esto encaja con vosotros o no. Si no encaja, se acaba aquí y tan amigos.",
     },
     {
       num: "2",
       meta: "Diagnóstico",
       titulo: "Diagnóstico",
       texto:
-        "Auditamos de verdad cómo trabajáis: cómo entra un cliente, cómo se agenda, cómo se cobra, cómo os encuentran online y cómo lleváis la administración. Es de pago a propósito: un diagnóstico gratis siempre acaba siendo una excusa para vender, y este no lo es.",
+        "Auditamos de verdad cómo trabajáis: cómo entra un cliente, cómo se agenda, cómo se cobra, cómo os encuentran online y cómo lleváis la administración. Le dedicamos días de trabajo real y termina en un documento que sirve por sí solo, incluso si después no seguís con nosotros.",
     },
     {
       num: "3",
@@ -155,10 +156,10 @@ export const metodoServicios = {
     },
     {
       num: "4",
-      meta: "Fase a fase · precio cerrado antes de empezar",
+      meta: "Fase a fase · aprobado antes de empezar",
       titulo: "Implementación",
       texto:
-        "Se construye lo que hayáis decidido, empezando por lo que más impacto tiene con menos esfuerzo. Cada fase se presupuesta y se aprueba antes de tocar nada. Nunca todo de golpe.",
+        "Se construye lo que hayáis decidido, empezando por lo que más impacto tiene con menos esfuerzo. Cada fase se acuerda y se aprueba antes de tocar nada. Nunca todo de golpe.",
     },
     {
       num: "5",
@@ -190,45 +191,45 @@ export const casoDiagnostico = {
 /* ============================================================
    CÓMO SE EMPIEZA
 
-   Aquí vivían los precios (150€ el diagnóstico, 500–3.000€ por
-   fase). Se retiraron a petición: las cifras se dan en la llamada,
-   no en la web.
+   Esta sección NO habla de dinero. Ni cifras, ni "gratis", ni
+   "se paga", ni presupuestos: fue una petición explícita. Las tres
+   tarjetas describen QUÉ es cada paso, no lo que cuesta —
+   duración, formato y ritmo:
 
-   Lo que NO se ha quitado, a propósito, es el modelo de tres
-   pasos. Es el que sostiene el argumento de venta de la empresa:
-   la llamada es gratis pero el diagnóstico se paga, y por eso es
-   un análisis real y no una llamada comercial disfrazada. Sin esa
-   estructura, la web dejaría de explicar por qué cobrar el
-   diagnóstico es una ventaja para el cliente.
+     15 minutos · Por escrito · Fase a fase
 
-   "Gratis" del paso 1 tampoco es un precio: es la condición de la
-   llamada, y es el gancho de conversión de todo el embudo.
+   Si alguien vuelve a meter aquí importes o la palabra "pago",
+   está deshaciendo una decisión deliberada, no arreglando un
+   olvido. Las cifras se dan en la llamada.
 
-   Para volver a poner cifras: se añaden aquí y en el componente
-   ComoEmpezar.tsx. El historial de git tiene la versión anterior.
+   El historial de git tiene la versión con precios, por si algún
+   día se quieren recuperar.
+
+   (La landing veterinaria sí muestra precios: es otra página y se
+   dejó intacta a propósito.)
    ============================================================ */
 export const comoEmpezar = {
   categoria: "Cómo se empieza",
-  titular: "Tres pasos, y el primero no cuesta nada",
+  titular: "Tres pasos, y el primero son quince minutos",
   intro:
-    "Una sola historia, la misma en toda la web: la llamada es gratis, el diagnóstico se paga y la implementación se cierra fase a fase. Las cifras concretas dependen de vuestro caso y las vemos en la llamada.",
+    "Una sola historia, la misma en toda la web: primero hablamos, después analizamos vuestros procesos y os lo entregamos por escrito, y solo entonces se implementa. Siempre fase a fase, y decidiendo vosotros hasta dónde llegar.",
   paso1: {
-    meta: "Paso 1",
-    destacado: "Gratis",
+    meta: "Paso 1 · La llamada",
+    destacado: "15 minutos",
     texto:
-      "Llamada de 15 minutos por videollamada. Sin tarjeta y sin compromiso. Sirve para ver si encajamos — y a veces la conclusión es que no.",
+      "Videollamada corta, sin compromiso y sin presentación comercial. Sirve para ver si encajamos — y a veces la conclusión es que no.",
   },
   paso2: {
     meta: "Paso 2 · El diagnóstico",
-    destacado: "Se paga",
+    destacado: "Por escrito",
     texto:
-      "Análisis completo de vuestros procesos y un roadmap priorizado, entregado por escrito. Nunca hay una versión gratuita: por eso es un análisis real y no una llamada de venta. El precio depende del tamaño del negocio y lo cerramos antes de empezar.",
+      "Análisis completo de vuestros procesos y un roadmap priorizado, entregado en un documento: qué automatizar primero, qué puede esperar y qué no compensa tocar. Un análisis de verdad, no una llamada de venta disfrazada.",
   },
   paso3: {
     meta: "Paso 3 · Opcional",
     destacado: "Fase a fase",
     texto:
-      "Cada automatización del roadmap se presupuesta y se aprueba por separado antes de empezar. Sin cuota mensual obligatoria ni permanencia: decidís cuánto avanzar y cuándo parar.",
+      "Cada automatización del roadmap se aprueba por separado antes de empezar. Decidís cuánto avanzar y cuándo parar, sin ataduras ni permanencia.",
   },
   callout: {
     fuerte: "Y si no seguís:",
@@ -238,16 +239,13 @@ export const comoEmpezar = {
 };
 
 
+
 /* `quienesSomos` y `datosRgpd` vivían aquí, al final de /servicios,
    donde solo llegaba quien ya se había leído el catálogo entero.
    Ahora son la página /nosotros (content/nosotros.ts), que el brief
    pedía por separado, y allí están además ampliados. */
 
 export const faqServicios = [
-  {
-    p: "¿Por qué el diagnóstico es de pago si otros lo hacen gratis?",
-    r: "Porque un diagnóstico gratis no es un diagnóstico, es una llamada de venta con otro nombre. Cobrarlo nos obliga a dedicarle días de trabajo real y a entregaros un documento que sirva por sí solo, incluso si no seguís con nosotros. La llamada previa de 15 minutos, esa sí es gratis.",
-  },
   {
     p: "No sabemos nada de tecnología. ¿Es un problema?",
     r: "Al revés: es el perfil con el que mejor trabajamos. No hay que aprender ningún programa nuevo — seguís usando lo que ya usáis. Lo montamos, lo configuramos y os enseñamos en una sesión las pocas cosas que sí cambian.",
@@ -261,8 +259,8 @@ export const faqServicios = [
     r: "No es la idea ni lo vendemos así. Lo que quita es la parte repetitiva — contestar veinte veces el mismo horario, recordar citas, apuntar en tres sitios — para que esa persona pueda dedicarse a lo que sí requiere un humano.",
   },
   {
-    p: "¿Hay permanencia o cuota mensual?",
-    r: "No hay permanencia. Cada fase de implementación se presupuesta y se aprueba por separado. Si en algún momento queréis parar, paráis, y lo construido se queda funcionando en vuestras cuentas.",
+    p: "¿Hay permanencia o ataduras?",
+    r: "Ninguna. Cada fase de implementación se acuerda y se aprueba por separado, y decidís vosotros si hay una siguiente. Si en algún momento queréis parar, paráis, y lo construido se queda funcionando en vuestras cuentas.",
   },
   {
     p: "Estamos fuera de Mallorca. ¿Trabajáis en remoto?",

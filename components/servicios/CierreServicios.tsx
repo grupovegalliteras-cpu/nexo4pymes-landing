@@ -26,7 +26,7 @@ export function CierreServicios() {
             </Boton>
           </div>
           <p className="mt-4 font-mono text-[12px] text-white/45">
-            Gratis y sin compromiso · Si seguimos, el diagnóstico se presupuesta antes de empezar
+            Sin compromiso y sin presentación comercial · 15 minutos por videollamada
           </p>
           <p className="mt-3 text-[14px] text-white/55">
             {cierreServicios.escribir}

@@ -16,7 +16,7 @@ import { esquemaFaq } from "@/lib/esquema";
 
 /* /servicios — el catálogo largo: qué automatizamos con su alcance
    y sus límites, cómo trabajamos en cinco pasos, por qué el
-   diagnóstico va primero y qué cuesta.
+   diagnóstico va primero y cómo se empieza.
 
    Ha adelgazado con el rediseño y a propósito. Antes esta página era
    "servicios + sectores + quiénes somos + RGPD", o sea la empresa
@@ -26,7 +26,7 @@ import { esquemaFaq } from "@/lib/esquema";
 
 const titulo = "Servicios de automatización con IA para pymes";
 const descripcion =
-  "Qué automatizamos exactamente —atención al cliente, citas, administración, leads, datos—, cómo trabajamos en cinco pasos y qué cuesta cada fase.";
+  "Qué automatizamos exactamente —atención al cliente, citas, administración, leads, datos—, cómo trabajamos en cinco pasos y cómo se empieza.";
 
 export const metadata: Metadata = {
   title: { absolute: `${titulo} | Nexo4Pymes` },
@@ -64,7 +64,7 @@ export default function PaginaServicios() {
       <Cabecera
         enlaces={navServicios}
         cta={{ texto: "Llamada gratis", href: marca.calendly, externo: true }}
-        enlacePill={{ href: "/contacto", texto: "Contacto ↗", textoMovil: "Contacto y presupuesto ↗" }}
+        enlacePill={{ href: "/contacto", texto: "Contacto ↗", textoMovil: "Contacto ↗" }}
       />
 
       <main id="contenido" className="relative z-10">

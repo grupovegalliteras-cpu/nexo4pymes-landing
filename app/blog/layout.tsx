@@ -36,11 +36,18 @@ export default function LayoutBlog({ children }: { children: React.ReactNode }) 
             implementación por fases después.
           </p>
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[13.5px]">
-            <Link href="/" className="text-mint/80 transition-colors hover:text-mint">
-              Clínicas veterinarias
-            </Link>
+            {/* Aquí había un enlace "Clínicas veterinarias" apuntando a la
+                home. La home ya no es veterinaria: esa landing vive en
+                /sectores/veterinarias y se llega desde el selector de
+                sectores. En el pie del blog rinden más estas tres. */}
             <Link href="/servicios" className="text-mint/80 transition-colors hover:text-mint">
               Servicios
+            </Link>
+            <Link href="/nosotros" className="text-mint/80 transition-colors hover:text-mint">
+              Quiénes somos
+            </Link>
+            <Link href="/contacto" className="text-mint/80 transition-colors hover:text-mint">
+              Contacto
             </Link>
             <Link href="/legal#aviso" className="text-white/50 transition-colors hover:text-white">
               Aviso legal

@@ -28,13 +28,12 @@ export function ServiciosGrid() {
               <CajaIcono nombre={tarjeta.icono} tono={tarjeta.tono} />
               <h3 className="mt-5 text-[20px] font-semibold text-[#F4F6FF]">{tarjeta.titulo}</h3>
 
-              {tarjeta.badge && (
-                <span className="mt-2 inline-flex items-center rounded-full border border-mint/28 bg-mint/10 px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.1em] text-mint">
-                  {tarjeta.badge}
-                </span>
-              )}
-
-              {tarjeta.texto && <p className="mt-3 text-[14.5px] leading-relaxed text-white/60">{tarjeta.texto}</p>}
+              {/* Aquí había un `badge` opcional que solo usaba una tarjeta,
+                  la de recordatorios, para marcarla como "clave en
+                  veterinarias". Con el giro de posicionamiento esa
+                  distinción ya no existe: ningún servicio es más de un
+                  sector que de otro. */}
+              <p className="mt-3 text-[14.5px] leading-relaxed text-white/60">{tarjeta.texto}</p>
 
               <ul className="mt-4 space-y-2.5">
                 {tarjeta.items.map((item) => (

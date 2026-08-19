@@ -8,27 +8,28 @@ import { HeroServicios } from "@/components/servicios/HeroServicios";
 import { ServiciosGrid } from "@/components/servicios/ServiciosGrid";
 import { MetodoServicios } from "@/components/servicios/MetodoServicios";
 import { CasoDiagnostico } from "@/components/servicios/CasoDiagnostico";
-import { Sectores } from "@/components/servicios/Sectores";
 import { PreciosServicios } from "@/components/servicios/PreciosServicios";
-import { QuienesSomos } from "@/components/servicios/QuienesSomos";
-import { DatosRgpd } from "@/components/servicios/DatosRgpd";
 import { CierreServicios } from "@/components/servicios/CierreServicios";
 import { faqServicios, navServicios } from "@/content/servicios";
 import { marca, oferta } from "@/content/marca";
 import { esquemaFaq } from "@/lib/esquema";
 
-/* /servicios — la página general de la empresa: qué automatizamos,
-   cómo trabajamos, a quién ayudamos, precios, quiénes somos y datos.
-   La home (/) ya se lleva la keyword de clínicas veterinarias, así
-   que aquí el título persigue la búsqueda genérica de automatización
-   con IA para pymes. */
+/* /servicios — el catálogo largo: qué automatizamos con su alcance
+   y sus límites, cómo trabajamos en cinco pasos, por qué el
+   diagnóstico va primero y qué cuesta.
 
-const titulo = "Servicios, método y quiénes somos — Nexo4Pymes";
+   Ha adelgazado con el rediseño y a propósito. Antes esta página era
+   "servicios + sectores + quiénes somos + RGPD", o sea la empresa
+   entera en una URL: nadie llegaba al final y Google no sabía de qué
+   iba. Ahora los sectores viven en la home (como selector) y
+   quiénes somos + RGPD en /nosotros. Aquí solo queda servicio. */
+
+const titulo = "Servicios de automatización con IA para pymes";
 const descripcion =
-  "Qué automatizamos, cómo trabajamos en cinco pasos, a quién ayudamos, qué cuesta y qué pasa con los datos de vuestros clientes.";
+  "Qué automatizamos exactamente —atención al cliente, citas, administración, leads, datos—, cómo trabajamos en cinco pasos y qué cuesta cada fase.";
 
 export const metadata: Metadata = {
-  title: { absolute: titulo },
+  title: { absolute: `${titulo} | Nexo4Pymes` },
   description: descripcion,
   alternates: { canonical: "/servicios" },
   openGraph: {
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
         url: "/assets/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Nexo4Pymes — servicios, método y quiénes somos",
+        alt: "Nexo4Pymes — servicios de automatización con IA",
       },
     ],
   },
@@ -63,7 +64,7 @@ export default function PaginaServicios() {
       <Cabecera
         enlaces={navServicios}
         cta={{ texto: "Llamada gratis", href: marca.calendly, externo: true }}
-        enlacePill={{ href: "/", texto: "← Veterinarias", textoMovil: "← Clínicas veterinarias" }}
+        enlacePill={{ href: "/contacto", texto: "Contacto ↗", textoMovil: "Contacto y presupuesto ↗" }}
       />
 
       <main id="contenido" className="relative z-10">
@@ -71,10 +72,7 @@ export default function PaginaServicios() {
         <ServiciosGrid />
         <MetodoServicios />
         <CasoDiagnostico />
-        <Sectores />
         <PreciosServicios />
-        <QuienesSomos />
-        <DatosRgpd />
         <FaqSeccion id="faq" categoria="Preguntas frecuentes" titular="Antes de escribirnos" preguntas={faqServicios} />
         <CierreServicios />
       </main>
@@ -85,14 +83,14 @@ export default function PaginaServicios() {
           { href: "#servicios", texto: "Servicios" },
           { href: "#metodo", texto: "Método" },
           { href: "#precios", texto: "Precios" },
-          { href: "#nosotros", texto: "Quiénes somos" },
-          { href: "/", texto: "Clínicas veterinarias" },
+          { href: "/nosotros", texto: "Quiénes somos" },
+          { href: "/contacto", texto: "Contacto" },
           { href: "/blog", texto: "Blog" },
         ]}
         cruce={{
-          pregunta: "¿Buscáis la clínica veterinaria?",
-          texto: "Volver a la home de veterinarias",
-          href: "/",
+          pregunta: "¿Queréis saber quién está detrás?",
+          texto: "Quiénes somos y qué pasa con vuestros datos",
+          href: "/nosotros",
         }}
       />
 

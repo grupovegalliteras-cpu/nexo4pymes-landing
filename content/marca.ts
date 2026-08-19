@@ -6,8 +6,8 @@
 
    AL AGOTARSE LAS PLAZAS: cambia `plazasLibres` y revisa
    `ofertaActiva`. Si `ofertaActiva` pasa a false, hay que quitar
-   la mención a la oferta del hero de /veterinarias y del bloque
-   veterinario de la portada.
+   la mención a la oferta en los dos sitios que la enseñan: el hero
+   de /sectores/veterinarias y la barra flotante de /servicios.
    ============================================================ */
 
 export const marca = {
@@ -15,8 +15,17 @@ export const marca = {
   dominio: "https://nexo4pymes.com",
   email: "grupovegalliteras@gmail.com",
   calendly: "https://calendly.com/grupovegalliteras/demo-15-minutos",
+  /* Aquí había también `facebook`. Se retiró del sitio: la única red
+     que se enlaza es Instagram.
+
+     OJO — esto NO afecta a dos cosas que siguen dependiendo de Meta y
+     que no son enlaces:
+       · la etiqueta facebook-domain-verification de app/layout.tsx,
+         que verifica el dominio ante Meta Business;
+       · el píxel de Meta, que mide los anuncios.
+     Si algún día se recupera la página de Facebook, basta con volver
+     a añadir la clave aquí y el enlace en el pie y en /nosotros. */
   instagram: "https://instagram.com/nexo4pymes",
-  facebook: "https://facebook.com/nexo4pymes",
   razonSocial: "Nexo4Pymes Automatización, S.L. (sociedad en constitución)",
   localidad: "Mallorca",
   region: "Illes Balears",

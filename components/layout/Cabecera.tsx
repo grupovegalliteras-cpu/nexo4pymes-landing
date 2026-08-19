@@ -16,8 +16,8 @@ import { marca } from "@/content/marca";
    se vuelve algo más opaca y el borde inferior se marca más, para
    distinguirla del contenido que pasa por debajo.
 
-   `enlacePill` es el enlace cruzado entre home y /servicios
-   ("Servicios ↗" / "← Veterinarias"): va aparte de los enlaces
+   `enlacePill` es el enlace cruzado a otra página del sitio
+   ("Contacto ↗" / "← Todos los sectores"): va aparte de los enlaces
    normales, con su propio borde, para que se note que lleva a otra
    página.
    ============================================================ */

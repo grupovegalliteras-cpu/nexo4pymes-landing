@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { IconoFacebook, IconoInstagram } from "@/components/ui/IconosRedes";
+import { IconoInstagram } from "@/components/ui/IconosRedes";
+import { BotonPreferencias } from "@/components/legal/BotonPreferencias";
 import { marca } from "@/content/marca";
 
-/* Pie común a las páginas del sitio. `cruce` es el enlace entre la
-   home veterinaria y /servicios (ayuda a posicionar cada una en lo
-   suyo). Fondo casi negro con desenfoque, igual que la maqueta del
-   rediseño — ya no hay una versión "clara" del pie.
+/* Pie común a las páginas del sitio. `cruce` es el enlace cruzado a
+   la siguiente página lógica del recorrido (ayuda a posicionar cada
+   una en lo suyo). Fondo casi negro con desenfoque, igual que la
+   maqueta del rediseño — ya no hay una versión "clara" del pie.
 
    FASE 4 — objetivos táctiles. Aquí vivían trece enlaces de 18 px de
    alto: por debajo de los 44 × 44 px que piden la WCAG 2.5.8 y las
@@ -66,6 +67,7 @@ export function PieDePagina({
               Mallorca, Illes Balears.
             </p>
 
+            {/* Solo Instagram. El icono de Facebook se retiró del sitio. */}
             {redes && (
               <div className="mt-4 flex gap-3 sm:mt-5">
                 <a
@@ -76,15 +78,6 @@ export function PieDePagina({
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-azul/50 hover:text-azul"
                 >
                   <IconoInstagram size={17} />
-                </a>
-                <a
-                  href={marca.facebook}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label="Facebook de Nexo4Pymes"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-azul/50 hover:text-azul"
-                >
-                  <IconoFacebook size={17} />
                 </a>
               </div>
             )}
@@ -128,6 +121,13 @@ export function PieDePagina({
                   <Link href="/legal#cookies" className={FILA}>
                     Cookies
                   </Link>
+                </li>
+                {/* Retirar el consentimiento tiene que ser tan fácil como
+                    darlo, así que este enlace va en el pie de todas las
+                    páginas. Sin él, el consentimiento inicial no sería
+                    válido. */}
+                <li>
+                  <BotonPreferencias />
                 </li>
               </ul>
             </div>

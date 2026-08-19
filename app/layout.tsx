@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Sora, Space_Grotesk } from "next/font/google";
 import { marca } from "@/content/marca";
 import { esquemaNegocio } from "@/lib/esquema";
+import { BannerCookies } from "@/components/legal/BannerCookies";
+import { Analitica } from "@/components/legal/Analitica";
 import "./globals.css";
 
 /* next/font descarga y sirve las tipografías desde nuestro propio
@@ -72,6 +74,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <style>{`[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
         {children}
+
+        {/* Banner de cookies y píxeles, en el layout raíz para que
+            vayan en todas las páginas sin repetirlos.
+
+            El orden importa poco porque Analitica no pinta nada
+            hasta que hay consentimiento, pero conceptualmente es
+            este: primero se pregunta, después se carga. */}
+        <BannerCookies />
+        <Analitica />
+
         <script
           type="application/ld+json"
           // La misma entidad @id en todas las páginas: si cambian los datos de

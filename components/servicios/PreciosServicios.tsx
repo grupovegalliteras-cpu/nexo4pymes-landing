@@ -39,8 +39,8 @@ export function PreciosServicios() {
             </div>
             <p className="mt-4 text-[14.5px] leading-relaxed text-white/68">
               Diagnóstico completo, entregado en {oferta.duracion}. Precio normal {oferta.precioAntiguo}; ahora{" "}
-              {oferta.precio}€ para las primeras clínicas. Nunca hay una versión gratuita: por eso es un análisis
-              real y no una llamada de venta.
+              {oferta.precio}€ para los primeros {oferta.plazasTotales} proyectos. Nunca hay una versión gratuita:
+              por eso es un análisis real y no una llamada de venta.
             </p>
           </TarjetaGlow>
         </Reveal>

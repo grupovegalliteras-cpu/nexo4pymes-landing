@@ -1,4 +1,4 @@
-/* Iconos de Instagram y Facebook dibujados a mano.
+/* Icono de Instagram, dibujado a mano.
    lucide-react 1.x ya no incluye iconos de marca, así que se copian
    los mismos trazos que usaba la web anterior. Son dos SVG de
    trescientos bytes: no compensa añadir otra dependencia. */

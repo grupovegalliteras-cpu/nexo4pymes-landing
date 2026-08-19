@@ -3,33 +3,49 @@ import { Cabecera } from "@/components/layout/Cabecera";
 import { PieDePagina } from "@/components/layout/PieDePagina";
 import { CtaMovil } from "@/components/layout/CtaMovil";
 import { FondoAmbiente } from "@/components/ui/FondoAmbiente";
-import { HeroVet } from "@/components/vet/HeroVet";
 import { Marquesina } from "@/components/vet/Marquesina";
-import { ProblemaVet } from "@/components/vet/ProblemaVet";
-import { ComoVaVet } from "@/components/vet/ComoVaVet";
-import { LimitesVet } from "@/components/vet/LimitesVet";
-import { PruebaVet } from "@/components/vet/PruebaVet";
-import { MetodoVet } from "@/components/vet/MetodoVet";
-import { OfertaVet } from "@/components/vet/OfertaVet";
-import { GateServicios } from "@/components/vet/GateServicios";
 import { FaqSeccion } from "@/components/ui/FaqSeccion";
-import { CierreVet } from "@/components/vet/CierreVet";
-import { faqVet, garantias, navVet } from "@/content/vet";
+import { HeroInicio } from "@/components/inicio/HeroInicio";
+import { AntesDespues } from "@/components/inicio/AntesDespues";
+import { ServiciosInicio } from "@/components/inicio/ServiciosInicio";
+import { SelectorSectores } from "@/components/inicio/SelectorSectores";
+import { ProcesoInicio } from "@/components/inicio/ProcesoInicio";
+import { PruebaInicio } from "@/components/inicio/PruebaInicio";
+import { CierreInicio } from "@/components/inicio/CierreInicio";
+import { faqInicio, garantiasInicio, navInicio } from "@/content/inicio";
 import { marca } from "@/content/marca";
 import { esquemaFaq } from "@/lib/esquema";
 
-/* HOME — antes vivía en /veterinarias. Es la página de conversión que
-   se manda tras las llamadas en frío, así que aquí sí se persigue la
-   keyword "automatización para clínicas veterinarias" en H1 y title.
-   La página general de pymes (que vivía aquí) se retiró: su
-   contenido pasó a /servicios. */
+/* ============================================================
+   HOME — página general de pymes.
 
-const titulo = "Nexo4Pymes — El WhatsApp de vuestra clínica, contestado y agendado solo";
+   Antes esta URL servía la landing veterinaria, que ahora vive en
+   /sectores/veterinarias. El cambio responde al giro de
+   posicionamiento: la propuesta deja de ser "especialistas en un
+   nicho" y pasa a ser "automatización con IA para cualquier
+   pyme", con los sectores como demostración de adaptabilidad.
+
+   ORDEN DE LECTURA, y por qué:
+     1. hero       — qué hacemos y para quién, en una pantalla
+     2. antes/desp.— el problema, en su lenguaje, no en el nuestro
+     3. servicios  — qué se compra, en concreto
+     4. sectores   — "esto va conmigo": el momento de conversión
+     5. proceso    — cómo se empieza, para bajar el riesgo percibido
+     6. compromisos— quién responde si sale mal
+     7. FAQ        — objeciones de quien ya está interesado
+     8. cierre     — la acción
+
+   Se hereda del rediseño anterior: lo que demuestra va antes que
+   lo que explica, y el material que solo interesa a quien ya está
+   dentro (FAQ, letra pequeña) va al final.
+   ============================================================ */
+
+const titulo = "Automatización de procesos con IA para pymes";
 const descripcion =
-  "Un agente de IA contesta los WhatsApp de vuestra clínica veterinaria, agenda en vuestro Google Calendar y avisa de las vacunas que tocan.";
+  "Automatizamos atención al cliente, citas, administración y seguimiento de vuestra pyme con IA, sobre las herramientas que ya usáis. Sin cambiar de programa y sin permanencia.";
 
 export const metadata: Metadata = {
-  title: { absolute: titulo },
+  title: { absolute: `${titulo} | Nexo4Pymes` },
   description: descripcion,
   alternates: { canonical: "/" },
   openGraph: {
@@ -41,10 +57,10 @@ export const metadata: Metadata = {
     url: "/",
     images: [
       {
-        url: "/assets/og-image.jpg",
+        url: "/assets/og-automatizacion-pymes.jpg",
         width: 1200,
         height: 630,
-        alt: "Nexo4Pymes — automatización con IA para clínicas veterinarias",
+        alt: "Nexo4Pymes — automatización de procesos con IA para pymes",
       },
     ],
   },
@@ -52,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: titulo,
     description: descripcion,
-    images: ["/assets/og-image.jpg"],
+    images: ["/assets/og-automatizacion-pymes.jpg"],
   },
 };
 
@@ -62,62 +78,46 @@ export default function PaginaInicio() {
       <FondoAmbiente />
 
       <Cabecera
-        enlaces={navVet}
+        enlaces={navInicio}
         cta={{ texto: "Llamada gratis", href: marca.calendly, externo: true }}
-        enlacePill={{ href: "/servicios", texto: "Servicios ↗", textoMovil: "Servicios y quiénes somos ↗" }}
+        enlacePill={{ href: "/contacto", texto: "Contacto ↗", textoMovil: "Contacto y presupuesto ↗" }}
       />
 
-      {/* ORDEN DE LECTURA — fase 1 del rediseño mobile-first.
-          Antes: problema → demo → límites → ensayo → método → precio. Ese es el
-          orden en que uno explica su negocio, no en el que un desconocido decide
-          comprar: el precio quedaba en el píxel 9.301 (63 % del recorrido) y
-          casi nadie llegaba en móvil.
-
-          Ahora: primero se demuestra que funciona (la secuencia), después quién
-          está detrás y qué se compromete (la prueba), después cuánto cuesta y
-          qué se llevan (la oferta), y solo entonces el material que resuelve
-          dudas de quien ya está interesado (límites y método).
-
-          MetodoVet absorbió la antigua sección PorQueNoEmpezamos en la fase 3. */}
       <main id="contenido" className="relative z-10">
-        <HeroVet />
-        <Marquesina items={garantias} />
-        <ProblemaVet />
-        <ComoVaVet />
-        <PruebaVet />
-        <OfertaVet />
-        <LimitesVet />
-        <MetodoVet />
-        <GateServicios />
-        <FaqSeccion id="faq" categoria="Preguntas frecuentes" titular="Lo que nos preguntan siempre" preguntas={faqVet} />
-        <CierreVet />
+        <HeroInicio />
+        <Marquesina items={garantiasInicio} />
+        <AntesDespues />
+        <ServiciosInicio />
+        <SelectorSectores />
+        <ProcesoInicio />
+        <PruebaInicio />
+        <FaqSeccion id="faq" categoria="Preguntas frecuentes" titular="Lo que nos preguntan siempre" preguntas={faqInicio} />
+        <CierreInicio />
       </main>
 
       <PieDePagina
         redes
         enlaces={[
-          { href: "#problema", texto: "El problema" },
-          { href: "#como-va", texto: "Cómo va" },
-          { href: "#diagnostico", texto: "Precio" },
-          { href: "#faq", texto: "Preguntas frecuentes" },
-          { href: "/servicios", texto: "Servicios y quiénes somos" },
+          { href: "#cambio", texto: "Qué cambia" },
+          { href: "#servicios", texto: "Servicios" },
+          { href: "#sectores", texto: "Sectores" },
+          { href: "/nosotros", texto: "Quiénes somos" },
+          { href: "/contacto", texto: "Contacto" },
           { href: "/blog", texto: "Blog" },
         ]}
         cruce={{
-          pregunta: "¿Quieres verlo todo con calma?",
-          texto: "Servicios, método y quiénes somos",
+          pregunta: "¿Queréis el detalle de cada servicio?",
+          texto: "Servicios, alcance y precios",
           href: "/servicios",
         }}
       />
 
-      {/* Sin `nota`: iba a 9,5 px, ilegible, y robaba alto de pantalla al botón.
-          El precio y las plazas ya viven en la tarjeta de la oferta. */}
       <CtaMovil texto="Agendar llamada gratis" href={marca.calendly} externo />
 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(esquemaFaq(faqVet, `${marca.dominio}/#faq`)),
+          __html: JSON.stringify(esquemaFaq(faqInicio, `${marca.dominio}/#faq`)),
         }}
       />
     </>

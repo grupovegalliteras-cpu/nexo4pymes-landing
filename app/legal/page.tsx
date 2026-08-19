@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FondoAmbiente } from "@/components/ui/FondoAmbiente";
 import { Reveal } from "@/components/motion/Reveal";
+import { BotonPreferencias } from "@/components/legal/BotonPreferencias";
 import { marca } from "@/content/marca";
 
 /* Aviso legal, privacidad y cookies.
@@ -164,8 +165,8 @@ export default function PaginaLegal() {
 
                 <h3 className="mt-8 text-[18px] text-[#F4F6FF]">4. Enlaces a terceros</h3>
                 <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
-                  Este sitio incluye enlaces a servicios de terceros (Calendly, Instagram, Facebook,
-                  correo electrónico) sobre cuyo contenido, disponibilidad o políticas de privacidad
+                  Este sitio incluye enlaces a servicios de terceros (Calendly, Instagram, correo
+                  electrónico) sobre cuyo contenido, disponibilidad o políticas de privacidad
                   Nexo4Pymes no tiene control ni asume responsabilidad. El acceso a dichos servicios
                   se rige por sus propias condiciones.
                 </p>
@@ -216,13 +217,21 @@ export default function PaginaLegal() {
                 <h3 className="mt-8 text-[18px] text-[#F4F6FF]">
                   2. Qué datos tratamos y con qué finalidad
                 </h3>
-                {/* Esta frase solo es cierta mientras el sitio no incorpore un
-                    formulario propio de recogida de datos. */}
+                {/* ACTUALIZADO CON EL REDISEÑO: el sitio SÍ incorpora ya un
+                    formulario propio, en /contacto. Antes aquí ponía que no
+                    lo había. Si algún día se quita el formulario, esta lista
+                    hay que recortarla otra vez. */}
                 <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
-                  Este sitio web no incorpora formularios propios de recogida de datos. Los datos
-                  personales que tratamos proceden únicamente de:
+                  Los datos personales que tratamos proceden únicamente de:
                 </p>
                 <ul className="mt-4 list-disc space-y-2 pl-5 text-[15.5px] leading-relaxed text-white/68">
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">El formulario de contacto</strong> de
+                    la página <em>Contacto</em> (nombre, empresa, dirección de email, teléfono
+                    opcional, sector y el contenido del mensaje), con la finalidad de responder a tu
+                    consulta. Todos los campos salvo nombre, email y mensaje son opcionales, y el
+                    envío requiere que marques expresamente la casilla de consentimiento.
+                  </li>
                   <li>
                     El correo electrónico que nos envíes voluntariamente (nombre, dirección de email y
                     cualquier dato incluido en el mensaje), con la finalidad de responder a tu
@@ -230,13 +239,17 @@ export default function PaginaLegal() {
                   </li>
                   <li>
                     La reserva de una llamada a través de Calendly (nombre, email y, en su caso,
-                    teléfono), con la finalidad de gestionar la cita comercial solicitada.
+                    teléfono), con la finalidad de gestionar la cita comercial solicitada. El
+                    calendario de Calendly no se carga automáticamente: solo se activa si pulsas el
+                    botón correspondiente, tras informarte de ello.
                   </li>
                 </ul>
                 <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
                   No se recaba ningún dato personal de forma automática por el simple hecho de navegar
                   por el sitio. Las tipografías se sirven desde nuestro propio dominio, por lo que la
-                  navegación no genera ninguna conexión a servidores de terceros.
+                  navegación no genera ninguna conexión a servidores de terceros. Al enviar el
+                  formulario se registra tu dirección IP de forma temporal, con la única finalidad de
+                  evitar envíos automatizados masivos (interés legítimo, art. 6.1.f RGPD).
                 </p>
 
                 <h3 className="mt-8 text-[18px] text-[#F4F6FF]">3. Base legal del tratamiento</h3>
@@ -262,6 +275,16 @@ export default function PaginaLegal() {
                     alojamiento del sitio web; empresa con sede en EE. UU. Sus servidores registran
                     datos técnicos de conexión (como la dirección IP) por motivos de seguridad y
                     funcionamiento.
+                  </li>
+                  {/* Este punto describe al proveedor de automatización que
+                      recibe los envíos del formulario (el webhook configurado
+                      en WEBHOOK_CONTACTO). Si se cambia de proveedor, hay que
+                      cambiar el nombre y la sede que figuran aquí. */}
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">Make (Celonis SE)</strong> —
+                    encargado del tratamiento que recibe y encamina los mensajes enviados desde el
+                    formulario de contacto hasta nuestro correo. Los datos se procesan en servidores
+                    de la Unión Europea.
                   </li>
                 </ul>
                 <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
@@ -318,39 +341,80 @@ export default function PaginaLegal() {
                   2. Cookies que utiliza este sitio
                 </h3>
                 <p className="mt-4 rounded-tarjeta border border-mint/22 bg-gradient-to-br from-mint/[.09] to-mint/[.02] p-5 text-[15.5px] leading-relaxed text-white/78 shadow-[0_24px_60px_rgba(0,0,0,.4),inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-xl">
-                  Actualmente este sitio{" "}
                   <strong className="font-medium text-mint">
-                    no instala cookies propias ni de terceros
+                    No se instala ninguna cookie no esencial hasta que la aceptas.
                   </strong>{" "}
-                  con fines analíticos, publicitarios o de seguimiento. Por eso no verás un banner de
-                  consentimiento: no es necesario, porque no se usan cookies no esenciales.
-                </p>
-                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
-                  Tampoco se realiza ninguna conexión externa al navegar: las tipografías del sitio se
-                  sirven desde nuestro propio dominio y no desde un CDN de terceros, precisamente para
-                  evitar que tu dirección IP se transmita a otras empresas durante la simple visita a
-                  la web.
-                </p>
-                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
-                  El sitio está alojado en Vercel Inc., cuyos servidores registran datos técnicos de
-                  conexión por motivos de seguridad y funcionamiento, sin que ello implique la
-                  instalación de cookies en tu navegador.
+                  Al entrar por primera vez verás un banner con dos opciones al mismo nivel: aceptar
+                  todas o rechazar todas. Si rechazas —o si simplemente sigues navegando sin
+                  responder— no se carga ninguna herramienta de analítica ni de publicidad, y el sitio
+                  funciona exactamente igual.
                 </p>
 
-                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">3. Cambios futuros</h3>
+                <h4 className="mt-6 text-[16px] font-medium text-[#F4F6FF]">Necesarias</h4>
+                <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+                  Imprescindibles para prestar el servicio, por lo que no requieren consentimiento
+                  (art. 22.2 LSSICE). No son cookies de terceros: tu decisión sobre este aviso se
+                  guarda en el almacenamiento local de tu propio navegador, para no volver a
+                  preguntártelo en cada página. Además, al enviar el formulario de contacto se
+                  registra tu dirección IP de forma temporal para evitar envíos automatizados
+                  masivos.
+                </p>
+
+                <h4 className="mt-6 text-[16px] font-medium text-[#F4F6FF]">Analítica (opcional)</h4>
+                <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+                  Google Analytics 4, de Google Ireland Ltd. Nos permite saber cuánta gente visita el
+                  sitio, desde dónde llega y qué páginas consulta, con el fin de mejorarlo. Los
+                  informes son agregados y no se usan para identificarte. Instala las cookies{" "}
+                  <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono text-[13.5px]">_ga</code> y{" "}
+                  <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono text-[13.5px]">_ga_*</code>,
+                  con una duración de 24 meses. La dirección IP se trunca antes de almacenarse.
+                </p>
+
+                <h4 className="mt-6 text-[16px] font-medium text-[#F4F6FF]">Marketing (opcional)</h4>
+                <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+                  Meta Pixel, de Meta Platforms Ireland Ltd. Permite medir el resultado de nuestros
+                  anuncios en Instagram y Facebook y mostrar publicidad a quien ya ha visitado la web.
+                  Instala las cookies{" "}
+                  <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono text-[13.5px]">_fbp</code> y{" "}
+                  <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono text-[13.5px]">_fbc</code>,
+                  con una duración de 3 meses. Implica una transferencia internacional de datos a
+                  EE. UU., amparada en el Marco de Privacidad de Datos UE-EE. UU. y en cláusulas
+                  contractuales tipo.
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">3. Contenido incrustado de terceros</h3>
                 <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
-                  Si en el futuro incorporamos herramientas de analítica o publicidad (por ejemplo,
-                  Google Analytics o Meta Pixel), actualizaremos esta política e implementaremos un
-                  banner de consentimiento previo conforme a la LSSICE y a la Guía sobre el uso de
-                  cookies de la AEPD, antes de activar dichas cookies.
+                  El calendario de reservas de la página de contacto lo proporciona Calendly, LLC. No
+                  se carga automáticamente: solo se activa si pulsas el botón correspondiente, después
+                  de informarte de qué datos recibirá Calendly. Mientras no lo pulses, tu navegador no
+                  establece ninguna conexión con sus servidores.
+                </p>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Las tipografías del sitio se sirven desde nuestro propio dominio y no desde un CDN de
+                  terceros, precisamente para evitar que tu dirección IP se transmita a otras empresas
+                  durante la simple visita a la web. El sitio está alojado en Vercel Inc., cuyos
+                  servidores registran datos técnicos de conexión por motivos de seguridad y
+                  funcionamiento, sin que ello implique la instalación de cookies en tu navegador.
                 </p>
 
                 <h3 className="mt-8 text-[18px] text-[#F4F6FF]">
-                  4. Gestión de cookies desde el navegador
+                  4. Cómo cambiar o retirar tu consentimiento
                 </h3>
                 <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
-                  Aunque este sitio no instala cookies no esenciales, puedes configurar tu navegador
-                  en cualquier momento para bloquear, eliminar o ser avisado de las cookies desde su
+                  Puedes cambiar tu decisión en cualquier momento, y retirarla es tan sencillo como
+                  darla. Al retirar una categoría, las cookies que hubiera instalado se eliminan de
+                  inmediato.
+                </p>
+                <p className="mt-4">
+                  {/* Este botón es la vía de retirada exigida por el art. 7.3
+                      RGPD. También está en el pie de todas las páginas. */}
+                  <BotonPreferencias estilo="enlace">
+                    Abrir las preferencias de cookies
+                  </BotonPreferencias>
+                </p>
+                <p className="mt-4 text-[15.5px] leading-relaxed text-white/68">
+                  En cualquier caso, volveremos a preguntarte pasados 24 meses. También puedes
+                  configurar tu navegador para bloquear, eliminar o ser avisado de las cookies desde su
                   configuración de privacidad.
                 </p>
               </section>

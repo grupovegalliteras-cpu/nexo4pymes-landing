@@ -24,7 +24,10 @@ export const esquemaNegocio = {
     { "@type": "AdministrativeArea", name: "Illes Balears" },
     { "@type": "Country", name: "España" },
   ],
-  sameAs: [marca.instagram, marca.facebook],
+  /* `sameAs` le dice a Google qué perfiles son de esta misma empresa.
+     Solo Instagram: el perfil de Facebook ya no se enlaza, y listar
+     aquí una página que no reconocemos en la web sería incoherente. */
+  sameAs: [marca.instagram],
   knowsAbout: [
     "Automatización de procesos",
     "Inteligencia artificial aplicada a pymes",

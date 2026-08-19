@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
+import { usarConsentimiento } from "@/lib/consentimiento";
 import { AnimatePresence, motion } from "framer-motion";
 
 /* Barra de acción fija en móvil.
@@ -43,6 +44,18 @@ export function CtaMovil({
   const [visible, setVisible] = useState(false);
   const reducido = usarMovimientoReducido();
 
+  /* En móvil, esta barra y el banner de cookies ocupan exactamente el
+     mismo trozo de pantalla. Mientras el banner sigue ahí esperando
+     una respuesta, la barra no aparece: dos capas fijas apiladas
+     abajo tapan media pantalla y el botón de rechazar quedaría
+     debajo del CTA, que es justo la clase de estorbo que la AEPD
+     considera que vicia el consentimiento.
+
+     `cargado` evita el parpadeo: hasta que no se sabe si hay
+     decisión previa, no se decide nada. */
+  const { cargado, decidido } = usarConsentimiento();
+  const banneRespondido = cargado && decidido;
+
   useEffect(() => {
     const alScroll = () => {
       const hero = document.getElementById(anclaInicio);
@@ -68,7 +81,7 @@ export function CtaMovil({
 
   return (
     <AnimatePresence>
-      {visible && (
+      {visible && banneRespondido && (
         <motion.div
           initial={reducido ? { opacity: 0 } : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

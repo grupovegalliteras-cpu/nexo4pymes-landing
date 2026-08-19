@@ -80,8 +80,13 @@ export function Cabecera({
             aria-label="Nexo4Pymes, inicio"
             onClick={() => setMenuAbierto(false)}
           >
-            <span className="flex h-[38px] w-[38px] items-center justify-center overflow-hidden rounded-caja bg-gradient-to-br from-azul to-violeta shadow-[0_6px_22px_rgba(76,125,255,.4),inset_0_1px_0_rgba(255,255,255,.35)]">
-              <Image src="/assets/logo.png" alt="" width={164} height={160} priority className="h-full w-full object-cover" />
+            <span className="flex h-[38px] w-[38px] items-center justify-center overflow-hidden rounded-caja shadow-[0_6px_22px_rgba(0,0,0,.45)]">
+              {/* El logotipo trae su propio fondo verde, asi que la caja no
+                  pinta ninguno: el degradado azul-violeta que habia aqui
+                  no es color de marca y competia con el verde del propio
+                  simbolo. object-contain y no cover porque el archivo ya
+                  viene cuadrado y encuadrado: recortarlo cortaba la N. */}
+              <Image src="/assets/logo.png" alt="" width={512} height={512} sizes="38px" priority className="h-full w-full object-contain" />
             </span>
             {/* Bajo 380 px el logotipo cede su sitio al CTA: en un móvil
                 pequeño importa más poder pulsar que leer la marca dos veces

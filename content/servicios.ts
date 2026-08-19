@@ -187,24 +187,48 @@ export const casoDiagnostico = {
    entre seis y el mensaje pasa a ser adaptabilidad, que es lo que
    pedía el rediseño. */
 
-export const preciosServicios = {
-  categoria: "Precios",
-  titular: "Qué cuesta, sin rodeos",
+/* ============================================================
+   CÓMO SE EMPIEZA
+
+   Aquí vivían los precios (150€ el diagnóstico, 500–3.000€ por
+   fase). Se retiraron a petición: las cifras se dan en la llamada,
+   no en la web.
+
+   Lo que NO se ha quitado, a propósito, es el modelo de tres
+   pasos. Es el que sostiene el argumento de venta de la empresa:
+   la llamada es gratis pero el diagnóstico se paga, y por eso es
+   un análisis real y no una llamada comercial disfrazada. Sin esa
+   estructura, la web dejaría de explicar por qué cobrar el
+   diagnóstico es una ventaja para el cliente.
+
+   "Gratis" del paso 1 tampoco es un precio: es la condición de la
+   llamada, y es el gancho de conversión de todo el embudo.
+
+   Para volver a poner cifras: se añaden aquí y en el componente
+   ComoEmpezar.tsx. El historial de git tiene la versión anterior.
+   ============================================================ */
+export const comoEmpezar = {
+  categoria: "Cómo se empieza",
+  titular: "Tres pasos, y el primero no cuesta nada",
   intro:
-    "Una sola historia, la misma en toda la web: la llamada es gratis, el diagnóstico se paga y la implementación se cierra fase a fase.",
+    "Una sola historia, la misma en toda la web: la llamada es gratis, el diagnóstico se paga y la implementación se cierra fase a fase. Las cifras concretas dependen de vuestro caso y las vemos en la llamada.",
   paso1: {
     meta: "Paso 1",
-    precio: "Gratis",
-    texto: "Llamada de 15 minutos por videollamada. Sin tarjeta y sin compromiso. Sirve para ver si encajamos — y a veces la conclusión es que no.",
+    destacado: "Gratis",
+    texto:
+      "Llamada de 15 minutos por videollamada. Sin tarjeta y sin compromiso. Sirve para ver si encajamos — y a veces la conclusión es que no.",
   },
   paso2: {
-    meta: "Paso 2 · Oferta de lanzamiento",
+    meta: "Paso 2 · El diagnóstico",
+    destacado: "Se paga",
+    texto:
+      "Análisis completo de vuestros procesos y un roadmap priorizado, entregado por escrito. Nunca hay una versión gratuita: por eso es un análisis real y no una llamada de venta. El precio depende del tamaño del negocio y lo cerramos antes de empezar.",
   },
   paso3: {
     meta: "Paso 3 · Opcional",
-    precio: "500–3.000€",
-    precioNota: "por fase",
-    texto: "Cada automatización del roadmap, según su complejidad. Se presupuesta y se aprueba antes de empezar. Sin cuota mensual obligatoria ni permanencia.",
+    destacado: "Fase a fase",
+    texto:
+      "Cada automatización del roadmap se presupuesta y se aprueba por separado antes de empezar. Sin cuota mensual obligatoria ni permanencia: decidís cuánto avanzar y cuándo parar.",
   },
   callout: {
     fuerte: "Y si no seguís:",
@@ -212,6 +236,7 @@ export const preciosServicios = {
       "el documento del diagnóstico es vuestro igualmente, con el análisis completo y el roadmap. Podéis ejecutarlo por vuestra cuenta o llevárselo a quien queráis.",
   },
 };
+
 
 /* `quienesSomos` y `datosRgpd` vivían aquí, al final de /servicios,
    donde solo llegaba quien ya se había leído el catálogo entero.

@@ -8,7 +8,7 @@ import { HeroServicios } from "@/components/servicios/HeroServicios";
 import { ServiciosGrid } from "@/components/servicios/ServiciosGrid";
 import { MetodoServicios } from "@/components/servicios/MetodoServicios";
 import { CasoDiagnostico } from "@/components/servicios/CasoDiagnostico";
-import { PreciosServicios } from "@/components/servicios/PreciosServicios";
+import { ComoEmpezar } from "@/components/servicios/ComoEmpezar";
 import { CierreServicios } from "@/components/servicios/CierreServicios";
 import { faqServicios, navServicios } from "@/content/servicios";
 import { marca, oferta } from "@/content/marca";
@@ -72,7 +72,7 @@ export default function PaginaServicios() {
         <ServiciosGrid />
         <MetodoServicios />
         <CasoDiagnostico />
-        <PreciosServicios />
+        <ComoEmpezar />
         <FaqSeccion id="faq" categoria="Preguntas frecuentes" titular="Antes de escribirnos" preguntas={faqServicios} />
         <CierreServicios />
       </main>
@@ -82,7 +82,7 @@ export default function PaginaServicios() {
         enlaces={[
           { href: "#servicios", texto: "Servicios" },
           { href: "#metodo", texto: "Método" },
-          { href: "#precios", texto: "Precios" },
+          { href: "#como-empezar", texto: "Cómo se empieza" },
           { href: "/nosotros", texto: "Quiénes somos" },
           { href: "/contacto", texto: "Contacto" },
           { href: "/blog", texto: "Blog" },
@@ -98,7 +98,10 @@ export default function PaginaServicios() {
         texto="Agendar llamada gratis"
         href={marca.calendly}
         externo
-        nota={oferta.ofertaActiva ? `Diagnóstico ${oferta.precio}€ · quedan ${oferta.plazasLibres} plazas` : undefined}
+        /* La barra flotante llevaba aquí "Diagnóstico 150€ · quedan N
+            plazas". Se quitó al retirar los precios de esta página:
+            era el único importe que seguía a la vista al hacer scroll. */
+        nota={oferta.ofertaActiva ? `Quedan ${oferta.plazasLibres} plazas` : undefined}
       />
 
       <script

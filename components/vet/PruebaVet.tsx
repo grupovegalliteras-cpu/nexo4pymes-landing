@@ -95,9 +95,10 @@ export function PruebaVet() {
           ) : (
             <span
               aria-hidden="true"
-              className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-azul to-violeta"
+              /* Sin degradado: el logotipo ya trae su fondo de marca. */
+              className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full"
             >
-              <Image src="/assets/logo.png" alt="" width={164} height={160} className="h-full w-full object-cover" />
+              <Image src="/assets/logo.png" alt="" width={512} height={512} sizes="44px" className="h-full w-full object-cover" />
             </span>
           )}
           <div>

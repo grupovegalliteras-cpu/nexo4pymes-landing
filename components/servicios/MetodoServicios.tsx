@@ -25,9 +25,10 @@ export function MetodoServicios() {
                 </span>
                 <div>
                   <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#9FB6FF]">
-                    {paso.num === "2"
-                      ? `${oferta.duracion} · ${oferta.precio}€ (lanzamiento)`
-                      : paso.meta}
+                    {/* Antes ponía "3-4 días · 150€ (lanzamiento)". Se quitó el
+                        importe con el resto de precios de la página; el plazo
+                        de entrega se queda, que sí es información útil. */}
+                    {paso.num === "2" ? oferta.duracion : paso.meta}
                   </span>
                   <h3 className="mt-2 text-[19px] font-semibold text-[#F4F6FF]">{paso.titulo}</h3>
                   <p className="mt-2.5 text-[15px] leading-relaxed text-white/64">{paso.texto}</p>

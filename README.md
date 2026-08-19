@@ -28,7 +28,7 @@ que el método se adapta.
 | URL | Qué es |
 |---|---|
 | `/` | Home general. Hero, antes/después, servicios, **selector de sectores**, proceso, compromisos, FAQ |
-| `/servicios` | El catálogo largo: qué automatizamos, método de 5 pasos, precios |
+| `/servicios` | El catálogo largo: qué automatizamos, método de 5 pasos, cómo se empieza (sin precios) |
 | `/nosotros` | Quiénes somos, valores, enfoque pyme, datos y RGPD |
 | `/contacto` | Formulario, calendario y datos de la empresa |
 | `/sectores/veterinarias` | Landing del sector veterinario. **Es la que mejor convierte**: se manda tras las llamadas en frío |
@@ -42,10 +42,11 @@ con un 301 a `/sectores/veterinarias`. Ese redirect no se toca.
 
 | Quiero cambiar… | Archivo |
 |---|---|
-| El precio, las plazas, el enlace de Calendly, el email | `content/marca.ts` |
+| Las plazas, el enlace de Calendly, el email | `content/marca.ts` |
+| El precio (solo lo usa ya la landing veterinaria) | `content/marca.ts` (`oferta`) |
 | Textos de la home | `content/inicio.ts` |
 | **Los sectores del selector de la home** | `content/inicio.ts` (`sectoresInicio`) |
-| Textos de servicios y precios | `content/servicios.ts` |
+| Textos de servicios y de «cómo se empieza» | `content/servicios.ts` |
 | Textos de quiénes somos y RGPD | `content/nosotros.ts` |
 | Textos de contacto y del formulario | `content/contacto.ts` |
 | Textos de la landing de veterinarias | `content/vet.ts` |
@@ -61,6 +62,26 @@ añade `href` y `enlaceTexto`.
 **Publicar un artículo nuevo:** crea `app/blog/<slug>/page.mdx` copiando
 el que ya hay, y añade el slug a `app/sitemap.ts` y la tarjeta a
 `content/blog.ts` (`blogHome`).
+
+## Precios
+
+`/servicios` **no muestra precios**. La sección «Cómo se empieza»
+conserva el modelo de tres pasos (llamada gratis → diagnóstico de pago →
+implementación fase a fase) pero sin cifras: se dan en la llamada.
+
+Eso es deliberado y conviene no deshacerlo a medias. El modelo de tres
+pasos es el que sostiene el argumento de que **el diagnóstico se cobra**,
+que es lo que lo distingue de una llamada comercial disfrazada. Si se
+quitara también la estructura, la web dejaría de explicar por qué pagar
+por un diagnóstico es una ventaja para el cliente.
+
+Para volver a poner cifras: `comoEmpezar` en `content/servicios.ts` y el
+componente `components/servicios/ComoEmpezar.tsx`. El historial de git
+tiene la versión con precios.
+
+**La landing veterinaria SÍ sigue mostrando precios**
+(`components/vet/OfertaVet.tsx`). Es una página aparte, la que mejor
+convierte, y no se tocó.
 
 **Cuando se agoten las 3 plazas:** cambia `plazasLibres` en
 `content/marca.ts`. Si se acaba la oferta entera, pon `ofertaActiva: false`

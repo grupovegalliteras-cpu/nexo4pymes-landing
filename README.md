@@ -82,28 +82,56 @@ contradice el argumento de venta de la propia empresa.
 
 ## El formulario de contacto
 
-`/contacto` tiene un formulario que hace POST a `/api/contacto`. Esa ruta
-no manda el email por sí misma: **reenvía el mensaje a un webhook** que se
-configura por variable de entorno. Así el escenario de Make/Zapier decide
-qué hacer con cada mensaje (mandarlo al correo, crear el contacto en el
-CRM, avisar por WhatsApp).
+El formulario de `/contacto` tiene **dos caminos de envío** y elige solo
+según qué variable de entorno esté puesta. **Sin ninguna de las dos no
+funciona**: muestra un error con el email directo. Nunca acepta un mensaje
+en silencio, porque un formulario que dice «enviado» sin enviar nada es
+peor que no tener formulario.
 
-**Sin la variable configurada, el formulario no funciona**: responde un
-error y enseña el email directo como alternativa. Nunca acepta un mensaje
-en silencio.
+### Camino 1 — Web3Forms (el que está en uso)
 
-Para activarlo:
+El mensaje llega al correo. Es el más rápido de montar:
+
+1. Entrad en [web3forms.com](https://web3forms.com), escribid el email
+   donde queréis recibir los mensajes y confirmad el correo que os llega.
+2. En Vercel: *Settings → Environment Variables* → añadid
+   `NEXT_PUBLIC_WEB3FORMS_KEY` con la Access Key.
+3. Volved a desplegar.
+
+**Por qué el envío sale del navegador y no del servidor**: no es una
+preferencia, lo exige Web3Forms. En su plan gratuito rechaza con un 403
+todo lo que venga de una IP de servidor (*"Use our API in client side…
+Pro plan is required"*). Se intentó por servidor primero y no pasa.
+
+Que la clave sea pública no es un descuido: Web3Forms las diseña así y van
+en el HTML de miles de webs. Quien la tenga solo puede mandar mensajes al
+correo del dueño, no leer los ajenos.
+
+### Camino 2 — webhook propio (Make, Zapier, n8n)
+
+Para cuando el mensaje tenga que hacer más cosas además de llegar al
+correo: crear el contacto en el CRM, avisar por WhatsApp, etiquetar por
+sector.
 
 1. En Make: escenario nuevo → módulo **Webhooks** → *Custom webhook* →
    *Add* → copiar la URL.
-2. En Vercel: *Settings → Environment Variables* → añadir
-   `WEBHOOK_CONTACTO` con esa URL.
-3. Volver a desplegar.
+2. En Vercel: añadid `WEBHOOK_CONTACTO` con esa URL.
 
-En local, lo mismo pero en un archivo `.env.local` (ver `.env.example`).
+En cuanto exista esa variable, el formulario deja de usar Web3Forms y pasa
+por `/api/contacto`, que además valida en servidor y limita a 5 envíos por
+IP cada 10 minutos. **No hay que tocar código para cambiar de camino.**
 
-Lo que ya trae de serie: validación en servidor, consentimiento RGPD
-obligatorio, trampa anti-bots y límite de 5 envíos por IP cada 10 minutos.
+Al webhook le llegan estos campos: `nombre`, `empresa`, `email`,
+`telefono`, `sector`, `mensaje`, `origen`, `recibido`.
+
+### Lo que trae de serie en los dos caminos
+
+Consentimiento RGPD obligatorio comprobado en el código (no solo con el
+`required` del HTML), trampa anti-bots, y el texto escrito no se pierde si
+el envío falla.
+
+En local, las variables van en un archivo `.env.local` (ver
+`.env.example`).
 
 ## Cookies, analítica y píxeles
 
@@ -149,7 +177,8 @@ con un servidor estadounidense.
 
 | Variable | Obligatoria | Para qué |
 |---|---|---|
-| `WEBHOOK_CONTACTO` | Para que funcione el formulario | URL del webhook de Make/Zapier que recibe los mensajes de `/contacto` |
+| `NEXT_PUBLIC_WEB3FORMS_KEY` | Una de las dos, para que funcione el formulario | Access Key de Web3Forms. Los mensajes llegan al correo |
+| `WEBHOOK_CONTACTO` | Una de las dos | URL de webhook (Make/Zapier). Tiene prioridad sobre la anterior |
 | `NEXT_PUBLIC_GA_ID` | No | Identificador de medición de Google Analytics 4 (`G-XXXXXXXXXX`) |
 | `NEXT_PUBLIC_META_PIXEL_ID` | No | ID del píxel de Meta |
 

@@ -9,19 +9,38 @@ import { marca } from "@/content/marca";
 /* ============================================================
    FORMULARIO DE CONTACTO
 
-   Manda un JSON a /api/contacto, que lo reenvía al webhook de
-   Make/Zapier configurado en WEBHOOK_CONTACTO. Ver los comentarios
-   de app/api/contacto/route.ts.
+   DOS CAMINOS DE ENVÍO, y elige solo según qué esté configurado:
 
-   Decisiones que no son evidentes leyendo el JSX:
+   1. WEB3FORMS (el que está en uso)
+      Si existe NEXT_PUBLIC_WEB3FORMS_KEY, el navegador envía
+      directamente a la API de Web3Forms y el mensaje llega al
+      correo.
+
+      Va desde el navegador y no desde nuestro servidor porque
+      Web3Forms lo exige: en su plan gratuito rechaza con un 403
+      todo lo que venga de una IP de servidor ("Use our API in
+      client side... Pro plan is required"). No es una preferencia
+      nuestra.
+
+      Que la clave sea pública no es un descuido: Web3Forms las
+      diseña así, van en el HTML de miles de webs. Lo que no puede
+      hacer quien la tenga es leer mensajes ajenos, solo mandar al
+      correo del dueño — de ahí la trampa anti-bots de abajo.
+
+   2. WEBHOOK PROPIO (para cuando se monte Make o Zapier)
+      Sin esa clave, envía a /api/contacto, que reenvía al webhook
+      de WEBHOOK_CONTACTO con validación de servidor, límite por IP
+      y comprobación del consentimiento.
+
+   Cambiar de uno a otro es cambiar variables de entorno. Este
+   archivo no se toca.
+
+   ------------------------------------------------------------
+   Otras decisiones que no se ven leyendo el JSX:
 
    · No usa `action` de servidor. El formulario necesita enseñar
      tres estados distintos (enviando, enviado, fallo con email de
      rescate) sin recargar, y con fetch eso son diez líneas.
-
-   · La validación de verdad está en el servidor. Lo de aquí es
-     comodidad para quien rellena, no una barrera: se puede saltar
-     con la consola abierta y el servidor lo vuelve a comprobar.
 
    · Si el envío falla, NO se pierde lo escrito. El estado se
      conserva y aparece el email directo, para poder copiar y pegar
@@ -29,11 +48,58 @@ import { marca } from "@/content/marca";
      gente se vaya.
 
    · El campo `web` es una trampa para bots: oculto para personas,
-     visible para rellenadores automáticos. Si llega con contenido,
-     el servidor responde 200 y descarta.
+     visible para rellenadores automáticos. Se manda a Web3Forms
+     como `botcheck`, que es el nombre que ellos reconocen para
+     descartar el envío.
    ============================================================ */
 
+const CLAVE_WEB3FORMS = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+
 type Estado = "inicial" | "enviando" | "enviado" | "error";
+
+type Campos = {
+  nombre: string;
+  empresa: string;
+  email: string;
+  telefono: string;
+  sector: string;
+  mensaje: string;
+  consentimiento: boolean;
+  web: string;
+};
+
+/* Cuerpo para Web3Forms. Las claves que no tienen un significado
+   propio para ellos se convierten en las líneas del correo, así que
+   se escriben como queremos leerlas en la bandeja de entrada, no
+   como se llaman en el código.
+
+   Campos con significado propio:
+     access_key → autentica (obligatorio)
+     subject    → asunto del correo
+     from_name  → nombre del remitente
+     replyto    → a dónde va "Responder": el email de quien escribe,
+                  para poder contestarle sin copiarlo a mano
+     botcheck   → si llega con contenido, Web3Forms lo descarta */
+function cuerpoWeb3Forms(campos: Campos) {
+  const quien = campos.empresa ? `${campos.nombre} (${campos.empresa})` : campos.nombre;
+
+  return {
+    access_key: CLAVE_WEB3FORMS,
+    subject: `Nuevo contacto desde la web: ${quien}`,
+    from_name: "Formulario nexo4pymes.com",
+    replyto: campos.email,
+    botcheck: campos.web,
+
+    Nombre: campos.nombre,
+    Empresa: campos.empresa || "—",
+    Email: campos.email,
+    Teléfono: campos.telefono || "—",
+    Sector: campos.sector || "—",
+    "Qué le quita más tiempo": campos.mensaje,
+    "Consentimiento RGPD": campos.consentimiento ? "Aceptado" : "NO ACEPTADO",
+  };
+}
 
 const CAMPO =
   "w-full rounded-tarjeta border border-white/12 bg-white/[.04] px-4 py-3 text-[15px] text-white " +
@@ -53,35 +119,57 @@ export function FormularioContacto() {
     if (estado === "enviando") return;
 
     const datos = new FormData(evento.currentTarget);
-    const cuerpo = {
-      nombre: datos.get("nombre"),
-      empresa: datos.get("empresa"),
-      email: datos.get("email"),
-      telefono: datos.get("telefono"),
-      sector: datos.get("sector"),
-      mensaje: datos.get("mensaje"),
+    const campos = {
+      nombre: String(datos.get("nombre") ?? "").trim(),
+      empresa: String(datos.get("empresa") ?? "").trim(),
+      email: String(datos.get("email") ?? "").trim(),
+      telefono: String(datos.get("telefono") ?? "").trim(),
+      sector: String(datos.get("sector") ?? "").trim(),
+      mensaje: String(datos.get("mensaje") ?? "").trim(),
       consentimiento: datos.get("consentimiento") === "si",
-      web: datos.get("web"),
+      web: String(datos.get("web") ?? ""),
     };
 
     setEstado("enviando");
     setFaltan([]);
 
+    /* El consentimiento se comprueba también aquí, no solo con el
+       `required` del HTML: por el camino de Web3Forms no hay
+       servidor nuestro que lo vuelva a mirar, y es lo que da base
+       legal al tratamiento. */
+    if (!campos.consentimiento) {
+      setFaltan(["consentimiento"]);
+      setEstado("error");
+      return;
+    }
+
     try {
-      const respuesta = await fetch("/api/contacto", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(cuerpo),
-      });
+      const respuesta = CLAVE_WEB3FORMS
+        ? await fetch(WEB3FORMS_ENDPOINT, {
+            method: "POST",
+            headers: { "content-type": "application/json", accept: "application/json" },
+            body: JSON.stringify(cuerpoWeb3Forms(campos)),
+          })
+        : await fetch("/api/contacto", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(campos),
+          });
 
-      const resultado = await respuesta.json().catch(() => ({ ok: false }));
+      const resultado = await respuesta.json().catch(() => null);
 
-      if (respuesta.ok && resultado.ok) {
+      /* Los dos destinos dicen que ha ido bien de forma distinta:
+         Web3Forms con `success`, nuestra ruta con `ok`. Y Web3Forms
+         puede devolver 200 con success:false, así que no vale
+         mirar solo el código HTTP. */
+      const entregado = respuesta.ok && (resultado?.success === true || resultado?.ok === true);
+
+      if (entregado) {
         setEstado("enviado");
         return;
       }
 
-      setFaltan(Array.isArray(resultado.faltan) ? resultado.faltan : []);
+      setFaltan(Array.isArray(resultado?.faltan) ? resultado.faltan : []);
       setEstado("error");
     } catch {
       setEstado("error");

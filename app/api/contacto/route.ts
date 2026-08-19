@@ -3,25 +3,38 @@ import { NextResponse } from "next/server";
 /* ============================================================
    RECEPCIÓN DEL FORMULARIO DE CONTACTO
 
-   No manda el email por sí misma: reenvía el mensaje a un webhook
-   que se configura por variable de entorno. Es la opción que
-   encaja con vuestro propio stack — el brief ya menciona Make y
-   Zapier — y evita meter un proveedor de email con su SDK, su
-   clave y su facturación solo para tres campos de texto.
-
-   CONFIGURACIÓN (una variable, en el panel de Vercel o en
-   .env.local para desarrollo):
+   No manda el email por sí misma: valida y reenvía a un webhook
+   configurado por variable de entorno.
 
      WEBHOOK_CONTACTO=https://hook.eu2.make.com/xxxxxxxxxxxx
 
-   En Make/Zapier, el escenario que cuelga de ese webhook decide
-   qué pasa con el mensaje: mandarlo al email, crear el contacto en
-   el CRM, avisar por WhatsApp, o las tres cosas.
+   Sirve para Make, Zapier, n8n o cualquier cosa que acepte un POST
+   con JSON. El escenario que cuelgue de ahí decide qué pasa con el
+   mensaje: mandarlo al correo, crear el contacto en el CRM, avisar
+   por WhatsApp, o las tres cosas.
 
-   SIN la variable configurada, la ruta responde 503 y el
-   formulario enseña el email directo como alternativa. Nunca
-   traga un mensaje en silencio: un formulario que dice "enviado"
-   y no envía nada es peor que no tener formulario.
+   SIN la variable configurada responde 503 y el formulario enseña
+   el email directo. Nunca traga un mensaje en silencio: un
+   formulario que dice "enviado" y no envía nada es peor que no
+   tener formulario.
+
+   ------------------------------------------------------------
+   POR QUÉ WEB3FORMS NO PASA POR AQUÍ
+
+   Se intentó. Web3Forms rechaza las peticiones que llegan desde un
+   servidor si no tienes plan de pago:
+
+     403 — "This method is not allowed. Use our API in client side
+     or contact support with server IP address (Pro plan is
+     required)"
+
+   Su plan gratuito espera que el formulario envíe desde el
+   navegador. Así que ese camino vive en el componente del
+   formulario, no aquí. Ver components/contacto/FormularioContacto.tsx.
+
+   Si algún día se monta Make, esta ruta pasa a ser la que se usa y
+   el formulario cambia de camino solo, sin tocar código: basta con
+   quitar la clave de Web3Forms y poner WEBHOOK_CONTACTO.
    ============================================================ */
 
 /* Límites de tamaño. No son validación de negocio: son el tope a
@@ -130,7 +143,7 @@ export async function POST(peticion: Request) {
   }
 
   if (!webhook) {
-    /* Sin webhook no hay a dónde mandarlo. Se deja constancia en el
+    /* Sin destino no hay a dónde mandarlo. Se deja constancia en el
        log del servidor para no perder el mensaje del todo y se avisa
        al navegador, que enseñará el email directo. */
     console.error(
@@ -144,14 +157,14 @@ export async function POST(peticion: Request) {
   }
 
   try {
-    /* Timeout explícito: sin él, un webhook caído deja la petición
+    /* Timeout explícito: sin él, un destino caído deja la petición
        colgada hasta que la corta la plataforma y el visitante se
        queda mirando el botón en "Enviando…". */
     const corte = AbortSignal.timeout(10_000);
 
     const respuesta = await fetch(webhook, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json", accept: "application/json" },
       signal: corte,
       body: JSON.stringify({
         ...datos,
@@ -167,7 +180,7 @@ export async function POST(peticion: Request) {
 
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("[contacto] fallo al llamar al webhook:", error);
+    console.error("[contacto] fallo al entregar el mensaje:", error);
     return NextResponse.json({ ok: false, error: "No se ha podido entregar el mensaje." }, { status: 502 });
   }
 }

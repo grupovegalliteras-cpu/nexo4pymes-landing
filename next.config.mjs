@@ -59,18 +59,24 @@ const nextConfig = {
         destination: "/blog/por-que-diagnosticar-antes-de-automatizar",
         permanent: true,
       },
-      // /veterinarias era la landing de conversión. Pasó a ser la home
-      // en el rediseño anterior y ahora, con el giro de posicionamiento
-      // a "cualquier pyme", vive en /sectores/veterinarias. Esa URL se
-      // repartió en llamadas en frío, así que el 301 se queda para
-      // siempre; no es una migración puntual.
-      { source: "/veterinarias", destination: "/sectores/veterinarias", permanent: true },
-      { source: "/veterinarias.html", destination: "/sectores/veterinarias", permanent: true },
+      // La landing veterinaria se retiró de internet. Estas tres URLs
+      // llevan a la home con un 301, y NO se pueden borrar:
+      //
+      //   · /veterinarias y /veterinarias.html se repartieron en
+      //     llamadas en frío. Hay gente con esa dirección apuntada en
+      //     papel; sin el 301 se encuentran un 404.
+      //   · /sectores/veterinarias estuvo indexada en Google y es la
+      //     que llevaba el posicionamiento del sector.
+      //
+      // El 301 traslada a la home lo que esas URLs tuvieran ganado en
+      // buscadores, en vez de tirarlo. Si algún día se recupera la
+      // landing, se vuelven a apuntar a ella.
+      { source: "/veterinarias", destination: "/", permanent: true },
+      { source: "/veterinarias.html", destination: "/", permanent: true },
+      { source: "/sectores/veterinarias", destination: "/", permanent: true },
 
-      // Google indexó la home cuando era la página veterinaria. Quien
-      // llegue buscando el sector desde un enlace antiguo a /sectores
-      // (sin más) aterriza en el único sector con página propia en vez
-      // de en un 404.
+      // Enlaces antiguos a /sectores (sin más): al selector de sectores
+      // de la home, que es donde vive ahora esa información.
       { source: "/sectores", destination: "/#sectores", permanent: false },
     ];
   },

@@ -4,10 +4,15 @@
    enlaces. Ningún componente escribe un precio o un contador a
    mano: todos leen de aquí.
 
+   OJO: los importes de `oferta` ya NO se muestran en ninguna
+   página. Se retiraron de /servicios y la landing veterinaria, que
+   era la otra que los enseñaba, se retiró de internet. Siguen aquí
+   para no perderlos y porque `plazasLibres` sí se usa.
+
    AL AGOTARSE LAS PLAZAS: cambia `plazasLibres` y revisa
-   `ofertaActiva`. Si `ofertaActiva` pasa a false, hay que quitar
-   la mención a la oferta en los dos sitios que la enseñan: el hero
-   de /sectores/veterinarias y la barra flotante de /servicios.
+   `ofertaActiva`. Si `ofertaActiva` pasa a false, la mención
+   desaparece sola de su único sitio: la barra flotante de
+   /servicios.
    ============================================================ */
 
 export const marca = {

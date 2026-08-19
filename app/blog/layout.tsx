@@ -36,10 +36,9 @@ export default function LayoutBlog({ children }: { children: React.ReactNode }) 
             implementación por fases después.
           </p>
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[13.5px]">
-            {/* Aquí había un enlace "Clínicas veterinarias" apuntando a la
-                home. La home ya no es veterinaria: esa landing vive en
-                /sectores/veterinarias y se llega desde el selector de
-                sectores. En el pie del blog rinden más estas tres. */}
+            {/* Aquí hubo un enlace "Clínicas veterinarias". Esa landing se
+                retiró de internet; lo del sector se ve ahora en el
+                selector de sectores de la portada. */}
             <Link href="/servicios" className="text-mint/80 transition-colors hover:text-mint">
               Servicios
             </Link>

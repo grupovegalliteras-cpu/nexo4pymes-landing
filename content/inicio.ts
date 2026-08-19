@@ -240,10 +240,6 @@ export const sectoresInicio = {
         "Recordatorios de cita para reducir las ausencias",
       ],
       resultado: "Ingresos recurrentes que dejan de perderse por no avisar a tiempo.",
-      /* Único sector con landing propia: es donde tenemos el sistema
-         montado y probado, y la página se sigue usando en captación. */
-      href: "/sectores/veterinarias",
-      enlaceTexto: "Ver la página completa del sector",
     },
     {
       id: "logistica",

@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 import { Antetitulo, Seccion, TituloSeccion } from "@/components/ui/Seccion";
@@ -196,22 +195,20 @@ export function SelectorSectores() {
                 <p className="mt-1.5 text-[15px] font-medium leading-snug text-white">{sector.resultado}</p>
               </div>
 
-              {/* Matices y landing propia, si el sector los tiene. */}
+              {/* Matices, si el sector los tiene. */}
               {"nota" in sector && sector.nota && (
                 <p className="mt-4 text-[13px] leading-snug text-white/45">{sector.nota}</p>
               )}
 
-              {"href" in sector && sector.href && (
-                <Link
-                  href={sector.href}
-                  className="group mt-5 inline-flex min-h-[44px] items-center gap-2 text-[15px] font-medium text-azul"
-                >
-                  {sector.enlaceTexto}
-                  <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </Link>
-              )}
+              {/* Aquí se pintaba un enlace a la landing propia del sector.
+                  Lo usaba solo el veterinario, que se retiró de internet,
+                  así que ya no hay ningún sector con página aparte.
+
+                  Si algún día vuelve a haberla, hay que devolver a su
+                  objeto de content/inicio.ts las claves `href` y
+                  `enlaceTexto` y volver a pintar el <Link> aquí: sin
+                  ningún sector que las tenga, TypeScript no admite
+                  leerlas. */}
             </motion.div>
           </AnimatePresence>
         </div>

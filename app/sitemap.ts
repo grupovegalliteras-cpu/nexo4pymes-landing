@@ -7,9 +7,11 @@ import { marca } from "@/content/marca";
 
    Prioridades tras el rediseño: la home general se lleva el 1 porque
    es la que persigue la keyword principal ("automatización de
-   procesos con IA para pymes"). /sectores/veterinarias baja a 0,7:
-   sigue siendo la que mejor convierte, pero ya no es la puerta de
-   entrada del sitio ni la que se posiciona en genérico. */
+   procesos con IA para pymes").
+
+   Aquí estaba /sectores/veterinarias con prioridad 0,7. Esa página se
+   retiró de internet, así que sale del sitemap: dejarla anunciaría a
+   Google una URL que responde con un 301. */
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const hoy = new Date();
@@ -32,12 +34,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${marca.dominio}/nosotros`,
       lastModified: hoy,
       changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${marca.dominio}/sectores/veterinarias`,
-      lastModified: hoy,
-      changeFrequency: "monthly",
       priority: 0.7,
     },
     { url: `${marca.dominio}/blog`, lastModified: hoy, changeFrequency: "monthly", priority: 0.6 },

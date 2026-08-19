@@ -31,62 +31,84 @@ que el método se adapta.
 | `/servicios` | El catálogo largo: qué automatizamos, método de 5 pasos, cómo se empieza (sin precios) |
 | `/nosotros` | Quiénes somos, valores, enfoque pyme, datos y RGPD |
 | `/contacto` | Formulario, calendario y datos de la empresa |
-| `/sectores/veterinarias` | Landing del sector veterinario. **Es la que mejor convierte**: se manda tras las llamadas en frío |
 | `/blog` | Artículos |
 | `/legal` | Aviso legal, privacidad y cookies |
 
-`/veterinarias` (la URL antigua, repartida en llamadas en frío) redirige
-con un 301 a `/sectores/veterinarias`. Ese redirect no se toca.
+## La landing veterinaria se retiró
+
+Ya no está online. `/veterinarias`, `/veterinarias.html` y
+`/sectores/veterinarias` **redirigen a la home con un 301**, y esos tres
+redirects no se pueden borrar: las dos primeras se repartieron en llamadas
+en frío y hay gente con esa dirección apuntada, y la tercera estuvo
+indexada en Google.
+
+**El código no se ha borrado, solo está dormido:** `content/vet.ts` y
+`components/vet/` siguen en el repo sin que nada los importe (salvo
+`Marquesina`, que la usa la home). Para volver a publicarla:
+
+1. Recuperar `app/sectores/veterinarias/page.tsx` del historial de git.
+2. Quitar el redirect de `/sectores/veterinarias` en `next.config.mjs` y
+   devolver los otros dos a esa URL.
+3. Volver a añadirla a `app/sitemap.ts`.
+4. Devolver `href` y `enlaceTexto` al sector `veterinarias` de
+   `content/inicio.ts`, y volver a pintar el enlace en
+   `components/inicio/SelectorSectores.tsx` (hay un comentario donde iba).
+
+El sector veterinario **sigue en el selector de la portada** como los
+otros cinco, solo que ya sin página propia detrás.
 
 ## Dónde se toca cada cosa
 
 | Quiero cambiar… | Archivo |
 |---|---|
 | Las plazas, el enlace de Calendly, el email | `content/marca.ts` |
-| El precio (solo lo usa ya la landing veterinaria) | `content/marca.ts` (`oferta`) |
+| Las cifras de la oferta (ya no se muestran en ninguna página) | `content/marca.ts` (`oferta`) |
 | Textos de la home | `content/inicio.ts` |
 | **Los sectores del selector de la home** | `content/inicio.ts` (`sectoresInicio`) |
 | Textos de servicios y de «cómo se empieza» | `content/servicios.ts` |
 | Textos de quiénes somos y RGPD | `content/nosotros.ts` |
 | Textos de contacto y del formulario | `content/contacto.ts` |
-| Textos de la landing de veterinarias | `content/vet.ts` |
+| Textos de la landing veterinaria (retirada, dormida) | `content/vet.ts` |
 | La conversación de Luna | `content/vet.ts` (`comoVaVet.burbujas`) |
 | Aviso legal / privacidad / cookies | `app/legal/page.tsx` |
 | Colores, tipografías y radios | `app/globals.css` (bloque `@theme`) |
 
 **Añadir un sector nuevo:** un objeto más en `sectoresInicio.sectores`
 (`content/inicio.ts`). Nada más — el selector, el panel y la navegación
-por teclado se adaptan solos. Si ese sector merece landing propia, se le
-añade `href` y `enlaceTexto`.
+por teclado se adaptan solos. Ningún sector tiene ya página propia; si
+alguno vuelve a tenerla, hay un comentario en `SelectorSectores.tsx` con
+lo que hay que reponer.
 
 **Publicar un artículo nuevo:** crea `app/blog/<slug>/page.mdx` copiando
 el que ya hay, y añade el slug a `app/sitemap.ts` y la tarjeta a
 `content/blog.ts` (`blogHome`).
 
-## Precios
+## Nada de precios ni de pagos
 
-`/servicios` **no muestra precios**. La sección «Cómo se empieza»
-conserva el modelo de tres pasos (llamada gratis → diagnóstico de pago →
-implementación fase a fase) pero sin cifras: se dan en la llamada.
+`/servicios` **no habla de dinero en ningún sitio**: ni cifras, ni
+«gratis», ni «se paga», ni presupuestos. Las tres tarjetas de «Cómo se
+empieza» describen qué es cada paso — **15 minutos · Por escrito · Fase a
+fase** — y las cifras se dan en la llamada.
 
-Eso es deliberado y conviene no deshacerlo a medias. El modelo de tres
-pasos es el que sostiene el argumento de que **el diagnóstico se cobra**,
-que es lo que lo distingue de una llamada comercial disfrazada. Si se
-quitara también la estructura, la web dejaría de explicar por qué pagar
-por un diagnóstico es una ventaja para el cliente.
+Fue una decisión explícita, no un olvido. Si alguien vuelve a meter ahí
+importes o la palabra «pago», está deshaciendo algo deliberado. Hay un
+comentario largo en `content/servicios.ts` que lo explica.
 
-Para volver a poner cifras: `comoEmpezar` en `content/servicios.ts` y el
-componente `components/servicios/ComoEmpezar.tsx`. El historial de git
-tiene la versión con precios.
+Se quedan a propósito dos palabras que parecen dinero pero no lo son:
+«precios» y «Presupuestos» en la lista de servicios describen lo que la
+automatización hace para **el cliente** (responder por los precios de *su*
+negocio, seguir *sus* presupuestos).
 
-**La landing veterinaria SÍ sigue mostrando precios**
-(`components/vet/OfertaVet.tsx`). Es una página aparte, la que mejor
-convierte, y no se tocó.
+También se queda «llamada gratis» en los botones: dice que **no** hay que
+pagar, y es el CTA de todo el sitio, no solo de esa página.
+
+Las cifras siguen en `content/marca.ts` (`oferta`) pero ya no las muestra
+ninguna página. El historial de git tiene la versión con precios.
 
 **Cuando se agoten las 3 plazas:** cambia `plazasLibres` en
 `content/marca.ts`. Si se acaba la oferta entera, pon `ofertaActiva: false`
-y revisa los dos sitios que la mencionan: el hero de
-`/sectores/veterinarias` y la barra flotante de `/servicios`.
+y revisa la barra flotante de `/servicios`, que es el único sitio que
+sigue mencionando las plazas.
 
 ## Testimonios
 
@@ -212,7 +234,7 @@ Vercel despliega al hacer push a `main`. El proyecto debe estar como
 salida personalizado.
 
 Los `redirects` de `next.config.mjs` mandan las URLs `.html` antiguas y
-`/veterinarias` a las nuevas con un 301, así que el posicionamiento
+`/veterinarias` a la home con un 301, así que el posicionamiento
 acumulado no se pierde.
 
 Los dos archivos `google*.html` de Search Console y la etiqueta de

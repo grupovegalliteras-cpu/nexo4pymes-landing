@@ -19,16 +19,22 @@ import { esquemaFaq } from "@/lib/esquema";
 /* ============================================================
    HOME — página general de pymes.
 
-   Antes esta URL servía la landing veterinaria, que ahora vive en
-   /sectores/veterinarias. El cambio responde al giro de
-   posicionamiento: la propuesta deja de ser "especialistas en un
-   nicho" y pasa a ser "automatización con IA para cualquier
-   pyme", con los sectores como demostración de adaptabilidad.
+   Dos giros de posicionamiento acumulados en esta página:
+     1º dejó de ser landing veterinaria y pasó a hablar a cualquier
+        pyme, con los sectores como prueba de adaptabilidad;
+     2º dejó de vender "automatización con IA" y pasa a vender
+        SOFTWARE A MEDIDA — CRM propio, configuradores web e
+        integraciones. La IA sigue dentro, como tecnología de
+        apoyo, no como el producto.
+
+   El razonamiento largo del segundo giro está en la cabecera de
+   content/inicio.ts, incluida la promesa antigua que ya no se
+   puede usar ("no cambiáis de programa").
 
    ORDEN DE LECTURA, y por qué:
      1. hero       — qué hacemos y para quién, en una pantalla
      2. antes/desp.— el problema, en su lenguaje, no en el nuestro
-     3. servicios  — qué se compra, en concreto
+     3. servicios  — las tres piezas que se construyen
      4. sectores   — "esto va conmigo": el momento de conversión
      5. proceso    — cómo se empieza, para bajar el riesgo percibido
      6. compromisos— quién responde si sale mal
@@ -40,9 +46,9 @@ import { esquemaFaq } from "@/lib/esquema";
    dentro (FAQ, letra pequeña) va al final.
    ============================================================ */
 
-const titulo = "Automatización de procesos con IA para pymes";
+const titulo = "Desarrollo de software a medida para pymes";
 const descripcion =
-  "Automatizamos atención al cliente, citas, administración y seguimiento de vuestra pyme con IA, sobre las herramientas que ya usáis. Sin cambiar de programa y sin permanencia.";
+  "CRM propio, configuradores de producto para la web e integraciones automatizadas, hechos a la medida de vuestra pyme. Sin licencias mensuales y sin permanencia.";
 
 export const metadata: Metadata = {
   title: { absolute: `${titulo} | Nexo4Pymes` },
@@ -60,7 +66,7 @@ export const metadata: Metadata = {
         url: "/assets/og-automatizacion-pymes.jpg",
         width: 1200,
         height: 630,
-        alt: "Nexo4Pymes — automatización de procesos con IA para pymes",
+        alt: "Nexo4Pymes — software a medida para pymes",
       },
     ],
   },
@@ -99,7 +105,7 @@ export default function PaginaInicio() {
         redes
         enlaces={[
           { href: "#cambio", texto: "Qué cambia" },
-          { href: "#servicios", texto: "Servicios" },
+          { href: "#servicios", texto: "Qué construimos" },
           { href: "#sectores", texto: "Sectores" },
           { href: "/nosotros", texto: "Quiénes somos" },
           { href: "/contacto", texto: "Contacto" },
@@ -107,7 +113,7 @@ export default function PaginaInicio() {
         ]}
         cruce={{
           pregunta: "¿Queréis el detalle de cada servicio?",
-          texto: "Servicios, alcance y precios",
+          texto: "Servicios, alcance y límites",
           href: "/servicios",
         }}
       />

@@ -37,7 +37,7 @@ const mono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(marca.dominio),
   title: {
-    default: "Automatización de procesos con IA para pymes | Nexo4Pymes",
+    default: "Soluciones digitales a medida para pymes | Nexo4Pymes",
     template: "%s | Nexo4Pymes",
   },
   authors: [{ name: "Nexo4Pymes" }],

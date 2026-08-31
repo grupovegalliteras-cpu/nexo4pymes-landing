@@ -107,7 +107,7 @@ function Conmutador() {
           dos pestañas que gobiernan el mismo panel. */}
       <div
         role="tablist"
-        aria-label="Comparar el negocio antes y después de automatizar"
+        aria-label="Comparar el negocio con y sin software a medida"
         className="relative grid grid-cols-2 gap-1 rounded-full border border-white/10 bg-white/[.03] p-1"
       >
         {/* Pastilla que se desliza por debajo de las etiquetas. */}

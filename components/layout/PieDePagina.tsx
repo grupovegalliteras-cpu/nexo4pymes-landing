@@ -63,8 +63,8 @@ export function PieDePagina({
               className="h-auto w-[150px] brightness-125 sm:w-[190px]"
             />
             <p className="mt-3 max-w-[42ch] text-[14px] leading-relaxed text-white/55 sm:mt-4">
-              Automatización de procesos con inteligencia artificial para pymes y autónomos.
-              Mallorca, Illes Balears.
+              Desarrollo de software a medida para pymes y autónomos: CRM, configuradores
+              web e integraciones. Mallorca, Illes Balears.
             </p>
 
             {/* Solo Instagram. El icono de Facebook se retiró del sitio. */}

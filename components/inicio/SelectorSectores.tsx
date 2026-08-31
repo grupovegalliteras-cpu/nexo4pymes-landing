@@ -163,7 +163,7 @@ export function SelectorSectores() {
 
               {/* QUÉ SE AUTOMATIZA */}
               <p className="mt-6 font-mono text-[10.5px] uppercase tracking-[0.1em] text-white/45">
-                Qué se automatiza aquí
+                Qué se construye aquí
               </p>
               <ul className="mt-3 space-y-2.5">
                 {sector.automatizaciones.map((item, i) => (

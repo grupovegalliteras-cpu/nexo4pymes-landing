@@ -6,8 +6,10 @@ import { marca } from "@/content/marca";
    más de dos o tres).
 
    Prioridades tras el rediseño: la home general se lleva el 1 porque
-   es la que persigue la keyword principal ("automatización de
-   procesos con IA para pymes").
+   es la que persigue la keyword principal. Con el giro de
+   posicionamiento esa keyword pasó de "automatización de procesos
+   con IA para pymes" a "software / soluciones digitales a medida
+   para pymes".
 
    Aquí estaba /sectores/veterinarias con prioridad 0,7. Esa página se
    retiró de internet, así que sale del sitemap: dejarla anunciaría a

@@ -7,7 +7,7 @@ import { blogHome } from "@/content/blog";
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Artículos sobre qué se puede automatizar en un negocio pequeño, en qué orden conviene hacerlo y qué errores salen caros.",
+    "Artículos sobre qué software necesita de verdad un negocio pequeño, en qué orden conviene montarlo y qué errores salen caros.",
   alternates: { canonical: "/blog" },
 };
 

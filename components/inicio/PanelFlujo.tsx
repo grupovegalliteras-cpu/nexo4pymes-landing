@@ -8,10 +8,17 @@ import { Icono, type NombreIcono } from "@/components/ui/Icono";
 /* ============================================================
    PANEL DE FLUJO — el visual del hero
 
-   Un mismo esqueleto (entra algo → la IA decide → se ejecutan
-   acciones) recorriendo ejemplos de sectores distintos. Es el
-   argumento central de la home convertido en imagen: la
-   tecnología no cambia, cambia el proceso.
+   Un mismo esqueleto (entra algo → el sistema lo procesa → se
+   ejecutan acciones) recorriendo LAS TRES PIEZAS que vendemos:
+   configurador, sistema de gestión e integraciones. Es el
+   argumento central de la home convertido en imagen.
+
+   Antes los tres escenarios eran sectores distintos y el paso 2
+   se llamaba siempre "La IA interpreta y decide". Con el giro a
+   software a medida eso contaba el producto antiguo —la IA como
+   producto—, así que ahora cada escenario nombra la pieza que
+   está trabajando y la IA aparece solo donde de verdad actúa,
+   en el tercero.
 
    Por qué animación y no una captura:
    · las dos fotos del proyecto son de un WhatsApp veterinario y
@@ -28,42 +35,50 @@ import { Icono, type NombreIcono } from "@/components/ui/Icono";
    ============================================================ */
 
 type Escenario = {
-  sector: string;
+  /* La pieza de software que protagoniza el ejemplo. Sale en la
+     píldora de la esquina y en el aria-label de los puntos. */
+  pieza: string;
   canal: string;
   entrada: string;
+  /* Etiqueta del paso 2. Va por escenario porque cada pieza hace
+     una cosa distinta: no todas "deciden con IA". */
+  proceso: string;
   decision: string;
   acciones: { icono: NombreIcono; texto: string }[];
 };
 
 const ESCENARIOS: Escenario[] = [
   {
-    sector: "Comercio",
-    canal: "WhatsApp",
-    entrada: "¿Os queda la referencia 4120 en azul? ¿Y para cuándo llegaría?",
-    decision: "Consulta stock y plazos de entrega",
+    pieza: "Configurador",
+    canal: "vuestra web",
+    entrada: "La mesa de 180 × 90, en roble macizo y con las patas negras.",
+    proceso: "El configurador aplica vuestras reglas",
+    decision: "Calcula precio y plazo con vuestros márgenes",
     acciones: [
-      { icono: "mensaje", texto: "Respuesta enviada con stock real" },
-      { icono: "lista", texto: "Contacto guardado como lead" },
+      { icono: "documento", texto: "Presupuesto enviado al momento" },
+      { icono: "lista", texto: "Ficha creada en vuestro sistema" },
     ],
   },
   {
-    sector: "Salud",
-    canal: "Web",
-    entrada: "Necesito cambiar mi cita del jueves, me ha surgido algo.",
-    decision: "Busca huecos reales en el calendario",
+    pieza: "Gestión",
+    canal: "el formulario",
+    entrada: "Solicitud de reforma de baño, 6 m², para el mes que viene.",
+    proceso: "Vuestro sistema lo clasifica y lo asigna",
+    decision: "Entra en la fase que le toca, con responsable",
     acciones: [
-      { icono: "agenda", texto: "Cita movida al viernes 10:00" },
-      { icono: "campana", texto: "Recordatorio reprogramado" },
+      { icono: "agenda", texto: "Visita propuesta para el jueves" },
+      { icono: "campana", texto: "Seguimiento programado a 3 días" },
     ],
   },
   {
-    sector: "Servicios",
-    canal: "Email",
-    entrada: "Adjunto la documentación que me pedisteis para el expediente.",
-    decision: "Clasifica el documento y actualiza el expediente",
+    pieza: "Integración",
+    canal: "email",
+    entrada: "Adjunto el albarán firmado del pedido 4120.",
+    proceso: "La IA lee el documento",
+    decision: "Extrae los datos y actualiza el pedido",
     acciones: [
-      { icono: "documento", texto: "Archivado en su carpeta" },
-      { icono: "verificado", texto: "Aviso al responsable del caso" },
+      { icono: "verificado", texto: "Pedido marcado como entregado" },
+      { icono: "grafico", texto: "Factura lista, sin teclear nada" },
     ],
   },
 ];
@@ -100,13 +115,13 @@ export function PanelFlujo() {
         <div className="flex items-center justify-between gap-3 border-b border-white/8 pb-3.5">
           <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.12em] text-white/60">
             <span aria-hidden="true" className="anim-respirar h-1.5 w-1.5 rounded-full bg-mint" />
-            Flujo activo
+            Sistema en marcha
           </span>
 
           {/* Sector del escenario en curso. Cambia con el contenido. */}
           <AnimatePresence mode="wait" initial={false}>
             <motion.span
-              key={escenario.sector}
+              key={escenario.pieza}
               initial={reducido ? false : { opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={reducido ? undefined : { opacity: 0, y: 4 }}
@@ -114,7 +129,7 @@ export function PanelFlujo() {
               className="rounded-full border border-white/12 bg-white/[.05] px-2.5 py-1
                          font-mono text-[10px] uppercase tracking-[0.1em] text-white/70"
             >
-              {escenario.sector}
+              {escenario.pieza}
             </motion.span>
           </AnimatePresence>
         </div>
@@ -143,7 +158,7 @@ export function PanelFlujo() {
               <Conector />
 
               {/* PASO 2 — la IA decide */}
-              <Paso etiqueta="La IA interpreta y decide" numero="2">
+              <Paso etiqueta={escenario.proceso} numero="2">
                 <div className="flex items-center gap-3 rounded-tarjeta border border-azul/25 bg-azul/10 px-3.5 py-3">
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-caja bg-gradient-to-br from-azul to-violeta text-white">
                     <Icono nombre="engranaje" size={16} />
@@ -190,15 +205,15 @@ export function PanelFlujo() {
             que la rueda vuelva a pasar. */}
         <div className="flex items-center justify-between gap-3 border-t border-white/8 pt-3.5">
           <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-white/40">
-            Mismo sistema · otro sector
+            Tres piezas · un solo sistema
           </span>
           <div className="flex gap-1.5">
             {ESCENARIOS.map((item, i) => (
               <button
-                key={item.sector}
+                key={item.pieza}
                 type="button"
                 onClick={() => setIndice(i)}
-                aria-label={`Ver el ejemplo de ${item.sector}`}
+                aria-label={`Ver el ejemplo de ${item.pieza}`}
                 aria-current={i === indice}
                 /* El punto mide 6 px pero el botón 32: el área pulsable
                    cumple sin engordar el indicador. */

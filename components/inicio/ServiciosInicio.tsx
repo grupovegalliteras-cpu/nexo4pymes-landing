@@ -6,11 +6,16 @@ import { CajaIcono } from "@/components/ui/Icono";
 import { serviciosInicio } from "@/content/inicio";
 
 /* ============================================================
-   SERVICIOS DESTACADOS (home)
+   LAS TRES PIEZAS (home)
 
-   Seis módulos, uno por área. El detalle largo de cada uno vive
-   en /servicios: aquí solo hay lo justo para que alguien
+   Tres tarjetas, una por pieza de software: gestión,
+   configurador e integraciones. El detalle largo de cada una
+   vive en /servicios; aquí solo hay lo justo para que alguien
    reconozca su problema y siga bajando.
+
+   Eran seis módulos de automatización. Tres encajan en una fila
+   exacta en escritorio (lg:grid-cols-3); una cuarta se quedaría
+   sola en la segunda fila.
 
    El tinte del resplandor de cada tarjeta se toma del `tono` del
    contenido, para que las columnas no queden todas del mismo

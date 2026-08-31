@@ -166,7 +166,7 @@ export default function PaginaContacto() {
         ]}
         cruce={{
           pregunta: "¿Todavía no sabéis si os encaja?",
-          texto: "Ver qué automatizamos en vuestro sector",
+          texto: "Ver qué construimos en vuestro sector",
           href: "/#sectores",
         }}
       />

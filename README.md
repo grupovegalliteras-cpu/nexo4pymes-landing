@@ -19,16 +19,47 @@ despliega, con todo optimizado):
 npm run build && npm start
 ```
 
-## Estructura del sitio
+## Qué vendemos ahora (leer antes de tocar el copy)
 
-Tras el rediseño de posicionamiento, la web ya no se dirige a un solo
-sector. La home habla a cualquier pyme y los sectores son la prueba de
-que el método se adapta.
+La web ha dado **dos giros de posicionamiento**, y el segundo es el que
+manda hoy:
+
+1. Dejó de ser una landing veterinaria y pasó a hablar a cualquier pyme.
+2. Dejó de vender «automatización de procesos con IA» y pasa a vender
+   **soluciones digitales a medida**: CRMs propios, configuradores de
+   producto para la web e integraciones. La IA sigue dentro, pero como
+   tecnología de apoyo — no como el producto.
+
+**El enemigo del argumento cambió**: ya no es «hacerlo a mano», es *el
+software genérico y rígido al que la pyme se tiene que adaptar*.
+
+**Y una promesa antigua dejó de poder usarse.** Antes se decía «no
+cambiáis de programa, montamos encima de lo que ya usáis». Eso ahora
+sería falso: el programa lo construimos nosotros. Lo que tranquiliza en
+su lugar es **la propiedad** — el código y los datos son del cliente, sin
+licencia mensual y sin quedar atado a nosotros. Si alguien vuelve a
+escribir «montamos encima de lo que ya usáis» como argumento principal,
+está reintroduciendo el posicionamiento antiguo sin darse cuenta.
+
+Las tres piezas que se venden, y en las que está estructurado todo el
+copy de `/` y `/servicios`:
+
+| Pieza | Qué es |
+|---|---|
+| CRMs y sistemas de gestión a medida | El programa que lleva el negocio por dentro, hecho a su operativa |
+| Configuradores y diseñadores web | El cliente final personaliza, diseña o cotiza en la web del cliente |
+| Automatización e integraciones con IA | El pegamento entre las piezas. Aquí vive lo que antes se vendía suelto |
+
+**Voz:** toda la web habla de «vosotros». El hero de la home es la única
+excepción — está en «tú» — porque su texto vino dado palabra por palabra.
+Es el único bloque que habría que tocar para unificarlo.
+
+## Estructura del sitio
 
 | URL | Qué es |
 |---|---|
-| `/` | Home general. Hero, antes/después, servicios, **selector de sectores**, proceso, compromisos, FAQ |
-| `/servicios` | El catálogo largo: qué automatizamos, método de 5 pasos, cómo se empieza (sin precios) |
+| `/` | Home general. Hero, antes/después, **las tres piezas**, **selector de sectores**, proceso, compromisos, FAQ |
+| `/servicios` | El catálogo largo: las tres piezas con su alcance, método de 5 pasos, cómo se empieza (sin precios) |
 | `/nosotros` | Quiénes somos, valores, enfoque pyme, datos y RGPD |
 | `/contacto` | Formulario, calendario y datos de la empresa |
 | `/blog` | Artículos |
@@ -66,6 +97,8 @@ otros cinco, solo que ya sin página propia detrás.
 | Textos de la home | `content/inicio.ts` |
 | **Los sectores del selector de la home** | `content/inicio.ts` (`sectoresInicio`) |
 | Textos de servicios y de «cómo se empieza» | `content/servicios.ts` |
+| **Las tres piezas** (home y /servicios) | `content/inicio.ts` (`serviciosInicio`) y `content/servicios.ts` (`servicios`) |
+| Los ejemplos animados del hero | `components/inicio/PanelFlujo.tsx` (`ESCENARIOS`) |
 | Textos de quiénes somos y RGPD | `content/nosotros.ts` |
 | Textos de contacto y del formulario | `content/contacto.ts` |
 | Textos de la landing veterinaria (retirada, dormida) | `content/vet.ts` |
@@ -85,19 +118,24 @@ el que ya hay, y añade el slug a `app/sitemap.ts` y la tarjeta a
 
 ## Nada de precios ni de pagos
 
-`/servicios` **no habla de dinero en ningún sitio**: ni cifras, ni
-«gratis», ni «se paga», ni presupuestos. Las tres tarjetas de «Cómo se
-empieza» describen qué es cada paso — **15 minutos · Por escrito · Fase a
-fase** — y las cifras se dan en la llamada.
+**Ni `/servicios` ni la home hablan de dinero**: ni cifras, ni «se paga»,
+ni presupuestos. Las tres tarjetas de «Cómo se empieza» describen qué es
+cada paso — **15 minutos · Por escrito · Fase a fase** — y las cifras se
+dan en la llamada.
+
+La regla empezó solo en `/servicios`; con el giro de posicionamiento se
+aplicó también a la home, que todavía decía «de pago» en el paso del
+diagnóstico y tenía una pregunta entera sobre por qué se cobra.
 
 Fue una decisión explícita, no un olvido. Si alguien vuelve a meter ahí
 importes o la palabra «pago», está deshaciendo algo deliberado. Hay un
 comentario largo en `content/servicios.ts` que lo explica.
 
-Se quedan a propósito dos palabras que parecen dinero pero no lo son:
-«precios» y «Presupuestos» en la lista de servicios describen lo que la
-automatización hace para **el cliente** (responder por los precios de *su*
-negocio, seguir *sus* presupuestos).
+Se quedan a propósito las palabras que parecen dinero pero no lo son:
+«precio», «presupuesto» y «márgenes» describen lo que el software hace
+para **el cliente** (el configurador calcula *sus* precios con *sus*
+márgenes, el sistema sigue *sus* presupuestos). Eso es producto, no
+tarifa.
 
 También se queda «llamada gratis» en los botones: dice que **no** hay que
 pagar, y es el CTA de todo el sitio, no solo de esa página.

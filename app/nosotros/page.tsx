@@ -83,8 +83,8 @@ export default function PaginaNosotros() {
           { href: "/blog", texto: "Blog" },
         ]}
         cruce={{
-          pregunta: "¿Queréis ver qué automatizamos?",
-          texto: "Servicios, método y precios",
+          pregunta: "¿Queréis ver qué construimos?",
+          texto: "Servicios, método y alcance",
           href: "/servicios",
         }}
       />

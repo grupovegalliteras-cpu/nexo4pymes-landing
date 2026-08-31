@@ -17,7 +17,7 @@ import { marca } from "@/content/marca";
 export const metadata: Metadata = {
   title: "Aviso legal, privacidad y cookies",
   description:
-    "Aviso legal, política de privacidad y política de cookies de Nexo4Pymes, automatización de procesos con IA para pymes y autónomos.",
+    "Aviso legal, política de privacidad y política de cookies de Nexo4Pymes, desarrollo de software a medida para pymes y autónomos.",
   alternates: { canonical: "/legal" },
   robots: { index: false, follow: true },
 };
@@ -133,8 +133,8 @@ export default function PaginaLegal() {
                     </a>
                   </li>
                   <li>
-                    <strong className="font-medium text-[#F4F6FF]">Actividad:</strong> automatización de
-                    procesos mediante inteligencia artificial para pymes y autónomos
+                    <strong className="font-medium text-[#F4F6FF]">Actividad:</strong> desarrollo de
+                    software a medida e integración de sistemas para pymes y autónomos
                   </li>
                   <li>
                     <strong className="font-medium text-[#F4F6FF]">Datos registrales:</strong>{" "}

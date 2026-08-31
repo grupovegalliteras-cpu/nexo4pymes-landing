@@ -32,8 +32,8 @@ export default function LayoutBlog({ children }: { children: React.ReactNode }) 
         <div className="malla malla-fade absolute inset-0 opacity-60" aria-hidden="true" />
         <div className="relative mx-auto max-w-[760px]">
           <p className="max-w-[52ch] text-[14.5px] leading-relaxed text-white/55">
-            Automatización de procesos con IA para pymes y autónomos. Diagnóstico primero,
-            implementación por fases después.
+            Soluciones digitales a medida para pymes y autónomos. Diagnóstico primero,
+            desarrollo por fases después.
           </p>
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[13.5px]">
             {/* Aquí hubo un enlace "Clínicas veterinarias". Esa landing se

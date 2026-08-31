@@ -14,7 +14,7 @@ import { faqServicios, navServicios } from "@/content/servicios";
 import { marca, oferta } from "@/content/marca";
 import { esquemaFaq } from "@/lib/esquema";
 
-/* /servicios — el catálogo largo: qué automatizamos con su alcance
+/* /servicios — el catálogo largo: qué construimos con su alcance
    y sus límites, cómo trabajamos en cinco pasos, por qué el
    diagnóstico va primero y cómo se empieza.
 
@@ -24,9 +24,9 @@ import { esquemaFaq } from "@/lib/esquema";
    iba. Ahora los sectores viven en la home (como selector) y
    quiénes somos + RGPD en /nosotros. Aquí solo queda servicio. */
 
-const titulo = "Servicios de automatización con IA para pymes";
+const titulo = "Soluciones digitales a medida para pymes";
 const descripcion =
-  "Qué automatizamos exactamente —atención al cliente, citas, administración, leads, datos—, cómo trabajamos en cinco pasos y cómo se empieza.";
+  "Qué construimos exactamente —CRM a medida, configuradores de producto web e integraciones con IA—, cómo trabajamos en cinco pasos y cómo se empieza.";
 
 export const metadata: Metadata = {
   title: { absolute: `${titulo} | Nexo4Pymes` },
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
         url: "/assets/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Nexo4Pymes — servicios de automatización con IA",
+        alt: "Nexo4Pymes — soluciones digitales a medida",
       },
     ],
   },

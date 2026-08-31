@@ -4,9 +4,9 @@
 
 export const blogHome = {
   categoria: "Blog",
-  titular: "Automatización para pymes, explicada sin tecnicismos",
+  titular: "Tecnología para pymes, explicada sin tecnicismos",
   entradilla:
-    "Artículos sobre qué se puede automatizar en un negocio pequeño, en qué orden conviene hacerlo y qué errores salen caros.",
+    "Artículos sobre qué software necesita de verdad un negocio pequeño, en qué orden conviene montarlo y qué errores salen caros.",
   publicado: {
     etiqueta: "Diagnóstico previo · 5 min",
     titulo: "Por qué automatizar sin diagnosticar antes puede hundirte el negocio",
@@ -16,7 +16,7 @@ export const blogHome = {
   },
   proximos: [
     "Qué es un diagnóstico de procesos y qué te llevas de él",
-    "Cómo automatizar la atención de WhatsApp en un negocio pequeño",
-    "Recordatorios de citas automáticos: cómo reducir las ausencias",
+    "CRM a medida o software de catálogo: cómo elegir sin equivocarse",
+    "Configuradores de producto: cuándo compensan y cuándo no",
   ],
 };

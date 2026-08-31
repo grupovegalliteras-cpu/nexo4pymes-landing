@@ -10,7 +10,7 @@ export const esquemaNegocio = {
   "@id": `${marca.dominio}/#business`,
   name: marca.nombre,
   description:
-    "Agencia de automatización de procesos con inteligencia artificial para pymes y autónomos. Diagnóstico primero, implementación por fases después.",
+    "Desarrollo de soluciones digitales a medida para pymes y autónomos: CRM propios, configuradores de producto para la web e integraciones automatizadas. Diagnóstico primero, desarrollo por fases después.",
   url: marca.dominio,
   email: marca.email,
   image: `${marca.dominio}/assets/og-image.jpg`,
@@ -29,10 +29,11 @@ export const esquemaNegocio = {
      aquí una página que no reconocemos en la web sería incoherente. */
   sameAs: [marca.instagram],
   knowsAbout: [
-    "Automatización de procesos",
+    "Desarrollo de software a medida",
+    "CRM a medida para pymes",
+    "Configuradores de producto para la web",
+    "Integración de sistemas y automatización de procesos",
     "Inteligencia artificial aplicada a pymes",
-    "Atención automática de WhatsApp",
-    "Gestión y recordatorios de citas",
   ],
 };
 

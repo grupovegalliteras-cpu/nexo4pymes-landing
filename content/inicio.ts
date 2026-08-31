@@ -50,13 +50,33 @@ export const navInicio = [
 
 export const heroInicio = {
   categoria: "Soluciones Digitales a Medida",
-  /* titularA sale en blanco y titularB en degradado: el corte está
-     puesto para que el degradado caiga sobre «adaptado al 100 % a
-     tu negocio», que es la parte que nos diferencia. */
-  titularA: "El software que tu pyme necesita,",
-  titularB: "adaptado al 100% a tu negocio.",
+  /* EL TITULAR NOMBRA LAS TRES COSAS QUE VENDEMOS —software,
+     automatización e IA— porque decir solo «software» dejaba fuera
+     la mitad del negocio. Si alguien solo mira el hero, tiene que
+     salir sabiendo las tres. La etiqueta de arriba pone el
+     paraguas («Soluciones Digitales a Medida») y el titular lo
+     desglosa.
+
+     titularA sale en blanco y titularB en degradado: el corte está
+     puesto para que el degradado caiga sobre «a la medida de tu
+     negocio», que es lo que nos diferencia y lo que cierra los
+     tres elementos de la lista a la vez.
+
+     OJO CON LA LONGITUD. El titular es 'clamp(2.3rem, 7.4vw,
+     4.15rem)': a 66 px y en una columna de 590 px, cada ~15
+     caracteres es una línea más. Medido:
+       56 caracteres → 4 líneas (287 px)  ← este
+       61 caracteres → 5 líneas
+       71 caracteres → 6 líneas (430 px), y en móvil empuja las
+                       métricas fuera de pantalla
+     Una versión anterior decía «Software a medida, automatización
+     e IA, adaptados al 100% a tu negocio»: nombraba las tres pero
+     se comía el hero. El «100%» no se perdió — lo lleva la tercera
+     métrica de aquí abajo. */
+  titularA: "Software, automatización e IA",
+  titularB: "a la medida de tu negocio.",
   parrafo:
-    "Diseñamos tu CRM propio, configuradores de producto web y automatizaciones integradas para que tu empresa funcione sin caos ni herramientas genéricas.",
+    "Diseñamos tu CRM propio, los configuradores de tu web y las automatizaciones con IA que lo conectan todo. Para que tu empresa funcione sin caos ni herramientas genéricas.",
   ctaPrincipal: "Agendar llamada gratis",
   ctaSecundario: { texto: "Ver qué construimos ↓", href: "#servicios" },
   micro: "15 min · sin compromiso · sin tarjeta",

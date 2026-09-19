@@ -15,21 +15,38 @@ import "./globals.css";
    Rediseño: Sora pasa a ser la tipografía de titulares (antes era
    Space Grotesk) y Space Grotesk baja a texto de cuerpo (antes Inter),
    igual que en la maqueta del rediseño. */
+/* SUBCONJUNTOS Y PESOS — no es un detalle de gusto, son kilobytes.
+   Las tres fuentes cargaban "latin" y "latin-ext", y Sora traía además
+   cinco pesos. Ocho archivos y 117 KB, el mayor peso del sitio después
+   del JavaScript, y en móvil eso se paga en el LCP.
+
+   · latin-ext fuera. Cubre U+0100–U+02AF y similares: eslavo, báltico,
+     turco. Se revisó todo el contenido carácter a carácter y no hay ni
+     uno en ese rango — las tildes, la ñ y la ç del catalán están en
+     "latin". Las flechas y los símbolos (→ ✓ ⚠) tampoco están en
+     latin-ext, así que ya venían de la fuente del sistema antes y
+     siguen igual.
+     SI ALGÚN DÍA se publica un nombre con caracteres de Europa del
+     Este, habrá que devolverlo: se vería con la tipografía del
+     sistema en vez de con la de marca.
+
+   · El peso 800 de Sora no lo usaba nadie. Se buscaron las clases de
+     grosor en todo el proyecto: solo hay 400, 500, 600 y 700. */
 const titular = Sora({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--fuente-titular",
   display: "swap",
 });
 
 const texto = Space_Grotesk({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   variable: "--fuente-texto",
   display: "swap",
 });
 
 const mono = IBM_Plex_Mono({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--fuente-mono",
   display: "swap",

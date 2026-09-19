@@ -55,6 +55,13 @@ export const marca = {
      Si algún día se recupera la página de Facebook, basta con volver
      a añadir la clave aquí y el enlace en el pie y en /nosotros. */
   instagram: "https://instagram.com/nexo4pymes",
+
+  /* CENTRALAVISOS — producto propio con landing aparte.
+     A 19 de septiembre de 2026 centralavisos.com todavía no resuelve,
+     así que se enlaza el despliegue de Vercel.
+     TODO(HUMANO): cuando el dominio esté publicado, cambiar esta línea
+     y ya está: la web entera enlaza desde aquí. */
+  centralAvisos: "https://landing-central-avisos.vercel.app/",
   razonSocial: "Nexo4Pymes S.L. (en constitución)",
   localidad: "Mallorca",
   region: "Illes Balears",

@@ -43,6 +43,7 @@
 export const navInicio = [
   { href: "#cambio", texto: "Qué cambia" },
   { href: "#servicios", texto: "Qué construimos" },
+  { href: "#central-avisos", texto: "CentralAvisos" },
   { href: "#sectores", texto: "Sectores" },
   { href: "#proceso", texto: "Proceso" },
   { href: "#faq", texto: "Preguntas" },
@@ -102,14 +103,28 @@ export const heroInicio = {
 };
 
 /* Píldoras de la marquesina bajo el hero. Compromisos, no promesas
-   de resultado. «El sistema es vuestro» y «Sin licencias mensuales»
-   son las que sustituyen a la antigua «Sobre vuestras herramientas»:
-   son la respuesta al miedo real de encargar software a medida. */
+   de resultado.
+
+   OJO — AQUÍ SOLO CABE LO QUE ES CIERTO DE TODO LO QUE VENDEMOS.
+   Estas píldoras van bajo el hero, antes de que el visitante sepa
+   si está mirando un proyecto a medida o un producto por
+   suscripción, así que cualquier matiz se pierde.
+
+   Decía «Sin licencias mensuales» y «El sistema es vuestro». Las dos
+   son verdad del software a medida y MENTIRA de CentralAvisos, que
+   es una cuota mensual alojada por nosotros y que ahora tiene su
+   propio bloque en esta misma página. Quedaban a dos pantallas de
+   distancia contradiciéndose.
+
+   Lo que sí vale para ambos: no hay permanencia, los datos se
+   exportan, cada fase se aprueba y somos de aquí. Los argumentos de
+   propiedad y de «sin licencia» siguen dichos, pero donde tienen su
+   contexto: en el bloque de software a medida y en /nosotros. */
 export const garantiasInicio = [
   "Sin permanencia",
-  "El sistema es vuestro",
-  "Sin licencias mensuales",
+  "Tus datos, siempre exportables",
   "Aprobado fase a fase",
+  "De Mallorca",
 ];
 
 /* ------------------------------------------------------------
@@ -408,6 +423,62 @@ export const procesoInicio = {
         detecta si el array tiene contenido.
    ------------------------------------------------------------ */
 /* ------------------------------------------------------------
+   CENTRALAVISOS — el producto de entrada
+
+   Todo lo demás de esta web vende PROYECTO: diagnóstico, fases,
+   presupuesto. Eso es un compromiso grande para quien acaba de
+   llegar de un anuncio. CentralAvisos es lo contrario: una cuota
+   mensual, sin permanencia, que se contrata esta semana. Es la
+   puerta barata de entrada, y por eso tiene su propio bloque en
+   vez de ser una tarjeta más entre las tres piezas a medida.
+
+   REGLA DE MENSAJE, y no es un detalle: «sin licencias mensuales»
+   y «el sistema es vuestro» valen para el software a medida, NO
+   para esto. CentralAvisos se paga cada mes y lo alojamos
+   nosotros. Lo que sí es cierto aquí es que no hay permanencia y
+   que los datos se exportan. Si alguien escribe «sin cuotas» en
+   este bloque, está contando algo falso.
+
+   El precio (89 €/mes) es público: ya está en su propia landing.
+   Si allí cambia, aquí también — o la web se contradice sola.
+
+   LA COLABORACIÓN con Multiservicios Mallorca se nombra aquí
+   porque da credibilidad: no es un producto de laboratorio, sale
+   de una empresa que vive del problema que resuelve.
+   OJO: la landing de CentralAvisos dice hoy «un producto de
+   Nexo4Pymes», sin mencionar la colaboración. Las dos páginas
+   deberían decir lo mismo.
+   ------------------------------------------------------------ */
+export const centralAvisos = {
+  categoria: "Producto propio · en colaboración con Multiservicios Mallorca",
+  titular: "¿Se te escapan avisos cuando estás trabajando?",
+  parrafo:
+    "CentralAvisos recoge tus llamadas, WhatsApp, correos y el formulario de tu web, y los deja ordenados por urgencia en un panel que ven tu oficina y tus técnicos. Sigues con tu número y con tu forma de trabajar.",
+  puntos: [
+    {
+      icono: "mensaje" as const,
+      titulo: "Entra todo por el mismo sitio",
+      texto: "Llamadas atendidas y perdidas, WhatsApp, correo y web. Sin que nadie apunte nada.",
+    },
+    {
+      icono: "campana" as const,
+      titulo: "Lo que arde, arriba",
+      texto: "Cada aviso sale con su urgencia puesta. Tú miras la lista de arriba abajo.",
+    },
+    {
+      icono: "reloj" as const,
+      titulo: "El día entero, a las nueve",
+      texto: "Lo que ha entrado, lo que sigue abierto y lo que está listo para facturar.",
+    },
+  ],
+  /* Condiciones reales. Se dicen tal cual son: es un producto por
+     suscripción y no se disfraza de otra cosa. */
+  condiciones: ["Desde 89 €/mes", "Sin permanencia", "Tu número de siempre", "Datos alojados en la UE"],
+  ctaPrincipal: "Escríbenos AVISOS por WhatsApp",
+  ctaSecundario: "Ver cómo funciona",
+};
+
+/* ------------------------------------------------------------
    LO QUE YA ESTÁ FUNCIONANDO
 
    La web pedía una llamada sin haber enseñado nada. Era su agujero
@@ -493,10 +564,15 @@ export const pruebaInicio = {
          herramienta la construimos nosotros. La tranquilidad ahora es
          la propiedad: es el miedo número uno al encargar software a
          medida y hay que contestarlo de frente. */
+      /* «Lo que construimos a medida» y no «el sistema», a secas: desde
+         que existe CentralAvisos hay dos cosas distintas a la venta, y
+         esta promesa solo vale para una. Dicha en general sería falsa y
+         además sobra: CentralAvisos tiene su propia promesa, que es que
+         se cancela cuando se quiera. */
       icono: "escudo" as const,
-      titulo: "El sistema es vuestro",
+      titulo: "Lo que construimos a medida es vuestro",
       texto:
-        "El código y los datos se quedan en vuestras cuentas, sin licencia mensual. Si un día seguís sin nosotros, os lo lleváis y punto.",
+        "El código y los datos se quedan en vuestras cuentas, sin licencia mensual. Si un día seguís sin nosotros, os lo lleváis y punto. Los módulos por suscripción, como CentralAvisos, se cancelan cuando queráis y los datos salen con vosotros.",
     },
     {
       icono: "documento" as const,

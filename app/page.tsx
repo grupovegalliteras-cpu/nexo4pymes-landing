@@ -9,6 +9,7 @@ import { HeroInicio } from "@/components/inicio/HeroInicio";
 import { AntesDespues } from "@/components/inicio/AntesDespues";
 import { ServiciosInicio } from "@/components/inicio/ServiciosInicio";
 import { TrabajoReal } from "@/components/inicio/TrabajoReal";
+import { CentralAvisos } from "@/components/inicio/CentralAvisos";
 import { SelectorSectores } from "@/components/inicio/SelectorSectores";
 import { ProcesoInicio } from "@/components/inicio/ProcesoInicio";
 import { PruebaInicio } from "@/components/inicio/PruebaInicio";
@@ -48,9 +49,20 @@ import { waLink } from "@/lib/whatsapp";
    dentro (FAQ, letra pequeña) va al final.
    ============================================================ */
 
-const titulo = "Desarrollo de software a medida para pymes";
+/* TÍTULO Y DESCRIPCIÓN — con intención local.
+   El anterior era "Desarrollo de software a medida para pymes": ni
+   Mallorca ni Baleares por ninguna parte. Competir por "software a
+   medida" a secas es pelear contra toda España; "software a medida en
+   Mallorca" lo busca justo quien nos puede contratar, y ahí la
+   competencia es una décima parte.
+
+   El título entero, con la marca, se queda en 60 caracteres para que
+   Google no lo corte. La descripción, en 155 por lo mismo. La
+   descripción no posiciona por sí sola, pero decide si hacen clic:
+   por eso acaba en lo que se puede hacer ahora mismo, escribir. */
+const titulo = "Software a medida para pymes en Mallorca";
 const descripcion =
-  "CRM propio, configuradores de producto para la web e integraciones automatizadas, hechos a la medida de vuestra pyme. Sin licencias mensuales y sin permanencia.";
+  "CRM, configuradores web y automatizaciones a medida para pymes y autónomos de Baleares. Sin permanencia. Escríbenos por WhatsApp y te decimos si encajamos.";
 
 export const metadata: Metadata = {
   title: { absolute: `${titulo} | Nexo4Pymes` },
@@ -97,6 +109,7 @@ export default function PaginaInicio() {
         <AntesDespues />
         <ServiciosInicio />
         <TrabajoReal />
+        <CentralAvisos />
         <SelectorSectores />
         <ProcesoInicio />
         <PruebaInicio />

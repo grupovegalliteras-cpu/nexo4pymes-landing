@@ -103,8 +103,15 @@ export const enfoquePyme = {
       bien: false,
       items: [
         "Proyectos de seis meses antes de ver el primer resultado",
-        "Cuotas mensuales obligatorias con permanencia",
-        "Plataformas nuestras de las que luego no se pueda salir",
+        /* Decía «Cuotas mensuales obligatorias con permanencia» y
+           «Plataformas nuestras de las que luego no se pueda salir».
+           Las dos dejaron de ser ciertas al lanzar CentralAvisos, que
+           es exactamente una plataforma nuestra con cuota mensual. Lo
+           que sigue siendo verdad, y es lo que de verdad importaba, es
+           que nadie se queda atrapado: no hay permanencia y los datos
+           salen en Excel cuando se quiera. */
+        "Permanencia: ni en los proyectos ni en las suscripciones",
+        "Quedarnos vuestros datos si un día os vais",
         "Construir antes de entender cómo funciona el negocio",
       ],
     },

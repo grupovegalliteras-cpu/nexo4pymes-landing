@@ -4,6 +4,7 @@ import { marca } from "@/content/marca";
 import { esquemaNegocio } from "@/lib/esquema";
 import { BannerCookies } from "@/components/legal/BannerCookies";
 import { Analitica } from "@/components/legal/Analitica";
+import { Medicion } from "@/components/legal/Medicion";
 import "./globals.css";
 
 /* next/font descarga y sirve las tipografías desde nuestro propio
@@ -83,6 +84,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             este: primero se pregunta, después se carga. */}
         <BannerCookies />
         <Analitica />
+
+        {/* Medición. No pinta nada: guarda de dónde viene la visita y
+            escucha los clics de WhatsApp, Calendly, teléfono y correo.
+            Si el visitante no aceptó, gtag y fbq no existen y los
+            eventos se quedan en nada — la puerta está en Analitica. */}
+        <Medicion />
 
         <script
           type="application/ld+json"

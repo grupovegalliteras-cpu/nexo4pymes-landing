@@ -6,6 +6,9 @@ import { Boton } from "@/components/ui/Boton";
 import { formulario } from "@/content/contacto";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
+/* `evento` se renombra: el manejador del formulario ya tiene un
+   parámetro que se llama así (el evento del submit). */
+import { evento as medir, leerAtribucion, type Atribucion } from "@/lib/medicion";
 
 /* ============================================================
    FORMULARIO DE CONTACTO
@@ -82,8 +85,24 @@ type Campos = {
      replyto    → a dónde va "Responder": el email de quien escribe,
                   para poder contestarle sin copiarlo a mano
      botcheck   → si llega con contenido, Web3Forms lo descarta */
-function cuerpoWeb3Forms(campos: Campos) {
+function cuerpoWeb3Forms(campos: Campos, atribucion: Atribucion) {
   const quien = campos.empresa ? `${campos.nombre} (${campos.empresa})` : campos.nombre;
+
+  /* De dónde vino, en una línea legible dentro del propio correo. Sin
+     esto hay que cruzar a mano el mensaje con el panel de anuncios
+     para saber qué campaña lo trajo, y nadie lo hace nunca.
+     Si la visita fue directa no aparece nada: mejor que un "—" que
+     no dice si es que no vino de campaña o es que falló la medición. */
+  const origen = [
+    atribucion.utm_source && `origen: ${atribucion.utm_source}`,
+    atribucion.utm_medium && `medio: ${atribucion.utm_medium}`,
+    atribucion.utm_campaign && `campaña: ${atribucion.utm_campaign}`,
+    atribucion.utm_content && `anuncio: ${atribucion.utm_content}`,
+    atribucion.fbclid && "viene de Meta",
+    atribucion.referente && `desde: ${atribucion.referente}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   return {
     access_key: CLAVE_WEB3FORMS,
@@ -99,6 +118,7 @@ function cuerpoWeb3Forms(campos: Campos) {
     Sector: campos.sector || "—",
     "Qué le quita más tiempo": campos.mensaje,
     "Consentimiento RGPD": campos.consentimiento ? "Aceptado" : "NO ACEPTADO",
+    ...(origen ? { "De dónde viene": origen } : {}),
   };
 }
 
@@ -144,17 +164,19 @@ export function FormularioContacto() {
       return;
     }
 
+    const atribucion = leerAtribucion();
+
     try {
       const respuesta = CLAVE_WEB3FORMS
         ? await fetch(WEB3FORMS_ENDPOINT, {
             method: "POST",
             headers: { "content-type": "application/json", accept: "application/json" },
-            body: JSON.stringify(cuerpoWeb3Forms(campos)),
+            body: JSON.stringify(cuerpoWeb3Forms(campos, atribucion)),
           })
         : await fetch("/api/contacto", {
             method: "POST",
             headers: { "content-type": "application/json" },
-            body: JSON.stringify(campos),
+            body: JSON.stringify({ ...campos, atribucion }),
           });
 
       const resultado = await respuesta.json().catch(() => null);
@@ -166,6 +188,10 @@ export function FormularioContacto() {
       const entregado = respuesta.ok && (resultado?.success === true || resultado?.ok === true);
 
       if (entregado) {
+        /* Solo cuando el mensaje ha llegado de verdad. Contarlo al
+           pulsar el botón inflaría la cifra con los envíos que fallan,
+           y Meta aprendería de contactos que nunca existieron. */
+        medir("form_submit", { page: "contacto", sector: campos.sector }, true);
         setEstado("enviado");
         return;
       }

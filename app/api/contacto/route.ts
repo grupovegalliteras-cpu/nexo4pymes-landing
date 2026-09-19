@@ -86,6 +86,36 @@ function texto(valor: unknown, maximo: number) {
   return typeof valor === "string" ? valor.trim().slice(0, maximo) : "";
 }
 
+/* Claves de atribución que se dejan pasar al webhook. Es una lista
+   cerrada a propósito: lo que llega aquí viene de la URL que tecleó
+   quien sea, así que reenviar el objeto entero sería dejar que
+   cualquiera meta lo que quiera en el CRM del otro lado. */
+const CLAVES_ATRIBUCION = [
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_content",
+  "utm_term",
+  "fbclid",
+  "gclid",
+  "referente",
+  "aterrizaje",
+] as const;
+
+function atribucionSegura(valor: unknown): Record<string, string> {
+  if (!valor || typeof valor !== "object" || Array.isArray(valor)) return {};
+
+  const origen = valor as Record<string, unknown>;
+  const limpia: Record<string, string> = {};
+
+  for (const clave of CLAVES_ATRIBUCION) {
+    const v = texto(origen[clave], 200);
+    if (v) limpia[clave] = v;
+  }
+
+  return limpia;
+}
+
 /* Suficiente para descartar erratas evidentes. La validación de
    verdad de un email es mandarle un mensaje y ver si llega. */
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -169,6 +199,10 @@ export async function POST(peticion: Request) {
       body: JSON.stringify({
         ...datos,
         origen: "formulario-web",
+        /* De qué anuncio o enlace vino, para poder medir qué campaña
+           trae clientes de verdad y no solo clics. Va aparte y no
+           mezclado con los datos del contacto. */
+        atribucion: atribucionSegura(cuerpo.atribucion),
         recibido: new Date().toISOString(),
       }),
     });

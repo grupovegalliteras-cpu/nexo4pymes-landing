@@ -90,7 +90,7 @@ export default function PaginaNosotros() {
         }}
       />
 
-      <CtaMovil texto="Escríbenos por WhatsApp" href={waLink("GENERAL")} externo />
+      <CtaMovil texto="Escribidnos por WhatsApp" href={waLink("GENERAL")} externo />
     </>
   );
 }

@@ -6,7 +6,7 @@ import { CajaIcono } from "@/components/ui/Icono";
 import { serviciosInicio } from "@/content/inicio";
 
 /* ============================================================
-   LAS TRES PIEZAS (home)
+   LAS PIEZAS QUE CONSTRUIMOS (home)
 
    Tres tarjetas, una por pieza de software: gestión,
    configurador e integraciones. El detalle largo de cada una

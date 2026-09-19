@@ -9,7 +9,7 @@ import { Icono, type NombreIcono } from "@/components/ui/Icono";
    PANEL DE FLUJO — el visual del hero
 
    Un mismo esqueleto (entra algo → el sistema lo procesa → se
-   ejecutan acciones) recorriendo LAS TRES PIEZAS que vendemos:
+   ejecutan acciones) recorriendo las piezas que vendemos:
    configurador, sistema de gestión e integraciones. Es el
    argumento central de la home convertido en imagen.
 
@@ -205,7 +205,7 @@ export function PanelFlujo() {
             que la rueda vuelva a pasar. */}
         <div className="flex items-center justify-between gap-3 border-t border-white/8 pt-3.5">
           <span className="font-mono text-[10.5px] uppercase tracking-[0.1em] text-white/40">
-            Tres piezas · un solo sistema
+            Cuatro piezas · un solo sistema
           </span>
           <div className="flex gap-1.5">
             {ESCENARIOS.map((item, i) => (

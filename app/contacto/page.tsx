@@ -110,10 +110,10 @@ export default function PaginaContacto() {
                   magnetico
                   className="w-full font-titular font-semibold sm:w-auto"
                 >
-                  Escríbenos por WhatsApp
+                  Escribidnos por WhatsApp
                 </Boton>
                 <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-white/45">
-                  {marca.whatsappVisible} · te contestamos nosotros
+                  {marca.whatsappVisible} · os contestamos nosotros
                 </p>
               </div>
             </Reveal>

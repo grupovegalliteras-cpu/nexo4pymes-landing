@@ -2,7 +2,7 @@
    trabajamos y cómo se empieza.
 
    GIRO DE POSICIONAMIENTO. Esta página describía siete áreas de
-   automatización. Ahora describe TRES PIEZAS DE SOFTWARE —
+   automatización. Ahora describe CUATRO PIEZAS DE SOFTWARE —
    gestión, configurador e integraciones — porque el producto ya
    no son automatizaciones sueltas, es software a medida. La IA
    entra como tecnología de apoyo dentro de la tercera pieza, no
@@ -37,7 +37,7 @@ export const heroServicios = {
   titularB: "Primero miramos si de verdad os hace falta.",
   parrafo:
     "Somos Nexo4Pymes, un equipo pequeño de Mallorca. Desarrollamos soluciones digitales a medida para pymes de cualquier sector: CRMs propios, configuradores web e integraciones. Aquí está el detalle completo de qué construimos, cómo trabajamos y cómo se empieza.",
-  cta: "Escríbenos por WhatsApp",
+  cta: "Escribidnos por WhatsApp",
   indice: [
     { href: "#servicios", texto: "Qué construimos" },
     { href: "#metodo", texto: "Cómo trabajamos" },
@@ -280,6 +280,6 @@ export const cierreServicios = {
   titular: "Contadnos cómo trabajáis hoy",
   texto:
     "15 minutos por videollamada, sin compromiso. Salís de ahí sabiendo si vuestro negocio necesita software propio — aunque la respuesta sea que todavía no.",
-  cta: "Escríbenos por WhatsApp",
+  cta: "Escribidnos por WhatsApp",
   escribir: "¿Preferís escribir? ",
 };

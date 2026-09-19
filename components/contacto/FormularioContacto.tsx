@@ -219,7 +219,7 @@ export function FormularioContacto() {
         </p>
         <div className="mt-7 flex justify-center">
           <Boton href={waLink("GENERAL")} externo tamano="md" flecha>
-            Escríbenos por WhatsApp
+            Escribidnos por WhatsApp
           </Boton>
         </div>
       </div>

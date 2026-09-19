@@ -35,14 +35,21 @@ import { waLink } from "@/lib/whatsapp";
    puede usar ("no cambiáis de programa").
 
    ORDEN DE LECTURA, y por qué:
-     1. hero       — qué hacemos y para quién, en una pantalla
-     2. antes/desp.— el problema, en su lenguaje, no en el nuestro
-     3. servicios  — las tres piezas que se construyen
-     4. sectores   — "esto va conmigo": el momento de conversión
-     5. proceso    — cómo se empieza, para bajar el riesgo percibido
-     6. compromisos— quién responde si sale mal
-     7. FAQ        — objeciones de quien ya está interesado
-     8. cierre     — la acción
+     1. hero        — qué hacemos y para quién, en una pantalla
+     2. antes/desp. — el problema, en su lenguaje, no en el nuestro
+     3. servicios   — las cuatro piezas que se construyen
+     4. funcionando — capturas de sistemas reales: la prueba
+     5. CentralAvisos — lo único que se puede contratar esta semana
+     6. sectores    — "esto va conmigo": el momento de conversión
+     7. proceso     — cómo se empieza, para bajar el riesgo percibido
+     8. compromisos — quién responde si sale mal
+     9. FAQ         — objeciones de quien ya está interesado
+    10. cierre      — la acción
+
+   Los pasos 4 y 5 son nuevos y su orden no es casual: primero se
+   explica (3), después se demuestra (4) y solo con esa confianza ya
+   puesta se ofrece lo barato de contratar (5). Al revés, el producto
+   de 89 €/mes aparecería antes de haber dado un motivo para creerlo.
 
    Se hereda del rediseño anterior: lo que demuestra va antes que
    lo que explica, y el material que solo interesa a quien ya está
@@ -62,7 +69,7 @@ import { waLink } from "@/lib/whatsapp";
    por eso acaba en lo que se puede hacer ahora mismo, escribir. */
 const titulo = "Software a medida para pymes en Mallorca";
 const descripcion =
-  "CRM, configuradores web y automatizaciones a medida para pymes y autónomos de Baleares. Sin permanencia. Escríbenos por WhatsApp y te decimos si encajamos.";
+  "CRM, fichaje y automatizaciones a medida para pymes y autónomos de Baleares. Sin permanencia. Escribidnos por WhatsApp y os decimos si encajamos.";
 
 export const metadata: Metadata = {
   title: { absolute: `${titulo} | Nexo4Pymes` },
@@ -134,7 +141,7 @@ export default function PaginaInicio() {
         }}
       />
 
-      <CtaMovil texto="Escríbenos por WhatsApp" href={waLink("GENERAL")} externo />
+      <CtaMovil texto="Escribidnos por WhatsApp" href={waLink("GENERAL")} externo />
 
       <script
         type="application/ld+json"

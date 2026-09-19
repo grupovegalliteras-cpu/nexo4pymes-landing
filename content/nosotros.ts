@@ -30,7 +30,7 @@ export const heroNosotros = {
   titularB: "de Mallorca",
   parrafo:
     "Sin oficina de cristal ni departamento comercial. Somos las mismas personas que atienden la llamada, hacen el diagnóstico y escriben el código.",
-  cta: "Escríbenos por WhatsApp",
+  cta: "Escribidnos por WhatsApp",
   micro: "15 min · sin compromiso · sin tarjeta",
 };
 
@@ -168,7 +168,7 @@ export const cierreNosotros = {
   titular: "¿Hablamos 15 minutos?",
   texto:
     "Nos contáis cómo funciona vuestro negocio y os decimos con honestidad si os hace falta software propio. Sin presentación comercial y sin compromiso.",
-  cta: "Escríbenos por WhatsApp",
+  cta: "Escribidnos por WhatsApp",
   finePrint: "Gratis y sin compromiso · 15 min",
   alternativa: { texto: "O escribidnos y lo vemos por escrito", href: "/contacto" },
 };

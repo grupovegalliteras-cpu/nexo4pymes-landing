@@ -106,7 +106,7 @@ export const formulario = {
   enviando: "Enviando…",
   exito: {
     titulo: "Mensaje enviado",
-    texto: "Te contestamos en menos de 24 horas laborables. Si tienes prisa, escríbenos por WhatsApp y lo vemos al momento.",
+    texto: "Os contestamos en menos de 24 horas laborables. Si tenéis prisa, escribidnos por WhatsApp y lo vemos al momento.",
   },
   error: {
     titulo: "No hemos podido enviarlo",

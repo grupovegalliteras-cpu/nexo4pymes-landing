@@ -96,7 +96,7 @@ export default function PaginaServicios() {
       />
 
       <CtaMovil
-        texto="Escríbenos por WhatsApp"
+        texto="Escribidnos por WhatsApp"
         href={waLink("GENERAL")}
         externo
         /* La barra flotante llevaba aquí "Diagnóstico 150€ · quedan N

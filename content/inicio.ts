@@ -14,7 +14,7 @@
      genérico y rígido al que la pyme se tiene que adaptar.
 
    · Lo que se compra ya no son automatizaciones sueltas: son
-     tres piezas de software (gestión, configurador,
+     cuatro piezas de software (gestión, fichaje, configurador,
      integraciones) de las que se empieza por una.
 
    · La vieja promesa «no cambiáis de programa, montamos encima
@@ -26,9 +26,23 @@
      usáis» como argumento principal, está reintroduciendo el
      posicionamiento antiguo sin darse cuenta.
 
-   VOZ: toda la web habla de «vosotros». El hero es la única
-   excepción — está en «tú» — porque su texto vino dado palabra
-   por palabra. Si algún día se unifica, es solo ese bloque.
+   VOZ: «VOSOTROS» AL CLIENTE, «NOSOTROS» A NOSOTROS. Sin
+   excepciones, ni siquiera en el hero, que durante meses fue la
+   única parte en «tú» porque su texto vino dado palabra por
+   palabra.
+
+   El motivo no es gramatical, es de a quién se le habla: el
+   cliente es una empresa —un gerente, alguien en administración,
+   los técnicos— y no una persona suelta. Hablarle de «tú» en el
+   hero y de «vosotros» tres secciones más abajo se nota aunque
+   nadie sepa decir por qué: suena a texto escrito por dos personas
+   distintas que no se hablan.
+
+   LA ÚNICA EXCEPCIÓN DEL SITIO es /legal y el banner de cookies,
+   que siguen en «tú» a propósito: ahí no se le habla a la empresa
+   sino a la persona cuyos datos se tratan, y los derechos del RGPD
+   son de una persona física. Pasar esa página a «vosotros» sería
+   incorrecto, no un descuido.
 
    Regla de escritura heredada del rediseño móvil: ningún bloque
    de texto corrido pasa de ~40 palabras y las tarjetas se quedan
@@ -59,7 +73,7 @@ export const heroInicio = {
      desglosa.
 
      titularA sale en blanco y titularB en degradado: el corte está
-     puesto para que el degradado caiga sobre «a la medida de tu
+     puesto para que el degradado caiga sobre «a la medida de vuestro
      negocio», que es lo que nos diferencia y lo que cierra los
      tres elementos de la lista a la vez.
 
@@ -73,11 +87,25 @@ export const heroInicio = {
      Una versión anterior decía «Software a medida, automatización
      e IA, adaptados al 100% a tu negocio»: nombraba las tres pero
      se comía el hero. El «100%» no se perdió — lo lleva la tercera
-     métrica de aquí abajo. */
+     métrica de aquí abajo.
+
+     «vuestro» ocupa cinco caracteres más que «tu» y el titular estaba
+     medido al límite, así que se volvió a medir en el navegador:
+       1440 px → 4 líneas (287 px, fuente 66)
+        390 px → 4 líneas (159 px, fuente 37)
+        360 px → 4 líneas (159 px, fuente 37)
+     Sigue en cuatro porque titularA y titularB son dos trozos y el
+     corte cae solo entre ellos; el recuento de caracteres de arriba
+     valía para una versión que iba en una sola cadena.
+
+     A 360 px las métricas quedan 74 px por debajo del borde, pero el
+     botón de WhatsApp —que es lo que tiene que verse— entra en la
+     primera pantalla en los tres tamaños, incluido un iPhone SE de
+     667 px de alto. */
   titularA: "Software, automatización e IA",
-  titularB: "a la medida de tu negocio.",
+  titularB: "a la medida de vuestro negocio.",
   parrafo:
-    "Diseñamos tu CRM propio, los configuradores de tu web y las automatizaciones con IA que lo conectan todo. Para que tu empresa funcione sin caos ni herramientas genéricas.",
+    "Diseñamos vuestro CRM propio, los configuradores de vuestra web y las automatizaciones con IA que lo conectan todo. Para que la empresa funcione sin caos ni herramientas genéricas.",
   /* LOS DOS CTA, EN ESTE ORDEN Y NO AL REVÉS.
      Antes el botón principal era «Agendar llamada gratis» y llevaba a
      Calendly, que era el único camino de contacto de toda la web. Para
@@ -88,13 +116,17 @@ export const heroInicio = {
 
      Calendly no desaparece, baja a segundo botón. Quien prefiera hablar
      lo tiene a un clic; quien no, ya no se queda sin opción. */
-  ctaPrincipal: "Escríbenos por WhatsApp",
-  ctaSecundario: { texto: "O reserva una llamada de 15 min" },
-  micro: "Te contestamos por WhatsApp · sin compromiso · sin tarjeta",
+  ctaPrincipal: "Escribidnos por WhatsApp",
+  /* Sin la «O» delante: en Sora esa mayúscula suelta se lee como un
+     cero («0 reservad una llamada»). Y más corto, porque con el texto
+     largo los dos botones se partían en dos líneas cada uno y el par
+     quedaba descuadrado. */
+  ctaSecundario: { texto: "Reservad una llamada" },
+  micro: "Os contestamos por WhatsApp · sin compromiso · sin tarjeta",
   /* Cifras del SERVICIO, no resultados de cliente inventados. Cada
-     una es verificable contra lo que ofrecemos. Sin pronombre a
-     propósito: así no hay que tocarlas si algún día el hero pasa
-     de «tú» a «vosotros». */
+     una es verificable contra lo que ofrecemos. Van sin pronombre a
+     propósito, así que el cambio de voz no las afectó y seguirán
+     valiendo si algún día se vuelve a tocar. */
   metricas: [
     { valor: "0€", etiqueta: "La primera llamada" },
     { valor: "3-4", etiqueta: "Días de diagnóstico" },
@@ -122,7 +154,7 @@ export const heroInicio = {
    contexto: en el bloque de software a medida y en /nosotros. */
 export const garantiasInicio = [
   "Sin permanencia",
-  "Tus datos, siempre exportables",
+  "Vuestros datos, siempre exportables",
   "Aprobado fase a fase",
   "De Mallorca",
 ];
@@ -194,12 +226,13 @@ export const antesDespues = {
 };
 
 /* ------------------------------------------------------------
-   LOS TRES PILARES — módulos de la home. La versión larga y
+   LAS PIEZAS QUE CONSTRUIMOS — módulos de la home. La versión larga y
    detallada vive en /servicios; aquí solo el titular de cada uno.
 
    Eran seis tarjetas de automatización (atención al cliente,
    citas, facturación, leads, datos, presencia online). Con el
-   giro pasan a ser TRES piezas de software. Aquello no se ha
+   giro pasaron a ser tres piezas de software, y hoy son cuatro
+   (entró el fichaje). Aquello no se ha
    perdido: la mayoría vive ahora dentro del pilar 3, que es
    donde le corresponde estar cuando la IA es soporte y no
    producto.
@@ -285,7 +318,7 @@ export const sectoresInicio = {
       nombre: "Oficios y servicios técnicos",
       ejemplos: "Fontanería, climatización, piscinas, electricidad, mantenimiento, reformas",
       dolor:
-        "Cada presupuesto se calcula desde cero y se pierde en el correo. Las visitas se cuadran a base de llamadas perdidas, y la que no coges se la lleva otro.",
+        "Cada presupuesto se calcula desde cero y se pierde en el correo. Las visitas se cuadran a base de llamadas perdidas, y la que no cogéis se la lleva otro.",
       automatizaciones: [
         "Calculadora de presupuestos en la web, con vuestros precios y medidas",
         "Sistema de avisos y visitas: quién va, cuándo y en qué estado está",
@@ -443,7 +476,7 @@ export const procesoInicio = {
    llegar de un anuncio. CentralAvisos es lo contrario: una cuota
    mensual, sin permanencia, que se contrata esta semana. Es la
    puerta barata de entrada, y por eso tiene su propio bloque en
-   vez de ser una tarjeta más entre las tres piezas a medida.
+   vez de ser una tarjeta más entre las piezas a medida.
 
    REGLA DE MENSAJE, y no es un detalle: «sin licencias mensuales»
    y «el sistema es vuestro» valen para el software a medida, NO
@@ -464,9 +497,9 @@ export const procesoInicio = {
    ------------------------------------------------------------ */
 export const centralAvisos = {
   categoria: "Producto propio · en colaboración con Multiservicios Mallorca",
-  titular: "¿Se te escapan avisos cuando estás trabajando?",
+  titular: "¿Se os escapan avisos mientras estáis trabajando?",
   parrafo:
-    "CentralAvisos recoge tus llamadas, WhatsApp, correos y el formulario de tu web, y los deja ordenados por urgencia en un panel que ven tu oficina y tus técnicos. Sigues con tu número y con tu forma de trabajar.",
+    "CentralAvisos recoge vuestras llamadas, WhatsApp, correos y el formulario de la web, y los deja ordenados por urgencia en un panel que ven la oficina y los técnicos. Seguís con vuestro número y con vuestra forma de trabajar.",
   puntos: [
     {
       icono: "mensaje" as const,
@@ -476,7 +509,7 @@ export const centralAvisos = {
     {
       icono: "campana" as const,
       titulo: "Lo que arde, arriba",
-      texto: "Cada aviso sale con su urgencia puesta. Tú miras la lista de arriba abajo.",
+      texto: "Cada aviso sale con su urgencia puesta. Solo hay que mirar la lista de arriba abajo.",
     },
     {
       icono: "reloj" as const,
@@ -486,8 +519,13 @@ export const centralAvisos = {
   ],
   /* Condiciones reales. Se dicen tal cual son: es un producto por
      suscripción y no se disfraza de otra cosa. */
-  condiciones: ["Desde 89 €/mes", "Sin permanencia", "Tu número de siempre", "Datos alojados en la UE"],
-  ctaPrincipal: "Escríbenos AVISOS por WhatsApp",
+  condiciones: [
+    "Desde 89 €/mes",
+    "Sin permanencia",
+    "Vuestro número de siempre",
+    "Datos alojados en la UE",
+  ],
+  ctaPrincipal: "Escribidnos AVISOS por WhatsApp",
   ctaSecundario: "Ver cómo funciona",
 };
 
@@ -556,7 +594,7 @@ export const trabajoReal = {
         "El cliente reserva en tres toques desde el móvil y el aviso llega al instante. Sin llamadas para cuadrar una hora.",
     },
   ],
-  cta: "Quiero algo así para lo mío",
+  cta: "Queremos algo así para lo nuestro",
 };
 
 export const pruebaInicio = {
@@ -649,10 +687,10 @@ export const faqInicio = [
    un mensaje. La videollamada sigue disponible justo debajo para quien
    la prefiera. */
 export const cierreInicio = {
-  titular: "Cuéntanos cómo trabajas hoy",
+  titular: "Contadnos cómo trabajáis hoy",
   texto:
-    "Escríbenos por WhatsApp y te decimos con honestidad si te podemos ayudar — aunque la respuesta sea que todavía no te hace falta.",
-  cta: "Escríbenos por WhatsApp",
-  finePrint: "Sin compromiso · te contestamos nosotros, no un robot",
-  alternativa: { texto: "Prefiero una llamada de 15 minutos" },
+    "Escribidnos por WhatsApp y os decimos con honestidad si os podemos ayudar — aunque la respuesta sea que todavía no os hace falta.",
+  cta: "Escribidnos por WhatsApp",
+  finePrint: "Sin compromiso · os contestamos nosotros, no un robot",
+  alternativa: { texto: "Preferimos una llamada de 15 minutos" },
 };

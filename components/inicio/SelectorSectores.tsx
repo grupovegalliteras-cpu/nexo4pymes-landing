@@ -11,14 +11,14 @@ import { sectoresInicio } from "@/content/inicio";
 /* ============================================================
    SELECTOR DE SECTORES
 
-   La pieza que sustituye al viejo "nuestra especialidad son las
-   clínicas veterinarias". El mensaje cambia de "hacemos un
-   sector" a "el método es el mismo, el proceso cambia": por eso
+   El mensaje es "el método es el mismo, el proceso cambia": por eso
    es un selector y no una rejilla estática — el visitante elige
    el suyo y ve su propio caso, que es lo que le hace quedarse.
 
-   Las veterinarias siguen dentro, como un sector más, y son el
-   único con `href` a landing propia.
+   El orden de content/inicio.ts NO es decorativo: el primero de la
+   lista es el que más gente abre, y va primero el público que de
+   verdad perseguimos (oficios y servicios técnicos). Ningún sector
+   tiene página propia.
 
    Accesibilidad: es un tablist real con navegación por flechas
    (patrón APG de pestañas manuales). Sin esto, con teclado habría
@@ -201,7 +201,7 @@ export function SelectorSectores() {
               )}
 
               {/* Aquí se pintaba un enlace a la landing propia del sector.
-                  Lo usaba solo el veterinario, que se retiró de internet,
+                  Lo usaba solo un sector que ya no está en la web,
                   así que ya no hay ningún sector con página aparte.
 
                   Si algún día vuelve a haberla, hay que devolver a su

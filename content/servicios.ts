@@ -154,11 +154,11 @@ export const casoDiagnostico = {
   cita: "Si no os hace falta software a medida, os lo diremos. Eso también es parte del trabajo.",
 };
 
-/* Aquí vivía `sectores`, con las veterinarias como especialidad
+/* Aquí vivía `sectores`, con un sector destacado como especialidad
    destacada y tres grupos genéricos debajo. Se ha ido entero a la
    home (content/inicio.ts → `sectoresInicio`), convertido en el
-   selector interactivo: allí las veterinarias son un sector más
-   entre seis y el mensaje pasa a ser adaptabilidad, que es lo que
+   selector interactivo: allí cada sector es uno más de los seis
+   y el mensaje pasa a ser la adaptabilidad, que es lo que
    pedía el rediseño. */
 
 /* ============================================================

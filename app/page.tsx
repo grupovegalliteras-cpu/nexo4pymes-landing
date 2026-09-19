@@ -3,7 +3,7 @@ import { Cabecera } from "@/components/layout/Cabecera";
 import { PieDePagina } from "@/components/layout/PieDePagina";
 import { CtaMovil } from "@/components/layout/CtaMovil";
 import { FondoAmbiente } from "@/components/ui/FondoAmbiente";
-import { Marquesina } from "@/components/vet/Marquesina";
+import { Marquesina } from "@/components/ui/Marquesina";
 import { FaqSeccion } from "@/components/ui/FaqSeccion";
 import { HeroInicio } from "@/components/inicio/HeroInicio";
 import { AntesDespues } from "@/components/inicio/AntesDespues";

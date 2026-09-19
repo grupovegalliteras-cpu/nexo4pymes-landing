@@ -1,5 +1,6 @@
 import {
   Bell,
+  Building2,
   CalendarDays,
   CheckCircle2,
   Clock,
@@ -14,13 +15,12 @@ import {
   Send,
   Settings,
   ShieldCheck,
-  Syringe,
   TrendingUp,
   Wrench,
 } from "lucide-react";
 
 /* Un único mapa nombre → icono. Los archivos de contenido guardan el
-   nombre ("agenda", "vacuna"...) y no importan lucide: así el copy no
+   nombre ("agenda", "edificio"...) y no importan lucide: así el copy no
    depende de la librería de iconos. */
 const iconos = {
   mensaje: MessageCircle,
@@ -30,7 +30,7 @@ const iconos = {
   altavoz: Megaphone,
   engranaje: Settings,
   documento: FileText,
-  vacuna: Syringe,
+  edificio: Building2,
   lupa: Search,
   mapa: Map,
   herramienta: Wrench,

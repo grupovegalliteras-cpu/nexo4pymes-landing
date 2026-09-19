@@ -24,7 +24,7 @@ npm run build && npm start
 La web ha dado **dos giros de posicionamiento**, y el segundo es el que
 manda hoy:
 
-1. Dejó de ser una landing veterinaria y pasó a hablar a cualquier pyme.
+1. Dejó de ser una landing de un solo sector y pasó a hablar a cualquier pyme.
 2. Dejó de vender «automatización de procesos con IA» y pasa a vender
    **soluciones digitales a medida**: CRMs propios, configuradores de
    producto para la web e integraciones. La IA sigue dentro, pero como
@@ -65,34 +65,32 @@ Es el único bloque que habría que tocar para unificarlo.
 | `/blog` | Artículos |
 | `/legal` | Aviso legal, privacidad y cookies |
 
-## La landing veterinaria se retiró
+## El sector veterinario se abandonó
 
-Ya no está online. `/veterinarias`, `/veterinarias.html` y
-`/sectores/veterinarias` **redirigen a la home con un 301**, y esos tres
-redirects no se pueden borrar: las dos primeras se repartieron en llamadas
-en frío y hay gente con esa dirección apuntada, y la tercera estuvo
-indexada en Google.
+No es solo que la landing se retirase: **ya no trabajamos con clínicas
+veterinarias**. El sector tiene mucho software hecho y bueno, y competir
+ahí no tiene sentido para un equipo pequeño.
 
-**El código no se ha borrado, solo está dormido:** `content/vet.ts` y
-`components/vet/` siguen en el repo sin que nada los importe (salvo
-`Marquesina`, que la usa la home). Para volver a publicarla:
+Por eso, en septiembre de 2026, se borraron `content/vet.ts` y toda la
+carpeta `components/vet/` (`Marquesina`, que sí usa la home, se movió a
+`components/ui/`), y el sector salió del selector de la portada y del
+formulario de contacto. Su hueco en el selector lo ocupa
+**Administradores de fincas**. Si alguna vez hiciera falta recuperar
+algo, está en el historial de git hasta el commit anterior a ese.
 
-1. Recuperar `app/sectores/veterinarias/page.tsx` del historial de git.
-2. Quitar el redirect de `/sectores/veterinarias` en `next.config.mjs` y
-   devolver los otros dos a esa URL.
-3. Volver a añadirla a `app/sitemap.ts`.
-4. Devolver `href` y `enlaceTexto` al sector `veterinarias` de
-   `content/inicio.ts`, y volver a pintar el enlace en
-   `components/inicio/SelectorSectores.tsx` (hay un comentario donde iba).
-
-El sector veterinario **sigue en el selector de la portada** como los
-otros cinco, solo que ya sin página propia detrás.
+**Lo único que se queda son los tres redirects** de `/veterinarias`,
+`/veterinarias.html` y `/sectores/veterinarias` a la home, en
+`next.config.mjs`. No se pueden borrar: las dos primeras se repartieron
+en llamadas en frío y hay gente con esa dirección apuntada en papel, y la
+tercera estuvo indexada en Google. El 301 traslada a la home lo que esas
+URLs tuvieran ganado en buscadores en vez de tirarlo.
 
 ## Dónde se toca cada cosa
 
 | Quiero cambiar… | Archivo |
 |---|---|
-| Las plazas, el enlace de Calendly, el email | `content/marca.ts` |
+| **El número de WhatsApp**, las plazas, el Calendly, el email | `content/marca.ts` |
+| **Los mensajes que se precargan en WhatsApp** | `lib/whatsapp.ts` (`MENSAJES`) |
 | Las cifras de la oferta (ya no se muestran en ninguna página) | `content/marca.ts` (`oferta`) |
 | Textos de la home | `content/inicio.ts` |
 | **Los sectores del selector de la home** | `content/inicio.ts` (`sectoresInicio`) |
@@ -101,8 +99,6 @@ otros cinco, solo que ya sin página propia detrás.
 | Los ejemplos animados del hero | `components/inicio/PanelFlujo.tsx` (`ESCENARIOS`) |
 | Textos de quiénes somos y RGPD | `content/nosotros.ts` |
 | Textos de contacto y del formulario | `content/contacto.ts` |
-| Textos de la landing veterinaria (retirada, dormida) | `content/vet.ts` |
-| La conversación de Luna | `content/vet.ts` (`comoVaVet.burbujas`) |
 | Aviso legal / privacidad / cookies | `app/legal/page.tsx` |
 | Colores, tipografías y radios | `app/globals.css` (bloque `@theme`) |
 
@@ -137,8 +133,9 @@ para **el cliente** (el configurador calcula *sus* precios con *sus*
 márgenes, el sistema sigue *sus* presupuestos). Eso es producto, no
 tarifa.
 
-También se queda «llamada gratis» en los botones: dice que **no** hay que
-pagar, y es el CTA de todo el sitio, no solo de esa página.
+También se queda «llamada gratis» donde aparece: dice que **no** hay que
+pagar. El CTA principal de todo el sitio es ahora WhatsApp; la llamada
+quedó como segunda opción.
 
 Las cifras siguen en `content/marca.ts` (`oferta`) pero ya no las muestra
 ninguna página. El historial de git tiene la versión con precios.
@@ -272,7 +269,7 @@ Vercel despliega al hacer push a `main`. El proyecto debe estar como
 salida personalizado.
 
 Los `redirects` de `next.config.mjs` mandan las URLs `.html` antiguas y
-`/veterinarias` a la home con un 301, así que el posicionamiento
+las URLs antiguas a la home con un 301, así que el posicionamiento
 acumulado no se pierde.
 
 Los dos archivos `google*.html` de Search Console y la etiqueta de

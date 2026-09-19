@@ -76,14 +76,17 @@ export const formulario = {
   titular: "Escribidnos y lo vemos por escrito",
   intro:
     "Nada obligatorio salvo lo imprescindible para poder contestar. Cuanto más concreto sea el «qué os quita tiempo», más útil será nuestra primera respuesta.",
+  /* El orden importa: el primero es el que más se elige, y el público
+     que perseguimos son los oficios y servicios técnicos. "Clínica
+     veterinaria" se retiró — ese sector se abandonó. */
   sectores: [
-    "Servicios profesionales (asesoría, despacho, consultora)",
+    "Oficios y servicios técnicos (fontanería, clima, piscinas, mantenimiento)",
+    "Administración de fincas y comunidades",
     "Comercio y retail",
-    "Salud y bienestar",
-    "Clínica veterinaria",
+    "Servicios profesionales (asesoría, despacho, consultora)",
     "Logística y transporte",
-    "Oficios y servicios a domicilio",
     "Hostelería y turismo",
+    "Salud y bienestar",
     "Otro",
   ],
   campos: {

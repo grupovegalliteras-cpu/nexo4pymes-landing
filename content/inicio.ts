@@ -249,6 +249,23 @@ export const sectoresInicio = {
     "Lo que hay que construir cambia mucho de un negocio a otro. El método para decidirlo, no. Elegid el que más se parezca al vuestro.",
   sectores: [
     {
+      /* PRIMERO A PROPÓSITO. Es el público que de verdad perseguimos
+         —el mismo de CentralAvisos— y el primero de la lista es el que
+         más gente abre. Antes estaba el último. */
+      id: "oficios",
+      icono: "herramienta" as const,
+      nombre: "Oficios y servicios técnicos",
+      ejemplos: "Fontanería, climatización, piscinas, electricidad, mantenimiento, reformas",
+      dolor:
+        "Cada presupuesto se calcula desde cero y se pierde en el correo. Las visitas se cuadran a base de llamadas perdidas, y la que no coges se la lleva otro.",
+      automatizaciones: [
+        "Calculadora de presupuestos en la web, con vuestros precios y medidas",
+        "Sistema de avisos y visitas: quién va, cuándo y en qué estado está",
+        "Presupuesto enviado con seguimiento automático a los días",
+      ],
+      resultado: "Menos desplazamientos en balde y presupuestos que se cierran.",
+    },
+    {
       id: "profesionales",
       icono: "documento" as const,
       nombre: "Servicios profesionales",
@@ -292,18 +309,23 @@ export const sectoresInicio = {
       nota: "Los historiales clínicos quedan siempre fuera de lo que gestiona la IA.",
     },
     {
-      id: "veterinarias",
-      icono: "vacuna" as const,
-      nombre: "Clínicas veterinarias",
-      ejemplos: "Clínicas, hospitales veterinarios, centros de referencia",
+      /* Sustituye a "Clínicas veterinarias". Ese sector se abandonó: ya
+         tiene mucho software hecho y bueno, y competir ahí no tiene
+         sentido para un equipo pequeño. Los administradores de fincas,
+         en cambio, son uno de los públicos de CentralAvisos y tienen el
+         mismo problema que los gremios: todo entra por teléfono. */
+      id: "fincas",
+      icono: "edificio" as const,
+      nombre: "Administradores de fincas",
+      ejemplos: "Administradores, gestión de comunidades, patrimonios",
       dolor:
-        "El programa de gestión cubre lo clínico pero no lo demás, y el WhatsApp acaba absorbiendo citas, dudas y pedidos.",
+        "Las incidencias entran por teléfono y WhatsApp desde cien vecinos distintos, y luego hay que acordarse de a qué gremio se avisó y si vino.",
       automatizaciones: [
-        "Fichas de paciente y propietario conectadas con la agenda",
-        "Reserva online de cita y de revisión, integrada con el calendario",
-        "Avisos de vacunas y desparasitaciones con reserva en el mismo mensaje",
+        "Panel de incidencias por finca, con su estado y quién la atiende",
+        "Parte que se manda al gremio y vuelve cerrado, sin llamar para preguntar",
+        "Historial por comunidad para las juntas, sin reconstruirlo a mano",
       ],
-      resultado: "Ingresos recurrentes que dejan de perderse por no avisar a tiempo.",
+      resultado: "Cada incidencia con dueño y fecha, y una junta que se prepara sola.",
     },
     {
       id: "logistica",
@@ -318,20 +340,6 @@ export const sectoresInicio = {
         "Partes, albaranes e incidencias que se registran sin papel",
       ],
       resultado: "Menos llamadas entrantes y trazabilidad sin trabajo extra.",
-    },
-    {
-      id: "oficios",
-      icono: "herramienta" as const,
-      nombre: "Oficios y servicios a domicilio",
-      ejemplos: "Reformas, instaladores, talleres, mantenimiento",
-      dolor:
-        "Cada presupuesto se calcula desde cero y se pierde en el correo. Las visitas se cuadran a base de llamadas perdidas.",
-      automatizaciones: [
-        "Calculadora de presupuestos en la web, con vuestros precios y medidas",
-        "Sistema de obras y visitas: quién va, cuándo y en qué estado está",
-        "Presupuesto enviado con seguimiento automático a los días",
-      ],
-      resultado: "Menos desplazamientos en balde y presupuestos que se cierran.",
     },
   ],
 };

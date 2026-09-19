@@ -15,6 +15,7 @@ import { CierreInicio } from "@/components/inicio/CierreInicio";
 import { faqInicio, garantiasInicio, navInicio } from "@/content/inicio";
 import { marca } from "@/content/marca";
 import { esquemaFaq } from "@/lib/esquema";
+import { waLink } from "@/lib/whatsapp";
 
 /* ============================================================
    HOME — página general de pymes.
@@ -85,7 +86,7 @@ export default function PaginaInicio() {
 
       <Cabecera
         enlaces={navInicio}
-        cta={{ texto: "Llamada gratis", href: marca.calendly, externo: true }}
+        cta={{ texto: "WhatsApp", href: waLink("GENERAL"), externo: true }}
         enlacePill={{ href: "/contacto", texto: "Contacto ↗", textoMovil: "Contacto y presupuesto ↗" }}
       />
 
@@ -118,7 +119,7 @@ export default function PaginaInicio() {
         }}
       />
 
-      <CtaMovil texto="Agendar llamada gratis" href={marca.calendly} externo />
+      <CtaMovil texto="Escríbenos por WhatsApp" href={waLink("GENERAL")} externo />
 
       <script
         type="application/ld+json"

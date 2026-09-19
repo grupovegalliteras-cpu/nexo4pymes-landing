@@ -13,6 +13,7 @@ import { CierreServicios } from "@/components/servicios/CierreServicios";
 import { faqServicios, navServicios } from "@/content/servicios";
 import { marca, oferta } from "@/content/marca";
 import { esquemaFaq } from "@/lib/esquema";
+import { waLink } from "@/lib/whatsapp";
 
 /* /servicios — el catálogo largo: qué construimos con su alcance
    y sus límites, cómo trabajamos en cinco pasos, por qué el
@@ -63,7 +64,7 @@ export default function PaginaServicios() {
 
       <Cabecera
         enlaces={navServicios}
-        cta={{ texto: "Llamada gratis", href: marca.calendly, externo: true }}
+        cta={{ texto: "WhatsApp", href: waLink("GENERAL"), externo: true }}
         enlacePill={{ href: "/contacto", texto: "Contacto ↗", textoMovil: "Contacto ↗" }}
       />
 
@@ -95,8 +96,8 @@ export default function PaginaServicios() {
       />
 
       <CtaMovil
-        texto="Agendar llamada gratis"
-        href={marca.calendly}
+        texto="Escríbenos por WhatsApp"
+        href={waLink("GENERAL")}
         externo
         /* La barra flotante llevaba aquí "Diagnóstico 150€ · quedan N
             plazas". Se quitó al retirar los precios de esta página:

@@ -37,7 +37,7 @@ export const heroServicios = {
   titularB: "Primero miramos si de verdad os hace falta.",
   parrafo:
     "Somos Nexo4Pymes, un equipo pequeño de Mallorca. Desarrollamos soluciones digitales a medida para pymes de cualquier sector: CRMs propios, configuradores web e integraciones. Aquí está el detalle completo de qué construimos, cómo trabajamos y cómo se empieza.",
-  cta: "Agendar llamada gratis de 15 min",
+  cta: "Escríbenos por WhatsApp",
   indice: [
     { href: "#servicios", texto: "Qué construimos" },
     { href: "#metodo", texto: "Cómo trabajamos" },
@@ -248,6 +248,6 @@ export const cierreServicios = {
   titular: "Contadnos cómo trabajáis hoy",
   texto:
     "15 minutos por videollamada, sin compromiso. Salís de ahí sabiendo si vuestro negocio necesita software propio — aunque la respuesta sea que todavía no.",
-  cta: "Agendar llamada gratis de 15 min",
+  cta: "Escríbenos por WhatsApp",
   escribir: "¿Preferís escribir? ",
 };

@@ -13,6 +13,7 @@ import {
 import { DatosRgpd } from "@/components/nosotros/DatosRgpd";
 import { navNosotros } from "@/content/nosotros";
 import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
 
 /* /nosotros — el brief la pedía como página propia y tenía razón:
    "quiénes somos" y "datos y RGPD" eran dos secciones enterradas al
@@ -59,7 +60,7 @@ export default function PaginaNosotros() {
 
       <Cabecera
         enlaces={navNosotros}
-        cta={{ texto: "Llamada gratis", href: marca.calendly, externo: true }}
+        cta={{ texto: "WhatsApp", href: waLink("GENERAL"), externo: true }}
         enlacePill={{ href: "/contacto", texto: "Contacto ↗", textoMovil: "Contacto y presupuesto ↗" }}
       />
 
@@ -89,7 +90,7 @@ export default function PaginaNosotros() {
         }}
       />
 
-      <CtaMovil texto="Agendar llamada gratis" href={marca.calendly} externo />
+      <CtaMovil texto="Escríbenos por WhatsApp" href={waLink("GENERAL")} externo />
     </>
   );
 }

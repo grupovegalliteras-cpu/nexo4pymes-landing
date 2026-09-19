@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Boton } from "@/components/ui/Boton";
 import { formulario } from "@/content/contacto";
 import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
 
 /* ============================================================
    FORMULARIO DE CONTACTO
@@ -191,8 +192,8 @@ export function FormularioContacto() {
           {formulario.exito.texto}
         </p>
         <div className="mt-7 flex justify-center">
-          <Boton href={marca.calendly} externo tamano="md" flecha>
-            Agendar la llamada
+          <Boton href={waLink("GENERAL")} externo tamano="md" flecha>
+            Escríbenos por WhatsApp
           </Boton>
         </div>
       </div>

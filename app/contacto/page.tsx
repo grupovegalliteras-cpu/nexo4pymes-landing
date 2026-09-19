@@ -4,10 +4,12 @@ import { PieDePagina } from "@/components/layout/PieDePagina";
 import { FondoAmbiente } from "@/components/ui/FondoAmbiente";
 import { Antetitulo, Seccion, TituloSeccion } from "@/components/ui/Seccion";
 import { Reveal } from "@/components/motion/Reveal";
+import { Boton } from "@/components/ui/Boton";
 import { FormularioContacto } from "@/components/contacto/FormularioContacto";
 import { CalendarioEmbebido } from "@/components/contacto/CalendarioEmbebido";
 import { calendario, datosEmpresa, formulario, heroContacto } from "@/content/contacto";
 import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
 
 /* /contacto — el brief la pedía con formulario, calendario integrado
    y vías directas. Están las tres.
@@ -59,7 +61,7 @@ export default function PaginaContacto() {
           { href: "#formulario", texto: "Formulario" },
           { href: "#datos-empresa", texto: "Datos" },
         ]}
-        cta={{ texto: "Llamada gratis", href: marca.calendly, externo: true }}
+        cta={{ texto: "WhatsApp", href: waLink("GENERAL"), externo: true }}
         enlacePill={{ href: "/servicios", texto: "Servicios ↗", textoMovil: "Ver servicios ↗" }}
       />
 
@@ -87,6 +89,33 @@ export default function PaginaContacto() {
               <p className="mx-auto mt-5 max-w-[56ch] text-[16.5px] leading-relaxed text-white/70 sm:text-[18px]">
                 {heroContacto.parrafo}
               </p>
+            </Reveal>
+
+            {/* WHATSAPP ANTES QUE NADA.
+                Esta página ofrecía tres caminos —calendario, formulario y
+                correo— y los tres pedían más esfuerzo que escribir un
+                mensaje. Quien llega aquí ya ha decidido contactar: lo que
+                falta es que no se arrepienta por el camino.
+
+                El número va escrito y a la vista, no solo dentro del
+                botón: en escritorio mucha gente prefiere copiarlo y
+                escribir desde su propio móvil. */}
+            <Reveal retraso={0.18}>
+              <div className="mt-8 flex flex-col items-center gap-3">
+                <Boton
+                  href={waLink("CONTACTO")}
+                  externo
+                  tamano="lg"
+                  flecha
+                  magnetico
+                  className="w-full font-titular font-semibold sm:w-auto"
+                >
+                  Escríbenos por WhatsApp
+                </Boton>
+                <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-white/45">
+                  {marca.whatsappVisible} · te contestamos nosotros
+                </p>
+              </div>
             </Reveal>
           </div>
         </section>
@@ -146,6 +175,11 @@ export default function PaginaContacto() {
           <Reveal retraso={0.1}>
             <dl className="mt-8 grid gap-4 rounded-panel border border-white/10 bg-white/[.03] p-5 sm:grid-cols-2 sm:p-7">
               <Dato etiqueta="Razón social" valor={marca.razonSocial} />
+              <Dato
+                etiqueta="WhatsApp"
+                valor={marca.whatsappVisible}
+                href={waLink("CONTACTO")}
+              />
               <Dato etiqueta="Email" valor={marca.email} href={`mailto:${marca.email}`} />
               <Dato etiqueta="Ubicación" valor={`${marca.localidad}, ${marca.region}`} />
               <Dato etiqueta="Ámbito" valor="Toda España, en remoto" />

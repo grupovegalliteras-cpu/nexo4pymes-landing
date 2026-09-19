@@ -77,9 +77,19 @@ export const heroInicio = {
   titularB: "a la medida de tu negocio.",
   parrafo:
     "Diseñamos tu CRM propio, los configuradores de tu web y las automatizaciones con IA que lo conectan todo. Para que tu empresa funcione sin caos ni herramientas genéricas.",
-  ctaPrincipal: "Agendar llamada gratis",
-  ctaSecundario: { texto: "Ver qué construimos ↓", href: "#servicios" },
-  micro: "15 min · sin compromiso · sin tarjeta",
+  /* LOS DOS CTA, EN ESTE ORDEN Y NO AL REVÉS.
+     Antes el botón principal era «Agendar llamada gratis» y llevaba a
+     Calendly, que era el único camino de contacto de toda la web. Para
+     el cliente que buscamos —gerente de pyme de servicios, a pie de
+     obra, con el móvil en la mano— cuadrar una videollamada con
+     desconocidos es un salto demasiado grande para un primer contacto.
+     WhatsApp no lo es: es donde ya trabaja todo el día.
+
+     Calendly no desaparece, baja a segundo botón. Quien prefiera hablar
+     lo tiene a un clic; quien no, ya no se queda sin opción. */
+  ctaPrincipal: "Escríbenos por WhatsApp",
+  ctaSecundario: { texto: "O reserva una llamada de 15 min" },
+  micro: "Te contestamos por WhatsApp · sin compromiso · sin tarjeta",
   /* Cifras del SERVICIO, no resultados de cliente inventados. Cada
      una es verificable contra lo que ofrecemos. Sin pronombre a
      propósito: así no hay que tocarlas si algún día el hero pasa
@@ -469,11 +479,15 @@ export const faqInicio = [
   },
 ];
 
+/* CIERRE — la última oportunidad de la página, así que pide lo más
+   fácil, no lo más ambicioso. Antes pedía una videollamada; ahora pide
+   un mensaje. La videollamada sigue disponible justo debajo para quien
+   la prefiera. */
 export const cierreInicio = {
-  titular: "Contadnos cómo trabajáis hoy",
+  titular: "Cuéntanos cómo trabajas hoy",
   texto:
-    "15 minutos por videollamada, sin compromiso. Salís sabiendo si vuestro negocio necesita software propio — aunque la respuesta sea que todavía no.",
-  cta: "Agendar llamada gratis",
-  finePrint: "Gratis y sin compromiso · 15 min",
-  alternativa: { texto: "O escribidnos y lo vemos por escrito", href: "/contacto" },
+    "Escríbenos por WhatsApp y te decimos con honestidad si te podemos ayudar — aunque la respuesta sea que todavía no te hace falta.",
+  cta: "Escríbenos por WhatsApp",
+  finePrint: "Sin compromiso · te contestamos nosotros, no un robot",
+  alternativa: { texto: "Prefiero una llamada de 15 minutos" },
 };

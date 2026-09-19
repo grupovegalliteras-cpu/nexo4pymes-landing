@@ -2,6 +2,7 @@ import { Boton } from "@/components/ui/Boton";
 import { Reveal } from "@/components/motion/Reveal";
 import { cierreServicios } from "@/content/servicios";
 import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
 
 export function CierreServicios() {
   return (
@@ -21,7 +22,7 @@ export function CierreServicios() {
             {cierreServicios.texto}
           </p>
           <div className="mt-9 flex justify-center">
-            <Boton href={marca.calendly} externo tamano="lg" flecha magnetico variante="claro">
+            <Boton href={waLink("GENERAL")} externo tamano="lg" flecha magnetico variante="claro">
               {cierreServicios.cta}
             </Boton>
           </div>

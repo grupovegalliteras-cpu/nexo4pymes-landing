@@ -3,6 +3,7 @@ import Link from "next/link";
 import { IconoInstagram } from "@/components/ui/IconosRedes";
 import { BotonPreferencias } from "@/components/legal/BotonPreferencias";
 import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
 
 /* Pie común a las páginas del sitio. `cruce` es el enlace cruzado a
    la siguiente página lógica del recorrido (ayuda a posicionar cada
@@ -102,6 +103,20 @@ export function PieDePagina({
             <div>
               <h2 className="font-mono text-[11px] uppercase tracking-[0.16em] text-mint">Contacto</h2>
               <ul className="mt-1">
+                {/* WhatsApp primero y con el número a la vista. Enseñar el
+                    número, y no solo un botón, es lo que convence a quien
+                    desconfía de una web pequeña: detrás hay un teléfono
+                    real al que se puede escribir. */}
+                <li>
+                  <a
+                    href={waLink("GENERAL")}
+                    target="_blank"
+                    rel="noopener"
+                    className={`${FILA} font-medium text-white/80 hover:text-mint`}
+                  >
+                    WhatsApp {marca.whatsappVisible}
+                  </a>
+                </li>
                 <li>
                   <a href={`mailto:${marca.email}`} className={`${FILA} break-all`}>
                     {marca.email}

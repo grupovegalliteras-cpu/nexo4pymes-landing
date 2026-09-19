@@ -5,6 +5,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { PanelFlujo } from "@/components/inicio/PanelFlujo";
 import { heroInicio } from "@/content/inicio";
 import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
 
 /* ============================================================
    HERO DE LA HOME GENERAL
@@ -57,8 +58,10 @@ export function HeroInicio() {
 
           <Reveal retraso={0.18}>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+              {/* Principal: WhatsApp. Segundo: Calendly. El porqué del
+                  orden está escrito en content/inicio.ts, junto al texto. */}
               <Boton
-                href={marca.calendly}
+                href={waLink("GENERAL")}
                 externo
                 tamano="lg"
                 flecha
@@ -68,7 +71,8 @@ export function HeroInicio() {
                 {heroInicio.ctaPrincipal}
               </Boton>
               <Boton
-                href={heroInicio.ctaSecundario.href}
+                href={marca.calendly}
+                externo
                 variante="secundario"
                 tamano="lg"
                 className="w-full sm:w-auto"

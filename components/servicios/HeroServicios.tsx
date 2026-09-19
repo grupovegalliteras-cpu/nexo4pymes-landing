@@ -8,6 +8,7 @@ import { TextoPorPalabras } from "@/components/motion/TextoPorPalabras";
 import { SALIDA } from "@/components/motion/Reveal";
 import { heroServicios } from "@/content/servicios";
 import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
 
 /* ============================================================
    HERO DE /servicios
@@ -59,7 +60,7 @@ export function HeroServicios() {
         </motion.p>
 
         <motion.div {...entrada(0.64)} className="mt-8">
-          <Boton href={marca.calendly} externo tamano="lg" flecha magnetico>
+          <Boton href={waLink("GENERAL")} externo tamano="lg" flecha magnetico>
             {heroServicios.cta}
           </Boton>
         </motion.div>

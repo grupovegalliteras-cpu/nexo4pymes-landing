@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { Boton } from "@/components/ui/Boton";
 import { Reveal } from "@/components/motion/Reveal";
 import { cierreInicio } from "@/content/inicio";
 import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
 
 /* Bloque de cierre de la home. Dos salidas: agendar (la principal) y
    escribir, para quien no quiere una videollamada todavía — que en
@@ -36,7 +36,7 @@ export function CierreInicio() {
 
           <div className="mt-9 flex justify-center">
             <Boton
-              href={marca.calendly}
+              href={waLink("GENERAL")}
               externo
               tamano="lg"
               flecha
@@ -50,13 +50,17 @@ export function CierreInicio() {
 
           <p className="mt-4 font-mono text-[12px] text-white/45">{cierreInicio.finePrint}</p>
 
+          {/* La videollamada baja a segunda opción, pero no desaparece:
+              hay gente que necesita oír una voz antes de contratar nada. */}
           <p className="mt-6 border-t border-white/8 pt-5 text-[14.5px] text-white/55">
-            <Link
-              href={cierreInicio.alternativa.href}
+            <a
+              href={marca.calendly}
+              target="_blank"
+              rel="noopener"
               className="inline-flex min-h-[44px] items-center text-azul underline-offset-4 hover:underline"
             >
               {cierreInicio.alternativa.texto} →
-            </Link>
+            </a>
           </p>
         </div>
       </Reveal>

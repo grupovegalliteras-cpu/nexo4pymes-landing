@@ -7,6 +7,7 @@ import { CajaIcono } from "@/components/ui/Icono";
 import { IconoInstagram } from "@/components/ui/IconosRedes";
 import { cierreNosotros, enfoquePyme, heroNosotros, historia, valores } from "@/content/nosotros";
 import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
 
 /* ============================================================
    SECCIONES DE /nosotros
@@ -48,7 +49,7 @@ export function HeroNosotros() {
         <Reveal retraso={0.18}>
           <div className="mt-8 flex justify-center">
             <Boton
-              href={marca.calendly}
+              href={waLink("GENERAL")}
               externo
               tamano="lg"
               flecha
@@ -239,7 +240,7 @@ export function CierreNosotros() {
 
           <div className="mt-9 flex justify-center">
             <Boton
-              href={marca.calendly}
+              href={waLink("GENERAL")}
               externo
               tamano="lg"
               flecha

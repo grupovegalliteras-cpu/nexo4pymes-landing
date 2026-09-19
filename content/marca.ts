@@ -72,6 +72,7 @@ export const marca = {
      haber una dirección en la página legal y otra en los datos
      estructurados. */
   calle: "Carrer General Riera 64",
+  codigoPostal: "07010",
   municipio: "Palma",
 } as const;
 
@@ -117,10 +118,8 @@ export const datosLegales = {
   etiquetaIdentificacion: "NIF",
 
   /* Domicilio a efectos de notificaciones. Se compone de la dirección
-     de arriba; la página le añade sola la región y el país.
-     Falta el código postal: en un aviso legal un dato aproximado es
-     peor que uno corto, así que no se inventa. */
-  domicilio: `${marca.calle}, ${marca.municipio}`,
+     de arriba; la página le añade sola la región y el país. */
+  domicilio: `${marca.calle}, ${marca.codigoPostal} ${marca.municipio}`,
 
   /* Vacío a propósito: no hay inscripción hasta que exista la S.L. */
   registroMercantil: "",

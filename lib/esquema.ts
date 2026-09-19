@@ -24,6 +24,7 @@ export const esquemaNegocio = {
   address: {
     "@type": "PostalAddress",
     streetAddress: marca.calle,
+    postalCode: marca.codigoPostal,
     addressLocality: marca.municipio,
     addressRegion: marca.region,
     addressCountry: "ES",

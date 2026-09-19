@@ -6,6 +6,7 @@ import { FondoAmbiente } from "@/components/ui/FondoAmbiente";
 import { FaqSeccion } from "@/components/ui/FaqSeccion";
 import { HeroServicios } from "@/components/servicios/HeroServicios";
 import { ServiciosGrid } from "@/components/servicios/ServiciosGrid";
+import { AvisosServicios } from "@/components/servicios/AvisosServicios";
 import { MetodoServicios } from "@/components/servicios/MetodoServicios";
 import { CasoDiagnostico } from "@/components/servicios/CasoDiagnostico";
 import { ComoEmpezar } from "@/components/servicios/ComoEmpezar";
@@ -27,7 +28,7 @@ import { waLink } from "@/lib/whatsapp";
 
 const titulo = "Soluciones digitales a medida para pymes";
 const descripcion =
-  "Qué construimos exactamente —CRM a medida, configuradores de producto web e integraciones con IA—, cómo trabajamos en cinco pasos y cómo se empieza.";
+  "Qué construimos: CRM a medida, fichaje, configuradores web e integraciones. Cómo trabajamos, en cuatro pasos. Y CentralAvisos, que ya está hecho.";
 
 export const metadata: Metadata = {
   title: { absolute: `${titulo} | Nexo4Pymes` },
@@ -71,6 +72,7 @@ export default function PaginaServicios() {
       <main id="contenido" className="relative z-10">
         <HeroServicios />
         <ServiciosGrid />
+        <AvisosServicios />
         <MetodoServicios />
         <CasoDiagnostico />
         <ComoEmpezar />

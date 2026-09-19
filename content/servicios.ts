@@ -38,8 +38,13 @@ export const heroServicios = {
   parrafo:
     "Somos Nexo4Pymes, un equipo pequeño de Mallorca. Desarrollamos soluciones digitales a medida para pymes de cualquier sector: CRMs propios, configuradores web e integraciones. Aquí está el detalle completo de qué construimos, cómo trabajamos y cómo se empieza.",
   cta: "Escribidnos por WhatsApp",
+  /* El indice de la portada lleva una entrada mas que el menu de
+     arriba: CentralAvisos. En el menu no cabe sin apretarlo (son
+     cinco enlaces mas el boton de WhatsApp), y aqui si, que es donde
+     alguien decide a que seccion salta. */
   indice: [
     { href: "#servicios", texto: "Qué construimos" },
+    { href: "#central-avisos", texto: "CentralAvisos" },
     { href: "#metodo", texto: "Cómo trabajamos" },
     { href: "#caso", texto: "Por qué diagnóstico primero" },
     { href: "#como-empezar", texto: "Cómo se empieza" },
@@ -248,6 +253,42 @@ export const comoEmpezar = {
    donde solo llegaba quien ya se había leído el catálogo entero.
    Ahora son la página /nosotros (content/nosotros.ts), que el brief
    pedía por separado, y allí están además ampliados. */
+
+/* ------------------------------------------------------------
+   CENTRALAVISOS EN /SERVICIOS
+
+   Esta pagina entera vende trabajo a medida: nada de lo que hay
+   arriba se puede contratar sin pasar antes por un diagnostico.
+   CentralAvisos es la excepcion —esta construido y se contrata por
+   cuota— y no aparecia por ninguna parte: quien llegaba aqui desde
+   un anuncio y solo necesitaba ordenar los avisos se iba sin saber
+   que existe justo eso.
+
+   NO SE REPITE EL BLOQUE DE LA HOME. Alli estan los tres puntos de
+   como funciona; aqui solo hace falta decir que existe, en que se
+   diferencia de todo lo demas de esta pagina y por donde se sigue.
+   Quien quiera el detalle tiene la landing propia del producto.
+
+   Las condiciones (precio, permanencia) NO se escriben aqui: se leen
+   de content/inicio.ts, que es donde ya estaban. Dos listas de
+   precios escritas a mano acaban contradiciendose el dia que una se
+   actualiza y la otra no.
+   ------------------------------------------------------------ */
+export const avisosServicios = {
+  categoria: "Producto propio · en colaboración con Multiservicios Mallorca",
+  /* El nombre del producto va en el h2, no solo en el parrafo:
+     es el unico sitio de esta pagina donde Google lo va a leer como
+     encabezado. */
+  titular: "Y una cosa que ya está hecha: CentralAvisos",
+  parrafo:
+    "Todo lo de arriba se construye a medida y empieza por un diagnóstico. CentralAvisos no: es un producto nuestro que ya funciona. Recoge vuestras llamadas, WhatsApp, correos y el formulario de la web, y los deja ordenados por urgencia en un panel que ven la oficina y los técnicos.",
+  /* La frase que de verdad convierte en esta pagina: le ahorra al
+     lector el paso que mas frena, que es el diagnostico. */
+  nota:
+    "Si es justo lo que os falta, no hace falta diagnóstico ni proyecto: se contrata y se pone en marcha.",
+  ctaPrincipal: "Escribidnos AVISOS por WhatsApp",
+  ctaSecundario: "Ver cómo funciona",
+};
 
 export const faqServicios = [
   {

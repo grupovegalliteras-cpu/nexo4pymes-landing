@@ -407,6 +407,74 @@ export const procesoInicio = {
      2. la sección cambia sola de formato — el componente ya
         detecta si el array tiene contenido.
    ------------------------------------------------------------ */
+/* ------------------------------------------------------------
+   LO QUE YA ESTÁ FUNCIONANDO
+
+   La web pedía una llamada sin haber enseñado nada. Era su agujero
+   más caro: para un tráfico frío, que viene de un anuncio y no nos
+   conoce, "software a medida" es una promesa sin respaldo. Cuatro
+   capturas de sistemas reales valen más que tres párrafos.
+
+   SOBRE LAS IMÁGENES — leer antes de sustituirlas:
+
+   · Son capturas de demos propias, no de clientes, y están
+     ANONIMIZADAS: los logos son marcas genéricas y los nombres
+     propios están cambiados. Si algún día se regeneran, tienen que
+     salir igual de limpias. La herramienta que las genera vive
+     fuera del repo.
+
+   · NO se enlaza a las demos en vivo. Las capturas están limpias;
+     las demos no — ahí sí se ve la marca de cada proyecto. Si
+     alguien añade aquí un `href` a la demo, está deshaciendo la
+     anonimización entera con un clic.
+
+   · `ancho` y `alto` son los píxeles reales del archivo. Van
+     explícitos para que el navegador reserve el hueco y la página
+     no pegue el salto al cargar.
+   ------------------------------------------------------------ */
+export const trabajoReal = {
+  categoria: "Software funcionando",
+  titular: "Esto no es una maqueta: son sistemas en marcha",
+  intro:
+    "Cuatro piezas que ya usa alguien todos los días. Las capturas son de demos nuestras, con los nombres cambiados.",
+  piezas: [
+    {
+      archivo: "/assets/demos/panel-oficina.png",
+      ancho: 2792,
+      alto: 1652,
+      titulo: "Panel de oficina para servicios de campo",
+      texto:
+        "La oficina ve el día entero: qué partes han entrado desde los móviles, qué visitas quedan y qué está fuera de rango. Con su CRM y su mapa.",
+      destacada: true,
+    },
+    {
+      archivo: "/assets/demos/app-operario.png",
+      ancho: 752,
+      alto: 1540,
+      titulo: "La app del operario, en la furgoneta",
+      texto:
+        "Cada operario abre su ruta del día y solo la suya. Rellena el parte en 40 segundos, el cliente firma en la pantalla y sube solo — también sin cobertura.",
+    },
+    {
+      archivo: "/assets/demos/panel-tpv.png",
+      ancho: 2880,
+      alto: 1800,
+      titulo: "Caja, facturación e inventario",
+      texto:
+        "Un TPV hecho a la medida de un negocio con servicios y extras: se cobra, se factura y el stock baja solo. Sin licencia mensual.",
+    },
+    {
+      archivo: "/assets/demos/panel-reservas.png",
+      ancho: 960,
+      alto: 1672,
+      titulo: "Reservas que avisan por WhatsApp",
+      texto:
+        "El cliente reserva en tres toques desde el móvil y el aviso llega al instante. Sin llamadas para cuadrar una hora.",
+    },
+  ],
+  cta: "Quiero algo así para lo mío",
+};
+
 export const pruebaInicio = {
   categoria: "Cómo trabajamos con vosotros",
   titular: "Lo que nos comprometemos a cumplir",

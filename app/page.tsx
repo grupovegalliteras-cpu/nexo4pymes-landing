@@ -8,6 +8,7 @@ import { FaqSeccion } from "@/components/ui/FaqSeccion";
 import { HeroInicio } from "@/components/inicio/HeroInicio";
 import { AntesDespues } from "@/components/inicio/AntesDespues";
 import { ServiciosInicio } from "@/components/inicio/ServiciosInicio";
+import { TrabajoReal } from "@/components/inicio/TrabajoReal";
 import { SelectorSectores } from "@/components/inicio/SelectorSectores";
 import { ProcesoInicio } from "@/components/inicio/ProcesoInicio";
 import { PruebaInicio } from "@/components/inicio/PruebaInicio";
@@ -95,6 +96,7 @@ export default function PaginaInicio() {
         <Marquesina items={garantiasInicio} />
         <AntesDespues />
         <ServiciosInicio />
+        <TrabajoReal />
         <SelectorSectores />
         <ProcesoInicio />
         <PruebaInicio />

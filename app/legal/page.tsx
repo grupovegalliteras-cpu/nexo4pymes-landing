@@ -3,7 +3,8 @@ import Link from "next/link";
 import { FondoAmbiente } from "@/components/ui/FondoAmbiente";
 import { Reveal } from "@/components/motion/Reveal";
 import { BotonPreferencias } from "@/components/legal/BotonPreferencias";
-import { marca } from "@/content/marca";
+import { datosLegales, marca } from "@/content/marca";
+import { esPendiente, revisarDatosLegales } from "@/lib/legal";
 
 /* Aviso legal, privacidad y cookies.
    Tres secciones apiladas con id propio, no pestañas: así los enlaces
@@ -11,8 +12,22 @@ import { marca } from "@/content/marca";
    texto entero.
 
    El texto es el mismo, palabra por palabra: es contenido legal, no
-   copy de marketing. Los [PENDIENTE] son reales — se completan al
-   inscribir la sociedad. */
+   copy de marketing.
+
+   LOS DATOS DE LA EMPRESA YA NO SE ESCRIBEN AQUÍ. Vienen de
+   content/marca.ts → datosLegales, que es el único sitio donde se
+   tocan. Antes estaban a mano en esta página y llevaban meses
+   publicando cinco "[PENDIENTE]" en internet sin que nadie se
+   enterara: un hueco en el aviso legal no rompe nada y no sale en
+   ningún error, solo lo ve el cliente que entra a comprobar si la
+   empresa existe.
+
+   Ahora el build lo avisa (ver lib/legal.ts) y lo que falta se dice
+   con una frase honesta en vez de un corchete de programador. */
+
+/* Se ejecuta al construir la página, no en el navegador: el aviso
+   sale en el registro del despliegue. */
+revisarDatosLegales();
 
 export const metadata: Metadata = {
   title: "Aviso legal, privacidad y cookies",
@@ -34,6 +49,15 @@ function Pendiente({ children }: { children: React.ReactNode }) {
       {children}
     </span>
   );
+}
+
+/* Pinta un dato legal, o dice con una frase normal que todavía no está.
+   Lo que había antes era "[PENDIENTE — se asignará tras la inscripción
+   en el Registro Mercantil]": un corchete de programador publicado en
+   internet, que a un cliente le dice "esta web está a medio hacer". */
+function Dato({ valor, falta }: { valor: string; falta: string }) {
+  if (esPendiente(valor)) return <Pendiente>{falta}</Pendiente>;
+  return <>{valor}</>;
 }
 
 function Tarjeta({ children }: { children: React.ReactNode }) {
@@ -82,7 +106,13 @@ export default function PaginaLegal() {
             </h1>
           </Reveal>
           <Reveal retraso={0.06}>
-            <p className="mt-3 text-[14px] text-white/58">Última actualización: 4 de agosto de 2026</p>
+            {/* La fecha sale de content/marca.ts: escrita a mano aquí se
+                quedaba vieja cada vez que se tocaba el texto legal, y una
+                política de privacidad con fecha antigua resta credibilidad
+                justo donde se está pidiendo confianza. */}
+            <p className="mt-3 text-[14px] text-white/58">
+              Última actualización: {datosLegales.ultimaRevision}
+            </p>
           </Reveal>
 
           <Reveal retraso={0.12}>
@@ -113,18 +143,33 @@ export default function PaginaLegal() {
                 </p>
                 <Tarjeta>
                   <li>
-                    <strong className="font-medium text-[#F4F6FF]">Denominación social:</strong>{" "}
-                    Nexo4Pymes Automatización, S.L. (sociedad en constitución)
+                    <strong className="font-medium text-[#F4F6FF]">Titular del sitio:</strong>{" "}
+                    <Dato valor={datosLegales.titular} falta="pendiente de completar" />
                   </li>
                   <li>
-                    <strong className="font-medium text-[#F4F6FF]">CIF:</strong>{" "}
-                    <Pendiente>
-                      [PENDIENTE — se asignará tras la inscripción en el Registro Mercantil]
-                    </Pendiente>
+                    <strong className="font-medium text-[#F4F6FF]">Nombre comercial:</strong>{" "}
+                    {datosLegales.nombreComercial} — {marca.razonSocial}
                   </li>
                   <li>
-                    <strong className="font-medium text-[#F4F6FF]">Domicilio social:</strong> Mallorca,
-                    Illes Balears, España — <Pendiente>[PENDIENTE dirección completa]</Pendiente>
+                    <strong className="font-medium text-[#F4F6FF]">
+                      {datosLegales.etiquetaIdentificacion}:
+                    </strong>{" "}
+                    <Dato valor={datosLegales.identificacion} falta="pendiente de asignación" />
+                    {datosLegales.tipoTitular === "persona" && (
+                      <span className="text-white/50">
+                        {" "}
+                        — la sociedad está en constitución, así que responde del sitio la persona
+                        física hasta que se le asigne CIF
+                      </span>
+                    )}
+                  </li>
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">
+                      Domicilio a efectos de notificaciones:
+                    </strong>{" "}
+                    <Dato valor={datosLegales.domicilio} falta="pendiente de completar" />
+                    {!esPendiente(datosLegales.domicilio) && " — "}
+                    {!esPendiente(datosLegales.domicilio) && `${marca.localidad}, ${marca.region}, España`}
                   </li>
                   <li>
                     <strong className="font-medium text-[#F4F6FF]">Correo electrónico:</strong>{" "}
@@ -136,12 +181,21 @@ export default function PaginaLegal() {
                     <strong className="font-medium text-[#F4F6FF]">Actividad:</strong> desarrollo de
                     software a medida e integración de sistemas para pymes y autónomos
                   </li>
-                  <li>
-                    <strong className="font-medium text-[#F4F6FF]">Datos registrales:</strong>{" "}
-                    <Pendiente>
-                      [PENDIENTE — se completará al inscribirse la sociedad en el Registro Mercantil]
-                    </Pendiente>
-                  </li>
+                  {/* Los datos registrales solo existen cuando existe la
+                      sociedad. Mientras no exista, la línea no se pinta:
+                      enseñar un hueco donde no puede haber nada todavía
+                      confunde más que no decir nada. */}
+                  {datosLegales.registroMercantil ? (
+                    <li>
+                      <strong className="font-medium text-[#F4F6FF]">Datos registrales:</strong>{" "}
+                      {datosLegales.registroMercantil}
+                    </li>
+                  ) : (
+                    <li className="text-white/55">
+                      <strong className="font-medium text-[#F4F6FF]">Datos registrales:</strong> se
+                      publicarán cuando la sociedad quede inscrita en el Registro Mercantil.
+                    </li>
+                  )}
                 </Tarjeta>
 
                 <h3 className="mt-8 text-[18px] text-[#F4F6FF]">2. Objeto y condiciones de uso</h3>
@@ -196,16 +250,25 @@ export default function PaginaLegal() {
 
                 <h3 className="mt-8 text-[18px] text-[#F4F6FF]">1. Responsable del tratamiento</h3>
                 <Tarjeta>
+                  {/* Mismos datos que el aviso legal y de la misma fuente:
+                      dos listas escritas a mano se acaban contradiciendo
+                      en cuanto alguien actualiza una sola. */}
                   <li>
                     <strong className="font-medium text-[#F4F6FF]">
-                      Nexo4Pymes Automatización, S.L.
+                      <Dato valor={datosLegales.titular} falta="pendiente de completar" />
                     </strong>{" "}
-                    (sociedad en constitución)
+                    ({marca.razonSocial})
                   </li>
                   <li>
-                    CIF: <Pendiente>[PENDIENTE]</Pendiente>
+                    {datosLegales.etiquetaIdentificacion}:{" "}
+                    <Dato valor={datosLegales.identificacion} falta="pendiente de asignación" />
                   </li>
-                  <li>Domicilio: Mallorca, Illes Balears, España</li>
+                  <li>
+                    Domicilio:{" "}
+                    <Dato valor={datosLegales.domicilio} falta="pendiente de completar" />
+                    {!esPendiente(datosLegales.domicilio) &&
+                      ` — ${marca.localidad}, ${marca.region}, España`}
+                  </li>
                   <li>
                     Email:{" "}
                     <a href={`mailto:${marca.email}`} className="text-[#9FB6FF] underline underline-offset-4 hover:text-white">

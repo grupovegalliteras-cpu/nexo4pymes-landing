@@ -21,7 +21,7 @@ export function ServiciosGrid() {
         </Reveal>
       </div>
 
-      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 grid gap-5 sm:grid-cols-2">
         {servicios.tarjetas.map((tarjeta, i) => (
           <Reveal key={tarjeta.titulo} retraso={(i % 3) * 0.08}>
             <TarjetaGlow color={GLOW[tarjeta.tono]} className="h-full">

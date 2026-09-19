@@ -210,9 +210,9 @@ export const antesDespues = {
    ------------------------------------------------------------ */
 export const serviciosInicio = {
   categoria: "Qué construimos",
-  titular: "Tres piezas, y se empieza por una",
+  titular: "Cuatro piezas, y se empieza por una",
   intro:
-    "Nada de «soluciones digitales». Esto es lo que se construye, en concreto. No hace falta encargar las tres: en el roadmap se decide cuál compensa primero y en qué orden van las demás.",
+    "Nada de «soluciones digitales». Esto es lo que se construye, en concreto. No hace falta encargarlas todas: en el roadmap se decide cuál compensa primero y en qué orden van las demás.",
   tarjetas: [
     {
       icono: "lista" as const,
@@ -229,6 +229,19 @@ export const serviciosInicio = {
       texto:
         "Una herramienta en vuestra web para que el cliente personalice, diseñe o cotice su producto en tiempo real.",
       metrica: "El cliente se hace el presupuesto solo, a cualquier hora",
+    },
+    {
+      /* El fichaje entra como pieza propia y no como una línea dentro
+         del CRM: es lo que más se busca por su nombre y quien lo
+         necesita no lo encuentra mirando "sistemas de gestión". Ya
+         está construido y funcionando en una app de cliente, así que
+         no es una promesa — se dice en presente. */
+      icono: "reloj" as const,
+      tono: "azul" as const,
+      titulo: "Fichaje y control de jornada",
+      texto:
+        "Cada persona ficha desde su móvil, con su hora y su sitio. Las horas salen solas, sin cuadrar partes a mano a final de mes.",
+      metrica: "Registro de jornada trazable, sin papeles",
     },
     {
       icono: "engranaje" as const,

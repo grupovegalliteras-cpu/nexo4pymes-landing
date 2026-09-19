@@ -47,14 +47,14 @@ export const heroServicios = {
   ],
 };
 
-/* Tres tarjetas = una fila exacta en escritorio (lg:grid-cols-3).
+/* Cuatro tarjetas en rejilla de 2x2 (antes eran tres en una fila).
    Cada una lleva cinco `items` porque esta es la página del
    detalle: es aquí donde alguien viene a ver el alcance real. */
 export const servicios = {
   categoria: "Qué construimos",
-  titular: "Tres piezas de software, y se empieza por una",
+  titular: "Cuatro piezas de software, y se empieza por una",
   intro:
-    "Nada de «soluciones digitales». Esto es lo que se construye, con su alcance y sus límites. No hace falta encargar las tres: en el roadmap se decide cuál compensa primero y en qué orden van las demás.",
+    "Nada de «soluciones digitales». Esto es lo que se construye, con su alcance y sus límites. No hace falta encargarlas todas: en el roadmap se decide cuál compensa primero y en qué orden van las demás.",
   tarjetas: [
     {
       icono: "lista" as const,
@@ -82,6 +82,29 @@ export const servicios = {
         "Vista previa visual de lo que está montando, cuando el producto lo permite",
         "La solicitud llega ya montada: sin descifrar qué quería el cliente",
         "Se conecta con la gestión, así que el presupuesto no se vuelve a teclear",
+      ],
+    },
+    {
+      /* Pieza propia y no una línea dentro del CRM: "fichaje" es lo que
+         la gente teclea en Google por su nombre, y quien lo busca no lo
+         encuentra debajo de "sistemas de gestión". Está construido y
+         funcionando en una app de cliente, así que se habla en presente.
+
+         OJO CON LAS PALABRAS: nada de "homologado", "cumple la ley" ni
+         "a prueba de inspección". Lo que se puede afirmar es que el
+         registro es trazable; si cumple o no en un caso concreto lo
+         dice la gestoría de cada empresa, no nosotros. */
+      icono: "reloj" as const,
+      tono: "azul" as const,
+      titulo: "Fichaje y control de jornada",
+      texto:
+        "Cada persona ficha desde su propio móvil y las horas se suman solas. Pensado para equipos que no están sentados en una oficina.",
+      items: [
+        "Entrada, salida y pausas desde el móvil, con su hora y su ubicación",
+        "Horas por persona, por semana y por proyecto, sin cuadrar partes a mano",
+        "Registro trazable: queda quién fichó, cuándo y desde dónde",
+        "Los responsables ven el equipo entero; cada persona, solo lo suyo",
+        "Validadlo con vuestra gestoría: nosotros construimos la herramienta, no certificamos el cumplimiento",
       ],
     },
     {

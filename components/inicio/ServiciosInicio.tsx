@@ -13,9 +13,11 @@ import { serviciosInicio } from "@/content/inicio";
    vive en /servicios; aquí solo hay lo justo para que alguien
    reconozca su problema y siga bajando.
 
-   Eran seis módulos de automatización. Tres encajan en una fila
-   exacta en escritorio (lg:grid-cols-3); una cuarta se quedaría
-   sola en la segunda fila.
+   Eran seis módulos de automatización, luego tres piezas y ahora
+   cuatro (entró el fichaje, que ya está construido). Por eso la
+   rejilla pasó de lg:grid-cols-3 a dos columnas: con tres columnas
+   la cuarta tarjeta se quedaba sola en la segunda fila. Si algún día
+   vuelven a ser tres, hay que devolver lg:grid-cols-3.
 
    El tinte del resplandor de cada tarjeta se toma del `tono` del
    contenido, para que las columnas no queden todas del mismo
@@ -41,7 +43,7 @@ export function ServiciosInicio() {
         </Reveal>
       </div>
 
-      <Stagger className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+      <Stagger className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 sm:gap-5">
         {serviciosInicio.tarjetas.map((tarjeta) => (
           <ItemStagger key={tarjeta.titulo} as="article">
             <TarjetaGlow className="h-full" color={TINTES[tarjeta.tono]}>

@@ -65,6 +65,14 @@ export const marca = {
   razonSocial: "Nexo4Pymes S.L. (en constitución)",
   localidad: "Mallorca",
   region: "Illes Balears",
+
+  /* DIRECCIÓN REAL, en dos piezas a propósito: el aviso legal las
+     quiere juntas en una línea y schema.org las quiere separadas
+     (streetAddress / addressLocality). Partiendo de aquí no puede
+     haber una dirección en la página legal y otra en los datos
+     estructurados. */
+  calle: "Carrer General Riera 64",
+  municipio: "Palma",
 } as const;
 
 /* ============================================================
@@ -97,9 +105,10 @@ export const datosLegales = {
   /* "persona" mientras la S.L. no tenga CIF; "sociedad" después. */
   tipoTitular: "persona" as "persona" | "sociedad",
 
-  /* TODO(HUMANO): nombre y apellidos completos del titular, tal y
-     como figuran en el DNI. Sin esto el aviso legal está incompleto. */
-  titular: "TODO(HUMANO): nombre y apellidos del titular",
+  /* Los dos socios de la sociedad en constitución. Mientras no haya
+     CIF, el NIF que se publica debajo es el de uno de ellos: el que
+     responde del sitio a efectos del artículo 10 de la LSSI-CE. */
+  titular: "Alejandro Vega y Jaume Lliteras",
 
   nombreComercial: "Nexo4Pymes",
 
@@ -107,9 +116,11 @@ export const datosLegales = {
   identificacion: "43479075J",
   etiquetaIdentificacion: "NIF",
 
-  /* TODO(HUMANO): domicilio completo a efectos de notificaciones
-     (calle, número, código postal y municipio). */
-  domicilio: "TODO(HUMANO): domicilio completo",
+  /* Domicilio a efectos de notificaciones. Se compone de la dirección
+     de arriba; la página le añade sola la región y el país.
+     Falta el código postal: en un aviso legal un dato aproximado es
+     peor que uno corto, así que no se inventa. */
+  domicilio: `${marca.calle}, ${marca.municipio}`,
 
   /* Vacío a propósito: no hay inscripción hasta que exista la S.L. */
   registroMercantil: "",

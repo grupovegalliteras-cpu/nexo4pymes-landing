@@ -65,7 +65,7 @@ export function PieDePagina({
             />
             <p className="mt-3 max-w-[42ch] text-[14px] leading-relaxed text-white/55 sm:mt-4">
               Desarrollo de software a medida para pymes y autónomos: CRM, configuradores
-              web e integraciones. Mallorca, Illes Balears.
+              web e integraciones. Palma de Mallorca, Illes Balears.
             </p>
 
             {/* Solo Instagram. El icono de Facebook se retiró del sitio. */}

@@ -14,12 +14,23 @@ export const esquemaNegocio = {
   url: marca.dominio,
   email: marca.email,
   image: `${marca.dominio}/assets/og-nexo4pymes.jpg`,
+  /* La dirección era solo "Mallorca, Illes Balears": para Google eso
+     es una isla, no un domicilio. Con calle y municipio reales la
+     ficha puede aspirar a resultados locales de Palma, que es donde
+     está el cliente que nos puede contratar.
+     `addressLocality` pasa a ser el municipio (Palma) porque es lo
+     que schema.org entiende por localidad; la isla no cabe en el
+     vocabulario. */
   address: {
     "@type": "PostalAddress",
-    addressLocality: marca.localidad,
+    streetAddress: marca.calle,
+    addressLocality: marca.municipio,
     addressRegion: marca.region,
     addressCountry: "ES",
   },
+  /* El mismo número que el botón de WhatsApp de toda la web, en
+     formato internacional, que es el que pide schema.org. */
+  telephone: `+${marca.whatsapp}`,
   areaServed: [
     { "@type": "AdministrativeArea", name: "Illes Balears" },
     { "@type": "Country", name: "España" },

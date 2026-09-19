@@ -158,8 +158,8 @@ export default function PaginaLegal() {
                     {datosLegales.tipoTitular === "persona" && (
                       <span className="text-white/50">
                         {" "}
-                        — la sociedad está en constitución, así que responde del sitio la persona
-                        física hasta que se le asigne CIF
+                        — la sociedad está en constitución, así que hasta que se le asigne CIF
+                        responde del sitio uno de los socios como persona física
                       </span>
                     )}
                   </li>
@@ -169,7 +169,7 @@ export default function PaginaLegal() {
                     </strong>{" "}
                     <Dato valor={datosLegales.domicilio} falta="pendiente de completar" />
                     {!esPendiente(datosLegales.domicilio) && " — "}
-                    {!esPendiente(datosLegales.domicilio) && `${marca.localidad}, ${marca.region}, España`}
+                    {!esPendiente(datosLegales.domicilio) && `${marca.region}, España`}
                   </li>
                   <li>
                     <strong className="font-medium text-[#F4F6FF]">Correo electrónico:</strong>{" "}
@@ -267,7 +267,7 @@ export default function PaginaLegal() {
                     Domicilio:{" "}
                     <Dato valor={datosLegales.domicilio} falta="pendiente de completar" />
                     {!esPendiente(datosLegales.domicilio) &&
-                      ` — ${marca.localidad}, ${marca.region}, España`}
+                      ` — ${marca.region}, España`}
                   </li>
                   <li>
                     Email:{" "}

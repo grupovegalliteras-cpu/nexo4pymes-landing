@@ -104,38 +104,42 @@ export const servicios = {
 export const metodoServicios = {
   categoria: "Cómo trabajamos",
   titular: "De la primera llamada al sistema funcionando",
-  intro: "Cinco pasos, sin sorpresas y sin contratos de doce meses. En cualquiera de ellos podéis parar.",
+  /* CUATRO PASOS, Y LOS MISMOS QUE EN LA HOME.
+     Esta página decía cinco y la home cuatro, y más abajo («Cómo se
+     empieza») había un tercer recuento de tres. Tres versiones del
+     mismo proceso en la misma web: quien las lee seguidas no piensa
+     «qué lío de textos», piensa «estos no tienen el proceso claro»,
+     que es exactamente lo contrario de lo que se vende aquí.
+
+     El que sobraba era «Roadmap priorizado» como paso aparte: no es
+     un paso, es el entregable del diagnóstico — la propia home ya lo
+     contaba así. Se ha fundido con él sin perder una palabra de lo
+     que promete. */
+  intro: "Cuatro pasos, sin sorpresas y sin contratos de doce meses. En cualquiera de ellos podéis parar.",
   pasos: [
     {
       num: "1",
-      meta: "15 minutos · videollamada",
+      meta: "15 minutos · videollamada o WhatsApp",
       titulo: "Llamada inicial",
       texto:
         "Nos contáis cómo funciona el negocio hoy y con qué peleáis cada día. Nosotros os decimos, con honestidad, si esto encaja con vosotros o no. Si no encaja, se acaba aquí y tan amigos.",
     },
     {
       num: "2",
-      meta: "Diagnóstico",
-      titulo: "Diagnóstico",
+      meta: "3-4 días · por escrito",
+      titulo: "Diagnóstico y roadmap",
       texto:
-        "Auditamos de verdad cómo trabajáis: cómo entra un cliente, cómo se prepara un presupuesto, dónde vive cada dato y qué programas tenéis ya. Le dedicamos días de trabajo real y termina en un documento que sirve por sí solo, incluso si después no seguís con nosotros.",
+        "Auditamos de verdad cómo trabajáis: cómo entra un cliente, cómo se prepara un presupuesto, dónde vive cada dato y qué programas tenéis ya. Termina en un documento con el diagrama de cómo funcionáis hoy, qué software hace falta ordenado por impacto y esfuerzo, los riesgos de cada pieza y el alcance de cada fase. Ese documento es vuestro, sigáis o no con nosotros.",
     },
     {
       num: "3",
-      meta: "Incluido en el diagnóstico",
-      titulo: "Roadmap priorizado",
-      texto:
-        "Un documento con el diagrama de cómo funcionáis hoy, qué software hace falta de verdad ordenado por impacto y esfuerzo, los riesgos de cada pieza y el alcance de cada fase. Ese documento es vuestro, sigáis o no con nosotros.",
-    },
-    {
-      num: "4",
       meta: "Fase a fase · aprobado antes de empezar",
       titulo: "Desarrollo e implementación",
       texto:
         "Se construye lo que hayáis decidido, empezando por la pieza que más impacto tiene con menos esfuerzo. Vais viendo el sistema funcionar según avanza, no al final. Cada fase se acuerda y se aprueba antes de tocar nada.",
     },
     {
-      num: "5",
+      num: "4",
       meta: "Después de arrancar",
       titulo: "Ajuste y acompañamiento",
       texto:
@@ -182,7 +186,12 @@ export const casoDiagnostico = {
    ============================================================ */
 export const comoEmpezar = {
   categoria: "Cómo se empieza",
-  titular: "Tres pasos, y el primero son quince minutos",
+  /* NO dice «pasos». El proceso tiene cuatro y está unas secciones más
+     arriba, en esta misma página: llamar «tres pasos» a esto hacía que
+     pareciera que nos contradecimos, cuando en realidad son otra cosa.
+     Estas son las tres puertas de entrada — hasta dónde quiere llegar
+     el cliente —, no las fases del trabajo. */
+  titular: "Tres formas de empezar, y la primera son quince minutos",
   intro:
     "Una sola historia, la misma en toda la web: primero hablamos, después analizamos cómo trabajáis y os lo entregamos por escrito, y solo entonces se construye. Siempre fase a fase, y decidiendo vosotros hasta dónde llegar.",
   paso1: {

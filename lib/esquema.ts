@@ -13,7 +13,7 @@ export const esquemaNegocio = {
     "Desarrollo de soluciones digitales a medida para pymes y autónomos: CRM propios, configuradores de producto para la web e integraciones automatizadas. Diagnóstico primero, desarrollo por fases después.",
   url: marca.dominio,
   email: marca.email,
-  image: `${marca.dominio}/assets/og-image.jpg`,
+  image: `${marca.dominio}/assets/og-nexo4pymes.jpg`,
   address: {
     "@type": "PostalAddress",
     addressLocality: marca.localidad,

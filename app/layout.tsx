@@ -58,7 +58,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0E3B36",
+  /* El fondo real del sitio. Era "#0E3B36", el verde botella de la web
+     anterior al rediseño: llevaba meses pintando de verde la barra del
+     navegador en Android sobre una web que ya es casi negra. Es el
+     valor de --color-bottle en app/globals.css; si cambia allí, aquí
+     también. */
+  themeColor: "#05060c",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",

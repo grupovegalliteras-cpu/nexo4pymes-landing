@@ -77,7 +77,7 @@ export const metadata: Metadata = {
     url: "/",
     images: [
       {
-        url: "/assets/og-automatizacion-pymes.jpg",
+        url: "/assets/og-nexo4pymes.jpg",
         width: 1200,
         height: 630,
         alt: "Nexo4Pymes — software a medida para pymes",
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: titulo,
     description: descripcion,
-    images: ["/assets/og-automatizacion-pymes.jpg"],
+    images: ["/assets/og-nexo4pymes.jpg"],
   },
 };
 

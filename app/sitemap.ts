@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { marca } from "@/content/marca";
+import { SECTORES } from "@/data/sectors";
 
 /* El sitemap se genera solo. Al publicar un artículo nuevo basta con
    añadir su slug aquí (o mejor: leer la carpeta app/blog cuando haya
@@ -46,5 +47,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
     { url: `${marca.dominio}/legal`, lastModified: hoy, changeFrequency: "yearly", priority: 0.3 },
+    // La demo: la portada ya está arriba; aquí sus páginas públicas
+    { url: `${marca.dominio}/demo`, lastModified: hoy, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${marca.dominio}/modulos`, lastModified: hoy, changeFrequency: "monthly", priority: 0.6 },
+    ...SECTORES.map((s) => ({ url: `${marca.dominio}/sectores/${s.id}`, lastModified: hoy, changeFrequency: "monthly" as const, priority: 0.7 })),
   ];
 }

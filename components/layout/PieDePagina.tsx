@@ -97,6 +97,11 @@ export function PieDePagina({
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <Link href="/demo?tour=1" className={FILA}>
+                    Demo en vivo
+                  </Link>
+                </li>
               </ul>
             </div>
 

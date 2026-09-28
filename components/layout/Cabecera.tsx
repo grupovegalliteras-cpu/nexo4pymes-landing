@@ -114,6 +114,14 @@ export function Cabecera({
                 {enlacePill.texto}
               </Link>
             )}
+            {/* La portada es la demo en vivo: acceso directo desde cualquier apartado de la web. */}
+            <Link
+              href="/demo?tour=1"
+              className="ml-2 flex items-center gap-2 rounded-full border border-mint/30 bg-mint/[.06] px-4 py-2 text-[14px] text-white transition-colors duration-200 hover:bg-mint/12"
+            >
+              <span aria-hidden="true" className="anim-respirar h-1.5 w-1.5 rounded-full bg-mint" />
+              Demo en vivo
+            </Link>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -126,7 +134,7 @@ export function Cabecera({
               variante="principal"
               tamano="sm"
               magnetico
-              className="whitespace-nowrap font-titular font-semibold"
+              className={`whitespace-nowrap font-titular font-semibold ${/wa.me|whatsapp.com/.test(cta.href) ? "vibrar" : ""}`}
             >
               {cta.texto}
             </Boton>
@@ -203,6 +211,15 @@ export function Cabecera({
                   </Link>
                 </motion.div>
               )}
+
+              <Link
+                href="/demo?tour=1"
+                onClick={() => setMenuAbierto(false)}
+                className="flex items-center gap-2.5 py-4 font-titular text-[21px] font-semibold text-mint"
+              >
+                <span aria-hidden="true" className="anim-respirar h-2 w-2 rounded-full bg-mint" />
+                Ver la demo en vivo
+              </Link>
 
               <div className="mt-6">
                 <Boton href={cta.href} externo={cta.externo} tamano="lg" flecha className="w-full">

@@ -1,0 +1,142 @@
+@import "tailwindcss";
+@import "./tema-web.css";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* Compensa la cabecera fija al saltar a un ancla. */
+    scroll-padding-top: 84px;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-bottle);
+    color: var(--color-ink);
+    font-family: var(--font-texto);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-titular);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Foco visible en todo el sitio: sin esto la navegación por teclado
+     es invisible sobre los fondos oscuros. Todo el sitio es oscuro
+     desde el rediseño, así que el azul de marca sirve de base sin
+     necesitar la variante ".oscuro" de antes. */
+  :focus-visible {
+    outline: 2px solid var(--color-azul);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .oscuro :focus-visible,
+  .oscuro:focus-visible {
+    outline-color: var(--color-mint);
+  }
+
+  ::selection {
+    background: rgb(76 125 255 / 0.35);
+    color: #ffffff;
+  }
+}
+
+
+/* ============================================================
+   RENDIMIENTO EN MÓVIL Y EN TÁCTIL (fase 5)
+
+   Estas reglas van FUERA de cualquier @layer a propósito: el CSS sin
+   capa gana siempre a las utilidades de Tailwind, que viven en
+   @layer utilities. Así no hace falta !important ni tocar los 27
+   sitios donde se usa el desenfoque.
+
+   El criterio combina ancho y tipo de puntero: una tablet con dedo a
+   900 px también es un dispositivo donde esto importa.
+   ============================================================ */
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+  /* Las tres manchas de color del fondo derivan en bucle infinito
+     (26 s, 34 s y 40 s) detrás de TODA la página. Cada una es un
+     radial-gradient de 60-70 vw con blur: moverlas obliga a repintar
+     una capa enorme sin parar, también mientras se hace scroll.
+     Congeladas se ven exactamente igual — el degradado sigue ahí. */
+  .anim-deriva-a,
+  .anim-deriva-b,
+  .anim-deriva-a-inversa {
+    animation: none;
+  }
+
+  /* Cada backdrop-filter obliga al navegador a leer lo que hay detrás
+     del elemento y desenfocarlo en cada frame. Detrás de estas
+     tarjetas solo hay un fondo casi negro con manchas ya difuminadas,
+     así que el efecto no se aprecia y el coste es real.
+
+     Se conserva donde de verdad hay contenido pasando por debajo:
+     cabecera y barra flotante, marcadas con .blur-si. */
+  [class*="backdrop-blur"]:not(.blur-si) {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* ============================================================
+   SUELO TIPOGRÁFICO MÓVIL (fase 6)
+
+   El sitio se escribió con la escala de escritorio y en móvil bajaba
+   hasta 9,5 px: horas del teléfono simulado, chips de coste, versalitas
+   de sección. Texto de escritorio metido en una pantalla de mano.
+
+   Esto pone un suelo de 12 px a TODO lo que declare un tamaño por
+   debajo, en las cuatro páginas del sitio a la vez. Es un puente
+   deliberado: la alternativa era editar 33 usos repartidos por 19
+   archivos y volver a dejar la escala a merced del siguiente que
+   escriba un `text-[10px]` a ojo.
+
+   Verificado que no hay colisiones: en el proyecto no existe ningún
+   text-[1XXpx] ni valores en rem/% que empiecen por 9, 10 u 11.
+   ============================================================ */
+@media (max-width: 480px) {
+  [class*="text-[9"],
+  [class*="text-[10"],
+  [class*="text-[11"] {
+    font-size: var(--text-micro);
+  }
+}
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION
+   Un único sitio corta todo el movimiento CSS. Las animaciones
+   de JS se cortan en components/motion/usarMovimiento.ts.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

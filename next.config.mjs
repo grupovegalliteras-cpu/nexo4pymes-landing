@@ -6,6 +6,10 @@ const nextConfig = {
   // archivo en app/blog/<slug>/page.mdx, sin tocar nada más.
   pageExtensions: ["ts", "tsx", "mdx"],
 
+  // Hay dos plantillas raíz (la demo en app/(demo) y los apartados de la web en
+  // app/(web)); la página 404 común vive en app/global-not-found.tsx.
+  experimental: { globalNotFound: true },
+
   // SOLO AFECTA A `npm run dev`. En producción no hace nada.
   //
   // Desde Next 16, el servidor de desarrollo sirve el HTML a cualquiera
@@ -78,6 +82,9 @@ const nextConfig = {
       // Enlaces antiguos a /sectores (sin más): al selector de sectores
       // de la home, que es donde vive ahora esa información.
       { source: "/sectores", destination: "/#sectores", permanent: false },
+
+      // La demo tenía su propia página de privacidad; en la web conjunta manda /legal.
+      { source: "/privacidad", destination: "/legal", permanent: true },
     ];
   },
 };

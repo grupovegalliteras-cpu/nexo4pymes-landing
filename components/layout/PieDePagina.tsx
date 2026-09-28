@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { IconoInstagram } from "@/components/ui/IconosRedes";
 import { BotonPreferencias } from "@/components/legal/BotonPreferencias";
 import { marca } from "@/content/marca";

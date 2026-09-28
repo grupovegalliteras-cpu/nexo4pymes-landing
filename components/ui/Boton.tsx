@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import type { ReactNode } from "react";
 import { useMagnetico } from "@/components/motion/useMagnetico";
 

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { marca } from "@/content/marca";
 
 /* Marco común del blog: cabecera sobria y pie corto. El artículo no

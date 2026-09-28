@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Boton } from "@/components/ui/Boton";

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import {
   Bell, ChevronDown, Command, Menu, Moon, PhoneIncoming, RotateCcw, Search, Sparkles, Sun, MessageCircle, X, Radio,
 } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { useRouter } from "next/navigation";
 import { useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { GRUPOS, MODULOS, MODULO_POR_ID, type ModuleGroup } from "@/data/modules";

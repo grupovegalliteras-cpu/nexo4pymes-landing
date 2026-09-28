@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { Geist, Bricolage_Grotesque } from "next/font/google";
 import "./(demo)/globals.css";
 

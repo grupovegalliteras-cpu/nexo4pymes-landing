@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { AlertTriangle, Info } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import { Boton } from "@/components/ui/Boton";

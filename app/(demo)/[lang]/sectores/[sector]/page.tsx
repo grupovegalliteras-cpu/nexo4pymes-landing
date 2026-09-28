@@ -7,7 +7,7 @@ export function generateStaticParams() {
   return SECTORES.map((s) => ({ sector: s.id }));
 }
 
-export async function generateMetadata({ params }: PageProps<"/sectores/[sector]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/[lang]/sectores/[sector]">): Promise<Metadata> {
   const { sector } = await params;
   if (!isSectorId(sector)) return {};
   const s = SECTOR_POR_ID[sector];
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps<"/sectores/[sector]
   return { title, description, openGraph: { type: "website", locale: "es_ES", siteName: "Nexo4Pymes", title: `Nexo4Pymes para ${s.nombre.toLowerCase()}`, description } };
 }
 
-export default async function Page({ params }: PageProps<"/sectores/[sector]">) {
+export default async function Page({ params }: PageProps<"/[lang]/sectores/[sector]">) {
   const { sector } = await params;
   if (!isSectorId(sector)) notFound();
   return <SectorPage id={sector} />;

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { useEffect, useState } from "react";
 import { Monitor, Smartphone } from "lucide-react";
 import { useUi, type AppScreen } from "@/store/ui";

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { Boton } from "@/components/ui/Boton";
 import { Antetitulo, Seccion, TituloSeccion } from "@/components/ui/Seccion";
 import { Reveal, Stagger, ItemStagger } from "@/components/motion/Reveal";

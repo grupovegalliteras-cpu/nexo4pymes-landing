@@ -52,6 +52,18 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    // IDIOMAS (lib/i18n.ts): las páginas viven en app/(…)/[lang]/. El español se
+    // sirve sin prefijo, así que /servicios se contesta desde /es/servicios sin que
+    // cambie la dirección. afterFiles: antes se atienden public/, la API, el sitemap…
+    return {
+      afterFiles: [
+        { source: "/", destination: "/es" },
+        { source: "/:path((?!(?:es|en|de)(?:/|$)).+)", destination: "/es/:path" },
+      ],
+    };
+  },
+
   async redirects() {
     // Las URLs .html de la web anterior ya están indexadas en Google.
     // Sin estos 301 se perdería el posicionamiento acumulado.

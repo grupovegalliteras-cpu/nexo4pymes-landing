@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { motion } from "framer-motion";
 import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 import { Boton } from "@/components/ui/Boton";

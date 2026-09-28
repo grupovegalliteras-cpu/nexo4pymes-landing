@@ -5,7 +5,10 @@ import { esquemaNegocio } from "@/lib/esquema";
 import { BannerCookies } from "@/components/legal/BannerCookies";
 import { Analitica } from "@/components/legal/Analitica";
 import { Medicion } from "@/components/legal/Medicion";
-import "./globals.css";
+import { SugerenciaIdioma } from "@/components/i18n/SugerenciaIdioma";
+import { IDIOMAS, idiomaOBase } from "@/lib/i18n";
+import { fijarIdioma } from "@/lib/idioma-servidor";
+import "../globals.css";
 
 /* next/font descarga y sirve las tipografías desde nuestro propio
    dominio en el build. No hay ninguna petición a Google en el
@@ -52,12 +55,19 @@ const mono = IBM_Plex_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
+const TITULO = {
+  es: "Soluciones digitales a medida para pymes | Nexo4Pymes",
+  en: "Custom software for small businesses in Mallorca | Nexo4Pymes",
+  de: "Individuelle Software für kleine Unternehmen auf Mallorca | Nexo4Pymes",
+};
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const lang = idiomaOBase((await params).lang);
+  return { ...metadataComun, title: { default: TITULO[lang], template: "%s | Nexo4Pymes" } };
+}
+
+const metadataComun: Metadata = {
   metadataBase: new URL(marca.dominio),
-  title: {
-    default: "Soluciones digitales a medida para pymes | Nexo4Pymes",
-    template: "%s | Nexo4Pymes",
-  },
   authors: [{ name: "Nexo4Pymes" }],
   robots: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
   icons: {
@@ -86,9 +96,16 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export function generateStaticParams() {
+  return IDIOMAS.map((lang) => ({ lang }));
+}
+export const dynamicParams = false;
+
+export default async function RootLayout({ children, params }: { children: React.ReactNode; params: Promise<{ lang: string }> }) {
+  const lang = idiomaOBase((await params).lang);
+  fijarIdioma(lang);
   return (
-    <html lang="es" className={`${titular.variable} ${texto.variable} ${mono.variable}`}>
+    <html lang={lang} className={`${titular.variable} ${texto.variable} ${mono.variable}`}>
       <body>
         {/* Sin JavaScript, Framer Motion deja escrito opacity:0 en el HTML y
             media página se quedaría en blanco. Esto devuelve la visibilidad a
@@ -104,6 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             El orden importa poco porque Analitica no pinta nada
             hasta que hay consentimiento, pero conceptualmente es
             este: primero se pregunta, después se carga. */}
+        <SugerenciaIdioma />
         <BannerCookies />
         <Analitica />
 

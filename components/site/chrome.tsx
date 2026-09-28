@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, MessageCircle, PlayCircle, X } from "lucide-react";
 import { useEffect, useState } from "react";

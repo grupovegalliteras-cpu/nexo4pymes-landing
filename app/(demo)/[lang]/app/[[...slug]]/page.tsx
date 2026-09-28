@@ -9,7 +9,7 @@ export function generateStaticParams() {
   return [{ slug: [] }, ...SCREENS.map((s) => ({ slug: [s] }))];
 }
 
-export default async function Page({ params }: PageProps<"/app/[[...slug]]">) {
+export default async function Page({ params }: PageProps<"/[lang]/app/[[...slug]]">) {
   const { slug } = await params;
   const s = slug?.[0];
   return <AppRoutePage initial={s && SCREENS.includes(s) ? s : "hoy"} />;

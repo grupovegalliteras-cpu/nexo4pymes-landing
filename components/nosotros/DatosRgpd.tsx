@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { Antetitulo, Seccion, TituloSeccion } from "@/components/ui/Seccion";
 import { Reveal } from "@/components/motion/Reveal";
 import { CajaIcono } from "@/components/ui/Icono";

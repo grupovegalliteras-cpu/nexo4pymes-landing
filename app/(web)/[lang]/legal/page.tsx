@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { FondoAmbiente } from "@/components/ui/FondoAmbiente";
 import { Reveal } from "@/components/motion/Reveal";
 import { BotonPreferencias } from "@/components/legal/BotonPreferencias";

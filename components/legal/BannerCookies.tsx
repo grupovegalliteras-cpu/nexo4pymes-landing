@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { AnimatePresence, motion } from "framer-motion";
 import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 import {

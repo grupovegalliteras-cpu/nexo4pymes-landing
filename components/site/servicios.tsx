@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { motion } from "motion/react";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";

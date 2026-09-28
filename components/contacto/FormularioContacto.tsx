@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { Boton } from "@/components/ui/Boton";
 import { formulario } from "@/content/contacto";
 import { marca } from "@/content/marca";

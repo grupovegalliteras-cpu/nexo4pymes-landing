@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/Enlace";
 import { motion } from "motion/react";
 import { Check, MessageCircle, PhoneIncoming, PlayCircle, Smartphone } from "lucide-react";
 import { whatsappLink } from "@/data/site";

@@ -6,7 +6,15 @@ import { ExternalLink, Monitor, PlayCircle, RotateCcw, Smartphone } from "lucide
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PanelShell } from "@/components/panel/shell";
 import { AppShell, PhoneFrame } from "@/components/app/shell";
-import { SECTORES, type SectorId } from "@/data/sectors";
+import type { SectorId } from "@/data/sectors";
+import { sectoresDe } from "@/data/sectors-i18n";
+import { useIdioma } from "@/components/i18n/idioma";
+
+const TX = {
+  es: { inicio: "Inicio de Nexo4Pymes", modo: "Modo presentación", sector: "Sector de la demo", reiniciarT: "Reiniciar demo", reiniciar: "Reiniciar", otraT: "Abrir la app en otra pestaña", otra: "App en otra pestaña", verRecorrido: "Ver recorrido", recorrido: "Recorrido", oficina: "Oficina", movil: "Móvil del técnico", conectados: "Conectados en tiempo real" },
+  en: { inicio: "Nexo4Pymes home", modo: "Presentation mode", sector: "Demo industry", reiniciarT: "Reset demo", reiniciar: "Reset", otraT: "Open the app in another tab", otra: "App in another tab", verRecorrido: "Guided tour", recorrido: "Tour", oficina: "Office", movil: "Technician's phone", conectados: "Connected in real time" },
+  de: { inicio: "Nexo4Pymes Startseite", modo: "Präsentationsmodus", sector: "Branche der Demo", reiniciarT: "Demo zurücksetzen", reiniciar: "Zurücksetzen", otraT: "App in neuem Tab öffnen", otra: "App in neuem Tab", verRecorrido: "Geführte Tour", recorrido: "Tour", oficina: "Büro", movil: "Handy des Technikers", conectados: "In Echtzeit verbunden" },
+};
 import { useDemo, useSector } from "@/store/demo";
 import { useUi } from "@/store/ui";
 import { cn } from "@/lib/utils";
@@ -48,6 +56,8 @@ function ScaledBox({ children }: { children: React.ReactNode }) {
 }
 
 export function DemoPage() {
+  const lang = useIdioma();
+  const tx = TX[lang];
   const sector = useSector();
   const setSector = useDemo((s) => s.setSector);
   const reset = useDemo((s) => s.reset);
@@ -89,11 +99,11 @@ export function DemoPage() {
     <div className="flex h-dvh flex-col bg-[#0a161c] text-fg">
       {/* en el móvil, durante el recorrido, fuera barras: toda la pantalla para la demo */}
       <header className={cn("flex h-14 shrink-0 items-center gap-3 border-b border-white/10 px-3 text-white sm:px-4", guiado && "hidden")}>
-        <Link href="/" className="flex items-center gap-2" aria-label="Inicio de Nexo4Pymes">
+        <Link href="/" className="flex items-center gap-2" aria-label={tx.inicio}>
           <Logo className="h-6 max-[400px]:[&>span]:hidden" light />
         </Link>
         <span className="hidden h-5 w-px bg-white/15 md:block" />
-        <span className="hidden text-[13px] text-white/60 md:block">Modo presentación</span>
+        <span className="hidden text-[13px] text-white/60 md:block">{tx.modo}</span>
         <select
           value={sector.id}
           onChange={(e) => {
@@ -101,23 +111,23 @@ export function DemoPage() {
             setSector(e.target.value as SectorId);
           }}
           className="ml-auto h-8 min-w-0 max-w-[46vw] rounded-lg border border-white/15 bg-white/5 px-2 text-[13px] text-white outline-none md:ml-4"
-          aria-label="Sector de la demo"
+          aria-label={tx.sector}
         >
-          {SECTORES.map((s) => (
+          {sectoresDe(lang).map((s) => (
             <option key={s.id} value={s.id} className="text-black">
               {s.nombre}: {s.empresa}
             </option>
           ))}
         </select>
         <div className="flex items-center gap-1.5 md:ml-auto">
-          <button onClick={() => { tour.stop(); reset(); }} className="hidden h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] text-white/70 hover:bg-white/10 sm:flex" title="Reiniciar demo">
-            <RotateCcw className="size-3.5" /> Reiniciar
+          <button onClick={() => { tour.stop(); reset(); }} className="hidden h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] text-white/70 hover:bg-white/10 sm:flex" title={tx.reiniciarT}>
+            <RotateCcw className="size-3.5" /> {tx.reiniciar}
           </button>
-          <Link href="/app" target="_blank" className="hidden h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] text-white/70 hover:bg-white/10 lg:flex" title="Abrir la app en otra pestaña">
-            <ExternalLink className="size-3.5" /> App en otra pestaña
+          <Link href="/app" target="_blank" className="hidden h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] text-white/70 hover:bg-white/10 lg:flex" title={tx.otraT}>
+            <ExternalLink className="size-3.5" /> {tx.otra}
           </Link>
           <motion.button whileTap={{ scale: 0.96 }} onClick={tour.start} className="flex h-8 items-center gap-1.5 rounded-lg bg-sun px-3 text-[13px] font-semibold text-[#1d1300]" data-tour="ver-recorrido">
-            <PlayCircle className="size-4" /> <span className="max-[400px]:hidden">Ver recorrido</span><span className="min-[401px]:hidden">Recorrido</span>
+            <PlayCircle className="size-4" /> <span className="max-[400px]:hidden">{tx.verRecorrido}</span><span className="min-[401px]:hidden">{tx.recorrido}</span>
           </motion.button>
         </div>
       </header>
@@ -127,7 +137,7 @@ export function DemoPage() {
         {(["panel", "app"] as const).map((v) => (
           <button key={v} onClick={() => setView(v)} className={cn("flex h-8 flex-1 items-center justify-center gap-1.5 rounded-lg text-[13px] font-medium", view === v ? "bg-white text-[#0a161c]" : "text-white/70")}>
             {v === "panel" ? <Monitor className="size-4" /> : <Smartphone className="size-4" />}
-            {v === "panel" ? "Oficina" : "Móvil del técnico"}
+            {v === "panel" ? tx.oficina : tx.movil}
           </button>
         ))}
       </div>
@@ -150,7 +160,7 @@ export function DemoPage() {
             </div>
           )}
           <div className="hidden items-center gap-1.5 text-[11px] text-white/40 lg:flex">
-            <span className="size-1.5 rounded-full bg-ok" /> Conectados en tiempo real
+            <span className="size-1.5 rounded-full bg-ok" /> {tx.conectados}
           </div>
         </div>
       </div>

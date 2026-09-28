@@ -7,6 +7,7 @@ import { LIVE_SPEED, useDemo } from "@/store/demo";
 import { useUi, type AppRoute } from "@/store/ui";
 import { SECTOR_POR_ID } from "@/data/sectors";
 import { whatsappLink } from "@/data/site";
+import { useIdioma } from "@/components/i18n/idioma";
 import { addDays, cn, isoDay } from "@/lib/utils";
 
 type Ctx = { avisoId?: string; jobId?: string; invoiceId?: string; absenceId?: string };
@@ -315,28 +316,95 @@ function TourProgress({ t }: { t: ReturnType<typeof useTour> }) {
   );
 }
 
-const WA_TOUR = "Hola, he visto el recorrido de la demo de Nexo4Pymes y me gustaría verla con los datos de mi empresa.";
+/* Textos de la tarjeta del recorrido. Los pasos van en el mismo orden que STEPS (en STEPS está el español). */
+const TX_TOUR = {
+  es: {
+    wa: "Hola, he visto el recorrido de la demo de Nexo4Pymes y me gustaría verla con los datos de mi empresa.",
+    region: "Recorrido guiado", fin: "Fin del recorrido", paso: (n: number, t: number) => `Paso ${n} de ${t}`, cerrar: "Cerrar recorrido",
+    finTitulo: "De la llamada a la factura cobrada, sin papeles",
+    finTexto: "Esto es lo que hace tu equipo cada día, pero sin apuntar, sin llamar para preguntar y sin pasar nada a mano. Lo montamos con los datos de tu empresa.",
+    finCorto: "Esto es lo que hace tu equipo cada día, sin apuntar nada ni pasar nada a mano. Lo montamos con los datos de tu empresa.",
+    otraVez: "Ver otra vez", otraCorto: "Otra vez", quiero: "La quiero con mis datos", anterior: "Paso anterior", siguientePaso: "Paso siguiente",
+    pausar: "Pausar", reanudar: "Reanudar", seguir: "Seguir", siguiente: "Siguiente", espacio: "Espacio para pausar", movil: "Móvil del técnico", oficina: "Oficina",
+    pasos: null as null | [string, string][],
+  },
+  en: {
+    wa: "Hi, I've watched the Nexo4Pymes demo tour and I'd like to see it with my company's data.",
+    region: "Guided tour", fin: "End of tour", paso: (n: number, t: number) => `Step ${n} of ${t}`, cerrar: "Close tour",
+    finTitulo: "From the call to the paid invoice, paperless",
+    finTexto: "This is what your team does every day, but without writing anything down, calling to ask or typing anything up by hand. We set it up with your company's data.",
+    finCorto: "This is what your team does every day, without writing anything down or typing anything up. We set it up with your company's data.",
+    otraVez: "Watch again", otraCorto: "Again", quiero: "I want it with my data", anterior: "Previous step", siguientePaso: "Next step",
+    pausar: "Pause", reanudar: "Resume", seguir: "Resume", siguiente: "Next", espacio: "Space to pause", movil: "Technician's phone", oficina: "Office",
+    pasos: [
+      ["A call comes in", "A customer calls your usual number. Central Avisos records and transcribes it while they talk. Nobody has to write anything down."],
+      ["AI has already understood it", "It knows which customer it is, what's wrong, whether it's urgent and which service is needed. And it leaves a one-line summary for the office."],
+      ["One click and the technician has it", "The office creates the work order with the suggested technician. The notification with all the details arrives instantly."],
+      ["Clocking in from the phone", "The technician clocks in with their location. In the office the team board updates itself, and the working-time record is kept."],
+      ["On the way to the customer", "They tap \"I'm on my way\" and the customer gets a message. In the office, the map and the schedule update live."],
+      ["The job report, on the phone", "Service checklist, industry readings, van stock, before and after photos, and the customer's finger signature."],
+      ["Close the report and the office has everything", "PDF report sent to the customer, materials deducted from stock and the invoice ready as a draft. Nothing typed by hand."],
+      ["VeriFactu invoice in one click", "It gets its number, is registered with VeriFactu with its QR code, and goes out with a card or Bizum payment link."],
+      ["The customer pays from their phone", "They pay by Bizum from the link. The invoice becomes paid and the management dashboard shows it straight away."],
+      ["And the team, paperless", "The technician requests holidays in the app. The office sees them instantly in the team calendar."],
+      ["Approved, and they get notified", "One click in the office and the technician gets the answer on their phone. Same for payslips, announcements and documents."],
+    ] as [string, string][],
+  },
+  de: {
+    wa: "Hallo, ich habe die Tour durch die Demo von Nexo4Pymes gesehen und würde sie gern mit den Daten meiner Firma sehen.",
+    region: "Geführte Tour", fin: "Ende der Tour", paso: (n: number, t: number) => `Schritt ${n} von ${t}`, cerrar: "Tour schließen",
+    finTitulo: "Vom Anruf zur bezahlten Rechnung, ohne Papier",
+    finTexto: "Das macht Ihr Team jeden Tag, aber ohne Notizen, ohne Rückfragen per Telefon und ohne etwas abzutippen. Wir richten es mit den Daten Ihrer Firma ein.",
+    finCorto: "Das macht Ihr Team jeden Tag, ohne Notizen und ohne etwas abzutippen. Wir richten es mit den Daten Ihrer Firma ein.",
+    otraVez: "Noch einmal", otraCorto: "Nochmal", quiero: "Mit meinen Daten", anterior: "Vorheriger Schritt", siguientePaso: "Nächster Schritt",
+    pausar: "Pause", reanudar: "Fortsetzen", seguir: "Weiter", siguiente: "Weiter", espacio: "Leertaste für Pause", movil: "Handy des Technikers", oficina: "Büro",
+    pasos: [
+      ["Ein Anruf kommt rein", "Ein Kunde ruft die gewohnte Nummer an. Central Avisos zeichnet auf und transkribiert, während er spricht. Niemand muss etwas notieren."],
+      ["Die KI hat es schon verstanden", "Sie weiß, welcher Kunde es ist, was los ist, ob es dringend ist und welche Leistung gebraucht wird. Und sie hinterlässt dem Büro eine Zusammenfassung in einer Zeile."],
+      ["Ein Klick, und der Techniker hat es auf dem Handy", "Das Büro erstellt den Auftrag mit dem vorgeschlagenen Techniker. Sofort kommt die Benachrichtigung mit allen Daten an."],
+      ["Einstempeln per Handy", "Der Techniker stempelt mit Standort ein. Im Büro aktualisiert sich die Teamübersicht von selbst, und die Arbeitszeit wird erfasst."],
+      ["Auf dem Weg zum Kunden", "Er tippt auf „Ich fahre los“ und der Kunde bekommt eine Nachricht. Im Büro ändern sich Karte und Planung live."],
+      ["Der Arbeitsbericht auf dem Handy", "Checkliste der Leistung, Branchenmesswerte, Material aus dem Fahrzeug, Vorher-Nachher-Fotos und die Unterschrift des Kunden mit dem Finger."],
+      ["Bericht abschließen, und das Büro hat alles", "PDF-Bericht an den Kunden, Material vom Lager abgebucht und die Rechnung als Entwurf vorbereitet. Ohne etwas abzutippen."],
+      ["Rechnung mit VeriFactu per Klick", "Sie bekommt ihre Nummer, wird mit VeriFactu und QR-Code registriert und geht mit Zahlungslink für Karte oder Bizum raus."],
+      ["Der Kunde zahlt per Handy", "Er zahlt per Bizum über den Link. Die Rechnung gilt als bezahlt und das Dashboard der Geschäftsführung zeigt es sofort."],
+      ["Und das Team, ohne Papier", "Der Techniker beantragt Urlaub in der App. Das Büro sieht ihn sofort im Teamkalender."],
+      ["Genehmigt, und er wird benachrichtigt", "Ein Klick im Büro und der Techniker bekommt die Antwort aufs Handy. Genauso bei Lohnzetteln, Mitteilungen und Dokumenten."],
+    ] as [string, string][],
+  },
+};
+
+function useTxTour(t: { step: number }) {
+  const tx = TX_TOUR[useIdioma()];
+  const s = STEPS[t.step];
+  const p = tx.pasos?.[t.step];
+  return { tx, titulo: p?.[0] ?? s?.title ?? "", texto: p?.[1] ?? s?.text ?? "" };
+}
 
 export function TourCard({ t, compact = false }: { t: ReturnType<typeof useTour>; compact?: boolean }) {
   if (!t.active) return null;
   if (compact) return <TourCardCompact t={t} />;
-  const s = STEPS[t.step];
+  return <TourCardGrande t={t} />;
+}
+
+function TourCardGrande({ t }: { t: ReturnType<typeof useTour> }) {
+  const { tx, titulo, texto } = useTxTour(t);
   const end = t.step >= STEPS.length;
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="pointer-events-auto w-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a22]/95 text-white shadow-e3 backdrop-blur-xl" role="region" aria-label="Recorrido guiado">
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="pointer-events-auto w-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a22]/95 text-white shadow-e3 backdrop-blur-xl" role="region" aria-label={tx.region}>
       {!end && <TourProgress t={t} />}
       <div className="p-4">
         <div className="flex items-center justify-between text-xs text-white/50">
-          <span className="tabular">{end ? "Fin del recorrido" : `Paso ${t.step + 1} de ${STEPS.length}`}</span>
-          <button onClick={t.stop} className="grid size-6 place-items-center rounded-md hover:bg-white/10" aria-label="Cerrar recorrido">
+          <span className="tabular">{end ? tx.fin : tx.paso(t.step + 1, STEPS.length)}</span>
+          <button onClick={t.stop} className="grid size-6 place-items-center rounded-md hover:bg-white/10" aria-label={tx.cerrar}>
             <X className="size-3.5" />
           </button>
         </div>
         <AnimatePresence mode="wait">
           <motion.div key={t.step} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.25 }}>
-            <div className="mt-1 font-display text-xl font-semibold">{end ? "De la llamada a la factura cobrada, sin papeles" : s.title}</div>
+            <div className="mt-1 font-display text-xl font-semibold">{end ? tx.finTitulo : titulo}</div>
             <p className="mt-1.5 text-[14px] leading-relaxed text-white/75">
-              {end ? "Esto es lo que hace tu equipo cada día, pero sin apuntar, sin llamar para preguntar y sin pasar nada a mano. Lo montamos con los datos de tu empresa." : s.text}
+              {end ? tx.finTexto : texto}
             </p>
           </motion.div>
         </AnimatePresence>
@@ -344,25 +412,25 @@ export function TourCard({ t, compact = false }: { t: ReturnType<typeof useTour>
           {end ? (
             <>
               <button onClick={t.start} className="h-10 rounded-lg px-3 text-[13px] text-white/80 hover:bg-white/10">
-                Ver otra vez
+                {tx.otraVez}
               </button>
-              <a href={whatsappLink(WA_TOUR)} target="_blank" rel="noreferrer" className="ml-auto flex h-10 items-center gap-2 rounded-lg bg-sun px-4 text-[14px] font-semibold text-[#1d1300]">
-                <MessageCircle className="size-4" /> La quiero con mis datos
+              <a href={whatsappLink(tx.wa)} target="_blank" rel="noreferrer" className="ml-auto flex h-10 items-center gap-2 rounded-lg bg-sun px-4 text-[14px] font-semibold text-[#1d1300]">
+                <MessageCircle className="size-4" /> {tx.quiero}
               </a>
             </>
           ) : (
             <>
-              <button onClick={() => t.go(t.step - 1)} disabled={t.step === 0} className="grid size-9 place-items-center rounded-lg hover:bg-white/10 disabled:opacity-30" aria-label="Paso anterior">
+              <button onClick={() => t.go(t.step - 1)} disabled={t.step === 0} className="grid size-9 place-items-center rounded-lg hover:bg-white/10 disabled:opacity-30" aria-label={tx.anterior}>
                 <ChevronLeft className="size-4" />
               </button>
-              <button onClick={() => t.setPlaying(!t.playing)} className="flex h-9 items-center gap-1.5 rounded-lg bg-white/10 px-3 text-[13px] font-medium hover:bg-white/15" aria-label={t.playing ? "Pausar" : "Reanudar"}>
+              <button onClick={() => t.setPlaying(!t.playing)} className="flex h-9 items-center gap-1.5 rounded-lg bg-white/10 px-3 text-[13px] font-medium hover:bg-white/15" aria-label={t.playing ? tx.pausar : tx.reanudar}>
                 {t.playing ? <Pause className="size-3.5" /> : <Play className="size-3.5" />}
-                {t.playing ? "Pausar" : "Seguir"}
+                {t.playing ? tx.pausar : tx.seguir}
               </button>
-              <button onClick={() => t.go(t.step + 1)} className="flex h-9 items-center gap-1 rounded-lg px-3 text-[13px] font-medium hover:bg-white/10" aria-label="Paso siguiente">
-                Siguiente <ChevronRight className="size-4" />
+              <button onClick={() => t.go(t.step + 1)} className="flex h-9 items-center gap-1 rounded-lg px-3 text-[13px] font-medium hover:bg-white/10" aria-label={tx.siguientePaso}>
+                {tx.siguiente} <ChevronRight className="size-4" />
               </button>
-              <span className="ml-auto text-[11px] text-white/40">Espacio para pausar</span>
+              <span className="ml-auto text-[11px] text-white/40">{tx.espacio}</span>
             </>
           )}
         </div>
@@ -374,11 +442,12 @@ export function TourCard({ t, compact = false }: { t: ReturnType<typeof useTour>
 /** En el móvil la pantalla es lo importante: la guía ocupa lo mínimo y los controles caben en una fila. */
 function TourCardCompact({ t }: { t: ReturnType<typeof useTour> }) {
   const s = STEPS[t.step];
+  const { tx, titulo, texto } = useTxTour(t);
   const end = t.step >= STEPS.length;
   const lado = s ? (s.mobile ?? (s.side === "app" ? "app" : "panel")) : "panel";
   const btn = "grid size-9 shrink-0 place-items-center rounded-lg";
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a22] text-white shadow-e3" role="region" aria-label="Recorrido guiado">
+    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a22] text-white shadow-e3" role="region" aria-label={tx.region}>
       {!end && <TourProgress t={t} />}
       <div className="px-3 pt-2 pb-3">
         <div className="flex items-center gap-2">
@@ -388,7 +457,7 @@ function TourCardCompact({ t }: { t: ReturnType<typeof useTour> }) {
             <>
               <span className={cn("flex h-6 items-center gap-1 rounded-md px-1.5 text-[11px] font-semibold", lado === "app" ? "bg-sun/15 text-sun" : "bg-white/10 text-white/80")}>
                 {lado === "app" ? <Smartphone className="size-3" /> : <Monitor className="size-3" />}
-                {lado === "app" ? "Móvil del técnico" : "Oficina"}
+                {lado === "app" ? tx.movil : tx.oficina}
               </span>
               <span className="text-[12px] text-white/45 tabular">
                 {t.step + 1}/{STEPS.length}
@@ -398,31 +467,31 @@ function TourCardCompact({ t }: { t: ReturnType<typeof useTour> }) {
           <div className="ml-auto flex items-center gap-1">
             {!end && (
               <>
-                <button onClick={() => t.go(t.step - 1)} disabled={t.step === 0} className={cn(btn, "bg-white/5 disabled:opacity-30")} aria-label="Paso anterior">
+                <button onClick={() => t.go(t.step - 1)} disabled={t.step === 0} className={cn(btn, "bg-white/5 disabled:opacity-30")} aria-label={tx.anterior}>
                   <ChevronLeft className="size-4" />
                 </button>
-                <button onClick={() => t.setPlaying(!t.playing)} className={cn(btn, "bg-white/10")} aria-label={t.playing ? "Pausar" : "Reanudar"}>
+                <button onClick={() => t.setPlaying(!t.playing)} className={cn(btn, "bg-white/10")} aria-label={t.playing ? tx.pausar : tx.reanudar}>
                   {t.playing ? <Pause className="size-4" /> : <Play className="size-4" />}
                 </button>
-                <button onClick={() => t.go(t.step + 1)} className={cn(btn, "bg-white text-[#0c1a22]")} aria-label="Paso siguiente">
+                <button onClick={() => t.go(t.step + 1)} className={cn(btn, "bg-white text-[#0c1a22]")} aria-label={tx.siguientePaso}>
                   <ChevronRight className="size-4" />
                 </button>
               </>
             )}
-            <button onClick={t.stop} className={cn(btn, "text-white/60")} aria-label="Cerrar recorrido">
+            <button onClick={t.stop} className={cn(btn, "text-white/60")} aria-label={tx.cerrar}>
               <X className="size-4" />
             </button>
           </div>
         </div>
-        <div className="mt-1.5 font-display text-[17px] leading-tight font-semibold">{end ? "De la llamada a la factura cobrada, sin papeles" : s.title}</div>
-        <p className="mt-1 line-clamp-3 text-[13px] leading-snug text-white/70">{end ? "Esto es lo que hace tu equipo cada día, sin apuntar nada ni pasar nada a mano. Lo montamos con los datos de tu empresa." : s.text}</p>
+        <div className="mt-1.5 font-display text-[17px] leading-tight font-semibold">{end ? tx.finTitulo : titulo}</div>
+        <p className="mt-1 line-clamp-3 text-[13px] leading-snug text-white/70">{end ? tx.finCorto : texto}</p>
         {end && (
           <div className="mt-3 grid grid-cols-[auto_1fr] gap-2">
             <button onClick={t.start} className="h-11 rounded-xl bg-white/10 px-4 text-[14px] font-medium">
-              Otra vez
+              {tx.otraCorto}
             </button>
-            <a href={whatsappLink(WA_TOUR)} target="_blank" rel="noreferrer" className="flex h-11 items-center justify-center gap-2 rounded-xl bg-sun text-[14px] font-semibold text-[#1d1300]">
-              <MessageCircle className="size-4" /> La quiero con mis datos
+            <a href={whatsappLink(tx.wa)} target="_blank" rel="noreferrer" className="flex h-11 items-center justify-center gap-2 rounded-xl bg-sun text-[14px] font-semibold text-[#1d1300]">
+              <MessageCircle className="size-4" /> {tx.quiero}
             </a>
           </div>
         )}

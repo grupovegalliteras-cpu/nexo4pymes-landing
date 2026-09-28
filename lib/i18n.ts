@@ -62,7 +62,7 @@ export function tr<T>(lang: Idioma, textos: Record<Idioma, T>): T {
 /** Metadatos de idioma de una página: dirección canónica y sus versiones en los otros idiomas (hreflang). */
 export function alternativas(lang: Idioma, path: string) {
   const languages: Record<string, string> = {};
-  for (const l of IDIOMAS) languages[LOCALE[l]] = conIdioma(l, path);
+  for (const l of IDIOMAS) languages[l] = conIdioma(l, path);
   languages["x-default"] = conIdioma(IDIOMA_BASE, path);
   return { canonical: conIdioma(lang, path), languages };
 }

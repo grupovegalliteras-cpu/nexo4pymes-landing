@@ -2,16 +2,19 @@ import type { Metadata } from "next";
 import Link from "@/components/i18n/Enlace";
 import { Reveal } from "@/components/motion/Reveal";
 import { TarjetaGlow } from "@/components/ui/TarjetaGlow";
-import { blogHome } from "@/content/blog";
+import { contenido } from "@/content/i18n";
+import { alternativas, idiomaOBase, tr } from "@/lib/i18n";
+import { fijarIdioma } from "@/lib/idioma-servidor";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description:
-    "Artículos sobre qué software necesita de verdad un negocio pequeño, en qué orden conviene montarlo y qué errores salen caros.",
-  alternates: { canonical: "/blog" },
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const lang = idiomaOBase((await params).lang);
+  return { title: "Blog", description: contenido(lang).blog.blogHome.entradilla, alternates: alternativas(lang, "/blog") };
+}
 
-export default function PaginaBlog() {
+export default async function PaginaBlog({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = idiomaOBase((await params).lang);
+  fijarIdioma(lang);
+  const { blogHome } = contenido(lang).blog;
   return (
     <>
       <Reveal as="span" className="block">
@@ -47,7 +50,7 @@ export default function PaginaBlog() {
               {blogHome.publicado.resumen}
             </p>
             <span className="mt-5 inline-flex items-center gap-1.5 text-[14.5px] font-medium text-[#9FB6FF]">
-              Leer el artículo
+              {tr(lang, { es: "Leer el artículo", en: "Read the article", de: "Artikel lesen" })}
               <span
                 aria-hidden="true"
                 className="transition-transform duration-300 group-hover:translate-x-1"
@@ -61,9 +64,9 @@ export default function PaginaBlog() {
         <Reveal retraso={0.16}>
           <div className="rounded-tarjeta border border-mint/20 bg-mint/[.05] p-6 sm:p-7">
             <span className="inline-flex rounded-full border border-mint/25 bg-bottle-900/40 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-mint">
-              En preparación
+              {tr(lang, { es: "En preparación", en: "Coming soon", de: "In Vorbereitung" })}
             </span>
-            <h2 className="mt-4 text-[20px] text-[#F4F6FF]">Próximos artículos</h2>
+            <h2 className="mt-4 text-[20px] text-[#F4F6FF]">{tr(lang, { es: "Próximos artículos", en: "Upcoming articles", de: "Nächste Artikel" })}</h2>
             <ul className="mt-4 space-y-2.5">
               {blogHome.proximos.map((titulo) => (
                 <li key={titulo} className="flex gap-2.5 text-[15px] leading-snug text-white/65">

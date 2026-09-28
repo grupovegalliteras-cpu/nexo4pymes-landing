@@ -1,7 +1,8 @@
 import { Antetitulo, Seccion, TituloSeccion } from "@/components/ui/Seccion";
 import { Reveal } from "@/components/motion/Reveal";
 import { TarjetaGlow } from "@/components/ui/TarjetaGlow";
-import { comoEmpezar } from "@/content/servicios";
+import { contenido } from "@/content/i18n";
+import { idiomaServidor } from "@/lib/idioma-servidor";
 
 /* Antes era PreciosServicios y enseñaba cifras. Esta sección ya no
    habla de dinero en absoluto — ver el comentario largo en
@@ -12,9 +13,10 @@ import { comoEmpezar } from "@/content/servicios";
    letra baja de 38-42 px a 26: un texto largo en el cuerpo de un
    número quedaba desproporcionado. */
 
-const pasos = [comoEmpezar.paso1, comoEmpezar.paso2, comoEmpezar.paso3] as const;
-
 export function ComoEmpezar() {
+  const lang = idiomaServidor();
+  const { comoEmpezar } = contenido(lang).servicios;
+  const pasos = [comoEmpezar.paso1, comoEmpezar.paso2, comoEmpezar.paso3] as const;
   return (
     <Seccion id="como-empezar" tono="oscuro" ancho="ancho">
       <div className="max-w-[60ch]">

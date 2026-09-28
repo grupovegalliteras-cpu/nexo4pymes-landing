@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "@/components/i18n/Enlace";
+import { useIdioma } from "@/components/i18n/idioma";
 import { AnimatePresence, motion } from "framer-motion";
 import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 import {
@@ -38,7 +39,62 @@ const SALIDA = [0.22, 1, 0.36, 1] as const;
 
 type Vista = "oculto" | "banner" | "preferencias";
 
+const TXC = {
+  es: {
+    titulo: "Cookies en esta web",
+    texto: "Usamos cookies propias necesarias para que la web funcione y, solo si nos dais permiso, cookies de terceros para medir cómo se usa el sitio y para publicidad. Podéis rechazarlas todas sin perder ninguna función.",
+    politica: "Política de cookies", rechazar: "Rechazar todas", aceptar: "Aceptar todas", configurar: "Configurar",
+    cerrarSin: "Cerrar las preferencias de cookies sin guardar", cerrar: "Cerrar sin guardar", preferencias: "Preferencias de cookies",
+    elegid: "Elegid qué queréis permitir. Podéis cambiarlo cuando queráis desde el enlace «Preferencias de cookies» del pie de página.",
+    necesarias: "Necesarias",
+    necesariasD: "Hacen que la web funcione: recordar esta misma decisión y proteger el formulario de contacto frente a envíos automatizados. No se pueden desactivar porque sin ellas el sitio no puede prestar el servicio.",
+    necesariasX: "No se instala ninguna cookie de terceros. La decisión se guarda en el almacenamiento local de vuestro navegador.",
+    analitica: "Analítica",
+    analiticaD: "Google Analytics. Nos dice cuánta gente entra, desde dónde llega y qué páginas lee, para saber qué mejorar. Los informes son agregados: no identificamos a nadie.",
+    analiticaX: "Cookies _ga y _ga_*, de Google Ireland Ltd. Caducan a los 24 meses.",
+    marketing: "Marketing",
+    marketingD: "Meta Pixel. Permite medir si nuestros anuncios en Instagram y Facebook traen visitas reales y mostrar anuncios a quien ya ha visitado la web.",
+    marketingX: "Cookies _fbp y _fbc, de Meta Platforms Ireland Ltd. Caducan a los 3 meses. Implica transferencia internacional de datos.",
+    guardar: "Guardar mi elección", siempre: "Siempre activas",
+  },
+  en: {
+    titulo: "Cookies on this website",
+    texto: "We use our own essential cookies to make the website work and, only if you give us permission, third-party cookies to measure how the site is used and for advertising. You can reject them all without losing any feature.",
+    politica: "Cookie policy", rechazar: "Reject all", aceptar: "Accept all", configurar: "Settings",
+    cerrarSin: "Close cookie preferences without saving", cerrar: "Close without saving", preferencias: "Cookie preferences",
+    elegid: "Choose what you want to allow. You can change it at any time from the \"Cookie preferences\" link in the footer.",
+    necesarias: "Essential",
+    necesariasD: "They make the website work: remembering this very choice and protecting the contact form against automated submissions. They can't be switched off because without them the site can't provide its service.",
+    necesariasX: "No third-party cookies are set. Your choice is stored in your browser's local storage.",
+    analitica: "Analytics",
+    analiticaD: "Google Analytics. It tells us how many people visit, where they come from and which pages they read, so we know what to improve. Reports are aggregated: we don't identify anyone.",
+    analiticaX: "_ga and _ga_* cookies, from Google Ireland Ltd. They expire after 24 months.",
+    marketing: "Marketing",
+    marketingD: "Meta Pixel. It lets us measure whether our Instagram and Facebook ads bring real visits and show ads to people who have already visited the website.",
+    marketingX: "_fbp and _fbc cookies, from Meta Platforms Ireland Ltd. They expire after 3 months. Involves an international data transfer.",
+    guardar: "Save my choice", siempre: "Always on",
+  },
+  de: {
+    titulo: "Cookies auf dieser Website",
+    texto: "Wir verwenden eigene, notwendige Cookies, damit die Website funktioniert, und nur mit Ihrer Erlaubnis Cookies von Drittanbietern, um die Nutzung zu messen und für Werbung. Sie können alle ablehnen, ohne eine Funktion zu verlieren.",
+    politica: "Cookie-Richtlinie", rechazar: "Alle ablehnen", aceptar: "Alle akzeptieren", configurar: "Einstellungen",
+    cerrarSin: "Cookie-Einstellungen ohne Speichern schließen", cerrar: "Ohne Speichern schließen", preferencias: "Cookie-Einstellungen",
+    elegid: "Wählen Sie, was Sie erlauben möchten. Sie können es jederzeit über den Link „Cookie-Einstellungen“ in der Fußzeile ändern.",
+    necesarias: "Notwendig",
+    necesariasD: "Sie sorgen dafür, dass die Website funktioniert: diese Entscheidung speichern und das Kontaktformular vor automatisierten Einsendungen schützen. Sie lassen sich nicht abschalten, weil die Website ohne sie ihren Dienst nicht erbringen kann.",
+    necesariasX: "Es werden keine Cookies von Drittanbietern gesetzt. Die Entscheidung wird im lokalen Speicher Ihres Browsers abgelegt.",
+    analitica: "Statistik",
+    analiticaD: "Google Analytics. Zeigt uns, wie viele Menschen kommen, woher sie kommen und welche Seiten sie lesen, damit wir wissen, was wir verbessern können. Die Berichte sind zusammengefasst: Wir identifizieren niemanden.",
+    analiticaX: "Cookies _ga und _ga_* von Google Ireland Ltd. Laufzeit 24 Monate.",
+    marketing: "Marketing",
+    marketingD: "Meta Pixel. Damit messen wir, ob unsere Anzeigen auf Instagram und Facebook echte Besuche bringen, und zeigen Anzeigen Menschen, die die Website schon besucht haben.",
+    marketingX: "Cookies _fbp und _fbc von Meta Platforms Ireland Ltd. Laufzeit 3 Monate. Beinhaltet eine internationale Datenübermittlung.",
+    guardar: "Auswahl speichern", siempre: "Immer aktiv",
+  },
+};
+
 export function BannerCookies() {
+  const tx = TXC[useIdioma()];
   const { cargado, decidido, guardar } = usarConsentimiento();
   const [vista, setVista] = useState<Vista>("oculto");
   const reducido = usarMovimientoReducido();
@@ -141,14 +197,12 @@ export function BannerCookies() {
           <div className="mx-auto flex max-w-[1180px] flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
             <div className="lg:flex-1">
               <h2 id="titulo-cookies" className="font-titular text-[16px] font-semibold text-white sm:text-[17px]">
-                Cookies en esta web
+                {tx.titulo}
               </h2>
               <p className="mt-1.5 max-w-[70ch] text-[13.5px] leading-relaxed text-white/60 sm:text-[14px]">
-                Usamos cookies propias necesarias para que la web funcione y, solo si nos dais
-                permiso, cookies de terceros para medir cómo se usa el sitio y para publicidad.
-                Podéis rechazarlas todas sin perder ninguna función.{" "}
+                {tx.texto}{" "}
                 <Link href="/legal#cookies" className="text-azul underline underline-offset-4">
-                  Política de cookies
+                  {tx.politica}
                 </Link>
                 .
               </p>
@@ -164,7 +218,7 @@ export function BannerCookies() {
                            text-[14px] font-medium text-white transition-colors duration-200
                            hover:border-white/35 hover:bg-white/[.12]"
               >
-                Rechazar todas
+                {tx.rechazar}
               </button>
 
               <button
@@ -174,7 +228,7 @@ export function BannerCookies() {
                            text-[14px] font-medium text-white shadow-[0_10px_30px_-12px_rgba(76,125,255,.75)]
                            transition-transform duration-200 hover:-translate-y-0.5"
               >
-                Aceptar todas
+                {tx.aceptar}
               </button>
 
               <button
@@ -186,7 +240,7 @@ export function BannerCookies() {
                 className="min-h-[44px] rounded-full px-5 py-2.5 text-[14px] text-white/65
                            underline-offset-4 transition-colors duration-200 hover:text-white hover:underline"
               >
-                Configurar
+                {tx.configurar}
               </button>
             </div>
           </div>
@@ -205,7 +259,7 @@ export function BannerCookies() {
           {/* Fondo. Cerrar aquí NO guarda nada: equivale a no decidir. */}
           <button
             type="button"
-            aria-label="Cerrar las preferencias de cookies sin guardar"
+            aria-label={tx.cerrarSin}
             onClick={cerrar}
             className="absolute inset-0 bg-bottle-900/80 backdrop-blur-sm"
           />
@@ -225,12 +279,12 @@ export function BannerCookies() {
           >
             <div className="flex items-start justify-between gap-4">
               <h2 id="titulo-preferencias" className="font-titular text-[21px] font-semibold text-white sm:text-[24px]">
-                Preferencias de cookies
+                {tx.preferencias}
               </h2>
               <button
                 type="button"
                 onClick={cerrar}
-                aria-label="Cerrar sin guardar"
+                aria-label={tx.cerrar}
                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/12
                            text-white/60 transition-colors hover:border-white/30 hover:text-white"
               >
@@ -241,31 +295,31 @@ export function BannerCookies() {
             </div>
 
             <p className="mt-3 text-[14px] leading-relaxed text-white/60">
-              Elegid qué queréis permitir. Podéis cambiarlo cuando queráis desde el enlace
-              «Preferencias de cookies» del pie de página.
+              {tx.elegid}
             </p>
 
             <div className="mt-6 space-y-3">
               <Categoria
-                titulo="Necesarias"
-                descripcion="Hacen que la web funcione: recordar esta misma decisión y proteger el formulario de contacto frente a envíos automatizados. No se pueden desactivar porque sin ellas el sitio no puede prestar el servicio."
-                detalle="No se instala ninguna cookie de terceros. La decisión se guarda en el almacenamiento local de vuestro navegador."
+                titulo={tx.necesarias}
+                descripcion={tx.necesariasD}
+                detalle={tx.necesariasX}
+                siempre={tx.siempre}
                 activa
                 bloqueada
               />
 
               <Categoria
-                titulo="Analítica"
-                descripcion="Google Analytics. Nos dice cuánta gente entra, desde dónde llega y qué páginas lee, para saber qué mejorar. Los informes son agregados: no identificamos a nadie."
-                detalle="Cookies _ga y _ga_*, de Google Ireland Ltd. Caducan a los 24 meses."
+                titulo={tx.analitica}
+                descripcion={tx.analiticaD}
+                detalle={tx.analiticaX}
                 activa={analitica}
                 alCambiar={setAnalitica}
               />
 
               <Categoria
-                titulo="Marketing"
-                descripcion="Meta Pixel. Permite medir si nuestros anuncios en Instagram y Facebook traen visitas reales y mostrar anuncios a quien ya ha visitado la web."
-                detalle="Cookies _fbp y _fbc, de Meta Platforms Ireland Ltd. Caducan a los 3 meses. Implica transferencia internacional de datos."
+                titulo={tx.marketing}
+                descripcion={tx.marketingD}
+                detalle={tx.marketingX}
                 activa={marketing}
                 alCambiar={setMarketing}
               />
@@ -279,7 +333,7 @@ export function BannerCookies() {
                            text-[14.5px] font-medium text-white shadow-[0_10px_30px_-12px_rgba(76,125,255,.75)]
                            transition-transform duration-200 hover:-translate-y-0.5"
               >
-                Guardar mi elección
+                {tx.guardar}
               </button>
 
               <button
@@ -289,7 +343,7 @@ export function BannerCookies() {
                            text-[14.5px] font-medium text-white transition-colors duration-200
                            hover:border-white/35 hover:bg-white/[.12]"
               >
-                Rechazar todas
+                {tx.rechazar}
               </button>
 
               <button
@@ -299,7 +353,7 @@ export function BannerCookies() {
                            text-[14.5px] font-medium text-white transition-colors duration-200
                            hover:border-white/35 hover:bg-white/[.12]"
               >
-                Aceptar todas
+                {tx.aceptar}
               </button>
             </div>
 
@@ -329,7 +383,9 @@ function Categoria({
   activa,
   bloqueada = false,
   alCambiar,
+  siempre = "",
 }: {
+  siempre?: string;
   titulo: string;
   descripcion: string;
   detalle: string;
@@ -369,7 +425,7 @@ function Categoria({
             <span className="text-[15px] font-medium text-white">{titulo}</span>
             {bloqueada && (
               <span className="rounded-full border border-white/15 bg-white/[.05] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.08em] text-white/50">
-                Siempre activas
+                {siempre}
               </span>
             )}
           </span>

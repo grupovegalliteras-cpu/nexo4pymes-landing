@@ -3,12 +3,13 @@
 import { useId, useState } from "react";
 import Link from "@/components/i18n/Enlace";
 import { Boton } from "@/components/ui/Boton";
-import { formulario } from "@/content/contacto";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
 /* `evento` se renombra: el manejador del formulario ya tiene un
    parámetro que se llama así (el evento del submit). */
 import { evento as medir, leerAtribucion, type Atribucion } from "@/lib/medicion";
+import { contenido } from "@/content/i18n";
+import { useIdioma } from "@/components/i18n/idioma";
 
 /* ============================================================
    FORMULARIO DE CONTACTO
@@ -130,7 +131,15 @@ const CAMPO =
 const ETIQUETA = "block text-[14px] font-medium text-white/80";
 const AYUDA = "mt-1.5 text-[12.5px] leading-snug text-white/45";
 
+const TXF = {
+  es: { whatsapp: "Escribidnos por WhatsApp", phNombre: "Marta García", phEmpresa: "Nombre del negocio", phEmail: "marta@sunegocio.com", elegir: "Elegid uno (opcional)", phMensaje: "Se nos van las mañanas contestando los mismos mensajes de siempre…", privacidad: "Ver la política de privacidad", revisad: "Revisad estos campos:" },
+  en: { whatsapp: "Message us on WhatsApp", phNombre: "Sarah Jones", phEmpresa: "Business name", phEmail: "sarah@yourbusiness.com", elegir: "Choose one (optional)", phMensaje: "Our mornings go on answering the same old messages…", privacidad: "Read the privacy policy", revisad: "Please check these fields:" },
+  de: { whatsapp: "Schreiben Sie uns auf WhatsApp", phNombre: "Anna Schmidt", phEmpresa: "Name des Betriebs", phEmail: "anna@ihrbetrieb.de", elegir: "Bitte wählen (optional)", phMensaje: "Unsere Vormittage gehen mit immer denselben Nachrichten drauf…", privacidad: "Datenschutzerklärung lesen", revisad: "Bitte prüfen Sie diese Felder:" },
+};
+
 export function FormularioContacto() {
+  const lang = useIdioma();
+  const { formulario } = contenido(lang).contacto;
   const [estado, setEstado] = useState<Estado>("inicial");
   const [faltan, setFaltan] = useState<string[]>([]);
   const id = useId();
@@ -218,8 +227,8 @@ export function FormularioContacto() {
           {formulario.exito.texto}
         </p>
         <div className="mt-7 flex justify-center">
-          <Boton href={waLink("GENERAL")} externo tamano="md" flecha>
-            Escribidnos por WhatsApp
+          <Boton href={waLink("GENERAL", undefined, lang)} externo tamano="md" flecha>
+            {TXF[lang].whatsapp}
           </Boton>
         </div>
       </div>
@@ -243,7 +252,7 @@ export function FormularioContacto() {
           <strong className="block font-semibold text-coral">{formulario.error.titulo}</strong>
           {faltan.length > 0 ? (
             <span className="mt-1 block">
-              Revisad estos campos: {faltan.join(", ")}.
+              {TXF[lang].revisad} {faltan.map((k) => (formulario.campos as Record<string, { etiqueta: string }>)[k]?.etiqueta ?? k).join(", ")}.
             </span>
           ) : (
             <span className="mt-1 block">
@@ -270,7 +279,7 @@ export function FormularioContacto() {
             autoComplete="name"
             maxLength={120}
             className={`mt-2 ${CAMPO}`}
-            placeholder="Marta García"
+            placeholder={TXF[lang].phNombre}
           />
         </div>
 
@@ -285,7 +294,7 @@ export function FormularioContacto() {
             autoComplete="organization"
             maxLength={160}
             className={`mt-2 ${CAMPO}`}
-            placeholder="Nombre del negocio"
+            placeholder={TXF[lang].phEmpresa}
           />
         </div>
 
@@ -302,7 +311,7 @@ export function FormularioContacto() {
             maxLength={200}
             aria-describedby={`${id}-email-ayuda`}
             className={`mt-2 ${CAMPO}`}
-            placeholder="marta@sunegocio.com"
+            placeholder={TXF[lang].phEmail}
           />
           <p id={`${id}-email-ayuda`} className={AYUDA}>
             {formulario.campos.email.ayuda}
@@ -341,7 +350,7 @@ export function FormularioContacto() {
                Android salen en texto blanco sobre blanco. */
             className={`mt-2 ${CAMPO} [&>option]:bg-bottle-800 [&>option]:text-white`}
           >
-            <option value="">Elegid uno (opcional)</option>
+            <option value="">{TXF[lang].elegir}</option>
             {formulario.sectores.map((sector) => (
               <option key={sector} value={sector}>
                 {sector}
@@ -362,7 +371,7 @@ export function FormularioContacto() {
             maxLength={4000}
             aria-describedby={`${id}-mensaje-ayuda`}
             className={`mt-2 resize-y ${CAMPO}`}
-            placeholder="Se nos van las mañanas contestando los mismos mensajes de siempre…"
+            placeholder={TXF[lang].phMensaje}
           />
           <p id={`${id}-mensaje-ayuda`} className={AYUDA}>
             {formulario.campos.mensaje.ayuda}
@@ -392,7 +401,7 @@ export function FormularioContacto() {
         <label htmlFor={`${id}-consentimiento`} className="text-[13.5px] leading-relaxed text-white/60">
           {formulario.consentimiento}{" "}
           <Link href="/legal#privacidad" className="text-azul underline underline-offset-4">
-            Ver la política de privacidad
+            {TXF[lang].privacidad}
           </Link>
           .
         </label>
@@ -405,7 +414,7 @@ export function FormularioContacto() {
       </div>
 
       <p aria-live="polite" className="sr-only">
-        {enviando ? "Enviando el mensaje" : ""}
+        {enviando ? formulario.enviando : ""}
       </p>
     </form>
   );

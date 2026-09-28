@@ -3,11 +3,14 @@ import { Antetitulo, Seccion, TituloSeccion } from "@/components/ui/Seccion";
 import { Reveal } from "@/components/motion/Reveal";
 import { CajaIcono } from "@/components/ui/Icono";
 import { TarjetaGlow } from "@/components/ui/TarjetaGlow";
-import { datosRgpd } from "@/content/nosotros";
+import { contenido } from "@/content/i18n";
+import { idiomaServidor } from "@/lib/idioma-servidor";
 
 /* Datos y RGPD. Vivía al final de /servicios; ahora cierra /nosotros,
    que es donde alguien va a buscar si puede fiarse de nosotros. */
 export function DatosRgpd() {
+  const lang = idiomaServidor();
+  const { datosRgpd } = contenido(lang).nosotros;
   return (
     <Seccion id="datos" tono="oscuro" ancho="ancho">
       <div className="max-w-[60ch]">

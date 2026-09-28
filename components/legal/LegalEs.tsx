@@ -1,0 +1,368 @@
+import { Reveal } from "@/components/motion/Reveal";
+import { BotonPreferencias } from "@/components/legal/BotonPreferencias";
+import { datosLegales, marca } from "@/content/marca";
+import { esPendiente } from "@/lib/legal";
+import { Dato, Tarjeta } from "./piezas";
+
+/* Texto legal en español: es la versión que prevalece. Las traducciones están en LegalEn y LegalDe. */
+export function LegalEs() {
+  return (
+          <div className="mt-14 space-y-16">
+            {/* ================= AVISO LEGAL ================= */}
+            <Reveal>
+              <section id="aviso" className="scroll-mt-24">
+                <h2 className="text-[26px] text-[#F4F6FF]">Aviso legal</h2>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">1. Datos identificativos</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de
+                  la Sociedad de la Información y de Comercio Electrónico (LSSICE), se informa de los
+                  siguientes datos:
+                </p>
+                <Tarjeta>
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">Titular del sitio:</strong>{" "}
+                    <Dato valor={datosLegales.titular} falta="pendiente de completar" />
+                  </li>
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">Nombre comercial:</strong>{" "}
+                    {datosLegales.nombreComercial} — {marca.razonSocial}
+                  </li>
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">
+                      {datosLegales.etiquetaIdentificacion}:
+                    </strong>{" "}
+                    <Dato valor={datosLegales.identificacion} falta="pendiente de asignación" />
+                    {datosLegales.tipoTitular === "persona" && (
+                      <span className="text-white/50">
+                        {" "}
+                        — la sociedad está en constitución, así que hasta que se le asigne CIF
+                        responde del sitio uno de los socios como persona física
+                      </span>
+                    )}
+                  </li>
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">
+                      Domicilio a efectos de notificaciones:
+                    </strong>{" "}
+                    <Dato valor={datosLegales.domicilio} falta="pendiente de completar" />
+                    {!esPendiente(datosLegales.domicilio) && " — "}
+                    {!esPendiente(datosLegales.domicilio) && `${marca.region}, España`}
+                  </li>
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">Correo electrónico:</strong>{" "}
+                    <a href={`mailto:${marca.email}`} className="text-[#9FB6FF] underline underline-offset-4 hover:text-white">
+                      {marca.email}
+                    </a>
+                  </li>
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">Actividad:</strong> desarrollo de
+                    software a medida e integración de sistemas para pymes y autónomos
+                  </li>
+                  {/* Los datos registrales solo existen cuando existe la
+                      sociedad. Mientras no exista, la línea no se pinta:
+                      enseñar un hueco donde no puede haber nada todavía
+                      confunde más que no decir nada. */}
+                  {datosLegales.registroMercantil ? (
+                    <li>
+                      <strong className="font-medium text-[#F4F6FF]">Datos registrales:</strong>{" "}
+                      {datosLegales.registroMercantil}
+                    </li>
+                  ) : (
+                    <li className="text-white/55">
+                      <strong className="font-medium text-[#F4F6FF]">Datos registrales:</strong> se
+                      publicarán cuando la sociedad quede inscrita en el Registro Mercantil.
+                    </li>
+                  )}
+                </Tarjeta>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">2. Objeto y condiciones de uso</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Este sitio web tiene como finalidad informar sobre los servicios de Nexo4Pymes y
+                  facilitar el contacto con potenciales clientes. El acceso y uso del sitio atribuye
+                  la condición de usuario e implica la aceptación plena de las condiciones aquí
+                  recogidas desde el momento en que se accede al sitio.
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">
+                  3. Propiedad intelectual e industrial
+                </h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Todos los contenidos del sitio (textos, imágenes, logotipos, diseño gráfico, código
+                  fuente) son titularidad de Nexo4Pymes o de terceros que han autorizado su uso, y
+                  están protegidos por la normativa de propiedad intelectual e industrial. Queda
+                  prohibida su reproducción, distribución, comunicación pública o transformación total
+                  o parcial sin autorización expresa y por escrito del titular.
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">4. Enlaces a terceros</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Este sitio incluye enlaces a servicios de terceros (Calendly, Instagram, correo
+                  electrónico) sobre cuyo contenido, disponibilidad o políticas de privacidad
+                  Nexo4Pymes no tiene control ni asume responsabilidad. El acceso a dichos servicios
+                  se rige por sus propias condiciones.
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">5. Exclusión de responsabilidad</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Nexo4Pymes no garantiza la disponibilidad continua ni la ausencia de errores en el
+                  sitio, y no se responsabiliza de los daños o perjuicios derivados de su uso, sin
+                  perjuicio de las obligaciones legalmente establecidas en materia de protección al
+                  consumidor.
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">6. Legislación y jurisdicción</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Las presentes condiciones se rigen por la legislación española. Para la resolución
+                  de cualquier controversia derivada del acceso o uso del sitio, y salvo que la
+                  normativa aplicable disponga otra cosa cuando el usuario actúe como consumidor, las
+                  partes se someten a los juzgados y tribunales de Mallorca (Illes Balears).
+                </p>
+              </section>
+            </Reveal>
+
+            {/* ================= PRIVACIDAD ================= */}
+            <Reveal>
+              <section id="privacidad" className="scroll-mt-24">
+                <h2 className="text-[26px] text-[#F4F6FF]">Política de privacidad</h2>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">1. Responsable del tratamiento</h3>
+                <Tarjeta>
+                  {/* Mismos datos que el aviso legal y de la misma fuente:
+                      dos listas escritas a mano se acaban contradiciendo
+                      en cuanto alguien actualiza una sola. */}
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">
+                      <Dato valor={datosLegales.titular} falta="pendiente de completar" />
+                    </strong>{" "}
+                    ({marca.razonSocial})
+                  </li>
+                  <li>
+                    {datosLegales.etiquetaIdentificacion}:{" "}
+                    <Dato valor={datosLegales.identificacion} falta="pendiente de asignación" />
+                  </li>
+                  <li>
+                    Domicilio:{" "}
+                    <Dato valor={datosLegales.domicilio} falta="pendiente de completar" />
+                    {!esPendiente(datosLegales.domicilio) &&
+                      ` — ${marca.region}, España`}
+                  </li>
+                  <li>
+                    Email:{" "}
+                    <a href={`mailto:${marca.email}`} className="text-[#9FB6FF] underline underline-offset-4 hover:text-white">
+                      {marca.email}
+                    </a>
+                  </li>
+                </Tarjeta>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">
+                  2. Qué datos tratamos y con qué finalidad
+                </h3>
+                {/* ACTUALIZADO CON EL REDISEÑO: el sitio SÍ incorpora ya un
+                    formulario propio, en /contacto. Antes aquí ponía que no
+                    lo había. Si algún día se quita el formulario, esta lista
+                    hay que recortarla otra vez. */}
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Los datos personales que tratamos proceden únicamente de:
+                </p>
+                <ul className="mt-4 list-disc space-y-2 pl-5 text-[15.5px] leading-relaxed text-white/68">
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">El formulario de contacto</strong> de
+                    la página <em>Contacto</em> (nombre, empresa, dirección de email, teléfono
+                    opcional, sector y el contenido del mensaje), con la finalidad de responder a tu
+                    consulta. Todos los campos salvo nombre, email y mensaje son opcionales, y el
+                    envío requiere que marques expresamente la casilla de consentimiento.
+                  </li>
+                  <li>
+                    El correo electrónico que nos envíes voluntariamente (nombre, dirección de email y
+                    cualquier dato incluido en el mensaje), con la finalidad de responder a tu
+                    consulta.
+                  </li>
+                  <li>
+                    La reserva de una llamada a través de Calendly (nombre, email y, en su caso,
+                    teléfono), con la finalidad de gestionar la cita comercial solicitada. El
+                    calendario de Calendly no se carga automáticamente: solo se activa si pulsas el
+                    botón correspondiente, tras informarte de ello.
+                  </li>
+                </ul>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  No se recaba ningún dato personal de forma automática por el simple hecho de navegar
+                  por el sitio. Las tipografías se sirven desde nuestro propio dominio, por lo que la
+                  navegación no genera ninguna conexión a servidores de terceros. Al enviar el
+                  formulario se registra tu dirección IP de forma temporal, con la única finalidad de
+                  evitar envíos automatizados masivos (interés legítimo, art. 6.1.f RGPD).
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">3. Base legal del tratamiento</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  El tratamiento se basa en tu consentimiento, prestado al facilitarnos tus datos
+                  voluntariamente, y en la ejecución de medidas precontractuales solicitadas por ti
+                  (art. 6.1.a y 6.1.b RGPD).
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">4. Con quién compartimos tus datos</h3>
+                <ul className="mt-4 list-disc space-y-2 pl-5 text-[15.5px] leading-relaxed text-white/68">
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">Calendly, LLC</strong> — encargado del
+                    tratamiento para la gestión de reservas; empresa con sede en EE. UU. que ofrece
+                    garantías de transferencia internacional (cláusulas contractuales tipo).
+                  </li>
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">Google LLC</strong> — proveedor del
+                    correo electrónico (Gmail) a través del cual se reciben y responden las consultas.
+                  </li>
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">Vercel Inc.</strong> — proveedor de
+                    alojamiento del sitio web; empresa con sede en EE. UU. Sus servidores registran
+                    datos técnicos de conexión (como la dirección IP) por motivos de seguridad y
+                    funcionamiento.
+                  </li>
+                  {/* Este punto describe al proveedor de automatización que
+                      recibe los envíos del formulario (el webhook configurado
+                      en WEBHOOK_CONTACTO). Si se cambia de proveedor, hay que
+                      cambiar el nombre y la sede que figuran aquí. */}
+                  <li>
+                    <strong className="font-medium text-[#F4F6FF]">Make (Celonis SE)</strong> —
+                    encargado del tratamiento que recibe y encamina los mensajes enviados desde el
+                    formulario de contacto hasta nuestro correo. Los datos se procesan en servidores
+                    de la Unión Europea.
+                  </li>
+                </ul>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  No se cede ningún dato a terceros con fines comerciales o publicitarios.
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">5. Plazo de conservación</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Los datos se conservan mientras exista una relación comercial activa o una solicitud
+                  pendiente de respuesta, y posteriormente durante los plazos legalmente exigibles
+                  para atender eventuales responsabilidades.
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">6. Tus derechos</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición,
+                  limitación del tratamiento y portabilidad escribiendo a{" "}
+                  <a href={`mailto:${marca.email}`} className="text-[#9FB6FF] underline underline-offset-4 hover:text-white">
+                    {marca.email}
+                  </a>
+                  . Si consideras que no hemos tratado tus datos conforme a la normativa, puedes
+                  presentar una reclamación ante la Agencia Española de Protección de Datos (
+                  <a
+                    href="https://www.aepd.es"
+                    target="_blank"
+                    rel="noopener"
+                    className="text-[#9FB6FF] underline underline-offset-4 hover:text-white"
+                  >
+                    www.aepd.es
+                  </a>
+                  ).
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">7. Menores de edad</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Los servicios de Nexo4Pymes están dirigidos a empresas y profesionales. No recabamos
+                  conscientemente datos de menores de edad.
+                </p>
+              </section>
+            </Reveal>
+
+            {/* ================= COOKIES ================= */}
+            <Reveal>
+              <section id="cookies" className="scroll-mt-24">
+                <h2 className="text-[26px] text-[#F4F6FF]">Política de cookies</h2>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">1. Qué son las cookies</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Las cookies son pequeños archivos que un sitio web puede almacenar en tu navegador
+                  para recordar información sobre tu visita.
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">
+                  2. Cookies que utiliza este sitio
+                </h3>
+                <p className="mt-4 rounded-tarjeta border border-mint/22 bg-gradient-to-br from-mint/[.09] to-mint/[.02] p-5 text-[15.5px] leading-relaxed text-white/78 shadow-[0_24px_60px_rgba(0,0,0,.4),inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-xl">
+                  <strong className="font-medium text-mint">
+                    No se instala ninguna cookie no esencial hasta que la aceptas.
+                  </strong>{" "}
+                  Al entrar por primera vez verás un banner con dos opciones al mismo nivel: aceptar
+                  todas o rechazar todas. Si rechazas —o si simplemente sigues navegando sin
+                  responder— no se carga ninguna herramienta de analítica ni de publicidad, y el sitio
+                  funciona exactamente igual.
+                </p>
+
+                <h4 className="mt-6 text-[16px] font-medium text-[#F4F6FF]">Necesarias</h4>
+                <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+                  Imprescindibles para prestar el servicio, por lo que no requieren consentimiento
+                  (art. 22.2 LSSICE). No son cookies de terceros: tu decisión sobre este aviso y el idioma que eliges se
+                  guardan en el almacenamiento local y en una cookie propia de tu navegador, para no volver a
+                  preguntártelo en cada página. La demo en vivo guarda también ahí lo que haces en
+                  ella (avisos, partes y facturas de prueba, con datos ficticios) y si prefieres el
+                  tema claro u oscuro, para que la demo recuerde dónde lo dejaste; no sale de tu
+                  dispositivo. Además, al enviar el formulario de contacto se
+                  registra tu dirección IP de forma temporal para evitar envíos automatizados
+                  masivos.
+                </p>
+
+                <h4 className="mt-6 text-[16px] font-medium text-[#F4F6FF]">Analítica (opcional)</h4>
+                <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+                  Google Analytics 4, de Google Ireland Ltd. Nos permite saber cuánta gente visita el
+                  sitio, desde dónde llega y qué páginas consulta, con el fin de mejorarlo. Los
+                  informes son agregados y no se usan para identificarte. Instala las cookies{" "}
+                  <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono text-[13.5px]">_ga</code> y{" "}
+                  <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono text-[13.5px]">_ga_*</code>,
+                  con una duración de 24 meses. La dirección IP se trunca antes de almacenarse.
+                </p>
+
+                <h4 className="mt-6 text-[16px] font-medium text-[#F4F6FF]">Marketing (opcional)</h4>
+                <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+                  Meta Pixel, de Meta Platforms Ireland Ltd. Permite medir el resultado de nuestros
+                  anuncios en Instagram y Facebook y mostrar publicidad a quien ya ha visitado la web.
+                  Instala las cookies{" "}
+                  <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono text-[13.5px]">_fbp</code> y{" "}
+                  <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono text-[13.5px]">_fbc</code>,
+                  con una duración de 3 meses. Implica una transferencia internacional de datos a
+                  EE. UU., amparada en el Marco de Privacidad de Datos UE-EE. UU. y en cláusulas
+                  contractuales tipo.
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">3. Contenido incrustado de terceros</h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  El calendario de reservas de la página de contacto lo proporciona Calendly, LLC. No
+                  se carga automáticamente: solo se activa si pulsas el botón correspondiente, después
+                  de informarte de qué datos recibirá Calendly. Mientras no lo pulses, tu navegador no
+                  establece ninguna conexión con sus servidores.
+                </p>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Las tipografías del sitio se sirven desde nuestro propio dominio y no desde un CDN de
+                  terceros, precisamente para evitar que tu dirección IP se transmita a otras empresas
+                  durante la simple visita a la web. El sitio está alojado en Vercel Inc., cuyos
+                  servidores registran datos técnicos de conexión por motivos de seguridad y
+                  funcionamiento, sin que ello implique la instalación de cookies en tu navegador.
+                </p>
+
+                <h3 className="mt-8 text-[18px] text-[#F4F6FF]">
+                  4. Cómo cambiar o retirar tu consentimiento
+                </h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-white/68">
+                  Puedes cambiar tu decisión en cualquier momento, y retirarla es tan sencillo como
+                  darla. Al retirar una categoría, las cookies que hubiera instalado se eliminan de
+                  inmediato.
+                </p>
+                <p className="mt-4">
+                  {/* Este botón es la vía de retirada exigida por el art. 7.3
+                      RGPD. También está en el pie de todas las páginas. */}
+                  <BotonPreferencias estilo="enlace">
+                    Abrir las preferencias de cookies
+                  </BotonPreferencias>
+                </p>
+                <p className="mt-4 text-[15.5px] leading-relaxed text-white/68">
+                  En cualquier caso, volveremos a preguntarte pasados 24 meses. También puedes
+                  configurar tu navegador para bloquear, eliminar o ser avisado de las cookies desde su
+                  configuración de privacidad.
+                </p>
+              </section>
+            </Reveal>
+          </div>
+  );
+}

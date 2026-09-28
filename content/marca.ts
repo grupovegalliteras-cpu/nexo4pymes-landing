@@ -127,6 +127,8 @@ export const datosLegales = {
   /* Fecha de la última revisión del texto legal. Actualízala cuando
      cambies algo de fondo, no por una coma. */
   ultimaRevision: "19 de septiembre de 2026",
+  /* La misma fecha en formato ISO, para escribirla en inglés y alemán. Cámbiala a la vez que la de arriba. */
+  ultimaRevisionISO: "2026-09-19",
 } as const;
 
 export const oferta = {

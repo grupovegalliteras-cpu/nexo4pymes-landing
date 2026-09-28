@@ -2,7 +2,8 @@ import { Antetitulo, Seccion, TituloSeccion } from "@/components/ui/Seccion";
 import { Reveal } from "@/components/motion/Reveal";
 import { CajaIcono } from "@/components/ui/Icono";
 import { TarjetaGlow } from "@/components/ui/TarjetaGlow";
-import { servicios } from "@/content/servicios";
+import { contenido } from "@/content/i18n";
+import { idiomaServidor } from "@/lib/idioma-servidor";
 
 const GLOW: Record<string, string> = {
   azul: "76,125,255",
@@ -11,6 +12,8 @@ const GLOW: Record<string, string> = {
 };
 
 export function ServiciosGrid() {
+  const lang = idiomaServidor();
+  const { servicios } = contenido(lang).servicios;
   return (
     <Seccion id="servicios" tono="oscuro" ancho="ancho">
       <div className="max-w-[60ch]">

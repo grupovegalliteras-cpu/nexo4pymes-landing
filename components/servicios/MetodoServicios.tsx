@@ -1,10 +1,13 @@
 import { Antetitulo, Seccion, TituloSeccion } from "@/components/ui/Seccion";
 import { Reveal } from "@/components/motion/Reveal";
 import { TarjetaGlow } from "@/components/ui/TarjetaGlow";
-import { metodoServicios } from "@/content/servicios";
 import { oferta } from "@/content/marca";
+import { contenido } from "@/content/i18n";
+import { idiomaServidor } from "@/lib/idioma-servidor";
 
 export function MetodoServicios() {
+  const lang = idiomaServidor();
+  const { metodoServicios } = contenido(lang).servicios;
   return (
     <Seccion id="metodo" tono="oscuro-hondo" ancho="ancho">
       <div className="max-w-[54ch]">

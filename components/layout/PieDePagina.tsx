@@ -4,6 +4,9 @@ import { IconoInstagram } from "@/components/ui/IconosRedes";
 import { BotonPreferencias } from "@/components/legal/BotonPreferencias";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
+import { tr } from "@/lib/i18n";
+import { SelectorIdioma } from "@/components/i18n/SelectorIdioma";
+import { idiomaServidor } from "@/lib/idioma-servidor";
 
 /* Pie común a las páginas del sitio. `cruce` es el enlace cruzado a
    la siguiente página lógica del recorrido (ayuda a posicionar cada
@@ -33,6 +36,7 @@ export function PieDePagina({
   cruce: { pregunta: string; texto: string; href: string };
   redes?: boolean;
 }) {
+  const lang = idiomaServidor();
   return (
     <footer className="relative overflow-hidden border-t border-white/7 bg-bottle-900/60 px-5 pb-8 pt-12 text-white backdrop-blur-xl sm:px-8 sm:pb-10 sm:pt-16">
       <div className="malla malla-fade absolute inset-0 opacity-70" aria-hidden="true" />
@@ -57,16 +61,20 @@ export function PieDePagina({
           <div>
             <Image
               src="/assets/logo-lockup-dark.png"
-              alt="Nexo4Pymes — Automatizamos tu negocio, potenciamos tu futuro"
+              alt={tr(lang, { es: "Nexo4Pymes — Automatizamos tu negocio, potenciamos tu futuro", en: "Nexo4Pymes — We automate your business, we power your future", de: "Nexo4Pymes — Wir automatisieren Ihr Geschäft" })}
               width={480}
               height={306}
               sizes="(max-width: 639px) 150px, 190px"
               className="h-auto w-[150px] brightness-125 sm:w-[190px]"
             />
             <p className="mt-3 max-w-[42ch] text-[14px] leading-relaxed text-white/55 sm:mt-4">
-              Desarrollo de software a medida para pymes y autónomos: CRM, configuradores
-              web e integraciones. Palma de Mallorca, Illes Balears.
+              {tr(lang, {
+                es: "Desarrollo de software a medida para pymes y autónomos: CRM, configuradores web e integraciones. Palma de Mallorca, Illes Balears.",
+                en: "Custom software development for small businesses and the self-employed: CRMs, web configurators and integrations. Palma de Mallorca, Balearic Islands.",
+                de: "Individuelle Softwareentwicklung für kleine Unternehmen und Selbstständige: CRMs, Web-Konfiguratoren und Integrationen. Palma de Mallorca, Balearen.",
+              })}
             </p>
+            <SelectorIdioma tono="oscuro" className="mt-4 w-fit" />
 
             {/* Solo Instagram. El icono de Facebook se retiró del sitio. */}
             {redes && (
@@ -75,7 +83,7 @@ export function PieDePagina({
                   href={marca.instagram}
                   target="_blank"
                   rel="noopener"
-                  aria-label="Instagram de Nexo4Pymes"
+                  aria-label="Instagram Nexo4Pymes"
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-azul/50 hover:text-azul"
                 >
                   <IconoInstagram size={17} />
@@ -88,7 +96,7 @@ export function PieDePagina({
               apiladas sumaban 440 px de pie ellas solas. */}
           <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:contents">
             <div>
-              <h2 className="font-mono text-[11px] uppercase tracking-[0.16em] text-mint">Página</h2>
+              <h2 className="font-mono text-[11px] uppercase tracking-[0.16em] text-mint">{tr(lang, { es: "Página", en: "This page", de: "Diese Seite" })}</h2>
               <ul className="mt-1">
                 {enlaces.map((enlace) => (
                   <li key={enlace.href}>
@@ -99,14 +107,14 @@ export function PieDePagina({
                 ))}
                 <li>
                   <Link href="/demo?tour=1" className={FILA}>
-                    Demo en vivo
+                    {tr(lang, { es: "Demo en vivo", en: "Live demo", de: "Live-Demo" })}
                   </Link>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h2 className="font-mono text-[11px] uppercase tracking-[0.16em] text-mint">Contacto</h2>
+              <h2 className="font-mono text-[11px] uppercase tracking-[0.16em] text-mint">{tr(lang, { es: "Contacto", en: "Contact", de: "Kontakt" })}</h2>
               <ul className="mt-1">
                 {/* WhatsApp primero y con el número a la vista. Enseñar el
                     número, y no solo un botón, es lo que convence a quien
@@ -114,7 +122,7 @@ export function PieDePagina({
                     real al que se puede escribir. */}
                 <li>
                   <a
-                    href={waLink("GENERAL")}
+                    href={waLink("GENERAL", undefined, lang)}
                     target="_blank"
                     rel="noopener"
                     className={`${FILA} font-medium text-white/80 hover:text-mint`}
@@ -129,12 +137,12 @@ export function PieDePagina({
                 </li>
                 <li>
                   <Link href="/legal#aviso" className={FILA}>
-                    Aviso legal
+                    {tr(lang, { es: "Aviso legal", en: "Legal notice", de: "Impressum" })}
                   </Link>
                 </li>
                 <li>
                   <Link href="/legal#privacidad" className={FILA}>
-                    Política de privacidad
+                    {tr(lang, { es: "Política de privacidad", en: "Privacy policy", de: "Datenschutz" })}
                   </Link>
                 </li>
                 <li>
@@ -147,7 +155,7 @@ export function PieDePagina({
                     páginas. Sin él, el consentimiento inicial no sería
                     válido. */}
                 <li>
-                  <BotonPreferencias />
+                  <BotonPreferencias>{tr(lang, { es: "Preferencias de cookies", en: "Cookie preferences", de: "Cookie-Einstellungen" })}</BotonPreferencias>
                 </li>
               </ul>
             </div>
@@ -155,7 +163,7 @@ export function PieDePagina({
         </div>
 
         <p className="mt-8 border-t border-white/8 pt-5 text-[12.5px] text-white/40 sm:mt-12 sm:pt-6">
-          © {new Date().getFullYear()} Nexo4Pymes. Todos los derechos reservados.
+          © {new Date().getFullYear()} Nexo4Pymes. {tr(lang, { es: "Todos los derechos reservados.", en: "All rights reserved.", de: "Alle Rechte vorbehalten." })}
         </p>
       </div>
     </footer>

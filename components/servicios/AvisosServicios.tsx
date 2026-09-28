@@ -1,10 +1,10 @@
 import { Antetitulo, Seccion, TituloSeccion } from "@/components/ui/Seccion";
 import { Reveal } from "@/components/motion/Reveal";
 import { Boton } from "@/components/ui/Boton";
-import { avisosServicios } from "@/content/servicios";
-import { centralAvisos } from "@/content/inicio";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
+import { contenido } from "@/content/i18n";
+import { idiomaServidor } from "@/lib/idioma-servidor";
 
 /* ============================================================
    CENTRALAVISOS EN /SERVICIOS
@@ -25,6 +25,9 @@ import { waLink } from "@/lib/whatsapp";
    ============================================================ */
 
 export function AvisosServicios() {
+  const lang = idiomaServidor();
+  const { avisosServicios } = contenido(lang).servicios;
+  const centralAvisos = contenido(lang).centralAvisos;
   return (
     <Seccion id="central-avisos" tono="oscuro" ancho="ancho">
       <Reveal>
@@ -61,7 +64,7 @@ export function AvisosServicios() {
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <Boton
-              href={waLink("AVISOS")}
+              href={waLink("AVISOS", undefined, lang)}
               externo
               tamano="lg"
               flecha

@@ -1,10 +1,16 @@
 import Link from "@/components/i18n/Enlace";
 import { marca } from "@/content/marca";
+import { idiomaOBase, tr } from "@/lib/i18n";
+import { fijarIdioma } from "@/lib/idioma-servidor";
+import { SelectorIdioma } from "@/components/i18n/SelectorIdioma";
 
 /* Marco común del blog: cabecera sobria y pie corto. El artículo no
    compite con la web comercial, tiene que leerse. */
 
-export default function LayoutBlog({ children }: { children: React.ReactNode }) {
+export default async function LayoutBlog({ children, params }: { children: React.ReactNode; params: Promise<{ lang: string }> }) {
+  const lang = idiomaOBase((await params).lang);
+  fijarIdioma(lang);
+  const t = (x: { es: string; en: string; de: string }) => tr(lang, x);
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-white/8 bg-bottle/92 backdrop-blur-lg">
@@ -17,8 +23,9 @@ export default function LayoutBlog({ children }: { children: React.ReactNode }) 
               Blog
             </Link>
             <Link href="/" className="text-white/60 transition-colors hover:text-white">
-              Volver a la web
+              {t({ es: "Volver a la web", en: "Back to the website", de: "Zurück zur Website" })}
             </Link>
+            <SelectorIdioma tono="oscuro" className="max-sm:hidden" />
           </nav>
         </div>
       </header>
@@ -32,30 +39,33 @@ export default function LayoutBlog({ children }: { children: React.ReactNode }) 
         <div className="malla malla-fade absolute inset-0 opacity-60" aria-hidden="true" />
         <div className="relative mx-auto max-w-[760px]">
           <p className="max-w-[52ch] text-[14.5px] leading-relaxed text-white/55">
-            Soluciones digitales a medida para pymes y autónomos. Diagnóstico primero,
-            desarrollo por fases después.
+            {t({
+              es: "Soluciones digitales a medida para pymes y autónomos. Diagnóstico primero, desarrollo por fases después.",
+              en: "Custom digital solutions for small businesses and the self-employed. Diagnosis first, phased development after.",
+              de: "Individuelle digitale Lösungen für kleine Unternehmen und Selbstständige. Zuerst die Analyse, dann Entwicklung in Phasen.",
+            })}
           </p>
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[13.5px]">
             {/* Aquí hubo un enlace "Clínicas veterinarias". Esa landing se
                 retiró de internet; lo del sector se ve ahora en el
                 selector de sectores de la portada. */}
             <Link href="/servicios" className="text-mint/80 transition-colors hover:text-mint">
-              Servicios
+              {t({ es: "Servicios", en: "Services", de: "Leistungen" })}
             </Link>
             <Link href="/nosotros" className="text-mint/80 transition-colors hover:text-mint">
-              Quiénes somos
+              {t({ es: "Quiénes somos", en: "About us", de: "Über uns" })}
             </Link>
             <Link href="/contacto" className="text-mint/80 transition-colors hover:text-mint">
-              Contacto
+              {t({ es: "Contacto", en: "Contact", de: "Kontakt" })}
             </Link>
             <Link href="/legal#aviso" className="text-white/50 transition-colors hover:text-white">
-              Aviso legal
+              {t({ es: "Aviso legal", en: "Legal notice", de: "Impressum" })}
             </Link>
             <Link
               href="/legal#privacidad"
               className="text-white/50 transition-colors hover:text-white"
             >
-              Privacidad
+              {t({ es: "Privacidad", en: "Privacy", de: "Datenschutz" })}
             </Link>
             <a
               href={`mailto:${marca.email}`}

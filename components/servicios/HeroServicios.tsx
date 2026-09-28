@@ -6,9 +6,10 @@ import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 import { Boton } from "@/components/ui/Boton";
 import { TextoPorPalabras } from "@/components/motion/TextoPorPalabras";
 import { SALIDA } from "@/components/motion/Reveal";
-import { heroServicios } from "@/content/servicios";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
+import { contenido } from "@/content/i18n";
+import { useIdioma } from "@/components/i18n/idioma";
 
 /* ============================================================
    HERO DE /servicios
@@ -17,6 +18,8 @@ import { waLink } from "@/lib/whatsapp";
    ============================================================ */
 
 export function HeroServicios() {
+  const lang = useIdioma();
+  const { heroServicios } = contenido(lang).servicios;
   const reducido = usarMovimientoReducido();
 
   const entrada = (retraso: number) => ({
@@ -60,14 +63,14 @@ export function HeroServicios() {
         </motion.p>
 
         <motion.div {...entrada(0.64)} className="mt-8">
-          <Boton href={waLink("GENERAL")} externo tamano="lg" flecha magnetico>
+          <Boton href={waLink("GENERAL", undefined, lang)} externo tamano="lg" flecha magnetico>
             {heroServicios.cta}
           </Boton>
         </motion.div>
 
         <motion.nav
           {...entrada(0.74)}
-          aria-label="Índice"
+          aria-label={lang === "de" ? "Inhalt" : lang === "en" ? "Contents" : "Índice"}
           className="mt-10 flex flex-wrap gap-2 border-t border-white/8 pt-8"
         >
           {heroServicios.indice.map((item) => (

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useIdioma } from "@/components/i18n/idioma";
+import { SelectorIdioma } from "@/components/i18n/SelectorIdioma";
 import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 import Image from "next/image";
 import Link from "@/components/i18n/Enlace";
@@ -22,6 +24,12 @@ import { marca } from "@/content/marca";
    página.
    ============================================================ */
 
+const TX_CABECERA = {
+  es: { saltar: "Saltar al contenido", inicio: "Nexo4Pymes, inicio", demo: "Demo en vivo", verDemo: "Ver la demo en vivo", abrir: "Abrir menú", cerrar: "Cerrar menú" },
+  en: { saltar: "Skip to content", inicio: "Nexo4Pymes, home", demo: "Live demo", verDemo: "See the live demo", abrir: "Open menu", cerrar: "Close menu" },
+  de: { saltar: "Zum Inhalt springen", inicio: "Nexo4Pymes, Startseite", demo: "Live-Demo", verDemo: "Live-Demo ansehen", abrir: "Menü öffnen", cerrar: "Menü schließen" },
+};
+
 export function Cabecera({
   enlaces,
   cta,
@@ -34,6 +42,8 @@ export function Cabecera({
   const [bajado, setBajado] = useState(false);
   const [menuAbierto, setMenuAbierto] = useState(false);
   const reducido = usarMovimientoReducido();
+  const lang = useIdioma();
+  const tx = TX_CABECERA[lang];
 
   useEffect(() => {
     const alHacerScroll = () => setBajado(window.scrollY > 20);
@@ -57,7 +67,7 @@ export function Cabecera({
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-100
                    focus:rounded-full focus:bg-white focus:px-5 focus:py-3 focus:text-bottle-900"
       >
-        Saltar al contenido
+        {tx.saltar}
       </a>
 
       <header className="fixed inset-x-0 top-0 z-50">
@@ -76,8 +86,8 @@ export function Cabecera({
             /* min-w además de min-h: por debajo de 380 px el logotipo se
                oculta y el enlace se quedaba en 38 px de ancho. El área
                pulsable llega a 44 sin agrandar la marca. */
-            className="mr-auto flex min-h-[44px] min-w-[44px] items-center gap-2.5"
-            aria-label="Nexo4Pymes, inicio"
+            className="mr-auto flex min-h-[44px] min-w-[44px] shrink-0 items-center gap-2.5"
+            aria-label={tx.inicio}
             onClick={() => setMenuAbierto(false)}
           >
             <span className="flex h-[38px] w-[38px] items-center justify-center overflow-hidden rounded-caja shadow-[0_6px_22px_rgba(0,0,0,.45)]">
@@ -96,12 +106,12 @@ export function Cabecera({
             </span>
           </Link>
 
-          <nav aria-label="Navegación principal" className="hidden items-center gap-1 lg:flex">
+          <nav aria-label="Navegación principal" className="hidden items-center gap-1 xl:flex">
             {enlaces.map((enlace) => (
               <Link
                 key={enlace.href}
                 href={enlace.href}
-                className="rounded-full px-3.5 py-2 text-[14px] text-white/70 transition-colors duration-200 hover:bg-white/6 hover:text-white"
+                className="rounded-full px-2.5 py-2 text-[14px] whitespace-nowrap xl:px-3.5 text-white/70 transition-colors duration-200 hover:bg-white/6 hover:text-white"
               >
                 {enlace.texto}
               </Link>
@@ -109,7 +119,7 @@ export function Cabecera({
             {enlacePill && (
               <Link
                 href={enlacePill.href}
-                className="ml-2 rounded-full border border-white/14 bg-white/[.03] px-4 py-2 text-[14px] text-white/85 transition-colors duration-200 hover:border-azul/50 hover:bg-azul/12 hover:text-white"
+                className="ml-2 hidden whitespace-nowrap rounded-full border border-white/14 bg-white/[.03] px-4 py-2 text-[14px] text-white/85 transition-colors duration-200 hover:border-azul/50 hover:bg-azul/12 hover:text-white 2xl:block"
               >
                 {enlacePill.texto}
               </Link>
@@ -117,11 +127,12 @@ export function Cabecera({
             {/* La portada es la demo en vivo: acceso directo desde cualquier apartado de la web. */}
             <Link
               href="/demo?tour=1"
-              className="ml-2 flex items-center gap-2 rounded-full border border-mint/30 bg-mint/[.06] px-4 py-2 text-[14px] text-white transition-colors duration-200 hover:bg-mint/12"
+              className="ml-2 flex items-center gap-2 whitespace-nowrap rounded-full border border-mint/30 bg-mint/[.06] px-4 py-2 text-[14px] text-white transition-colors duration-200 hover:bg-mint/12"
             >
               <span aria-hidden="true" className="anim-respirar h-1.5 w-1.5 rounded-full bg-mint" />
-              Demo en vivo
+              {tx.demo}
             </Link>
+            <SelectorIdioma tono="oscuro" className="ml-2" />
           </nav>
 
           <div className="flex items-center gap-2">
@@ -142,9 +153,9 @@ export function Cabecera({
             <button
               type="button"
               onClick={() => setMenuAbierto(true)}
-              aria-label="Abrir menú"
+              aria-label={tx.abrir}
               aria-expanded={menuAbierto}
-              className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/12 bg-white/4 text-white lg:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/12 bg-white/4 text-white xl:hidden"
             >
               <Menu size={19} />
             </button>
@@ -156,7 +167,7 @@ export function Cabecera({
       <AnimatePresence>
         {menuAbierto && (
           <motion.div
-            className="fixed inset-0 z-60 flex flex-col bg-bottle/95 p-5 backdrop-blur-2xl lg:hidden"
+            className="fixed inset-0 z-60 flex flex-col bg-bottle/95 p-5 backdrop-blur-2xl xl:hidden"
             initial={reducido ? { opacity: 0 } : { opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
@@ -171,7 +182,7 @@ export function Cabecera({
               <button
                 type="button"
                 onClick={() => setMenuAbierto(false)}
-                aria-label="Cerrar menú"
+                aria-label={tx.cerrar}
                 className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/12 bg-white/4 text-white"
               >
                 <X size={19} />
@@ -218,8 +229,10 @@ export function Cabecera({
                 className="flex items-center gap-2.5 py-4 font-titular text-[21px] font-semibold text-mint"
               >
                 <span aria-hidden="true" className="anim-respirar h-2 w-2 rounded-full bg-mint" />
-                Ver la demo en vivo
+                {tx.verDemo}
               </Link>
+
+              <SelectorIdioma tono="oscuro" largo className="mt-2 w-fit" />
 
               <div className="mt-6">
                 <Boton href={cta.href} externo={cta.externo} tamano="lg" flecha className="w-full">

@@ -1,4 +1,5 @@
 import { marca } from "@/content/marca";
+import type { Idioma } from "@/lib/i18n";
 
 /* ============================================================
    WHATSAPP — EL CANAL DE CIERRE
@@ -46,6 +47,27 @@ export const MENSAJES = {
 
 export type ClaveWhatsapp = keyof typeof MENSAJES;
 
+/* Los mismos mensajes en inglés y alemán. La palabra clave en mayúsculas se conserva
+   para saber de dónde viene quien escribe. */
+const MENSAJES_IDIOMA: Record<"en" | "de", Record<ClaveWhatsapp, string>> = {
+  en: {
+    GENERAL: "Hi, I'm writing from the Nexo4Pymes website. I'd like to hear how you work.",
+    AVISOS: "Hi, I'd like to know more about CentralAvisos (AVISOS).",
+    SOFTWARE: "Hi, I'd like custom software for my company (SOFTWARE).",
+    DIAGNOSTICO: "Hi, I'd like a process diagnosis (DIAGNÓSTICO).",
+    DEMO: "Hi, I'd like to see a demo (DEMO).",
+    CONTACTO: "Hi, I'm writing from the Nexo4Pymes contact page.",
+  },
+  de: {
+    GENERAL: "Hallo, ich schreibe über die Website von Nexo4Pymes. Ich würde gern erfahren, wie ihr arbeitet.",
+    AVISOS: "Hallo, ich möchte mehr über CentralAvisos erfahren (AVISOS).",
+    SOFTWARE: "Hallo, ich möchte individuelle Software für meine Firma (SOFTWARE).",
+    DIAGNOSTICO: "Hallo, ich möchte eine Prozessanalyse (DIAGNÓSTICO).",
+    DEMO: "Hallo, ich möchte eine Demo sehen (DEMO).",
+    CONTACTO: "Hallo, ich schreibe über die Kontaktseite von Nexo4Pymes.",
+  },
+};
+
 /**
  * Devuelve el enlace de WhatsApp con el mensaje ya escrito.
  *
@@ -56,8 +78,9 @@ export type ClaveWhatsapp = keyof typeof MENSAJES;
  *               lo ve antes de enviar y puede borrarlo: nunca se manda
  *               nada a sus espaldas.
  */
-export function waLink(clave: ClaveWhatsapp = "GENERAL", extra?: string): string {
-  const texto = extra ? `${MENSAJES[clave]}\n\n${extra}` : MENSAJES[clave];
+export function waLink(clave: ClaveWhatsapp = "GENERAL", extra?: string, lang: Idioma = "es"): string {
+  const base = lang === "es" ? MENSAJES[clave] : MENSAJES_IDIOMA[lang][clave];
+  const texto = extra ? `${base}\n\n${extra}` : base;
 
   /* api.whatsapp.com y no wa.me: wa.me hace un salto intermedio que en
      algunos Android abre el navegador antes que la aplicación y pierde

@@ -1,0 +1,148 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { esquemaArticulo } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
+
+<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
+  <Link href="/" className="text-[#9FB6FF]">Home</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Why diagnose before automating
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Diagnosis first · 5 min read</div>
+
+# Why automating without a diagnosis first can sink your business
+
+<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+  The idea of automating always sounds good: less repetitive work, more free time, more
+  customers served. And it works. The problem is the order you do things in, because
+  automating a process you don't fully understand doesn't fix it: it speeds it up.
+</div>
+
+## Automation doesn't fix a process, it amplifies it
+
+This is the idea worth understanding before you spend a single euro. An automation doesn't judge whether what it does makes sense. It takes what you already do and repeats it faster, more often and without getting tired. If the process is well set up, you multiply the good result. If it's badly set up, **you multiply the problem**.
+
+An automated bottleneck doesn't disappear. It becomes a bottleneck that fills itself, around the clock, with nobody to slow it down. Before, when someone on your team picked up the phone, that person acted as a filter without realising it: they noticed the diary was tight, the stock was running low or that customer had already called three times. That judgement isn't written down anywhere, but it's working. When you automate without looking at it, the first thing you remove is the filter.
+
+## The workshop that filled its diary and ended up losing customers
+
+It's worth seeing with a concrete case, because in the abstract all this sounds reasonable and people still get it wrong.
+
+Imagine a car workshop that wants more work and decides to automate bookings. It sets up a system that replies instantly on WhatsApp, shows the free slots and confirms the booking without anyone lifting a finger. On paper, perfect: it stops losing the people who write at eleven at night and nobody has to call back. Within two weeks the diary is full.
+
+<Destacado titulo="What nobody looked at first">
+  How many cars that workshop can **really** handle in a day.
+
+  Now there are twice as many bookings and still the same two mechanics. Customers wait longer
+  than promised, deliveries slip, the phone is red-hot with complaints, the team works under
+  pressure and makes more mistakes. The following month the one-star reviews start coming in.
+  And reviews take much longer to repair than a diary.
+
+  Notice the uncomfortable detail: **the automation worked perfectly**. It did exactly what it
+  was asked to do. That's why it broke the business faster.
+</Destacado>
+
+With a diagnosis first, that same workshop would have seen something else. Its problem wasn't getting more bookings: it had dead slots mid-morning and some customers didn't turn up on the day. The right automation wasn't getting more, it was **reminding and rescheduling**. It would have brought more revenue with the same staff and without adding a single hour of work.
+
+Same investment, similar technical effort and the opposite result. The difference isn't in the technology: it's in having looked at the business before choosing what to automate.
+
+## The three typical ways to get it wrong
+
+When something goes wrong with automation, it's almost always one of these three.
+
+### 1. Amplifying a bottleneck
+
+That's the workshop's case. You automate the work coming in without checking your capacity to get it out. It applies to bookings, quotes, orders and enquiries. The rule is simple: before speeding up what comes in, check what happens to what already comes in today.
+
+### 2. Automating a process that is really three
+
+Many tasks counted as one actually have branches: a new customer isn't treated the same as a regular one, an urgent order doesn't follow the same path as a normal one, and there are a couple of exceptions only the person who's been doing it for ten years knows about. If you automate the simplified version, everything that doesn't fit falls through a hole. And the worst part is that nobody notices until a customer complains.
+
+### 3. Scaling a small mistake
+
+A piece of data written down wrong by hand affects one customer. That same data written down wrong inside an automated process affects every customer who goes through it, for weeks and silently. Automation doesn't make more mistakes than a person: it makes the same ones, but on another scale and without anyone spotting them in time.
+
+## What a diagnosis looks at before touching anything
+
+A diagnosis isn't a meeting where someone sells you things. It's drawing the real journey through the business: what happens from the moment a customer gets in touch until they pay and leave. Specifically, this is what we look at:
+
+- **Where the work comes in** and who handles it on each channel.
+- **What the real capacity** to handle more is, not the theoretical one.
+- **What gets done twice**: data written down in one place and copied to another.
+- **What sits waiting** and because of whom or what.
+- **What exceptions exist** and who knows them, even if they aren't written down.
+- **What tools you already use** and what information lives in each one.
+
+The result is an ordered list: what can be automated, what's better fixed first and in what order to do it so that each step pays for the next. That order matters as much as the list.
+
+<Nota>
+  **A useful warning sign:** if someone proposes a specific automation before asking how many
+  customers you can handle in a day, they aren't solving your problem. They're selling their
+  product.
+</Nota>
+
+## When automation isn't worth it
+
+It's worth saying, because almost nobody does. There are cases where the right answer is not to automate, at least not yet:
+
+<Senales
+  items={[
+    {
+      fuerte: "The volume is very low.",
+      texto: "If a task happens three times a month, the time you save doesn't make up for what it costs to set up and maintain.",
+    },
+    {
+      fuerte: "The process changes every week.",
+      texto: "Automating something you're still defining is building on sand. First stabilise it, then automate it.",
+    },
+    {
+      fuerte: "The value lies precisely in the human touch.",
+      texto: "Some conversations the customer wants to have with a person, and automating them saves minutes and costs customers.",
+    },
+    {
+      fuerte: "The process is broken.",
+      texto: "If it doesn't work well by hand today, automating it won't fix it. It just makes it fail faster.",
+    },
+  ]}
+/>
+
+## Where to start if you're considering it
+
+You don't need to hire anyone to take the first step. Take a normal week and write down two things: **which tasks repeat** and **where work gets stuck**. That alone will show you patterns you miss today because they're spread across several people and several days.
+
+Then, before automating anything, ask yourself the workshop question: if twice as much work came in through that channel tomorrow, could you handle it? If the answer is no, the first problem to solve isn't getting more.
+
+And when it's time to choose, start with what frees up the most time with the least risk. Get it running, review it with real business data and only then move on to the next. That way the business never stops and you see the effect of each change before investing in the next one.
+
+<CtaPost
+  titulo="Want to know what your business really needs?"
+  boton="Message us on WhatsApp"
+  href={waLink("DIAGNOSTICO", undefined, "en")}
+  externo
+>
+  We always work in that order: first a diagnosis to understand how the business works today,
+  and then phased development of whatever comes out of it. If the diagnosis shows nothing needs
+  building, we'll tell you.
+</CtaPost>
+
+<Nota>
+  Want to see how it would look in your industry? In the{" "}
+  <Link href="/#sectores">industry selector on the home page</Link> you can see the demo with the
+  day-to-day of building maintenance, pools, HVAC, cleaning, gardening, pest control, solar and renovations.
+</Nota>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      esquemaArticulo({
+        titulo: "Why automating without a diagnosis first can sink your business",
+        descripcion: "Automation doesn't fix a process, it amplifies it. The story of the workshop that filled its diary and ended up losing customers.",
+        url: `${marca.dominio}/en/blog/por-que-diagnosticar-antes-de-automatizar`,
+        fecha: "2026-08-05",
+      }),
+    ),
+  }}
+/>

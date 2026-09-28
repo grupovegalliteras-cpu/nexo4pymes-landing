@@ -1,10 +1,14 @@
 import { Boton } from "@/components/ui/Boton";
 import { Reveal } from "@/components/motion/Reveal";
-import { cierreServicios } from "@/content/servicios";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
+import { contenido } from "@/content/i18n";
+import { idiomaServidor } from "@/lib/idioma-servidor";
+import { tr } from "@/lib/i18n";
 
 export function CierreServicios() {
+  const lang = idiomaServidor();
+  const { cierreServicios } = contenido(lang).servicios;
   return (
     <section className="relative overflow-hidden px-5 py-20 text-white sm:px-8 sm:py-28">
       <div className="malla malla-fade absolute inset-0 opacity-50" aria-hidden="true" />
@@ -22,12 +26,12 @@ export function CierreServicios() {
             {cierreServicios.texto}
           </p>
           <div className="mt-9 flex justify-center">
-            <Boton href={waLink("GENERAL")} externo tamano="lg" flecha magnetico variante="claro">
+            <Boton href={waLink("GENERAL", undefined, lang)} externo tamano="lg" flecha magnetico variante="claro">
               {cierreServicios.cta}
             </Boton>
           </div>
           <p className="mt-4 font-mono text-[12px] text-white/45">
-            Sin compromiso y sin presentación comercial · 15 minutos por videollamada
+            {tr(lang, { es: "Sin compromiso y sin presentación comercial · 15 minutos por videollamada", en: "No commitment and no sales pitch · 15-minute video call", de: "Unverbindlich und ohne Verkaufspräsentation · 15 Minuten per Videocall" })}
           </p>
           <p className="mt-3 text-[14px] text-white/55">
             {cierreServicios.escribir}

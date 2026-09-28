@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { Boton } from "@/components/ui/Boton";
 import { Icono } from "@/components/ui/Icono";
-import { calendario } from "@/content/contacto";
 import { marca } from "@/content/marca";
+import { contenido } from "@/content/i18n";
+import { useIdioma } from "@/components/i18n/idioma";
 
 /* ============================================================
    CALENDARIO CON CARGA BAJO CONSENTIMIENTO
@@ -37,6 +38,8 @@ import { marca } from "@/content/marca";
    ============================================================ */
 
 export function CalendarioEmbebido() {
+  const lang = useIdioma();
+  const { calendario } = contenido(lang).contacto;
   const [cargado, setCargado] = useState(false);
 
   /* Parámetros de tema para que el widget no aparezca en blanco puro
@@ -49,7 +52,7 @@ export function CalendarioEmbebido() {
       <div className="overflow-hidden rounded-panel border border-white/10 bg-bottle-800">
         <iframe
           src={url}
-          title="Calendario para agendar una llamada de 15 minutos con Nexo4Pymes"
+          title={calendario.titular}
           className="h-[680px] w-full border-0 sm:h-[720px]"
           loading="lazy"
         />

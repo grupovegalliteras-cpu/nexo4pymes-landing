@@ -1,8 +1,11 @@
 import { Reveal } from "@/components/motion/Reveal";
 import { Seccion } from "@/components/ui/Seccion";
-import { casoDiagnostico } from "@/content/servicios";
+import { contenido } from "@/content/i18n";
+import { idiomaServidor } from "@/lib/idioma-servidor";
 
 export function CasoDiagnostico() {
+  const lang = idiomaServidor();
+  const { casoDiagnostico } = contenido(lang).servicios;
   return (
     <Seccion id="caso" tono="oscuro" ancho="ancho">
       <Reveal>

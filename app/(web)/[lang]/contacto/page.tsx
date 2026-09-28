@@ -7,7 +7,9 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Boton } from "@/components/ui/Boton";
 import { FormularioContacto } from "@/components/contacto/FormularioContacto";
 import { CalendarioEmbebido } from "@/components/contacto/CalendarioEmbebido";
-import { calendario, datosEmpresa, formulario, heroContacto } from "@/content/contacto";
+import { contenido } from "@/content/i18n";
+import { OG_LOCALE, alternativas, idiomaOBase, tr } from "@/lib/i18n";
+import { fijarIdioma } from "@/lib/idioma-servidor";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
 
@@ -18,27 +20,38 @@ import { waLink } from "@/lib/whatsapp";
    encima de una página que ya es, entera, un formulario de contacto.
    Ahí estorba en vez de ayudar. */
 
-const titulo = "Contacto — hablemos de vuestro negocio";
-const descripcion =
-  "Agendad una videollamada gratuita de 15 minutos o escribidnos por el formulario. Contestamos en menos de 24 horas laborables.";
+const TITULO = {
+  es: "Contacto — hablemos de vuestro negocio",
+  en: "Contact — let's talk about your business",
+  de: "Kontakt — sprechen wir über Ihr Geschäft",
+};
+const DESCRIPCION = {
+  es: "Agendad una videollamada gratuita de 15 minutos o escribidnos por el formulario. Contestamos en menos de 24 horas laborables.",
+  en: "Book a free 15-minute video call or write to us using the form. We reply within 24 working hours.",
+  de: "Buchen Sie einen kostenlosen 15-minütigen Videocall oder schreiben Sie uns über das Formular. Wir antworten innerhalb von 24 Arbeitsstunden.",
+};
 
-export const metadata: Metadata = {
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const lang = idiomaOBase((await params).lang);
+  const titulo = TITULO[lang];
+  const descripcion = DESCRIPCION[lang];
+  return {
   title: { absolute: `${titulo} | Nexo4Pymes` },
   description: descripcion,
-  alternates: { canonical: "/contacto" },
+  alternates: alternativas(lang, "/contacto"),
   openGraph: {
     type: "website",
     siteName: marca.nombre,
-    locale: "es_ES",
+    locale: OG_LOCALE[lang],
     title: titulo,
     description: descripcion,
-    url: "/contacto",
+    url: alternativas(lang, "/contacto").canonical,
     images: [
       {
         url: "/assets/og-nexo4pymes.jpg",
         width: 1200,
         height: 630,
-        alt: "Nexo4Pymes — contacto",
+        alt: `Nexo4Pymes — ${titulo}`,
       },
     ],
   },
@@ -48,21 +61,26 @@ export const metadata: Metadata = {
     description: descripcion,
     images: ["/assets/og-nexo4pymes.jpg"],
   },
-};
+  };
+}
 
-export default function PaginaContacto() {
+export default async function PaginaContacto({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = idiomaOBase((await params).lang);
+  fijarIdioma(lang);
+  const { calendario, datosEmpresa, formulario, heroContacto } = contenido(lang).contacto;
+  const t = (x: { es: string; en: string; de: string }) => tr(lang, x);
   return (
     <>
       <FondoAmbiente />
 
       <Cabecera
         enlaces={[
-          { href: "#agendar", texto: "Agendar llamada" },
-          { href: "#formulario", texto: "Formulario" },
-          { href: "#datos-empresa", texto: "Datos" },
+          { href: "#agendar", texto: t({ es: "Agendar llamada", en: "Book a call", de: "Termin buchen" }) },
+          { href: "#formulario", texto: t({ es: "Formulario", en: "Form", de: "Formular" }) },
+          { href: "#datos-empresa", texto: t({ es: "Datos", en: "Details", de: "Daten" }) },
         ]}
-        cta={{ texto: "WhatsApp", href: waLink("GENERAL"), externo: true }}
-        enlacePill={{ href: "/servicios", texto: "Servicios ↗", textoMovil: "Ver servicios ↗" }}
+        cta={{ texto: "WhatsApp", href: waLink("GENERAL", undefined, lang), externo: true }}
+        enlacePill={{ href: "/servicios", texto: t({ es: "Servicios ↗", en: "Services ↗", de: "Leistungen ↗" }), textoMovil: t({ es: "Ver servicios ↗", en: "See services ↗", de: "Leistungen ansehen ↗" }) }}
       />
 
       <main id="contenido" className="relative z-10">
@@ -103,17 +121,17 @@ export default function PaginaContacto() {
             <Reveal retraso={0.18}>
               <div className="mt-8 flex flex-col items-center gap-3">
                 <Boton
-                  href={waLink("CONTACTO")}
+                  href={waLink("CONTACTO", undefined, lang)}
                   externo
                   tamano="lg"
                   flecha
                   magnetico
                   className="w-full font-titular font-semibold sm:w-auto"
                 >
-                  Escribidnos por WhatsApp
+                  {t({ es: "Escribidnos por WhatsApp", en: "Message us on WhatsApp", de: "Schreiben Sie uns auf WhatsApp" })}
                 </Boton>
                 <p className="font-mono text-[12px] uppercase tracking-[0.1em] text-white/45">
-                  {marca.whatsappVisible} · os contestamos nosotros
+                  {marca.whatsappVisible} · {t({ es: "os contestamos nosotros", en: "we reply ourselves", de: "wir antworten selbst" })}
                 </p>
               </div>
             </Reveal>
@@ -174,15 +192,15 @@ export default function PaginaContacto() {
 
           <Reveal retraso={0.1}>
             <dl className="mt-8 grid gap-4 rounded-panel border border-white/10 bg-white/[.03] p-5 sm:grid-cols-2 sm:p-7">
-              <Dato etiqueta="Razón social" valor={marca.razonSocial} />
+              <Dato etiqueta={t({ es: "Razón social", en: "Registered name", de: "Firmenname" })} valor={marca.razonSocial} />
               <Dato
                 etiqueta="WhatsApp"
                 valor={marca.whatsappVisible}
-                href={waLink("CONTACTO")}
+                href={waLink("CONTACTO", undefined, lang)}
               />
               <Dato etiqueta="Email" valor={marca.email} href={`mailto:${marca.email}`} />
-              <Dato etiqueta="Ubicación" valor={`${marca.localidad}, ${marca.region}`} />
-              <Dato etiqueta="Ámbito" valor="Toda España, en remoto" />
+              <Dato etiqueta={t({ es: "Ubicación", en: "Location", de: "Standort" })} valor={`${marca.localidad}, ${marca.region}`} />
+              <Dato etiqueta={t({ es: "Ámbito", en: "Coverage", de: "Tätigkeitsgebiet" })} valor={t({ es: "Toda España, en remoto", en: "All of Spain, remotely", de: "Ganz Spanien, aus der Ferne" })} />
             </dl>
           </Reveal>
         </Seccion>
@@ -191,16 +209,16 @@ export default function PaginaContacto() {
       <PieDePagina
         redes
         enlaces={[
-          { href: "#agendar", texto: "Agendar llamada" },
-          { href: "#formulario", texto: "Formulario" },
-          { href: "/servicios", texto: "Servicios" },
-          { href: "/nosotros", texto: "Quiénes somos" },
+          { href: "#agendar", texto: t({ es: "Agendar llamada", en: "Book a call", de: "Termin buchen" }) },
+          { href: "#formulario", texto: t({ es: "Formulario", en: "Form", de: "Formular" }) },
+          { href: "/servicios", texto: t({ es: "Servicios", en: "Services", de: "Leistungen" }) },
+          { href: "/nosotros", texto: t({ es: "Quiénes somos", en: "About us", de: "Über uns" }) },
           { href: "/blog", texto: "Blog" },
-          { href: "/", texto: "Inicio" },
+          { href: "/", texto: t({ es: "Inicio", en: "Home", de: "Startseite" }) },
         ]}
         cruce={{
-          pregunta: "¿Todavía no sabéis si os encaja?",
-          texto: "Ver qué construimos en vuestro sector",
+          pregunta: t({ es: "¿Todavía no sabéis si os encaja?", en: "Not sure yet whether it's for you?", de: "Noch unsicher, ob es passt?" }),
+          texto: t({ es: "Ver qué construimos en vuestro sector", en: "See what we build for your industry", de: "Sehen, was wir für Ihre Branche bauen" }),
           href: "/#sectores",
         }}
       />

@@ -5,9 +5,10 @@ import { Reveal, Stagger, ItemStagger } from "@/components/motion/Reveal";
 import { TarjetaGlow } from "@/components/ui/TarjetaGlow";
 import { CajaIcono } from "@/components/ui/Icono";
 import { IconoInstagram } from "@/components/ui/IconosRedes";
-import { cierreNosotros, enfoquePyme, heroNosotros, historia, valores } from "@/content/nosotros";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
+import { contenido } from "@/content/i18n";
+import { idiomaServidor } from "@/lib/idioma-servidor";
 
 /* ============================================================
    SECCIONES DE /nosotros
@@ -21,6 +22,8 @@ import { waLink } from "@/lib/whatsapp";
 
 /* ---------- HERO ---------- */
 export function HeroNosotros() {
+  const lang = idiomaServidor();
+  const { heroNosotros } = contenido(lang).nosotros;
   return (
     <section id="top" className="relative overflow-hidden px-5 pb-10 pt-28 sm:px-8 sm:pb-16 sm:pt-36">
       <div className="relative mx-auto max-w-[820px] text-center">
@@ -49,7 +52,7 @@ export function HeroNosotros() {
         <Reveal retraso={0.18}>
           <div className="mt-8 flex justify-center">
             <Boton
-              href={waLink("GENERAL")}
+              href={waLink("GENERAL", undefined, lang)}
               externo
               tamano="lg"
               flecha
@@ -70,6 +73,8 @@ export function HeroNosotros() {
 
 /* ---------- HISTORIA ---------- */
 export function Historia() {
+  const lang = idiomaServidor();
+  const { historia } = contenido(lang).nosotros;
   return (
     <Seccion id="historia" tono="oscuro" ancho="ancho">
       <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-14">
@@ -92,7 +97,7 @@ export function Historia() {
                 href={marca.instagram}
                 target="_blank"
                 rel="noopener"
-                aria-label="Instagram de Nexo4Pymes"
+                aria-label="Instagram Nexo4Pymes"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-azul/50 hover:text-azul"
               >
                 <IconoInstagram size={17} />
@@ -127,6 +132,8 @@ export function Historia() {
 
 /* ---------- VALORES ---------- */
 export function Valores() {
+  const lang = idiomaServidor();
+  const { valores } = contenido(lang).nosotros;
   return (
     <Seccion id="valores" tono="oscuro-hondo" ancho="ancho">
       <div className="max-w-[62ch]">
@@ -154,6 +161,8 @@ export function Valores() {
 
 /* ---------- ENFOQUE PYME ---------- */
 export function EnfoquePyme() {
+  const lang = idiomaServidor();
+  const { enfoquePyme } = contenido(lang).nosotros;
   return (
     <Seccion id="enfoque" tono="oscuro" ancho="ancho">
       <div className="max-w-[62ch]">
@@ -216,6 +225,8 @@ export function EnfoquePyme() {
 
 /* ---------- CIERRE ---------- */
 export function CierreNosotros() {
+  const lang = idiomaServidor();
+  const { cierreNosotros } = contenido(lang).nosotros;
   return (
     <section id="cierre" className="relative overflow-hidden px-5 py-14 text-white sm:px-8 sm:py-28">
       <div className="malla malla-fade absolute inset-0 opacity-50" aria-hidden="true" />
@@ -240,7 +251,7 @@ export function CierreNosotros() {
 
           <div className="mt-9 flex justify-center">
             <Boton
-              href={waLink("GENERAL")}
+              href={waLink("GENERAL", undefined, lang)}
               externo
               tamano="lg"
               flecha

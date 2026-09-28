@@ -2,6 +2,8 @@ import Link from "@/components/i18n/Enlace";
 import { AlertTriangle, Info } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import { Boton } from "@/components/ui/Boton";
+import { tr } from "@/lib/i18n";
+import { idiomaServidor } from "@/lib/idioma-servidor";
 
 /* Bloques destacados de los artículos. Se importan desde el .mdx. */
 
@@ -102,7 +104,7 @@ export function VolverAlBlog() {
       <span aria-hidden="true" className="transition-transform duration-300 group-hover:-translate-x-1">
         ←
       </span>
-      Volver al blog
+      {tr(idiomaServidor(), { es: "Volver al blog", en: "Back to the blog", de: "Zurück zum Blog" })}
     </Link>
   );
 }

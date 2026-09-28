@@ -5,11 +5,22 @@ import { BadgeCheck, Bell, Check, MapPin, Navigation, PhoneIncoming, Sparkles, W
 import { useEffect, useState } from "react";
 import { useSector } from "@/store/demo";
 import { cn } from "@/lib/utils";
+import { useIdioma } from "@/components/i18n/idioma";
+import { TIPO_AVISO } from "@/lib/etiquetas";
+import type { Idioma } from "@/lib/i18n";
+
+const TX = {
+  es: { aria: "Animación: una llamada se convierte en un trabajo en el móvil del técnico", entrante: "Llamada entrante", grabando: "Central Avisos, grabando", ia: "Clasificado por IA", urgente: "Urgente", media: "Prioridad media", reconocido: "Cliente reconocido", ot: "OT-2431 creada y asignada", aToni: "A Toni Ferrer, el técnico más cercano", hoy: "Hoy", hola: "Buenos días, Toni", trabajando: "Trabajando", siguiente: "Siguiente parada", enCamino: "En camino", asignado: "Asignado", avisado: "El cliente ya está avisado", salgo: "Salgo hacia allí", notif: "Trabajo urgente asignado", factura: "Factura registrada con VeriFactu", cobrada: "Cobrada por Bizum, parte e informe enviados", cliente: "Cliente" },
+  en: { aria: "Animation: a call becomes a job on the technician's phone", entrante: "Incoming call", grabando: "Central Avisos, recording", ia: "Sorted by AI", urgente: "Urgent", media: "Medium priority", reconocido: "Known customer", ot: "WO-2431 created and assigned", aToni: "To Toni Ferrer, the nearest technician", hoy: "Today", hola: "Good morning, Toni", trabajando: "Working", siguiente: "Next stop", enCamino: "On the way", asignado: "Assigned", avisado: "Customer already notified", salgo: "I'm on my way", notif: "Urgent job assigned", factura: "Invoice registered with VeriFactu", cobrada: "Paid by Bizum, job report and report sent", cliente: "Customer" },
+  de: { aria: "Animation: Ein Anruf wird zum Auftrag auf dem Handy des Technikers", entrante: "Eingehender Anruf", grabando: "Central Avisos, Aufnahme läuft", ia: "Von der KI eingeordnet", urgente: "Dringend", media: "Mittlere Priorität", reconocido: "Kunde erkannt", ot: "AU-2431 erstellt und zugewiesen", aToni: "An Toni Ferrer, den nächstgelegenen Techniker", hoy: "Heute", hola: "Guten Morgen, Toni", trabajando: "Im Einsatz", siguiente: "Nächster Stopp", enCamino: "Unterwegs", asignado: "Zugewiesen", avisado: "Kunde ist benachrichtigt", salgo: "Ich fahre los", notif: "Dringender Auftrag zugewiesen", factura: "Rechnung mit VeriFactu registriert", cobrada: "Per Bizum bezahlt, Bericht verschickt", cliente: "Kunde" },
+} satisfies Record<Idioma, Record<string, string>>;
 
 const T = [0, 1300, 5600, 7000, 8600, 10900, 13000, 16500];
 
 export function HeroAnim() {
   const sector = useSector();
+  const lang = useIdioma();
+  const tx = TX[lang];
   const reduce = useReducedMotion();
   const [phase, setPhase] = useState(0);
   const [cycle, setCycle] = useState(0);
@@ -35,7 +46,7 @@ export function HeroAnim() {
   const clienteCorto = L.cliente;
 
   return (
-    <div className="relative mx-auto h-[540px] w-full max-w-[600px] select-none sm:h-[560px]" aria-label="Animación: una llamada se convierte en un trabajo en el móvil del técnico" role="img">
+    <div className="relative mx-auto h-[540px] w-full max-w-[600px] select-none sm:h-[560px]" aria-label={tx.aria} role="img">
       {/* tarjeta de llamada */}
       <motion.div
         key={`call-${cycle}`}
@@ -50,7 +61,7 @@ export function HeroAnim() {
             <PhoneIncoming className="relative size-5" />
           </span>
           <div className="min-w-0 flex-1">
-            <div className="text-[11px] text-white/55">{phase === 0 ? "Llamada entrante" : "Central Avisos, grabando"}</div>
+            <div className="text-[11px] text-white/55">{phase === 0 ? tx.entrante : tx.grabando}</div>
             <div className="truncate text-[15px] font-semibold">{clienteCorto}</div>
           </div>
           {phase >= 1 && (
@@ -63,20 +74,20 @@ export function HeroAnim() {
         </div>
         <div className="mt-3 grid min-h-[92px] gap-1.5">
           {lines.map((l, i) => (
-            <Typed key={`${cycle}-${i}`} text={l} start={phase >= 1} delay={i * 1900} />
+            <Typed key={`${cycle}-${i}`} etiqueta={tx.cliente} text={l} start={phase >= 1} delay={i * 1900} />
           ))}
         </div>
         <AnimatePresence>
           {phase >= 2 && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="overflow-hidden">
               <div className="mt-3 flex items-center gap-1.5 text-[11px] font-medium text-[#b9b0ff]">
-                <Sparkles className="size-3.5" /> Clasificado por IA
+                <Sparkles className="size-3.5" /> {tx.ia}
               </div>
               <motion.div className="mt-1.5 flex flex-wrap gap-1.5" initial="h" animate="s" variants={{ s: { transition: { staggerChildren: 0.12 } } }}>
                 {[
-                  [L.tipo[0].toUpperCase() + L.tipo.slice(1), "bg-white/10"],
-                  [L.urgencia === "alta" ? "Urgente" : "Prioridad media", L.urgencia === "alta" ? "bg-[#ff6b61]/25 text-[#ffb3ad]" : "bg-sun/20 text-sun"],
-                  ["Cliente reconocido", "bg-[#37c28a]/20 text-[#7fe3b8]"],
+                  [TIPO_AVISO[lang][L.tipo], "bg-white/10"],
+                  [L.urgencia === "alta" ? tx.urgente : tx.media, L.urgencia === "alta" ? "bg-[#ff6b61]/25 text-[#ffb3ad]" : "bg-sun/20 text-sun"],
+                  [tx.reconocido, "bg-[#37c28a]/20 text-[#7fe3b8]"],
                   [serv.nombre, "bg-white/10"],
                 ].map(([t, cls]) => (
                   <motion.span key={t} variants={{ h: { opacity: 0, y: 6, filter: "blur(4px)" }, s: { opacity: 1, y: 0, filter: "blur(0px)" } }} className={cn("rounded-md px-2 py-1 text-[12px] font-medium", cls)}>
@@ -94,8 +105,8 @@ export function HeroAnim() {
                 <Wrench className="size-4" />
               </span>
               <div className="min-w-0 text-[12.5px] leading-tight">
-                <div className="font-semibold">OT-2431 creada y asignada</div>
-                <div className="text-white/60">A Toni Ferrer, el técnico más cercano</div>
+                <div className="font-semibold">{tx.ot}</div>
+                <div className="text-white/60">{tx.aToni}</div>
               </div>
               <Check className="ml-auto size-4 text-[#7fe3b8]" />
             </motion.div>
@@ -127,20 +138,20 @@ export function HeroAnim() {
         <div className="relative h-full overflow-hidden rounded-[28px] bg-[#f4f6f7] text-[#0c1a22]">
           <span className="absolute top-2 left-1/2 z-20 h-4 w-16 -translate-x-1/2 rounded-full bg-black" />
           <div className="px-3.5 pt-9">
-            <div className="text-[9px] font-medium text-[#7a8893]">Hoy</div>
-            <div className="font-display text-[17px] leading-tight font-semibold">Buenos días, Toni</div>
+            <div className="text-[9px] font-medium text-[#7a8893]">{tx.hoy}</div>
+            <div className="font-display text-[17px] leading-tight font-semibold">{tx.hola}</div>
             <div className="mt-2 flex items-center gap-2 rounded-xl bg-white p-2 shadow-sm">
               <span className="size-1.5 rounded-full bg-[#13845a]" />
-              <span className="text-[10px] text-[#465661]">Trabajando</span>
+              <span className="text-[10px] text-[#465661]">{tx.trabajando}</span>
               <span className="ml-auto font-display text-[12px] font-semibold tabular-nums">02:14:08</span>
             </div>
-            <div className="mt-2.5 text-[9px] font-medium text-[#7a8893]">Siguiente parada</div>
+            <div className="mt-2.5 text-[9px] font-medium text-[#7a8893]">{tx.siguiente}</div>
             <AnimatePresence mode="wait">
               {phase >= 4 ? (
                 <motion.div key="new" initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} className="mt-1 rounded-xl bg-white p-2.5 shadow-md ring-2 ring-[#f5ab2e]">
                   <div className="flex items-center gap-1.5">
-                    <span className="rounded bg-[#fbe6e4] px-1 py-0.5 text-[8px] font-semibold text-[#cf3f37]">Urgente</span>
-                    <span className={cn("ml-auto rounded px-1 py-0.5 text-[8px] font-semibold", phase >= 5 ? "bg-[#fdf1dc] text-[#b7740a]" : "bg-[#e5edfb] text-[#2f6ad0]")}>{phase >= 5 ? "En camino" : "Asignado"}</span>
+                    <span className="rounded bg-[#fbe6e4] px-1 py-0.5 text-[8px] font-semibold text-[#cf3f37]">{tx.urgente}</span>
+                    <span className={cn("ml-auto rounded px-1 py-0.5 text-[8px] font-semibold", phase >= 5 ? "bg-[#fdf1dc] text-[#b7740a]" : "bg-[#e5edfb] text-[#2f6ad0]")}>{phase >= 5 ? tx.enCamino : tx.asignado}</span>
                   </div>
                   <div className="mt-1 text-[13px] leading-tight font-semibold">{clienteCorto}</div>
                   <div className="text-[10px] text-[#465661]">{serv.nombre}</div>
@@ -149,7 +160,7 @@ export function HeroAnim() {
                   </div>
                   <div className={cn("mt-2 flex h-7 items-center justify-center gap-1 rounded-lg text-[10px] font-semibold transition-colors", phase >= 5 ? "bg-[#13845a] text-white" : "bg-[#0a5d78] text-white")}>
                     {phase >= 5 ? <Check className="size-3" /> : <Navigation className="size-3" />}
-                    {phase >= 5 ? "El cliente ya está avisado" : "Salgo hacia allí"}
+                    {phase >= 5 ? tx.avisado : tx.salgo}
                   </div>
                 </motion.div>
               ) : (
@@ -175,7 +186,7 @@ export function HeroAnim() {
                   <Bell className="size-3.5" />
                 </span>
                 <span className="min-w-0 leading-tight">
-                  <span className="block text-[10px] font-semibold">Trabajo urgente asignado</span>
+                  <span className="block text-[10px] font-semibold">{tx.notif}</span>
                   <span className="block truncate text-[9.5px] text-white/75">{clienteCorto}: {serv.nombre}</span>
                 </span>
               </motion.div>
@@ -192,8 +203,8 @@ export function HeroAnim() {
               <BadgeCheck className="size-5" />
             </span>
             <div className="text-[12.5px] leading-tight">
-              <div className="font-semibold">Factura registrada con VeriFactu</div>
-              <div className="text-white/65">Cobrada por Bizum, parte e informe enviados</div>
+              <div className="font-semibold">{tx.factura}</div>
+              <div className="text-white/65">{tx.cobrada}</div>
             </div>
           </motion.div>
         )}
@@ -202,7 +213,7 @@ export function HeroAnim() {
   );
 }
 
-function Typed({ text, start, delay }: { text: string; start: boolean; delay: number }) {
+function Typed({ text, start, delay, etiqueta }: { text: string; start: boolean; delay: number; etiqueta: string }) {
   const [n, setN] = useState(0);
   useEffect(() => {
     if (!start) return;
@@ -218,7 +229,7 @@ function Typed({ text, start, delay }: { text: string; start: boolean; delay: nu
   if (!n) return null;
   return (
     <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[13.5px] leading-snug text-white/85">
-      <span className="mr-1.5 text-[11px] text-white/40">Cliente</span>
+      <span className="mr-1.5 text-[11px] text-white/40">{etiqueta}</span>
       {text.slice(0, n)}
       {n < text.length && <span className="ml-0.5 inline-block h-3 w-[2px] translate-y-0.5 animate-pulse bg-white" />}
     </motion.p>

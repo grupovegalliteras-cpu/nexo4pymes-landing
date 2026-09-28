@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { LOCALE, type Idioma } from "@/lib/i18n";
 
 export function cn(...inputs: ClassValue[]) {
   return clsx(inputs);
@@ -40,59 +41,82 @@ export function hashString(s: string) {
   return h >>> 0;
 }
 
-const eur = new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" });
-const eur0 = new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
-const num = new Intl.NumberFormat("es-ES");
+/** Formatos de números, euros, fechas y tiempos en el idioma de la página. */
+function crearFmt(lang: Idioma) {
+  const loc = LOCALE[lang];
+  const eur = new Intl.NumberFormat(loc, { style: "currency", currency: "EUR" });
+  const eur0 = new Intl.NumberFormat(loc, { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  const num = new Intl.NumberFormat(loc);
+  const sep = lang === "de" ? "." : "/";
+  const dia = new Intl.DateTimeFormat(loc, { weekday: "long" });
+  const diaLargo = new Intl.DateTimeFormat(loc, { weekday: "long", day: "numeric", month: "long" });
+  const mes = new Intl.DateTimeFormat(loc, { month: "long", year: "numeric" });
+  const hace = {
+    es: { ahora: "ahora", min: (m: number) => `hace ${m} min`, h: (h: number) => `hace ${h} h`, ayer: "ayer", dias: (d: number) => `hace ${d} días` },
+    en: { ahora: "now", min: (m: number) => `${m} min ago`, h: (h: number) => `${h} h ago`, ayer: "yesterday", dias: (d: number) => `${d} days ago` },
+    de: { ahora: "jetzt", min: (m: number) => `vor ${m} Min.`, h: (h: number) => `vor ${h} Std.`, ayer: "gestern", dias: (d: number) => `vor ${d} Tagen` },
+  }[lang];
+  const minTxt = lang === "de" ? "Min." : "min";
+  const hTxt = lang === "de" ? "Std." : "h";
+  return {
+    lang,
+    eur: (n: number) => eur.format(n),
+    eur0: (n: number) => eur0.format(n),
+    num: (n: number, d = 0) => new Intl.NumberFormat(loc, { maximumFractionDigits: d, minimumFractionDigits: d }).format(n),
+    int: (n: number) => num.format(Math.round(n)),
+    /** dd/mm/aaaa (en alemán dd.mm.aaaa) */
+    date: (iso: string | number | Date) => {
+      const d = new Date(iso);
+      return `${String(d.getDate()).padStart(2, "0")}${sep}${String(d.getMonth() + 1).padStart(2, "0")}${sep}${d.getFullYear()}`;
+    },
+    dateShort: (iso: string | number | Date) => {
+      const d = new Date(iso);
+      return `${String(d.getDate()).padStart(2, "0")}${sep}${String(d.getMonth() + 1).padStart(2, "0")}${lang === "de" ? "." : ""}`;
+    },
+    time: (iso: string | number | Date) => {
+      const d = new Date(iso);
+      return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+    },
+    dayName: (iso: string | number | Date) => dia.format(new Date(iso)),
+    dayLong: (iso: string | number | Date) => diaLargo.format(new Date(iso)),
+    monthName: (iso: string | number | Date) => mes.format(new Date(iso)),
+    ago: (ts: number, now = Date.now()) => {
+      const s = Math.max(0, Math.round((now - ts) / 1000));
+      if (s < 45) return hace.ahora;
+      const m = Math.round(s / 60);
+      if (m < 60) return hace.min(m);
+      const h = Math.round(m / 60);
+      if (h < 24) return hace.h(h);
+      const d = Math.round(h / 24);
+      if (d === 1) return hace.ayer;
+      return hace.dias(d);
+    },
+    dur: (min: number) => {
+      const h = Math.floor(min / 60);
+      const m = Math.round(min % 60);
+      if (!h) return `${m} ${minTxt}`;
+      return m ? `${h} ${hTxt} ${m} ${minTxt}` : `${h} ${hTxt}`;
+    },
+    clock: (ms: number) => {
+      const s = Math.max(0, Math.floor(ms / 1000));
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const ss = s % 60;
+      return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(ss).padStart(2, "0")}`;
+    },
+  };
+}
+export type Fmt = ReturnType<typeof crearFmt>;
 
-export const fmt = {
-  eur: (n: number) => eur.format(n),
-  eur0: (n: number) => eur0.format(n),
-  num: (n: number, d = 0) => new Intl.NumberFormat("es-ES", { maximumFractionDigits: d, minimumFractionDigits: d }).format(n),
-  int: (n: number) => num.format(Math.round(n)),
-  /** dd/mm/aaaa */
-  date: (iso: string | number | Date) => {
-    const d = new Date(iso);
-    return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
-  },
-  dateShort: (iso: string | number | Date) => {
-    const d = new Date(iso);
-    return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`;
-  },
-  time: (iso: string | number | Date) => {
-    const d = new Date(iso);
-    return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
-  },
-  dayName: (iso: string | number | Date) =>
-    new Intl.DateTimeFormat("es-ES", { weekday: "long" }).format(new Date(iso)),
-  dayLong: (iso: string | number | Date) =>
-    new Intl.DateTimeFormat("es-ES", { weekday: "long", day: "numeric", month: "long" }).format(new Date(iso)),
-  monthName: (iso: string | number | Date) =>
-    new Intl.DateTimeFormat("es-ES", { month: "long", year: "numeric" }).format(new Date(iso)),
-  ago: (ts: number, now = Date.now()) => {
-    const s = Math.max(0, Math.round((now - ts) / 1000));
-    if (s < 45) return "ahora";
-    const m = Math.round(s / 60);
-    if (m < 60) return `hace ${m} min`;
-    const h = Math.round(m / 60);
-    if (h < 24) return `hace ${h} h`;
-    const d = Math.round(h / 24);
-    if (d === 1) return "ayer";
-    return `hace ${d} días`;
-  },
-  dur: (min: number) => {
-    const h = Math.floor(min / 60);
-    const m = Math.round(min % 60);
-    if (!h) return `${m} min`;
-    return m ? `${h} h ${m} min` : `${h} h`;
-  },
-  clock: (ms: number) => {
-    const s = Math.max(0, Math.floor(ms / 1000));
-    const h = Math.floor(s / 3600);
-    const m = Math.floor((s % 3600) / 60);
-    const ss = s % 60;
-    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(ss).padStart(2, "0")}`;
-  },
-};
+const FMTS: Record<Idioma, Fmt> = { es: crearFmt("es"), en: crearFmt("en"), de: crearFmt("de") };
+
+/** Formatos para un idioma concreto. En componentes de cliente, mejor useFmt(). */
+export function fmtDe(lang: Idioma): Fmt {
+  return FMTS[lang];
+}
+
+/** Formatos en español (lo que no depende del idioma de la página). */
+export const fmt = FMTS.es;
 
 export function isoDay(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;

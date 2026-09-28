@@ -6,6 +6,8 @@ import { createSeed, computeInvoice, huellaVerifactu, DATA_VERSION, MUNICIPIOS }
 import { SECTOR_POR_ID, SECTOR_DEFECTO, type SectorId } from "@/data/sectors";
 import type { Absence, Aviso, DemoData, Invoice, Job, JobStatus, Notif, Opportunity } from "@/data/types";
 import { isoDay, uid } from "@/lib/utils";
+import { sectorDe } from "@/data/sectors-i18n";
+import { useIdioma } from "@/components/i18n/idioma";
 
 type CompletePayload = {
   checklistHecho: boolean[];
@@ -572,7 +574,8 @@ export function startSync() {
   });
 }
 
+/** Sector actual de la demo, con los textos en el idioma de la página. */
 export function useSector() {
   const id = useDemo((s) => s.sector);
-  return SECTOR_POR_ID[id];
+  return sectorDe(useIdioma(), id);
 }

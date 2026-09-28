@@ -7,17 +7,175 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { whatsappLink } from "@/data/site";
 import { leer, type Lectura } from "@/lib/lectura-aviso";
 import { useDemo, useSector } from "@/store/demo";
-import { cn, fmt, isoDay } from "@/lib/utils";
+import { cn, isoDay } from "@/lib/utils";
+import { conIdioma } from "@/lib/i18n";
+import { TIPO_AVISO } from "@/lib/etiquetas";
+import { useFmt, useIdioma } from "@/components/i18n/idioma";
 
-const DIAS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
 const hhmm = (d: Date) => `${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`;
 
-function cuando(urg: Lectura["urgencia"], tipo: Lectura["tipo"]) {
+type Respuesta = { empresa: string; nombre: string; servicio: string; precio: string; municipio: string | null; cuando: string };
+
+const TX = {
+  es: {
+    dias: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
+    hoyCorto: (h: string) => `Hoy, ${h}`,
+    hoyLargo: (h: string) => `hoy sobre las ${h}`,
+    mananaCorto: "Mañana",
+    diaLargo: (d: string, h: string) => `el ${d} a las ${h}`,
+    mananaLargo: (h: string) => `mañana a las ${h}`,
+    kicker: "Pruébalo tú",
+    h2: "Escribe como si fueras tu cliente. Mira lo que pasa.",
+    p: (e: string) => `Manda un aviso a ${e}, la empresa de ejemplo, con tus palabras: una avería, un presupuesto, una queja. Incluye el pueblo si quieres.`,
+    escribiendo: "escribiendo…",
+    enLinea: "en línea",
+    otro: "Probar otro mensaje",
+    ayuda: "Toca un ejemplo o escribe el tuyo. Nadie de la oficina va a intervenir.",
+    enviado: "Mensaje enviado",
+    placeholder: "Escribe tu aviso…",
+    aria: "Tu mensaje como cliente",
+    enviar: "Enviar",
+    mientras: "Mientras tanto, en tu empresa",
+    recibido: "Recibido en Central Avisos",
+    entendido: "Entendido por la IA",
+    urgencia: (u: string) => `Urgencia ${u}`,
+    urg: { alta: "alta", media: "media", baja: "baja" },
+    desde: (p: string) => `desde ${p}`,
+    zona: "Zona por confirmar",
+    orden: (n: number) => `Orden de trabajo OT-${n} creada`,
+    ordenSin: "Orden de trabajo creada",
+    tecnicoZona: (m: string) => `técnico de la zona de ${m}`,
+    tecnico: "el técnico",
+    carga: "con menos carga hoy",
+    movil: "En el móvil del técnico",
+    ahora: "ahora",
+    urgente: "Trabajo urgente asignado",
+    nuevo: "Nuevo trabajo asignado",
+    respuesta: "Respuesta enviada al cliente",
+    miraChat: "Con técnico y hora. Míralo en el chat.",
+    todo: (s: string) => `Todo en ${s} segundos.`,
+    nadie: "Sin que nadie de la oficina toque nada.",
+    loQuiero: "Lo quiero en mi empresa",
+    verPanel: "Verlo en el panel de oficina",
+    waMsg: (m: string) => `Hola, he probado a mandar un aviso en vuestra demo y quiero esto para mi empresa. El mensaje era: «${m}»`,
+    contactoPrueba: "Tu mensaje de prueba",
+    coma: (s: string) => s.replace(".", ","),
+    r: {
+      presupuesto: (x: Respuesta) => `Hola, somos ${x.empresa}. Te preparamos el presupuesto de ${x.servicio.toLowerCase()} (desde ${x.precio}) y te lo enviamos hoy por aquí. Si quieres, ${x.nombre} puede pasar ${x.cuando} a verlo.`,
+      queja: (x: Respuesta) => `Hola, somos ${x.empresa}. Sentimos mucho lo ocurrido. Lo hemos abierto como garantía y ${x.nombre} pasará ${x.cuando}, sin coste. Te avisamos cuando vaya de camino.`,
+      consulta: (x: Respuesta) => `Hola, somos ${x.empresa}. Hemos recibido tu mensaje y lo tiene ya la oficina. Te dejamos a ${x.nombre} reservado ${x.cuando} por si hace falta pasar.`,
+      averia: (x: Respuesta) => `Hola, somos ${x.empresa}. Recibido: ${x.servicio.toLowerCase()}${x.municipio ? ` en ${x.municipio}` : ""}. ${x.nombre} pasará ${x.cuando}. Te avisamos cuando vaya de camino.`,
+    },
+  },
+  en: {
+    dias: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    hoyCorto: (h: string) => `Today, ${h}`,
+    hoyLargo: (h: string) => `today at around ${h}`,
+    mananaCorto: "Tomorrow",
+    diaLargo: (d: string, h: string) => `on ${d} at ${h}`,
+    mananaLargo: (h: string) => `tomorrow at ${h}`,
+    kicker: "Try it yourself",
+    h2: "Write as if you were your customer. See what happens.",
+    p: (e: string) => `Send a request to ${e}, the sample company, in your own words: a fault, a quote, a complaint. Add the town if you like.`,
+    escribiendo: "typing…",
+    enLinea: "online",
+    otro: "Try another message",
+    ayuda: "Tap an example or write your own. Nobody in the office will step in.",
+    enviado: "Message sent",
+    placeholder: "Write your request…",
+    aria: "Your message as a customer",
+    enviar: "Send",
+    mientras: "Meanwhile, at your company",
+    recibido: "Received in Central Avisos",
+    entendido: "Understood by AI",
+    urgencia: (u: string) => `${u} urgency`,
+    urg: { alta: "High", media: "Medium", baja: "Low" },
+    desde: (p: string) => `from ${p}`,
+    zona: "Area to be confirmed",
+    orden: (n: number) => `Work order WO-${n} created`,
+    ordenSin: "Work order created",
+    tecnicoZona: (m: string) => `the ${m} area technician`,
+    tecnico: "the technician",
+    carga: "with the lightest workload today",
+    movil: "On the technician's phone",
+    ahora: "now",
+    urgente: "Urgent job assigned",
+    nuevo: "New job assigned",
+    respuesta: "Reply sent to the customer",
+    miraChat: "With technician and time. See it in the chat.",
+    todo: (s: string) => `All done in ${s} seconds.`,
+    nadie: "Without anyone in the office lifting a finger.",
+    loQuiero: "I want this for my company",
+    verPanel: "See it in the office dashboard",
+    waMsg: (m: string) => `Hi, I tried sending a request in your demo and I want this for my company. My message was: "${m}"`,
+    contactoPrueba: "Your test message",
+    coma: (s: string) => s,
+    r: {
+      presupuesto: (x: Respuesta) => `Hi, this is ${x.empresa}. We're preparing your quote for ${x.servicio.toLowerCase()} (from ${x.precio}) and will send it here today. If you like, ${x.nombre} can come ${x.cuando} to take a look.`,
+      queja: (x: Respuesta) => `Hi, this is ${x.empresa}. We're very sorry about this. We've logged it under warranty and ${x.nombre} will come ${x.cuando}, free of charge. We'll let you know when they're on the way.`,
+      consulta: (x: Respuesta) => `Hi, this is ${x.empresa}. We've received your message and the office already has it. We've kept ${x.nombre} free ${x.cuando} in case a visit is needed.`,
+      averia: (x: Respuesta) => `Hi, this is ${x.empresa}. Got it: ${x.servicio.toLowerCase()}${x.municipio ? ` in ${x.municipio}` : ""}. ${x.nombre} will come ${x.cuando}. We'll let you know when they're on the way.`,
+    },
+  },
+  de: {
+    dias: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+    hoyCorto: (h: string) => `Heute, ${h}`,
+    hoyLargo: (h: string) => `heute gegen ${h} Uhr`,
+    mananaCorto: "Morgen",
+    diaLargo: (d: string, h: string) => `am ${d} um ${h} Uhr`,
+    mananaLargo: (h: string) => `morgen um ${h} Uhr`,
+    kicker: "Probieren Sie es aus",
+    h2: "Schreiben Sie wie Ihr Kunde. Sehen Sie, was passiert.",
+    p: (e: string) => `Senden Sie ${e}, der Beispielfirma, eine Anfrage in Ihren Worten: eine Störung, ein Angebot, eine Reklamation. Nennen Sie gern den Ort.`,
+    escribiendo: "schreibt…",
+    enLinea: "online",
+    otro: "Andere Nachricht probieren",
+    ayuda: "Tippen Sie auf ein Beispiel oder schreiben Sie Ihre eigene. Niemand im Büro greift ein.",
+    enviado: "Nachricht gesendet",
+    placeholder: "Ihre Anfrage…",
+    aria: "Ihre Nachricht als Kunde",
+    enviar: "Senden",
+    mientras: "Währenddessen in Ihrer Firma",
+    recibido: "In Central Avisos eingegangen",
+    entendido: "Von der KI verstanden",
+    urgencia: (u: string) => `Dringlichkeit ${u}`,
+    urg: { alta: "hoch", media: "mittel", baja: "niedrig" },
+    desde: (p: string) => `ab ${p}`,
+    zona: "Gebiet noch offen",
+    orden: (n: number) => `Arbeitsauftrag AU-${n} erstellt`,
+    ordenSin: "Arbeitsauftrag erstellt",
+    tecnicoZona: (m: string) => `Techniker für ${m}`,
+    tecnico: "der Techniker",
+    carga: "mit der geringsten Auslastung heute",
+    movil: "Auf dem Handy des Technikers",
+    ahora: "jetzt",
+    urgente: "Dringender Auftrag zugewiesen",
+    nuevo: "Neuer Auftrag zugewiesen",
+    respuesta: "Antwort an den Kunden gesendet",
+    miraChat: "Mit Techniker und Uhrzeit. Siehe Chat.",
+    todo: (s: string) => `Alles in ${s} Sekunden.`,
+    nadie: "Ohne dass im Büro jemand einen Finger rührt.",
+    loQuiero: "Das will ich für meine Firma",
+    verPanel: "Im Büro-Dashboard ansehen",
+    waMsg: (m: string) => `Hallo, ich habe in eurer Demo eine Anfrage geschickt und möchte das für meine Firma. Meine Nachricht war: „${m}“`,
+    contactoPrueba: "Ihre Testnachricht",
+    coma: (s: string) => s.replace(".", ","),
+    r: {
+      presupuesto: (x: Respuesta) => `Hallo, hier ist ${x.empresa}. Wir erstellen Ihr Angebot für ${x.servicio} (ab ${x.precio}) und schicken es Ihnen heute hier. Wenn Sie möchten, kann ${x.nombre} ${x.cuando} vorbeikommen und es sich ansehen.`,
+      queja: (x: Respuesta) => `Hallo, hier ist ${x.empresa}. Das tut uns sehr leid. Wir haben es als Garantiefall aufgenommen, ${x.nombre} kommt ${x.cuando}, kostenlos. Wir melden uns, sobald er unterwegs ist.`,
+      consulta: (x: Respuesta) => `Hallo, hier ist ${x.empresa}. Ihre Nachricht ist angekommen und liegt schon im Büro. Wir halten ${x.nombre} ${x.cuando} frei, falls ein Besuch nötig ist.`,
+      averia: (x: Respuesta) => `Hallo, hier ist ${x.empresa}. Erhalten: ${x.servicio}${x.municipio ? ` in ${x.municipio}` : ""}. ${x.nombre} kommt ${x.cuando}. Wir melden uns, sobald er unterwegs ist.`,
+    },
+  },
+};
+type Tx = (typeof TX)["es"];
+
+function cuando(tx: Tx, urg: Lectura["urgencia"], tipo: Lectura["tipo"]) {
   const now = new Date();
   if (urg === "alta") {
     const d = new Date(now.getTime() + 90 * 60000);
     d.setMinutes(Math.ceil(d.getMinutes() / 15) * 15, 0, 0);
-    if (d.getHours() < 20) return { corto: `Hoy, ${hhmm(d)}`, largo: `hoy sobre las ${hhmm(d)}`, hora: hhmm(d) };
+    if (d.getHours() < 20) return { corto: tx.hoyCorto(hhmm(d)), largo: tx.hoyLargo(hhmm(d)), hora: hhmm(d) };
   }
   const d = new Date(now);
   let add = urg === "media" || tipo === "queja" ? 1 : 2;
@@ -27,7 +185,8 @@ function cuando(urg: Lectura["urgencia"], tipo: Lectura["tipo"]) {
   }
   const h = urg === "baja" ? "10:00" : "9:00";
   const manana = (d.getTime() - now.getTime()) / 86400000 < 1.5;
-  return { corto: `${manana ? "Mañana" : DIAS[d.getDay()][0].toUpperCase() + DIAS[d.getDay()].slice(1)}, ${h}`, largo: `${manana ? "mañana" : `el ${DIAS[d.getDay()]}`} a las ${h}`, hora: h };
+  const dia = tx.dias[d.getDay()];
+  return { corto: `${manana ? tx.mananaCorto : dia[0].toUpperCase() + dia.slice(1)}, ${h}`, largo: manana ? tx.mananaLargo(h) : tx.diaLargo(dia, h), hora: h };
 }
 
 /* ---------- Componente ---------- */
@@ -37,6 +196,9 @@ const PASOS = 5;
 
 export function PruebaAviso() {
   const router = useRouter();
+  const lang = useIdioma();
+  const tx = TX[lang];
+  const fmt = useFmt();
   const sector = useSector();
   const techs = useDemo((s) => s.techs);
   const jobs = useDemo((s) => s.jobs);
@@ -67,7 +229,7 @@ export function PruebaAviso() {
     const zona = techs.filter((t) => t.zona.includes(lectura.municipio));
     return [...(zona.length ? zona : techs)].sort((a, b) => carga(a.id) - carga(b.id))[0] ?? null;
   }, [lectura, techs, jobs]);
-  const cita = useMemo(() => (lectura ? cuando(lectura.urgencia, lectura.tipo) : null), [lectura]);
+  const cita = useMemo(() => (lectura ? cuando(tx, lectura.urgencia, lectura.tipo) : null), [lectura, tx]);
 
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
 
@@ -125,25 +287,19 @@ export function PruebaAviso() {
   useEffect(() => {
     if (paso !== 5 || !lectura || !tecnico || !cita) return;
     const nombre = tecnico.nombre.split(" ")[0];
-    const r =
-      lectura.tipo === "presupuesto"
-        ? `Hola, somos ${sector.empresa}. Te preparamos el presupuesto de ${lectura.servicio.nombre.toLowerCase()} (desde ${fmt.eur0(lectura.servicio.precio)}) y te lo enviamos hoy por aquí. Si quieres, ${nombre} puede pasar ${cita.largo} a verlo.`
-        : lectura.tipo === "queja"
-          ? `Hola, somos ${sector.empresa}. Sentimos mucho lo ocurrido. Lo hemos abierto como garantía y ${nombre} pasará ${cita.largo}, sin coste. Te avisamos cuando vaya de camino.`
-          : lectura.tipo === "consulta"
-            ? `Hola, somos ${sector.empresa}. Hemos recibido tu mensaje y lo tiene ya la oficina. Te dejamos a ${nombre} reservado ${cita.largo} por si hace falta pasar.`
-            : `Hola, somos ${sector.empresa}. Recibido: ${lectura.servicio.nombre.toLowerCase()}${lectura.municipioDicho ? ` en ${lectura.municipio}` : ""}. ${nombre} pasará ${cita.largo}. Te avisamos cuando vaya de camino.`;
+    const x = { empresa: sector.empresa, nombre, servicio: lectura.servicio.nombre, precio: fmt.eur0(lectura.servicio.precio), municipio: lectura.municipioDicho ? lectura.municipio : null, cuando: cita.largo };
+    const r = lectura.tipo === "presupuesto" ? tx.r.presupuesto(x) : lectura.tipo === "queja" ? tx.r.queja(x) : lectura.tipo === "consulta" ? tx.r.consulta(x) : tx.r.averia(x);
     setMsgs((m) => (m.some((x) => x.de === "empresa") ? m : [...m, { de: "empresa", texto: r, hora: hhmm(new Date()) }]));
-  }, [paso, lectura, tecnico, cita, sector.empresa]);
+  }, [paso, lectura, tecnico, cita, sector.empresa, tx, fmt]);
 
   function verEnPanel() {
     if (!enviado) return;
-    addWebRequest("Tu mensaje de prueba", "", enviado, "whatsapp", lectura ? { tipo: lectura.tipo, urgencia: lectura.urgencia, resumen: lectura.resumen, servicio: Math.max(0, sector.servicios.indexOf(lectura.servicio)) } : undefined);
-    router.push("/panel/central-avisos");
+    addWebRequest(tx.contactoPrueba, "", enviado, "whatsapp", lectura ? { tipo: lectura.tipo, urgencia: lectura.urgencia, resumen: lectura.resumen, servicio: Math.max(0, sector.servicios.indexOf(lectura.servicio)) } : undefined);
+    router.push(conIdioma(lang, "/panel/central-avisos"));
   }
 
   const urgColor = lectura?.urgencia === "alta" ? "bg-[#ff6b61]/15 text-[#ff8a82]" : lectura?.urgencia === "media" ? "bg-sun/15 text-sun" : "bg-white/10 text-white/80";
-  const segundos = (ms / 1000).toFixed(1).replace(".", ",");
+  const segundos = tx.coma((ms / 1000).toFixed(1));
   const fin = paso >= PASOS;
 
   return (
@@ -152,11 +308,11 @@ export function PruebaAviso() {
       <div className="relative mx-auto max-w-7xl px-5 sm:px-6">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 rounded-full bg-sun px-2.5 py-1 text-[12px] font-semibold text-[#1d1300]">
-            <span className="size-1.5 rounded-full bg-[#1d1300]" /> Pruébalo tú
+            <span className="size-1.5 rounded-full bg-[#1d1300]" /> {tx.kicker}
           </div>
-          <h2 className="mt-4 font-display text-[32px] leading-[1.05] font-semibold tracking-tight sm:text-[48px]">Escribe como si fueras tu cliente. Mira lo que pasa.</h2>
+          <h2 className="mt-4 font-display text-[32px] leading-[1.05] font-semibold tracking-tight sm:text-[48px]">{tx.h2}</h2>
           <p className="mt-3 text-[16px] text-white/70 sm:text-[18px]">
-            Manda un aviso a {sector.empresa}, la empresa de ejemplo, con tus palabras: una avería, un presupuesto, una queja. Incluye el pueblo si quieres.
+            {tx.p(sector.empresa)}
           </p>
         </div>
 
@@ -169,10 +325,10 @@ export function PruebaAviso() {
               </span>
               <div className="min-w-0 flex-1">
                 <div className="truncate text-[15px] font-semibold">{sector.empresa}</div>
-                <div className="text-[12px] text-[#5ee39a]">{escribiendo ? "escribiendo…" : "en línea"}</div>
+                <div className="text-[12px] text-[#5ee39a]">{escribiendo ? tx.escribiendo : tx.enLinea}</div>
               </div>
               {enviado && (
-                <button onClick={reiniciar} className="grid size-9 place-items-center rounded-full text-white/60 hover:bg-white/10" aria-label="Probar otro mensaje">
+                <button onClick={reiniciar} className="grid size-9 place-items-center rounded-full text-white/60 hover:bg-white/10" aria-label={tx.otro}>
                   <RotateCcw className="size-4" />
                 </button>
               )}
@@ -180,7 +336,7 @@ export function PruebaAviso() {
             <div ref={chat} className="flex-1 space-y-2 overflow-y-auto bg-[radial-gradient(rgb(255_255_255/0.035)_1px,transparent_1px)] [background-size:14px_14px] px-3 py-4">
               {!msgs.length && (
                 <div className="mx-auto mt-2 max-w-[260px] rounded-xl bg-white/[0.06] px-3 py-2 text-center text-[12px] text-white/55">
-                  Toca un ejemplo o escribe el tuyo. Nadie de la oficina va a intervenir.
+                  {tx.ayuda}
                 </div>
               )}
               <AnimatePresence initial={false}>
@@ -225,12 +381,12 @@ export function PruebaAviso() {
                 value={texto}
                 onChange={(e) => setTexto(e.target.value)}
                 disabled={!!enviado}
-                placeholder={enviado ? "Mensaje enviado" : "Escribe tu aviso…"}
+                placeholder={enviado ? tx.enviado : tx.placeholder}
                 className="h-11 min-w-0 flex-1 rounded-full bg-white/[0.07] px-4 text-[16px] text-white outline-none placeholder:text-white/35 focus:bg-white/10 disabled:opacity-50"
-                aria-label="Tu mensaje como cliente"
+                aria-label={tx.aria}
                 enterKeyHint="send"
               />
-              <button type="submit" disabled={!!enviado || texto.trim().length < 6} className="grid size-11 shrink-0 place-items-center rounded-full bg-[#1faa59] text-white transition disabled:opacity-40" aria-label="Enviar">
+              <button type="submit" disabled={!!enviado || texto.trim().length < 6} className="grid size-11 shrink-0 place-items-center rounded-full bg-[#1faa59] text-white transition disabled:opacity-40" aria-label={tx.enviar}>
                 <Send className="size-5" />
               </button>
             </form>
@@ -239,44 +395,44 @@ export function PruebaAviso() {
           {/* Lo que hace la empresa sola */}
           <div ref={pipe} className="min-w-0 scroll-mt-4 rounded-3xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur sm:p-6">
             <div className="flex items-center justify-between gap-3">
-              <div className="text-[13px] font-medium text-white/60">Mientras tanto, en tu empresa</div>
+              <div className="text-[13px] font-medium text-white/60">{tx.mientras}</div>
               <div className={cn("rounded-lg px-2.5 py-1 font-display text-[15px] font-semibold tabular", fin ? "bg-[#37c28a]/15 text-[#7fe3b8]" : "bg-white/10 text-white/80")}>
                 {segundos} s
               </div>
             </div>
             <ol className="mt-4 grid gap-2.5">
-              <Paso n={1} activo={paso >= 1} icon={<Inbox className="size-4" />} titulo="Recibido en Central Avisos">
+              <Paso n={1} activo={paso >= 1} icon={<Inbox className="size-4" />} titulo={tx.recibido}>
                 {lectura && (
                   <span>
                     WhatsApp, {hhmm(new Date())}. «{lectura.resumen}»
                   </span>
                 )}
               </Paso>
-              <Paso n={2} activo={paso >= 2} icon={<BrainCircuit className="size-4" />} titulo="Entendido por la IA" tono="ai">
+              <Paso n={2} activo={paso >= 2} icon={<BrainCircuit className="size-4" />} titulo={tx.entendido} tono="ai">
                 {lectura && (
                   <div className="flex flex-wrap gap-1.5">
-                    <Chip>{lectura.tipo[0].toUpperCase() + lectura.tipo.slice(1)}</Chip>
-                    <Chip className={urgColor}>Urgencia {lectura.urgencia}</Chip>
+                    <Chip>{TIPO_AVISO[lang][lectura.tipo]}</Chip>
+                    <Chip className={urgColor}>{tx.urgencia(tx.urg[lectura.urgencia])}</Chip>
                     <Chip>
-                      {lectura.servicio.nombre} · desde {fmt.eur0(lectura.servicio.precio)}
+                      {lectura.servicio.nombre} · {tx.desde(fmt.eur0(lectura.servicio.precio))}
                     </Chip>
-                    <Chip>{lectura.municipioDicho ? lectura.municipio : "Zona por confirmar"}</Chip>
+                    <Chip>{lectura.municipioDicho ? lectura.municipio : tx.zona}</Chip>
                   </div>
                 )}
               </Paso>
-              <Paso n={3} activo={paso >= 3} icon={<ClipboardList className="size-4" />} titulo={ot && paso >= 3 ? `Orden de trabajo OT-${ot} creada` : "Orden de trabajo creada"}>
+              <Paso n={3} activo={paso >= 3} icon={<ClipboardList className="size-4" />} titulo={ot && paso >= 3 ? tx.orden(ot) : tx.ordenSin}>
                 {tecnico && cita && (
                   <div className="flex items-center gap-2.5">
                     <span className="grid size-8 shrink-0 place-items-center rounded-full text-[12px] font-bold text-white" style={{ background: tecnico.color }}>
                       {tecnico.nombre.split(" ").map((p) => p[0]).join("")}
                     </span>
                     <span>
-                      <span className="font-semibold text-white">{tecnico.nombre}</span>, {lectura!.municipioDicho ? `técnico de la zona de ${lectura!.municipio}` : "el técnico"} con menos carga hoy. <span className="text-white">{cita.corto}</span>, {fmt.dur(lectura!.servicio.min)}.
+                      <span className="font-semibold text-white">{tecnico.nombre}</span>, {lectura!.municipioDicho ? tx.tecnicoZona(lectura!.municipio) : tx.tecnico} {tx.carga}. <span className="text-white">{cita.corto}</span>, {fmt.dur(lectura!.servicio.min)}.
                     </span>
                   </div>
                 )}
               </Paso>
-              <Paso n={4} activo={paso >= 4} icon={<Bell className="size-4" />} titulo="En el móvil del técnico">
+              <Paso n={4} activo={paso >= 4} icon={<Bell className="size-4" />} titulo={tx.movil}>
                 {tecnico && cita && lectura && (
                   <div className="flex items-start gap-2.5 rounded-xl bg-[#1a2830] p-2.5 shadow-e2">
                     <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-[#3db1d3] text-[#041319]">
@@ -285,9 +441,9 @@ export function PruebaAviso() {
                     <div className="min-w-0 text-[12px] leading-snug">
                       <div className="flex justify-between text-white/50">
                         <span>Nexo Campo</span>
-                        <span>ahora</span>
+                        <span>{tx.ahora}</span>
                       </div>
-                      <div className="font-semibold text-white">{lectura.urgencia === "alta" ? "Trabajo urgente asignado" : "Nuevo trabajo asignado"}</div>
+                      <div className="font-semibold text-white">{lectura.urgencia === "alta" ? tx.urgente : tx.nuevo}</div>
                       <div className="truncate text-white/75">
                         {lectura.servicio.nombre} · {cita.corto}
                       </div>
@@ -295,11 +451,11 @@ export function PruebaAviso() {
                   </div>
                 )}
               </Paso>
-              <Paso n={5} activo={paso >= 5} icon={<MessageCircle className="size-4" />} titulo="Respuesta enviada al cliente" tono="ok">
+              <Paso n={5} activo={paso >= 5} icon={<MessageCircle className="size-4" />} titulo={tx.respuesta} tono="ok">
                 {fin && (
                   <>
                     <span className="lg:hidden">«{msgs.find((m) => m.de === "empresa")?.texto}»</span>
-                    <span className="max-lg:hidden">Con técnico y hora. Míralo en el chat.</span>
+                    <span className="max-lg:hidden">{tx.miraChat}</span>
                   </>
                 )}
               </Paso>
@@ -309,19 +465,19 @@ export function PruebaAviso() {
               {fin && (
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-5 border-t border-white/10 pt-5">
                   <div className="font-display text-[20px] leading-tight font-semibold sm:text-[24px]">
-                    Todo en {segundos} segundos. <span className="text-white/60">Sin que nadie de la oficina toque nada.</span>
+                    {tx.todo(segundos)} <span className="text-white/60">{tx.nadie}</span>
                   </div>
                   <div className="mt-4 grid gap-2 sm:grid-cols-2">
                     <a
-                      href={whatsappLink(`Hola, he probado a mandar un aviso en vuestra demo y quiero esto para mi empresa. El mensaje era: «${enviado}»`)}
+                      href={whatsappLink(tx.waMsg(enviado ?? ""))}
                       target="_blank"
                       rel="noreferrer"
                       className="flex h-12 items-center justify-center gap-2 rounded-xl bg-sun text-[15px] font-semibold text-[#1d1300] hover:brightness-105"
                     >
-                      <MessageCircle className="size-5" /> Lo quiero en mi empresa
+                      <MessageCircle className="size-5" /> {tx.loQuiero}
                     </a>
                     <button onClick={verEnPanel} className="flex h-12 items-center justify-center gap-2 rounded-xl border border-white/20 text-[15px] font-medium hover:bg-white/10">
-                      Verlo en el panel de oficina <ArrowRight className="size-4" />
+                      {tx.verPanel} <ArrowRight className="size-4" />
                     </button>
                   </div>
                 </motion.div>

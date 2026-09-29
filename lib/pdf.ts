@@ -3,6 +3,7 @@
 import type { Client, Installation, Invoice, Job, StockItem, Tech } from "@/data/types";
 import type { Sector } from "@/data/sectors";
 import { fmt } from "./utils";
+import { trad, tradf } from "./t";
 
 function hexToRgb(hex: string): [number, number, number] {
   const h = hex.replace("#", "");
@@ -26,7 +27,7 @@ async function base(sector: Sector, titulo: string, numero: string) {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8.5);
   doc.setTextColor(90, 105, 115);
-  doc.text("CIF B07000000 (datos de ejemplo), Polígono de Son Castelló, 07009 Palma", 34, 26);
+  doc.text(trad("CIF B07000000 (datos de ejemplo), Polígono de Son Castelló, 07009 Palma"), 34, 26);
   doc.setTextColor(12, 26, 34);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
@@ -43,18 +44,18 @@ function footer(doc: import("jspdf").jsPDF) {
   doc.line(18, 282, 192, 282);
   doc.setFontSize(7.5);
   doc.setTextColor(120, 135, 145);
-  doc.text("Documento generado en la demo de Nexo4Pymes con datos ficticios.", 18, 287);
-  doc.text("nexo4pymes.com", 192, 287, { align: "right" });
+  doc.text(trad("Documento generado en la demo de Nexo4Pymes con datos ficticios."), 18, 287);
+  doc.text(trad("nexo4pymes.com"), 192, 287, { align: "right" });
 }
 
 export async function invoicePdf(inv: Invoice, client: Client, sector: Sector) {
-  const { doc, rgb } = await base(sector, "Factura", inv.numero);
+  const { doc, rgb } = await base(sector, trad("Factura"), inv.numero);
   let y = 44;
   doc.setFontSize(8);
   doc.setTextColor(120, 135, 145);
-  doc.text("Facturar a", 18, y);
-  doc.text("Fecha", 130, y);
-  doc.text("Vencimiento", 165, y);
+  doc.text(trad("Facturar a"), 18, y);
+  doc.text(trad("Fecha"), 130, y);
+  doc.text(trad("Vencimiento"), 165, y);
   doc.setFontSize(10);
   doc.setTextColor(12, 26, 34);
   doc.setFont("helvetica", "bold");
@@ -72,10 +73,10 @@ export async function invoicePdf(inv: Invoice, client: Client, sector: Sector) {
   doc.rect(18, y, 174, 8, "F");
   doc.setFontSize(8.5);
   doc.setTextColor(70, 86, 97);
-  doc.text("Concepto", 21, y + 5.3);
-  doc.text("Cant.", 128, y + 5.3, { align: "right" });
-  doc.text("Precio", 155, y + 5.3, { align: "right" });
-  doc.text("Importe", 189, y + 5.3, { align: "right" });
+  doc.text(trad("Concepto"), 21, y + 5.3);
+  doc.text(trad("Cant."), 128, y + 5.3, { align: "right" });
+  doc.text(trad("Precio"), 155, y + 5.3, { align: "right" });
+  doc.text(trad("Importe"), 189, y + 5.3, { align: "right" });
   y += 8;
   doc.setTextColor(12, 26, 34);
   doc.setFontSize(9.5);
@@ -96,12 +97,12 @@ export async function invoicePdf(inv: Invoice, client: Client, sector: Sector) {
     doc.text(v, 189, y, { align: "right" });
     y += bold ? 8 : 6;
   };
-  row("Base imponible", fmt.eur(inv.base));
-  row("IVA 21 %", fmt.eur(inv.iva));
+  row(trad("Base imponible"), fmt.eur(inv.base));
+  row(trad("IVA 21 %"), fmt.eur(inv.iva));
   doc.setDrawColor(...rgb);
   doc.line(120, y - 3, 192, y - 3);
   y += 2;
-  row("Total", fmt.eur(inv.total), true);
+  row(trad("Total"), fmt.eur(inv.total), true);
 
   // Pago
   y += 6;
@@ -111,7 +112,7 @@ export async function invoicePdf(inv: Invoice, client: Client, sector: Sector) {
     doc.setTextColor(255, 255, 255);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(10);
-    doc.text("Paga con tarjeta o Bizum", 23, y + 6.5);
+    doc.text(trad("Paga con tarjeta o Bizum"), 23, y + 6.5);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8.5);
     doc.text(inv.enlacePago, 23, y + 11.5);
@@ -127,20 +128,20 @@ export async function invoicePdf(inv: Invoice, client: Client, sector: Sector) {
     doc.setTextColor(12, 26, 34);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(10);
-    doc.text("Factura registrada con VeriFactu", 56, qy + 7);
+    doc.text(trad("Factura registrada con VeriFactu"), 56, qy + 7);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(8.5);
     doc.setTextColor(90, 105, 115);
-    doc.text(`Huella del registro: ${inv.verifactu.huella}`, 56, qy + 13);
-    doc.text(`Registrada el ${fmt.date(inv.verifactu.registrada)} a las ${fmt.time(inv.verifactu.registrada)}`, 56, qy + 18);
-    doc.text("QR de verificación incluido en la factura.", 56, qy + 23);
+    doc.text(tradf("Huella del registro: {0}", inv.verifactu.huella), 56, qy + 13);
+    doc.text(tradf("Registrada el {0} a las {1}", fmt.date(inv.verifactu.registrada), fmt.time(inv.verifactu.registrada)), 56, qy + 18);
+    doc.text(trad("QR de verificación incluido en la factura."), 56, qy + 23);
   }
   footer(doc);
   doc.save(`${inv.numero.replace(/\s+/g, "-")}.pdf`);
 }
 
 export async function reportPdf(job: Job, client: Client, tech: Tech | undefined, inst: Installation | undefined, sector: Sector, stock: StockItem[]) {
-  const { doc, rgb } = await base(sector, "Informe de servicio", job.codigo);
+  const { doc, rgb } = await base(sector, trad("Informe de servicio"), job.codigo);
   let y = 44;
   const kv = (x: number, k: string, v: string) => {
     doc.setFontSize(8);
@@ -150,18 +151,18 @@ export async function reportPdf(job: Job, client: Client, tech: Tech | undefined
     doc.setTextColor(12, 26, 34);
     doc.text(v, x, y + 5.5);
   };
-  kv(18, "Cliente", client.nombre);
-  kv(95, "Fecha", `${fmt.date(job.fecha)}, ${job.hora}`);
-  kv(145, "Técnico", tech?.nombre ?? "");
+  kv(18, trad("Cliente"), client.nombre);
+  kv(95, trad("Fecha"), `${fmt.date(job.fecha)}, ${job.hora}`);
+  kv(145, trad("Técnico"), tech?.nombre ?? "");
   y += 14;
-  kv(18, sector.instalacion.tipo, inst?.nombre ?? "General");
-  kv(95, "Servicio", job.titulo);
-  kv(145, "Tiempo", fmt.dur((job.horasReales ?? job.duracionMin / 60) * 60));
+  kv(18, sector.instalacion.tipo, inst?.nombre ?? trad("General"));
+  kv(95, trad("Servicio"), job.titulo);
+  kv(145, trad("Tiempo"), fmt.dur((job.horasReales ?? job.duracionMin / 60) * 60));
 
   y += 18;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
-  doc.text("Trabajo realizado", 18, y);
+  doc.text(trad("Trabajo realizado"), 18, y);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9.5);
   sector.checklist.forEach((c, i) => {
@@ -176,7 +177,7 @@ export async function reportPdf(job: Job, client: Client, tech: Tech | undefined
   y += 12;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
-  doc.text("Mediciones", 18, y);
+  doc.text(trad("Mediciones"), 18, y);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9.5);
   sector.mediciones.forEach((m) => {
@@ -187,9 +188,9 @@ export async function reportPdf(job: Job, client: Client, tech: Tech | undefined
     doc.text(m.nombre, 20, y);
     doc.text(`${fmt.num(v, m.dec)} ${m.unidad}`, 100, y, { align: "right" });
     doc.setTextColor(...(ok ? ([19, 132, 90] as [number, number, number]) : ([207, 63, 55] as [number, number, number])));
-    doc.text(ok ? "Correcto" : "Fuera de rango", 106, y);
+    doc.text(ok ? trad("Correcto") : trad("Fuera de rango"), 106, y);
     doc.setTextColor(120, 135, 145);
-    doc.text(`Referencia ${fmt.num(m.ok[0], m.dec)} a ${fmt.num(m.ok[1], m.dec)} ${m.unidad}`, 140, y);
+    doc.text(tradf("Referencia {0} a {1} {2}", fmt.num(m.ok[0], m.dec), fmt.num(m.ok[1], m.dec), m.unidad), 140, y);
   });
 
   const mat = (job.material ?? []).filter((m) => m.cantidad > 0);
@@ -198,7 +199,7 @@ export async function reportPdf(job: Job, client: Client, tech: Tech | undefined
     doc.setFont("helvetica", "bold");
     doc.setFontSize(11);
     doc.setTextColor(12, 26, 34);
-    doc.text("Material utilizado", 18, y);
+    doc.text(trad("Material utilizado"), 18, y);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9.5);
     mat.forEach((m) => {
@@ -212,9 +213,9 @@ export async function reportPdf(job: Job, client: Client, tech: Tech | undefined
   y += 12;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
-  doc.text("Fotos", 18, y);
+  doc.text(trad("Fotos"), 18, y);
   y += 4;
-  const labels = ["Antes", "Después"];
+  const labels = [trad("Antes"), trad("Después")];
   labels.forEach((l, i) => {
     const x = 18 + i * 60;
     doc.setFillColor(...(i ? rgb : ([150, 165, 175] as [number, number, number])));
@@ -229,7 +230,7 @@ export async function reportPdf(job: Job, client: Client, tech: Tech | undefined
   doc.setTextColor(12, 26, 34);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
-  doc.text("Firma del cliente", 142, fy - 4);
+  doc.text(trad("Firma del cliente"), 142, fy - 4);
   doc.setDrawColor(12, 26, 34);
   doc.setLineWidth(0.5);
   doc.lines([[6, -6], [4, 8], [5, -10], [3, 9], [8, -4], [6, 2]], 146, fy + 22, [1, 1]);

@@ -9,13 +9,14 @@ import { useHydrated } from "@/components/providers";
 import { useNow } from "@/lib/hooks";
 import { cn, fmt } from "@/lib/utils";
 import { APP_SCREENS } from "./screens";
+import { trad } from "@/lib/t";
 
 const TABS: { screen: AppScreen; label: string; icon: typeof Home }[] = [
-  { screen: "hoy", label: "Hoy", icon: Home },
-  { screen: "ruta", label: "Ruta", icon: Map },
-  { screen: "fichar", label: "Fichar", icon: Clock },
-  { screen: "chat", label: "Oficina", icon: MessageCircle },
-  { screen: "mas", label: "Más", icon: Menu },
+  { screen: "hoy", label: trad("Hoy"), icon: Home },
+  { screen: "ruta", label: trad("Ruta"), icon: Map },
+  { screen: "fichar", label: trad("Fichar"), icon: Clock },
+  { screen: "chat", label: trad("Oficina"), icon: MessageCircle },
+  { screen: "mas", label: trad("Más"), icon: Menu },
 ];
 
 export function PhoneFrame({ children, className, scale = 1 }: { children: ReactNode; className?: string; scale?: number }) {
@@ -61,7 +62,7 @@ export function AppShell({ framed = true }: { framed?: boolean }) {
         {offline && (
           <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }} className="relative z-30 overflow-hidden bg-[#3a2a0d] text-[#f5ab2e]">
             <div className="flex items-center gap-2 px-4 py-1.5 text-xs font-medium">
-              <WifiOff className="size-3.5" /> Sin cobertura. Todo se guarda en el móvil y se envía al volver.
+              <WifiOff className="size-3.5" />{" "}{trad("Sin cobertura. Todo se guarda en el móvil y se envía al volver.")}
             </div>
           </motion.div>
         )}
@@ -97,14 +98,14 @@ export function AppShell({ framed = true }: { framed?: boolean }) {
         <AppBanner />
       </div>
       {/* barra de pestañas */}
-      <nav className="relative z-30 grid shrink-0 grid-cols-5 border-t border-line bg-surface/95 px-2 pt-1.5 pb-[max(18px,env(safe-area-inset-bottom))] backdrop-blur" aria-label="Navegación de la app">
+      <nav className="relative z-30 grid shrink-0 grid-cols-5 border-t border-line bg-surface/95 px-2 pt-1.5 pb-[max(18px,env(safe-area-inset-bottom))] backdrop-blur" aria-label={trad("Navegación de la app")}>
         {TABS.map((t) => {
           const active = stack[0].screen === t.screen && stack.length === 1 ? true : stack[0].screen === t.screen;
           return (
             <button key={t.screen} onClick={() => reset({ screen: t.screen })} className={cn("relative flex flex-col items-center gap-0.5 py-1 text-[10.5px] font-medium", active ? "text-brand" : "text-fg-3")} data-tour={`app-tab-${t.screen}`}>
               <t.icon className="size-[22px]" strokeWidth={active ? 2.2 : 1.8} />
-              {t.label}
-              {t.screen === "hoy" && unread > 0 && <span className="absolute top-0.5 right-[calc(50%-18px)] grid h-4 min-w-4 place-items-center rounded-full bg-bad px-1 text-[9px] font-bold text-white">{unread}</span>}
+              {trad(t.label)}
+              {t.screen === "hoy" && unread > 0 && <span className="absolute top-0.5 right-[calc(50%-18px)] grid h-4 min-w-4 place-items-center rounded-full bg-bad px-1 text-[9px] font-bold text-white">{trad(unread)}</span>}
             </button>
           );
         })}
@@ -165,11 +166,11 @@ function AppBanner() {
           </span>
           <span className="min-w-0 flex-1">
             <span className="flex items-center justify-between text-[11px] text-white/60">
-              <span>Nexo Campo</span>
-              <span>ahora</span>
+              <span>{trad("Nexo Campo")}</span>
+              <span>{trad("ahora")}</span>
             </span>
-            <span className="block text-[14px] font-semibold">{n.titulo}</span>
-            <span className="line-clamp-2 block text-[13px] text-white/80">{n.texto}</span>
+            <span className="block text-[14px] font-semibold">{trad(n.titulo)}</span>
+            <span className="line-clamp-2 block text-[13px] text-white/80">{trad(n.texto)}</span>
           </span>
         </motion.button>
       )}

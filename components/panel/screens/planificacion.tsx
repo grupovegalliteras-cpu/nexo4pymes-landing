@@ -9,6 +9,7 @@ import { Avatar, Badge, Button, Card, Segmented } from "@/components/ui";
 import type { Job } from "@/data/types";
 import { PageHeader } from "../shell";
 import { JobDrawer } from "./trabajos";
+import { trad } from "@/lib/t";
 
 const toMin = (h: string) => Number(h.slice(0, 2)) * 60 + Number(h.slice(3, 5));
 const toHora = (m: number) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`;
@@ -93,13 +94,13 @@ export function Planificacion() {
         title={`${j.codigo} ${c?.nombre}`}
       >
         <div className="flex items-center gap-1">
-          <span className="tabular font-semibold">{j.hora}</span>
+          <span className="tabular font-semibold">{trad(j.hora)}</span>
           {j.prioridad === "alta" && <span className="size-1.5 rounded-full bg-bad" />}
           {solapes.has(j.id) && <AlertTriangle className="size-3 text-bad" />}
           {draggable && <GripVertical className="ml-auto size-3 text-fg-3 opacity-0 group-hover:opacity-100" />}
         </div>
-        <div className="truncate font-medium">{c?.nombre}</div>
-        {!compact && <div className="truncate text-fg-3">{j.titulo}</div>}
+        <div className="truncate font-medium">{trad(c?.nombre)}</div>
+        {!compact && <div className="truncate text-fg-3">{trad(j.titulo)}</div>}
       </button>
     );
   };
@@ -110,15 +111,15 @@ export function Planificacion() {
         id="planificacion"
         actions={
           <>
-            <Segmented value={view} onChange={(v) => { setView(v); setOffset(0); }} options={[{ value: "semana", label: "Semana" }, { value: "dia", label: "Día" }]} />
+            <Segmented value={view} onChange={(v) => { setView(v); setOffset(0); }} options={[{ value: "semana", label: trad("Semana") }, { value: "dia", label: trad("Día") }]} />
             <div className="flex items-center gap-1">
-              <Button size="sm" variant="ghost" aria-label="Anterior" onClick={() => setOffset((o) => o - 1)}>
+              <Button size="sm" variant="ghost" aria-label={trad("Anterior")} onClick={() => setOffset((o) => o - 1)}>
                 <ChevronLeft className="size-4" />
               </Button>
               <Button size="sm" variant="secondary" onClick={() => setOffset(0)}>
-                Hoy
+                {trad("Hoy")}
               </Button>
-              <Button size="sm" variant="ghost" aria-label="Siguiente" onClick={() => setOffset((o) => o + 1)}>
+              <Button size="sm" variant="ghost" aria-label={trad("Siguiente")} onClick={() => setOffset((o) => o + 1)}>
                 <ChevronRight className="size-4" />
               </Button>
             </div>
@@ -128,23 +129,23 @@ export function Planificacion() {
       <div className="grid gap-4 px-4 sm:px-6">
         <Card className="flex flex-wrap items-center gap-3 px-3 py-2.5" onDragOver={(e) => e.preventDefault()}>
           <span className="flex items-center gap-1.5 text-[13px] font-medium">
-            <Inbox className="size-4 text-fg-3" /> Sin asignar
-            <Badge tone={sinAsignar.length ? "sun" : "ok"}>{sinAsignar.length}</Badge>
+            <Inbox className="size-4 text-fg-3" />{" "}{trad("Sin asignar")}
+            <Badge tone={sinAsignar.length ? "sun" : "ok"}>{trad(sinAsignar.length)}</Badge>
           </span>
-          <span className="text-xs text-fg-3">Arrastra una orden a un técnico y un día.</span>
+          <span className="text-xs text-fg-3">{trad("Arrastra una orden a un técnico y un día.")}</span>
           <div className="flex w-full gap-2 overflow-x-auto pb-1 no-scrollbar">
             {sinAsignar.map((j) => (
               <div key={j.id} className="w-44 shrink-0">
                 <Chip j={j} />
               </div>
             ))}
-            {!sinAsignar.length && <span className="text-xs text-ok">Todo el trabajo tiene técnico.</span>}
+            {!sinAsignar.length && <span className="text-xs text-ok">{trad("Todo el trabajo tiene técnico.")}</span>}
           </div>
         </Card>
 
         {solapes.size > 0 && (
           <div className="flex items-center gap-2 rounded-lg border border-bad/30 bg-bad-soft px-3 py-2 text-[13px] text-bad">
-            <AlertTriangle className="size-4" /> Hay {solapes.size} órdenes que se solapan en el tiempo. Están marcadas en rojo.
+            <AlertTriangle className="size-4" />{" "}{trad("Hay")}{" "}{trad(solapes.size)}{" "}{trad("órdenes que se solapan en el tiempo. Están marcadas en rojo.")}
           </div>
         )}
 
@@ -163,8 +164,8 @@ export function Planificacion() {
                   <div className="sticky left-0 z-10 flex items-center gap-2 border-b border-line bg-surface px-3 py-2">
                     <Avatar name={t.nombre} color={t.color} size={26} />
                     <div className="min-w-0">
-                      <div className="truncate text-[13px] font-medium">{t.nombre}</div>
-                      <div className="truncate text-[11px] text-fg-3">{t.zona}</div>
+                      <div className="truncate text-[13px] font-medium">{trad(t.nombre)}</div>
+                      <div className="truncate text-[11px] text-fg-3">{trad(t.zona)}</div>
                     </div>
                   </div>
                   {days.map((d) => {
@@ -183,7 +184,7 @@ export function Planificacion() {
                         className={cn("min-h-[92px] space-y-1 border-b border-l border-line p-1.5 transition-colors", d === hoy && "bg-brand-soft/20", dragOver === key && "bg-brand-soft outline-2 -outline-offset-2 outline-brand outline-dashed")}
                       >
                         {vac ? (
-                          <div className="grid h-full place-items-center rounded-md bg-[repeating-linear-gradient(135deg,var(--surface-2)_0_6px,transparent_6px_12px)] text-[11px] text-fg-3">{vac.tipo === "vacaciones" ? "Vacaciones" : "Ausencia"}</div>
+                          <div className="grid h-full place-items-center rounded-md bg-[repeating-linear-gradient(135deg,var(--surface-2)_0_6px,transparent_6px_12px)] text-[11px] text-fg-3">{vac.tipo === "vacaciones" ? trad("Vacaciones") : trad("Ausencia")}</div>
                         ) : (
                           list.map((j) => <Chip key={j.id} j={j} compact />)
                         )}
@@ -214,7 +215,7 @@ export function Planificacion() {
                   <div key={t.id} className="flex border-b border-line last:border-0">
                     <div className="flex w-[180px] shrink-0 items-center gap-2 px-3 py-3">
                       <Avatar name={t.nombre} color={t.color} size={26} />
-                      <span className="truncate text-[13px] font-medium">{t.nombre}</span>
+                      <span className="truncate text-[13px] font-medium">{trad(t.nombre)}</span>
                     </div>
                     <div
                       className={cn("relative h-[76px] flex-1", dragOver === key && "bg-brand-soft")}
@@ -253,7 +254,7 @@ export function Planificacion() {
           {Object.entries(STATUS_BG).map(([k, cls]) => (
             <span key={k} className="flex items-center gap-1.5">
               <span className={cn("size-3 rounded", cls)} />
-              {k === "en-camino" ? "En camino" : k === "en-curso" ? "En curso" : k[0].toUpperCase() + k.slice(1)}
+              {k === "en-camino" ? trad("En camino") : k === "en-curso" ? trad("En curso") : trad(k[0].toUpperCase() + k.slice(1))}
             </span>
           ))}
         </div>

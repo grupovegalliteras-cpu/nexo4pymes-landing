@@ -19,6 +19,7 @@ import { SCREENS } from "./screens";
 import { CommandPalette } from "./command-palette";
 import { useHydrated } from "@/components/providers";
 import { AiDrawer } from "./screens/datos";
+import { trad } from "@/lib/t";
 
 export function BrandMark({ size = 28 }: { size?: number }) {
   const sector = useSector();
@@ -160,11 +161,11 @@ function Sidebar() {
         )}
       >
         <Icon name={m.icono} className="size-4 shrink-0" />
-        <span className="min-w-0 flex-1 truncate">{label}</span>
-        {showEstado && m.estado === "a-medida" && <span className="rounded bg-ai-soft px-1 text-[10px] text-ai">a medida</span>}
+        <span className="min-w-0 flex-1 truncate">{trad(label)}</span>
+        {showEstado && m.estado === "a-medida" && <span className="rounded bg-ai-soft px-1 text-[10px] text-ai">{trad("a medida")}</span>}
         {!!counts[id] && (
           <motion.span key={counts[id]} initial={{ scale: 0.6 }} animate={{ scale: 1 }} className={cn("tabular grid h-[18px] min-w-[18px] place-items-center rounded-full px-1 text-[11px] font-semibold", id === "central-avisos" ? "bg-sun text-[#1d1300]" : "bg-surface-3 text-fg-2")}>
-            {counts[id]}
+            {trad(counts[id])}
           </motion.span>
         )}
       </button>
@@ -176,11 +177,11 @@ function Sidebar() {
       <div className="flex h-14 shrink-0 items-center gap-2.5 border-b border-line px-3">
         <BrandMark />
         <div className="min-w-0 leading-tight">
-          <div className="truncate text-[13px] font-semibold">{sector.empresa}</div>
-          <div className="truncate text-[11px] text-fg-3">Panel de oficina</div>
+          <div className="truncate text-[13px] font-semibold">{trad(sector.empresa)}</div>
+          <div className="truncate text-[11px] text-fg-3">{trad("Panel de oficina")}</div>
         </div>
       </div>
-      <nav className="min-h-0 flex-1 space-y-4 overflow-y-auto px-2 py-3 scroll-thin" aria-label="Módulos">
+      <nav className="min-h-0 flex-1 space-y-4 overflow-y-auto px-2 py-3 scroll-thin" aria-label={trad("Módulos")}>
         <div className="space-y-0.5">{FAVORITOS.map(item)}</div>
         {(Object.keys(GRUPOS) as ModuleGroup[]).map((g) => {
           const isOpen = open[g] ?? g === activeGroup;
@@ -188,8 +189,8 @@ function Sidebar() {
           return (
             <div key={g}>
               <button onClick={() => setOpen((o) => ({ ...o, [g]: !isOpen }))} className="flex h-7 w-full items-center gap-1 px-2 text-xs font-medium text-fg-3 hover:text-fg-2" aria-expanded={isOpen}>
-                <span className="flex-1 text-left">{GRUPOS[g].nombre}</span>
-                <span className="tabular text-[11px] opacity-70">{mods.length}</span>
+                <span className="flex-1 text-left">{trad(GRUPOS[g].nombre)}</span>
+                <span className="tabular text-[11px] opacity-70">{trad(mods.length)}</span>
                 <ChevronDown className={cn("size-3.5 transition-transform", !isOpen && "-rotate-90")} />
               </button>
               <AnimatePresence initial={false}>
@@ -207,8 +208,8 @@ function Sidebar() {
         <div className="flex items-center gap-2.5 rounded-lg px-2 py-1.5">
           <Avatar name="Marga Riera" color="#465661" size={26} />
           <div className="min-w-0 flex-1 leading-tight">
-            <div className="truncate text-[13px] font-medium">Marga Riera</div>
-            <div className="text-[11px] text-fg-3">Oficina</div>
+            <div className="truncate text-[13px] font-medium">{trad("Marga Riera")}</div>
+            <div className="text-[11px] text-fg-3">{trad("Oficina")}</div>
           </div>
         </div>
       </div>
@@ -239,14 +240,14 @@ function Topbar({ onMenu, compact }: { onMenu: () => void; compact?: boolean }) 
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-2 border-b border-line bg-surface/80 px-3 backdrop-blur sm:px-4">
-      <IconButton label="Abrir menú" onClick={onMenu} className={cn("lg:hidden", compact && "xl:hidden")}>
+      <IconButton label={trad("Abrir menú")} onClick={onMenu} className={cn("lg:hidden", compact && "xl:hidden")}>
         <Menu className="size-4" />
       </IconButton>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-1.5 text-[13px]">
-          <span className={cn("hidden text-fg-3", compact ? "2xl:inline" : "sm:inline")}>{m ? GRUPOS[m.grupo].nombre : ""}</span>
+          <span className={cn("hidden text-fg-3", compact ? "2xl:inline" : "sm:inline")}>{m ? trad(GRUPOS[m.grupo].nombre) : ""}</span>
           <span className={cn("hidden text-fg-3", compact ? "2xl:inline" : "sm:inline")}>/</span>
-          <span className="truncate font-medium">{section === "instalaciones" ? sector.instalacion.plural : SHORT[section]}</span>
+          <span className="truncate font-medium">{section === "instalaciones" ? trad(sector.instalacion.plural) : trad(SHORT[section])}</span>
         </div>
       </div>
       <button
@@ -254,18 +255,18 @@ function Topbar({ onMenu, compact }: { onMenu: () => void; compact?: boolean }) 
         className="hidden h-8 w-56 items-center gap-2 rounded-lg border border-line bg-bg px-2.5 text-[13px] text-fg-3 transition hover:border-line-strong md:flex"
       >
         <Search className="size-3.5" />
-        <span className="flex-1 text-left">Buscar en todo</span>
+        <span className="flex-1 text-left">{trad("Buscar en todo")}</span>
         <Kbd>
           <Command className="size-3" />
         </Kbd>
         <Kbd>K</Kbd>
       </button>
-      <IconButton label="Buscar" className="md:hidden" onClick={() => useUi.getState().setCmdk(true)}>
+      <IconButton label={trad("Buscar")} className="md:hidden" onClick={() => useUi.getState().setCmdk(true)}>
         <Search className="size-4" />
       </IconButton>
       <button onClick={() => useUi.getState().setAiOpen(true)} className="flex h-8 items-center gap-1.5 rounded-lg bg-ai-soft px-2.5 text-[13px] font-medium text-ai transition hover:brightness-95" data-tour="ai-button">
         <Sparkles className="size-3.5" />
-        <span className="hidden sm:inline">Pregunta</span>
+        <span className="hidden sm:inline">{trad("Pregunta")}</span>
       </button>
       <div className="relative">
         <button
@@ -275,29 +276,29 @@ function Topbar({ onMenu, compact }: { onMenu: () => void; compact?: boolean }) 
           data-tour="demo-menu"
         >
           <Radio className="size-3.5 text-sun" />
-          <span className="hidden sm:inline">Simular</span>
+          <span className="hidden sm:inline">{trad("Simular")}</span>
         </button>
         <AnimatePresence>
           {demoMenu && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setDemoMenu(false)} />
               <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} className="absolute right-0 z-50 mt-1.5 w-64 rounded-xl border border-line bg-surface p-1.5 shadow-e2">
-                <div className="px-2 pt-1 pb-1.5 text-[11px] text-fg-3">Controles de la demo</div>
+                <div className="px-2 pt-1 pb-1.5 text-[11px] text-fg-3">{trad("Controles de la demo")}</div>
                 <MenuItem icon={<PhoneIncoming className="size-4 text-sun" />} onClick={() => { simulateCall(); go("central-avisos"); setDemoMenu(false); }}>
-                  Simular llamada entrante
+                  {trad("Simular llamada entrante")}
                 </MenuItem>
                 <MenuItem icon={<MessageCircle className="size-4 text-ok" />} onClick={() => { simulateWhatsapp(); go("central-avisos"); setDemoMenu(false); }}>
-                  Simular WhatsApp de cliente
+                  {trad("Simular WhatsApp de cliente")}
                 </MenuItem>
                 <MenuItem icon={<RotateCcw className="size-4" />} onClick={() => { reset(); setDemoMenu(false); }}>
-                  Reiniciar demo
+                  {trad("Reiniciar demo")}
                 </MenuItem>
                 <div className="my-1 border-t border-line" />
-                <div className="px-2 pt-1 pb-1 text-[11px] text-fg-3">Sector</div>
+                <div className="px-2 pt-1 pb-1 text-[11px] text-fg-3">{trad("Sector")}</div>
                 <div className="grid max-h-56 overflow-auto scroll-thin">
                   {SECTORES.map((s) => (
                     <MenuItem key={s.id} onClick={() => { setSector(s.id); setDemoMenu(false); }} icon={<span className="size-2.5 rounded-sm" style={{ background: s.color }} />}>
-                      <span className={cn(s.id === sector.id && "font-semibold")}>{s.nombre}</span>
+                      <span className={cn(s.id === sector.id && "font-semibold")}>{trad(s.nombre)}</span>
                     </MenuItem>
                   ))}
                 </div>
@@ -307,7 +308,7 @@ function Topbar({ onMenu, compact }: { onMenu: () => void; compact?: boolean }) 
         </AnimatePresence>
       </div>
       <Notifications />
-      <IconButton label={theme === "dark" ? "Modo claro" : "Modo oscuro"} onClick={toggle}>
+      <IconButton label={theme === "dark" ? trad("Modo claro") : trad("Modo oscuro")} onClick={toggle}>
         {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
       </IconButton>
     </header>
@@ -333,9 +334,9 @@ function Notifications() {
   const unread = hydrated ? list.filter((n) => !n.leida).length : 0;
   return (
     <div className="relative">
-      <IconButton label="Notificaciones" onClick={() => { setOpen((v) => !v); if (!open) setTimeout(() => mark("panel"), 1500); }} className="relative">
+      <IconButton label={trad("Notificaciones")} onClick={() => { setOpen((v) => !v); if (!open) setTimeout(() => mark("panel"), 1500); }} className="relative">
         <Bell className="size-4" />
-        {unread > 0 && <span className="absolute top-1 right-1 grid h-3.5 min-w-3.5 place-items-center rounded-full bg-bad px-0.5 text-[9px] font-bold text-white">{unread}</span>}
+        {unread > 0 && <span className="absolute top-1 right-1 grid h-3.5 min-w-3.5 place-items-center rounded-full bg-bad px-0.5 text-[9px] font-bold text-white">{trad(unread)}</span>}
       </IconButton>
       <AnimatePresence>
         {open && (
@@ -343,16 +344,16 @@ function Notifications() {
             <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
             <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} className="absolute right-0 z-50 mt-1.5 w-[340px] overflow-hidden rounded-xl border border-line bg-surface shadow-e2">
               <div className="flex items-center justify-between border-b border-line px-3.5 py-2.5">
-                <span className="text-[13px] font-semibold">Notificaciones</span>
-                <button className="text-xs text-fg-3 hover:text-fg" onClick={() => mark("panel")}>Marcar como leídas</button>
+                <span className="text-[13px] font-semibold">{trad("Notificaciones")}</span>
+                <button className="text-xs text-fg-3 hover:text-fg" onClick={() => mark("panel")}>{trad("Marcar como leídas")}</button>
               </div>
               <div className="max-h-96 overflow-auto scroll-thin">
                 {list.map((n) => (
                   <button key={n.id} onClick={() => { if (n.href) go(n.href); setOpen(false); }} className="flex w-full gap-3 border-b border-line/60 px-3.5 py-2.5 text-left last:border-0 hover:bg-surface-2">
                     <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", n.leida ? "bg-transparent" : "bg-brand")} />
                     <span className="min-w-0">
-                      <span className="block text-[13px] font-medium">{n.titulo}</span>
-                      <span className="block text-xs text-fg-2">{n.texto}</span>
+                      <span className="block text-[13px] font-medium">{trad(n.titulo)}</span>
+                      <span className="block text-xs text-fg-2">{trad(n.texto)}</span>
                       <span className="mt-0.5 block text-[11px] text-fg-3">{fmt.ago(n.ts)}</span>
                     </span>
                   </button>
@@ -399,10 +400,10 @@ function PanelToasts() {
               <Bell className="size-4" />
             </span>
             <button className="min-w-0 flex-1 text-left" onClick={() => n.href && go(n.href)}>
-              <div className="text-[13px] font-semibold">{n.titulo}</div>
-              <div className="line-clamp-2 text-xs text-fg-2">{n.texto}</div>
+              <div className="text-[13px] font-semibold">{trad(n.titulo)}</div>
+              <div className="line-clamp-2 text-xs text-fg-2">{trad(n.texto)}</div>
             </button>
-            <button aria-label="Cerrar" className="self-start text-fg-3 hover:text-fg" onClick={() => setShown((s) => [...s, n.id])}>
+            <button aria-label={trad("Cerrar")} className="self-start text-fg-3 hover:text-fg" onClick={() => setShown((s) => [...s, n.id])}>
               <X className="size-3.5" />
             </button>
           </motion.div>
@@ -420,13 +421,13 @@ export function PageHeader({ id, title, desc, actions, children }: { id?: string
     <div className="flex flex-wrap items-end justify-between gap-3 px-4 pt-5 pb-4 sm:px-6">
       <div className="min-w-0 max-w-2xl">
         <div className="flex items-center gap-2">
-          <h1 className="font-display text-[22px] leading-tight font-semibold tracking-tight">{title ?? m?.nombre}</h1>
-          {showEstado && m && <Badge tone={m.estado === "disponible" ? "ok" : "ai"}>{m.estado === "disponible" ? "Disponible" : "A medida"}</Badge>}
+          <h1 className="font-display text-[22px] leading-tight font-semibold tracking-tight">{trad(title) ?? trad(m?.nombre)}</h1>
+          {showEstado && m && <Badge tone={m.estado === "disponible" ? "ok" : "ai"}>{m.estado === "disponible" ? trad("Disponible") : trad("A medida")}</Badge>}
         </div>
-        <p className="mt-1 text-[13px] text-fg-2">{desc ?? m?.descripcion}</p>
+        <p className="mt-1 text-[13px] text-fg-2">{trad(desc) ?? trad(m?.descripcion)}</p>
         {children}
       </div>
-      {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
+      {actions && <div className="flex flex-wrap items-center gap-2">{trad(actions)}</div>}
     </div>
   );
 }

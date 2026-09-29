@@ -7,6 +7,7 @@ import { useUi, type AppScreen } from "@/store/ui";
 import { AppShell, PhoneFrame } from "./shell";
 import { QrSvg } from "@/components/panel/screens/finanzas";
 import { useSector } from "@/store/demo";
+import { trad } from "@/lib/t";
 
 export function AppRoutePage({ initial }: { initial: string }) {
   const [mobile, setMobile] = useState<boolean | null>(null);
@@ -35,13 +36,13 @@ export function AppRoutePage({ initial }: { initial: string }) {
         </PhoneFrame>
         <div className="hidden max-w-xs lg:block">
           <div className="flex items-center gap-2 text-sm font-medium text-brand">
-            <Smartphone className="size-4" /> App de operarios de {sector.empresa}
+            <Smartphone className="size-4" />{" "}{trad("App de operarios de")}{" "}{trad(sector.empresa)}
           </div>
-          <h1 className="mt-2 font-display text-3xl leading-tight font-semibold tracking-tight">Pruébala en tu móvil</h1>
-          <p className="mt-2 text-sm text-fg-2">Escanea el código con la cámara. Se instala desde el navegador, sin tienda de aplicaciones, y funciona aunque no haya cobertura.</p>
-          {url && <QrSvg text={url} className="mt-5 size-40 rounded-xl border border-line" />}
+          <h1 className="mt-2 font-display text-3xl leading-tight font-semibold tracking-tight">{trad("Pruébala en tu móvil")}</h1>
+          <p className="mt-2 text-sm text-fg-2">{trad("Escanea el código con la cámara. Se instala desde el navegador, sin tienda de aplicaciones, y funciona aunque no haya cobertura.")}</p>
+          {url && <QrSvg text={trad(url)} className="mt-5 size-40 rounded-xl border border-line" />}
           <Link href="/demo" className="mt-6 inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-3 py-2 text-sm font-medium shadow-e1 hover:bg-surface-2">
-            <Monitor className="size-4" /> Verla junto al panel de oficina
+            <Monitor className="size-4" />{" "}{trad("Verla junto al panel de oficina")}
           </Link>
         </div>
       </div>

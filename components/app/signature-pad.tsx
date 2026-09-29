@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { trad } from "@/lib/t";
 
 /** Firma con el dedo. `demoKey` cambia para dibujar una firma de ejemplo animada. */
 export function SignaturePad({ onInk, demoKey, clearKey }: { onInk: (has: boolean) => void; demoKey?: number; clearKey?: number }) {
@@ -83,7 +84,7 @@ export function SignaturePad({ onInk, demoKey, clearKey }: { onInk: (has: boolea
     <canvas
       ref={ref}
       className="h-36 w-full touch-none rounded-2xl bg-surface text-fg"
-      aria-label="Zona de firma del cliente"
+      aria-label={trad("Zona de firma del cliente")}
       onPointerDown={(e) => {
         drawing.current = true;
         last.current = pos(e);

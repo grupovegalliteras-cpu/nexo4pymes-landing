@@ -8,20 +8,21 @@ import { addDays, cn, fmt, isoDay } from "@/lib/utils";
 import { Badge, Button, Card, CardHeader, Field, inputCls } from "@/components/ui";
 import { PageHeader } from "../shell";
 import { usePanelNav } from "../nav";
+import { trad, tradf } from "@/lib/t";
 
 /* ---------------- Asistente de atención ---------------- */
 type Msg = { from: "cliente" | "bot" | "sistema"; text: string };
 
 function botReply(q: string, empresa: string, servicios: { nombre: string; precio: number }[]): { text: string; derivar?: boolean; aviso?: boolean } {
   const l = q.toLowerCase();
-  if (/horario|abr[ií]s|hora/.test(l)) return { text: `Atendemos de lunes a viernes de 8:00 a 18:00 y los sábados por la mañana. Para urgencias hay un técnico de guardia todos los días.` };
-  if (/precio|cu[aá]nto|cuesta|tarifa/.test(l))
-    return { text: `Te doy precios orientativos: ${servicios.slice(0, 3).map((s) => `${s.nombre.toLowerCase()} desde ${fmt.eur0(s.precio)}`).join(", ")}, más IVA. Si quieres, te preparo un presupuesto cerrado. ¿Me dices la dirección?` };
-  if (/urgente|fuga|no funciona|aver[ií]a|roto|sin luz|verde|no enfr/.test(l))
-    return { text: `Lo registro como aviso urgente para que la oficina lo asigne ya. ¿Me confirmas la dirección y un teléfono de contacto?`, aviso: true };
-  if (/persona|humano|hablar con|llamad/.test(l)) return { text: `Te paso con una persona de la oficina ahora mismo. Te escribe en unos minutos.`, derivar: true };
-  if (/gracias|perfecto|vale/.test(l)) return { text: `A ti. Cualquier cosa, escríbenos por aquí.` };
-  return { text: `Soy el asistente de ${empresa}. Puedo darte precios, registrar un aviso o pasarte con la oficina. ¿Qué necesitas?` };
+  if (/horario|abr[ií]s|hora|opening|hours|open|öffnungszeit|geöffnet|uhrzeit/.test(l)) return { text: trad("Atendemos de lunes a viernes de 8:00 a 18:00 y los sábados por la mañana. Para urgencias hay un técnico de guardia todos los días.") };
+  if (/precio|cu[aá]nto|cuesta|tarifa|price|how much|cost|rate|preis|kostet|kosten|wie viel/.test(l))
+    return { text: tradf("Te doy precios orientativos: {0}, más IVA. Si quieres, te preparo un presupuesto cerrado. ¿Me dices la dirección?", servicios.slice(0, 3).map((s) => `${s.nombre.toLowerCase()} ${trad("desde")} ${fmt.eur0(s.precio)}`).join(", ")) };
+  if (/urgente|fuga|no funciona|aver[ií]a|roto|sin luz|verde|no enfr|urgent|leak|not working|broken|fault|no power|green|not cooling|dringend|leck|undicht|funktioniert nicht|kaputt|störung|kein strom|grün|kühlt nicht/.test(l))
+    return { text: trad("Lo registro como aviso urgente para que la oficina lo asigne ya. ¿Me confirmas la dirección y un teléfono de contacto?"), aviso: true };
+  if (/persona|humano|hablar con|llamad|person|human|speak to|talk to|call me|mensch|sprechen|mitarbeiter|anruf/.test(l)) return { text: trad("Te paso con una persona de la oficina ahora mismo. Te escribe en unos minutos."), derivar: true };
+  if (/gracias|perfecto|vale|thank|perfect|great|danke|perfekt|super/.test(l)) return { text: trad("A ti. Cualquier cosa, escríbenos por aquí.") };
+  return { text: tradf("Soy el asistente de {0}. Puedo darte precios, registrar un aviso o pasarte con la oficina. ¿Qué necesitas?", empresa) };
 }
 
 export function AsistenteAtencion() {
@@ -29,7 +30,7 @@ export function AsistenteAtencion() {
   const addReq = useDemo((s) => s.addWebRequest);
   const { go } = usePanelNav();
   const [msgs, setMsgs] = useState<Msg[]>([
-    { from: "cliente", text: "Hola, ¿cuánto cuesta una revisión?" },
+    { from: "cliente", text: trad("Hola, ¿cuánto cuesta una revisión?") },
     { from: "bot", text: botReply("precio", sector.empresa, sector.servicios).text },
   ]);
   const [q, setQ] = useState("");
@@ -49,7 +50,7 @@ export function AsistenteAtencion() {
     setTimeout(() => {
       const r = botReply(text, sector.empresa, sector.servicios);
       setTyping(false);
-      setMsgs((m) => [...m, { from: "bot", text: r.text }, ...(r.derivar ? [{ from: "sistema" as const, text: "Conversación pasada a la oficina" }] : [])]);
+      setMsgs((m) => [...m, { from: "bot", text: r.text }, ...(r.derivar ? [{ from: "sistema" as const, text: trad("Conversación pasada a la oficina") }] : [])]);
       if (r.aviso) {
         addReq("Cliente por WhatsApp", "600 000 000", text, "whatsapp");
         setCreado(true);
@@ -64,21 +65,21 @@ export function AsistenteAtencion() {
         <div className="mx-auto w-full max-w-[380px] overflow-hidden rounded-[28px] border-[6px] border-[#0c1a22] bg-[#e9e3da] shadow-e3 dark:bg-[#0b141a]">
           <div className="flex items-center gap-2.5 bg-[#075e54] px-3 py-2.5 text-white">
             <span className="grid size-8 place-items-center rounded-full text-xs font-bold" style={{ background: sector.color }}>
-              {sector.empresaCorta[0]}
+              {trad(sector.empresaCorta[0])}
             </span>
             <div className="leading-tight">
-              <div className="text-[13px] font-semibold">{sector.empresa}</div>
-              <div className="text-[11px] opacity-80">{typing ? "escribiendo…" : "en línea"}</div>
+              <div className="text-[13px] font-semibold">{trad(sector.empresa)}</div>
+              <div className="text-[11px] opacity-80">{typing ? trad("escribiendo…") : trad("en línea")}</div>
             </div>
           </div>
           <div className="flex h-[420px] flex-col gap-1.5 overflow-auto p-3 scroll-thin">
             {msgs.map((m, i) =>
               m.from === "sistema" ? (
-                <div key={i} className="mx-auto rounded-md bg-[#fff5c4] px-2 py-1 text-[11px] text-[#54491d]">{m.text}</div>
+                <div key={i} className="mx-auto rounded-md bg-[#fff5c4] px-2 py-1 text-[11px] text-[#54491d]">{trad(m.text)}</div>
               ) : (
                 <motion.div key={i} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className={cn("max-w-[82%] rounded-lg px-2.5 py-1.5 text-[13px] shadow-sm", m.from === "cliente" ? "ml-auto bg-[#d9fdd3] text-[#111b21]" : "bg-white text-[#111b21]")}>
-                  {m.from === "bot" && <div className="mb-0.5 flex items-center gap-1 text-[10px] font-semibold text-[#075e54]"><Bot className="size-3" /> Asistente</div>}
-                  {m.text}
+                  {m.from === "bot" && <div className="mb-0.5 flex items-center gap-1 text-[10px] font-semibold text-[#075e54]"><Bot className="size-3" />{" "}{trad("Asistente")}</div>}
+                  {trad(m.text)}
                   <div className="mt-0.5 flex justify-end text-[10px] text-[#667781]">{m.from === "cliente" && <CheckCheck className="size-3 text-[#53bdeb]" />}</div>
                 </motion.div>
               ),
@@ -99,19 +100,19 @@ export function AsistenteAtencion() {
             }}
             className="flex gap-2 bg-[#f0f2f5] p-2 dark:bg-[#202c33]"
           >
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Escribe como si fueras un cliente" className="h-9 flex-1 rounded-full bg-white px-3 text-[13px] text-[#111b21] outline-none" aria-label="Mensaje del cliente" />
-            <button type="submit" className="grid size-9 place-items-center rounded-full bg-[#00a884] text-white" aria-label="Enviar">
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={trad("Escribe como si fueras un cliente")} className="h-9 flex-1 rounded-full bg-white px-3 text-[13px] text-[#111b21] outline-none" aria-label={trad("Mensaje del cliente")} />
+            <button type="submit" className="grid size-9 place-items-center rounded-full bg-[#00a884] text-white" aria-label={trad("Enviar")}>
               <Send className="size-4" />
             </button>
           </form>
         </div>
         <div className="grid content-start gap-4">
           <Card className="p-4">
-            <div className="text-[13px] font-semibold">Prueba a escribir</div>
+            <div className="text-[13px] font-semibold">{trad("Prueba a escribir")}</div>
             <div className="mt-2 flex flex-wrap gap-2">
               {["¿Qué horario tenéis?", sector.llamada.lineas.find((l) => l[0] === "cliente" && l[1].length > 50)?.[1] ?? "Tengo una avería urgente", "¿Puedo hablar con una persona?"].map((s) => (
-                <button key={s} onClick={() => send(s)} className="rounded-full border border-line bg-surface px-3 py-1.5 text-left text-xs hover:bg-surface-2">
-                  {s}
+                <button key={s} onClick={() => send(trad(s))} className="rounded-full border border-line bg-surface px-3 py-1.5 text-left text-xs hover:bg-surface-2">
+                  {trad(s)}
                 </button>
               ))}
             </div>
@@ -121,8 +122,8 @@ export function AsistenteAtencion() {
               <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
                 <Card className="flex items-center gap-3 border-ok/40 bg-ok-soft p-4 text-ok">
                   <Check className="size-5" />
-                  <div className="flex-1 text-[13px]">El asistente ha recogido los datos y ha creado un aviso en Central Avisos.</div>
-                  <Button size="sm" variant="secondary" onClick={() => go("central-avisos")}>Ver aviso</Button>
+                  <div className="flex-1 text-[13px]">{trad("El asistente ha recogido los datos y ha creado un aviso en Central Avisos.")}</div>
+                  <Button size="sm" variant="secondary" onClick={() => go("central-avisos")}>{trad("Ver aviso")}</Button>
                 </Card>
               </motion.div>
             )}
@@ -135,8 +136,8 @@ export function AsistenteAtencion() {
                 ["Sabe cuándo parar", "Si el cliente lo pide o el caso lo necesita, pasa la conversación a una persona."],
               ].map(([t, d]) => (
                 <div key={t}>
-                  <div className="text-[13px] font-semibold">{t}</div>
-                  <div className="mt-1 text-xs text-fg-2">{d}</div>
+                  <div className="text-[13px] font-semibold">{trad(t)}</div>
+                  <div className="mt-1 text-xs text-fg-2">{trad(d)}</div>
                 </div>
               ))}
             </div>
@@ -164,16 +165,16 @@ export function WebReservas() {
         <div className="overflow-hidden rounded-2xl border border-line shadow-e2">
           <div className="flex items-center gap-2 border-b border-line bg-surface px-4 py-2 text-xs text-fg-3">
             <Globe className="size-3.5" />
-            <span className="rounded-md bg-surface-2 px-2 py-0.5">www.{sector.empresa.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, "")}.es</span>
+            <span className="rounded-md bg-surface-2 px-2 py-0.5">{trad("www.")}{sector.empresa.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, "")}.es</span>
           </div>
           <div className="grid lg:grid-cols-2">
             <div className="relative overflow-hidden p-8 text-white" style={{ background: `linear-gradient(135deg, ${sector.color}, #0c1a22)` }}>
-              <div className="font-display text-3xl font-semibold leading-tight">{sector.empresa}</div>
-              <div className="mt-2 max-w-sm text-white/80">{sector.lema} en toda Mallorca. Respuesta en el día.</div>
+              <div className="font-display text-3xl font-semibold leading-tight">{trad(sector.empresa)}</div>
+              <div className="mt-2 max-w-sm text-white/80">{trad(sector.lema)}{" "}{trad("en toda Mallorca. Respuesta en el día.")}</div>
               <div className="mt-6 grid gap-2 text-sm">
                 {sector.servicios.slice(0, 4).map((s) => (
                   <div key={s.nombre} className="flex items-center gap-2">
-                    <Check className="size-4 text-sun" /> {s.nombre}
+                    <Check className="size-4 text-sun" /> {trad(s.nombre)}
                   </div>
                 ))}
               </div>
@@ -186,9 +187,9 @@ export function WebReservas() {
                     <span className="grid size-12 place-items-center rounded-full bg-ok text-white">
                       <Check className="size-6" />
                     </span>
-                    <div className="font-semibold">Solicitud enviada</div>
-                    <p className="max-w-xs text-sm text-fg-2">Ya está en la bandeja de la oficina, con la cita reservada {dia && hora ? `el ${fmt.date(dia)} a las ${hora}` : ""}.</p>
-                    <Button variant="primary" onClick={() => go("central-avisos")}>Verla en Central Avisos</Button>
+                    <div className="font-semibold">{trad("Solicitud enviada")}</div>
+                    <p className="max-w-xs text-sm text-fg-2">{trad("Ya está en la bandeja de la oficina, con la cita reservada")}{" "}{dia && hora ? tradf("el {0} a las {1}", fmt.date(dia), hora) : ""}.</p>
+                    <Button variant="primary" onClick={() => go("central-avisos")}>{trad("Verla en Central Avisos")}</Button>
                   </motion.div>
                 ) : (
                   <motion.form
@@ -196,25 +197,25 @@ export function WebReservas() {
                     className="grid gap-3"
                     onSubmit={(e) => {
                       e.preventDefault();
-                      addReq(f.nombre || "Contacto web", f.tel, `${f.texto || "Solicitud de presupuesto desde la web"}${dia && hora ? `. Cita pedida el ${fmt.date(dia)} a las ${hora}.` : ""}`);
+                      addReq(f.nombre || trad("Contacto web"), f.tel, `${f.texto || trad("Solicitud de presupuesto desde la web")}${dia && hora ? tradf(". Cita pedida el {0} a las {1}.", fmt.date(dia), hora) : ""}`);
                       setOk(true);
                     }}
                   >
-                    <div className="font-display text-lg font-semibold">Pide presupuesto o reserva visita</div>
+                    <div className="font-display text-lg font-semibold">{trad("Pide presupuesto o reserva visita")}</div>
                     <div className="grid grid-cols-2 gap-3">
-                      <Field label="Nombre">
+                      <Field label={trad("Nombre")}>
                         <input className={inputCls} value={f.nombre} onChange={(e) => setF({ ...f, nombre: e.target.value })} />
                       </Field>
-                      <Field label="Teléfono">
+                      <Field label={trad("Teléfono")}>
                         <input className={inputCls} value={f.tel} onChange={(e) => setF({ ...f, tel: e.target.value })} inputMode="tel" />
                       </Field>
                     </div>
-                    <Field label="¿Qué necesitas?">
-                      <textarea className={cn(inputCls, "h-20 py-2")} value={f.texto} onChange={(e) => setF({ ...f, texto: e.target.value })} placeholder="Cuéntanos brevemente" />
+                    <Field label={trad("¿Qué necesitas?")}>
+                      <textarea className={cn(inputCls, "h-20 py-2")} value={f.texto} onChange={(e) => setF({ ...f, texto: e.target.value })} placeholder={trad("Cuéntanos brevemente")} />
                     </Field>
                     <div>
                       <div className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-fg-2">
-                        <CalendarDays className="size-3.5" /> Elige día y hora
+                        <CalendarDays className="size-3.5" />{" "}{trad("Elige día y hora")}
                       </div>
                       <div className="grid grid-cols-6 gap-1.5">
                         {days.map((d) => (
@@ -228,14 +229,14 @@ export function WebReservas() {
                         <div className="mt-2 flex flex-wrap gap-1.5">
                           {["09:00", "10:30", "12:00", "16:00", "17:30"].map((h, i) => (
                             <button type="button" key={h} disabled={i === 2} onClick={() => setHora(h)} className={cn("rounded-md border px-2.5 py-1 text-xs tabular disabled:opacity-40 disabled:line-through", hora === h ? "border-brand bg-brand text-brand-ink" : "border-line hover:bg-surface-2")}>
-                              {h}
+                              {trad(h)}
                             </button>
                           ))}
                         </div>
                       )}
                     </div>
-                    <Button variant="primary" type="submit">Enviar solicitud</Button>
-                    <p className="text-[11px] text-fg-3">Los huecos salen de la planificación real del equipo.</p>
+                    <Button variant="primary" type="submit">{trad("Enviar solicitud")}</Button>
+                    <p className="text-[11px] text-fg-3">{trad("Los huecos salen de la planificación real del equipo.")}</p>
                   </motion.form>
                 )}
               </AnimatePresence>
@@ -253,8 +254,8 @@ export function Recordatorios() {
   const [on, setOn] = useState<Record<string, boolean>>({ a: true, b: true, c: true, d: false });
   const [prev, setPrev] = useState("b");
   const items = [
-    { id: "a", t: "Confirmación de la visita", w: "El día antes, a las 18:00", m: `Hola, le recordamos que mañana a las 10:30 le visita nuestro técnico de ${sector.empresa}. Si necesita cambiar la hora, responda a este mensaje.` },
-    { id: "b", t: "El técnico va de camino", w: "Cuando el técnico pulsa «Salgo hacia allí»", m: `Toni, de ${sector.empresa}, va de camino. Llegará en unos 15 minutos.` },
+    { id: "a", t: "Confirmación de la visita", w: "El día antes, a las 18:00", m: tradf("Hola, le recordamos que mañana a las 10:30 le visita nuestro técnico de {0}. Si necesita cambiar la hora, responda a este mensaje.", sector.empresa) },
+    { id: "b", t: "El técnico va de camino", w: "Cuando el técnico pulsa «Salgo hacia allí»", m: tradf("Toni, de {0}, va de camino. Llegará en unos 15 minutos.", sector.empresa) },
     { id: "c", t: "Encuesta al terminar", w: "Al cerrar el parte con firma", m: "¿Qué tal ha ido el servicio de hoy? Responda con un número del 1 al 5." },
     { id: "d", t: "Aviso de revisión periódica", w: "15 días antes de cada preventivo", m: "Se acerca la revisión de su instalación. Le propondremos fecha en los próximos días." },
   ];
@@ -268,13 +269,13 @@ export function Recordatorios() {
             <div key={i.id} className={cn("flex cursor-pointer items-center gap-3 px-4 py-3", prev === i.id && "bg-brand-soft/40")} onClick={() => setPrev(i.id)}>
               <MessageCircle className="size-4 text-ok" />
               <div className="min-w-0 flex-1">
-                <div className="text-[13px] font-semibold">{i.t}</div>
-                <div className="text-xs text-fg-3">{i.w}</div>
+                <div className="text-[13px] font-semibold">{trad(i.t)}</div>
+                <div className="text-xs text-fg-3">{trad(i.w)}</div>
               </div>
               <button
                 role="switch"
                 aria-checked={on[i.id]}
-                aria-label={i.t}
+                aria-label={trad(i.t)}
                 onClick={(e) => {
                   e.stopPropagation();
                   setOn((s) => ({ ...s, [i.id]: !s[i.id] }));
@@ -287,16 +288,16 @@ export function Recordatorios() {
           ))}
         </Card>
         <Card className="p-4">
-          <div className="text-xs text-fg-3">Así le llega al cliente</div>
+          <div className="text-xs text-fg-3">{trad("Así le llega al cliente")}</div>
           <div className="mt-3 rounded-2xl bg-[#e9e3da] p-4 dark:bg-[#0b141a]">
             <AnimatePresence mode="wait">
               <motion.div key={p.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="max-w-[90%] rounded-lg bg-white px-3 py-2 text-[13px] text-[#111b21] shadow-sm">
-                {p.m}
+                {trad(p.m)}
                 <div className="mt-1 text-right text-[10px] text-[#667781]">10:14</div>
               </motion.div>
             </AnimatePresence>
           </div>
-          <Badge tone={on[p.id] ? "ok" : "neutral"} className="mt-3">{on[p.id] ? "Activo" : "Desactivado"}</Badge>
+          <Badge tone={on[p.id] ? "ok" : "neutral"} className="mt-3">{on[p.id] ? trad("Activo") : trad("Desactivado")}</Badge>
         </Card>
       </div>
     </div>
@@ -317,21 +318,21 @@ export function Resenas() {
       <PageHeader id="resenas" />
       <div className="grid gap-4 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
         <Card className="p-4">
-          <div className="text-[13px] font-semibold">Cómo funciona</div>
+          <div className="text-[13px] font-semibold">{trad("Cómo funciona")}</div>
           <ol className="mt-3 grid gap-3 text-[13px]">
             {["El técnico cierra el parte y el cliente firma.", "Llega la encuesta: ¿qué tal ha ido, del 1 al 5?", "Si responde 4 o 5, recibe el enlace para dejar su reseña en Google.", "Si responde menos, avisamos a la oficina para llamarle antes."].map((s, i) => (
               <li key={s} className="flex gap-3">
                 <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand-soft text-xs font-semibold text-brand">{i + 1}</span>
-                <span className="pt-0.5">{s}</span>
+                <span className="pt-0.5">{trad(s)}</span>
               </li>
             ))}
           </ol>
           <Button variant="primary" className="mt-4 w-full" onClick={() => setSent(true)} disabled={sent}>
-            {sent ? <><Check className="size-4" /> Invitaciones enviadas a los clientes de hoy</> : <><Star className="size-4" /> Pedir reseña a los clientes de hoy</>}
+            {sent ? <><Check className="size-4" />{" "}{trad("Invitaciones enviadas a los clientes de hoy")}</> : <><Star className="size-4" />{" "}{trad("Pedir reseña a los clientes de hoy")}</>}
           </Button>
         </Card>
         <Card className="overflow-hidden">
-          <CardHeader title={`Últimas opiniones de ${sector.empresa}`} sub="Ejemplo con datos ficticios" />
+          <CardHeader title={tradf("Últimas opiniones de {0}", sector.empresa)} sub={trad("Ejemplo con datos ficticios")} />
           <div className="divide-y divide-line/70">
             {ops.map((o) => (
               <div key={o.n} className="flex gap-3 px-4 py-3">
@@ -340,14 +341,14 @@ export function Resenas() {
                 </span>
                 <div>
                   <div className="flex items-center gap-2 text-[13px] font-medium">
-                    {o.n}
+                    {trad(o.n)}
                     <span className="flex">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <Star key={i} className={cn("size-3", i < o.s ? "fill-sun text-sun" : "text-line-strong")} />
                       ))}
                     </span>
                   </div>
-                  <p className="text-[13px] text-fg-2">{o.t}</p>
+                  <p className="text-[13px] text-fg-2">{trad(o.t)}</p>
                 </div>
               </div>
             ))}

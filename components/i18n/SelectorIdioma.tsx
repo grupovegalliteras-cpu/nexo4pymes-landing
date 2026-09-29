@@ -34,11 +34,10 @@ export function SelectorIdioma({ tono = "oscuro", largo = false, className = "" 
             title={NOMBRE_IDIOMA[l]}
             onClick={(e) => {
               recordarIdioma(l);
-              // conserva la sección en la que estaba (#sectores, #contacto…)
-              if (window.location.hash) {
-                e.preventDefault();
-                window.location.assign(conIdioma(l, base) + window.location.hash);
-              }
+              // recarga completa: la demo prepara sus datos de ejemplo en el idioma nuevo
+              // y se conserva la sección en la que estaba (#sectores, #contacto…)
+              e.preventDefault();
+              window.location.assign(conIdioma(l, base) + window.location.search + window.location.hash);
             }}
             className={`rounded-full font-semibold uppercase transition-colors ${largo ? "px-4 py-2 text-[15px]" : "px-2.5 py-1 text-[12px]"} ${
               tema ? (activo ? "bg-fg text-bg" : "text-fg-2 hover:text-fg") : activo ? (oscuro ? "bg-white text-[#0b1220]" : "bg-[#0c1a22] text-white") : oscuro ? "text-white/70 hover:text-white" : "text-black/60 hover:text-black"

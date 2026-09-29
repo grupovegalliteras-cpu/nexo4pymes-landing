@@ -1,4 +1,5 @@
 import { hashString, cn } from "@/lib/utils";
+import { trad, tradf } from "@/lib/t";
 
 /** "Foto" generada: una escena abstracta que evoca una foto de obra, con sello de cámara. */
 export function FakePhoto({ seed, label, stamp, tint = "#0a5d78", className, after }: { seed: string; label?: string; stamp?: string; tint?: string; className?: string; after?: boolean }) {
@@ -6,7 +7,7 @@ export function FakePhoto({ seed, label, stamp, tint = "#0a5d78", className, aft
   const a = (h % 360) / 360;
   const r = (n: number) => ((h >> n) & 255) / 255;
   return (
-    <div className={cn("relative overflow-hidden rounded-lg bg-surface-3", className)} role="img" aria-label={label ?? "Foto del trabajo"}>
+    <div className={cn("relative overflow-hidden rounded-lg bg-surface-3", className)} role="img" aria-label={trad(label) ?? trad("Foto del trabajo")}>
       <svg viewBox="0 0 160 120" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 size-full">
         <defs>
           <filter id={`b${h}`}>
@@ -26,8 +27,8 @@ export function FakePhoto({ seed, label, stamp, tint = "#0a5d78", className, aft
         </g>
         <rect width="160" height="120" fill={after ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.08)"} />
       </svg>
-      {label && <span className="absolute top-1.5 left-1.5 rounded bg-black/55 px-1.5 py-0.5 text-[10px] font-medium text-white">{label}</span>}
-      {stamp && <span className="tabular absolute right-1.5 bottom-1.5 text-[9px] font-medium text-white/90 [text-shadow:0_1px_2px_rgb(0_0_0/0.6)]">{stamp}</span>}
+      {label && <span className="absolute top-1.5 left-1.5 rounded bg-black/55 px-1.5 py-0.5 text-[10px] font-medium text-white">{trad(label)}</span>}
+      {stamp && <span className="tabular absolute right-1.5 bottom-1.5 text-[9px] font-medium text-white/90 [text-shadow:0_1px_2px_rgb(0_0_0/0.6)]">{trad(stamp)}</span>}
     </div>
   );
 }
@@ -37,7 +38,7 @@ export function Signature({ name, className }: { name: string; className?: strin
   const pts = Array.from({ length: 7 }, (_, i) => [10 + i * 22, 30 + ((h >> (i * 3)) % 24) - 12]);
   const d = `M${pts[0][0]},${pts[0][1]} ` + pts.slice(1).map((p, i) => `Q${p[0] - 11},${(i % 2 ? 8 : 52)} ${p[0]},${p[1]}`).join(" ") + ` M20,48 L150,${40 + (h % 10)}`;
   return (
-    <svg viewBox="0 0 170 60" className={cn("h-14 w-40 text-fg", className)} aria-label={`Firma de ${name}`} role="img">
+    <svg viewBox="0 0 170 60" className={cn("h-14 w-40 text-fg", className)} aria-label={tradf("Firma de {0}", name)} role="img">
       <path d={d} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );

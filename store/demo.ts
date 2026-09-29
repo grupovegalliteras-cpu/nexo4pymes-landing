@@ -3,11 +3,12 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { createSeed, computeInvoice, huellaVerifactu, DATA_VERSION, MUNICIPIOS } from "@/data/seed";
-import { SECTOR_POR_ID, SECTOR_DEFECTO, type SectorId } from "@/data/sectors";
+import { SECTOR_DEFECTO, type SectorId } from "@/data/sectors";
 import type { Absence, Aviso, DemoData, Invoice, Job, JobStatus, Notif, Opportunity } from "@/data/types";
 import { isoDay, uid } from "@/lib/utils";
 import { sectorDe } from "@/data/sectors-i18n";
 import { useIdioma } from "@/components/i18n/idioma";
+import { idiomaGlobal, trad, tradf } from "@/lib/t";
 
 type CompletePayload = {
   checklistHecho: boolean[];
@@ -86,19 +87,19 @@ export const useDemo = create<DemoState>()(
     (set, get) => {
       const patchJob = (id: string, patch: Partial<Job>) =>
         set((s) => ({ jobs: s.jobs.map((j) => (j.id === id ? { ...j, ...patch } : j)), lastChange: { ids: [id], ts: Date.now() } }));
-      const techName = (id?: string) => get().techs.find((t) => t.id === id)?.nombre ?? "Sin asignar";
-      const clientName = (id?: string) => get().clients.find((c) => c.id === id)?.nombre ?? "Cliente";
+      const techName = (id?: string) => get().techs.find((t) => t.id === id)?.nombre ?? trad("Sin asignar");
+      const clientName = (id?: string) => get().clients.find((c) => c.id === id)?.nombre ?? trad("Cliente");
 
       const addAviso = (a: Aviso, liveMs: number) => {
         set((s) => ({
           avisos: [a, ...s.avisos],
           lastChange: { ids: [a.id], ts: Date.now() },
-          activity: [activity(`${a.canal === "llamada" ? "Llamada" : "WhatsApp"} entrante de ${a.contacto}`, "aviso"), ...s.activity].slice(0, 40),
+          activity: [activity(tradf("{0} entrante de {1}", a.canal === "llamada" ? trad("Llamada") : "WhatsApp", a.contacto), "aviso"), ...s.activity].slice(0, 40),
         }));
         const t = setTimeout(() => {
           set((s) => ({
             avisos: s.avisos.map((x) => (x.id === a.id ? { ...x, enDirecto: false } : x)),
-            notifs: [notif("panel", `Aviso ${a.urgencia === "alta" ? "urgente" : "nuevo"}: ${a.tipo}`, a.resumen, "aviso", "central-avisos"), ...s.notifs],
+            notifs: [notif("panel", tradf("Aviso {0}: {1}", a.urgencia === "alta" ? trad("urgente") : trad("nuevo"), trad(a.tipo)), a.resumen, "aviso", "central-avisos"), ...s.notifs],
             lastChange: { ids: [a.id], ts: Date.now() },
           }));
           liveTimers.delete(a.id);
@@ -124,7 +125,7 @@ export const useDemo = create<DemoState>()(
 
         simulateCall: () => {
           const s = get();
-          const sector = SECTOR_POR_ID[s.sector];
+          const sector = sectorDe(idiomaGlobal(), s.sector);
           const tpl = sector.llamada;
           const client = s.clients.find((c) => c.nombre === tpl.cliente) ?? s.clients[0];
           let t = 0;
@@ -156,7 +157,7 @@ export const useDemo = create<DemoState>()(
 
         simulateWhatsapp: () => {
           const s = get();
-          const sector = SECTOR_POR_ID[s.sector];
+          const sector = sectorDe(idiomaGlobal(), s.sector);
           const tpl = sector.avisos.find((x) => x.canal === "whatsapp") ?? sector.avisos[0];
           const client = s.clients[(s.avisos.length * 7) % s.clients.length];
           const a: Aviso = {
@@ -182,7 +183,7 @@ export const useDemo = create<DemoState>()(
           const s = get();
           const a = s.avisos.find((x) => x.id === avisoId);
           if (!a) return;
-          const sector = SECTOR_POR_ID[s.sector];
+          const sector = sectorDe(idiomaGlobal(), s.sector);
           const serv = sector.servicios[a.servicio] ?? sector.servicios[0];
           const now = new Date();
           const hora = opts?.hora ?? `${String(Math.min(19, now.getHours() + (now.getMinutes() > 30 ? 1 : 0))).padStart(2, "0")}:${now.getMinutes() > 30 ? "00" : "30"}`;
@@ -191,7 +192,7 @@ export const useDemo = create<DemoState>()(
           const clientId = a.clientId ?? s.clients[0].id;
           const job: Job = {
             id: `j${n}`,
-            codigo: `OT-${n}`,
+            codigo: tradf("OT-{0}", n),
             clientId,
             installationId: inst?.id,
             titulo: serv.nombre,
@@ -211,9 +212,9 @@ export const useDemo = create<DemoState>()(
             avisos: st.avisos.map((x) => (x.id === avisoId ? { ...x, estado: "convertido", jobId: job.id, enDirecto: false } : x)),
             counters: { ...st.counters, job: n + 1 },
             notifs: techId
-              ? [notif("app", a.urgencia === "alta" ? "Trabajo urgente asignado" : "Nuevo trabajo asignado", `${clientName(clientId)}: ${serv.nombre} a las ${hora}`, "trabajo", job.id), ...st.notifs]
+              ? [notif("app", a.urgencia === "alta" ? "Trabajo urgente asignado" : "Nuevo trabajo asignado", tradf("{0}: {1} a las {2}", clientName(clientId), serv.nombre, hora), "trabajo", job.id), ...st.notifs]
               : st.notifs,
-            activity: [activity(`${job.codigo} creada desde un aviso y asignada a ${techName(techId)}`, "trabajo"), ...st.activity].slice(0, 40),
+            activity: [activity(tradf("{0} creada desde un aviso y asignada a {1}", job.codigo, techName(techId)), "trabajo"), ...st.activity].slice(0, 40),
             lastChange: { ids: [job.id, avisoId], ts: Date.now() },
           }));
           return job.id;
@@ -234,7 +235,7 @@ export const useDemo = create<DemoState>()(
           });
           if (changedTech) {
             set((s) => ({
-              notifs: [notif("app", "Cambio en tu agenda", `${clientName(j.clientId)} a las ${hora ?? j.hora}`, "trabajo", jobId), ...s.notifs],
+              notifs: [notif("app", "Cambio en tu agenda", tradf("{0} a las {1}", clientName(j.clientId), hora ?? j.hora), "trabajo", jobId), ...s.notifs],
             }));
           }
         },
@@ -242,8 +243,8 @@ export const useDemo = create<DemoState>()(
         clockIn: (techId) =>
           set((s) => ({
             techs: s.techs.map((t) => (t.id === techId ? { ...t, estado: "trabajando", fichajeInicio: t.fichajeInicio ?? Date.now(), pausaInicio: undefined } : t)),
-            activity: [activity(`${techName(techId)} ha fichado la entrada`, "equipo"), ...s.activity].slice(0, 40),
-            notifs: [notif("panel", "Fichaje de entrada", `${techName(techId)} ha empezado su jornada`, "equipo", "fichaje"), ...s.notifs],
+            activity: [activity(tradf("{0} ha fichado la entrada", techName(techId)), "equipo"), ...s.activity].slice(0, 40),
+            notifs: [notif("panel", "Fichaje de entrada", tradf("{0} ha empezado su jornada", techName(techId)), "equipo", "fichaje"), ...s.notifs],
             lastChange: { ids: [techId], ts: Date.now() },
           })),
 
@@ -257,7 +258,7 @@ export const useDemo = create<DemoState>()(
               }
               return { ...t, estado: "pausa", pausaInicio: Date.now() };
             }),
-            activity: [activity(`${techName(techId)} ${s.techs.find((t) => t.id === techId)?.estado === "pausa" ? "vuelve de la pausa" : "está en pausa"}`, "equipo"), ...s.activity].slice(0, 40),
+            activity: [activity(`${techName(techId)} ${s.techs.find((t) => t.id === techId)?.estado === "pausa" ? trad("vuelve de la pausa") : trad("está en pausa")}`, "equipo"), ...s.activity].slice(0, 40),
             lastChange: { ids: [techId], ts: Date.now() },
           })),
 
@@ -270,7 +271,7 @@ export const useDemo = create<DemoState>()(
             return {
               techs: s.techs.map((x) => (x.id === techId ? { ...x, estado: "fuera", fichajeInicio: undefined, pausaInicio: undefined, pausaAcumMin: 0 } : x)),
               timeEntries: [...s.timeEntries, { id: uid("te"), techId, fecha: isoDay(now), entrada: hhmm(entrada), salida: hhmm(now), pausaMin: Math.round(t?.pausaAcumMin ?? 0), lat: t?.lat ?? 39.57, lon: t?.lon ?? 2.65 }],
-              activity: [activity(`${techName(techId)} ha fichado la salida`, "equipo"), ...s.activity].slice(0, 40),
+              activity: [activity(tradf("{0} ha fichado la salida", techName(techId)), "equipo"), ...s.activity].slice(0, 40),
               lastChange: { ids: [techId], ts: Date.now() },
             };
           }),
@@ -289,7 +290,7 @@ export const useDemo = create<DemoState>()(
             activity: [activity(`${techName(j.techId)} ${label} ${c?.nombre ?? ""}`, "trabajo"), ...st.activity].slice(0, 40),
             notifs:
               estado === "en-camino"
-                ? [notif("panel", "Técnico en camino", `${techName(j.techId)} va hacia ${c?.nombre}. El cliente ha recibido el aviso.`, "trabajo", "trabajos"), ...st.notifs]
+                ? [notif("panel", "Técnico en camino", tradf("{0} va hacia {1}. El cliente ha recibido el aviso.", techName(j.techId), c?.nombre), "trabajo", "trabajos"), ...st.notifs]
                 : st.notifs,
           }));
         },
@@ -298,7 +299,7 @@ export const useDemo = create<DemoState>()(
           const s = get();
           const j = s.jobs.find((x) => x.id === jobId);
           if (!j) return;
-          const sector = SECTOR_POR_ID[s.sector];
+          const sector = sectorDe(idiomaGlobal(), s.sector);
           const serv = sector.servicios[j.servicio];
           const horas = j.inicio ? Math.max(0.5, Math.round(((Date.now() - j.inicio) / 3600e3) * 4) / 4) : serv.min / 60;
           const matLines = p.material
@@ -334,12 +335,12 @@ export const useDemo = create<DemoState>()(
             }),
             invoices: [...st.invoices, inv],
             notifs: [
-              notif("panel", "Parte cerrado con firma", `${j.codigo} en ${clientName(j.clientId)}. Informe enviado y factura en borrador.`, "trabajo", "facturacion"),
+              notif("panel", "Parte cerrado con firma", tradf("{0} en {1}. Informe enviado y factura en borrador.", j.codigo, clientName(j.clientId)), "trabajo", "facturacion"),
               ...st.notifs,
             ],
             activity: [
-              activity(`Informe de ${j.codigo} enviado a ${clientName(j.clientId)}`, "info"),
-              activity(`${techName(j.techId)} ha cerrado ${j.codigo} con firma de ${p.firmadoPor}`, "trabajo"),
+              activity(tradf("Informe de {0} enviado a {1}", j.codigo, clientName(j.clientId)), "info"),
+              activity(tradf("{0} ha cerrado {1} con firma de {2}", techName(j.techId), j.codigo, p.firmadoPor), "trabajo"),
               ...st.activity,
             ].slice(0, 40),
             lastChange: { ids: [jobId, inv.id, ...p.material.map((m) => m.itemId)], ts: Date.now() },
@@ -361,7 +362,7 @@ export const useDemo = create<DemoState>()(
             ),
             jobs: st.jobs.map((j) => (j.id === inv.jobId ? { ...j, estado: "facturado" } : j)),
             counters: { ...st.counters, invoice: n + 1 },
-            activity: [activity(`Factura ${numero} emitida y registrada con VeriFactu`, "factura"), ...st.activity].slice(0, 40),
+            activity: [activity(tradf("Factura {0} emitida y registrada con VeriFactu", numero), "factura"), ...st.activity].slice(0, 40),
             lastChange: { ids: [invoiceId], ts: Date.now() },
           }));
         },
@@ -371,8 +372,8 @@ export const useDemo = create<DemoState>()(
           if (!inv) return;
           set((st) => ({
             invoices: st.invoices.map((x) => (x.id === invoiceId ? { ...x, estado: "cobrada", cobradaEn: Date.now(), metodo } : x)),
-            notifs: [notif("panel", "Pago recibido", `${clientName(inv.clientId)} ha pagado ${inv.numero} por ${metodo}`, "pago", "cobros"), ...st.notifs],
-            activity: [activity(`Cobrada ${inv.numero} por ${metodo}`, "pago"), ...st.activity].slice(0, 40),
+            notifs: [notif("panel", "Pago recibido", tradf("{0} ha pagado {1} por {2}", clientName(inv.clientId), inv.numero, metodo), "pago", "cobros"), ...st.notifs],
+            activity: [activity(tradf("Cobrada {0} por {1}", inv.numero, metodo), "pago"), ...st.activity].slice(0, 40),
             lastChange: { ids: [invoiceId], ts: Date.now() },
           }));
         },
@@ -399,14 +400,14 @@ export const useDemo = create<DemoState>()(
             resumen: texto.length > 110 ? texto.slice(0, 107) + "…" : texto,
             lineas: [{ speaker: "cliente", texto, t: 0 }],
             estado: "nuevo",
-            servicio: tipo === "presupuesto" ? SECTOR_POR_ID[get().sector].servicios.length - 1 : 0,
+            servicio: tipo === "presupuesto" ? sectorDe(idiomaGlobal(), get().sector).servicios.length - 1 : 0,
             // si quien llama ya lo ha leído (la sección «Pruébalo tú»), se respeta esa lectura
             ...lectura,
           };
           set((st) => ({
             avisos: [a, ...st.avisos],
             notifs: [notif("panel", canal === "web" ? "Solicitud desde la web" : "Aviso recogido por el asistente", a.resumen, "aviso", "central-avisos"), ...st.notifs],
-            activity: [activity(`${canal === "web" ? "Formulario web" : "Asistente de WhatsApp"}: ${a.contacto}`, "aviso"), ...st.activity].slice(0, 40),
+            activity: [activity(`${canal === "web" ? trad("Formulario web") : trad("Asistente de WhatsApp")}: ${a.contacto}`, "aviso"), ...st.activity].slice(0, 40),
             lastChange: { ids: [a.id], ts: Date.now() },
           }));
           return a.id;
@@ -420,7 +421,7 @@ export const useDemo = create<DemoState>()(
               { id, nombre, tipo, municipio, direccion: municipio, contacto, telefono, email: `${contacto.split(" ")[0].toLowerCase() || "contacto"}@ejemplo.es`, cif: "Pendiente", lat, lon, desde: isoDay(new Date()), centros: 1, etiquetas: ["Nuevo"] },
               ...st.clients,
             ],
-            activity: [activity(`Nuevo cliente: ${nombre}`, "info"), ...st.activity].slice(0, 40),
+            activity: [activity(tradf("Nuevo cliente: {0}", nombre), "info"), ...st.activity].slice(0, 40),
             lastChange: { ids: [id], ts: Date.now() },
           }));
           return id;
@@ -432,7 +433,7 @@ export const useDemo = create<DemoState>()(
           if (!inv || inv.serie === "R") return;
           const n = s.invoices.filter((x) => x.serie === "R").length + 1;
           const numero = `R-${new Date().getFullYear()}-${String(n).padStart(4, "0")}`;
-          const lineas = inv.lineas.map((l) => ({ ...l, concepto: `Rectifica ${inv.numero}: ${l.concepto}`, precio: -l.precio }));
+          const lineas = inv.lineas.map((l) => ({ ...l, concepto: tradf("Rectifica {0}: {1}", inv.numero, l.concepto), precio: -l.precio }));
           const r: Invoice = {
             id: uid("f"),
             numero,
@@ -448,7 +449,7 @@ export const useDemo = create<DemoState>()(
           };
           set((st) => ({
             invoices: [...st.invoices.map((x) => (x.id === invoiceId ? { ...x, estado: "cobrada" as const, cobradaEn: x.cobradaEn ?? Date.now(), metodo: x.metodo ?? ("transferencia" as const) } : x)), r],
-            activity: [activity(`Rectificativa ${numero} registrada con VeriFactu`, "factura"), ...st.activity].slice(0, 40),
+            activity: [activity(tradf("Rectificativa {0} registrada con VeriFactu", numero), "factura"), ...st.activity].slice(0, 40),
             lastChange: { ids: [r.id, invoiceId], ts: Date.now() },
           }));
         },
@@ -457,8 +458,8 @@ export const useDemo = create<DemoState>()(
           const a: Absence = { id: uid("au"), techId, tipo, desde, hasta, estado: "pendiente", solicitada: Date.now() };
           set((st) => ({
             absences: [...st.absences, a],
-            notifs: [notif("panel", "Solicitud de vacaciones", `${techName(techId)} pide ${tipo} del ${desde.split("-").reverse().join("/")} al ${hasta.split("-").reverse().join("/")}`, "equipo", "vacaciones"), ...st.notifs],
-            activity: [activity(`${techName(techId)} ha pedido ${tipo}`, "equipo"), ...st.activity].slice(0, 40),
+            notifs: [notif("panel", "Solicitud de vacaciones", tradf("{0} pide {1} del {2} al {3}", techName(techId), tipo, desde.split("-").reverse().join("/"), hasta.split("-").reverse().join("/")), "equipo", "vacaciones"), ...st.notifs],
+            activity: [activity(tradf("{0} ha pedido {1}", techName(techId), tipo), "equipo"), ...st.activity].slice(0, 40),
             lastChange: { ids: [a.id], ts: Date.now() },
           }));
           return a.id;
@@ -469,8 +470,8 @@ export const useDemo = create<DemoState>()(
           if (!a) return;
           set((st) => ({
             absences: st.absences.map((x) => (x.id === id ? { ...x, estado: ok ? "aprobada" : "rechazada" } : x)),
-            notifs: [notif("app", ok ? "Vacaciones aprobadas" : "Solicitud no aprobada", `Del ${a.desde.split("-").reverse().join("/")} al ${a.hasta.split("-").reverse().join("/")}`, "equipo", "vacaciones"), ...st.notifs],
-            activity: [activity(`${ok ? "Aprobadas" : "Rechazadas"} las ${a.tipo} de ${techName(a.techId)}`, "equipo"), ...st.activity].slice(0, 40),
+            notifs: [notif("app", ok ? trad("Vacaciones aprobadas") : trad("Solicitud no aprobada"), tradf("Del {0} al {1}", a.desde.split("-").reverse().join("/"), a.hasta.split("-").reverse().join("/")), "equipo", "vacaciones"), ...st.notifs],
+            activity: [activity(tradf("{0} las {1} de {2}", ok ? trad("Aprobadas") : trad("Rechazadas"), trad(a.tipo), techName(a.techId)), "equipo"), ...st.activity].slice(0, 40),
             lastChange: { ids: [id], ts: Date.now() },
           }));
         },
@@ -487,7 +488,7 @@ export const useDemo = create<DemoState>()(
           set((st) => ({
             payslips: [...st.payslips, ...nuevas],
             notifs: [notif("app", "Tu nómina ya está disponible", "Nómina de este mes", "equipo", "nominas"), ...st.notifs],
-            activity: [activity(`Nóminas del mes repartidas a ${nuevas.length} personas`, "equipo"), ...st.activity].slice(0, 40),
+            activity: [activity(tradf("Nóminas del mes repartidas a {0} personas", nuevas.length), "equipo"), ...st.activity].slice(0, 40),
             lastChange: { ids: nuevas.map((n) => n.id), ts: Date.now() },
           }));
         },
@@ -504,7 +505,7 @@ export const useDemo = create<DemoState>()(
         sendChat: (techId, from, texto, jobId) =>
           set((st) => ({
             chats: [...st.chats, { id: uid("ch"), techId, from, texto, ts: Date.now(), jobId }],
-            notifs: [notif(from === "oficina" ? "app" : "panel", from === "oficina" ? "Mensaje de la oficina" : `Mensaje de ${techName(techId)}`, texto, "info", "chat"), ...st.notifs],
+            notifs: [notif(from === "oficina" ? "app" : "panel", from === "oficina" ? "Mensaje de la oficina" : tradf("Mensaje de {0}", techName(techId)), texto, "info", "chat"), ...st.notifs],
           })),
 
         addExpense: (techId, proveedor, categoria, base) =>
@@ -549,6 +550,12 @@ export const useDemo = create<DemoState>()(
   ),
 );
 
+/** Cada idioma guarda su propia demo: los textos de ejemplo se crean ya traducidos. */
+export function claveDemo() {
+  const lang = idiomaGlobal();
+  return lang === "es" ? "nexo4pymes-demo" : `nexo4pymes-demo-${lang}`;
+}
+
 /* ---------- Sincronización entre pestañas ---------- */
 let applyingRemote = false;
 let channel: BroadcastChannel | null = null;
@@ -556,7 +563,7 @@ const TAB = Math.random().toString(36).slice(2);
 
 export function startSync() {
   if (typeof window === "undefined" || channel || !("BroadcastChannel" in window)) return;
-  channel = new BroadcastChannel("nexo4pymes-demo");
+  channel = new BroadcastChannel(claveDemo());
   channel.onmessage = (e: MessageEvent<{ from: string; data: DemoData }>) => {
     if (!e.data || e.data.from === TAB) return;
     applyingRemote = true;

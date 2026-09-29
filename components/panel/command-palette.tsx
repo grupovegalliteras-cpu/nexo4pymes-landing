@@ -9,6 +9,7 @@ import { useUi } from "@/store/ui";
 import { cn, fmt } from "@/lib/utils";
 import { Icon } from "@/components/icon";
 import { usePanelNav, SHORT } from "./nav";
+import { trad } from "@/lib/t";
 
 type Item = { id: string; group: string; label: string; sub?: string; icon: ReactNode; run: () => void };
 
@@ -37,8 +38,8 @@ export function CommandPalette() {
     const mods: Item[] = MODULOS.map((m) => ({
       id: `m-${m.id}`,
       group: "Módulos",
-      label: m.id === "instalaciones" ? sector.instalacion.plural : SHORT[m.id],
-      sub: m.nombre !== SHORT[m.id] ? m.nombre : undefined,
+      label: m.id === "instalaciones" ? trad(sector.instalacion.plural) : trad(SHORT[m.id]),
+      sub: m.nombre !== SHORT[m.id] ? trad(m.nombre) : undefined,
       icon: <Icon name={m.icono} className="size-4" />,
       run: () => go(m.id),
     }));
@@ -83,7 +84,7 @@ export function CommandPalette() {
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-[90] flex items-start justify-center p-4 pt-[12vh]" role="dialog" aria-modal aria-label="Buscar en todo">
+        <div className="fixed inset-0 z-[90] flex items-start justify-center p-4 pt-[12vh]" role="dialog" aria-modal aria-label={trad("Buscar en todo")}>
           <motion.div className="absolute inset-0 bg-[#04121a]/40" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)} />
           <motion.div
             initial={{ opacity: 0, scale: 0.97, y: -8 }}
@@ -111,27 +112,27 @@ export function CommandPalette() {
                   } else if (e.key === "Enter") run(items[idx]);
                   else if (e.key === "Escape") setOpen(false);
                 }}
-                placeholder="Busca un cliente, una factura, una orden o un módulo"
+                placeholder={trad("Busca un cliente, una factura, una orden o un módulo")}
                 className="h-12 flex-1 bg-transparent text-[15px] outline-none placeholder:text-fg-3"
-                aria-label="Buscar"
+                aria-label={trad("Buscar")}
               />
             </div>
             <div className="max-h-[50vh] overflow-auto p-1.5 scroll-thin">
-              {items.length === 0 && <div className="px-3 py-10 text-center text-sm text-fg-3">Sin resultados para «{q}»</div>}
+              {items.length === 0 && <div className="px-3 py-10 text-center text-sm text-fg-3">{trad("Sin resultados para «")}{trad(q)}»</div>}
               {items.map((it, i) => {
                 const header = it.group !== lastGroup ? it.group : null;
                 lastGroup = it.group;
                 return (
                   <div key={it.id}>
-                    {header && <div className="px-2.5 pt-2 pb-1 text-[11px] font-medium text-fg-3">{header}</div>}
+                    {header && <div className="px-2.5 pt-2 pb-1 text-[11px] font-medium text-fg-3">{trad(header)}</div>}
                     <button
                       onMouseEnter={() => setIdx(i)}
                       onClick={() => run(it)}
                       className={cn("flex h-10 w-full items-center gap-3 rounded-lg px-2.5 text-left", i === idx ? "bg-brand-soft text-fg" : "text-fg-2")}
                     >
-                      <span className={cn(i === idx ? "text-brand" : "text-fg-3")}>{it.icon}</span>
-                      <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-fg">{it.label}</span>
-                      {it.sub && <span className="max-w-[45%] truncate text-xs text-fg-3">{it.sub}</span>}
+                      <span className={cn(i === idx ? "text-brand" : "text-fg-3")}>{trad(it.icon)}</span>
+                      <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-fg">{trad(it.label)}</span>
+                      {it.sub && <span className="max-w-[45%] truncate text-xs text-fg-3">{trad(it.sub)}</span>}
                       {i === idx && <CornerDownLeft className="size-3.5 text-fg-3" />}
                     </button>
                   </div>

@@ -11,10 +11,13 @@ import { addDays, cn, fmt, isoDay } from "@/lib/utils";
 import { Avatar, Badge, Button, Card, CardHeader, Overlay } from "@/components/ui";
 import { PageHeader } from "../shell";
 import { usePanelNav } from "../nav";
+import { trad, tradf } from "@/lib/t";
 
 /* ---------------- Motor de respuestas del asistente ---------------- */
 type Answer = { text: string; link?: { label: string; go: string; focus?: string }; bars?: { label: string; value: number }[] };
 const DIAS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+const DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+const TAGE = ["sonntag", "montag", "dienstag", "mittwoch", "donnerstag", "freitag", "samstag"];
 const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
 export function answer(q: string, s: DemoState): Answer {
@@ -23,16 +26,16 @@ export function answer(q: string, s: DemoState): Answer {
   const client = s.clients.find((c) => n.includes(norm(c.nombre)) || norm(c.nombre).split(" ").filter((w) => w.length > 3 && !["hotel", "villa", "comunidad", "clinica"].includes(w)).some((w) => n.includes(w)));
   const emit = s.invoices.filter((i) => i.estado !== "borrador");
 
-  if (client && /factur|gastado|cuanto/.test(n)) {
+  if (client && /factur|gastado|cuanto|invoic|billed|how much|spent|rechnung|wie viel|umsatz/.test(n)) {
     const inv = emit.filter((i) => i.clientId === client.id && i.fecha.startsWith(year));
     const tot = inv.reduce((a, i) => a + i.total, 0);
     const pend = inv.filter((i) => i.estado !== "cobrada").reduce((a, i) => a + i.total, 0);
-    return { text: `A ${client.nombre} le has facturado ${fmt.eur(tot)} este año en ${inv.length} facturas. ${pend ? `Tiene ${fmt.eur(pend)} pendientes de cobro.` : "Lo tiene todo pagado."}`, link: { label: `Abrir ficha de ${client.nombre}`, go: "clientes", focus: client.id } };
+    return { text: tradf("A {0} le has facturado {1} este año en {2} facturas. {3}", client.nombre, fmt.eur(tot), inv.length, pend ? tradf("Tiene {0} pendientes de cobro.", fmt.eur(pend)) : trad("Lo tiene todo pagado.")), link: { label: tradf("Abrir ficha de {0}", client.nombre), go: "clientes", focus: client.id } };
   }
-  if (/hueco|libre|disponible|quien puede/.test(n)) {
+  if (/hueco|libre|disponible|quien puede|free|availab|slot|who can|frei|verfugbar|wer kann|bzeitb/.test(n)) {
     let d = new Date();
-    const idx = DIAS.findIndex((x) => n.includes(norm(x)));
-    if (n.includes("manana")) d = addDays(d, 1);
+    const idx = [DIAS, DAYS, TAGE].map((l) => l.findIndex((x) => n.includes(norm(x)))).find((i) => i >= 0) ?? -1;
+    if (/manana|tomorrow|morgen/.test(n)) d = addDays(d, 1);
     else if (idx >= 0) {
       const diff = (idx - d.getDay() + 7) % 7 || 7;
       d = addDays(d, diff);
@@ -44,58 +47,58 @@ export function answer(q: string, s: DemoState): Answer {
       .sort((a, b) => a.n - b.n);
     const best = carga[0];
     return {
-      text: `El ${fmt.dayLong(d)} quien más hueco tiene es ${best.t.nombre}, con ${best.n} ${best.n === 1 ? "trabajo" : "trabajos"} en agenda. Después ${carga[1]?.t.nombre} (${carga[1]?.n}).`,
+      text: tradf("El {0} quien más hueco tiene es {1}, con {2} {3} en agenda. Después {4} ({5}).", fmt.dayLong(d), best.t.nombre, best.n, best.n === 1 ? trad("trabajo") : trad("trabajos"), carga[1]?.t.nombre, carga[1]?.n),
       bars: carga.map((c) => ({ label: c.t.nombre.split(" ")[0], value: c.n })),
-      link: { label: "Ver planificación", go: "planificacion" },
+      link: { label: trad("Ver planificación"), go: "planificacion" },
     };
   }
-  if (/venc|debe|impag|moroso|sin cobrar|pendiente de cobro/.test(n)) {
+  if (/venc|debe|impag|moroso|sin cobrar|pendiente de cobro|overdue|owe|unpaid|debt|uberfallig|schuld|unbezahlt|offene posten/.test(n)) {
     const v = emit.filter((i) => i.estado === "vencida");
     const by = new Map<string, number>();
     v.forEach((i) => by.set(i.clientId, (by.get(i.clientId) ?? 0) + i.total));
     const top = [...by.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3);
     return {
-      text: `Tienes ${v.length} facturas vencidas por ${fmt.eur(v.reduce((a, i) => a + i.total, 0))}. Los que más deben: ${top.map(([id, t]) => `${s.clients.find((c) => c.id === id)?.nombre} (${fmt.eur0(t)})`).join(", ")}.`,
-      link: { label: "Ver impagos", go: "impagos" },
+      text: tradf("Tienes {0} facturas vencidas por {1}. Los que más deben: {2}.", v.length, fmt.eur(v.reduce((a, i) => a + i.total, 0)), top.map(([id, t]) => `${s.clients.find((c) => c.id === id)?.nombre} (${fmt.eur0(t)})`).join(", ")),
+      link: { label: trad("Ver impagos"), go: "impagos" },
     };
   }
-  if (/cobr/.test(n)) {
+  if (/cobr|collected|payments received|been paid|bezahlt|zahlungseing|eingenommen/.test(n)) {
     const mes = isoDay(new Date()).slice(0, 7);
     const c = emit.filter((i) => i.cobradaEn && isoDay(new Date(i.cobradaEn)).startsWith(mes));
-    return { text: `Este mes has cobrado ${fmt.eur(c.reduce((a, i) => a + i.total, 0))} de ${c.length} facturas.`, link: { label: "Ver cobros", go: "cobros" } };
+    return { text: tradf("Este mes has cobrado {0} de {1} facturas.", fmt.eur(c.reduce((a, i) => a + i.total, 0)), c.length), link: { label: trad("Ver cobros"), go: "cobros" } };
   }
-  if (/factur/.test(n)) {
+  if (/factur|invoic|rechnung/.test(n)) {
     const mes = isoDay(new Date()).slice(0, 7);
     const f = emit.filter((i) => i.fecha.startsWith(mes));
-    return { text: `Este mes llevas ${fmt.eur(f.reduce((a, i) => a + i.total, 0))} facturados en ${f.length} facturas, IVA incluido.`, link: { label: "Ver facturación", go: "facturacion" } };
+    return { text: tradf("Este mes llevas {0} facturados en {1} facturas, IVA incluido.", fmt.eur(f.reduce((a, i) => a + i.total, 0)), f.length), link: { label: trad("Ver facturación"), go: "facturacion" } };
   }
-  if (/hoy|trabajos|ordenes/.test(n)) {
+  if (/hoy|trabajos|ordenes|today|jobs|work order|heut|auftrag/.test(n)) {
     const hoy = isoDay(new Date());
     const j = s.jobs.filter((x) => x.fecha === hoy);
     const done = j.filter((x) => x.estado === "finalizado" || x.estado === "facturado").length;
-    return { text: `Hoy hay ${j.length} trabajos: ${done} terminados, ${j.filter((x) => x.estado === "en-curso").length} en curso y ${j.filter((x) => x.estado === "asignado").length} por empezar.`, link: { label: "Ver trabajos", go: "trabajos" } };
+    return { text: tradf("Hoy hay {0} trabajos: {1} terminados, {2} en curso y {3} por empezar.", j.length, done, j.filter((x) => x.estado === "en-curso").length, j.filter((x) => x.estado === "asignado").length), link: { label: trad("Ver trabajos"), go: "trabajos" } };
   }
-  if (/stock|material|falta|almacen/.test(n)) {
+  if (/stock|material|falta|almacen|missing|short|lager|fehlt/.test(n)) {
     const b = s.stock.filter((x) => x.nave < x.minimo);
-    return { text: b.length ? `Hay ${b.length} artículos por debajo del mínimo: ${b.map((x) => `${x.nombre} (${x.nave} ${x.unidad})`).join(", ")}.` : "Todo el material está por encima del mínimo.", link: { label: "Ver almacén", go: "almacen" } };
+    return { text: b.length ? tradf("Hay {0} artículos por debajo del mínimo: {1}.", b.length, b.map((x) => `${x.nombre} (${x.nave} ${x.unidad})`).join(", ")) : trad("Todo el material está por encima del mínimo."), link: { label: trad("Ver almacén"), go: "almacen" } };
   }
-  if (/vacacion|ausen|fiesta/.test(n)) {
+  if (/vacacion|ausen|fiesta|holiday|vacation|absen|leave|urlaub|abwesen/.test(n)) {
     const hoy = isoDay(new Date());
     const now = s.absences.filter((a) => a.estado === "aprobada" && a.desde <= hoy && a.hasta >= hoy);
     const pend = s.absences.filter((a) => a.estado === "pendiente");
-    return { text: `${now.length ? `Hoy está de vacaciones ${now.map((a) => s.techs.find((t) => t.id === a.techId)?.nombre).join(" y ")}.` : "Hoy no falta nadie."} ${pend.length ? `Tienes ${pend.length} solicitudes por aprobar.` : ""}`, link: { label: "Ver vacaciones", go: "vacaciones" } };
+    return { text: `${now.length ? tradf("Hoy está de vacaciones {0}.", now.map((a) => s.techs.find((t) => t.id === a.techId)?.nombre).join(` ${trad("y")} `)) : trad("Hoy no falta nadie.")} ${pend.length ? tradf("Tienes {0} solicitudes por aprobar.", pend.length) : ""}`, link: { label: trad("Ver vacaciones"), go: "vacaciones" } };
   }
-  if (/mejor cliente|rentab|margen/.test(n)) {
+  if (/mejor cliente|rentab|margen|best customer|top customer|profit|margin|beste kunden|besten kunden|marge/.test(n)) {
     const by = new Map<string, number>();
     emit.filter((i) => i.fecha.startsWith(year)).forEach((i) => by.set(i.clientId, (by.get(i.clientId) ?? 0) + i.total));
     const top = [...by.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
-    return { text: `Tus mejores clientes este año son ${top.slice(0, 3).map(([id]) => s.clients.find((c) => c.id === id)?.nombre).join(", ")}.`, bars: top.map(([id, v]) => ({ label: s.clients.find((c) => c.id === id)?.nombre.split(" ").slice(0, 2).join(" ") ?? "", value: Math.round(v) })), link: { label: "Ver rentabilidad", go: "rentabilidad" } };
+    return { text: tradf("Tus mejores clientes este año son {0}.", top.slice(0, 3).map(([id]) => s.clients.find((c) => c.id === id)?.nombre).join(", ")), bars: top.map(([id, v]) => ({ label: s.clients.find((c) => c.id === id)?.nombre.split(" ").slice(0, 2).join(" ") ?? "", value: Math.round(v) })), link: { label: trad("Ver rentabilidad"), go: "rentabilidad" } };
   }
-  return { text: "Puedo responderte sobre facturación, cobros, clientes, trabajos, el equipo o el material. Pregunta como lo harías a alguien de la oficina." };
+  return { text: trad("Puedo responderte sobre facturación, cobros, clientes, trabajos, el equipo o el material. Pregunta como lo harías a alguien de la oficina.") };
 }
 
 const SUGERENCIAS = (cliente: string) => [
-  `¿Cuánto le he facturado a ${cliente} este año?`,
+  tradf("¿Cuánto le he facturado a {0} este año?", cliente),
   "¿Qué técnico tiene hueco el jueves?",
   "¿Quién me debe dinero?",
   "¿Cómo van los trabajos de hoy?",
@@ -139,14 +142,15 @@ function AiChat({ compact }: { compact?: boolean }) {
                 <Sparkles className="size-4" />
               </span>
               <div>
-                <div className="text-sm font-semibold">Pregúntale a tu empresa</div>
-                <div className="text-xs text-fg-3">Responde con tus datos y te lleva a la pantalla correcta.</div>
+                <div className="text-sm font-semibold">{trad("Pregúntale a tu empresa")}</div>
+                <div className="text-xs text-fg-3">{trad("Responde con tus datos y te lleva a la pantalla correcta.")}</div>
               </div>
             </div>
             <div className={cn("grid gap-2", !compact && "sm:grid-cols-2")}>
               {SUGERENCIAS(sector.llamada.cliente).map((s) => (
-                <button key={s} onClick={() => ask(s)} className="rounded-xl border border-line bg-surface px-3 py-2.5 text-left text-[13px] transition hover:border-ai/50 hover:bg-ai-soft/40">
-                  {s}
+                // la pregunta se envía ya traducida: el asistente entiende los tres idiomas
+                <button key={s} onClick={() => ask(trad(s))} className="rounded-xl border border-line bg-surface px-3 py-2.5 text-left text-[13px] transition hover:border-ai/50 hover:bg-ai-soft/40">
+                  {trad(s)}
                 </button>
               ))}
             </div>
@@ -154,22 +158,22 @@ function AiChat({ compact }: { compact?: boolean }) {
         )}
         {turns.map((t, i) => (
           <div key={i} className="grid gap-2">
-            <div className="ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-fg px-3 py-2 text-[13px] text-bg">{t.q}</div>
+            <div className="ml-auto max-w-[85%] rounded-2xl rounded-br-md bg-fg px-3 py-2 text-[13px] text-bg">{trad(t.q)}</div>
             {t.a ? (
               <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="max-w-[92%] rounded-2xl rounded-bl-md border border-line bg-surface p-3 text-[13px]">
                 <div className="mb-1 flex items-center gap-1 text-[11px] font-medium text-ai">
-                  <Sparkles className="size-3" /> Asistente
+                  <Sparkles className="size-3" />{" "}{trad("Asistente")}
                 </div>
-                <TypeText text={t.a.text} />
+                <TypeText text={trad(t.a.text)} />
                 {t.a.bars && (
                   <div className="mt-3 grid gap-1.5">
                     {t.a.bars.map((b) => (
                       <div key={b.label} className="grid grid-cols-[90px_1fr_auto] items-center gap-2 text-xs">
-                        <span className="truncate text-fg-2">{b.label}</span>
+                        <span className="truncate text-fg-2">{trad(b.label)}</span>
                         <div className="h-1.5 rounded-full bg-surface-2">
                           <motion.div className="h-full rounded-full bg-ai" initial={{ width: 0 }} animate={{ width: `${(b.value / Math.max(...t.a!.bars!.map((x) => x.value), 1)) * 100}%` }} />
                         </div>
-                        <span className="tabular text-fg-3">{b.value > 999 ? fmt.eur0(b.value) : b.value}</span>
+                        <span className="tabular text-fg-3">{b.value > 999 ? fmt.eur0(b.value) : trad(b.value)}</span>
                       </div>
                     ))}
                   </div>
@@ -182,7 +186,7 @@ function AiChat({ compact }: { compact?: boolean }) {
                     }}
                     className="mt-2.5 inline-flex items-center gap-1 rounded-md bg-ai-soft px-2 py-1 text-xs font-medium text-ai hover:brightness-95"
                   >
-                    {t.a.link.label}
+                    {trad(t.a.link.label)}
                   </button>
                 )}
               </motion.div>
@@ -191,7 +195,7 @@ function AiChat({ compact }: { compact?: boolean }) {
                 <motion.span animate={{ rotate: 360 }} transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}>
                   <Sparkles className="size-3.5 text-ai" />
                 </motion.span>
-                Consultando tus datos…
+                {trad("Consultando tus datos…")}
               </div>
             )}
           </div>
@@ -205,8 +209,8 @@ function AiChat({ compact }: { compact?: boolean }) {
           ask(q);
         }}
       >
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Escribe tu pregunta" className="h-10 flex-1 rounded-xl border border-line bg-bg px-3 text-sm outline-none focus:border-ai" aria-label="Pregunta" />
-        <Button variant="ai" type="submit" className="h-10" aria-label="Preguntar">
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={trad("Escribe tu pregunta")} className="h-10 flex-1 rounded-xl border border-line bg-bg px-3 text-sm outline-none focus:border-ai" aria-label={trad("Pregunta")} />
+        <Button variant="ai" type="submit" className="h-10" aria-label={trad("Preguntar")}>
           <Send className="size-4" />
         </Button>
       </form>
@@ -247,9 +251,9 @@ export function AiDrawer() {
             <motion.aside initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: 40, opacity: 0 }} transition={{ type: "spring", bounce: 0.1, duration: 0.4 }} className="relative flex h-full w-full max-w-[420px] flex-col border-l border-line bg-bg shadow-e3">
               <div className="flex h-12 items-center justify-between border-b border-line bg-surface px-4">
                 <span className="flex items-center gap-2 text-sm font-semibold">
-                  <Sparkles className="size-4 text-ai" /> Asistente IA
+                  <Sparkles className="size-4 text-ai" />{" "}{trad("Asistente IA")}
                 </span>
-                <button onClick={() => setOpen(false)} className="grid size-8 place-items-center rounded-lg text-fg-2 hover:bg-surface-2" aria-label="Cerrar">
+                <button onClick={() => setOpen(false)} className="grid size-8 place-items-center rounded-lg text-fg-2 hover:bg-surface-2" aria-label={trad("Cerrar")}>
                   <X className="size-4" />
                 </button>
               </div>
@@ -277,19 +281,19 @@ export function InformesAutomaticos() {
   const venc = invoices.filter((i) => i.estado === "vencida");
   return (
     <div className="pb-8">
-      <PageHeader id="informes-automaticos" actions={<Button size="sm" variant="primary" onClick={() => setSent(true)}><Send className="size-3.5" /> {sent ? "Enviado a tu email" : "Enviarme el de esta semana"}</Button>} />
+      <PageHeader id="informes-automaticos" actions={<Button size="sm" variant="primary" onClick={() => setSent(true)}><Send className="size-3.5" /> {sent ? trad("Enviado a tu email") : trad("Enviarme el de esta semana")}</Button>} />
       <div className="px-4 sm:px-6">
         <div className="mx-auto max-w-2xl overflow-hidden rounded-2xl border border-line bg-surface shadow-e2">
           <div className="border-b border-line px-5 py-3 text-[13px]">
             <div className="flex items-center gap-2">
               <Mail className="size-4 text-fg-3" />
-              <span className="font-semibold">Tu semana en {sector.empresa}</span>
-              <span className="ml-auto text-xs text-fg-3">Lunes, 7:00</span>
+              <span className="font-semibold">{trad("Tu semana en")}{" "}{trad(sector.empresa)}</span>
+              <span className="ml-auto text-xs text-fg-3">{trad("Lunes, 7:00")}</span>
             </div>
-            <div className="mt-1 text-xs text-fg-3">De: Nexo4Pymes. Para: dirección</div>
+            <div className="mt-1 text-xs text-fg-3">{trad("De: Nexo4Pymes. Para: dirección")}</div>
           </div>
           <div className="grid gap-5 p-5">
-            <p className="text-[14px]">Buenos días. Esto es lo más importante de los últimos 7 días:</p>
+            <p className="text-[14px]">{trad("Buenos días. Esto es lo más importante de los últimos 7 días:")}</p>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
                 ["Facturado", fmt.eur0(fact)],
@@ -298,20 +302,20 @@ export function InformesAutomaticos() {
                 ["Avisos recibidos", String(avisos.filter((a) => a.recibido > Date.now() - 7 * 864e5).length)],
               ].map(([k, v]) => (
                 <div key={k} className="rounded-xl bg-surface-2 p-3">
-                  <div className="text-[11px] text-fg-3">{k}</div>
-                  <div className="font-display text-xl font-semibold tabular">{v}</div>
+                  <div className="text-[11px] text-fg-3">{trad(k)}</div>
+                  <div className="font-display text-xl font-semibold tabular">{trad(v)}</div>
                 </div>
               ))}
             </div>
             <div>
-              <div className="text-[13px] font-semibold">Para esta semana</div>
+              <div className="text-[13px] font-semibold">{trad("Para esta semana")}</div>
               <ul className="mt-2 grid gap-1.5 text-[13px] text-fg-2">
-                <li>{venc.length} facturas vencidas por {fmt.eur0(venc.reduce((a, i) => a + i.total, 0))}. Ya se han enviado los recordatorios.</li>
-                <li>{jobs.filter((j) => j.estado === "pendiente").length} órdenes sin técnico asignado.</li>
-                <li>La ITV de una furgoneta vence este mes.</li>
+                <li>{trad(venc.length)}{" "}{trad("facturas vencidas por")}{" "}{fmt.eur0(venc.reduce((a, i) => a + i.total, 0))}.{" "}{trad("Ya se han enviado los recordatorios.")}</li>
+                <li>{trad(jobs.filter((j) => j.estado === "pendiente").length)}{" "}{trad("órdenes sin técnico asignado.")}</li>
+                <li>{trad("La ITV de una furgoneta vence este mes.")}</li>
               </ul>
             </div>
-            <Button variant="primary" className="justify-self-start" onClick={() => go("direccion")}>Abrir el panel</Button>
+            <Button variant="primary" className="justify-self-start" onClick={() => go("direccion")}>{trad("Abrir el panel")}</Button>
           </div>
         </div>
       </div>
@@ -335,22 +339,22 @@ export function Automatizaciones() {
           <Card key={f.t} className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-[14px] font-semibold">
-                <Zap className="size-4 text-sun" /> {f.t}
+                <Zap className="size-4 text-sun" /> {trad(f.t)}
               </div>
-              <Badge tone="ok" dot>Activa</Badge>
+              <Badge tone="ok" dot>{trad("Activa")}</Badge>
             </div>
             <div className="mt-4 grid gap-1">
               {f.steps.map(([icon, label], i) => (
                 <div key={label}>
                   <motion.div initial={{ opacity: 0, x: -6 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="flex items-center gap-2.5 rounded-lg border border-line bg-surface-2/50 px-3 py-2 text-[13px]">
                     <span className="grid size-6 place-items-center rounded-md bg-brand-soft text-brand">{icon}</span>
-                    {label}
+                    {trad(label)}
                   </motion.div>
                   {i < f.steps.length - 1 && <ArrowDown className="mx-auto my-0.5 size-3.5 text-fg-3" />}
                 </div>
               ))}
             </div>
-            <div className="mt-3 text-xs text-fg-3">Se ha ejecutado {f.n} veces en los últimos 90 días (datos de ejemplo).</div>
+            <div className="mt-3 text-xs text-fg-3">{trad("Se ha ejecutado")}{" "}{trad(f.n)}{" "}{trad("veces en los últimos 90 días (datos de ejemplo).")}</div>
           </Card>
         ))}
       </div>
@@ -376,16 +380,16 @@ export function Conexiones() {
         {items.map((i) => (
           <Card key={i.id} className="flex flex-col gap-3 p-4">
             <div className="flex items-center justify-between">
-              <span className="grid size-10 place-items-center rounded-xl bg-surface-2 text-fg-2">{i.icon}</span>
-              <button role="switch" aria-checked={on[i.id]} aria-label={i.t} onClick={() => setOn((s) => ({ ...s, [i.id]: !s[i.id] }))} className={cn("relative h-5 w-9 rounded-full transition-colors", on[i.id] ? "bg-ok" : "bg-line-strong")}>
+              <span className="grid size-10 place-items-center rounded-xl bg-surface-2 text-fg-2">{trad(i.icon)}</span>
+              <button role="switch" aria-checked={on[i.id]} aria-label={trad(i.t)} onClick={() => setOn((s) => ({ ...s, [i.id]: !s[i.id] }))} className={cn("relative h-5 w-9 rounded-full transition-colors", on[i.id] ? "bg-ok" : "bg-line-strong")}>
                 <motion.span layout className={cn("absolute top-0.5 size-4 rounded-full bg-white shadow", on[i.id] ? "right-0.5" : "left-0.5")} />
               </button>
             </div>
             <div>
-              <div className="text-[14px] font-semibold">{i.t}</div>
-              <div className="text-[13px] text-fg-2">{i.d}</div>
+              <div className="text-[14px] font-semibold">{trad(i.t)}</div>
+              <div className="text-[13px] text-fg-2">{trad(i.d)}</div>
             </div>
-            <Badge tone={on[i.id] ? "ok" : "neutral"} className="self-start">{on[i.id] ? "Conectado" : "Sin conectar"}</Badge>
+            <Badge tone={on[i.id] ? "ok" : "neutral"} className="self-start">{on[i.id] ? trad("Conectado") : trad("Sin conectar")}</Badge>
           </Card>
         ))}
       </div>
@@ -412,20 +416,20 @@ export function Seguridad() {
       <PageHeader id="seguridad" />
       <div className="grid gap-4 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
         <Card className="overflow-x-auto scroll-thin">
-          <CardHeader title="Roles y permisos" sub="Cada persona ve solo lo que necesita" />
+          <CardHeader title={trad("Roles y permisos")} sub={trad("Cada persona ve solo lo que necesita")} />
           <table className="w-full min-w-[520px] text-[13px]">
             <thead>
               <tr className="border-y border-line text-xs text-fg-3">
-                <th className="h-9 px-4 text-left font-medium">Permiso</th>
+                <th className="h-9 px-4 text-left font-medium">{trad("Permiso")}</th>
                 {roles.map((r) => (
-                  <th key={r} className="px-2 font-medium">{r}</th>
+                  <th key={r} className="px-2 font-medium">{trad(r)}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {perms.map(([p, v]) => (
                 <tr key={p} className="border-b border-line/70 last:border-0">
-                  <td className="px-4 py-2">{p}</td>
+                  <td className="px-4 py-2">{trad(p)}</td>
                   {v.map((x, i) => (
                     <td key={i} className="text-center">
                       {x ? <Check className="mx-auto size-4 text-ok" /> : <span className="text-fg-3">–</span>}
@@ -445,18 +449,18 @@ export function Seguridad() {
               [<ShieldCheck key="d" className="size-4" />, "Registro de quién hace qué y cuándo"],
             ].map(([i, t]) => (
               <div key={String(t)} className="flex items-center gap-3 text-[13px]">
-                <span className="grid size-8 place-items-center rounded-lg bg-ok-soft text-ok">{i}</span>
-                {t}
+                <span className="grid size-8 place-items-center rounded-lg bg-ok-soft text-ok">{trad(i)}</span>
+                {trad(t)}
               </div>
             ))}
           </Card>
           <Card className="overflow-hidden">
-            <CardHeader title="Registro de actividad" sub="Últimas acciones" />
+            <CardHeader title={trad("Registro de actividad")} sub={trad("Últimas acciones")} />
             <div className="max-h-72 divide-y divide-line/60 overflow-auto scroll-thin">
               {activity.slice(0, 15).map((a) => (
                 <div key={a.id} className="flex items-center gap-3 px-4 py-2 text-[13px]">
                   <Avatar name={a.texto} color="var(--text-3)" size={20} />
-                  <span className="min-w-0 flex-1 truncate">{a.texto}</span>
+                  <span className="min-w-0 flex-1 truncate">{trad(a.texto)}</span>
                   <span className="text-[11px] text-fg-3 tabular">{fmt.time(a.ts)}</span>
                 </div>
               ))}

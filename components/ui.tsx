@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState, type ButtonHTMLAttributes, type R
 import { createPortal } from "react-dom";
 import { cn, initials } from "@/lib/utils";
 import type { InvoiceStatus, JobStatus } from "@/data/types";
+import { trad } from "@/lib/t";
 
 /* ---------- Botones ---------- */
 type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -40,8 +41,8 @@ export function IconButton({ label, className, children, ...p }: ButtonHTMLAttri
   return (
     <button
       {...p}
-      aria-label={label}
-      title={label}
+      aria-label={trad(label)}
+      title={trad(label)}
       className={cn("inline-grid size-8 place-items-center rounded-lg text-fg-2 transition hover:bg-surface-2 hover:text-fg", className)}
     >
       {children}
@@ -71,37 +72,37 @@ export function Badge({ tone = "neutral", children, className, dot }: { tone?: T
 }
 
 export const JOB_STATUS: Record<JobStatus, { label: string; tone: Tone }> = {
-  pendiente: { label: "Pendiente", tone: "neutral" },
-  asignado: { label: "Asignado", tone: "info" },
-  "en-camino": { label: "En camino", tone: "sun" },
-  "en-curso": { label: "En curso", tone: "brand" },
-  finalizado: { label: "Finalizado", tone: "ok" },
-  facturado: { label: "Facturado", tone: "ai" },
+  pendiente: { label: trad("Pendiente"), tone: "neutral" },
+  asignado: { label: trad("Asignado"), tone: "info" },
+  "en-camino": { label: trad("En camino"), tone: "sun" },
+  "en-curso": { label: trad("En curso"), tone: "brand" },
+  finalizado: { label: trad("Finalizado"), tone: "ok" },
+  facturado: { label: trad("Facturado"), tone: "ai" },
 };
 export function JobStatusBadge({ s }: { s: JobStatus }) {
   const v = JOB_STATUS[s];
   return (
     <Badge tone={v.tone} dot>
-      {v.label}
+      {trad(v.label)}
     </Badge>
   );
 }
 export const INVOICE_STATUS: Record<InvoiceStatus, { label: string; tone: Tone }> = {
-  borrador: { label: "Borrador", tone: "neutral" },
-  emitida: { label: "Pendiente de cobro", tone: "info" },
-  cobrada: { label: "Cobrada", tone: "ok" },
-  vencida: { label: "Vencida", tone: "bad" },
+  borrador: { label: trad("Borrador"), tone: "neutral" },
+  emitida: { label: trad("Pendiente de cobro"), tone: "info" },
+  cobrada: { label: trad("Cobrada"), tone: "ok" },
+  vencida: { label: trad("Vencida"), tone: "bad" },
 };
 export function InvoiceStatusBadge({ s }: { s: InvoiceStatus }) {
   const v = INVOICE_STATUS[s];
   return (
     <Badge tone={v.tone} dot>
-      {v.label}
+      {trad(v.label)}
     </Badge>
   );
 }
 export function UrgencyBadge({ u }: { u: "alta" | "media" | "baja" }) {
-  return <Badge tone={u === "alta" ? "bad" : u === "media" ? "warn" : "neutral"}>{u === "alta" ? "Urgente" : u === "media" ? "Media" : "Baja"}</Badge>;
+  return <Badge tone={u === "alta" ? "bad" : u === "media" ? "warn" : "neutral"}>{u === "alta" ? trad("Urgente") : u === "media" ? trad("Media") : trad("Baja")}</Badge>;
 }
 
 /* ---------- Avatar ---------- */
@@ -129,10 +130,10 @@ export function CardHeader({ title, sub, right, className }: { title: ReactNode;
   return (
     <div className={cn("flex items-start justify-between gap-3 px-4 pt-3.5 pb-2", className)}>
       <div className="min-w-0">
-        <h3 className="text-[13px] font-semibold text-fg">{title}</h3>
-        {sub && <p className="mt-0.5 text-xs text-fg-3">{sub}</p>}
+        <h3 className="text-[13px] font-semibold text-fg">{trad(title)}</h3>
+        {sub && <p className="mt-0.5 text-xs text-fg-3">{trad(sub)}</p>}
       </div>
-      {right}
+      {trad(right)}
     </div>
   );
 }
@@ -192,7 +193,7 @@ export function Segmented<T extends string>({ value, onChange, options, size = "
           )}
         >
           {value === o.value && <motion.span layoutId={`seg-${options.map((x) => x.value).join("")}`} className="absolute inset-0 rounded-md bg-surface shadow-e1" transition={{ type: "spring", bounce: 0.15, duration: 0.35 }} />}
-          <span className="relative">{o.label}</span>
+          <span className="relative">{trad(o.label)}</span>
         </button>
       ))}
     </div>
@@ -221,7 +222,7 @@ export function Modal({ open, onClose, children, className, label }: { open: boo
     <Overlay>
     <AnimatePresence>
       {open && (
-        <div className="absolute inset-0 z-[80] grid place-items-center p-4 [body>&]:fixed" role="dialog" aria-modal aria-label={label}>
+        <div className="absolute inset-0 z-[80] grid place-items-center p-4 [body>&]:fixed" role="dialog" aria-modal aria-label={trad(label)}>
           <motion.div className="absolute inset-0 bg-[#04121a]/50 backdrop-blur-[2px]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
           <motion.div
             initial={{ opacity: 0, y: 12, scale: 0.98 }}
@@ -261,8 +262,8 @@ export function Drawer({ open, onClose, children, title, width = 520 }: { open: 
             style={{ maxWidth: width }}
           >
             <div className="flex h-12 shrink-0 items-center justify-between border-b border-line px-4">
-              <div className="min-w-0 truncate text-sm font-semibold">{title}</div>
-              <IconButton label="Cerrar" onClick={onClose}>
+              <div className="min-w-0 truncate text-sm font-semibold">{trad(title)}</div>
+              <IconButton label={trad("Cerrar")} onClick={onClose}>
                 <X className="size-4" />
               </IconButton>
             </div>
@@ -366,8 +367,8 @@ export function DataTable<T>({
                   setQ(e.target.value);
                   setPage(0);
                 }}
-                placeholder={placeholder}
-                aria-label={placeholder}
+                placeholder={trad(placeholder)}
+                aria-label={trad(placeholder)}
                 className="h-full w-full rounded-lg border border-line bg-bg pl-8 pr-2 text-[13px] outline-none placeholder:text-fg-3 focus:border-brand"
               />
             </label>
@@ -388,13 +389,13 @@ export function DataTable<T>({
                       f === i ? "bg-fg text-bg" : "text-fg-2 hover:bg-surface-2",
                     )}
                   >
-                    {fl.label} <span className={cn("tabular ml-0.5", f === i ? "opacity-70" : "text-fg-3")}>{count}</span>
+                    {trad(fl.label)} <span className={cn("tabular ml-0.5", f === i ? "opacity-70" : "text-fg-3")}>{trad(count)}</span>
                   </button>
                 );
               })}
             </div>
           )}
-          <div className="ml-auto flex items-center gap-2">{toolbar}</div>
+          <div className="ml-auto flex items-center gap-2">{trad(toolbar)}</div>
         </div>
       )}
       <div className="overflow-x-auto scroll-thin">
@@ -408,11 +409,11 @@ export function DataTable<T>({
                       className={cn("inline-flex items-center gap-1 hover:text-fg", sort?.key === c.key && "text-fg")}
                       onClick={() => setSort((s) => (s?.key === c.key ? { key: c.key, dir: (s.dir * -1) as 1 | -1 } : { key: c.key, dir: -1 }))}
                     >
-                      {c.header}
+                      {trad(c.header)}
                       <ArrowUpDown className="size-3" />
                     </button>
                   ) : (
-                    c.header
+                    trad(c.header)
                   )}
                 </th>
               ))}
@@ -448,21 +449,21 @@ export function DataTable<T>({
                 })}
           </tbody>
         </table>
-        {!loading && !slice.length && <div className="grid place-items-center px-4 py-14 text-center text-sm text-fg-3">{empty}</div>}
+        {!loading && !slice.length && <div className="grid place-items-center px-4 py-14 text-center text-sm text-fg-3">{trad(empty)}</div>}
       </div>
       {filtered.length > pageSize && (
         <div className="flex items-center justify-between border-t border-line px-3 py-2 text-xs text-fg-3">
           <span className="tabular">
-            {p * pageSize + 1}–{Math.min(filtered.length, (p + 1) * pageSize)} de {filtered.length}
+            {p * pageSize + 1}–{Math.min(filtered.length, (p + 1) * pageSize)}{" "}{trad("de")}{" "}{trad(filtered.length)}
           </span>
           <div className="flex items-center gap-1">
-            <IconButton label="Página anterior" className="size-7" onClick={() => setPage(Math.max(0, p - 1))} disabled={p === 0}>
+            <IconButton label={trad("Página anterior")} className="size-7" onClick={() => setPage(Math.max(0, p - 1))} disabled={p === 0}>
               <ChevronLeft className="size-4" />
             </IconButton>
             <span className="tabular px-1">
-              {p + 1} / {pages}
+              {p + 1} / {trad(pages)}
             </span>
-            <IconButton label="Página siguiente" className="size-7" onClick={() => setPage(Math.min(pages - 1, p + 1))} disabled={p >= pages - 1}>
+            <IconButton label={trad("Página siguiente")} className="size-7" onClick={() => setPage(Math.min(pages - 1, p + 1))} disabled={p >= pages - 1}>
               <ChevronRight className="size-4" />
             </IconButton>
           </div>
@@ -476,9 +477,9 @@ export function DataTable<T>({
 export function Stat({ label, value, sub, tone, children }: { label: ReactNode; value: ReactNode; sub?: ReactNode; tone?: Tone; children?: ReactNode }) {
   return (
     <div className="min-w-0 px-4 py-3.5">
-      <div className="text-xs text-fg-3">{label}</div>
-      <div className="mt-1 font-display text-[26px] leading-none font-semibold tracking-tight text-fg">{value}</div>
-      {sub && <div className={cn("mt-1.5 text-xs", tone ? `text-${tone}` : "text-fg-3")}>{sub}</div>}
+      <div className="text-xs text-fg-3">{trad(label)}</div>
+      <div className="mt-1 font-display text-[26px] leading-none font-semibold tracking-tight text-fg">{trad(value)}</div>
+      {sub && <div className={cn("mt-1.5 text-xs", tone ? `text-${tone}` : "text-fg-3")}>{trad(sub)}</div>}
       {children}
     </div>
   );
@@ -496,9 +497,9 @@ export function Empty({ icon, title, text, action }: { icon?: ReactNode; title: 
   return (
     <div className="grid place-items-center gap-2 px-6 py-12 text-center">
       {icon && <div className="grid size-10 place-items-center rounded-xl bg-surface-2 text-fg-3">{icon}</div>}
-      <div className="text-sm font-medium">{title}</div>
-      {text && <p className="max-w-xs text-xs text-fg-3">{text}</p>}
-      {action}
+      <div className="text-sm font-medium">{trad(title)}</div>
+      {text && <p className="max-w-xs text-xs text-fg-3">{trad(text)}</p>}
+      {trad(action)}
     </div>
   );
 }
@@ -506,9 +507,9 @@ export function Empty({ icon, title, text, action }: { icon?: ReactNode; title: 
 export function Field({ label, children, hint }: { label: string; children: ReactNode; hint?: string }) {
   return (
     <label className="grid gap-1.5">
-      <span className="text-xs font-medium text-fg-2">{label}</span>
+      <span className="text-xs font-medium text-fg-2">{trad(label)}</span>
       {children}
-      {hint && <span className="text-[11px] text-fg-3">{hint}</span>}
+      {hint && <span className="text-[11px] text-fg-3">{trad(hint)}</span>}
     </label>
   );
 }

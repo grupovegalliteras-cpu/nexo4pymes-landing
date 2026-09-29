@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { useId, useMemo, type ReactNode } from "react";
 import { cn, initials } from "@/lib/utils";
+import { trad } from "@/lib/t";
 
 /** Costa de Mallorca simplificada (lon, lat), en sentido horario desde Formentor. */
 const COAST: [number, number][] = [
@@ -131,7 +132,7 @@ export function MallorcaMap({
         transition={{ duration: 0.8, ease: [0.2, 0.7, 0.2, 1] }}
         className="size-full"
         role="img"
-        aria-label="Mapa de Mallorca con las paradas y técnicos"
+        aria-label={trad("Mapa de Mallorca con las paradas y técnicos")}
         preserveAspectRatio="xMidYMid slice"
       >
         <defs>
@@ -158,7 +159,7 @@ export function MallorcaMap({
               <g key={n} opacity={0.75}>
                 <circle cx={x} cy={y} r={2.5 * k} fill="var(--map-town, #7a8893)" />
                 <text x={x + 6 * k} y={y + 4 * k} fontSize={13 * k} fill="var(--map-town, #7a8893)" fontWeight={500} style={{ fontFamily: "var(--font-geist)" }}>
-                  {n}
+                  {trad(n)}
                 </text>
               </g>
             );
@@ -215,11 +216,11 @@ export function MallorcaMap({
               )}
               <path d="M0,0 C-7,-9 -11,-13 -11,-19 A11,11 0 1 1 11,-19 C11,-13 7,-9 0,0Z" fill={m.done ? "var(--surface)" : (m.color ?? "var(--brand)")} stroke={m.color ?? "var(--brand)"} strokeWidth={2} />
               <text textAnchor="middle" y={-15} fontSize={10.5} fontWeight={700} fill={m.done ? (m.color ?? "var(--brand)") : "#fff"} style={{ fontFamily: "var(--font-geist)" }}>
-                {m.n ?? "•"}
+                {trad(m.n) ?? "•"}
               </text>
               {m.label && m.kind === "client" && (
                 <text x={14} y={-14} fontSize={11} fill="var(--text-2)" fontWeight={500} style={{ fontFamily: "var(--font-geist)" }}>
-                  {m.label}
+                  {trad(m.label)}
                 </text>
               )}
             </g>

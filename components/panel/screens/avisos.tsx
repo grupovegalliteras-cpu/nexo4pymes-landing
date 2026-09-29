@@ -12,12 +12,13 @@ import type { Aviso } from "@/data/types";
 import type { Canal } from "@/data/sectors";
 import { PageHeader } from "../shell";
 import { usePanelNav } from "../nav";
+import { trad, tradf } from "@/lib/t";
 
 export const CANAL: Record<Canal, { label: string; icon: typeof Phone; cls: string }> = {
-  llamada: { label: "Llamada", icon: Phone, cls: "bg-brand-soft text-brand" },
+  llamada: { label: trad("Llamada"), icon: Phone, cls: "bg-brand-soft text-brand" },
   whatsapp: { label: "WhatsApp", icon: MessageCircle, cls: "bg-ok-soft text-ok" },
-  email: { label: "Email", icon: Mail, cls: "bg-info-soft text-info" },
-  web: { label: "Web", icon: Globe, cls: "bg-ai-soft text-ai" },
+  email: { label: trad("Email"), icon: Mail, cls: "bg-info-soft text-info" },
+  web: { label: trad("Web"), icon: Globe, cls: "bg-ai-soft text-ai" },
 };
 
 
@@ -62,11 +63,11 @@ export function Avisos() {
           <>
             <Button size="sm" variant="secondary" onClick={() => simulateWhatsapp()}>
               <MessageCircle className="size-3.5 text-ok" />
-              Simular WhatsApp
+              {trad("Simular WhatsApp")}
             </Button>
             <Button size="sm" variant="sun" onClick={() => simulateCall()} data-tour="simular-llamada">
               <PhoneIncoming className="size-3.5" />
-              Simular llamada
+              {trad("Simular llamada")}
             </Button>
           </>
         }
@@ -84,9 +85,9 @@ export function Avisos() {
               ] as const
             ).map(([k, l]) => (
               <button key={k} onClick={() => setFilter(k)} className={cn("h-7 rounded-md px-2 text-xs font-medium", filter === k ? "bg-fg text-bg" : "text-fg-2 hover:bg-surface-2")}>
-                {l}
+                {trad(l)}
                 <span className="tabular ml-1 opacity-60">
-                  {k === "nuevos" ? avisos.filter((a) => a.estado === "nuevo").length : k === "urgentes" ? avisos.filter((a) => a.urgencia === "alta").length : k === "todos" ? avisos.length : avisos.filter((a) => a.canal === k).length}
+                  {k === "nuevos" ? trad(avisos.filter((a) => a.estado === "nuevo").length) : k === "urgentes" ? trad(avisos.filter((a) => a.urgencia === "alta").length) : k === "todos" ? trad(avisos.length) : trad(avisos.filter((a) => a.canal === k).length)}
                 </span>
               </button>
             ))}
@@ -114,23 +115,23 @@ export function Avisos() {
                       <span className={cn("grid size-6 shrink-0 place-items-center rounded-md", C.cls)}>
                         <C.icon className="size-3.5" />
                       </span>
-                      <span className="min-w-0 flex-1 truncate text-[13px] font-semibold">{client?.nombre ?? a.contacto}</span>
+                      <span className="min-w-0 flex-1 truncate text-[13px] font-semibold">{trad(client?.nombre) ?? trad(a.contacto)}</span>
                       {a.enDirecto ? (
                         <span className="flex items-center gap-1 text-[11px] font-semibold text-sun">
                           <Wave />
-                          En directo
+                          {trad("En directo")}
                         </span>
                       ) : (
                         <span className="text-[11px] text-fg-3">{fmt.ago(a.recibido, now)}</span>
                       )}
                     </div>
-                    <p className={cn("mt-1 line-clamp-2 pl-8 text-xs", a.estado === "nuevo" ? "text-fg" : "text-fg-3")}>{a.enDirecto ? "Transcribiendo la llamada…" : a.resumen}</p>
+                    <p className={cn("mt-1 line-clamp-2 pl-8 text-xs", a.estado === "nuevo" ? "text-fg" : "text-fg-3")}>{a.enDirecto ? trad("Transcribiendo la llamada…") : trad(a.resumen)}</p>
                     {!a.enDirecto && (
                       <div className="mt-2 flex flex-wrap gap-1 pl-8">
                         <UrgencyBadge u={a.urgencia} />
-                        <Badge>{a.tipo}</Badge>
-                        {a.estado === "convertido" && <Badge tone="ok">Orden creada</Badge>}
-                        {a.estado === "descartado" && <Badge>Descartado</Badge>}
+                        <Badge>{trad(a.tipo)}</Badge>
+                        {a.estado === "convertido" && <Badge tone="ok">{trad("Orden creada")}</Badge>}
+                        {a.estado === "descartado" && <Badge>{trad("Descartado")}</Badge>}
                       </div>
                     )}
                   </motion.button>
@@ -142,13 +143,13 @@ export function Avisos() {
                 <div className="grid size-10 place-items-center rounded-xl bg-ok-soft text-ok">
                   <Check className="size-5" />
                 </div>
-                <div className="text-sm font-medium">Bandeja al día</div>
-                <p className="text-xs text-fg-3">Todos los avisos tienen su orden de trabajo.</p>
+                <div className="text-sm font-medium">{trad("Bandeja al día")}</div>
+                <p className="text-xs text-fg-3">{trad("Todos los avisos tienen su orden de trabajo.")}</p>
               </div>
             )}
           </div>
         </Card>
-        {current ? <AvisoDetail key={current.id} a={current} /> : <Card className="grid place-items-center text-sm text-fg-3">Selecciona un aviso</Card>}
+        {current ? <AvisoDetail key={current.id} a={current} /> : <Card className="grid place-items-center text-sm text-fg-3">{trad("Selecciona un aviso")}</Card>}
       </div>
     </div>
   );
@@ -225,37 +226,37 @@ function AvisoDetail({ a }: { a: Aviso }) {
             <C.icon className="size-5" />
           </span>
           <div className="min-w-0 flex-1">
-            <div className="text-[15px] font-semibold">{client?.nombre ?? a.contacto}</div>
+            <div className="text-[15px] font-semibold">{trad(client?.nombre) ?? trad(a.contacto)}</div>
             <div className="text-xs text-fg-3">
-              {a.contacto}, {a.telefono}. {C.label} {fmt.time(a.recibido)}
-              {a.duracionSeg ? `, ${Math.floor(a.duracionSeg / 60)} min ${a.duracionSeg % 60} s` : ""}
+              {trad(a.contacto)}, {trad(a.telefono)}. {trad(C.label)} {fmt.time(a.recibido)}
+              {a.duracionSeg ? tradf(", {0} min {1} s", Math.floor(a.duracionSeg / 60), a.duracionSeg % 60) : ""}
             </div>
           </div>
           {a.enDirecto ? (
             <Badge tone="sun" className="h-7 px-2">
-              <Wave /> Grabando y transcribiendo
+              <Wave />{" "}{trad("Grabando y transcribiendo")}
             </Badge>
           ) : (
-            client && <Badge tone="ok"><UserCheck className="size-3" /> Cliente reconocido</Badge>
+            client && <Badge tone="ok"><UserCheck className="size-3" />{" "}{trad("Cliente reconocido")}</Badge>
           )}
         </div>
 
         <div className="border-b border-line px-4 py-3" data-tour="aviso-ia">
           <div className="mb-2 flex items-center gap-1.5 text-xs font-medium text-ai">
             <Sparkles className="size-3.5" />
-            {classified ? "Clasificado automáticamente" : "Analizando la conversación…"}
+            {classified ? trad("Clasificado automáticamente") : trad("Analizando la conversación…")}
           </div>
           {classified ? (
             <motion.div initial="h" animate="s" variants={{ s: { transition: { staggerChildren: 0.09 } } }} className="grid gap-2 sm:grid-cols-4">
               {[
-                ["Tipo", <span key="t" className="capitalize">{a.tipo}</span>],
+                ["Tipo", <span key="t" className="capitalize">{trad(a.tipo)}</span>],
                 ["Urgencia", <UrgencyBadge key="u" u={a.urgencia} />],
                 ["Cliente", client?.nombre ?? "Nuevo contacto"],
                 ["Servicio propuesto", serv?.nombre],
               ].map(([k, v]) => (
                 <motion.div key={String(k)} variants={{ h: { opacity: 0, y: 6, filter: "blur(4px)" }, s: { opacity: 1, y: 0, filter: "blur(0px)" } }} className="rounded-lg bg-ai-soft/60 px-2.5 py-2">
-                  <div className="text-[11px] text-fg-3">{k}</div>
-                  <div className="mt-0.5 truncate text-[13px] font-medium">{v}</div>
+                  <div className="text-[11px] text-fg-3">{trad(k)}</div>
+                  <div className="mt-0.5 truncate text-[13px] font-medium">{trad(v)}</div>
                 </motion.div>
               ))}
             </motion.div>
@@ -269,8 +270,8 @@ function AvisoDetail({ a }: { a: Aviso }) {
           <AnimatePresence>
             {classified && (
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="mt-3 rounded-lg border border-line px-3 py-2 text-[13px]">
-                <span className="text-fg-3">Resumen: </span>
-                {a.resumen}
+                <span className="text-fg-3">{trad("Resumen:")}{" "}</span>
+                {trad(a.resumen)}
               </motion.p>
             )}
           </AnimatePresence>
@@ -284,63 +285,63 @@ function AvisoDetail({ a }: { a: Aviso }) {
           {a.estado === "convertido" && job ? (
             <div className="grid gap-3">
               <div className="flex items-center gap-2 text-sm font-semibold text-ok">
-                <Check className="size-4" /> Orden de trabajo creada
+                <Check className="size-4" />{" "}{trad("Orden de trabajo creada")}
               </div>
               <div className="rounded-lg bg-surface-2 p-3 text-[13px]">
-                <div className="font-semibold">{job.codigo}</div>
-                <div className="text-fg-2">{job.titulo}</div>
+                <div className="font-semibold">{trad(job.codigo)}</div>
+                <div className="text-fg-2">{trad(job.titulo)}</div>
                 <div className="mt-2 flex items-center gap-2">
                   {job.techId && <Avatar name={maps.tech[job.techId].nombre} color={maps.tech[job.techId].color} size={22} />}
                   <span className="text-xs text-fg-2">
-                    {job.techId ? maps.tech[job.techId].nombre : "Sin asignar"}, {fmt.date(job.fecha)} a las {job.hora}
+                    {job.techId ? trad(maps.tech[job.techId].nombre) : trad("Sin asignar")}, {fmt.date(job.fecha)}{" "}{trad("a las")}{" "}{trad(job.hora)}
                   </span>
                 </div>
               </div>
               <Button variant="secondary" onClick={() => go("trabajos", job.id)}>
-                <Wrench className="size-4" /> Ver la orden
+                <Wrench className="size-4" />{" "}{trad("Ver la orden")}
               </Button>
             </div>
           ) : a.estado === "descartado" ? (
-            <div className="text-sm text-fg-3">Aviso descartado. No requiere visita.</div>
+            <div className="text-sm text-fg-3">{trad("Aviso descartado. No requiere visita.")}</div>
           ) : (
             <div className="grid gap-3">
-              <div className="text-sm font-semibold">Crear orden de trabajo</div>
+              <div className="text-sm font-semibold">{trad("Crear orden de trabajo")}</div>
               {recomendado && (
                 <div className="flex items-start gap-2 rounded-lg bg-ai-soft/60 p-2.5 text-xs">
                   <Sparkles className="mt-0.5 size-3.5 shrink-0 text-ai" />
                   <span>
-                    <b>{recomendado.t.nombre}</b> es quien mejor encaja: zona {recomendado.t.zona}, a unos {Math.max(8, Math.round((recomendado.km / 45) * 60))} min del cliente
-                    {recomendado.carga ? ` y con ${recomendado.carga} trabajos más hoy.` : " y con la tarde libre."}
+                    <b>{trad(recomendado.t.nombre)}</b>{" "}{trad("es quien mejor encaja: zona")}{" "}{trad(recomendado.t.zona)}{trad(", a unos")}{" "}{Math.max(8, Math.round((recomendado.km / 45) * 60))}{" "}{trad("min del cliente")}
+                    {recomendado.carga ? tradf(" y con {0} trabajos más hoy.", recomendado.carga) : trad(" y con la tarde libre.")}
                   </span>
                 </div>
               )}
               <label className="grid gap-1 text-xs text-fg-2">
-                Técnico
+                {trad("Técnico")}
                 <select className={inputCls} value={techId} onChange={(e) => setTechId(e.target.value)} disabled={!classified}>
                   {techs.map((t) => (
                     <option key={t.id} value={t.id}>
-                      {t.nombre} ({t.zona})
+                      {trad(t.nombre)} ({trad(t.zona)})
                     </option>
                   ))}
                 </select>
               </label>
               <div className="grid grid-cols-2 gap-2">
                 <label className="grid gap-1 text-xs text-fg-2">
-                  Día
+                  {trad("Día")}
                   <input type="date" className={inputCls} value={fecha} onChange={(e) => setFecha(e.target.value)} />
                 </label>
                 <label className="grid gap-1 text-xs text-fg-2">
-                  Hora
+                  {trad("Hora")}
                   <input type="time" className={inputCls} value={hora} onChange={(e) => setHora(e.target.value)} />
                 </label>
               </div>
               <Button variant="primary" size="lg" disabled={!classified} onClick={() => convert(a.id, techId, { fecha, hora })} data-tour="aviso-convert-btn">
                 <Wrench className="size-4" />
-                Crear y asignar
+                {trad("Crear y asignar")}
               </Button>
               <button className="text-xs text-fg-3 hover:text-fg" onClick={() => discard(a.id)}>
                 <X className="mr-1 inline size-3" />
-                Descartar, no necesita visita
+                {trad("Descartar, no necesita visita")}
               </button>
             </div>
           )}
@@ -349,28 +350,28 @@ function AvisoDetail({ a }: { a: Aviso }) {
         {client && (
           <Card className="p-4">
             <div className="flex items-center justify-between">
-              <div className="text-sm font-semibold">Ficha del cliente</div>
+              <div className="text-sm font-semibold">{trad("Ficha del cliente")}</div>
               <button className="text-xs text-brand hover:underline" onClick={() => go("clientes", client.id)}>
-                Abrir
+                {trad("Abrir")}
               </button>
             </div>
             <div className="mt-2 grid gap-1 text-[13px]">
-              <div className="text-fg-2">{client.direccion}</div>
+              <div className="text-fg-2">{trad(client.direccion)}</div>
               <div className="text-fg-2">
-                {client.tipo}, cliente desde {fmt.date(client.desde)}
+                {trad(client.tipo)}{trad(", cliente desde")}{" "}{fmt.date(client.desde)}
               </div>
-              {client.notas && <div className="mt-1 rounded-md bg-warn-soft px-2 py-1.5 text-xs text-warn">{client.notas}</div>}
+              {client.notas && <div className="mt-1 rounded-md bg-warn-soft px-2 py-1.5 text-xs text-warn">{trad(client.notas)}</div>}
             </div>
             {!!historial.length && (
               <>
-                <div className="mt-3 mb-1 text-xs font-medium text-fg-3">Conversaciones anteriores</div>
+                <div className="mt-3 mb-1 text-xs font-medium text-fg-3">{trad("Conversaciones anteriores")}</div>
                 <div className="grid gap-1.5">
                   {historial.map((h) => {
                     const HC = CANAL[h.canal];
                     return (
                       <div key={h.id} className="flex items-start gap-2 text-xs">
                         <HC.icon className="mt-0.5 size-3.5 shrink-0 text-fg-3" />
-                        <span className="line-clamp-2 text-fg-2">{h.resumen}</span>
+                        <span className="line-clamp-2 text-fg-2">{trad(h.resumen)}</span>
                         <span className="ml-auto shrink-0 text-fg-3">{fmt.dateShort(h.recibido)}</span>
                       </div>
                     );
@@ -448,7 +449,7 @@ function Transcript({ a, elapsed }: { a: Aviso; elapsed: number }) {
             onClick={play}
             disabled={live}
             className="grid size-9 shrink-0 place-items-center rounded-full bg-fg text-bg transition hover:scale-105 disabled:opacity-40"
-            aria-label={playing ? "Pausar grabación" : "Escuchar grabación"}
+            aria-label={playing ? trad("Pausar grabación") : trad("Escuchar grabación")}
           >
             {playing ? <Pause className="size-4" /> : <Play className="ml-0.5 size-4" />}
           </button>
@@ -463,7 +464,7 @@ function Transcript({ a, elapsed }: { a: Aviso; elapsed: number }) {
           <span className="tabular w-10 text-right text-xs text-fg-3">{Math.floor(total / 60)}:{String(Math.round(total % 60)).padStart(2, "0")}</span>
         </div>
       )}
-      <div className="mb-2 text-xs font-medium text-fg-3">{a.canal === "llamada" ? "Transcripción" : "Conversación"}</div>
+      <div className="mb-2 text-xs font-medium text-fg-3">{a.canal === "llamada" ? trad("Transcripción") : trad("Conversación")}</div>
       <div className="grid gap-2">
         {a.lineas.map((l, i) => {
           const showAt = l.t * LIVE_SPEED * 1000;
@@ -484,8 +485,8 @@ function Transcript({ a, elapsed }: { a: Aviso; elapsed: number }) {
                   cur === i && "bg-brand-soft ring-1 ring-brand/40",
                 )}
               >
-                <div className="mb-0.5 text-[11px] font-medium text-fg-3">{isOffice ? "Oficina" : a.contacto}</div>
-                {text}
+                <div className="mb-0.5 text-[11px] font-medium text-fg-3">{isOffice ? trad("Oficina") : trad(a.contacto)}</div>
+                {trad(text)}
                 {partial < 1 && <span className="ml-0.5 inline-block h-3.5 w-[2px] translate-y-0.5 animate-pulse bg-fg" />}
               </div>
             </motion.div>

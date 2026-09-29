@@ -1,9 +1,12 @@
 import { addDays, hashString, isoDay, rng, startOfDay, type Rng } from "@/lib/utils";
-import { SECTOR_POR_ID, type SectorId } from "./sectors";
+import { type SectorId } from "./sectors";
+import { sectorDe } from "./sectors-i18n";
+import { idiomaGlobal } from "@/lib/t";
 import type {
   Absence, Activity, Aviso, ChatMsg, Client, Comunicado, Contract, DemoData, Expense, Incidencia,
   Installation, Invoice, Job, JobStatus, Notif, Opportunity, Payslip, Quote, StockItem, Tech, TimeEntry, Vehicle,
 } from "./types";
+import { trad, tradf } from "@/lib/t";
 
 export const DATA_VERSION = 6;
 export const IVA = 0.21;
@@ -129,7 +132,7 @@ export function huellaVerifactu(seed: string) {
 }
 
 export function createSeed(sectorId: SectorId, now = new Date()): DemoData {
-  const sector = SECTOR_POR_ID[sectorId];
+  const sector = sectorDe(idiomaGlobal(), sectorId);
   const semilla = hashString(sectorId) ^ 20260924;
   const r = rng(semilla);
   const today = startOfDay(now);
@@ -187,7 +190,7 @@ export function createSeed(sectorId: SectorId, now = new Date()): DemoData {
         id: `i${insN}`,
         clientId: c.id,
         nombre,
-        codigo: `QR-${pad(1000 + insN)}`,
+        codigo: tradf("QR-{0}", pad(1000 + insN)),
         marca: r.pick(MARCAS),
         instalada: isoDay(addDays(today, -r.int(400, 4000))),
         ultimaRevision: isoDay(addDays(today, -r.int(3, 80))),
@@ -202,7 +205,7 @@ export function createSeed(sectorId: SectorId, now = new Date()): DemoData {
     id: "i-star",
     clientId: llamadaCliente.id,
     nombre: sector.llamada.instalacionNombre,
-    codigo: `QR-${pad(1000 + insN)}`,
+    codigo: tradf("QR-{0}", pad(1000 + insN)),
     marca: r.pick(MARCAS),
     instalada: isoDay(addDays(today, -1400)),
     ultimaRevision: isoDay(addDays(today, -41)),
@@ -241,7 +244,7 @@ export function createSeed(sectorId: SectorId, now = new Date()): DemoData {
     const ins = insOf(p.clientId);
     return {
       id: `j${jobN}`,
-      codigo: `OT-${jobN++}`,
+      codigo: tradf("OT-{0}", jobN++),
       titulo: serv.nombre,
       prioridad: "media",
       hora: "09:00",
@@ -429,7 +432,7 @@ export function createSeed(sectorId: SectorId, now = new Date()): DemoData {
     const step = k.periodicidad === "mensual" ? 30 : k.periodicidad === "trimestral" ? 91 : 365;
     for (let d = 88; d >= 1; d -= step) {
       const fechaD = addDays(today, -d);
-      const lineas = [{ concepto: `${k.nombre}: cuota ${k.periodicidad}`, cantidad: 1, precio: k.cuota }];
+      const lineas = [{ concepto: tradf("{0}: cuota {1}", k.nombre, k.periodicidad), cantidad: 1, precio: k.cuota }];
       const numero = `F-${year}-${pad(invN++)}`;
       const estado: Invoice["estado"] = d > 20 ? "cobrada" : r.chance(0.5) ? "cobrada" : "emitida";
       invoices.push({
@@ -594,9 +597,9 @@ export function createSeed(sectorId: SectorId, now = new Date()): DemoData {
 
   // --- Comunicados
   const comunicados: Comunicado[] = [
-    { id: "cm1", titulo: "Horario de verano", texto: "Desde el lunes la jornada empieza a las 7:00 para evitar las horas de más calor. La oficina atiende de 7:00 a 15:00.", fecha: now.getTime() - 3 * 864e5, leidos: ["t1", "t2", "t3", "t5"] },
-    { id: "cm2", titulo: "Nuevos equipos de protección", texto: "Ya están en la nave los guantes y gafas nuevos. Pasad a recogerlos y firmad la entrega en la app.", fecha: now.getTime() - 9 * 864e5, leidos: ["t1", "t2", "t3", "t4", "t5", "t6"] },
-    { id: "cm3", titulo: "Revisión de furgonetas", texto: "Este mes toca revisión de todas las furgonetas. Marga os irá asignando día.", fecha: now.getTime() - 15 * 864e5, leidos: ["t1", "t3", "t4", "t6"] },
+    { id: "cm1", titulo: trad("Horario de verano"), texto: trad("Desde el lunes la jornada empieza a las 7:00 para evitar las horas de más calor. La oficina atiende de 7:00 a 15:00."), fecha: now.getTime() - 3 * 864e5, leidos: ["t1", "t2", "t3", "t5"] },
+    { id: "cm2", titulo: trad("Nuevos equipos de protección"), texto: trad("Ya están en la nave los guantes y gafas nuevos. Pasad a recogerlos y firmad la entrega en la app."), fecha: now.getTime() - 9 * 864e5, leidos: ["t1", "t2", "t3", "t4", "t5", "t6"] },
+    { id: "cm3", titulo: trad("Revisión de furgonetas"), texto: trad("Este mes toca revisión de todas las furgonetas. Marga os irá asignando día."), fecha: now.getTime() - 15 * 864e5, leidos: ["t1", "t3", "t4", "t6"] },
   ];
 
   // --- Fichajes
@@ -635,23 +638,23 @@ export function createSeed(sectorId: SectorId, now = new Date()): DemoData {
   if (meToday[0]) {
     const c = clients.find((x) => x.id === meToday[0].clientId)!;
     chats.push(
-      { id: "ch1", jobId: meToday[0].id, techId: meId, from: "oficina", texto: `Toni, en ${c.nombre} pregunta por ${c.contacto}. ${c.notas ?? "Te esperan a partir de las 9:30."}`, ts: now.getTime() - 50 * 60e3 },
-      { id: "ch2", jobId: meToday[0].id, techId: meId, from: "tecnico", texto: "Perfecto, gracias Marga.", ts: now.getTime() - 48 * 60e3 },
+      { id: "ch1", jobId: meToday[0].id, techId: meId, from: "oficina", texto: tradf("Toni, en {0} pregunta por {1}. {2}", c.nombre, c.contacto, trad(c.notas ?? "Te esperan a partir de las 9:30.")), ts: now.getTime() - 50 * 60e3 },
+      { id: "ch2", jobId: meToday[0].id, techId: meId, from: "tecnico", texto: trad("Perfecto, gracias Marga."), ts: now.getTime() - 48 * 60e3 },
     );
   }
 
   // --- Notificaciones y actividad
   const notifs: Notif[] = [
-    { id: "nt1", to: "panel", titulo: "Presupuesto abierto", texto: `${clients[6].nombre} ha abierto el presupuesto ${quotes[0]?.numero ?? ""}`, ts: now.getTime() - 35 * 60e3, leida: false, kind: "info", href: "presupuestos" },
-    { id: "nt2", to: "panel", titulo: "Stock bajo", texto: `${stock[1].nombre}: quedan ${stock[1].nave} ${stock[1].unidad} en la nave`, ts: now.getTime() - 2 * 3600e3, leida: false, kind: "info", href: "almacen" },
-    { id: "nt3", to: "panel", titulo: "Solicitud de vacaciones", texto: "Maria Bauzà pide 7 días de vacaciones", ts: now.getTime() - 26 * 3600e3, leida: true, kind: "equipo", href: "vacaciones" },
-    { id: "nt4", to: "app", titulo: "Comunicado nuevo", texto: "Horario de verano", ts: now.getTime() - 3 * 864e5, leida: true, kind: "info" },
+    { id: "nt1", to: "panel", titulo: trad("Presupuesto abierto"), texto: tradf("{0} ha abierto el presupuesto {1}", clients[6].nombre, quotes[0]?.numero ?? ""), ts: now.getTime() - 35 * 60e3, leida: false, kind: "info", href: "presupuestos" },
+    { id: "nt2", to: "panel", titulo: trad("Stock bajo"), texto: tradf("{0}: quedan {1} {2} en la nave", stock[1].nombre, stock[1].nave, stock[1].unidad), ts: now.getTime() - 2 * 3600e3, leida: false, kind: "info", href: "almacen" },
+    { id: "nt3", to: "panel", titulo: trad("Solicitud de vacaciones"), texto: trad("Maria Bauzà pide 7 días de vacaciones"), ts: now.getTime() - 26 * 3600e3, leida: true, kind: "equipo", href: "vacaciones" },
+    { id: "nt4", to: "app", titulo: trad("Comunicado nuevo"), texto: trad("Horario de verano"), ts: now.getTime() - 3 * 864e5, leida: true, kind: "info" },
   ];
   const activity: Activity[] = [
-    { id: "ac1", ts: now.getTime() - 8 * 60e3, texto: `${techs[1].nombre} ha empezado un trabajo`, kind: "trabajo" },
-    { id: "ac2", ts: now.getTime() - 21 * 60e3, texto: `Factura cobrada por Bizum`, kind: "pago" },
-    { id: "ac3", ts: now.getTime() - 35 * 60e3, texto: `Presupuesto abierto por el cliente`, kind: "info" },
-    { id: "ac4", ts: now.getTime() - 64 * 60e3, texto: `${techs[3].nombre} ha cerrado un parte con firma`, kind: "trabajo" },
+    { id: "ac1", ts: now.getTime() - 8 * 60e3, texto: tradf("{0} ha empezado un trabajo", techs[1].nombre), kind: "trabajo" },
+    { id: "ac2", ts: now.getTime() - 21 * 60e3, texto: trad("Factura cobrada por Bizum"), kind: "pago" },
+    { id: "ac3", ts: now.getTime() - 35 * 60e3, texto: trad("Presupuesto abierto por el cliente"), kind: "info" },
+    { id: "ac4", ts: now.getTime() - 64 * 60e3, texto: tradf("{0} ha cerrado un parte con firma", techs[3].nombre), kind: "trabajo" },
   ];
 
   return {

@@ -27,12 +27,13 @@ export function SectorPage({ id }: { id: SectorId }) {
   const fmt = useFmt();
   const s = sectorDe(lang, id);
   const hydrated = useHydrated();
-  const current = useDemo((st) => st.sector);
-  const setSector = useDemo((st) => st.setSector);
   const mensaje = tx.msg(s.nombre);
+  // Una sola vez al abrir: si luego otra pestaña cambia de sector, no se lo disputamos (evita un bucle entre pestañas).
   useEffect(() => {
-    if (hydrated && current !== id) setSector(id);
-  }, [hydrated, current, id, setSector]);
+    if (!hydrated) return;
+    const st = useDemo.getState();
+    if (st.sector !== id) st.setSector(id);
+  }, [hydrated, id]);
 
   return (
     <div className="bg-bg text-fg">

@@ -11,6 +11,7 @@ import { MallorcaMap, type MapMarker, type MapRoute } from "@/components/mallorc
 import { BASE } from "@/data/seed";
 import { PageHeader } from "../shell";
 import { JobDrawer } from "./trabajos";
+import { trad, tradf } from "@/lib/t";
 
 export function Rutas() {
   const jobs = useDemo((s) => s.jobs);
@@ -60,7 +61,7 @@ export function Rutas() {
         lon: s.lon,
         color: p.t.color,
         n: i + 1,
-        label: sel ? s.nombre : undefined,
+        label: sel ? trad(s.nombre) : undefined,
         done: s.job.estado === "finalizado" || s.job.estado === "facturado",
         active: s.job.estado === "en-curso",
       })),
@@ -81,50 +82,50 @@ export function Rutas() {
 
   return (
     <div className="pb-8">
-      <PageHeader id="rutas" actions={<Segmented value={modo} onChange={setModo} options={[{ value: "optimizada", label: "Ruta optimizada" }, { value: "original", label: "Orden original" }]} />} />
+      <PageHeader id="rutas" actions={<Segmented value={modo} onChange={setModo} options={[{ value: "optimizada", label: trad("Ruta optimizada") }, { value: "original", label: trad("Orden original") }]} />} />
       <div className="grid gap-4 px-4 sm:px-6 xl:grid-cols-[340px_minmax(0,1fr)]">
         <div className="grid content-start gap-4">
           <Card className="p-4">
             <div className="flex items-center gap-2 text-xs font-medium text-ai">
-              <Sparkles className="size-3.5" /> Ahorro de hoy con rutas optimizadas
+              <Sparkles className="size-3.5" />{" "}{trad("Ahorro de hoy con rutas optimizadas")}
             </div>
             <div className="mt-3 grid grid-cols-3 gap-2">
               <div>
                 <div className="font-display text-2xl font-semibold">
                   <AnimatedNumber value={Math.max(0, total.o - total.n)} format={(n) => fmt.int(n)} />
-                  <span className="text-sm font-normal text-fg-3"> km</span>
+                  <span className="text-sm font-normal text-fg-3">{" "}{trad("km")}</span>
                 </div>
-                <div className="text-[11px] text-fg-3">menos</div>
+                <div className="text-[11px] text-fg-3">{trad("menos")}</div>
               </div>
               <div>
                 <div className="font-display text-2xl font-semibold">
                   <AnimatedNumber value={kmToMin(Math.max(0, total.o - total.n))} />
-                  <span className="text-sm font-normal text-fg-3"> min</span>
+                  <span className="text-sm font-normal text-fg-3">{" "}{trad("min")}</span>
                 </div>
-                <div className="text-[11px] text-fg-3">de conducción</div>
+                <div className="text-[11px] text-fg-3">{trad("de conducción")}</div>
               </div>
               <div>
                 <div className="font-display text-2xl font-semibold">
                   <AnimatedNumber value={Math.max(0, total.o - total.n) * 0.11} format={(n) => fmt.eur0(n)} />
                 </div>
-                <div className="text-[11px] text-fg-3">de gasoil</div>
+                <div className="text-[11px] text-fg-3">{trad("de gasoil")}</div>
               </div>
             </div>
-            <div className="mt-3 text-[11px] text-fg-3">Estimación con distancias por carretera aproximadas y un consumo medio de furgoneta.</div>
+            <div className="mt-3 text-[11px] text-fg-3">{trad("Estimación con distancias por carretera aproximadas y un consumo medio de furgoneta.")}</div>
           </Card>
 
           <Card className="overflow-hidden">
             <button onClick={() => setTechId("todos")} className={cn("flex w-full items-center gap-3 border-b border-line px-4 py-2.5 text-left text-[13px]", techId === "todos" ? "bg-brand-soft/60 font-semibold" : "hover:bg-surface-2")}>
-              <RouteIcon className="size-4 text-fg-3" /> Todo el equipo
+              <RouteIcon className="size-4 text-fg-3" />{" "}{trad("Todo el equipo")}
             </button>
             {perTech.map((p) => (
               <button key={p.t.id} onClick={() => setTechId(p.t.id)} className={cn("flex w-full items-center gap-3 border-b border-line/70 px-4 py-2.5 text-left last:border-0", techId === p.t.id ? "bg-brand-soft/60" : "hover:bg-surface-2")}>
                 <Avatar name={p.t.nombre} color={p.t.color} size={28} />
                 <div className="min-w-0 flex-1">
-                  <div className="text-[13px] font-medium">{p.t.nombre}</div>
-                  <div className="text-[11px] text-fg-3">{p.stops.length ? `${p.stops.length} paradas, ${fmt.int(p.kmN)} km` : "Sin paradas hoy"}</div>
+                  <div className="text-[13px] font-medium">{trad(p.t.nombre)}</div>
+                  <div className="text-[11px] text-fg-3">{p.stops.length ? tradf("{0} paradas, {1} km", p.stops.length, fmt.int(p.kmN)) : trad("Sin paradas hoy")}</div>
                 </div>
-                {p.kmO - p.kmN > 1 && <span className="rounded bg-ok-soft px-1.5 py-0.5 text-[11px] font-medium text-ok">-{fmt.int(p.kmO - p.kmN)} km</span>}
+                {p.kmO - p.kmN > 1 && <span className="rounded bg-ok-soft px-1.5 py-0.5 text-[11px] font-medium text-ok">-{fmt.int(p.kmO - p.kmN)}{" "}{trad("km")}</span>}
               </button>
             ))}
           </Card>
@@ -137,13 +138,13 @@ export function Rutas() {
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="absolute top-3 left-3 flex flex-wrap gap-2">
                 <div className="flex items-center gap-3 rounded-xl border border-line bg-surface/95 px-3 py-2 shadow-e2 backdrop-blur">
                   <div>
-                    <div className="text-[11px] text-fg-3">Antes</div>
-                    <div className="tabular text-sm font-semibold text-fg-2 line-through decoration-bad/60">{fmt.int(sel.kmO)} km, {fmt.dur(kmToMin(sel.kmO))}</div>
+                    <div className="text-[11px] text-fg-3">{trad("Antes")}</div>
+                    <div className="tabular text-sm font-semibold text-fg-2 line-through decoration-bad/60">{fmt.int(sel.kmO)}{" "}{trad("km,")}{" "}{fmt.dur(kmToMin(sel.kmO))}</div>
                   </div>
                   <div className="h-8 w-px bg-line" />
                   <div>
-                    <div className="text-[11px] text-fg-3">Optimizada</div>
-                    <div className="tabular text-sm font-semibold text-ok">{fmt.int(sel.kmN)} km, {fmt.dur(kmToMin(sel.kmN))}</div>
+                    <div className="text-[11px] text-fg-3">{trad("Optimizada")}</div>
+                    <div className="tabular text-sm font-semibold text-ok">{fmt.int(sel.kmN)}{" "}{trad("km,")}{" "}{fmt.dur(kmToMin(sel.kmN))}</div>
                   </div>
                 </div>
               </motion.div>
@@ -152,15 +153,15 @@ export function Rutas() {
           {sel && (
             <Card>
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
-                <div className="text-[13px] font-semibold">Paradas de {sel.t.nombre}</div>
+                <div className="text-[13px] font-semibold">{trad("Paradas de")}{" "}{trad(sel.t.nombre)}</div>
                 <Button size="sm" variant={applied[sel.t.id] ? "secondary" : "primary"} onClick={aplicar} disabled={applied[sel.t.id] || sel.kmO - sel.kmN < 0.5}>
                   {applied[sel.t.id] ? (
                     <>
-                      <Check className="size-3.5" /> Ruta aplicada y enviada a la app
+                      <Check className="size-3.5" />{" "}{trad("Ruta aplicada y enviada a la app")}
                     </>
                   ) : (
                     <>
-                      <Navigation className="size-3.5" /> Aplicar ruta optimizada
+                      <Navigation className="size-3.5" />{" "}{trad("Aplicar ruta optimizada")}
                     </>
                   )}
                 </Button>
@@ -173,23 +174,23 @@ export function Rutas() {
                         {i + 1}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <div className="truncate text-[13px] font-medium">{s.nombre}</div>
+                        <div className="truncate text-[13px] font-medium">{trad(s.nombre)}</div>
                         <div className="truncate text-[11px] text-fg-3">
-                          {s.direccion}, {s.job.titulo}
+                          {trad(s.direccion)}, {trad(s.job.titulo)}
                         </div>
                       </div>
                       <span className="tabular flex items-center gap-1 text-xs text-fg-3">
                         <Clock className="size-3" />
-                        {s.job.hora}
+                        {trad(s.job.hora)}
                       </span>
                       <JobStatusBadge s={s.job.estado} />
                     </button>
                   </li>
                 ))}
-                {!sel.stops.length && <li className="px-4 py-8 text-center text-sm text-fg-3">Sin paradas hoy.</li>}
+                {!sel.stops.length && <li className="px-4 py-8 text-center text-sm text-fg-3">{trad("Sin paradas hoy.")}</li>}
               </ol>
               <div className="flex items-center gap-2 border-t border-line px-4 py-2.5 text-[11px] text-fg-3">
-                <Fuel className="size-3.5" /> Salida y vuelta a {BASE.nombre}
+                <Fuel className="size-3.5" />{" "}{trad("Salida y vuelta a")}{" "}{trad(BASE.nombre)}
               </div>
             </Card>
           )}

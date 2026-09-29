@@ -21,9 +21,17 @@ import { IDIOMA_BASE, idiomaDeRuta, type Idioma } from "@/lib/i18n";
 type Mapa = Record<string, string>;
 const MAPAS: Record<Exclude<Idioma, "es">, Mapa> = { en: EN as Mapa, de: DE as Mapa };
 
-let actual: Idioma = typeof window !== "undefined" ? idiomaDeRuta(window.location.pathname) : IDIOMA_BASE;
+// Empieza en español también en el navegador para que la hidratación coincida con el HTML del servidor;
+// Providers lo activa (activarIdioma) justo después, antes de pintar.
+let actual: Idioma = IDIOMA_BASE;
 
 export function idiomaGlobal(): Idioma {
+  return actual;
+}
+
+/** Lee el idioma de la dirección. Devuelve el idioma activado. */
+export function activarIdioma(): Idioma {
+  if (typeof window !== "undefined") actual = idiomaDeRuta(window.location.pathname);
   return actual;
 }
 
@@ -44,6 +52,15 @@ export function t<T>(x: T): T {
 
 /** Traduce un patrón con huecos {0}, {1}… y los rellena. */
 export function tf(patron: string, ...args: (string | number | null | undefined)[]): string {
-  const p = actual === "es" ? patron : (MAPAS[actual][patron] ?? patron);
+  let p = patron;
+  if (actual !== "es") {
+    const clave = patron.trim();
+    const v = MAPAS[actual][clave];
+    if (v) p = clave === patron ? v : patron.replace(clave, v);
+  }
   return p.replace(/\{(\d+)\}/g, (_, i) => String(args[Number(i)] ?? ""));
 }
+
+/* Alias con nombre propio para el código del panel y la app, donde `t` suele ser una variable local (un técnico). */
+export const trad = t;
+export const tradf = tf;

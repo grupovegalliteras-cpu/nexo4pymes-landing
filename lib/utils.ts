@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { LOCALE, type Idioma } from "@/lib/i18n";
+import { idiomaGlobal } from "@/lib/t";
 
 export function cn(...inputs: ClassValue[]) {
   return clsx(inputs);
@@ -115,8 +116,8 @@ export function fmtDe(lang: Idioma): Fmt {
   return FMTS[lang];
 }
 
-/** Formatos en español (lo que no depende del idioma de la página). */
-export const fmt = FMTS.es;
+/** Formatos del idioma activo de la demo (español hasta que Providers activa el de la página). */
+export const fmt: Fmt = new Proxy({} as Fmt, { get: (_, k) => FMTS[idiomaGlobal()][k as keyof Fmt] });
 
 export function isoDay(d: Date) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;

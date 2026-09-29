@@ -42,7 +42,11 @@ export function SugerenciaIdioma() {
         <button onClick={() => cerrar("es")} className="rounded-lg px-2.5 py-1.5 text-[13px] text-white/60 hover:text-white">
           {t.cerrar}
         </button>
-        <NextLink href={conIdioma(sugerido, base)} onClick={() => cerrar(sugerido)} className="rounded-lg bg-white px-3 py-1.5 text-[13px] font-semibold text-[#0b1220]">
+        <NextLink href={conIdioma(sugerido, base)} onClick={(e) => {
+            e.preventDefault();
+            cerrar(sugerido);
+            window.location.assign(conIdioma(sugerido, base) + window.location.search + window.location.hash);
+          }} className="rounded-lg bg-white px-3 py-1.5 text-[13px] font-semibold text-[#0b1220]">
           {t.boton}
         </NextLink>
       </span>

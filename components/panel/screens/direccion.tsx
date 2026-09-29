@@ -12,6 +12,7 @@ import { MallorcaMap } from "@/components/mallorca-map";
 import { BASE } from "@/data/seed";
 import { PageHeader } from "../shell";
 import { usePanelNav } from "../nav";
+import { trad, tradf } from "@/lib/t";
 
 export function Direccion() {
   const invoices = useDemo((s) => s.invoices);
@@ -72,28 +73,28 @@ export function Direccion() {
   const delta = k.facturadoMesAnt ? ((k.facturadoMes - k.facturadoMesAnt) / k.facturadoMesAnt) * 100 : 0;
 
   const atencion = [
-    nuevos.filter((a) => a.urgencia === "alta").length && { icon: <PhoneIncoming className="size-4" />, tone: "sun", text: `${nuevos.filter((a) => a.urgencia === "alta").length} avisos urgentes sin asignar`, go: "central-avisos" },
-    invoices.filter((i) => i.estado === "vencida").length && { icon: <FileWarning className="size-4" />, tone: "bad", text: `${invoices.filter((i) => i.estado === "vencida").length} facturas vencidas, ${fmt.eur0(k.vencido)}`, go: "impagos" },
-    invoices.filter((i) => i.estado === "borrador").length && { icon: <FileWarning className="size-4" />, tone: "info", text: `${invoices.filter((i) => i.estado === "borrador").length} facturas en borrador listas para emitir`, go: "facturacion" },
-    stock.filter((s) => s.nave < s.minimo).length && { icon: <Package className="size-4" />, tone: "warn", text: `${stock.filter((s) => s.nave < s.minimo).length} artículos por debajo del mínimo`, go: "almacen" },
-    absences.filter((a) => a.estado === "pendiente").length && { icon: <Palmtree className="size-4" />, tone: "info", text: `${absences.filter((a) => a.estado === "pendiente").length} solicitudes de vacaciones por aprobar`, go: "vacaciones" },
-    contracts.filter((c) => c.estado === "por-renovar").length && { icon: <CalendarClock className="size-4" />, tone: "ai", text: `${contracts.filter((c) => c.estado === "por-renovar").length} contratos se renuevan este mes`, go: "contratos" },
-    vehicles.filter((v) => v.itv <= isoDay(addDays(new Date(now), 30))).length && { icon: <Car className="size-4" />, tone: "warn", text: `ITV de ${vehicles.filter((v) => v.itv <= isoDay(addDays(new Date(now), 30))).map((v) => v.matricula).join(", ")} en menos de 30 días`, go: "flota" },
+    nuevos.filter((a) => a.urgencia === "alta").length && { icon: <PhoneIncoming className="size-4" />, tone: "sun", text: tradf("{0} avisos urgentes sin asignar", nuevos.filter((a) => a.urgencia === "alta").length), go: "central-avisos" },
+    invoices.filter((i) => i.estado === "vencida").length && { icon: <FileWarning className="size-4" />, tone: "bad", text: tradf("{0} facturas vencidas, {1}", invoices.filter((i) => i.estado === "vencida").length, fmt.eur0(k.vencido)), go: "impagos" },
+    invoices.filter((i) => i.estado === "borrador").length && { icon: <FileWarning className="size-4" />, tone: "info", text: tradf("{0} facturas en borrador listas para emitir", invoices.filter((i) => i.estado === "borrador").length), go: "facturacion" },
+    stock.filter((s) => s.nave < s.minimo).length && { icon: <Package className="size-4" />, tone: "warn", text: tradf("{0} artículos por debajo del mínimo", stock.filter((s) => s.nave < s.minimo).length), go: "almacen" },
+    absences.filter((a) => a.estado === "pendiente").length && { icon: <Palmtree className="size-4" />, tone: "info", text: tradf("{0} solicitudes de vacaciones por aprobar", absences.filter((a) => a.estado === "pendiente").length), go: "vacaciones" },
+    contracts.filter((c) => c.estado === "por-renovar").length && { icon: <CalendarClock className="size-4" />, tone: "ai", text: tradf("{0} contratos se renuevan este mes", contracts.filter((c) => c.estado === "por-renovar").length), go: "contratos" },
+    vehicles.filter((v) => v.itv <= isoDay(addDays(new Date(now), 30))).length && { icon: <Car className="size-4" />, tone: "warn", text: tradf("ITV de {0} en menos de 30 días", vehicles.filter((v) => v.itv <= isoDay(addDays(new Date(now), 30))).map((v) => v.matricula).join(", ")), go: "flota" },
   ].filter(Boolean) as { icon: React.ReactNode; tone: string; text: string; go: string }[];
 
   return (
     <div className="pb-10">
       <PageHeader
         id="direccion"
-        title={`Hoy, ${fmt.dayLong(now)}`}
-        desc={`${sector.empresa}: así va la empresa ahora mismo. Todo se actualiza solo.`}
+        title={tradf("Hoy, {0}", fmt.dayLong(now))}
+        desc={tradf("{0}: así va la empresa ahora mismo. Todo se actualiza solo.", sector.empresa)}
         actions={
           <Badge tone="ok" className="h-7 px-2">
             <span className="relative mr-0.5 flex size-2">
               <span className="absolute inset-0 animate-ping rounded-full bg-ok opacity-60" />
               <span className="relative size-2 rounded-full bg-ok" />
             </span>
-            En directo
+            {trad("En directo")}
           </Badge>
         }
       />
@@ -112,8 +113,8 @@ export function Direccion() {
               <PhoneIncoming className="relative size-4" />
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block text-[13px] font-semibold">Llamada en curso: {live.contacto}, {maps.client[live.clientId ?? ""]?.nombre}</span>
-              <span className="block text-xs text-fg-2">Se está grabando y transcribiendo. Pulsa para verla en Central Avisos.</span>
+              <span className="block text-[13px] font-semibold">{trad("Llamada en curso:")}{" "}{trad(live.contacto)}, {trad(maps.client[live.clientId ?? ""]?.nombre)}</span>
+              <span className="block text-xs text-fg-2">{trad("Se está grabando y transcribiendo. Pulsa para verla en Central Avisos.")}</span>
             </span>
             <Radio className="size-4 text-sun" />
           </motion.button>
@@ -123,16 +124,16 @@ export function Direccion() {
       <div className="grid gap-4 px-4 sm:px-6">
         <Card className="grid grid-cols-2 divide-line max-lg:[&>*:nth-child(-n+2)]:border-b lg:grid-cols-4 lg:divide-x [&>*]:border-line">
           <div className="border-r border-line lg:border-r-0">
-            <Kpi label="Facturado este mes" value={<AnimatedNumber value={k.facturadoMes} format={fmt.eur0} />} sub={delta >= 0 ? `+${fmt.num(delta, 0)} % frente al mismo día del mes pasado` : `${fmt.eur0(k.facturadoMes / Math.max(1, new Date(now).getDate()))} de media al día`} tone={delta >= 0 ? "ok" : undefined} onClick={() => go("facturacion")} />
+            <Kpi label={trad("Facturado este mes")} value={<AnimatedNumber value={k.facturadoMes} format={fmt.eur0} />} sub={delta >= 0 ? tradf("+{0} % frente al mismo día del mes pasado", fmt.num(delta, 0)) : tradf("{0} de media al día", fmt.eur0(k.facturadoMes / Math.max(1, new Date(now).getDate())))} tone={delta >= 0 ? "ok" : undefined} onClick={() => go("facturacion")} />
           </div>
-          <Kpi label="Cobrado este mes" value={<AnimatedNumber value={k.cobradoMes} format={fmt.eur0} />} sub={`${fmt.eur0(k.pendiente)} pendiente de cobro`} onClick={() => go("cobros")} />
+          <Kpi label={trad("Cobrado este mes")} value={<AnimatedNumber value={k.cobradoMes} format={fmt.eur0} />} sub={tradf("{0} pendiente de cobro", fmt.eur0(k.pendiente))} onClick={() => go("cobros")} />
           <div className="border-r border-line lg:border-r-0">
-            <Kpi label="Trabajos de hoy" value={<><AnimatedNumber value={k.hechos} /><span className="text-fg-3"> / {k.hoyJobs.length}</span></>} sub={`${k.hoyJobs.filter((j) => j.estado === "en-curso").length} en curso ahora`} onClick={() => go("trabajos")} />
+            <Kpi label={trad("Trabajos de hoy")} value={<><AnimatedNumber value={k.hechos} /><span className="text-fg-3"> / {trad(k.hoyJobs.length)}</span></>} sub={tradf("{0} en curso ahora", k.hoyJobs.filter((j) => j.estado === "en-curso").length)} onClick={() => go("trabajos")} />
           </div>
           <Kpi
-            label="Avisos sin asignar"
+            label={trad("Avisos sin asignar")}
             value={<AnimatedNumber value={nuevos.length} />}
-            sub={nuevos.length ? `El más antiguo ${fmt.ago(Math.min(...nuevos.map((a) => a.recibido)), now)}` : "Todo asignado"}
+            sub={nuevos.length ? tradf("El más antiguo {0}", fmt.ago(Math.min(...nuevos.map((a) => a.recibido)), now)) : trad("Todo asignado")}
             tone={nuevos.length ? "sun" : "ok"}
             onClick={() => go("central-avisos")}
           />
@@ -140,13 +141,13 @@ export function Direccion() {
 
         <div className="grid gap-4 xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
           <Card>
-            <CardHeader title="Facturación y cobros" sub="Por semanas, últimos tres meses, IVA incluido" right={<button className="text-xs text-brand hover:underline" onClick={() => go("contabilidad")}>Ver contabilidad</button>} />
+            <CardHeader title={trad("Facturación y cobros")} sub={trad("Por semanas, últimos tres meses, IVA incluido")} right={<button className="text-xs text-brand hover:underline" onClick={() => go("contabilidad")}>{trad("Ver contabilidad")}</button>} />
             <div className="px-3 pb-3">
-              <AreaChart data={weekly} format={(n) => (n >= 1000 ? `${fmt.num(n / 1000, 0)} mil` : fmt.int(n))} label="Facturado" label2="Cobrado" xLabel={(s) => fmt.dateShort(s)} />
+              <AreaChart data={weekly} format={(n) => (n >= 1000 ? tradf("{0} mil", fmt.num(n / 1000, 0)) : fmt.int(n))} label={trad("Facturado")} label2={trad("Cobrado")} xLabel={(s) => fmt.dateShort(s)} />
             </div>
           </Card>
           <Card>
-            <CardHeader title="Necesita tu atención" sub="Lo que el panel ha detectado hoy" />
+            <CardHeader title={trad("Necesita tu atención")} sub={trad("Lo que el panel ha detectado hoy")} />
             <div className="px-2 pb-2">
               {atencion.map((a, i) => (
                 <motion.button
@@ -157,18 +158,18 @@ export function Direccion() {
                   onClick={() => go(a.go)}
                   className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left hover:bg-surface-2"
                 >
-                  <span className={cn("grid size-8 shrink-0 place-items-center rounded-lg", `bg-${a.tone}-soft text-${a.tone}`)}>{a.icon}</span>
-                  <span className="text-[13px]">{a.text}</span>
+                  <span className={cn("grid size-8 shrink-0 place-items-center rounded-lg", `bg-${a.tone}-soft text-${a.tone}`)}>{trad(a.icon)}</span>
+                  <span className="text-[13px]">{trad(a.text)}</span>
                 </motion.button>
               ))}
-              {!atencion.length && <div className="px-2 py-8 text-center text-sm text-fg-3">Nada pendiente. Buen día.</div>}
+              {!atencion.length && <div className="px-2 py-8 text-center text-sm text-fg-3">{trad("Nada pendiente. Buen día.")}</div>}
             </div>
           </Card>
         </div>
 
         <div className="grid gap-4 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.9fr)]">
           <Card className="overflow-hidden">
-            <CardHeader title="El equipo ahora" sub={`${techs.filter((t) => t.estado !== "fuera").length} de ${techs.length} trabajando`} right={<button className="text-xs text-brand hover:underline" onClick={() => go("rutas")}>Ver mapa</button>} />
+            <CardHeader title={trad("El equipo ahora")} sub={tradf("{0} de {1} trabajando", techs.filter((t) => t.estado !== "fuera").length, techs.length)} right={<button className="text-xs text-brand hover:underline" onClick={() => go("rutas")}>{trad("Ver mapa")}</button>} />
             <div className="divide-y divide-line/70">
               {techs.map((t) => {
                 const tj = k.hoyJobs.filter((j) => j.techId === t.id);
@@ -179,15 +180,15 @@ export function Direccion() {
                     <Avatar name={t.nombre} color={t.color} size={30} />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 text-[13px] font-medium">
-                        {t.nombre}
+                        {trad(t.nombre)}
                         <span className={cn("size-1.5 rounded-full", t.estado === "trabajando" ? "bg-ok" : t.estado === "pausa" ? "bg-warn" : "bg-fg-3/40")} />
                       </div>
                       <div className="truncate text-xs text-fg-3">
-                        {vac ? "De vacaciones" : t.estado === "fuera" ? "Sin fichar" : cur ? `${maps.client[cur.clientId]?.nombre}` : "Sin trabajos pendientes"}
+                        {vac ? trad("De vacaciones") : t.estado === "fuera" ? trad("Sin fichar") : cur ? `${maps.client[cur.clientId]?.nombre}` : trad("Sin trabajos pendientes")}
                       </div>
                     </div>
-                    {vac ? <Badge tone="info">Vacaciones</Badge> : t.estado === "pausa" ? <Badge tone="warn">Pausa</Badge> : cur ? <JobStatusBadge s={cur.estado} /> : null}
-                    <span className="tabular w-10 text-right text-xs text-fg-3">{tj.filter((j) => j.estado === "finalizado" || j.estado === "facturado").length}/{tj.length}</span>
+                    {vac ? <Badge tone="info">{trad("Vacaciones")}</Badge> : t.estado === "pausa" ? <Badge tone="warn">{trad("Pausa")}</Badge> : cur ? <JobStatusBadge s={cur.estado} /> : null}
+                    <span className="tabular w-10 text-right text-xs text-fg-3">{trad(tj.filter((j) => j.estado === "finalizado" || j.estado === "facturado").length)}/{trad(tj.length)}</span>
                   </div>
                 );
               })}
@@ -209,14 +210,14 @@ export function Direccion() {
             />
           </Card>
           <Card>
-            <CardHeader title="Actividad" sub="En tiempo real" right={<Bell className="size-3.5 text-fg-3" />} />
+            <CardHeader title={trad("Actividad")} sub={trad("En tiempo real")} right={<Bell className="size-3.5 text-fg-3" />} />
             <ol className="relative max-h-[330px] space-y-0 overflow-auto px-4 pb-3 scroll-thin">
               <AnimatePresence initial={false}>
                 {activity.slice(0, 14).map((a) => (
                   <motion.li key={a.id} layout initial={{ opacity: 0, y: -8, backgroundColor: "var(--sun-soft)" }} animate={{ opacity: 1, y: 0, backgroundColor: "rgba(0,0,0,0)" }} transition={{ duration: 0.6 }} className="-mx-2 flex gap-3 rounded-lg px-2 py-2">
                     <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", a.kind === "pago" ? "bg-ok" : a.kind === "aviso" ? "bg-sun" : a.kind === "equipo" ? "bg-info" : a.kind === "factura" ? "bg-ai" : "bg-brand")} />
                     <span className="min-w-0">
-                      <span className="block text-[13px] leading-snug">{a.texto}</span>
+                      <span className="block text-[13px] leading-snug">{trad(a.texto)}</span>
                       <span className="text-[11px] text-fg-3">{fmt.ago(a.ts, now)}</span>
                     </span>
                   </motion.li>
@@ -228,13 +229,13 @@ export function Direccion() {
 
         <div className="grid gap-4 lg:grid-cols-2">
           <Card>
-            <CardHeader title="Mejores clientes del año" sub="Facturado, IVA incluido" right={<button className="text-xs text-brand hover:underline" onClick={() => go("rentabilidad")}>Ver rentabilidad</button>} />
+            <CardHeader title={trad("Mejores clientes del año")} sub={trad("Facturado, IVA incluido")} right={<button className="text-xs text-brand hover:underline" onClick={() => go("rentabilidad")}>{trad("Ver rentabilidad")}</button>} />
             <div className="px-4 pb-4">
               <HBars data={topClientes} format={fmt.eur0} />
             </div>
           </Card>
           <Card>
-            <CardHeader title="Trabajos por estado" sub="Hoy y próximos 7 días" />
+            <CardHeader title={trad("Trabajos por estado")} sub={trad("Hoy y próximos 7 días")} />
             <div className="grid grid-cols-3 gap-2 px-4 pb-4 sm:grid-cols-6">
               {(["pendiente", "asignado", "en-camino", "en-curso", "finalizado", "facturado"] as const).map((st) => {
                 const n = jobs.filter((j) => j.estado === st && j.fecha >= isoDay(addDays(new Date(now), st === "facturado" || st === "finalizado" ? -7 : 0)) && j.fecha <= isoDay(addDays(new Date(now), 7))).length;
@@ -252,7 +253,7 @@ export function Direccion() {
             </div>
             <div className="mx-4 mb-4 flex items-center gap-2 rounded-lg border border-dashed border-line px-3 py-2 text-xs text-fg-2">
               <AlertTriangle className="size-3.5 text-warn" />
-              Los números de este panel salen de los mismos datos que usa el equipo: nadie tiene que pasarlos a mano.
+              {trad("Los números de este panel salen de los mismos datos que usa el equipo: nadie tiene que pasarlos a mano.")}
             </div>
           </Card>
         </div>
@@ -264,9 +265,9 @@ export function Direccion() {
 function Kpi({ label, value, sub, tone, onClick }: { label: string; value: React.ReactNode; sub: string; tone?: string; onClick?: () => void }) {
   return (
     <button onClick={onClick} className="block w-full px-4 py-4 text-left transition hover:bg-surface-2/60">
-      <div className="text-xs text-fg-3">{label}</div>
-      <div className="mt-1.5 font-display text-[28px] leading-none font-semibold tracking-tight">{value}</div>
-      <div className={cn("mt-2 text-xs", tone ? `text-${tone}` : "text-fg-3")}>{sub}</div>
+      <div className="text-xs text-fg-3">{trad(label)}</div>
+      <div className="mt-1.5 font-display text-[28px] leading-none font-semibold tracking-tight">{trad(value)}</div>
+      <div className={cn("mt-2 text-xs", tone ? `text-${tone}` : "text-fg-3")}>{trad(sub)}</div>
     </button>
   );
 }

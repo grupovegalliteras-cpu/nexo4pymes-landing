@@ -11,6 +11,7 @@ import { downloadText, toCsv } from "@/lib/download";
 import { MUNICIPIOS } from "@/data/seed";
 import { haversineKm } from "@/lib/utils";
 import { PageHeader } from "../shell";
+import { trad, tradf } from "@/lib/t";
 
 const toMin = (h: string) => Number(h.slice(0, 2)) * 60 + Number(h.slice(3, 5));
 
@@ -55,10 +56,10 @@ export function Fichaje() {
         actions={
           <>
             <Button size="sm" variant="secondary" onClick={() => setTablet(true)}>
-              <Tablet className="size-3.5" /> Modo tablet de oficina
+              <Tablet className="size-3.5" />{" "}{trad("Modo tablet de oficina")}
             </Button>
             <Button size="sm" variant="primary" onClick={exportar}>
-              <Download className="size-3.5" /> Exportar registro de jornada
+              <Download className="size-3.5" />{" "}{trad("Exportar registro de jornada")}
             </Button>
           </>
         }
@@ -77,28 +78,28 @@ export function Fichaje() {
                     <span className={cn("absolute -right-0.5 -bottom-0.5 size-3 rounded-full border-2 border-surface", t.estado === "trabajando" ? "bg-ok" : t.estado === "pausa" ? "bg-warn" : "bg-fg-3/40")} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[14px] font-semibold">{t.nombre}</div>
-                    <div className="text-xs text-fg-3">{t.rol}</div>
+                    <div className="text-[14px] font-semibold">{trad(t.nombre)}</div>
+                    <div className="text-xs text-fg-3">{trad(t.rol)}</div>
                   </div>
-                  {vac ? <Badge tone="info">Vacaciones</Badge> : t.estado === "trabajando" ? <Badge tone="ok" dot>Trabajando</Badge> : t.estado === "pausa" ? <Badge tone="warn" dot>En pausa</Badge> : <Badge>Sin fichar</Badge>}
+                  {vac ? <Badge tone="info">{trad("Vacaciones")}</Badge> : t.estado === "trabajando" ? <Badge tone="ok" dot>{trad("Trabajando")}</Badge> : t.estado === "pausa" ? <Badge tone="warn" dot>{trad("En pausa")}</Badge> : <Badge>{trad("Sin fichar")}</Badge>}
                 </div>
                 <div className="mt-3 flex items-end justify-between">
                   <div>
-                    <div className="text-[11px] text-fg-3">Hoy</div>
+                    <div className="text-[11px] text-fg-3">{trad("Hoy")}</div>
                     <div className={cn("font-display text-2xl font-semibold tabular", !t.fichajeInicio && "text-fg-3")}>{t.fichajeInicio ? fmt.clock(worked) : "00:00:00"}</div>
                   </div>
                   <div className="text-right text-xs text-fg-3">
                     {t.fichajeInicio ? (
                       <>
-                        <div>Entrada {fmt.time(t.fichajeInicio)}</div>
+                        <div>{trad("Entrada")}{" "}{fmt.time(t.fichajeInicio)}</div>
                         <div className="flex items-center justify-end gap-1">
                           <MapPin className="size-3" /> {nearestTown(t.lat, t.lon)}
                         </div>
                       </>
                     ) : vac ? (
-                      "Vuelve pronto"
+                      trad("Vuelve pronto")
                     ) : (
-                      "Aún no ha empezado"
+                      trad("Aún no ha empezado")
                     )}
                   </div>
                 </div>
@@ -107,26 +108,26 @@ export function Fichaje() {
           })}
         </div>
         <Card className="overflow-hidden">
-          <CardHeader title="Registro de jornada" sub="Entradas, salidas y pausas con ubicación. Exportable para inspección en un clic." />
+          <CardHeader title={trad("Registro de jornada")} sub={trad("Entradas, salidas y pausas con ubicación. Exportable para inspección en un clic.")} />
           <DataTable
             rows={rows}
             rowKey={(e) => e.id}
             search={(e) => maps.tech[e.techId]?.nombre ?? ""}
-            placeholder="Buscar trabajador"
+            placeholder={trad("Buscar trabajador")}
             dense
             columns={[
-              { key: "t", header: "Trabajador", cell: (e) => <span className="flex items-center gap-2"><Avatar name={maps.tech[e.techId]?.nombre ?? ""} color={maps.tech[e.techId]?.color} size={20} />{maps.tech[e.techId]?.nombre}</span>, sort: (e) => maps.tech[e.techId]?.nombre ?? "" },
-              { key: "f", header: "Fecha", cell: (e) => <span className="tabular">{fmt.date(e.fecha)}</span>, sort: (e) => e.fecha },
-              { key: "e", header: "Entrada", cell: (e) => <span className="tabular">{e.entrada}</span> },
-              { key: "s", header: "Salida", cell: (e) => <span className="tabular">{e.salida}</span> },
-              { key: "p", header: "Pausas", cell: (e) => <span className="tabular">{e.pausaMin} min</span>, hideSm: true },
-              { key: "h", header: "Horas", cell: (e) => <span className="tabular font-medium">{fmt.num((toMin(e.salida) - toMin(e.entrada) - e.pausaMin) / 60, 2)}</span>, align: "right" },
-              { key: "u", header: "Ubicación", cell: (e) => <span className="flex items-center gap-1 text-fg-2"><MapPin className="size-3" />{nearestTown(e.lat, e.lon)}</span>, hideSm: true },
+              { key: "t", header: trad("Trabajador"), cell: (e) => <span className="flex items-center gap-2"><Avatar name={maps.tech[e.techId]?.nombre ?? ""} color={maps.tech[e.techId]?.color} size={20} />{trad(maps.tech[e.techId]?.nombre)}</span>, sort: (e) => maps.tech[e.techId]?.nombre ?? "" },
+              { key: "f", header: trad("Fecha"), cell: (e) => <span className="tabular">{fmt.date(e.fecha)}</span>, sort: (e) => e.fecha },
+              { key: "e", header: trad("Entrada"), cell: (e) => <span className="tabular">{trad(e.entrada)}</span> },
+              { key: "s", header: trad("Salida"), cell: (e) => <span className="tabular">{trad(e.salida)}</span> },
+              { key: "p", header: trad("Pausas"), cell: (e) => <span className="tabular">{trad(e.pausaMin)}{" "}{trad("min")}</span>, hideSm: true },
+              { key: "h", header: trad("Horas"), cell: (e) => <span className="tabular font-medium">{fmt.num((toMin(e.salida) - toMin(e.entrada) - e.pausaMin) / 60, 2)}</span>, align: "right" },
+              { key: "u", header: trad("Ubicación"), cell: (e) => <span className="flex items-center gap-1 text-fg-2"><MapPin className="size-3" />{nearestTown(e.lat, e.lon)}</span>, hideSm: true },
             ]}
           />
         </Card>
       </div>
-      <Modal open={tablet} onClose={() => { setTablet(false); setPin(""); setTabletOk(null); }} label="Tablet de fichaje" className="max-w-sm">
+      <Modal open={tablet} onClose={() => { setTablet(false); setPin(""); setTabletOk(null); }} label={trad("Tablet de fichaje")} className="max-w-sm">
         <div className="grid gap-4 bg-[#0c1a22] p-6 text-white">
           <div className="text-center">
             <div className="font-display text-4xl font-semibold tabular">{fmt.time(now)}</div>
@@ -138,8 +139,8 @@ export function Fichaje() {
                 <span className="grid size-14 place-items-center rounded-full bg-ok">
                   <Check className="size-7" />
                 </span>
-                <div className="text-lg font-semibold">Hola, {tabletOk}</div>
-                <div className="text-sm text-white/60">Entrada registrada a las {fmt.time(now)}</div>
+                <div className="text-lg font-semibold">{trad("Hola,")}{" "}{trad(tabletOk)}</div>
+                <div className="text-sm text-white/60">{trad("Entrada registrada a las")}{" "}{fmt.time(now)}</div>
               </motion.div>
             ) : (
               <motion.div key="pad" className="grid gap-3">
@@ -166,13 +167,13 @@ export function Fichaje() {
                         }
                       }}
                       className="h-14 rounded-xl bg-white/10 text-xl font-medium transition hover:bg-white/15 active:scale-95 disabled:opacity-0"
-                      aria-label={k === "⌫" ? "Borrar" : k}
+                      aria-label={k === "⌫" ? trad("Borrar") : trad(k)}
                     >
-                      {k}
+                      {trad(k)}
                     </button>
                   ))}
                 </div>
-                <div className="text-center text-xs text-white/50">Introduce tu código de 4 cifras</div>
+                <div className="text-center text-xs text-white/50">{trad("Introduce tu código de 4 cifras")}</div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -200,12 +201,12 @@ export function Turnos() {
     return h < 6 ? "mañana" : h < 9 ? "partido" : "tarde";
   };
   const T: Record<string, { label: string; cls: string; h: string }> = {
-    mañana: { label: "Mañana", cls: "bg-info-soft text-info", h: "7:00 a 15:00" },
-    partido: { label: "Partido", cls: "bg-brand-soft text-brand", h: "8:00 a 13:00, 15:00 a 18:00" },
-    tarde: { label: "Tarde", cls: "bg-ai-soft text-ai", h: "12:00 a 20:00" },
-    guardia: { label: "Guardia", cls: "bg-sun-soft text-sun", h: "Disponible 24 h" },
-    libre: { label: "Libre", cls: "bg-surface-2 text-fg-3", h: "" },
-    vac: { label: "Vacaciones", cls: "bg-ok-soft text-ok", h: "" },
+    mañana: { label: trad("Mañana"), cls: "bg-info-soft text-info", h: "7:00 a 15:00" },
+    partido: { label: trad("Partido"), cls: "bg-brand-soft text-brand", h: "8:00 a 13:00, 15:00 a 18:00" },
+    tarde: { label: trad("Tarde"), cls: "bg-ai-soft text-ai", h: "12:00 a 20:00" },
+    guardia: { label: trad("Guardia"), cls: "bg-sun-soft text-sun", h: "Disponible 24 h" },
+    libre: { label: trad("Libre"), cls: "bg-surface-2 text-fg-3", h: "" },
+    vac: { label: trad("Vacaciones"), cls: "bg-ok-soft text-ok", h: "" },
   };
   return (
     <div className="pb-8">
@@ -215,7 +216,7 @@ export function Turnos() {
           <table className="w-full min-w-[820px] text-[13px]">
             <thead>
               <tr className="border-b border-line text-left text-xs text-fg-3">
-                <th className="h-10 px-4 font-medium">Semana del {fmt.date(monday)}</th>
+                <th className="h-10 px-4 font-medium">{trad("Semana del")}{" "}{fmt.date(monday)}</th>
                 {days.map((d) => (
                   <th key={d.toISOString()} className={cn("px-2 font-medium capitalize", isoDay(d) === isoDay(new Date()) && "text-brand")}>
                     {fmt.dayName(d).slice(0, 3)} {d.getDate()}
@@ -229,16 +230,16 @@ export function Turnos() {
                   <td className="px-4 py-2">
                     <span className="flex items-center gap-2">
                       <Avatar name={t.nombre} color={t.color} size={24} />
-                      {t.nombre}
+                      {trad(t.nombre)}
                     </span>
                   </td>
                   {days.map((d) => {
                     const k = turno(t.id, d);
                     return (
                       <td key={d.toISOString()} className="px-1.5 py-2">
-                        <div className={cn("rounded-md px-2 py-1.5 text-xs font-medium", T[k].cls)} title={T[k].h}>
-                          {T[k].label}
-                          {T[k].h && <div className="truncate text-[10px] font-normal opacity-80">{T[k].h}</div>}
+                        <div className={cn("rounded-md px-2 py-1.5 text-xs font-medium", T[k].cls)} title={trad(T[k].h)}>
+                          {trad(T[k].label)}
+                          {T[k].h && <div className="truncate text-[10px] font-normal opacity-80">{trad(T[k].h)}</div>}
                         </div>
                       </td>
                     );
@@ -248,7 +249,7 @@ export function Turnos() {
             </tbody>
           </table>
         </Card>
-        <p className="mt-3 text-xs text-fg-3">Cada trabajador ve su cuadrante en la app y recibe un aviso cuando cambia.</p>
+        <p className="mt-3 text-xs text-fg-3">{trad("Cada trabajador ve su cuadrante en la app y recibe un aviso cuando cambia.")}</p>
       </div>
     </div>
   );
@@ -271,24 +272,24 @@ export function Vacaciones() {
       <PageHeader id="vacaciones" />
       <div className="grid gap-4 px-4 sm:px-6">
         <Card className="overflow-hidden" data-tour="vacaciones-pendientes">
-          <CardHeader title="Solicitudes por aprobar" sub={pend.length ? `${pend.length} pendientes` : "No hay solicitudes pendientes"} />
+          <CardHeader title={trad("Solicitudes por aprobar")} sub={pend.length ? tradf("{0} pendientes", pend.length) : trad("No hay solicitudes pendientes")} />
           <div className="divide-y divide-line/70">
             <AnimatePresence initial={false}>
               {pend.map((a) => (
                 <motion.div key={a.id} layout initial={{ opacity: 0, backgroundColor: "var(--sun-soft)" }} animate={{ opacity: 1, backgroundColor: "rgba(0,0,0,0)" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.8 }} className="flex flex-wrap items-center gap-3 px-4 py-3">
                   <Avatar name={maps.tech[a.techId].nombre} color={maps.tech[a.techId].color} size={32} />
                   <div className="min-w-0 flex-1">
-                    <div className="text-[13px] font-semibold">{maps.tech[a.techId].nombre}</div>
+                    <div className="text-[13px] font-semibold">{trad(maps.tech[a.techId].nombre)}</div>
                     <div className="text-xs text-fg-2">
-                      <span className="capitalize">{a.tipo}</span> del {fmt.date(a.desde)} al {fmt.date(a.hasta)}, {dias(a)} días. Pedida {fmt.ago(a.solicitada)} desde la app.
+                      <span className="capitalize">{trad(a.tipo)}</span>{" "}{trad("del")}{" "}{fmt.date(a.desde)}{" "}{trad("al")}{" "}{fmt.date(a.hasta)}, {dias(a)}{" "}{trad("días. Pedida")}{" "}{fmt.ago(a.solicitada)}{" "}{trad("desde la app.")}
                     </div>
                   </div>
                   <div className="flex gap-2">
                     <Button size="sm" variant="ghost" onClick={() => resolve(a.id, false)}>
-                      <X className="size-3.5" /> Rechazar
+                      <X className="size-3.5" />{" "}{trad("Rechazar")}
                     </Button>
                     <Button size="sm" variant="primary" onClick={() => resolve(a.id, true)} data-tour="aprobar-vacaciones">
-                      <Check className="size-3.5" /> Aprobar
+                      <Check className="size-3.5" />{" "}{trad("Aprobar")}
                     </Button>
                   </div>
                 </motion.div>
@@ -297,7 +298,7 @@ export function Vacaciones() {
           </div>
         </Card>
         <Card className="overflow-x-auto scroll-thin">
-          <CardHeader title="Calendario del equipo" sub="Próximas cinco semanas. Solo se muestra el tipo de ausencia, nunca el motivo médico." />
+          <CardHeader title={trad("Calendario del equipo")} sub={trad("Próximas cinco semanas. Solo se muestra el tipo de ausencia, nunca el motivo médico.")} />
           <div className="min-w-[900px] px-4 pb-4">
             <div className="grid" style={{ gridTemplateColumns: `150px repeat(${days.length}, minmax(0,1fr))` }}>
               <div />
@@ -310,7 +311,7 @@ export function Vacaciones() {
                 <div key={t.id} className="contents">
                   <div className="flex items-center gap-2 py-1.5 text-[13px]">
                     <Avatar name={t.nombre} color={t.color} size={20} />
-                    <span className="truncate">{t.nombre}</span>
+                    <span className="truncate">{trad(t.nombre)}</span>
                   </div>
                   {days.map((d) => {
                     const iso = isoDay(d);
@@ -331,22 +332,22 @@ export function Vacaciones() {
               ))}
             </div>
             <div className="mt-3 flex gap-4 text-[11px] text-fg-3">
-              <span className="flex items-center gap-1.5"><span className="h-2.5 w-4 rounded bg-ok/80" /> Vacaciones</span>
-              <span className="flex items-center gap-1.5"><span className="h-2.5 w-4 rounded bg-info/70" /> Otras ausencias</span>
-              <span className="flex items-center gap-1.5"><span className="h-2.5 w-4 rounded bg-[repeating-linear-gradient(135deg,var(--sun)_0_3px,transparent_3px_6px)]" /> Pendiente</span>
+              <span className="flex items-center gap-1.5"><span className="h-2.5 w-4 rounded bg-ok/80" />{" "}{trad("Vacaciones")}</span>
+              <span className="flex items-center gap-1.5"><span className="h-2.5 w-4 rounded bg-info/70" />{" "}{trad("Otras ausencias")}</span>
+              <span className="flex items-center gap-1.5"><span className="h-2.5 w-4 rounded bg-[repeating-linear-gradient(135deg,var(--sun)_0_3px,transparent_3px_6px)]" />{" "}{trad("Pendiente")}</span>
             </div>
           </div>
         </Card>
         <Card className="overflow-hidden">
-          <CardHeader title="Saldo de vacaciones" sub="23 días laborables al año" />
+          <CardHeader title={trad("Saldo de vacaciones")} sub={trad("23 días laborables al año")} />
           <div className="grid gap-3 px-4 pb-4 sm:grid-cols-2 lg:grid-cols-3">
             {techs.map((t) => {
               const used = absences.filter((a) => a.techId === t.id && a.tipo === "vacaciones" && a.estado === "aprobada").reduce((s, a) => s + dias(a), 0) + (hashString(t.id) % 9) + 4;
               return (
                 <div key={t.id} className="rounded-lg bg-surface-2 p-3">
                   <div className="flex items-center justify-between text-[13px]">
-                    <span className="font-medium">{t.nombre}</span>
-                    <span className="tabular text-fg-2">{Math.max(0, 23 - used)} restantes</span>
+                    <span className="font-medium">{trad(t.nombre)}</span>
+                    <span className="tabular text-fg-2">{Math.max(0, 23 - used)}{" "}{trad("restantes")}</span>
                   </div>
                   <Progress value={(used / 23) * 100} className="mt-2" />
                 </div>
@@ -383,7 +384,7 @@ export function HorasExtra() {
               setSent(true);
             }}
           >
-            <Send className="size-3.5" /> {sent ? "Enviado a la gestoría" : "Enviar a la gestoría"}
+            <Send className="size-3.5" /> {sent ? trad("Enviado a la gestoría") : trad("Enviar a la gestoría")}
           </Button>
         }
       />
@@ -392,7 +393,7 @@ export function HorasExtra() {
           <Card key={d.t.id} className="p-4">
             <div className="flex items-center gap-2.5">
               <Avatar name={d.t.nombre} color={d.t.color} size={30} />
-              <div className="text-[13px] font-semibold">{d.t.nombre}</div>
+              <div className="text-[13px] font-semibold">{trad(d.t.nombre)}</div>
             </div>
             <div className="mt-3 flex items-end gap-4">
               <div>
@@ -400,18 +401,18 @@ export function HorasExtra() {
                   <AnimatedNumber value={d.extra / 60} format={(n) => fmt.num(n, 1)} />
                   <span className="text-sm font-normal text-fg-3"> h</span>
                 </div>
-                <div className="text-[11px] text-fg-3">extra en 30 días</div>
+                <div className="text-[11px] text-fg-3">{trad("extra en 30 días")}</div>
               </div>
               <div className="text-xs text-fg-2">
-                {d.dias} días por encima de la jornada
+                {trad(d.dias)}{" "}{trad("días por encima de la jornada")}
                 <br />
-                {fmt.num(d.total / 60, 0)} h trabajadas
+                {fmt.num(d.total / 60, 0)}{" "}{trad("h trabajadas")}
               </div>
             </div>
           </Card>
         ))}
       </div>
-      <p className="mt-3 px-4 text-xs text-fg-3 sm:px-6">Calculadas a partir de los fichajes. La gestoría decide cómo se compensan.</p>
+      <p className="mt-3 px-4 text-xs text-fg-3 sm:px-6">{trad("Calculadas a partir de los fichajes. La gestoría decide cómo se compensan.")}</p>
     </div>
   );
 }
@@ -431,7 +432,7 @@ export function Nominas() {
         id="nominas"
         actions={
           <Button size="sm" variant="primary" onClick={() => setModal(1)}>
-            <Upload className="size-3.5" /> Subir nóminas de la gestoría
+            <Upload className="size-3.5" />{" "}{trad("Subir nóminas de la gestoría")}
           </Button>
         }
       />
@@ -440,7 +441,7 @@ export function Nominas() {
           <table className="w-full min-w-[640px] text-[13px]">
             <thead>
               <tr className="border-b border-line text-left text-xs text-fg-3">
-                <th className="h-10 px-4 font-medium">Trabajador</th>
+                <th className="h-10 px-4 font-medium">{trad("Trabajador")}</th>
                 {months.map((m) => (
                   <th key={m} className="px-3 font-medium capitalize">
                     {fmt.monthName(`${m}-15`)}
@@ -454,7 +455,7 @@ export function Nominas() {
                   <td className="px-4 py-2.5">
                     <span className="flex items-center gap-2">
                       <Avatar name={t.nombre} color={t.color} size={24} />
-                      {t.nombre}
+                      {trad(t.nombre)}
                     </span>
                   </td>
                   {months.map((m) => {
@@ -465,11 +466,11 @@ export function Nominas() {
                         {p ? (
                           p.leida ? (
                             <span className="flex items-center gap-1 text-xs text-ok">
-                              <CheckCheck className="size-3.5" /> Leída {fmt.dateShort(p.leida)}
+                              <CheckCheck className="size-3.5" />{" "}{trad("Leída")}{" "}{fmt.dateShort(p.leida)}
                             </span>
                           ) : (
                             <span className="flex items-center gap-1 text-xs text-fg-3">
-                              <Eye className="size-3.5" /> Entregada, sin abrir
+                              <Eye className="size-3.5" />{" "}{trad("Entregada, sin abrir")}
                             </span>
                           )
                         ) : (
@@ -484,7 +485,7 @@ export function Nominas() {
           </table>
         </Card>
         <Card className="overflow-hidden">
-          <CardHeader title="Documentos del equipo" sub="Contratos, certificados y justificantes, cada uno visible solo para su trabajador" />
+          <CardHeader title={trad("Documentos del equipo")} sub={trad("Contratos, certificados y justificantes, cada uno visible solo para su trabajador")} />
           <div className="grid gap-2 px-4 pb-4 sm:grid-cols-2 lg:grid-cols-3">
             {techs.flatMap((t, i) =>
               [
@@ -494,20 +495,20 @@ export function Nominas() {
                 <div key={`${t.id}${k}`} className="flex items-center gap-3 rounded-lg border border-line px-3 py-2">
                   <FileText className="size-4 text-bad" />
                   <div className="min-w-0 flex-1">
-                    <div className="truncate text-[13px]">{n}</div>
-                    <div className="text-[11px] text-fg-3">{t.nombre}</div>
+                    <div className="truncate text-[13px]">{trad(n)}</div>
+                    <div className="text-[11px] text-fg-3">{trad(t.nombre)}</div>
                   </div>
-                  <Badge tone={i % 3 === 0 && k ? "neutral" : "ok"}>{i % 3 === 0 && k ? "Sin abrir" : e}</Badge>
+                  <Badge tone={i % 3 === 0 && k ? "neutral" : "ok"}>{i % 3 === 0 && k ? trad("Sin abrir") : trad(e)}</Badge>
                 </div>
               )),
             ).slice(0, 9)}
           </div>
         </Card>
-        <p className="text-xs text-fg-3">Las nóminas las hace tu gestoría. La plataforma las reparte: cada persona recibe solo la suya, con aviso en el móvil y confirmación de lectura.</p>
+        <p className="text-xs text-fg-3">{trad("Las nóminas las hace tu gestoría. La plataforma las reparte: cada persona recibe solo la suya, con aviso en el móvil y confirmación de lectura.")}</p>
       </div>
-      <Modal open={modal > 0} onClose={() => setModal(0)} label="Subir nóminas">
+      <Modal open={modal > 0} onClose={() => setModal(0)} label={trad("Subir nóminas")}>
         <div className="grid gap-4 p-5">
-          <div className="font-display text-lg font-semibold">Repartir nóminas del mes</div>
+          <div className="font-display text-lg font-semibold">{trad("Repartir nóminas del mes")}</div>
           {modal === 1 ? (
             <button
               onClick={() => {
@@ -519,22 +520,22 @@ export function Nominas() {
               className="grid place-items-center gap-2 rounded-xl border-2 border-dashed border-line-strong px-6 py-10 text-center hover:border-brand hover:bg-brand-soft/40"
             >
               <Upload className="size-6 text-fg-3" />
-              <div className="text-sm font-medium">Suelta aquí el PDF de la gestoría</div>
-              <div className="text-xs text-fg-3">O pulsa para usar el de ejemplo: nominas-gestoria.pdf, {techs.length} páginas</div>
+              <div className="text-sm font-medium">{trad("Suelta aquí el PDF de la gestoría")}</div>
+              <div className="text-xs text-fg-3">{trad("O pulsa para usar el de ejemplo: nominas-gestoria.pdf,")}{" "}{trad(techs.length)}{" "}{trad("páginas")}</div>
             </button>
           ) : (
             <div className="grid gap-2">
               {techs.map((t, i) => (
                 <motion.div key={t.id} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.22 }} className="flex items-center gap-3 rounded-lg bg-surface-2 px-3 py-2 text-[13px]">
                   <FileText className="size-4 text-bad" />
-                  <span className="flex-1">Página {i + 1}: detectada nómina de {t.nombre}</span>
+                  <span className="flex-1">{trad("Página")}{" "}{i + 1}{trad(": detectada nómina de")}{" "}{trad(t.nombre)}</span>
                   <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: i * 0.22 + 0.15 }}>
                     <Check className="size-4 text-ok" />
                   </motion.span>
                 </motion.div>
               ))}
               <Button variant="primary" className="mt-2" onClick={() => setModal(0)}>
-                Hecho, todos avisados en el móvil
+                {trad("Hecho, todos avisados en el móvil")}
               </Button>
             </div>
           )}
@@ -548,7 +549,7 @@ export function Nominas() {
 export function Prevencion() {
   const techs = useDemo((s) => s.techs);
   const hoy = new Date();
-  const cursos = ["Prevención de riesgos, 60 h", "Trabajos en altura", "Manipulación de productos químicos", "Primeros auxilios"];
+  const cursos = ["Prevención de riesgos, 60 h", "Trabajos en altura", "Manipulación de productos químicos", "Primeros auxilios"].map((c) => trad(c));
   const epis = ["Guantes de protección", "Gafas", "Calzado de seguridad", "Arnés"];
   const rows = techs.flatMap((t) =>
     cursos.map((c, i) => {
@@ -561,38 +562,38 @@ export function Prevencion() {
       <PageHeader id="prevencion" />
       <div className="grid gap-4 px-4 sm:px-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
         <Card className="overflow-hidden">
-          <CardHeader title="Formación y certificados" sub="Con aviso automático antes de caducar" />
+          <CardHeader title={trad("Formación y certificados")} sub={trad("Con aviso automático antes de caducar")} />
           <DataTable
             rows={rows}
             rowKey={(r) => r.id}
             dense
             filters={[
-              { label: "Todos", fn: () => true },
-              { label: "Caducados", fn: (r) => r.cad < hoy },
-              { label: "Caducan en 90 días", fn: (r) => r.cad >= hoy && r.cad < addDays(hoy, 90) },
+              { label: trad("Todos"), fn: () => true },
+              { label: trad("Caducados"), fn: (r) => r.cad < hoy },
+              { label: trad("Caducan en 90 días"), fn: (r) => r.cad >= hoy && r.cad < addDays(hoy, 90) },
             ]}
             columns={[
-              { key: "t", header: "Trabajador", cell: (r) => r.t.nombre, sort: (r) => r.t.nombre },
-              { key: "c", header: "Curso", cell: (r) => r.c },
-              { key: "d", header: "Caduca", cell: (r) => <span className="tabular">{fmt.date(r.cad)}</span>, sort: (r) => r.cad.getTime() },
-              { key: "e", header: "Estado", cell: (r) => (r.cad < hoy ? <Badge tone="bad">Caducado</Badge> : r.cad < addDays(hoy, 90) ? <Badge tone="warn">Renovar pronto</Badge> : <Badge tone="ok">Vigente</Badge>) },
+              { key: "t", header: trad("Trabajador"), cell: (r) => r.t.nombre, sort: (r) => r.t.nombre },
+              { key: "c", header: trad("Curso"), cell: (r) => r.c },
+              { key: "d", header: trad("Caduca"), cell: (r) => <span className="tabular">{fmt.date(r.cad)}</span>, sort: (r) => r.cad.getTime() },
+              { key: "e", header: trad("Estado"), cell: (r) => (r.cad < hoy ? <Badge tone="bad">{trad("Caducado")}</Badge> : r.cad < addDays(hoy, 90) ? <Badge tone="warn">{trad("Renovar pronto")}</Badge> : <Badge tone="ok">{trad("Vigente")}</Badge>) },
             ]}
           />
         </Card>
         <Card className="overflow-hidden">
-          <CardHeader title="Entregas de equipos de protección" sub="Firmadas por el trabajador en la app" />
+          <CardHeader title={trad("Entregas de equipos de protección")} sub={trad("Firmadas por el trabajador en la app")} />
           <div className="divide-y divide-line/70">
             {techs.map((t, i) => (
               <div key={t.id} className="flex items-center gap-3 px-4 py-2.5">
                 <HardHat className="size-4 text-sun" />
                 <div className="min-w-0 flex-1">
-                  <div className="text-[13px]">{epis[i % epis.length]}</div>
+                  <div className="text-[13px]">{trad(epis[i % epis.length])}</div>
                   <div className="text-[11px] text-fg-3">
-                    {t.nombre}, {fmt.date(addDays(hoy, -(hashString(t.id) % 40) - 2))}
+                    {trad(t.nombre)}, {fmt.date(addDays(hoy, -(hashString(t.id) % 40) - 2))}
                   </div>
                 </div>
                 <Badge tone="ok">
-                  <Fingerprint className="size-3" /> Firmada
+                  <Fingerprint className="size-3" />{" "}{trad("Firmada")}
                 </Badge>
               </div>
             ))}
@@ -617,7 +618,7 @@ export function Comunicados() {
       <div className="grid gap-4 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
         <Card className="p-4">
           <div className="flex items-center gap-2 text-[13px] font-semibold">
-            <Megaphone className="size-4" /> Nuevo comunicado
+            <Megaphone className="size-4" />{" "}{trad("Nuevo comunicado")}
           </div>
           <form
             className="mt-3 grid gap-3"
@@ -629,10 +630,10 @@ export function Comunicados() {
               setTexto("");
             }}
           >
-            <input className={inputCls} placeholder="Título, por ejemplo: Cierre por festivo" value={titulo} onChange={(e) => setTitulo(e.target.value)} aria-label="Título" />
-            <textarea className={cn(inputCls, "h-28 py-2")} placeholder="Escribe el mensaje para todo el equipo" value={texto} onChange={(e) => setTexto(e.target.value)} aria-label="Mensaje" />
+            <input className={inputCls} placeholder={trad("Título, por ejemplo: Cierre por festivo")} value={titulo} onChange={(e) => setTitulo(e.target.value)} aria-label={trad("Título")} />
+            <textarea className={cn(inputCls, "h-28 py-2")} placeholder={trad("Escribe el mensaje para todo el equipo")} value={texto} onChange={(e) => setTexto(e.target.value)} aria-label={trad("Mensaje")} />
             <Button variant="primary" type="submit" disabled={!titulo.trim()}>
-              <Send className="size-4" /> Enviar a {techs.length} personas
+              <Send className="size-4" />{" "}{trad("Enviar a")}{" "}{trad(techs.length)}{" "}{trad("personas")}
             </Button>
           </form>
         </Card>
@@ -643,14 +644,14 @@ export function Comunicados() {
                 <Card className="p-4">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <div className="text-[14px] font-semibold">{c.titulo}</div>
+                      <div className="text-[14px] font-semibold">{trad(c.titulo)}</div>
                       <div className="text-[11px] text-fg-3">{fmt.date(c.fecha)}</div>
                     </div>
                     <Badge tone={c.leidos.length === techs.length ? "ok" : "neutral"}>
-                      {c.leidos.length} de {techs.length} lo han leído
+                      {trad(c.leidos.length)}{" "}{trad("de")}{" "}{trad(techs.length)}{" "}{trad("lo han leído")}
                     </Badge>
                   </div>
-                  <p className="mt-2 text-[13px] text-fg-2">{c.texto}</p>
+                  <p className="mt-2 text-[13px] text-fg-2">{trad(c.texto)}</p>
                   <div className="mt-3 flex -space-x-1.5">
                     {techs.map((t) => (
                       <span key={t.id} className={cn(!c.leidos.includes(t.id) && "opacity-30 grayscale")} title={`${maps.tech[t.id].nombre}: ${c.leidos.includes(t.id) ? "leído" : "sin leer"}`}>
@@ -688,20 +689,20 @@ export function Chat() {
               <button key={x.id} onClick={() => setSel(x.id)} className={cn("flex w-full items-center gap-3 border-b border-line/60 px-3 py-2.5 text-left", sel === x.id ? "bg-brand-soft/60" : "hover:bg-surface-2")}>
                 <Avatar name={x.nombre} color={x.color} size={32} />
                 <div className="min-w-0 flex-1">
-                  <div className="text-[13px] font-medium">{x.nombre}</div>
-                  <div className="truncate text-xs text-fg-3">{last?.texto ?? "Sin mensajes"}</div>
+                  <div className="text-[13px] font-medium">{trad(x.nombre)}</div>
+                  <div className="truncate text-xs text-fg-3">{trad(last?.texto) ?? trad("Sin mensajes")}</div>
                 </div>
               </button>
             );
           })}
         </div>
         <div className="flex min-h-0 flex-col">
-          <div className="border-b border-line px-4 py-2.5 text-[13px] font-semibold">{t?.nombre}</div>
+          <div className="border-b border-line px-4 py-2.5 text-[13px] font-semibold">{trad(t?.nombre)}</div>
           <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-auto bg-surface-2/50 p-4 scroll-thin">
-            {thread.length === 0 && <div className="m-auto text-sm text-fg-3">Empieza la conversación</div>}
+            {thread.length === 0 && <div className="m-auto text-sm text-fg-3">{trad("Empieza la conversación")}</div>}
             {thread.map((m) => (
               <motion.div key={m.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className={cn("max-w-[75%] rounded-2xl px-3 py-2 text-[13px]", m.from === "oficina" ? "ml-auto rounded-br-md bg-brand text-brand-ink" : "rounded-bl-md bg-surface shadow-e1")}>
-                {m.texto}
+                {trad(m.texto)}
                 <div className={cn("mt-0.5 text-right text-[10px]", m.from === "oficina" ? "opacity-70" : "text-fg-3")}>{fmt.time(m.ts)}</div>
               </motion.div>
             ))}
@@ -715,8 +716,8 @@ export function Chat() {
               setMsg("");
             }}
           >
-            <input value={msg} onChange={(e) => setMsg(e.target.value)} className={inputCls} placeholder={`Mensaje para ${t?.nombre.split(" ")[0]}`} aria-label="Mensaje" />
-            <Button variant="primary" type="submit" aria-label="Enviar">
+            <input value={msg} onChange={(e) => setMsg(e.target.value)} className={inputCls} placeholder={tradf("Mensaje para {0}", t?.nombre.split(" ")[0])} aria-label={trad("Mensaje")} />
+            <Button variant="primary" type="submit" aria-label={trad("Enviar")}>
               <Send className="size-4" />
             </Button>
           </form>

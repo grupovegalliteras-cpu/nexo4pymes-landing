@@ -80,12 +80,8 @@ const metadataComun: Metadata = {
   other: {
     // Meta Business exige esta etiqueta en el <head> renderizado en origen.
     // Si desaparece, Meta revoca la verificación del dominio.
-    // La 1.ª es del portfolio que verificó el dominio el 5 de agosto de 2026; la 2.ª, del portfolio
-    // de Nexo4Pymes (2 de octubre de 2026). Quitar la 1.ª cuando el dominio pase a Nexo4Pymes.
-    "facebook-domain-verification": [
-      "2uz5rez9zyt7qyb5r42ugk1cnkv0jl",
-      "5v8341w9cj32alna06bh90gfkontjd",
-    ],
+    // Etiqueta del portfolio de Nexo4Pymes (dominio verificado el 2 de octubre de 2026).
+    "facebook-domain-verification": "5v8341w9cj32alna06bh90gfkontjd",
   },
 };
 

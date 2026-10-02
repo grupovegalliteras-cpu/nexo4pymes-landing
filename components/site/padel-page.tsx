@@ -203,7 +203,7 @@ function FondoHero() {
   if (quieto) return <img src={video.poster} alt="" className="size-full object-cover" />;
   return (
     <video autoPlay muted loop playsInline preload="auto" poster={video.poster} aria-hidden className="size-full object-cover">
-      <source src={video.vertical} type="video/mp4" media="(max-width: 767px)" />
+      {video.vertical && <source src={video.vertical} type="video/mp4" media="(max-width: 767px)" />}
       <source src={video.horizontal} type="video/mp4" />
     </video>
   );

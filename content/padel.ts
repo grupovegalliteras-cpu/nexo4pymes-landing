@@ -23,10 +23,15 @@ export const padel = {
     titulo: "Tu club de pádel, sin estar pegado al WhatsApp",
     texto:
       "Un WhatsApp que contesta por vosotros, una escuela que reorganiza sola faltas y recuperaciones, y partidos que se completan sin perseguir al cuarto jugador. La oficina solo ve lo que necesita a una persona.",
-    /* Vídeo de fondo del hero: un dron que sobrevuela un club de pádel y entra en él.
-       Es un club inventado, generado con IA: no lleva el nombre ni el logo de ningún club real.
-       Archivos en public/padel/. Con null se ve el fondo animado de siempre. */
-    video: null as null | { horizontal: string; vertical: string; poster: string },
+    /* Vídeo de fondo del hero: un dron sobre las pistas vacías de un club al anochecer.
+       Es un club inventado, generado con IA (Veo, 2 de octubre de 2026): no es ningún club real.
+       Archivos en public/padel/. En el móvil se ve el centro del mismo vídeo. Con null se ve el
+       fondo animado de siempre. */
+    video: { horizontal: "/padel/hero.mp4", poster: "/padel/hero.jpg" } as null | {
+      horizontal: string;
+      vertical?: string;
+      poster: string;
+    },
     verDemo: "Ver la demo",
     pedir: "Pídela por WhatsApp",
     chat: [

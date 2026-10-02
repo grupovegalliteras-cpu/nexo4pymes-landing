@@ -28,7 +28,7 @@ const T = {
     columnas: [
       ["Demo", [["Modo presentación", "/demo"], ["Panel de oficina", "/panel"], ["App de operarios", "/app"], ["Ver recorrido guiado", "/demo?tour=1"]]],
       ["Producto", [["Central Avisos", "/panel/central-avisos"], ["Todos los módulos", "/modulos"], ["Facturación con VeriFactu", "/panel/facturacion"], ["Fichaje", "/panel/fichaje"]]],
-      ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"]]],
+      ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"], ["Clubes de pádel", "/padel"]]],
       ["Empresa", [["Servicios", "/servicios"], ["Nosotros", "/nosotros"], ["Blog", "/blog"], ["Contacto", "/contacto"]]],
     ],
     ficticias: "Todas las empresas, personas y cifras de esta demo son ficticias.",

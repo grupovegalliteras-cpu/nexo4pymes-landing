@@ -64,6 +64,31 @@ Es el único bloque que habría que tocar para unificarlo.
 | `/contacto` | Formulario, calendario y datos de la empresa |
 | `/blog` | Artículos |
 | `/legal` | Aviso legal, privacidad y cookies |
+| `/padel` | **Nexo Pádel**, producto para clubes y escuelas de pádel (solo en español, con precios) |
+
+## Nexo Pádel (`/padel`)
+
+Producto propio para clubes y escuelas de pádel de Mallorca (octubre de 2026).
+**Es la excepción a dos reglas de esta web**, y a propósito:
+
+- **Tiene precios** (89 € y 179 € al mes): no es un desarrollo a medida sino un
+  programa con cuota mensual. La regla de «nada de precios» sigue valiendo para
+  la home y `/servicios`.
+- **Solo está en español**: en `/en/padel` y `/de/padel` se ve la página en
+  español, sin indexar.
+
+| Qué | Dónde |
+|---|---|
+| Textos de la página (incluidas las fases del piloto y los precios) | `content/padel.ts` |
+| La página | `components/site/padel-page.tsx` y `app/(demo)/[lang]/padel/page.tsx` |
+| La demo interactiva, en `/padel/demo` | `public/padel/demo.html` (HTML propio; la reescritura está en `next.config.mjs`, `beforeFiles`) |
+| El aviso de la home | `AvisoPadel` en `components/site/landing.tsx` |
+| El enlace del pie | columna «Sectores» en `components/site/chrome.tsx` |
+
+El producto se construye por fases con 5 clubes piloto. La sección de fases de
+`content/padel.ts` dice qué funciona y cuándo: si una fase se retrasa, se
+cambia ahí. El proyecto del producto (documentos, emails, código) está en la
+carpeta `nexo4padel`.
 
 ## El sector veterinario se abandonó
 

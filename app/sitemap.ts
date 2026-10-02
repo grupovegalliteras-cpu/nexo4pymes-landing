@@ -25,13 +25,17 @@ const PAGINAS: { ruta: string; prioridad: number; frecuencia: "monthly" | "yearl
 export default function sitemap(): MetadataRoute.Sitemap {
   const hoy = new Date();
   const url = (lang: (typeof IDIOMAS)[number], ruta: string) => `${marca.dominio}${conIdioma(lang, ruta) === "/" ? "/" : conIdioma(lang, ruta)}`;
-  return PAGINAS.flatMap((p) =>
-    IDIOMAS.map((lang) => ({
-      url: url(lang, p.ruta),
-      lastModified: p.fecha ? new Date(p.fecha) : hoy,
-      changeFrequency: p.frecuencia,
-      priority: lang === "es" ? p.prioridad : Math.round(p.prioridad * 0.9 * 10) / 10,
-      alternates: { languages: Object.fromEntries(IDIOMAS.map((l) => [l, url(l, p.ruta)])) },
-    })),
-  );
+  return [
+    ...PAGINAS.flatMap((p) =>
+      IDIOMAS.map((lang) => ({
+        url: url(lang, p.ruta),
+        lastModified: p.fecha ? new Date(p.fecha) : hoy,
+        changeFrequency: p.frecuencia,
+        priority: lang === "es" ? p.prioridad : Math.round(p.prioridad * 0.9 * 10) / 10,
+        alternates: { languages: Object.fromEntries(IDIOMAS.map((l) => [l, url(l, p.ruta)])) },
+      })),
+    ),
+    // Nexo Pádel solo existe en español (clubes de Mallorca).
+    { url: `${marca.dominio}/padel`, lastModified: hoy, changeFrequency: "monthly", priority: 0.8 },
+  ];
 }

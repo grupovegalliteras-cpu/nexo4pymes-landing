@@ -280,6 +280,7 @@ export function Landing() {
       <SiteNav dark />
       <Hero />
       <SectorPicker />
+      <AvisoPadel />
       <Recorrido />
       <PruebaAviso />
       <SoftwareReal />
@@ -336,6 +337,28 @@ function Hero() {
           </div>
         </div>
         <HeroAnim />
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Nexo Pádel ----------------
+   Producto propio para clubes y escuelas de pádel, con página en /padel.
+   Solo en español: los clientes son clubes de Mallorca. */
+function AvisoPadel() {
+  const lang = useIdioma();
+  if (lang !== "es") return null;
+  return (
+    <section className="bg-[#041820] pb-16 text-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <Link href="/padel" className="group flex flex-col gap-3 rounded-2xl border border-sun/40 bg-sun/10 p-5 transition hover:bg-sun/15 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+          <span>
+            <span className="block text-[13px] font-semibold text-sun">🎾 Nuevo: Nexo Pádel</span>
+            <span className="mt-1 block font-display text-[20px] font-semibold sm:text-[22px]">¿Tenéis un club o una escuela de pádel?</span>
+            <span className="mt-1 block text-[15px] text-white/70">Un WhatsApp que contesta por vosotros, faltas y recuperaciones automáticas y partidos que se completan solos.</span>
+          </span>
+          <span className="flex h-11 shrink-0 items-center justify-center rounded-xl bg-sun px-4 text-[15px] font-semibold text-[#1d1300]">Ver Nexo Pádel →</span>
+        </Link>
       </div>
     </section>
   );

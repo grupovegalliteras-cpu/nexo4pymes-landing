@@ -1,0 +1,1280 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nexo Pádel Demo</title>
+<meta name="description" content="Demo interactiva de Nexo Pádel: panel de la escuela, app del entrenador, app del alumno y asistente de WhatsApp con IA.">
+<style>
+:root{
+  --bg:#efebe3; --bg-2:#e7e2d8; --surface:#ffffff; --surface-2:#f7f5f1; --ink:#0b0e1a; --muted:#55605c; --line:#e2ddd3;
+  --teal:#0e9f89; --teal-bright:#2ee0c4; --teal-soft:#e4f0ed; --coral:#e8552f; --coral-soft:#ffe7df;
+  --blue:#3f6ff0; --violet:#9a55e0; --amber:#d98b0b; --amber-soft:#fff1d9;
+  --k-ini:#0e9f89; --k-mid:#3f6ff0; --k-adv:#9a55e0; --k-kids:#d98b0b;
+  --shadow:0 1px 2px rgba(5,6,12,.05),0 10px 30px -14px rgba(5,6,12,.22);
+  --phone:#05060c;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#05060c; --bg-2:#0b0e1a; --surface:#0f1322; --surface-2:#141a2c; --ink:#e9ebf4; --muted:#9aa3b5; --line:#1f2539;
+    --teal:#2ee0c4; --teal-soft:#0d2a2a; --coral:#ff6b4c; --coral-soft:#2c1611; --blue:#6f95ff; --violet:#bf85f7; --amber:#f5ab2e; --amber-soft:#2a2010;
+    --k-ini:#2ee0c4; --k-mid:#6f95ff; --k-adv:#bf85f7; --k-kids:#f5ab2e;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px -16px rgba(0,0,0,.8); --phone:#1a1f33; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#05060c; --bg-2:#0b0e1a; --surface:#0f1322; --surface-2:#141a2c; --ink:#e9ebf4; --muted:#9aa3b5; --line:#1f2539;
+  --teal:#2ee0c4; --teal-soft:#0d2a2a; --coral:#ff6b4c; --coral-soft:#2c1611; --blue:#6f95ff; --violet:#bf85f7; --amber:#f5ab2e; --amber-soft:#2a2010;
+  --k-ini:#2ee0c4; --k-mid:#6f95ff; --k-adv:#bf85f7; --k-kids:#f5ab2e;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px -16px rgba(0,0,0,.8); --phone:#1a1f33; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Geist",ui-sans-serif,system-ui,sans-serif;font-size:14.5px;line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.015em;margin:0;line-height:1.15}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+.muted{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:13.5px;white-space:nowrap;text-decoration:none}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--teal-bright);border-color:var(--teal-bright);color:#05060c}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.btn.sm{padding:5px 11px;font-size:12.5px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.pill.ok{background:var(--teal-soft);color:var(--teal)}
+.pill.warn{background:var(--amber-soft);color:var(--amber)}
+.pill.bad{background:var(--coral-soft);color:var(--coral)}
+
+/* TOP */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in oklab,var(--bg) 85%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1440px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:9px;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:17px;text-decoration:none}
+.logo-mark{width:30px;height:30px;border-radius:9px;background:#05060c;display:grid;place-items:center;flex:none}
+.logo small{display:block;font-family:"Geist",system-ui,sans-serif;font-weight:500;font-size:11.5px;color:var(--muted);line-height:1.1}
+.top-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
+@media(max-width:640px){.top .hide-sm{display:none}}
+
+/* STEPS */
+.steps{max-width:1440px;margin:0 auto;padding:12px 16px 0}
+.steps-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.steps-title{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:8px}
+.steps-title .count{font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--ink);color:var(--bg);border-radius:999px;padding:1px 9px;font-size:12.5px}
+.step-list{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.step{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:6px 12px 6px 7px;font-size:12.8px;font-weight:500;text-align:left}
+.step .n{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line);font-size:11px;font-weight:700;flex:none}
+.step.done{background:var(--teal-soft);border-color:transparent;color:var(--teal)}
+.step.done .n{background:var(--teal-bright);border-color:transparent;color:#05060c}
+.step:hover{border-color:var(--muted)}
+
+/* LAYOUT */
+.mview{display:none;max-width:1440px;margin:0 auto;padding:12px 16px 0}
+.seg{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{flex:1;border:0;background:none;padding:7px 10px;border-radius:999px;font-weight:600;font-size:13px;color:var(--muted)}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.app{max-width:1440px;margin:0 auto;padding:14px 16px 40px;display:grid;gap:20px;grid-template-columns:minmax(0,1fr) 384px;align-items:start}
+.phone-col{position:sticky;top:132px}
+@media(max-width:1099px){
+  .mview{display:block}
+  .app{grid-template-columns:minmax(0,1fr)}
+  .app[data-m="panel"] .phone-col{display:none}
+  .app[data-m="phone"] .panel-col{display:none}
+  .phone-col{position:static}
+}
+
+/* PANEL */
+.panel{container-type:inline-size;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;min-height:760px}
+.win-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.win-bar i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.win-bar span{margin-left:8px;font-size:12px;color:var(--muted)}
+.panel-body{display:grid;grid-template-columns:1fr}
+.side{display:flex;gap:4px;padding:8px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.side::-webkit-scrollbar{display:none}
+.side .school{display:none}
+.nav-btn{display:flex;align-items:center;gap:9px;border:0;background:none;padding:8px 11px;border-radius:10px;font-weight:500;color:var(--muted);white-space:nowrap;font-size:13.5px}
+.nav-btn:hover{background:var(--surface-2);color:var(--ink)}
+.nav-btn.on{background:var(--teal-soft);color:var(--teal);font-weight:600}
+.nav-btn .badge{margin-left:auto;background:var(--coral);color:#fff;font-size:10.5px;font-weight:700;border-radius:999px;padding:0 6px;min-width:18px;text-align:center}
+.main{padding:18px;min-width:0}
+@container (min-width:760px){
+  .panel-body{grid-template-columns:196px 1fr;min-height:720px}
+  .side{flex-direction:column;border-bottom:0;border-right:1px solid var(--line);padding:14px 10px;overflow:visible}
+  .side .school{display:block;padding:4px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  .main{padding:22px 24px}
+}
+.school b{display:block;font-size:13.5px}
+.school small{color:var(--muted);font-size:12px}
+.view-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.view-head h2{font-size:24px}
+.view-head p{margin:3px 0 0;color:var(--muted);font-size:13.5px}
+
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}
+@container (min-width:640px){.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.kpi{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface)}
+.kpi .l{font-size:12px;color:var(--muted)}
+.kpi .v{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:26px;line-height:1.1;margin-top:3px;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:11.5px;color:var(--muted);margin-top:2px}
+.kpi.flash{animation:flash 1.2s}
+@keyframes flash{0%{background:var(--teal-soft)}100%{background:var(--surface)}}
+
+.card{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:14px 16px;margin-bottom:14px}
+.card h3{font-size:16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.alerts{display:grid;gap:10px;margin-bottom:14px}
+@container (min-width:640px){.alerts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.alert{border-radius:14px;padding:13px 14px;display:flex;gap:11px;align-items:flex-start;border:1px solid var(--line);background:var(--surface-2)}
+.alert .ic{font-size:20px;line-height:1}
+.alert b{display:block;font-size:13.8px;margin-bottom:2px}
+.alert p{margin:0 0 9px;color:var(--muted);font-size:13px}
+.alert.rain{background:linear-gradient(135deg,color-mix(in oklab,var(--blue) 12%,var(--surface)),var(--surface))}
+.alert.done{background:var(--teal-soft);border-color:transparent}
+.alert.done p{margin:0}
+
+/* court grid */
+.court-scroll{overflow-x:auto;margin:0 -4px;padding:0 4px}
+.court-grid{display:grid;grid-template-columns:78px repeat(6,minmax(96px,1fr));gap:6px;min-width:700px}
+.k-rent{--k:var(--muted)}
+.blk.inc{--k:var(--coral)}
+.free-slot{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;color:var(--muted);gap:1px}
+.free-slot small{font-weight:700;color:var(--teal);font-size:11.5px}
+.invite{border:2px solid var(--teal-bright)}
+.cg-h{font-size:11.5px;color:var(--muted);font-weight:600;padding:2px 4px}
+.cg-c{font-size:12.5px;font-weight:600;padding:8px 4px;display:flex;flex-direction:column;justify-content:center}
+.cg-c small{font-weight:500;color:var(--muted);font-size:11px}
+.slot{min-height:64px;border-radius:10px;border:1px dashed var(--line)}
+.blk{min-height:64px;border-radius:10px;padding:7px 8px;text-align:left;border:0;border-left:3px solid var(--k);background:color-mix(in oklab,var(--k) 13%,var(--surface));display:flex;flex-direction:column;gap:2px;width:100%;position:relative;transition:transform .15s}
+.blk:hover{transform:translateY(-1px)}
+.blk b{font-size:12.2px;line-height:1.2}
+.blk span{font-size:11px;color:var(--muted)}
+.blk .occ{position:absolute;right:6px;top:6px;font-size:10.5px;font-weight:700;padding:0 5px;border-radius:6px;background:var(--surface)}
+.blk .occ.free{color:var(--coral)}
+.blk.cancel{background:repeating-linear-gradient(-45deg,var(--surface-2) 0 6px,transparent 6px 12px);border-left-color:var(--muted);opacity:.8}
+.blk.cancel b{text-decoration:line-through}
+.blk.moved::after{content:"☂ Reubicada";position:absolute;bottom:5px;right:6px;font-size:9.5px;font-weight:700;color:var(--blue)}
+.blk.flash{animation:flashb 1.4s}
+@keyframes flashb{0%,40%{box-shadow:0 0 0 3px var(--teal-bright)}100%{box-shadow:0 0 0 0 transparent}}
+.club{min-height:64px;border-radius:10px;background:repeating-linear-gradient(-45deg,var(--surface-2) 0 5px,var(--bg-2) 5px 10px);display:grid;place-items:center;font-size:11px;color:var(--muted);font-weight:600}
+.k-ini{--k:var(--k-ini)}.k-mid{--k:var(--k-mid)}.k-adv{--k:var(--k-adv)}.k-kids{--k:var(--k-kids)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;background:var(--k);margin-right:5px}
+.morning{font-size:12.5px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* feed */
+.feed{display:flex;flex-direction:column}
+.fi{display:grid;grid-template-columns:44px 22px 1fr;gap:8px;padding:9px 0;border-top:1px solid var(--line);font-size:13px;align-items:start}
+.fi:first-child{border-top:0}
+.fi .t{color:var(--muted);font-variant-numeric:tabular-nums;font-size:12px;padding-top:1px}
+.fi .i{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:12px;background:var(--surface-2)}
+.fi.new{animation:slidein .5s}
+@keyframes slidein{from{opacity:0;transform:translateY(-6px)}}
+.fi .auto{font-size:10px;font-weight:700;color:var(--teal);letter-spacing:.04em;margin-left:4px}
+
+/* tables */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.2px}
+th{text-align:left;font-weight:600;font-size:11.5px;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.who{display:flex;align-items:center;gap:9px}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;background:var(--surface-2);color:var(--ink);flex:none}
+.bar{height:6px;border-radius:4px;background:var(--surface-2);overflow:hidden;width:70px;display:inline-block;vertical-align:middle;margin-right:6px}
+.bar i{display:block;height:100%;background:var(--teal)}
+.bar.low i{background:var(--coral)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.search{flex:1;min-width:160px;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:8px 14px;font:inherit;color:var(--ink)}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* week */
+.week{display:grid;grid-template-columns:52px repeat(6,minmax(96px,1fr));gap:5px;min-width:680px}
+.wk-h{font-size:12px;font-weight:600;color:var(--muted);text-align:center;padding:4px 0}
+.wk-h.today{color:var(--teal)}
+.wk-t{font-size:11.5px;color:var(--muted);padding-top:6px;font-variant-numeric:tabular-nums}
+.wk-c{display:flex;flex-direction:column;gap:4px;min-height:34px}
+.wk-c.today{background:color-mix(in oklab,var(--teal) 6%,transparent);border-radius:8px;padding:2px}
+.wchip{border-left:3px solid var(--k);background:color-mix(in oklab,var(--k) 12%,var(--surface));border-radius:7px;padding:4px 6px;font-size:11px;line-height:1.25}
+.wchip b{display:block;font-weight:600}
+.wchip span{color:var(--muted)}
+.wchip.free span{color:var(--coral);font-weight:600}
+.wchip.cancel{opacity:.5;text-decoration:line-through}
+
+/* coaches */
+.coach-grid{display:grid;gap:12px}
+@container (min-width:640px){.coach-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.coach{border:1px solid var(--line);border-radius:16px;padding:16px}
+.coach .top-r{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.coach .av{width:40px;height:40px;font-size:13px}
+.coach dl{display:grid;grid-template-columns:1fr auto;gap:6px 10px;margin:0 0 12px;font-size:13px}
+.coach dt{color:var(--muted)}
+.coach dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.coach .total{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:26px;font-weight:800}
+
+/* payments summary */
+.pay-sum{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.pay-sum .big{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:30px;font-variant-numeric:tabular-nums}
+.progress{height:10px;border-radius:6px;background:var(--surface-2);overflow:hidden;margin:8px 0 4px}
+.progress i{display:block;height:100%;background:var(--teal-bright);transition:width .8s}
+
+/* PHONE */
+.app-switch{margin-bottom:12px}
+.app-switch .seg button{font-size:12.5px;padding:7px 6px}
+.phone-hint{font-size:12px;color:var(--muted);text-align:center;margin:-4px 0 10px}
+.phone{width:min(360px,100%);margin:0 auto;background:var(--phone);border-radius:44px;padding:11px;box-shadow:0 30px 60px -28px rgba(5,6,12,.6)}
+.screen{border-radius:34px;overflow:hidden;height:min(700px,calc(100vh - 250px));min-height:560px;display:flex;flex-direction:column;background:var(--surface);position:relative}
+@media(max-width:1099px){.screen{height:640px}}
+.sbar{display:flex;justify-content:space-between;padding:12px 24px 6px;font-size:12px;font-weight:600;flex:none}
+.sbar.dark{background:#0f1a16;color:#fff}
+
+/* WhatsApp */
+.wa{flex:1;display:flex;flex-direction:column;min-height:0;background:#0b1310;color:#e9ebf4}
+.wa-head{display:flex;align-items:center;gap:10px;padding:8px 14px 12px;background:#0f1a16;flex:none}
+.wa-head .av{background:var(--teal-bright);color:#05060c;width:34px;height:34px}
+.wa-head b{font-size:14px;display:block}
+.wa-head small{font-size:11.5px;color:#8fd9c4}
+.wa-chat{flex:1;overflow-y:auto;padding:12px 10px;display:flex;flex-direction:column;gap:7px;scroll-behavior:smooth}
+.wa-day{align-self:center;font-size:11px;background:#1b2420;color:#9aa3b5;padding:3px 10px;border-radius:8px;margin:4px 0}
+.bub{max-width:86%;padding:7px 10px 5px;border-radius:12px;font-size:13.3px;line-height:1.4;animation:slidein .3s}
+.bub small{display:block;text-align:right;font-size:10px;color:#9aa3b5;margin-top:2px}
+.bub.them{background:#1b2420;align-self:flex-start;border-top-left-radius:4px}
+.bub.me{background:#0f4b3f;align-self:flex-end;border-top-right-radius:4px}
+.bub .ai{display:block;font-size:10px;font-weight:700;color:#2ee0c4;letter-spacing:.05em;margin-bottom:2px}
+.bub .card-in{background:#0b1310;border-radius:8px;padding:7px 9px;margin:6px 0 2px;font-size:12.5px;border-left:3px solid #2ee0c4}
+.typing{align-self:flex-start;background:#1b2420;border-radius:12px;padding:10px 12px;display:flex;gap:4px}
+.typing i{width:6px;height:6px;border-radius:50%;background:#9aa3b5;animation:bl 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes bl{50%{opacity:.25}}
+.wa-chips{display:flex;gap:6px;overflow-x:auto;padding:8px 10px 2px;flex:none;scrollbar-width:none}
+.wa-chips::-webkit-scrollbar{display:none}
+.wa-chips button{flex:none;border:1px solid #2ee0c4;background:transparent;color:#2ee0c4;border-radius:999px;padding:6px 11px;font-size:12.5px;font-weight:500}
+.wa-chips button:hover{background:#12302b}
+.wa-input{display:flex;gap:8px;padding:8px 10px 14px;flex:none}
+.wa-input input{flex:1;border:0;border-radius:999px;background:#1b2420;color:#e9ebf4;padding:10px 14px;font:inherit;font-size:13.5px;min-width:0}
+.wa-input button{width:40px;height:40px;border-radius:50%;border:0;background:#2ee0c4;color:#05060c;font-weight:700;flex:none}
+
+/* mobile apps generic */
+.m-app{flex:1;display:flex;flex-direction:column;min-height:0;background:var(--surface-2)}
+.m-scroll{flex:1;overflow-y:auto;padding:4px 14px 16px}
+.m-head{display:flex;align-items:center;justify-content:space-between;padding:6px 16px 12px;flex:none}
+.m-head h3{font-size:21px}
+.m-head small{color:var(--muted);font-size:12px;display:block}
+.m-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px}
+.m-card h4{font-size:15px;margin-bottom:4px}
+.m-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:14px 2px 8px}
+.m-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.hero-card{background:#05060c;color:#e9ebf4;border:0}
+:root[data-theme="dark"] .hero-card{background:#1a2138}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hero-card{background:#1a2138}}
+.hero-card .muted{color:#9aa3b5}
+.hero-card .when{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:26px;font-weight:800;margin:4px 0 2px}
+.dots{display:flex;gap:-4px;margin-top:10px}
+.dots .av{width:26px;height:26px;font-size:10px;border:2px solid #05060c;margin-left:-6px;background:#2a3150;color:#e9ebf4}
+.dots .av:first-child{margin-left:0}
+.dots .av.me{background:var(--teal-bright);color:#05060c}
+.tabbar{display:flex;border-top:1px solid var(--line);background:var(--surface);padding:6px 6px 14px;flex:none}
+.tabbar button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:600;color:var(--muted);padding:4px 0}
+.tabbar button.on{color:var(--teal)}
+.tabbar svg{width:20px;height:20px}
+.big-num{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:34px;line-height:1}
+.skill{display:grid;grid-template-columns:80px 1fr 30px;gap:8px;align-items:center;font-size:12.5px;margin:7px 0}
+.skill .bar{width:100%}
+.note{background:var(--teal-soft);border-radius:12px;padding:10px 12px;font-size:13px}
+.note b{display:block;font-size:12px;color:var(--teal);margin-bottom:2px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tagb{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:600;color:var(--muted)}
+.tagb.on{background:var(--teal-soft);color:var(--teal);border-color:transparent}
+
+/* coach */
+.cls-card{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--k);border-radius:16px;padding:12px 14px;margin-bottom:10px}
+.cls-card .t{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:20px}
+.att{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.att:first-child{border-top:0}
+.att .nm{flex:1;min-width:0}
+.att .nm b{display:block;font-size:13.5px}
+.att .nm small{color:var(--muted);font-size:11.5px}
+.mk{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:15px;display:grid;place-items:center}
+.mk.yes.on{background:var(--teal-bright);border-color:var(--teal-bright);color:#05060c}
+.mk.no.on{background:var(--coral);border-color:var(--coral);color:#fff}
+.att.off{opacity:.55}
+textarea.m-note{width:100%;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:inherit;font-size:13px;padding:10px;resize:none;height:64px}
+.back{border:0;background:none;color:var(--teal);font-weight:600;padding:0;font-size:13.5px}
+.success{text-align:center;padding:30px 10px}
+.success .ok-ic{width:64px;height:64px;border-radius:50%;background:var(--teal-bright);color:#05060c;display:grid;place-items:center;font-size:30px;margin:0 auto 14px}
+.m-foot{padding:10px 14px 16px;flex:none;background:var(--surface-2);border-top:1px solid var(--line)}
+.m-foot .btn{width:100%;padding:12px}
+
+/* modal + toast */
+.modal-bg{position:fixed;inset:0;background:rgba(5,6,12,.45);display:grid;place-items:center;z-index:60;padding:16px}
+.modal{background:var(--surface);border-radius:20px;max-width:440px;width:100%;padding:20px;box-shadow:var(--shadow);max-height:85vh;overflow:auto}
+.modal h3{font-size:20px}
+.toasts{position:fixed;left:16px;bottom:16px;z-index:70;display:flex;flex-direction:column;gap:8px;max-width:min(360px,calc(100vw - 32px))}
+.toast{background:#05060c;color:#e9ebf4;border-radius:14px;padding:11px 14px;font-size:13px;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);display:flex;gap:10px;align-items:flex-start;animation:slidein .35s;border:1px solid #1f2539}
+.toast .auto{color:#2ee0c4;font-size:10px;font-weight:700;letter-spacing:.05em;display:block}
+/* time saved + inbox */
+.saved{display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap;border-radius:16px;padding:14px 16px;margin-bottom:14px;background:linear-gradient(120deg,color-mix(in oklab,var(--teal-bright) 20%,var(--surface)),var(--surface) 70%);border:1px solid var(--line)}
+.saved .big{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.saved .lbl{font-size:12px;color:var(--muted);margin-top:3px}
+.saved.flash{animation:flash 1.2s}
+.saved-pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--teal-soft);color:var(--teal);white-space:nowrap}
+.sec-t{font-size:13.5px;font-weight:700;margin:4px 2px 8px;display:flex;align-items:center;gap:4px 8px;flex-wrap:wrap}
+.sec-t .muted{flex-basis:100%}
+@container (min-width:640px){.sec-t .muted{flex-basis:auto}}
+.sec-t .count{background:var(--coral);color:#fff;border-radius:999px;padding:0 7px;font-size:11px}
+.sec-t .count.zero{background:var(--teal-bright);color:#05060c}
+.inbox{display:grid;gap:8px;margin-bottom:14px}
+@container (min-width:720px){.inbox{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ib{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface)}
+.ib .ic{font-size:18px;line-height:1.2}
+.ib b{display:block;font-size:13.8px}
+.ib p{margin:2px 0 9px;color:var(--muted);font-size:13px}
+.ib .acts{display:flex;gap:6px;flex-wrap:wrap}
+.ib.rain{background:linear-gradient(135deg,color-mix(in oklab,var(--blue) 12%,var(--surface)),var(--surface))}
+.ib.done{background:var(--teal-soft);border-color:transparent}
+.ib.done p{margin-bottom:0}
+.empty-ok{border:1px dashed var(--teal);border-radius:14px;padding:16px;text-align:center;color:var(--muted);font-size:13.5px;margin-bottom:14px}
+/* messages */
+.msgs{display:grid;gap:12px}
+@container (min-width:720px){.msgs{grid-template-columns:250px minmax(0,1fr)}}
+.conv-list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;overflow:hidden;align-self:start}
+.conv{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;padding:10px 12px;border:0;border-top:1px solid var(--line);background:var(--surface);text-align:left;width:100%}
+.conv:first-child{border-top:0}
+.conv.on{background:var(--teal-soft)}
+.conv .av{width:30px;height:30px}
+.conv b{font-size:13px;display:flex;justify-content:space-between;gap:6px;align-items:center}
+.conv small{color:var(--muted);font-size:12px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.thread{border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0;background:var(--surface-2)}
+.thread-h{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.tb{max-width:86%;padding:8px 11px;border-radius:12px;font-size:13px;background:var(--surface);border:1px solid var(--line)}
+.tb small{display:block;text-align:right;font-size:10.5px;color:var(--muted);margin-top:2px}
+.tb.us{align-self:flex-end;background:var(--teal-soft);border-color:transparent}
+.tb .ai{display:block;font-size:10px;font-weight:700;color:var(--teal);letter-spacing:.05em}
+.tb .card-in{border-left:3px solid var(--teal);padding:4px 8px;margin:4px 0;font-size:12px;background:var(--surface-2);border-radius:6px}
+.draft{border:1px dashed var(--teal);border-radius:12px;padding:10px 12px;background:var(--surface);font-size:13px}
+.draft b{font-size:10.5px;color:var(--teal);letter-spacing:.05em;display:block;margin-bottom:4px}
+/* month close */
+.wz-line{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px;transition:opacity .3s}
+.wz-line:first-child{border-top:0}
+.wz-line .st{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;flex:none;background:var(--surface-2);color:var(--muted)}
+.wz-line.ok .st{background:var(--teal-bright);color:#05060c}
+.wz-line.wait{opacity:.4}
+.wz-line .amt{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.exc{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;background:var(--surface-2)}
+.exc b{display:block;font-size:13.5px}
+.exc p{margin:2px 0 8px;color:var(--muted);font-size:13px}
+/* club */
+.match{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line)}
+.match:first-of-type{border-top:0}
+.match .when{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:18px;min-width:56px}
+.match .info{flex:1;min-width:150px;font-size:13px}
+.seats{display:flex;gap:4px}
+.seats i{width:24px;height:24px;border-radius:50%;background:var(--teal-bright);display:grid;place-items:center;font-size:9px;font-style:normal;font-weight:700;color:#05060c}
+.seats i.free{background:transparent;border:1.5px dashed var(--muted)}
+.seats i.new{background:var(--blue);color:#fff}
+.pairs{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));margin-top:10px}
+.pair{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12.5px;background:var(--surface-2)}
+.pair b{display:block;font-size:11.5px;color:var(--muted);margin-bottom:4px}
+.names{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.switch{display:flex;align-items:center;gap:10px;font-size:13px;padding:10px 12px;border-radius:12px;background:var(--surface-2);margin-bottom:10px}
+.switch .tg{width:34px;height:20px;border-radius:999px;background:var(--teal-bright);position:relative;flex:none}
+.switch .tg::after{content:"";position:absolute;right:3px;top:3px;width:14px;height:14px;border-radius:50%;background:#fff}
+@media(max-width:700px){
+  .steps-card{flex-direction:column;align-items:stretch;gap:8px;padding:10px}
+  .step-list{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -10px;padding:0 10px}
+  .step-list::-webkit-scrollbar{display:none}
+  .step{flex:none;max-width:230px}
+  .logo small{display:none}
+}
+@media(max-width:700px){.toast:nth-child(n+2){display:none}.toasts{left:12px;right:12px;bottom:12px;max-width:none}}
+.demo-note{max-width:1440px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font-size:12.5px;text-align:center}
+</style>
+</head>
+<body>
+<script>(function(){try{var t=localStorage.getItem('nexo-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
+
+<div class="top">
+  <div class="top-in">
+    <a class="logo" href="/padel">
+      <span class="logo-mark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#2ee0c4" stroke-width="2.4"/><path d="M5.5 8.5c3 1.2 4.3 4 3.6 8.2M18.5 15.5c-3-1.2-4.3-4-3.6-8.2" stroke="#2ee0c4" stroke-width="2"/></svg></span>
+      <span>Nexo Pádel · Demo<small>Club de ejemplo con datos ficticios</small></span>
+    </a>
+    <div class="top-actions">
+      <button class="btn hide-sm" onclick="location.reload()">↺ Reiniciar demo</button>
+      <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <a class="btn primary" href="/contacto">Pide tu demo</a>
+    </div>
+  </div>
+</div>
+
+<div class="steps"><div class="steps-card" id="steps"></div></div>
+<div class="mview"><div class="seg" id="mseg">
+  <button data-m="panel" class="on">🖥 Panel del club</button>
+  <button data-m="phone">📱 Móvil</button>
+</div></div>
+
+<div class="app" id="app" data-m="panel">
+  <div class="panel-col">
+    <div class="panel">
+      <div class="win-bar"><i></i><i></i><i></i><span>app.nexopadel.es · Club Pádel Demo</span></div>
+      <div class="panel-body">
+        <nav class="side" id="side"></nav>
+        <div class="main" id="main"></div>
+      </div>
+    </div>
+  </div>
+  <div class="phone-col">
+    <div class="app-switch"><div class="seg" id="aseg">
+      <button data-a="wa">WhatsApp</button>
+      <button data-a="player">Jugador</button>
+      <button data-a="student">Alumna</button>
+      <button data-a="coach">Entrenadora</button>
+    </div></div>
+    <div class="phone-hint" id="phoneHint"></div>
+    <div class="phone"><div class="screen" id="screen"></div></div>
+  </div>
+</div>
+<p class="demo-note">Demo con un club y jugadores ficticios. Nada de lo que hagas aquí se guarda ni se envía. En esta demo, el club reserva sus pistas con la agenda de Nexo Pádel. Si tu club usa Playtomic, las pistas se siguen reservando y pagando en Playtomic, y Nexo Pádel envía a los jugadores el enlace.</p>
+
+<div class="toasts" id="toasts"></div>
+<div id="modal"></div>
+
+<script>
+/* ---------- DATA ---------- */
+const COURTS={1:{n:'Pista 1',cov:true},2:{n:'Pista 2',cov:true},3:{n:'Pista 3',cov:false},4:{n:'Pista 4',cov:false}};
+const HOURS=['17:00','18:00','19:00','20:00','21:00','22:00'];
+const PRICE=24,OFFER=17;
+const COACH={
+  toni:{n:'Toni Pastor',ini:'TP',rate:20,base:58},
+  marta:{n:'Marta Vidal',ini:'MV',rate:18,base:41},
+  pau:{n:'Pau Servera',ini:'PS',rate:16,base:47}
+};
+const KIND={ini:'Iniciación',mid:'Intermedio',adv:'Avanzado / competición',kids:'Menores'};
+function P(n,lvl,fee,o){return Object.assign({n,lvl,fee,pay:'ok',att:88+Math.floor((n.length*7)%11),recov:0,risk:null},o||{})}
+const ST={
+  isabel:P('Isabel Mas','3,6',65),rafel:P('Rafel Coll','3,4',65),marga:P('Margalida Riera','3,5',65),tomeu:P('Tomeu Sastre','3,7',65),
+  nico:P('Nico Vidal','Mini',45),julia:P('Júlia Bosch','Mini',45),hugo:P('Hugo Pons','Mini',45,{att:58,risk:'Asistencia baja'}),martina:P('Martina Gil','Mini',45),leo:P('Leo Ferrer','Mini',45),
+  alex:P('Àlex Roig','4,1',55),clara:P('Clara Serra','4,0',55),biel:P('Biel Oliver','4,2',55),paula:P('Paula Mir','3,9',55),
+  pol:P('Pol Amengual','Pre',45),noa:P('Noa Vicens','Pre',45,{pay:'pend'}),iker:P('Iker Sans','Pre',45),laia:P('Laia Font','Pre',45),dani:P('Dani Crespí','Pre',45),ona:P('Ona Salom','Pre',45),
+  lucia:P('Lucía García','2,4',65,{att:92}),joan:P('Joan Ferrer','2,2',65),aina:P('Aina Pons','2,5',65),carlos:P('Carlos Gil','2,3',65,{pay:'pend'}),
+  jaume:P('Jaume Nadal','3,0',65,{att:61,risk:'3 faltas seguidas'}),sergio:P('Sergio López','3,1',65,{pay:'dev'}),pilar:P('Pilar Riera','2,9',65),
+  andreu:P('Andreu Pou','3,6',65),sara:P('Sara Marí','3,5',65),miquel:P('Miquel Vich','3,4',65),elena:P('Elena Torres','3,7',65),
+  marc:P('Marc Riera','2,3',65,{att:100,isNew:true}),rosa:P('Rosa Font','3,0',65,{att:100,isNew:true}),
+  mateo:P('Mateo Ramis','Mini',45,{att:100,isNew:true})
+};
+function R(id,t,court,by,o){return Object.assign({id,t,court,by,status:'ok',price:PRICE,moved:false,src:'app'},o||{})}
+function C(id,time,court,coach,name,kind,lvl,cap,s,o){return Object.assign({id,time,court,coach,name,kind,lvl,cap,s,notice:[],status:'ok',moved:false,done:false,marks:{}},o||{})}
+const S={
+  classes:[
+    C('c1','09:30',1,'toni','Perfeccionamiento mañanas','adv','3,5',4,['isabel','rafel','marga','tomeu'],{done:true}),
+    C('c2','17:00',3,'pau','Menores 8–10','kids','Mini',6,['nico','julia','hugo','martina','leo']),
+    C('c3','18:00',1,'toni','Competición juvenil','adv','4,0',4,['alex','clara','biel','paula']),
+    C('c4','18:00',4,'pau','Menores 11–13','kids','Pre',6,['pol','noa','iker','laia','dani','ona']),
+    C('c5','19:00',2,'marta','Iniciación II','ini','2,0–2,5',4,['lucia','joan','aina','carlos']),
+    C('c6','20:00',3,'toni','Intermedio adultos','mid','3,0',4,['jaume','sergio','pilar']),
+    C('c7','21:00',1,'marta','Intermedio-alto','mid','3,5',4,['andreu','sara','miquel','elena'])
+  ],
+  waitlist:[{id:'marc',cls:'c5',used:false},{id:'rosa',cls:'c6',used:false}],
+  slots:{
+    thu:{label:'Jue 1 oct · 18:00',name:'Iniciación II',court:'Pista 1',coach:'Marta',occ:3,cap:4},
+    sat:{label:'Sáb 3 oct · 10:00',name:'Recuperaciones · Iniciación',court:'Pista 3',coach:'Pau',occ:2,cap:4}
+  },
+  booked:null,
+  feed:[
+    {t:'16:00',i:'📣',x:'Partido de las 22:00 en Pista 2: falta uno · aviso enviado a <b>14 jugadores</b> de nivel 2,75–3,25',auto:true},
+    {t:'15:10',i:'🏆',x:'Liga de otoño: 6 resultados de la jornada 3 registrados por los jugadores · clasificación actualizada',auto:true},
+    {t:'14:15',i:'💶',x:'Cuota de <b>Pilar Riera</b> cobrada tras reintento automático · factura VeriFactu emitida',auto:true},
+    {t:'12:40',i:'✨',x:'Nueva alumna: <b>Nora Salvà</b> se apuntó por WhatsApp y pagó la matrícula con Bizum',auto:true},
+    {t:'10:02',i:'🔔',x:'Recordatorio de clase enviado a <b>27 alumnos</b> de esta tarde',auto:true},
+    {t:'09:31',i:'✅',x:'<b>Toni</b> cerró Perfeccionamiento mañanas · 4/4 presentes',auto:false}
+  ],
+  clock:16*60+5,
+  collectedBase:11905,
+  pays:{carlos:'pend',noa:'pend',sergio:'dev'},
+  paidMethod:{},
+  coachDone:{toni:0,marta:0,pau:0},coachLost:{pau:0,toni:0,marta:0},
+  rain:null,riskDone:{},offered:{},lead:null,
+  steps:{wa:false,fill:false,falta:false,offer:false,close:false,sub:false,alta:false,mes:false,rain:false},
+  saved:{tasks:38,min:176},flashSaved:false,
+  requests:[{id:'mateo',n:'Mateo Ramis',who:'Madre: Catalina Ramis',age:'9 años',from:'Formulario de la web · ayer 22:14',avail:'Lunes y miércoles por la tarde',lvl:'Nunca ha jugado',prop:'c2',status:'new'}],
+  convSel:'pilar',
+  convs:[
+    {id:'pilar',n:'Pilar Riera',need:true,msgs:[{u:false,t:'15:48',h:'Hola. El lunes la pista 3 tenía charcos y casi no pudimos jugar. ¿No debería contar como recuperación?'}],
+      draft:'Hola Pilar, tienes toda la razón y lo sentimos. Te hemos añadido <b>1 recuperación</b>: puedes reservarla desde la app o contestando a este mensaje. Ya hemos pedido al club que revise el drenaje de la pista 3.'},
+    {id:'lucia',n:'Lucía García',live:true},
+    {id:'nico',n:'Mamá de Nico Vidal',msgs:[{u:false,t:'13:05',h:'Hola, ¿Nico se podría cambiar al grupo de los martes?'},{u:true,ai:true,t:'13:05',h:'¡Claro! El grupo de su edad de martes y jueves a las 17:00 está completo (6/6). Le he apuntado en la <b>lista de espera</b> y os avisaremos en cuanto haya plaza 🙌'},{u:false,t:'13:06',h:'Genial, gracias!'}]},
+    {id:'xavi',n:'Xavi (nuevo)',msgs:[{u:false,t:'11:20',h:'Buenas, ¿cuánto cuestan las clases particulares?'},{u:true,ai:true,t:'11:20',h:'¡Hola! La clase particular cuesta <b>35 €/h</b> y el bono de 5 clases, <b>160 €</b>. Hay hueco mañana a las 10:00 con Toni o el viernes a las 12:00 con Marta. ¿Te reservo alguna?'},{u:false,t:'11:24',h:'Mañana a las 10 perfecto'},{u:true,ai:true,t:'11:24',h:'Reservado ✅ Jueves 10:00 · Pista 1 · Toni. Te he enviado el enlace para pagar con Bizum.'}]},
+    {id:'joan',n:'Joan Ferrer',msgs:[{u:false,t:'09:12',h:'¿Me podéis mandar la factura de septiembre a nombre de mi empresa? Ferrer Instal·lacions SL, B07123456'},{u:true,ai:true,t:'09:12',h:'Hecho ✅ He actualizado tus datos de facturación y te he reenviado la factura de septiembre a nombre de <b>Ferrer Instal·lacions SL</b>. Las próximas saldrán así automáticamente.'}]}
+  ],
+  matches:[
+    {id:'m1',t:'22:00',court:2,lvl:'3,0',range:'2,75–3,25',by:'Xisco Mora',p:['XM','JR','AR'],need:1,status:'searching',sent:14},
+    {id:'m2',t:'22:00',court:1,lvl:'2,5',range:'2,25–2,75',by:'Neus Pujol',p:['NP','MC'],need:2,status:'open',sent:0}
+  ],
+  amer:{status:'open'},
+  rentals:[R('r1','17:00',1,'Tomeu Sastre'),R('r2','17:00',2,'Bel Vives'),R('r3','18:00',2,'Pere Nicolau'),R('r4','19:00',3,'Joana Mir'),R('r5','19:00',4,'Andreu Coll'),R('r6','20:00',2,'Sílvia Roig'),R('r7','20:00',4,'Marc Tous'),R('r8','21:00',2,'Llorenç Pou'),R('r9','21:00',3,'Cati Font')],
+  offer:null,player:{tab:'inicio',declined:false,bookings:[],liga:false},
+  cierre:{stage:'idle',i:0,carlos:null,sergio:null},
+  view:'hoy',app:'wa',m:'panel',filter:'all',search:'',
+  student:{tab:'inicio'},
+  coach:{view:'home',cls:null,tags:[],note:''},
+  wa:{msgs:[{me:false,t:'10:02',h:'🎾 Recordatorio: hoy tienes clase a las <b>19:00</b> en Pista 2 con Marta (Iniciación II).<br>Si no puedes venir, avísanos por aquí y te damos una recuperación.',ai:true}],typing:false,stage:'start'},
+  lastNote:null,flashCls:null,flashKpi:null
+};
+const cls=id=>S.classes.find(c=>c.id===id);
+const ini=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('');
+const eur=n=>n.toLocaleString('es-ES')+' €';
+function now(){const m=S.clock;S.clock+=1+Math.floor(Math.random()*2);return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+function peek(){const m=S.clock;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+function groupOf(id){const c=S.classes.find(c=>c.s.includes(id)||c.notice.includes(id));return c}
+function win(t,m){S.saved.tasks+=t;S.saved.min+=m;S.flashSaved=true}
+const fmtMin=m=>Math.floor(m/60)+' h '+String(m%60).padStart(2,'0')+' min';
+const QUAL={toni:['ini','mid','adv','kids'],marta:['ini','mid'],pau:['ini','kids']};
+
+/* ---------- EVENTS ---------- */
+function feed(i,x,auto=true,toastIt=true){S.feed.unshift({t:now(),i,x,auto,isNew:true});if(toastIt)toast(i,x,auto)}
+function toast(i,x,auto){
+  const el=document.createElement('div');el.className='toast';
+  el.innerHTML=`<span>${i}</span><span>${auto?'<span class="auto">AUTOMÁTICO</span>':''}${x}</span>`;
+  const box=document.getElementById('toasts');box.prepend(el);
+  while(box.children.length>3)box.lastChild.remove();
+  setTimeout(()=>el.remove(),5200);
+}
+function courtBusy(k,t,except){
+  return S.classes.some(c=>c.court===k&&c.time===t&&c.status==='ok'&&c.id!==except)
+    ||S.rentals.some(r=>r.court===k&&r.t===t&&r.status==='ok'&&r.id!==except)
+    ||S.matches.some(m=>m.court===k&&m.t===t&&m.id!==except);
+}
+function freeSlots(){
+  const out=[];HOURS.forEach(t=>[1,2,3,4].forEach(k=>{if(!courtBusy(k,t)&&!(S.rain&&!COURTS[k].cov))out.push({t,court:k})}));return out;
+}
+const price=()=>S.offer?OFFER:PRICE;
+function bookCourt(f,by,src){
+  if(courtBusy(f.court,f.t))return false;
+  const r=R('b'+S.rentals.length,f.t,f.court,by,{price:price(),src});S.rentals.push(r);return r;
+}
+function lastMinute(){
+  if(S.offer)return;
+  const fs=freeSlots().sort((a,b)=>(COURTS[b.court].cov-COURTS[a.court].cov)||a.t.localeCompare(b.t));
+  S.offer={status:'sent',n:fs.length,sold:0,rev:0};
+  feed('📣',`Oferta de última hora: <b>${fs.length} pistas libres</b> a ${OFFER} € (−30 %) enviada a 86 jugadores que suelen jugar entre semana por la tarde`);
+  render();
+  const pick=fs.slice(0,2),names=['Rafa Tomàs','Carme Oliver'];
+  if(!pick.length){S.offer.status='done';S.steps.offer=true;render();return}
+  pick.forEach((f,i)=>setTimeout(()=>{
+    const r=bookCourt(f,names[i],'oferta');
+    if(r){S.offer.sold++;S.offer.rev+=r.price;win(1,8);feed('💶',`<b>${names[i]}</b> reserva ${COURTS[f.court].n} a las ${f.t} con la oferta · ${r.price} € cobrados por Bizum`)}
+    if(i===pick.length-1){S.offer.status='done';S.steps.offer=true}
+    render();
+  },2200+i*1800));
+}
+function joinMatch(id,who,code){
+  const m=S.matches.find(x=>x.id===id);if(!m||m.p.length>=4)return;
+  m.p.push(code);m.added=(m.added||[]).concat(who);
+  if(m.p.length===4){m.status='full';S.steps.falta=true;win(1,15);feed('🎾',`Partido de las ${m.t} en ${COURTS[m.court].n} completo: <b>${m.added.join(' y ')}</b> se ${m.added.length>1?'apuntan':'apunta'} · cada jugador paga 6 € por Bizum`)}
+  render();
+}
+function markAbsent(via){
+  const c=cls('c5');
+  if(!c.s.includes('lucia')||c.done)return false;
+  c.s=c.s.filter(x=>x!=='lucia');c.notice.push('lucia');
+  ST.lucia.recov++;S.steps.wa=true;S.flashCls='c5';win(1,4);
+  feed('💬',`<b>Lucía García</b> avisa por ${via} que hoy no viene · plaza libre en <b>Iniciación II 19:00</b> · recuperación generada`);
+  fillFromWaitlist('c5');
+  return true;
+}
+function fillFromWaitlist(cid){
+  const c=cls(cid),w=S.waitlist.find(x=>x.cls===cid&&!x.used);if(!w)return;
+  w.used=true;S.offered[cid]='sent';
+  setTimeout(()=>{feed('📨',`Plaza ofrecida por WhatsApp a <b>${ST[w.id].n}</b> (lista de espera · nivel ${ST[w.id].lvl})`);render()},1800);
+  setTimeout(()=>{
+    if(c.status!=='ok'||c.done){S.offered[cid]=null;render();return}
+    c.s.push(w.id);S.offered[cid]='ok';S.flashCls=cid;win(1,12);
+    feed('🎉',`<b>${ST[w.id].n}</b> aceptó la plaza · ${c.name} ${c.time} vuelve a ${c.s.length}/${c.cap}`);
+    if(cid==='c5')S.steps.fill=true;
+    render();
+  },4300);
+}
+function bookRecovery(k){
+  if(ST.lucia.recov<1||S.booked)return false;
+  ST.lucia.recov--;S.booked=k;S.slots[k].occ++;win(1,3);
+  feed('🔁',`<b>Lucía García</b> reservó su recuperación: ${S.slots[k].label} (${S.slots[k].name})`);
+  return true;
+}
+function applyRain(){
+  if(S.rain)return;
+  let moved=[],cancelled=[],rec=0;
+  S.classes.filter(c=>!COURTS[c.court].cov&&c.status==='ok'&&!c.done&&c.time>='17:00').forEach(c=>{
+    const free=[1,2].find(k=>!courtBusy(k,c.time,c.id));
+    if(free){c.from=c.court;c.court=free;c.moved=true;moved.push(c)}
+    else{c.status='cancel';cancelled.push(c);c.s.forEach(id=>{ST[id].recov++;rec++});S.coachLost[c.coach]++}
+  });
+  const rMoved=[],rCanc=[];
+  S.rentals.filter(r=>!COURTS[r.court].cov&&r.status==='ok').forEach(r=>{
+    const free=[1,2].find(k=>!courtBusy(k,r.t,r.id));
+    if(free){r.from=r.court;r.court=free;r.moved=true;rMoved.push(r)}else{r.status='cancel';rCanc.push(r)}
+  });
+  S.rain={moved:moved.length,cancelled:cancelled.length,rec,rMoved:rMoved.length,rCanc:rCanc.length,refund:rCanc.reduce((a,r)=>a+r.price,0)};S.steps.rain=true;
+  win(1,15+2*(rec+moved.reduce((a,c)=>a+c.s.length,0))+6*(rMoved.length+rCanc.length));
+  rMoved.forEach(r=>feed('☂️',`Partido de <b>${r.by}</b> (${r.t}) movido de ${COURTS[r.from].n} a <b>${COURTS[r.court].n}</b> · jugadores avisados`,true,false));
+  if(rCanc.length)feed('💸',`${rCanc.length} partidos en pista exterior cancelados sin pista cubierta libre · <b>${eur(S.rain.refund)} devueltos</b> automáticamente a ${rCanc.length*4} jugadores`,true,false);
+  moved.forEach(c=>feed('☂️',`<b>${c.name} ${c.time}</b> reubicada de ${COURTS[c.from].n} a <b>${COURTS[c.court].n}</b> (cubierta)`,true,false));
+  cancelled.forEach(c=>feed('🌧️',`<b>${c.name} ${c.time}</b> cancelada: no hay pista cubierta libre · ${c.s.length} recuperaciones creadas`,true,false));
+  feed('📲',`Plan de lluvia: clases <b>${moved.length} reubicada, ${cancelled.length} canceladas</b> · partidos <b>${rMoved.length} movido, ${rCanc.length} cancelados</b> · ${rec+moved.reduce((a,c)=>a+c.s.length,0)+4*(rMoved.length+rCanc.length)} personas avisadas por WhatsApp`);
+  render();
+}
+function remind(id){
+  if(S.pays[id]!=='pend'&&S.pays[id]!=='dev')return;
+  S.pays[id]='sent';
+  feed('📨',`Recordatorio enviado a <b>${ST[id].n}</b> por WhatsApp con enlace de pago Bizum (${eur(ST[id].fee)})`);
+  render();
+  setTimeout(()=>{
+    if(id==='noa'){S.pays[id]='retry';feed('⏳',`<b>Noa Vicens</b> aún no ha pagado · reintento automático programado para el 5 oct`,true,false);render();return}
+    S.pays[id]='ok';ST[id].pay='ok';S.paidMethod[id]='Bizum';S.steps.pay=true;S.flashKpi='cob';win(1,6);
+    feed('💶',`<b>${ST[id].n}</b> pagó ${eur(ST[id].fee)} por Bizum · factura VeriFactu F-2026-0${930+Object.keys(S.paidMethod).length} enviada`);
+    render();
+  },2800);
+}
+function offerSlot(cid){fillFromWaitlist(cid);render()}
+function contactRisk(id){
+  S.riskDone[id]=true;
+  feed('💬',`Mensaje enviado a <b>${ST[id].n}</b>: “¡Hola! Te echamos de menos en la pista 🎾 ¿Te va mejor otro horario?”`,false);
+  setTimeout(()=>{feed('↩️',`<b>${ST[id].n}</b> respondió: “Cambio de turno en el trabajo, ¿hay algo los martes?” · conversación asignada a oficina`,true);render()},2600);
+  render();
+}
+function substitute(cid){
+  const c=cls(cid);if(!c||c.sub||c.done||c.status!=='ok')return;
+  const from=c.coach;
+  const busy=k=>S.classes.some(x=>x.coach===k&&x.time===c.time&&x.status==='ok'&&x.id!==c.id);
+  const others=Object.keys(COACH).filter(k=>k!==from);
+  const cands=others.filter(k=>QUAL[k].includes(c.kind)&&!busy(k)).sort((a,b)=>(COACH[a].base+S.coachDone[a])-(COACH[b].base+S.coachDone[b]));
+  const out=others.filter(k=>!cands.includes(k)).map(k=>`${COACH[k].n.split(' ')[0]} (${busy(k)?'ocupado a esa hora':'no imparte '+KIND[c.kind].toLowerCase()})`);
+  c.sub={from,status:'searching'};
+  feed('🤒',`<b>${COACH[from].n}</b> no puede dar ${c.name} ${c.time} · buscando sustituto…`);
+  setTimeout(()=>{
+    if(!cands.length){c.sub.status='none';feed('⚠️',`No hay sustituto disponible para ${c.name} ${c.time}. Te lo dejamos en “Pendiente de ti”.`,true);render();return}
+    const to=cands[0];c.sub.to=to;c.sub.status='offered';
+    feed('📨',`Clase ofrecida a <b>${COACH[to].n}</b>: libre a esa hora y cualificado${out.length?` · descartado: ${out.join(', ')}`:''}`,true,false);render();
+    setTimeout(()=>{
+      c.coach=to;c.sub.status='ok';S.steps.sub=true;S.flashCls=cid;win(1,25);
+      feed('✅',`<b>${COACH[to].n}</b> acepta ${c.name} ${c.time} · ${c.s.length} alumnos avisados del cambio · la hora se liquida a ${COACH[to].n.split(' ')[0]}`);
+      render();
+    },2600);
+  },1400);
+  S.coach={view:'home',cls:null,tags:[],note:''};render();
+}
+function assignRequest(id){
+  const r=S.requests.find(x=>x.id===id);if(!r||r.status!=='new')return;
+  const c=cls(r.prop);c.s.push(id);r.status='assigned';S.steps.alta=true;win(1,25);S.flashCls=c.id;
+  feed('🧾',`<b>${r.n}</b> asignado a ${c.name} (L/X ${c.time}) · enviados por WhatsApp: bienvenida, mandato SEPA, autorización de menor y derechos de imagen para firmar`,true);
+  setTimeout(()=>{r.status='signed';feed('✍️',`${r.who.split(': ')[1]} firmó los 3 documentos desde el móvil · domiciliación activa · primera cuota prorrateada: 23 €`);render()},3200);
+  render();
+}
+function sendDraft(id){
+  const c=S.convs.find(x=>x.id===id);if(!c||!c.need)return;
+  c.msgs.push({u:true,t:peek(),h:c.draft});c.need=false;c.done=true;
+  if(id==='pilar')ST.pilar.recov++;
+  win(1,8);feed('💬',`Respuesta enviada a <b>${c.n}</b>${id==='pilar'?' · +1 recuperación añadida':''}`,false);render();
+}
+function findPlayers(id){
+  const m=S.matches.find(x=>x.id===id);if(!m||m.status!=='open')return;
+  m.status='searching';
+  const n=m.need===1?14:18;
+  feed('📣',`Partido ${m.t} ${COURTS[m.court].n}: aviso enviado a <b>${n} jugadores</b> de nivel ${m.range} que suelen jugar a esa hora`);render();
+  const names=[['LB','Laura Bauzà'],['PM','Pau Mas']];
+  for(let k=0;k<m.need;k++)setTimeout(()=>joinMatch(m.id,names[k][1],names[k][0]),2400+k*1600);
+}
+const AMER=[['Xisco M.',3.8],['Neus P.',3.6],['Joan B.',3.5],['Aina R.',3.4],['Pep F.',3.3],['Marta C.',3.2],['Tià G.',3.1],['Guillem P.',3.0],['Llorenç V.',2.9],['Carme O.',2.8],['Rafa T.',2.8],['Laura N.',2.7],['Toni R.',2.6],['Maria J.',2.5],['Jordi A.',2.4],['Eva L.',2.3]];
+function amerPairs(){const sorted=AMER.slice().sort((a,b)=>b[1]-a[1]);const pairs=[];for(let i=0;i<8;i++)pairs.push([sorted[i],sorted[15-i]]);return pairs}
+function drawAmericana(){
+  if(S.amer.status!=='open')return;
+  S.amer.status='drawn';win(1,45);
+  feed('🏆',`Americana del viernes: <b>8 parejas equilibradas por nivel</b> y 4 rondas generadas · pista y hora enviadas a los 16 jugadores · resultados desde el móvil`);
+  render();
+}
+const CIERRE=[
+  ['186 cuotas de octubre calculadas',12090],
+  ['4 altas de este mes prorrateadas',-98],
+  ['7 descuentos de hermanos aplicados (−10 %)',-32],
+  ['3 bajas de septiembre excluidas',0],
+  ['Clases canceladas por lluvia compensadas con recuperación, sin tocar la cuota',0],
+  ['Remesa SEPA generada en el formato de tu banco',0],
+  ['Facturas VeriFactu programadas para el 1 de octubre',0],
+  ['Liquidaciones de los 3 entrenadores preparadas',0]
+];
+function startCierre(){
+  if(S.cierre.stage!=='idle')return;
+  S.cierre.stage='running';S.cierre.i=0;render();
+  const iv=setInterval(()=>{S.cierre.i++;if(S.cierre.i>=CIERRE.length){clearInterval(iv);S.cierre.stage='review'}if(S.view==='cobros')renderMain()},420);
+}
+function cierreTotal(){
+  let t=CIERRE.reduce((a,l)=>a+l[1],0);
+  if(S.cierre.carlos==='both'&&S.pays.carlos!=='ok')t+=65;
+  if(S.cierre.sergio==='bizum')t-=65;
+  return t;
+}
+function finishCierre(){
+  const c=S.cierre;if(c.stage!=='review'||!c.carlos||!c.sergio)return;
+  c.stage='done';S.steps.mes=true;win(1,240);
+  const rec=183-(c.sergio==='bizum'?1:0);
+  feed('🏦',`Cierre de octubre: remesa SEPA de <b>${rec} recibos (${eur(cierreTotal())})</b> enviada al banco · facturas programadas · liquidaciones listas para revisar`);
+  render();
+}
+function closeClass(){
+  const c=cls(S.coach.cls);const ids=c.s;
+  if(!ids.every(id=>c.marks[id]))return;
+  c.done=true;S.coachDone[c.coach]++;S.steps.close=true;win(1,10);
+  const pres=ids.filter(id=>c.marks[id]==='yes'),abs=ids.filter(id=>c.marks[id]==='no');
+  const txt=S.coach.note.trim()||'Buena clase, seguimos trabajando la posición en la red.';
+  if(pres.includes('lucia'))S.lastNote={tags:S.coach.tags.slice(),txt};
+  feed('✅',`<b>${COACH[c.coach].n.split(' ')[0]}</b> cerró ${c.name} ${c.time} · ${pres.length} presentes${abs.length?`, ${abs.length} sin avisar`:''} · resumen enviado · +1 h a su liquidación`,false);
+  abs.forEach(id=>{ST[id].att=Math.max(40,ST[id].att-6);if(!ST[id].risk)ST[id].risk='Falta sin avisar';feed('⚠️',`<b>${ST[id].n}</b> faltó sin avisar · se le ha escrito automáticamente`,true,false)});
+  S.coach.view='closed';render();
+}
+
+/* ---------- WHATSAPP BOT ---------- */
+function waSend(text){
+  if(S.wa.typing)return;
+  S.wa.msgs.push({me:true,t:peek(),h:esc(text)});S.wa.typing=true;render();
+  setTimeout(()=>{S.wa.typing=false;const r=botReply(text);if(r){S.wa.msgs.push({me:false,t:peek(),h:r,ai:!r.startsWith('§')});if(!r.startsWith('§'))win(1,2)}render()},1000);
+}
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'})[c])}
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')}
+function slotCard(k){const s=S.slots[k];return `<div class="card-in"><b>${s.label}</b><br>${s.name} · ${s.court} · ${s.coach} · ${s.occ}/${s.cap}</div>`}
+function botReply(text){
+  const t=norm(text);
+  if(S.wa.stage==='lead'){
+    const name=(text.match(/llama\s+(\w+)/i)||[])[1]||text.split(' ')[0];
+    S.wa.stage='start';S.lead=name;
+    S.requests.push({id:'lead',n:name,who:'Amiga de Lucía García',age:'Adulta',from:'WhatsApp · ahora',avail:'Jueves por la tarde',lvl:'Iniciación',prop:'trial',status:'trial'});
+    feed('✨',`Nuevo interesado: <b>${esc(name)}</b> (amiga de Lucía) · clase de prueba jue 1 oct 18:00 reservada`);
+    return `¡Genial! He reservado una <b>clase de prueba gratis</b> para ${esc(name)} el jueves a las 18:00 🎾<br><br>Pásale este enlace para que complete sus datos: <u>nexopadel.es/demo/prueba</u>`;
+  }
+  if(S.wa.stage==='court'){
+    const o=S.wa.courtOpts.find(o=>t.includes(o.t)||t.includes(o.t.slice(0,2)+'h')||t.includes(' '+String(+o.t.slice(0,2))+' '));
+    if(o){S.wa.stage='start';const r=bookCourt(o,'Lucía García','whatsapp');
+      if(!r)return 'Vaya, esa pista se acaba de reservar 😅 ¿Quieres que te busque otra?';
+      win(1,4);feed('📲',`<b>Lucía García</b> reserva ${COURTS[o.court].n} a las ${o.t} por WhatsApp · ${r.price} € (enlace de pago dividido entre 4 enviado)`);
+      return `¡Reservada! ✅<div class="card-in"><b>Hoy · ${o.t}</b><br>${COURTS[o.court].n} (${COURTS[o.court].cov?'cubierta':'exterior'}) · ${r.price} €</div>Te he enviado un enlace para que cada jugador pague su parte (${(r.price/4).toString().replace('.',',')} €). Si os falta alguien, dímelo y lo buscamos 😉`}
+    if(/(nada|no,|gracias)/.test(t)){S.wa.stage='start';return '¡Perfecto! Aquí estoy para lo que necesites 🎾'}
+  }
+  if(/(pista|reserv|jugar un partido)/.test(t)&&!/recuper/.test(t)){
+    const fs=freeSlots().filter(f=>f.t>='19:00').sort((a,b)=>(COURTS[b.court].cov-COURTS[a.court].cov)||a.t.localeCompare(b.t)).slice(0,3);
+    if(!fs.length)return 'Esta noche está todo completo 😕 ¿Te aviso si se libera alguna pista?';
+    S.wa.stage='court';S.wa.courtOpts=fs;
+    return `Esta noche tengo libres:${fs.map(f=>`<div class="card-in"><b>${f.t}</b> · ${COURTS[f.court].n} (${COURTS[f.court].cov?'cubierta':'exterior'}) · ${price()} €</div>`).join('')}¿Te reservo alguna?`;
+  }
+  if(/(no puedo|no podre|no voy|no ire|falt|no llego|me es imposible)/.test(t)){
+    const c=cls('c5');
+    if(c.notice.includes('lucia'))return 'Ya lo tengo apuntado 👍 Hoy no te esperamos. Tienes '+ST.lucia.recov+' recuperación(es) disponible(s).';
+    if(c.done)return 'La clase de hoy ya se ha cerrado. Si necesitas algo más, te paso con la oficina.';
+    markAbsent('WhatsApp');S.wa.stage='recov';
+    return `Sin problema, Lucía 🙌 Te he quitado de la clase de hoy (<b>19:00 · Iniciación II</b>) y tienes <b>${ST.lucia.recov} recuperación</b> disponible hasta el 30 oct.<br><br>Huecos de tu nivel:${slotCard('thu')}${slotCard('sat')}¿Reservo alguno?`;
+  }
+  if(/(jue|thu)/.test(t)&&S.wa.stage==='recov'){if(bookRecovery('thu')){S.wa.stage='start';return `¡Hecho! ✅ Recuperación reservada:${slotCard('thu')}Te lo recordaremos el jueves por la mañana.`}}
+  if(/(sab|sat)/.test(t)&&S.wa.stage==='recov'){if(bookRecovery('sat')){S.wa.stage='start';return `¡Hecho! ✅ Recuperación reservada:${slotCard('sat')}Te lo recordaremos el viernes.`}}
+  if(/(luego|despues|mas tarde)/.test(t)&&S.wa.stage==='recov'){S.wa.stage='start';return 'Perfecto. Puedes reservarla cuando quieras desde aquí o desde la app. Caduca el 30 de octubre ⏳'}
+  if(/recuper/.test(t)){
+    if(ST.lucia.recov<1)return 'Ahora mismo no tienes recuperaciones pendientes 👍';
+    S.wa.stage='recov';return `Tienes <b>${ST.lucia.recov}</b> recuperación disponible. Huecos compatibles:${slotCard('thu')}${slotCard('sat')}`;
+  }
+  if(/(horario|cuando tengo|mis clases|a que hora)/.test(t)){
+    const c=cls('c5');const today=c.notice.includes('lucia')?'Hoy no vienes (avisado).':c.done?'La de hoy ya está hecha ✅':'Próxima: <b>hoy a las 19:00</b>.';
+    return `Tus clases: <b>lunes y miércoles a las 19:00</b> · Iniciación II · Pista 2 con Marta.<br>${today}${S.booked?`<br>Recuperación: <b>${S.slots[S.booked].label}</b>`:''}`;
+  }
+  if(/(pag|debo|cuota|pendiente|factura)/.test(t)){
+    return 'Estás al día ✅<br>Septiembre (65 €) pagado por domiciliación.<br>Octubre (65 €) se cobra automáticamente el <b>1 de octubre</b>.';
+  }
+  if(/(amig|apunt|inscrib|precio|cuanto cuesta)/.test(t)){
+    S.wa.stage='lead';
+    return '¡Nos encanta! 😄 La primera clase es <b>gratis</b>. Hay plaza de iniciación el <b>jueves a las 18:00</b>. Las cuotas van desde 45 €/mes.<br><br>¿Cómo se llama tu amiga?';
+  }
+  if(/(hola|buenas|gracias|ok|vale|genial|perfecto)/.test(t))return '¡De nada! Si necesitas algo más, escríbeme por aquí 🎾';
+  feed('🙋','Conversación con <b>Lucía García</b> derivada a la oficina (la IA no tenía la respuesta)',true);
+  const lc=S.convs.find(c=>c.id==='lucia');lc.need=true;
+  return '§Te paso con el equipo de la escuela 🙋‍♀️ Te contestarán en breve.';
+}
+
+/* ---------- RENDER: STEPS ---------- */
+const STEPS=[
+  {k:'wa',t:'Lucía avisa por WhatsApp de que hoy falta',go:()=>{S.app='wa';S.m='phone'}},
+  {k:'fill',t:'La plaza se rellena sola',go:()=>{S.view='hoy';S.m='panel'}},
+  {k:'falta',t:'Guillem recibe un aviso de «falta uno» y se apunta',go:()=>{S.app='player';S.player.tab='inicio';S.m='phone'}},
+  {k:'offer',t:'Vende las pistas libres con una oferta de última hora',go:()=>{S.view='hoy';S.m='panel'}},
+  {k:'close',t:'Marta pasa lista y cierra la clase',go:()=>{S.app='coach';S.coach={view:'home',cls:null,tags:[],note:''};S.m='phone'}},
+  {k:'sub',t:'Marta se pone enferma: sustituto automático',go:()=>{S.app='coach';S.coach={view:'absence',cls:null,tags:[],note:''};S.m='phone'}},
+  {k:'alta',t:'Alta de un alumno nuevo en un clic',go:()=>{S.view='alumnos';S.m='panel'}},
+  {k:'mes',t:'Cierre de mes: cuotas, remesa y facturas',go:()=>{S.view='cobros';S.m='panel'}},
+  {k:'rain',t:'Llueve: clases y partidos reorganizados en un clic',go:()=>{S.view='hoy';S.m='panel'}}
+];
+function renderSteps(){
+  const done=STEPS.filter(s=>S.steps[s.k]).length;
+  document.getElementById('steps').innerHTML=`<div class="steps-title">Prueba esto <span class="count">${done}/${STEPS.length}</span></div>
+  <div class="step-list">${STEPS.map((s,i)=>`<button class="step ${S.steps[s.k]?'done':''}" data-step="${i}"><span class="n">${S.steps[s.k]?'✓':i+1}</span>${s.t}</button>`).join('')}</div>
+  <span class="saved-pill" title="Estimación del tiempo que habría llevado hacerlo a mano">⏱ ${fmtMin(S.saved.min)} ahorradas hoy</span>`;
+}
+
+/* ---------- RENDER: PANEL ---------- */
+const NAV=[
+  ['hoy','Hoy','<path d="M3 12l9-8 9 8M5 10v10h14V10"/>'],
+  ['mensajes','Mensajes','<path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z"/>'],
+  ['semana','Calendario','<rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/>'],
+  ['alumnos','Alumnos','<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M17 11a3 3 0 1 0 0-6M22 21a6 6 0 0 0-4-5.6"/>'],
+  ['cobros','Cobros','<rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/>'],
+  ['entrenadores','Entrenadores','<path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>'],
+  ['club','Partidos y eventos','<circle cx="12" cy="12" r="9"/><path d="M5.5 8.5c3 1.2 4.3 4 3.6 8.2M18.5 15.5c-3-1.2-4.3-4-3.6-8.2"/>']
+];
+function renderSide(){
+  const pend=Object.values(S.pays).filter(v=>v==='pend'||v==='dev').length;
+  const risks=Object.keys(ST).filter(id=>ST[id].risk&&!S.riskDone[id]&&!ST[id].isNew).length;
+  const badge={cobros:pend+(S.cierre.stage==='review'?1:0),alumnos:risks+S.requests.filter(r=>r.status==='new').length,mensajes:S.convs.filter(c=>c.need).length,club:S.matches.filter(m=>m.status==='open').length};
+  document.getElementById('side').innerHTML=`<div class="school"><b>Club Pádel Demo</b><small>Club de ejemplo · 4 pistas</small></div>`+
+  NAV.map(([k,l,p])=>`<button class="nav-btn ${S.view===k?'on':''}" data-view="${k}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${p}</svg>${l}${badge[k]?`<span class="badge">${badge[k]}</span>`:''}</button>`).join('');
+}
+function kpis(){
+  const act=S.classes.filter(c=>c.status==='ok');
+  const occ=act.reduce((a,c)=>a+c.s.length,0),cap=act.reduce((a,c)=>a+c.cap,0);
+  const recov=9+Object.values(ST).reduce((a,s)=>a+s.recov,0);
+  const paid=S.collectedBase+Object.keys(S.paidMethod).reduce((a,id)=>a+ST[id].fee,0);
+  const total=S.collectedBase+['carlos','noa','sergio'].reduce((a,id)=>a+ST[id].fee,0);
+  const slots=HOURS.length*4,used=HOURS.reduce((a,t)=>a+[1,2,3,4].filter(k=>courtBusy(k,t)).length,0);
+  const rev=S.rentals.filter(r=>r.status==='ok').reduce((a,r)=>a+r.price,0)+S.matches.length*PRICE;
+  return {occ,cap,free:cap-occ,recov,paid,total,slots,used,pct:Math.round(used/slots*100),rev,inc:S.matches.filter(m=>m.p.length<4).length};
+}
+function vHoy(){
+  const k=kpis();
+  const c6=cls('c6');const rosaW=S.waitlist.find(w=>w.id==='rosa');
+  let h=`<div class="view-head"><div><h2>Hoy · miércoles 30 sep</h2><p>${S.classes.filter(c=>c.status==='ok').length} clases · ${S.rentals.filter(r=>r.status==='ok').length+S.matches.length} partidos · 4 pistas</p></div><span class="pill ok">● Todo sincronizado</span></div>
+  <div class="kpis">
+    <div class="kpi"><div class="l">Ocupación de pistas (17–23 h)</div><div class="v">${k.pct}%</div><div class="s">${k.used} de ${k.slots} horas de pista</div></div>
+    <div class="kpi"><div class="l">Ingresos de pistas hoy</div><div class="v">${eur(k.rev)}</div><div class="s">${S.offer&&S.offer.rev?'+'+eur(S.offer.rev)+' con la oferta':'alquileres y partidos'}</div></div>
+    <div class="kpi"><div class="l">Partidos incompletos</div><div class="v" style="color:${k.inc?'var(--coral)':'var(--teal)'}">${k.inc}</div><div class="s">${k.inc?'se buscan jugadores solos':'¡todos completos!'}</div></div>
+    <div class="kpi"><div class="l">Plazas libres en clases</div><div class="v" style="color:${k.free?'var(--coral)':'var(--teal)'}">${k.free}</div><div class="s">${k.free?'se ofrecen a la lista de espera':'grupos completos'}</div></div>
+  </div>`;
+  h=h.replace('<div class="kpis">',`<div class="saved ${S.flashSaved?'flash':''}"><div><div class="big">${S.saved.tasks}</div><div class="lbl">tareas hechas hoy por la app</div></div><div><div class="big">${fmtMin(S.saved.min)}</div><div class="lbl">de trabajo que no ha hecho nadie de la oficina (estimado)</div></div><button class="btn sm" data-view="mensajes" style="margin-left:auto">Ver mensajes</button></div><div class="kpis">`);
+  S.flashSaved=false;
+  const P=[],D=[];
+  if(!S.rain)P.push(`<div class="ib rain"><span class="ic">🌧️</span><div><b>Lluvia prevista desde las 17:00 (80 %)</b><p>${S.classes.filter(c=>!COURTS[c.court].cov&&c.status==='ok').length} clases y ${S.rentals.filter(r=>!COURTS[r.court].cov&&r.status==='ok').length} partidos en pistas exteriores. Se pasan a pista cubierta si hay hueco. Si no, las clases se cancelan con recuperación y los partidos, con devolución automática.</p><div class="acts"><button class="btn dark sm" data-act="rain">Aplicar plan de lluvia</button></div></div></div>`);
+  else D.push(`<div class="ib done"><span class="ic">☂️</span><div><b>Plan de lluvia aplicado</b><p>Clases: ${S.rain.moved} reubicada, ${S.rain.cancelled} canceladas, ${S.rain.rec} recuperaciones · Partidos: ${S.rain.rMoved} movido, ${S.rain.rCanc} cancelados, ${eur(S.rain.refund)} devueltos</p></div></div>`);
+  const fs=freeSlots();
+  if(!S.offer&&fs.length)P.push(`<div class="ib"><span class="ic">🟢</span><div><b>${fs.length} horas de pista libres esta tarde</b><p>Son hasta ${eur(fs.length*PRICE)} que no se van a cobrar. Una oferta a los jugadores que suelen jugar entre semana suele llenar alguna.</p><div class="acts"><button class="btn sm primary" data-act="lastmin">Lanzar oferta de última hora (−30 %)</button></div></div></div>`);
+  else if(S.offer)D.push(`<div class="ib done"><span class="ic">🟢</span><div><b>Oferta de última hora</b><p>${S.offer.status==='done'?`${S.offer.sold} pistas vendidas · +${eur(S.offer.rev)}`:'Enviada · esperando reservas…'}</p></div></div>`);
+  S.matches.filter(m=>m.status==='open').forEach(m=>P.push(`<div class="ib"><span class="ic">🎾</span><div><b>Partido ${m.t} en ${COURTS[m.court].n}: faltan ${4-m.p.length}</b><p>La búsqueda automática empieza a las 18:00. Puedes lanzarla ya.</p><div class="acts"><button class="btn sm" data-find="${m.id}">Buscar jugadores ahora</button></div></div></div>`));
+  S.matches.filter(m=>m.status==='searching').forEach(m=>D.push(`<div class="ib done" style="background:var(--amber-soft)"><span class="ic">📣</span><div><b>Buscando el cuarto para las ${m.t} (${COURTS[m.court].n})</b><p>${m.sent} jugadores de nivel ${m.range} avisados. <button class="back" data-a="player">Verlo en la app de Guillem →</button></p></div></div>`));
+  S.matches.filter(m=>m.status==='full').forEach(m=>D.push(`<div class="ib done"><span class="ic">🎾</span><div><b>Partido ${m.t} completo</b><p>Se ${m.added.length>1?'unen':'une'} ${m.added.join(' y ')} · pago dividido</p></div></div>`));
+  const pil=S.convs.find(c=>c.id==='pilar');
+  if(pil.need)P.push(`<div class="ib"><span class="ic">💬</span><div><b>Pilar Riera se queja de la pista 3</b><p>La IA no decide compensaciones. Te ha dejado una respuesta preparada con 1 recuperación.</p><div class="acts"><button class="btn sm primary" data-draft="pilar">Enviar respuesta sugerida</button><button class="btn sm" data-conv="pilar">Ver conversación</button></div></div></div>`);
+  const luc=S.convs.find(c=>c.id==='lucia');
+  if(luc.need)P.push(`<div class="ib"><span class="ic">🙋</span><div><b>Lucía García pregunta algo que la IA no sabe</b><p>Te pasamos la conversación.</p><div class="acts"><button class="btn sm" data-conv="lucia">Ver conversación</button></div></div></div>`);
+  S.requests.filter(r=>r.status==='new').forEach(r=>{const c=cls(r.prop);P.push(`<div class="ib"><span class="ic">🧾</span><div><b>Nueva inscripción: ${r.n} (${r.age})</b><p>${r.avail} · ${r.lvl}. Propuesta: <b>${c.name}</b>, L/X ${c.time} (${c.s.length}/${c.cap}).</p><div class="acts"><button class="btn sm primary" data-assign="${r.id}">Asignar y enviar bienvenida</button><button class="btn sm" data-view="alumnos">Ver ficha</button></div></div></div>`)});
+  S.requests.filter(r=>r.status!=='new'&&r.status!=='trial').forEach(r=>D.push(`<div class="ib done"><span class="ic">🧾</span><div><b>${r.n} dado de alta</b><p>${r.status==='signed'?'Documentos firmados · SEPA activo':'Esperando firma de documentos…'}</p></div></div>`));
+  if(c6.status==='ok'&&c6.s.length<c6.cap){
+    const st=S.offered.c6;
+    P.push(`<div class="ib"><span class="ic">🟠</span><div><b>Intermedio adultos 20:00: 1 plaza libre</b><p>${eur(65)}/mes sin cobrar. <b>Rosa Font</b> (nivel 3,0) está en lista de espera.</p><div class="acts">${st==='sent'?'<span class="pill warn">Oferta enviada · esperando respuesta…</span>':`<button class="btn sm primary" data-act="offer" data-id="c6" ${rosaW.used?'disabled':''}>Ofrecerle la plaza</button>`}</div></div></div>`);
+  }else if(S.offered.c6==='ok')D.push(`<div class="ib done"><span class="ic">🎉</span><div><b>Intermedio adultos completo</b><p>Rosa Font aceptó la plaza · +65 €/mes</p></div></div>`);
+  if(!S.riskDone.jaume)P.push(`<div class="ib"><span class="ic">⚠️</span><div><b>Jaume Nadal lleva 3 faltas seguidas</b><p>Riesgo de baja. Un mensaje a tiempo suele recuperar al alumno.</p><div class="acts"><button class="btn sm" data-act="risk" data-id="jaume">Escribirle por WhatsApp</button></div></div></div>`);
+  S.classes.filter(c=>c.sub&&c.sub.status==='none').forEach(c=>P.push(`<div class="ib"><span class="ic">🤒</span><div><b>${c.name} ${c.time} sin entrenador</b><p>Nadie libre y cualificado. ¿Cancelar y dar recuperación?</p></div></div>`));
+  S.classes.filter(c=>c.sub&&c.sub.status==='ok').forEach(c=>D.push(`<div class="ib done"><span class="ic">🔄</span><div><b>${c.name} ${c.time}: sustitución resuelta</b><p>${COACH[c.sub.from].n.split(' ')[0]} → ${COACH[c.coach].n.split(' ')[0]} · alumnos avisados</p></div></div>`));
+  if(S.cierre.stage==='idle'||S.cierre.stage==='review')P.push(`<div class="ib"><span class="ic">🏦</span><div><b>Mañana es día 1: cuotas de octubre</b><p>La app lo deja todo calculado. Solo tienes que revisar 2 excepciones y enviar la remesa.</p><div class="acts"><button class="btn sm" data-view="cobros">Preparar cierre de mes</button></div></div></div>`);
+  h+=`<div class="sec-t">Pendiente de ti <span class="count ${P.length?'':'zero'}">${P.length}</span><span class="muted" style="font-weight:500;font-size:12.5px">Solo lo que necesita a una persona. El resto ya está hecho.</span></div>`;
+  h+=P.length?`<div class="inbox">${P.join('')}</div>`:`<div class="empty-ok">☕ Nada pendiente. Todo lo demás lo ha resuelto la app.</div>`;
+  if(D.length)h+=`<div class="inbox">${D.join('')}</div>`;
+  const c1=cls('c1');
+  h+=`<div class="card"><h3>Pistas esta tarde <span class="muted" style="font-size:12px;font-family:Geist;font-weight:500">Clases de la escuela y partidos del club · toca una clase para ver los alumnos</span></h3>
+  <div class="morning"><span class="pill ok">✓ Hecha</span> 09:30 · ${c1.name} · Pista 1 · Toni · 4/4</div>
+  <div class="court-scroll"><div class="court-grid"><div></div>${HOURS.map(x=>`<div class="cg-h">${x}</div>`).join('')}`;
+  [1,2,3,4].forEach(k=>{
+    h+=`<div class="cg-c">${COURTS[k].n}<small>${COURTS[k].cov?'Cubierta':'Exterior'}</small></div>`;
+    HOURS.forEach(t=>{
+      const c=S.classes.find(c=>c.court===k&&c.time===t);
+      const r=S.rentals.find(r=>r.court===k&&r.t===t&&r.status==='ok');
+      const rx=S.rentals.find(r=>r.court===k&&r.t===t&&r.status==='cancel');
+      const m=S.matches.find(m=>m.court===k&&m.t===t);
+      const nm=x=>{const p=x.split(' ');return p[0]+' '+p[1][0]+'.'};
+      if(c){
+        const free=c.cap-c.s.length;
+        h+=`<button class="blk k-${c.kind} ${c.status==='cancel'?'cancel':''} ${c.moved?'moved':''} ${S.flashCls===c.id?'flash':''}" data-cls="${c.id}">
+          <span class="occ ${free&&c.status==='ok'?'free':''}">${c.status==='cancel'?'—':c.s.length+'/'+c.cap}</span>
+          <b>${c.name}</b><span>${COACH[c.coach].n.split(' ')[0]}${c.sub&&c.sub.status==='ok'?' (sustituye)':c.sub?' · buscando…':''}${c.done?' · ✓ hecha':''}${c.status==='cancel'?' · cancelada':''}</span></button>`;
+      }else if(r)h+=`<div class="blk k-rent ${r.moved?'moved':''}"><span class="occ">4/4</span><b>Partido</b><span>${nm(r.by)}${r.src==='oferta'?' · oferta':r.src==='whatsapp'?' · WhatsApp':''}</span></div>`;
+      else if(m)h+=`<div class="blk k-rent ${m.p.length<4?'inc':''}"><span class="occ ${m.p.length<4?'free':''}">${m.p.length}/4</span><b>${m.p.length<4?'Falta'+(4-m.p.length>1?'n '+(4-m.p.length):' uno'):'Partido'}</b><span>${nm(m.by)}${m.status==='searching'?' · buscando':''}</span></div>`;
+      else if(rx)h+=`<div class="blk k-rent cancel"><span class="occ">—</span><b>Partido</b><span>cancelado · devuelto</span></div>`;
+      else if(S.rain&&!COURTS[k].cov)h+=`<div class="slot free-slot"><span>Cerrada</span><span>por lluvia</span></div>`;
+      else h+=`<div class="slot free-slot"><span>Libre</span><small>${price()} €</small></div>`;
+    });
+  });
+  h+=`</div></div><div class="legend">${Object.entries(KIND).map(([k,l])=>`<span class="k-${k}"><i></i>${l}</span>`).join('')}<span class="k-rent"><i></i>Partido (alquiler de pista)</span><span class="k-rent" style="--k:var(--coral)"><i></i>Partido incompleto</span></div></div>`;
+  h+=`<div class="card"><h3>Actividad <span class="pill ok">✦ La mayoría, automática</span></h3><div class="feed">${S.feed.slice(0,9).map(f=>`<div class="fi ${f.isNew?'new':''}"><span class="t">${f.t}</span><span class="i">${f.i}</span><span>${f.x}${f.auto?'<span class="auto">AUTO</span>':''}</span></div>`).join('')}</div></div>`;
+  S.feed.forEach(f=>f.isNew=false);
+  return h;
+}
+const TT=[
+  ['09:30',1,'toni','Adultos mañanas','mid',3,4],['17:00',3,'pau','Menores 6–7','kids',6,6],['18:00',1,'marta','Iniciación II','ini',4,4],
+  ['18:00',4,'pau','Menores 14–16','kids',5,6],['19:00',2,'toni','Intermedio','mid',4,4],['20:00',3,'marta','Iniciación I','ini',4,4],['21:00',1,'toni','Avanzado','adv',4,4]
+];
+function vSemana(){
+  const days=['Lun 28','Mar 29','Mié 30','Jue 1','Vie 2','Sáb 3'];
+  const times=['09:30','10:00','11:00','17:00','18:00','19:00','20:00','21:00'];
+  const cell=(d,t)=>{
+    let items=[];
+    if(d===0)items=S.classes.filter(c=>c.time===t).map(c=>({n:c.name,k:c.kind,o:c.id==='c6'?3:c.cap-(c.id==='c2'?1:0),cap:c.cap}));
+    if(d===2)items=S.classes.filter(c=>c.time===t).map(c=>({n:c.name,k:c.kind,o:c.s.length,cap:c.cap,cancel:c.status==='cancel'}));
+    if(d===1||d===3)items=TT.filter(r=>r[0]===t).map(r=>({n:r[3],k:r[4],o:(d===3&&r[0]==='18:00'&&r[3]==='Iniciación II')?S.slots.thu.occ:r[5],cap:r[6]}));
+    if(d===4){if(t==='17:00')items=[{n:'Tecnificación juvenil',k:'adv',o:5,cap:6}];if(t==='19:00')items=[{n:'Clínic de bandeja',k:'mid',o:7,cap:8}]}
+    if(d===5){if(t==='10:00')items=[{n:'Recuperaciones · Iniciación',k:'ini',o:S.slots.sat.occ,cap:4}];if(t==='11:00')items=[{n:'Recuperaciones · Intermedio',k:'mid',o:1,cap:4}]}
+    return `<div class="wk-c ${d===2?'today':''}">${items.map(i=>`<div class="wchip k-${i.k} ${i.o<i.cap?'free':''} ${i.cancel?'cancel':''}"><b>${i.n}</b><span>${i.cancel?'cancelada':i.o+'/'+i.cap}</span></div>`).join('')}</div>`;
+  };
+  let h=`<div class="view-head"><div><h2>Calendario semanal</h2><p>Semana 40 · En rojo, grupos con plazas libres</p></div><span class="pill">Ocupación media 91%</span></div>
+  <div class="card"><div class="court-scroll"><div class="week"><div></div>${days.map((d,i)=>`<div class="wk-h ${i===2?'today':''}">${d}${i===2?' · hoy':''}</div>`).join('')}`;
+  times.forEach(t=>{h+=`<div class="wk-t">${t}</div>`;for(let d=0;d<6;d++)h+=cell(d,t)});
+  h+=`</div></div><div class="legend">${Object.entries(KIND).map(([k,l])=>`<span class="k-${k}"><i></i>${l}</span>`).join('')}</div></div>
+  <div class="card"><h3>Lista de espera</h3>${S.waitlist.map(w=>`<div class="m-row" style="padding:8px 0;border-top:1px solid var(--line)"><span class="who"><span class="av">${ini(ST[w.id].n)}</span>${ST[w.id].n} <span class="muted">· nivel ${ST[w.id].lvl} · para ${cls(w.cls).name}</span></span>${cls(w.cls).s.includes(w.id)?'<span class="pill ok">Ya en el grupo</span>':w.used?'<span class="pill warn">Oferta enviada</span>':'<span class="pill">Esperando plaza</span>'}</div>`).join('')}</div>`;
+  return h;
+}
+function payPill(id){
+  const v=S.pays[id]||ST[id].pay;
+  return {ok:'<span class="pill ok">Pagado</span>',pend:'<span class="pill warn">Pendiente</span>',dev:'<span class="pill bad">Devuelto</span>',sent:'<span class="pill warn">Recordatorio enviado</span>',retry:'<span class="pill warn">Reintento 5 oct</span>'}[v]||'';
+}
+function studentRows(){
+  const q=norm(S.search);
+  return Object.keys(ST).filter(id=>{
+    const s=ST[id],g=groupOf(id);if(!g)return false;
+    if(q&&!norm(s.n).includes(q))return false;
+    if(S.filter==='risk')return s.risk&&!S.riskDone[id];
+    if(S.filter==='pay')return ['pend','dev','sent','retry'].includes(S.pays[id]);
+    return true;
+  }).map(id=>{
+    const s=ST[id],g=groupOf(id);
+    return `<tr><td><div class="who"><span class="av">${ini(s.n)}</span><div>${s.n}${s.isNew?' <span class="pill ok">Nuevo</span>':''}</div></div></td>
+    <td>${g.name} <span class="muted">${g.time}</span></td><td>${s.lvl}</td>
+    <td><span class="bar ${s.att<70?'low':''}"><i style="width:${s.att}%"></i></span>${s.att}%</td>
+    <td>${payPill(id)}</td>
+    <td>${s.recov?`<span class="pill">🔁 ${s.recov} recup.</span> `:''}${s.risk&&!S.riskDone[id]?`<span class="pill bad">${s.risk}</span> <button class="btn sm" data-act="risk" data-id="${id}">Escribir</button>`:S.riskDone[id]?'<span class="pill ok">Contactado</span>':''}</td></tr>`;
+  }).join('')||'<tr><td colspan="6" class="muted">Sin resultados</td></tr>';
+}
+function vAlumnos(){
+  return `<div class="view-head"><div><h2>Alumnos</h2><p>186 alumnos activos · mostrando los de hoy</p></div><button class="btn sm" data-act="noop">+ Nuevo alumno</button></div>
+  ${S.requests.length?`<div class="card"><h3>Solicitudes de inscripción <span class="muted" style="font-size:12px;font-family:Geist;font-weight:500">La app propone el grupo según edad, nivel, horario y plazas libres</span></h3>
+  ${S.requests.map(r=>{const c=r.prop==='trial'?null:cls(r.prop);return `<div class="match"><span class="av">${ini(r.n)}</span><div class="info"><b>${esc(r.n)}</b> · ${r.age} · ${r.lvl}<br><span class="muted">${r.who} · ${r.from} · ${r.avail}</span></div>
+  <div>${r.status==='trial'?'<span class="pill ok">Clase de prueba reservada · jue 18:00</span>':r.status==='new'?`<div class="muted" style="font-size:12px;margin-bottom:4px">Propuesta: <b style="color:var(--ink)">${c.name} · L/X ${c.time}</b> (${c.s.length}/${c.cap})</div><button class="btn sm primary" data-assign="${r.id}">Asignar y enviar bienvenida</button>`:r.status==='assigned'?'<span class="pill warn">Documentos enviados · esperando firma</span>':'<span class="pill ok">✓ Alta completa · SEPA firmado</span>'}</div></div>`}).join('')}
+  <p class="muted" style="font-size:12px;margin:8px 0 0">Al asignar se envían solos: bienvenida con horario, mandato SEPA, autorización de menores y derechos de imagen. La primera cuota se prorratea.</p></div>`:''}
+  <div class="toolbar"><input class="search" id="search" placeholder="Buscar alumno…" value="${esc(S.search)}">
+  ${[['all','Todos'],['risk','Con alertas'],['pay','Pagos pendientes']].map(([k,l])=>`<button class="chip ${S.filter===k?'on':''}" data-filter="${k}">${l}</button>`).join('')}</div>
+  <div class="card" style="padding:4px 6px"><div class="tbl-wrap"><table><thead><tr><th>Alumno</th><th>Grupo</th><th>Nivel</th><th>Asistencia</th><th>Cuota</th><th>Estado</th></tr></thead><tbody id="rows">${studentRows()}</tbody></table></div></div>`;
+}
+function vCobros(){
+  const k=kpis();const ids=['carlos','sergio','noa'];
+  const paidRows=['lucia','isabel','alex','nico','andreu','pilar'];
+  return `<div class="view-head"><div><h2>Cobros · septiembre</h2><p>Cuotas cobradas el día 1 por domiciliación, tarjeta o Bizum. Factura VeriFactu automática.</p></div>
+  <button class="btn sm primary" data-act="remindAll" ${ids.some(id=>['pend','dev'].includes(S.pays[id]))?'':'disabled'}>Recordar a todos los pendientes</button></div>
+  ${vCierre()}
+  <div class="card"><div class="pay-sum"><div><div class="muted" style="font-size:12px">Cobrado</div><div class="big">${eur(k.paid)}</div></div><div class="muted">de ${eur(k.total)} · ${Math.round(k.paid/k.total*1000)/10}%</div></div>
+  <div class="progress"><i style="width:${k.paid/k.total*100}%"></i></div><div class="muted" style="font-size:12px">149 recibos cobrados · ${ids.filter(id=>S.pays[id]!=='ok').length} pendientes</div></div>
+  <div class="card" style="padding:4px 6px"><div class="tbl-wrap"><table><thead><tr><th>Alumno</th><th>Concepto</th><th>Importe</th><th>Estado</th><th></th></tr></thead><tbody>
+  ${ids.map(id=>`<tr><td><div class="who"><span class="av">${ini(ST[id].n)}</span>${ST[id].n}</div></td><td>Cuota sep · ${groupOf(id).name}</td><td>${eur(ST[id].fee)}</td><td>${payPill(id)}${S.paidMethod[id]?' <span class="muted" style="font-size:12px">· Bizum</span>':''}</td>
+  <td>${['pend','dev'].includes(S.pays[id])?`<button class="btn sm" data-act="remind" data-id="${id}">Enviar recordatorio con Bizum</button>`:S.pays[id]==='ok'?'<span class="muted" style="font-size:12px">Factura enviada ✓</span>':''}</td></tr>`).join('')}
+  ${paidRows.map((id,i)=>`<tr><td><div class="who"><span class="av">${ini(ST[id].n)}</span>${ST[id].n}</div></td><td>Cuota sep · ${groupOf(id).name}</td><td>${eur(ST[id].fee)}</td><td><span class="pill ok">Pagado</span> <span class="muted" style="font-size:12px">· ${i%3===1?'Tarjeta':'Domiciliación'}</span></td><td><span class="muted" style="font-size:12px">F-2026-08${70+i}</span></td></tr>`).join('')}
+  <tr><td colspan="5" class="muted" style="text-align:center">y 143 recibos más cobrados…</td></tr></tbody></table></div></div>`;
+}
+function vCierre(){
+  const c=S.cierre;
+  if(c.stage==='idle')return `<div class="card" style="border-color:var(--teal)"><h3>Cierre de mes · octubre <span class="pill">Normalmente: una tarde entera</span></h3><p class="muted" style="margin:0 0 12px">Calcula todas las cuotas con altas, bajas, prorrateos y descuentos. Prepara la remesa del banco, las facturas VeriFactu y las liquidaciones de los entrenadores. Tú solo revisas las excepciones.</p><button class="btn primary" data-act="cierre">Preparar cuotas de octubre</button></div>`;
+  let h=`<div class="card" style="border-color:var(--teal)"><h3>Cierre de mes · octubre ${c.stage==='done'?'<span class="pill ok">✓ Enviado al banco</span>':c.stage==='review'?'<span class="pill warn">2 excepciones por revisar</span>':'<span class="pill">Calculando…</span>'}</h3>`;
+  h+=CIERRE.map((l,i)=>`<div class="wz-line ${i<c.i?'ok':'wait'}"><span class="st">${i<c.i?'✓':'·'}</span><span>${l[0]}</span>${l[1]?`<span class="amt">${l[1]>0?'':'−'}${eur(Math.abs(l[1]))}</span>`:''}</div>`).join('');
+  if(c.stage==='review'||c.stage==='done'){
+    const dis=c.stage==='done'?'disabled':'';
+    h+=`<div class="exc"><b>Carlos Gil tiene septiembre pendiente (65 €)</b><p>¿Lo incluimos en la remesa junto con octubre?</p><div class="acts" style="display:flex;gap:6px;flex-wrap:wrap"><button class="chip ${c.carlos==='both'?'on':''}" data-cz="carlos:both" ${dis}>Sí, cobrar 130 €</button><button class="chip ${c.carlos==='oct'?'on':''}" data-cz="carlos:oct" ${dis}>Solo octubre</button></div></div>
+    <div class="exc"><b>Sergio López: 2 recibos devueltos seguidos</b><p>¿Lo pasamos a pago con Bizum? Cada devolución cuesta unos 4 € de comisión.</p><div class="acts" style="display:flex;gap:6px;flex-wrap:wrap"><button class="chip ${c.sergio==='bizum'?'on':''}" data-cz="sergio:bizum" ${dis}>Sí, cobrar por Bizum</button><button class="chip ${c.sergio==='sepa'?'on':''}" data-cz="sergio:sepa" ${dis}>Seguir con domiciliación</button></div></div>`;
+    h+=`<div class="pay-sum" style="margin-top:14px"><div><div class="muted" style="font-size:12px">Total remesa</div><div class="big">${eur(cierreTotal())}</div></div>
+    ${c.stage==='done'?'<span class="pill ok">Remesa enviada · facturas programadas · liquidaciones listas</span>':`<button class="btn primary" data-act="cierreOk" ${c.carlos&&c.sergio?'':'disabled'}>Enviar remesa al banco</button>`}</div>`;
+  }
+  return h+`</div>`;
+}
+function vMensajes(){
+  const sel=S.convs.find(c=>c.id===S.convSel)||S.convs[0];
+  const need=S.convs.filter(c=>c.need).length;
+  const msgsOf=c=>c.live?S.wa.msgs.map(m=>({u:!m.me,ai:m.ai,t:m.t,h:m.h.startsWith('§')?m.h.slice(1):m.h})):c.msgs;
+  const last=c=>{const m=msgsOf(c);const x=m[m.length-1];return x?x.h.replace(/<[^>]+>/g,''):''};
+  let h=`<div class="view-head"><div><h2>Mensajes</h2><p>WhatsApp de la escuela · hoy: ${20+S.convs.length} conversaciones · ${20+S.convs.filter(c=>!c.need&&!c.done).length} resueltas por la IA · ${S.convs.filter(c=>c.done).length} por la oficina · ${need} pendientes</p></div><span class="pill ok">✦ IA activa 24/7</span></div>
+  <div class="msgs"><div class="conv-list">${S.convs.map(c=>`<button class="conv ${c.id===sel.id?'on':''}" data-conv="${c.id}"><span class="av">${ini(c.n)}</span><span style="min-width:0"><b>${c.n}${c.need?'<span class="pill bad">Contigo</span>':c.done?'<span class="pill">Oficina</span>':'<span class="pill ok">IA</span>'}</b><small>${esc(last(c))}</small></span></button>`).join('')}
+  <div class="conv" style="cursor:default"><span></span><small>+ 20 conversaciones más resueltas por la IA</small></div></div>
+  <div class="thread"><div class="thread-h"><b>${sel.n}</b>${sel.need?'<span class="pill bad">Necesita a una persona</span>':sel.done?'<span class="pill">Respondida por la oficina con el borrador de la IA</span>':'<span class="pill ok">Resuelta por la IA</span>'}</div>
+  ${msgsOf(sel).map(m=>`<div class="tb ${m.u?'us':''}">${m.u&&m.ai?'<span class="ai">✦ IA</span>':''}${m.h}<small>${m.t}</small></div>`).join('')}
+  ${sel.need&&sel.draft?`<div class="draft"><b>✦ RESPUESTA SUGERIDA POR LA IA</b>${sel.draft}<div style="display:flex;gap:6px;margin-top:10px"><button class="btn sm primary" data-draft="${sel.id}">Enviar</button><button class="btn sm" data-act="noop">Editar</button></div></div>`:''}
+  ${sel.need&&!sel.draft?`<div class="draft"><b>✦ LA IA TE PASA ESTA CONVERSACIÓN</b>No tenía información suficiente para responder con seguridad.</div>`:''}
+  </div></div>`;
+  return h;
+}
+function vClub(){
+  let h=`<div class="view-head"><div><h2>Partidos y eventos</h2><p>Lo que más tiempo quita en la recepción de un club: completar partidos, ligas y americanas</p></div></div>
+  <div class="card"><h3>Partidos a los que les falta gente</h3>
+  <div class="switch"><span class="tg"></span><span><b>Buscar jugadores automáticamente</b> cuando falte gente a menos de 6 h del partido. Se avisa por WhatsApp a jugadores de nivel parecido que suelen jugar a esa hora.</span></div>`;
+  S.matches.forEach(m=>{
+    h+=`<div class="match"><span class="when">${m.t}</span><div class="info"><b>${COURTS[m.court].n} · nivel ${m.lvl}</b><br><span class="muted">Reserva de ${m.by}${m.added?` · se unen: ${m.added.join(', ')}`:''}</span></div>
+    <div class="seats">${[0,1,2,3].map(i=>m.p[i]?`<i class="${i>=4-m.need?'new':''}">${m.p[i]}</i>`:'<i class="free"></i>').join('')}</div>
+    ${m.status==='open'?`<button class="btn sm primary" data-find="${m.id}">Buscar ${m.need===1?'el cuarto':'2 jugadores'} ahora</button>`:m.status==='searching'?`<span class="pill warn">Buscando · ${m.sent} avisados</span>${m.id==='m1'?' <button class="btn sm" data-a="player">Ver en la app de Guillem</button>':''}`:'<span class="pill ok">✓ Completo</span>'}</div>`;
+  });
+  h+=`<p class="muted" style="font-size:12px;margin:8px 0 0">Cada jugador paga su parte (6 €) por Bizum y el club cobra la pista entera.</p></div>`;
+  const pairs=amerPairs();
+  const LIGA=[['Mora / Riera',9,3],['Pons / Vich',7,3],['Coll / Font',6,3],['Pujol / Mas',4,3],['Serra / Oliver',3,3],['Tous / Roig',1,3]];
+  h+=`<div class="card"><h3>Liga de otoño · 2.ª categoría <span class="pill">Jornada 4</span></h3><div class="tbl-wrap"><table><thead><tr><th>#</th><th>Pareja</th><th>Puntos</th><th>Jugados</th></tr></thead><tbody>${LIGA.map((l,i)=>`<tr><td>${i+1}</td><td>${l[0]}</td><td><b>${l[1]}</b></td><td>${l[2]}</td></tr>`).join('')}</tbody></table></div>
+  <p class="muted" style="font-size:12px;margin:8px 0 0">Los jugadores apuntan el resultado desde el móvil y la clasificación se actualiza sola. Jornada 4: <b>${S.player.liga?7:6} de 8 partidos</b> ya tienen día, pista y hora confirmados. Los que faltan reciben un recordatorio automático.</p></div>`;
+  h+=`<div class="card"><h3>Americana del viernes · 2 oct · 19:00 ${S.amer.status==='open'?'<span class="pill ok">16/16 inscritos · pagado</span>':'<span class="pill ok">✓ Cuadro enviado</span>'}</h3>`;
+  if(S.amer.status==='open'){
+    h+=`<p class="muted" style="margin:0 0 6px">Inscripciones por WhatsApp con pago por Bizum. 3 personas en lista de espera.</p><div class="names">${AMER.map(p=>`<span class="pill">${p[0]} · ${String(p[1]).replace('.',',')}</span>`).join('')}</div>
+    <button class="btn primary" data-act="amer" style="margin-top:12px">Generar parejas y cuadro</button>`;
+  }else{
+    h+=`<p class="muted" style="margin:0">Parejas equilibradas: el nivel más alto con el más bajo. Ronda 1:</p><div class="pairs">${[0,1,2,3].map(k=>{const A=pairs[k*2],B=pairs[k*2+1];const avg=x=>((x[0][1]+x[1][1])/2).toFixed(2).replace('.',',');return `<div class="pair"><b>Pista ${k+1} · 19:00</b>${A[0][0]} / ${A[1][0]} <span class="muted">(${avg(A)})</span><br>vs ${B[0][0]} / ${B[1][0]} <span class="muted">(${avg(B)})</span></div>`}).join('')}</div>
+    <p class="muted" style="font-size:12px;margin:10px 0 0">Rondas 2 a 4 generadas sin repetir rivales. Los jugadores apuntan el resultado desde el móvil y la clasificación se actualiza sola.</p>`;
+  }
+  return h+`</div>`;
+}
+function vEntrenadores(){
+  return `<div class="view-head"><div><h2>Entrenadores</h2><p>Liquidación de septiembre calculada con las clases cerradas desde la app</p></div></div>
+  <div class="coach-grid">${Object.entries(COACH).map(([k,c])=>{
+    const n=c.base+S.coachDone[k];const today=S.classes.filter(x=>x.coach===k&&x.status==='ok').length;
+    return `<div class="coach"><div class="top-r"><span class="av">${c.ini}</span><div><b>${c.n}</b><div class="muted" style="font-size:12px">${today} clases hoy</div></div></div>
+    <div class="muted" style="font-size:12px;margin:-4px 0 10px">Imparte: ${QUAL[k].map(q=>KIND[q].split(' ')[0].toLowerCase()).join(', ')}</div>
+    <dl><dt>Clases dadas</dt><dd>${n}</dd>${S.classes.filter(c=>c.sub&&c.sub.status==='ok'&&c.coach===k).length?`<dt>Sustituciones hoy</dt><dd style="color:var(--teal)">+${S.classes.filter(c=>c.sub&&c.sub.status==='ok'&&c.coach===k).length}</dd>`:''}<dt>Horas</dt><dd>${n} h</dd><dt>Tarifa</dt><dd>${c.rate} €/h</dd>${S.coachLost[k]?`<dt>Canceladas por lluvia</dt><dd style="color:var(--coral)">${S.coachLost[k]}</dd>`:''}</dl>
+    <div class="muted" style="font-size:12px">A liquidar</div><div class="total">${eur(n*c.rate)}</div></div>`}).join('')}</div>
+  <div class="card" style="margin-top:14px"><h3>Cómo se calcula</h3><p class="muted" style="margin:0">Cada vez que un entrenador cierra una clase en su app, se suma a su liquidación. Las sustituciones cuentan para quien da la clase y las cancelaciones por lluvia no se pagan (configurable). A final de mes: nómina o factura del autónomo en un clic.</p></div>`;
+}
+function renderMain(){
+  const v={hoy:vHoy,mensajes:vMensajes,semana:vSemana,alumnos:vAlumnos,cobros:vCobros,entrenadores:vEntrenadores,club:vClub}[S.view]();
+  document.getElementById('main').innerHTML=v;
+  S.flashCls=null;S.flashKpi=null;
+}
+
+/* ---------- RENDER: PHONE ---------- */
+const HINT={player:'App de <b>Guillem</b>, socio del club: avisos de «falta uno», reservas, liga y americanas.',wa:'Estás en el WhatsApp de <b>Lucía</b>, alumna y jugadora. Escribe lo que quieras o usa las sugerencias.',student:'App de <b>Lucía</b>: horario, recuperaciones, progreso y pagos.',coach:'App de <b>Marta</b>, entrenadora: agenda, pasar lista, cerrar la clase y avisar si no puede venir.'};
+function sbar(dark){return `<div class="sbar ${dark?'dark':''}"><span>${peek()}</span><span>●●● 5G ▮</span></div>`}
+function rWA(){
+  const chips=[];const c=cls('c5');
+  if(S.wa.stage==='recov'&&ST.lucia.recov>0&&!S.booked)chips.push('El jueves a las 18:00','El sábado a las 10:00','Luego lo miro');
+  else if(S.wa.stage==='lead')chips.push('Se llama Carla');
+  else if(S.wa.stage==='court'){S.wa.courtOpts.forEach(o=>chips.push(`Reserva la de las ${o.t} (${COURTS[o.court].n})`));chips.push('Nada, gracias')}
+  else{
+    if(c.s.includes('lucia')&&!c.done)chips.push('Hoy no puedo ir a la de las 7 😕');
+    chips.push('¿Hay pista libre esta noche?','¿Qué horario tengo?','¿Tengo algo pendiente de pago?');
+    if(!S.lead)chips.push('Mi amiga se quiere apuntar');
+    if(ST.lucia.recov>0&&!S.booked)chips.push('Quiero recuperar una clase');
+  }
+  return `${sbar(true)}<div class="wa"><div class="wa-head"><span style="color:#8fd9c4;font-size:18px">‹</span><span class="av">PD</span><div><b>Club Pádel Demo</b><small>${S.wa.typing?'escribiendo…':'Asistente automático · en línea'}</small></div></div>
+  <div class="wa-chat" id="waChat"><div class="wa-day">HOY</div>${S.wa.msgs.map(m=>{
+    const h=m.h.startsWith('§')?m.h.slice(1):m.h;
+    return `<div class="bub ${m.me?'me':'them'}">${!m.me&&m.ai?'<span class="ai">✦ RESPUESTA AUTOMÁTICA</span>':''}${h}<small>${m.t}${m.me?' ✓✓':''}</small></div>`}).join('')}
+  ${S.wa.typing?'<div class="typing"><i></i><i></i><i></i></div>':''}</div>
+  <div class="wa-chips">${chips.map(c=>`<button data-wa="${esc(c)}">${c}</button>`).join('')}</div>
+  <form class="wa-input" id="waForm"><input id="waIn" placeholder="Escribe un mensaje" autocomplete="off"><button aria-label="Enviar">➤</button></form></div>`;
+}
+const ICONS={inicio:'<path d="M3 12l9-8 9 8M5 10v10h14V10"/>',recuperar:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',progreso:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',pagos:'<rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/>'};
+function rStudent(){
+  const s=ST.lucia,c=cls('c5'),tab=S.student.tab;let body='';
+  if(tab==='inicio'){
+    const absent=c.notice.includes('lucia');
+    if(!absent&&!c.done){
+      body+=`<div class="m-card hero-card"><div class="muted" style="font-size:12px">PRÓXIMA CLASE</div><div class="when">Hoy · 19:00</div><div>Iniciación II · ${COURTS[c.court].n} · Marta</div>
+      <div class="dots">${c.s.map(id=>`<span class="av ${id==='lucia'?'me':''}">${ini(ST[id].n)}</span>`).join('')}</div>
+      <div style="display:flex;gap:8px;margin-top:14px"><button class="btn sm primary" data-act="absent">No puedo ir</button><button class="btn sm" style="background:transparent;color:#e9ebf4;border-color:#2a3150" data-act="noop">Cómo llegar</button></div></div>`;
+    }else if(absent){
+      const nx=S.booked?S.slots[S.booked]:null;
+      body+=`<div class="m-card"><span class="pill warn">Hoy no vienes · avisado</span><h4 style="margin-top:8px">Tu plaza de hoy ya la ha ocupado otra persona 👍</h4><p class="muted" style="margin:4px 0 0;font-size:13px">Sin llamadas ni mensajes a la escuela.</p></div>
+      <div class="m-card hero-card"><div class="muted" style="font-size:12px">PRÓXIMA CLASE</div><div class="when">${nx?nx.label.split(' · ')[0]+' · '+nx.label.split(' · ')[1]:'Lun 5 oct · 19:00'}</div><div>${nx?nx.name+' · '+nx.court+' · '+nx.coach+' <span class="pill ok">Recuperación</span>':'Iniciación II · Pista 2 · Marta'}</div></div>`;
+    }else{
+      body+=`<div class="m-card"><span class="pill ok">✓ Clase de hoy hecha</span><h4 style="margin-top:8px">Próxima: lunes 5 oct · 19:00</h4></div>`;
+    }
+    body+=`<div class="m-card"><div class="m-row"><div><div class="muted" style="font-size:12px">Recuperaciones disponibles</div><div class="big-num">${s.recov}</div></div>${s.recov?`<button class="btn sm primary" data-stab="recuperar">Reservar</button>`:'<span class="muted" style="font-size:12px">Ninguna pendiente</span>'}</div>${s.recov?'<div class="muted" style="font-size:12px;margin-top:4px">Caduca el 30 de octubre</div>':''}</div>`;
+    if(S.lastNote)body+=`<div class="m-label">Resumen de tu última clase</div><div class="note"><b>Marta · hoy</b>${esc(S.lastNote.txt)}${S.lastNote.tags.length?`<div class="tags" style="margin-top:8px">${S.lastNote.tags.map(t=>`<span class="tagb on">${t}</span>`).join('')}</div>`:''}</div>`;
+    body+=`<div class="m-label">Avisos</div><div class="m-card" style="font-size:13px">📣 Torneo social de otoño el sábado 17 oct. Inscripción abierta en la app.</div>`;
+  }
+  if(tab==='recuperar'){
+    body+=`<div class="m-card"><div class="m-row"><div><h4>Tienes ${s.recov} recuperación${s.recov===1?'':'es'}</h4><div class="muted" style="font-size:12px">Solo te mostramos huecos de tu nivel (2,4 ± 0,5)</div></div><span class="big-num">${s.recov}</span></div></div>`;
+    ['thu','sat'].forEach(k=>{const sl=S.slots[k];const mine=S.booked===k;
+      body+=`<div class="m-card"><div class="m-row"><div><h4>${sl.label}</h4><div class="muted" style="font-size:12.5px">${sl.name} · ${sl.court} · ${sl.coach}</div><div style="margin-top:6px"><span class="pill ${sl.occ<sl.cap?'ok':''}">${sl.cap-sl.occ} plaza${sl.cap-sl.occ===1?'':'s'} libre${sl.cap-sl.occ===1?'':'s'}</span></div></div>
+      ${mine?'<span class="pill ok">✓ Reservada</span>':`<button class="btn sm primary" data-book="${k}" ${s.recov<1||S.booked?'disabled':''}>Reservar</button>`}</div></div>`});
+    if(!s.recov&&!S.booked)body+=`<p class="muted" style="font-size:12.5px;text-align:center">Cuando avises de una falta con más de 3 h de antelación, aquí aparecerá tu recuperación.</p>`;
+  }
+  if(tab==='progreso'){
+    body+=`<div class="m-card"><div class="m-row"><div><div class="muted" style="font-size:12px">Tu nivel</div><div class="big-num">${s.lvl}</div><div class="muted" style="font-size:12px">+0,3 desde junio</div></div><div style="text-align:right"><div class="muted" style="font-size:12px">Asistencia</div><div class="big-num">${s.att}%</div></div></div></div>
+    <div class="m-card"><h4 style="margin-bottom:6px">Golpes</h4>${[['Derecha',72],['Revés',55],['Volea',61],['Bandeja',38],['Saque',66],['Pared',44]].map(([n,v])=>`<div class="skill"><span>${n}</span><span class="bar"><i style="width:${v}%"></i></span><span class="muted">${v}</span></div>`).join('')}</div>
+    <div class="m-label">Comentarios de tu entrenadora</div>
+    ${S.lastNote?`<div class="note" style="margin-bottom:8px"><b>Marta · hoy</b>${esc(S.lastNote.txt)}</div>`:''}
+    <div class="note" style="background:var(--surface);border:1px solid var(--line)"><b style="color:var(--muted)">Marta · lun 28 sep</b>Mucho mejor la salida de pared. Próximo objetivo: la bandeja.</div>`;
+  }
+  if(tab==='pagos'){
+    body+=`<div class="m-card"><div class="m-row"><div><h4>Octubre · 65 €</h4><div class="muted" style="font-size:12.5px">Se cobrará el 1 oct · domiciliación</div></div><span class="pill">Programado</span></div></div>
+    <div class="m-card"><div class="m-row"><div><h4>Septiembre · 65 €</h4><div class="muted" style="font-size:12.5px">Pagado el 1 sep · F-2026-0874</div></div><span class="pill ok">Pagado</span></div><button class="btn sm" style="margin-top:10px" data-act="pdf">Descargar factura</button></div>
+    <div class="m-card"><div class="m-row"><div><h4>Agosto · 65 €</h4><div class="muted" style="font-size:12.5px">Pagado el 1 ago · F-2026-0712</div></div><span class="pill ok">Pagado</span></div></div>`;
+  }
+  return `${sbar()}<div class="m-app"><div class="m-head"><div><small>Club Pádel Demo</small><h3>Hola, Lucía 👋</h3></div><span class="av" style="background:var(--teal-bright);color:#05060c">LG</span></div>
+  <div class="m-scroll">${body}</div>
+  <div class="tabbar">${['inicio','recuperar','progreso','pagos'].map(t=>`<button class="${tab===t?'on':''}" data-stab="${t}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${ICONS[t]}</svg>${t[0].toUpperCase()+t.slice(1)}</button>`).join('')}</div></div>`;
+}
+function rPlayer(){
+  const tab=S.player.tab,m1=S.matches.find(m=>m.id==='m1');let body='';
+  const inMatch=m1.added&&m1.added.includes('Guillem Pons');
+  if(tab==='inicio'){
+    if(m1.status==='searching'&&!S.player.declined){
+      body+=`<div class="m-card hero-card invite"><div class="muted" style="font-size:12px">🎾 TE BUSCAN PARA UN PARTIDO</div><div class="when">Hoy · ${m1.t}</div><div>${COURTS[m1.court].n} · nivel ${m1.lvl} · 6 € por jugador</div>
+      <div class="dots">${m1.p.map(x=>`<span class="av">${x}</span>`).join('')}<span class="av me">?</span></div>
+      <p class="muted" style="font-size:12px;margin:10px 0 0">Te avisamos porque sueles jugar los miércoles por la noche y tu nivel encaja.</p>
+      <div style="display:flex;gap:8px;margin-top:12px"><button class="btn sm primary" data-join="m1">Me apunto</button><button class="btn sm" style="background:transparent;color:#e9ebf4;border-color:#2a3150" data-decline="m1">Hoy no puedo</button></div></div>`;
+    }else if(inMatch){
+      body+=`<div class="m-card hero-card"><div class="muted" style="font-size:12px">TU PRÓXIMO PARTIDO</div><div class="when">Hoy · ${m1.t}</div><div>${COURTS[m1.court].n} · con Xisco, Joan y Àngel</div><div class="dots">${m1.p.map(x=>`<span class="av ${x==='GP'?'me':''}">${x}</span>`).join('')}</div><div style="margin-top:10px"><span class="pill ok">✓ Pagado 6 € por Bizum</span></div></div>`;
+    }else if(S.player.declined){
+      body+=`<div class="m-card"><h4>Sin problema 👍</h4><p class="muted" style="margin:0;font-size:13px">No te volveremos a avisar para partidos hoy. Te avisamos de otros que encajen contigo.</p></div>`;
+    }
+    S.player.bookings.forEach(b=>body+=`<div class="m-card"><div class="m-row"><div><h4>Hoy · ${b.t}</h4><div class="muted" style="font-size:12.5px">${COURTS[b.court].n} · reservada por ti · ${b.price} €</div></div><span class="pill ok">Reservada</span></div></div>`);
+    body+=`<div class="m-label">Esta semana</div>
+    <div class="m-card"><div class="m-row"><div><h4>Liga · jornada 4</h4><div class="muted" style="font-size:12.5px">vs Pons / Vich · jue 21:00 · Pista 2</div></div>${S.player.liga?'<span class="pill ok">Confirmado</span>':'<button class="btn sm primary" data-liga="1">Confirmar</button>'}</div></div>
+    <div class="m-card"><div class="m-row"><div><h4>Americana del viernes</h4><div class="muted" style="font-size:12.5px">2 oct · 19:00 · inscrito y pagado</div></div><button class="btn sm" data-ptab="eventos">Ver</button></div></div>`;
+  }
+  if(tab==='reservar'){
+    const fs=freeSlots();
+    body+=`<div class="m-card" style="font-size:13px">${S.offer?`<span class="pill ok">Oferta de última hora: ${OFFER} € la hora</span>`:`Hora de pista: <b>${PRICE} €</b> · se puede dividir entre 4`}</div>`;
+    body+=fs.length?fs.map(f=>`<div class="m-card"><div class="m-row"><div><h4>Hoy · ${f.t}</h4><div class="muted" style="font-size:12.5px">${COURTS[f.court].n} · ${COURTS[f.court].cov?'cubierta':'exterior'}</div></div><button class="btn sm primary" data-pbook="${f.t}|${f.court}">Reservar · ${price()} €</button></div></div>`).join(''):'<p class="muted" style="text-align:center">No quedan pistas libres hoy.</p>';
+  }
+  if(tab==='eventos'){
+    body+=`<div class="m-card"><h4>Americana · viernes 2 oct · 19:00</h4><div class="muted" style="font-size:12.5px;margin-bottom:8px">16 jugadores · 4 rondas · 12 € pagados</div>`;
+    if(S.amer.status==='drawn'){
+      const pairs=amerPairs();const pi=pairs.findIndex(p=>p.some(x=>x[0]==='Guillem P.'));const court=Math.floor(pi/2)+1;const mate=pairs[pi].find(x=>x[0]!=='Guillem P.')[0];const opp=pairs[pi%2?pi-1:pi+1];
+      body+=`<div class="note"><b>Ronda 1 · Pista ${court} · 19:00</b>Tu pareja: <b>${mate}</b><br>Rivales: ${opp[0][0]} / ${opp[1][0]}</div>`;
+    }else body+=`<div class="note" style="background:var(--surface-2)"><b style="color:var(--muted)">Cuadro pendiente</b>Te llegará por WhatsApp con tu pareja, tu pista y tu hora.</div>`;
+    body+=`</div><div class="m-card"><h4>Liga de otoño · 2.ª</h4><div class="muted" style="font-size:12.5px">Tu pareja: Mora / Riera · 1.º con 9 puntos</div></div>`;
+  }
+  return `${sbar()}<div class="m-app"><div class="m-head"><div><small>Club Pádel Demo · socio · nivel 3,0</small><h3>Hola, Guillem</h3></div><span class="av" style="background:var(--blue);color:#fff">GP</span></div>
+  <div class="m-scroll">${body}</div>
+  <div class="tabbar">${[['inicio','Inicio',ICONS.inicio],['reservar','Reservar','<rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/>'],['eventos','Eventos','<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/>']].map(([k,l,ic])=>`<button class="${tab===k?'on':''}" data-ptab="${k}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${ic}</svg>${l}</button>`).join('')}</div></div>`;
+}
+function rCoach(){
+  const V=S.coach.view;
+  if(V==='home'){
+    const mine=S.classes.filter(c=>c.coach==='marta'||(c.sub&&c.sub.from==='marta'));
+    const notes=[];
+    if(cls('c5').notice.includes('lucia'))notes.push('🙋 <b>Lucía García</b> no viene hoy (avisó por WhatsApp)');
+    if(cls('c5').s.includes('marc'))notes.push('🎉 <b>Marc Riera</b> se une hoy a Iniciación II');
+    if(S.rain)notes.push('🌧️ Plan de lluvia aplicado. Tus clases son en pista cubierta: sin cambios.');
+    S.classes.filter(c=>c.sub&&c.sub.from==='marta').forEach(c=>notes.push(c.sub.status==='ok'?`🔄 <b>${COACH[c.coach].n.split(' ')[0]}</b> te sustituye en ${c.name} ${c.time}. Alumnos avisados. ¡Que te mejores!`:'⏳ Buscando quién te sustituye…'));
+    return `${sbar()}<div class="m-app"><div class="m-head"><div><small>Miércoles 30 sep</small><h3>Hola, Marta</h3></div><span class="av" style="background:var(--violet);color:#fff">MV</span></div>
+    <div class="m-scroll">
+      <div class="m-card" style="display:flex;justify-content:space-around;text-align:center"><div><div class="big-num" style="font-size:26px">${mine.filter(c=>!c.done&&c.coach==='marta').length}</div><div class="muted" style="font-size:11.5px">clases hoy</div></div><div><div class="big-num" style="font-size:26px">${COACH.marta.base+S.coachDone.marta}</div><div class="muted" style="font-size:11.5px">horas este mes</div></div><div><div class="big-num" style="font-size:26px">${eur((COACH.marta.base+S.coachDone.marta)*COACH.marta.rate)}</div><div class="muted" style="font-size:11.5px">a cobrar</div></div></div>
+      ${notes.length?`<div class="m-label">Novedades</div>${notes.map(n=>`<div class="m-card" style="font-size:13px;padding:11px 13px">${n}</div>`).join('')}`:''}
+      <div class="m-label">Tus clases de hoy</div>
+      ${mine.map(c=>c.coach!=='marta'?`<div class="cls-card k-${c.kind}" style="opacity:.6"><div class="m-row"><span class="t">${c.time}</span><span class="pill ${c.sub.status==='ok'?'ok':'warn'}">${c.sub.status==='ok'?'Cubierta por '+COACH[c.coach].n.split(' ')[0]:'Buscando sustituto…'}</span></div><b>${c.name}</b></div>`:`<button class="cls-card k-${c.kind}" data-cc="${c.id}"><div class="m-row"><span class="t">${c.time}</span>${c.done?'<span class="pill ok">✓ Cerrada</span>':`<span class="pill">${c.s.length}/${c.cap} alumnos</span>`}</div><b>${c.name}</b><div class="muted" style="font-size:12.5px">${COURTS[c.court].n} · nivel ${c.lvl}${c.notice.length?` · ${c.notice.length} aviso${c.notice.length>1?'s':''}`:''}</div>${c.done?'':'<div style="color:var(--teal);font-weight:600;font-size:13px;margin-top:6px">Pasar lista →</div>'}</button>`).join('')}
+      <button class="btn" data-cc="absence" style="width:100%;margin-top:6px">🤒 No puedo dar una clase</button>
+    </div></div>`;
+  }
+  if(V==='absence'){
+    const mine=S.classes.filter(c=>c.coach==='marta'&&!c.done&&c.status==='ok'&&!c.sub);
+    return `${sbar()}<div class="m-app"><div class="m-head" style="flex-direction:column;align-items:flex-start;gap:6px"><button class="back" data-cc="home">‹ Hoy</button><div><small>Aviso de ausencia</small><h3>¿Qué clase no puedes dar?</h3></div></div>
+    <div class="m-scroll"><div class="m-card" style="font-size:13px">La app busca sola un sustituto <b>libre a esa hora</b> y <b>que imparta ese nivel</b>, se lo ofrece, avisa a los alumnos y pasa la hora a su liquidación. No tienes que llamar a nadie.</div>
+    ${mine.length?mine.map(c=>`<button class="cls-card k-${c.kind}" data-absent="${c.id}"><div class="m-row"><span class="t">${c.time}</span><span class="pill">${KIND[c.kind]}</span></div><b>${c.name}</b><div class="muted" style="font-size:12.5px">${COURTS[c.court].n} · ${c.s.length} alumnos</div><div style="color:var(--coral);font-weight:600;font-size:13px;margin-top:6px">No puedo dar esta clase</div></button>`).join(''):'<p class="muted" style="text-align:center">No te quedan clases hoy.</p>'}
+    </div></div>`;
+  }
+  const c=cls(S.coach.cls);
+  if(V==='closed'){
+    const pres=c.s.filter(id=>c.marks[id]==='yes').length;
+    return `${sbar()}<div class="m-app"><div class="m-scroll"><div class="success"><div class="ok-ic">✓</div><h3>Clase cerrada</h3><p class="muted">${c.name} · ${c.time}</p>
+    <div class="m-card" style="text-align:left;margin-top:16px;font-size:13.5px;line-height:1.9">✅ ${pres} presentes${c.s.length-pres?` · ${c.s.length-pres} ausentes`:''}<br>📨 Resumen enviado a los alumnos<br>📈 Nivel y progreso actualizados<br>💶 +1 h en tu liquidación</div>
+    <button class="btn primary" data-cc="home" style="margin-top:8px">Volver a hoy</button></div></div></div>`;
+  }
+  if(c.done){S.coach.view='home';return rCoach()}
+  const all=c.s.every(id=>c.marks[id]);
+  const TAGS=['Bandeja','Volea','Salida de pared','Globo','Saque','Posición en red'];
+  return `${sbar()}<div class="m-app"><div class="m-head" style="flex-direction:column;align-items:flex-start;gap:6px"><button class="back" data-cc="home">‹ Hoy</button><div><small>${c.time} · ${COURTS[c.court].n} · nivel ${c.lvl}</small><h3>${c.name}</h3></div></div>
+  <div class="m-scroll">
+    <div class="m-card"><div class="m-row" style="margin-bottom:4px"><h4>Pasar lista</h4><button class="back" data-act="allyes">Todos presentes</button></div>
+    ${c.s.map(id=>`<div class="att"><span class="av">${ini(ST[id].n)}</span><div class="nm"><b>${ST[id].n}${ST[id].isNew?' <span class="pill ok">Nuevo</span>':''}</b><small>Nivel ${ST[id].lvl} · asistencia ${ST[id].att}%</small></div>
+      <button class="mk yes ${c.marks[id]==='yes'?'on':''}" data-mark="${id}" data-v="yes" aria-label="Presente">✓</button><button class="mk no ${c.marks[id]==='no'?'on':''}" data-mark="${id}" data-v="no" aria-label="Ausente">✕</button></div>`).join('')}
+    ${c.notice.map(id=>`<div class="att off"><span class="av">${ini(ST[id].n)}</span><div class="nm"><b>${ST[id].n}</b><small>Avisó que no viene · recuperación generada</small></div></div>`).join('')}
+    </div>
+    <div class="m-card"><h4 style="margin-bottom:8px">¿Qué habéis trabajado?</h4><div class="tags">${TAGS.map(t=>`<button class="tagb ${S.coach.tags.includes(t)?'on':''}" data-tag="${t}">${t}</button>`).join('')}</div>
+    <textarea class="m-note" id="cnote" placeholder="Nota para los alumnos (opcional)" style="margin-top:10px">${esc(S.coach.note)}</textarea></div>
+  </div>
+  <div class="m-foot"><button class="btn primary" data-act="close" ${all?'':'disabled'}>${all?'Cerrar clase y enviar resumen':'Marca a todos para cerrar'}</button></div></div>`;
+}
+function renderPhone(){
+  const scr=document.getElementById('screen');
+  const prevScroll=scr.querySelector('.m-scroll')?.scrollTop||0;
+  scr.innerHTML={wa:rWA,player:rPlayer,student:rStudent,coach:rCoach}[S.app]();
+  const ch=document.getElementById('waChat');if(ch)ch.scrollTop=ch.scrollHeight;
+  const ms=scr.querySelector('.m-scroll');if(ms&&S._keepScroll)ms.scrollTop=prevScroll;S._keepScroll=false;
+  document.getElementById('phoneHint').innerHTML=HINT[S.app];
+  document.querySelectorAll('#aseg button').forEach(b=>b.classList.toggle('on',b.dataset.a===S.app));
+}
+function render(){
+  renderSteps();renderSide();renderMain();renderPhone();
+  document.getElementById('app').dataset.m=S.m;
+  document.querySelectorAll('#mseg button').forEach(b=>b.classList.toggle('on',b.dataset.m===S.m));
+}
+
+/* ---------- MODAL ---------- */
+function openClass(id){
+  const c=cls(id);
+  const rows=c.s.map(id=>`<div class="m-row" style="padding:8px 0;border-top:1px solid var(--line)"><span class="who"><span class="av">${ini(ST[id].n)}</span>${ST[id].n}</span><span>${ST[id].isNew?'<span class="pill ok">Desde lista de espera</span>':c.marks[id]==='yes'?'<span class="pill ok">Presente</span>':c.marks[id]==='no'?'<span class="pill bad">Ausente</span>':'<span class="muted" style="font-size:12px">Nivel '+ST[id].lvl+'</span>'}</span></div>`).join('')
+   +c.notice.map(id=>`<div class="m-row" style="padding:8px 0;border-top:1px solid var(--line)"><span class="who"><span class="av">${ini(ST[id].n)}</span>${ST[id].n}</span><span class="pill warn">Avisó · recuperación</span></div>`).join('');
+  document.getElementById('modal').innerHTML=`<div class="modal-bg" data-close="1"><div class="modal">
+  <div class="m-row"><span class="pill k-${c.kind}" style="background:color-mix(in oklab,var(--k) 15%,var(--surface));color:var(--k)">${KIND[c.kind]}</span><button class="icon-btn" data-close="1" aria-label="Cerrar">✕</button></div>
+  <h3 style="margin-top:10px">${c.name}</h3><p class="muted" style="margin:4px 0 12px">${c.time} · ${COURTS[c.court].n}${c.moved?` (antes ${COURTS[c.from].n})`:''} · ${COACH[c.coach].n} · nivel ${c.lvl}</p>
+  ${c.status==='cancel'?'<div class="alert" style="margin-bottom:10px"><span class="ic">🌧️</span><div><b>Cancelada por lluvia</b><p style="margin:0">Todos los alumnos tienen una recuperación y han sido avisados.</p></div></div>':''}
+  <div style="font-weight:600;margin-bottom:4px">Alumnos (${c.s.length}/${c.cap})</div>${rows}
+  </div></div>`;
+}
+
+/* ---------- WIRING ---------- */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button,[data-close]');if(!t)return;
+  const d=t.dataset;
+  if(d.close&&(e.target===t||t.tagName==='BUTTON')){document.getElementById('modal').innerHTML='';return}
+  if(d.step!==undefined){STEPS[+d.step].go();render();return}
+  if(d.m){S.m=d.m;render();return}
+  if(d.a){S.app=d.a;if(t.closest('.main'))S.m='phone';render();return}
+  if(d.ptab){S.player.tab=d.ptab;render();return}
+  if(d.join){joinMatch(d.join,'Guillem Pons','GP');return}
+  if(d.decline){S.player.declined=true;feed('🙅',`Guillem Pons no puede · se sigue buscando entre los avisados`,true,false);render();setTimeout(()=>joinMatch(d.decline,'Biel Mas','BM'),2600);return}
+  if(d.liga){S.player.liga=true;win(1,5);feed('🏆','Liga jornada 4: <b>Mora/Riera vs Pons/Vich</b> confirmado por las dos parejas · Pista 2 reservada para el jueves a las 21:00');render();return}
+  if(d.pbook){const [tt,cc]=d.pbook.split('|');const r=bookCourt({t:tt,court:+cc},'Guillem Pons','app');if(r){S.player.bookings.push(r);win(1,3);feed('📱',`<b>Guillem Pons</b> reserva ${COURTS[+cc].n} a las ${tt} desde la app · ${r.price} € pagados`)}render();return}
+  if(d.view){S.view=d.view;render();return}
+  if(d.filter){S.filter=d.filter;render();return}
+  if(d.cls){openClass(d.cls);return}
+  if(d.wa){waSend(t.dataset.wa);return}
+  if(d.stab){S.student.tab=d.stab;render();return}
+  if(d.book){if(bookRecovery(d.book)){S.wa.stage='start'};render();return}
+  if(d.cc==='absence'){S.coach={view:'absence',cls:null,tags:[],note:''};render();return}
+  if(d.cc){if(d.cc==='home'){S.coach={view:'home',cls:null,tags:[],note:''}}else{S.coach={view:'class',cls:d.cc,tags:[],note:''}}render();return}
+  if(d.absent){substitute(d.absent);return}
+  if(d.conv){S.convSel=d.conv;S.view='mensajes';S.m='panel';render();return}
+  if(d.draft){sendDraft(d.draft);return}
+  if(d.assign){assignRequest(d.assign);return}
+  if(d.find){findPlayers(d.find);return}
+  if(d.cz){const [k,v]=d.cz.split(':');if(S.cierre.stage==='review'){S.cierre[k]=v;render()}return}
+  if(d.mark){cls(S.coach.cls).marks[d.mark]=d.v;S._keepScroll=true;render();return}
+  if(d.tag){const i=S.coach.tags.indexOf(d.tag);i<0?S.coach.tags.push(d.tag):S.coach.tags.splice(i,1);S._keepScroll=true;render();return}
+  switch(d.act){
+    case 'rain':applyRain();break;
+    case 'offer':offerSlot(d.id);break;
+    case 'risk':contactRisk(d.id);break;
+    case 'remind':remind(d.id);break;
+    case 'remindAll':['carlos','sergio','noa'].forEach((id,i)=>setTimeout(()=>remind(id),i*400));break;
+    case 'absent':markAbsent('la app');render();break;
+    case 'allyes':{const c=cls(S.coach.cls);c.s.forEach(id=>c.marks[id]='yes');S._keepScroll=true;render();break}
+    case 'close':closeClass();break;
+    case 'pdf':toast('📄','En la versión real se descarga la factura en PDF.',false);break;
+    case 'cierre':startCierre();break;
+    case 'cierreOk':finishCierre();break;
+    case 'amer':drawAmericana();break;
+    case 'lastmin':lastMinute();break;
+    case 'noop':toast('👀','Esta parte no está activa en la demo.',false);break;
+  }
+});
+document.addEventListener('submit',e=>{
+  if(e.target.id==='waForm'){e.preventDefault();const i=document.getElementById('waIn');const v=i.value.trim();if(v){i.value='';waSend(v)}}
+});
+document.addEventListener('input',e=>{
+  if(e.target.id==='search'){S.search=e.target.value;document.getElementById('rows').innerHTML=studentRows()}
+  if(e.target.id==='cnote'){S.coach.note=e.target.value}
+});
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  const r=document.documentElement;let cur=r.getAttribute('data-theme');
+  if(!cur)cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  const nx=cur==='dark'?'light':'dark';r.setAttribute('data-theme',nx);try{localStorage.setItem('nexo-theme',nx)}catch(e){}
+});
+render();
+</script>
+</body>
+</html>

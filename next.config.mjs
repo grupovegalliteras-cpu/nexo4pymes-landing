@@ -57,6 +57,9 @@ const nextConfig = {
     // sirve sin prefijo, así que /servicios se contesta desde /es/servicios sin que
     // cambie la dirección. afterFiles: antes se atienden public/, la API, el sitemap…
     return {
+      // Nexo Pádel: la demo interactiva es un HTML propio en public/padel/demo.html.
+      // Se sirve en /padel/demo, antes de que la reescritura de idiomas la mande a /es/….
+      beforeFiles: [{ source: "/padel/demo", destination: "/padel/demo.html" }],
       afterFiles: [
         { source: "/", destination: "/es" },
         { source: "/:path((?!(?:es|en|de)(?:/|$)).+)", destination: "/es/:path" },

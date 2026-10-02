@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Check, CircleHelp, MessageCircle, PlayCircle } from "lucide-react";
 import { padel } from "@/content/padel";
 import { whatsappLink } from "@/data/site";
@@ -23,7 +24,7 @@ export function PadelPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#041820] text-white">
         <div className="absolute inset-0">
-          <Caustics />
+          <FondoHero />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(4_24_32/0.55),rgb(4_24_32/0.9))] lg:bg-[linear-gradient(90deg,rgb(4_24_32/0.92),rgb(4_24_32/0.3))]" />
         </div>
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pt-24 pb-14 sm:px-6 sm:pt-28 lg:grid-cols-2 lg:gap-10">
@@ -183,6 +184,28 @@ export function PadelPage() {
       <SiteFooter />
       <ContactDock demoHref={DEMO} mensaje={padel.whatsapp} />
     </div>
+  );
+}
+
+/** Fondo del hero: el vídeo del dron si lo hay, y si no, el fondo animado.
+    Con «reducir movimiento» activado en el sistema se queda la imagen fija del vídeo. */
+function FondoHero() {
+  const video = padel.hero.video;
+  const [quieto, setQuieto] = useState(false);
+  useEffect(() => {
+    const m = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setQuieto(m.matches);
+    const cambio = () => setQuieto(m.matches);
+    m.addEventListener("change", cambio);
+    return () => m.removeEventListener("change", cambio);
+  }, []);
+  if (!video) return <Caustics />;
+  if (quieto) return <img src={video.poster} alt="" className="size-full object-cover" />;
+  return (
+    <video autoPlay muted loop playsInline preload="auto" poster={video.poster} aria-hidden className="size-full object-cover">
+      <source src={video.vertical} type="video/mp4" media="(max-width: 767px)" />
+      <source src={video.horizontal} type="video/mp4" />
+    </video>
   );
 }
 

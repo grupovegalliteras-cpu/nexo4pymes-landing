@@ -185,6 +185,55 @@ body {
   animation: fade-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
+/* /padel: el titular entra palabra a palabra, también sin JavaScript */
+.palabra-sube {
+  display: inline-block;
+  animation: palabra-sube 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes palabra-sube {
+  from { opacity: 0; transform: translateY(0.5em); }
+  to { opacity: 1; transform: none; }
+}
+.texto-whatsapp {
+  background: linear-gradient(90deg, #5eead4, #25d366);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+html:has(.pagina-padel) {
+  scroll-behavior: smooth;
+}
+
+/* /padel: barras de la calculadora, con la parte recorrida en color de marca */
+.barra-padel {
+  appearance: none;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand) var(--lleno, 50%), var(--surface-3) var(--lleno, 50%));
+  cursor: pointer;
+}
+.barra-padel::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--brand);
+  box-shadow: 0 2px 8px rgb(12 26 34 / 0.25);
+  transition: transform 0.15s;
+}
+.barra-padel::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--brand);
+  box-shadow: 0 2px 8px rgb(12 26 34 / 0.25);
+}
+.barra-padel:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
 .row-flash {
   animation: row-flash 2.2s ease-out;
 }

@@ -87,7 +87,23 @@ export function waHola(lang: Idioma) {
   }[lang];
 }
 
-export function SiteNav({ dark = false }: { dark?: boolean }) {
+/**
+ * Cabecera de la web. Las páginas de producto (como /padel) pueden pasar su propio menú:
+ * `enlaces` a secciones de la misma página, `demo` a su propia demo y `cta` para el botón
+ * principal. Esos tres van con <a> normal y no con el Link con idioma, porque apuntan a
+ * anclas, a un HTML aparte o fuera de la web.
+ */
+export function SiteNav({
+  dark = false,
+  enlaces,
+  demo,
+  cta,
+}: {
+  dark?: boolean;
+  enlaces?: readonly (readonly [string, string])[];
+  demo?: string;
+  cta?: { texto: string; href: string };
+}) {
   const lang = useIdioma();
   const t = T[lang];
   const [scrolled, setScrolled] = useState(false);
@@ -106,20 +122,38 @@ export function SiteNav({ dark = false }: { dark?: boolean }) {
           <Logo light={onDark} className="h-7" />
         </Link>
         <nav className="hidden items-center gap-0.5 lg:flex" aria-label={t.principal}>
-          {t.links.map(([l, h]) => (
-            <Link key={h} href={h} className={cn("rounded-lg px-2.5 py-2 text-[14px] font-medium whitespace-nowrap transition-colors xl:px-3", onDark ? "text-white/75 hover:text-white" : "text-fg-2 hover:text-fg")}>
-              {l}
-            </Link>
-          ))}
+          {enlaces
+            ? enlaces.map(([l, h]) => (
+                <a key={h} href={h} className={cn("rounded-lg px-2.5 py-2 text-[14px] font-medium whitespace-nowrap transition-colors xl:px-3", onDark ? "text-white/75 hover:text-white" : "text-fg-2 hover:text-fg")}>
+                  {l}
+                </a>
+              ))
+            : t.links.map(([l, h]) => (
+                <Link key={h} href={h} className={cn("rounded-lg px-2.5 py-2 text-[14px] font-medium whitespace-nowrap transition-colors xl:px-3", onDark ? "text-white/75 hover:text-white" : "text-fg-2 hover:text-fg")}>
+                  {l}
+                </Link>
+              ))}
         </nav>
         <div className="ml-auto flex items-center gap-2">
-          <SelectorIdioma tono={onDark ? "oscuro" : "tema"} className="hidden md:flex" />
-          <Link href="/demo" className={cn("hidden h-9 items-center rounded-lg px-3.5 text-[14px] font-medium whitespace-nowrap xl:flex", onDark ? "text-white hover:bg-white/10" : "text-fg hover:bg-surface-2")}>
-            {t.abrirDemo}
-          </Link>
-          <Link href="/#contacto" className="flex h-9 items-center rounded-lg bg-sun px-3.5 text-[14px] font-semibold whitespace-nowrap text-[#1d1300] shadow-[inset_0_1px_0_rgb(255_255_255/0.3)] hover:brightness-105">
-            {t.pideDemo}
-          </Link>
+          {!enlaces && <SelectorIdioma tono={onDark ? "oscuro" : "tema"} className="hidden md:flex" />}
+          {demo ? (
+            <a href={demo} className={cn("hidden h-9 items-center rounded-lg px-3.5 text-[14px] font-medium whitespace-nowrap xl:flex", onDark ? "text-white hover:bg-white/10" : "text-fg hover:bg-surface-2")}>
+              {t.abrirDemo}
+            </a>
+          ) : (
+            <Link href="/demo" className={cn("hidden h-9 items-center rounded-lg px-3.5 text-[14px] font-medium whitespace-nowrap xl:flex", onDark ? "text-white hover:bg-white/10" : "text-fg hover:bg-surface-2")}>
+              {t.abrirDemo}
+            </Link>
+          )}
+          {cta ? (
+            <a href={cta.href} target="_blank" rel="noreferrer" className="flex h-9 items-center rounded-lg bg-sun px-3.5 text-[14px] font-semibold whitespace-nowrap text-[#1d1300] shadow-[inset_0_1px_0_rgb(255_255_255/0.3)] hover:brightness-105">
+              {cta.texto}
+            </a>
+          ) : (
+            <Link href="/#contacto" className="flex h-9 items-center rounded-lg bg-sun px-3.5 text-[14px] font-semibold whitespace-nowrap text-[#1d1300] shadow-[inset_0_1px_0_rgb(255_255_255/0.3)] hover:brightness-105">
+              {t.pideDemo}
+            </Link>
+          )}
           <button onClick={() => setOpen(true)} className={cn("grid size-9 place-items-center rounded-lg lg:hidden", onDark ? "text-white" : "text-fg")} aria-label={t.abrirMenu}>
             <Menu className="size-5" />
           </button>
@@ -135,15 +169,21 @@ export function SiteNav({ dark = false }: { dark?: boolean }) {
               </button>
             </div>
             <nav className="mt-6 grid min-h-0 flex-1 content-start gap-0.5 overflow-y-auto">
-              {[...t.links, [t.abrirDemo, "/demo"] as const].map(([l, h]) => (
-                <Link key={h} href={h} onClick={() => setOpen(false)} className="rounded-xl px-3 py-2.5 font-display text-[22px] font-semibold">
-                  {l}
-                </Link>
-              ))}
+              {enlaces
+                ? [...enlaces, [t.abrirDemo, demo ?? "/demo"] as const].map(([l, h]) => (
+                    <a key={h} href={h} onClick={() => setOpen(false)} className="rounded-xl px-3 py-2.5 font-display text-[22px] font-semibold">
+                      {l}
+                    </a>
+                  ))
+                : [...t.links, [t.abrirDemo, "/demo"] as const].map(([l, h]) => (
+                    <Link key={h} href={h} onClick={() => setOpen(false)} className="rounded-xl px-3 py-2.5 font-display text-[22px] font-semibold">
+                      {l}
+                    </Link>
+                  ))}
             </nav>
             <div className="grid shrink-0 gap-3 pt-3">
-              <SelectorIdioma tono="tema" largo className="mx-auto" />
-              <a href={whatsappLink(waHola(lang))} target="_blank" rel="noreferrer" className="vibrar flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#1faa59] text-[16px] font-semibold text-white">
+              {!enlaces && <SelectorIdioma tono="tema" largo className="mx-auto" />}
+              <a href={cta?.href ?? whatsappLink(waHola(lang))} target="_blank" rel="noreferrer" className="vibrar flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#1faa59] text-[16px] font-semibold text-white">
                 <MessageCircle className="size-5" /> {t.escribenos}
               </a>
               <div className="text-center text-[13px] text-fg-3">
@@ -201,9 +241,16 @@ export function ContactDock({ demoHref = "/demo?tour=1", mensaje }: { demoHref?:
             className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/90 px-3 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden"
           >
             <div className="mx-auto flex max-w-md gap-2">
-              <Link href={demoHref} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-fg text-[15px] font-semibold text-bg">
-                <PlayCircle className="size-5" /> {t.verDemo}
-              </Link>
+              {/* La demo de pádel es un HTML aparte (public/padel/demo.html): con el Link de Next no se abriría bien */}
+              {demoHref === "/padel/demo" ? (
+                <a href={demoHref} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-fg text-[15px] font-semibold text-bg">
+                  <PlayCircle className="size-5" /> {t.verDemo}
+                </a>
+              ) : (
+                <Link href={demoHref} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-fg text-[15px] font-semibold text-bg">
+                  <PlayCircle className="size-5" /> {t.verDemo}
+                </Link>
+              )}
               <a href={whatsappLink(msg)} target="_blank" rel="noreferrer" className="vibrar flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#1faa59] text-[15px] font-semibold text-white">
                 <MessageCircle className="size-5" /> WhatsApp
               </a>

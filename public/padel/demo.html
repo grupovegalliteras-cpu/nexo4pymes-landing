@@ -28,6 +28,9 @@
   --k-ini:#37c28a; --k-mid:#6d9bff; --k-adv:#9d8fff; --k-kids:#f5ab2e;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px -16px rgba(0,0,0,.8); --phone:#1a2f3a; color-scheme:dark;
 }
+/* Vista previa dentro de nexo4pymes.com/padel (demo.html?incrustada): solo el panel y el móvil */
+.incrustada .top,.incrustada .steps,.incrustada .mview,.incrustada .demo-note,.incrustada .toasts,.incrustada #modal{display:none!important}
+.incrustada body{overflow:hidden}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Geist",ui-sans-serif,system-ui,sans-serif;font-size:14.5px;line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3,h4{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.015em;margin:0;line-height:1.15}
@@ -388,6 +391,7 @@ textarea.m-note{width:100%;border:1px solid var(--line);border-radius:12px;backg
 </head>
 <body>
 <script>(function(){try{var t=localStorage.getItem('nexo-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
+<script>(function(){try{if(new URLSearchParams(location.search).has('incrustada'))document.documentElement.classList.add('incrustada')}catch(e){}})();</script>
 
 <div class="top">
   <div class="top-in">
@@ -398,7 +402,7 @@ textarea.m-note{width:100%;border:1px solid var(--line);border-radius:12px;backg
     <div class="top-actions">
       <button class="btn hide-sm" onclick="location.reload()">↺ Reiniciar demo</button>
       <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      <a class="btn primary" href="/contacto">Pide tu demo</a>
+      <a class="btn primary" href="https://api.whatsapp.com/send?phone=34661922690&text=Hola%2C%20tengo%20un%20club%20de%20p%C3%A1del%20y%20he%20visto%20la%20demo%20de%20Nexo%20P%C3%A1del%20en%20vuestra%20web.%20Me%20gustar%C3%ADa%20verla%20con%20los%20datos%20de%20mi%20club." target="_blank" rel="noreferrer">Pide tu demo</a>
     </div>
   </div>
 </div>

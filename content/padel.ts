@@ -18,6 +18,16 @@
 export const padel = {
   whatsapp: "Hola, tengo un club de pádel y he visto Nexo Pádel en vuestra web. Me gustaría verlo con los datos de mi club.",
 
+  /* Menú de arriba en /padel: lleva a las secciones de esta página, no al resto de la web. */
+  nav: [
+    ["Cómo funciona", "#como-funciona"],
+    ["Calculadora", "#calculadora"],
+    ["Piloto", "#piloto"],
+    ["Precios", "#precios"],
+    ["Preguntas", "#preguntas"],
+  ] as [string, string][],
+  navCta: "Pide tu demo",
+
   hero: {
     etiqueta: "Nexo Pádel · para clubes y escuelas",
     titulo: "Tu club de pádel, sin estar pegado al WhatsApp",
@@ -34,6 +44,13 @@ export const padel = {
     },
     verDemo: "Ver la demo",
     pedir: "Pídela por WhatsApp",
+    garantias: ["Piloto gratis 3 meses", "Sin permanencia", "Hecho en Mallorca"],
+    /* Avisos que salen junto al chat cuando termina la conversación: lo que el programa
+       hace solo mientras tanto. Son del mismo ejemplo que la demo. */
+    avisos: [
+      ["Recuperación reservada", "Lucía · sábado 10:00, pista 3"],
+      ["Plaza ofrecida a la lista de espera", "Marc R. · miércoles 19:00"],
+    ],
     chat: [
       { de: "cliente", texto: "Hola! Hoy no puedo ir a la de las 7 😕", hora: "08:12" },
       {
@@ -45,6 +62,16 @@ export const padel = {
       { de: "club", texto: "Hecho ✅ Sábado 10:00, pista 3 con Pau. ¡Te lo recordamos el viernes!", hora: "08:13" },
     ],
   },
+
+  /* Franja de confianza justo debajo del hero. Todo es cierto hoy (2 de octubre de 2026):
+     programa y base de datos en Render (Frankfurt), IA en AWS Bedrock (eu-central-1),
+     WhatsApp por la API oficial de Meta y contrato de encargado del tratamiento. */
+  confianza: [
+    ["datos", "Datos en la Unión Europea", "Servidores en Frankfurt e IA en regiones de la UE"],
+    ["contrato", "Contrato RGPD antes de empezar", "Los datos son vuestros: si lo dejáis, os los devolvemos"],
+    ["whatsapp", "WhatsApp Business oficial", "API oficial de Meta, con vuestro número de siempre"],
+    ["pistas", "Funciona junto a Playtomic", "Las pistas se siguen reservando allí"],
+  ] as [string, string, string][],
 
   problemas: {
     titulo: "Un club de pádel no se gestiona con un Excel y 40 chats de WhatsApp",
@@ -93,6 +120,45 @@ export const padel = {
       ],
     },
   ],
+
+  /* Vista de la demo de verdad dentro de la página (public/padel/demo.html?incrustada). */
+  panel: {
+    etiqueta: "El programa, por dentro",
+    titulo: "Así lo ve la oficina",
+    texto:
+      "Esta es la demo de verdad, con un club inventado. Lo que se resuelve solo queda hecho; lo que necesita a una persona aparece en «Pendiente de ti», con la respuesta preparada.",
+    cta: "Abrir la demo completa",
+    nota: "Sin registro · también en el móvil",
+  },
+
+  /* Calculadora del tiempo que hoy se va en hacerlo a mano. Es una estimación con los
+     números que mete el visitante: NO promete un ahorro. El ahorro real se mide en el piloto. */
+  calculadora: {
+    etiqueta: "Calculadora",
+    titulo: "¿Cuánto tiempo se os va en el WhatsApp?",
+    texto: "Mueve las barras con los números de vuestro club.",
+    campos: [
+      { id: "mensajes", texto: "WhatsApps que contestáis", min: 10, max: 150, paso: 5, inicial: 40, minutos: 2, unidad: "al día" },
+      { id: "faltas", texto: "Faltas con recuperación", min: 0, max: 80, paso: 1, inicial: 15, minutos: 6, unidad: "a la semana" },
+      { id: "partidos", texto: "Partidos a los que les falta alguien", min: 0, max: 40, paso: 1, inicial: 6, minutos: 15, unidad: "a la semana" },
+    ],
+    coste: { texto: "Coste de una hora de recepción", min: 10, max: 25, inicial: 15 },
+    resultado: "horas al mes contestando y cuadrando a mano",
+    euros: "al mes en tiempo de recepción",
+    explicacion:
+      "Contamos 2 minutos por WhatsApp, 6 por cada falta con su recuperación y 15 por cada partido que hay que completar. Es lo que hoy cuesta hacerlo a mano; cuánto os ahorra Nexo Pádel lo medimos con vosotros en el piloto.",
+    cta: "Quiero verlo con mis números",
+  },
+
+  empezar: {
+    titulo: "Así empezamos con vuestro club",
+    texto: "Sin instalar nada y sin cambiar vuestra forma de trabajar el primer día.",
+    pasos: [
+      ["Una llamada de 20 minutos", "Os enseñamos Nexo Pádel con los datos de vuestro club y vemos si encaja. Sin compromiso."],
+      ["Lo cargamos nosotros", "Nos pasáis el Excel de alumnos y grupos, y las normas del club. Vosotros no configuráis nada."],
+      ["Una semana en modo borrador", "El asistente prepara cada respuesta y vosotros la aprobáis antes de enviarla. Cuando estéis tranquilos, contesta solo."],
+    ] as [string, string][],
+  },
 
   fases: {
     titulo: "Lo estamos construyendo con 5 clubes de Mallorca",
@@ -145,6 +211,21 @@ export const padel = {
     ],
     nota:
       "Precios al mes, sin IVA. El asistente de IA se puede añadir al plan Escuela por 29 € al mes. Los mensajes de WhatsApp que pasen del límite del plan se cobran a precio de coste, unos 2 céntimos cada uno.",
+    recomendado: "Recomendado",
+    piloto: "Los clubes del piloto no pagan nada durante 3 meses y, si siguen, tienen un 30 % de descuento el primer año.",
+  },
+
+  /* Quién hay detrás. Sin fotos ni testimonios inventados: todavía no hay clientes. */
+  equipo: {
+    etiqueta: "Quién hay detrás",
+    titulo: "Hablas con quien lo programa",
+    texto:
+      "Nexo Pádel es de Nexo4Pymes, un equipo pequeño de Palma que hace software para pymes. No hay centralita ni comerciales: el WhatsApp de aquí abajo lo contestamos nosotros.",
+    puntos: [
+      ["Vosotros decidís", "Lo delicado (una queja, un cobro, un tema de un menor) os llega con la respuesta preparada. La IA no decide por vosotros."],
+      ["Habla vuestro idioma", "Contesta en el idioma en el que le escriben: castellano, catalán, inglés o alemán."],
+      ["Sin permanencia", "Si lo dejáis, os devolvemos los datos y los borramos. Sin letra pequeña."],
+    ] as [string, string][],
   },
 
   faq: [
@@ -160,8 +241,16 @@ export const padel = {
       "¿Y si la IA se equivoca?",
       "Contesta con la ficha y las normas del club. Lo que no sabe, o es delicado (una queja, un cobro, un tema de un menor), os lo pasa con la respuesta preparada, y lo decidís vosotros.",
     ],
+    [
+      "¿Contesta en catalán?",
+      "Sí. Contesta en el idioma en el que le escriben: castellano, catalán, inglés o alemán. Así cada jugador, también los de fuera, recibe la respuesta en su idioma.",
+    ],
     ["¿Sirve si el club no tiene escuela?", "Sí. Podéis usar solo la parte de club: el WhatsApp, los partidos que se completan solos y las americanas."],
     ["¿Cuánto se tarda en empezar?", "Nos pasáis el Excel de alumnos y grupos y lo cargamos nosotros. En pocos días la escuela está funcionando."],
+    [
+      "¿Qué pasa cuando termina el piloto?",
+      "Nada automático: no se cobra nada ni se renueva solo. Si queréis seguir, el primer año tiene un 30 % de descuento. Si no, os devolvemos los datos y los borramos.",
+    ],
     [
       "¿Dónde están los datos?",
       "Los datos del club se guardan en servidores de la Unión Europea, con copias de seguridad diarias, y la IA trabaja en regiones de la UE. Antes de cargar nada firmamos un contrato de protección de datos. Los datos son vuestros: si lo dejáis, os los devolvemos y los borramos.",

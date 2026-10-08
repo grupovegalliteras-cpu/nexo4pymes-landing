@@ -15,7 +15,19 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/panel/[[..
   const id = slug?.[0] ?? "direccion";
   const m = moduloDe(lang, id);
   const panel = tr(lang, { es: "panel de oficina", en: "office dashboard", de: "Büro-Dashboard" });
-  return { title: m ? `${m.nombre}, ${panel}` : panel, alternates: alternativas(lang, slug?.[0] ? `/panel/${id}` : "/panel") };
+  return {
+    title: m ? `${m.nombre}, ${panel}` : panel,
+    alternates: alternativas(lang, slug?.[0] ? `/panel/${id}` : "/panel"),
+    /* FUERA DEL ÍNDICE, DENTRO DE LA WEB. Esto es la demo navegable:
+       trece pantallas de la app y cuarenta módulos del panel, por tres
+       idiomas. Son más de cien direcciones que no contestan a ninguna
+       búsqueda —la pantalla "Fichar" de una demo no es la respuesta a
+       nada— y que no están en el sitemap, o sea que ya se dijo que no
+       se querían indexar. Dejarlas indexables gasta en ellas el
+       rastreo que necesitan las páginas que sí venden.
+       follow: true a propósito: que siga los enlaces de vuelta. */
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function PanelPage({ params }: PageProps<"/[lang]/panel/[[...slug]]">) {

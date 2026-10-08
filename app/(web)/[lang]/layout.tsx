@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Sora, Space_Grotesk } from "next/font/google";
 import { marca } from "@/content/marca";
-import { esquemaNegocio } from "@/lib/esquema";
+import { grafoBase } from "@/lib/esquema";
 import { BannerCookies } from "@/components/legal/BannerCookies";
 import { Analitica } from "@/components/legal/Analitica";
 import { Medicion } from "@/components/legal/Medicion";
 import { SugerenciaIdioma } from "@/components/i18n/SugerenciaIdioma";
-import { IDIOMAS, idiomaOBase } from "@/lib/i18n";
+import { IDIOMAS, OG_LOCALE, idiomaOBase } from "@/lib/i18n";
 import { fijarIdioma } from "@/lib/idioma-servidor";
 import "../globals.css";
 
@@ -56,14 +56,28 @@ const mono = IBM_Plex_Mono({
 });
 
 const TITULO = {
-  es: "Soluciones digitales a medida para pymes | Nexo4Pymes",
+  es: "Software a medida para pymes en Mallorca | Nexo4Pymes",
   en: "Custom software for small businesses in Mallorca | Nexo4Pymes",
   de: "Individuelle Software für kleine Unternehmen auf Mallorca | Nexo4Pymes",
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const lang = idiomaOBase((await params).lang);
-  return { ...metadataComun, title: { default: TITULO[lang], template: "%s | Nexo4Pymes" } };
+  return {
+    ...metadataComun,
+    title: { default: TITULO[lang], template: "%s | Nexo4Pymes" },
+    /* Vista previa por defecto al pegar un enlace. Estaba en cada
+       página menos en el blog, que es justo la que se comparte: un
+       artículo sin imagen aparece en WhatsApp como un enlace pelado.
+       Lo que la página defina por su cuenta sigue mandando. */
+    openGraph: {
+      type: "website",
+      siteName: marca.nombre,
+      locale: OG_LOCALE[lang],
+      images: [{ url: "/assets/og-nexo4pymes.jpg", width: 1200, height: 630, alt: marca.nombre }],
+    },
+    twitter: { card: "summary_large_image", images: ["/assets/og-nexo4pymes.jpg"] },
+  };
 }
 
 const metadataComun: Metadata = {
@@ -136,7 +150,7 @@ export default async function RootLayout({ children, params }: { children: React
           type="application/ld+json"
           // La misma entidad @id en todas las páginas: si cambian los datos de
           // empresa hay que tocarlos aquí y en ningún sitio más.
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(esquemaNegocio) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(grafoBase(lang)) }}
         />
       </body>
     </html>

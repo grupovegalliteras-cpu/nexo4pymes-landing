@@ -6,7 +6,7 @@ import { Providers } from "@/components/providers";
 import { BannerCookies } from "@/components/legal/BannerCookies";
 import { Analitica } from "@/components/legal/Analitica";
 import { Medicion } from "@/components/legal/Medicion";
-import { esquemaNegocio } from "@/lib/esquema";
+import { grafoBase } from "@/lib/esquema";
 import { SITE_URL } from "@/data/site";
 import { SugerenciaIdioma } from "@/components/i18n/SugerenciaIdioma";
 import { IDIOMAS, OG_LOCALE, idiomaOBase, tr } from "@/lib/i18n";
@@ -34,10 +34,20 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     metadataBase: new URL(SITE_URL),
     title: {
+      /* EL TÍTULO DE LA PORTADA NO LLEVA LA MARCA Y ES A PROPÓSITO.
+         Google enseña el nombre del sitio encima del título en la
+         página de inicio (lo saca del WebSite de lib/esquema.ts), así
+         que repetir "Nexo4Pymes" aquí gastaba trece caracteres de los
+         sesenta que caben en contarle a quién buscamos y dónde.
+
+         Y DÓNDE IMPORTA MÁS QUE NADA. Los diez primeros resultados de
+         "software a medida mallorca" llevan todos "Mallorca" en el
+         título; esta web no lo llevaba en ninguno. El resto de
+         páginas sí conservan la marca por el template de abajo. */
       default: tr(lang, {
-        es: "Nexo4Pymes: panel de gestión y app para empresas de servicios",
-        en: "Nexo4Pymes: office dashboard and field app for service companies",
-        de: "Nexo4Pymes: Büro-Dashboard und Techniker-App für Dienstleister",
+        es: "Programa de gestión para empresas de servicios en Mallorca",
+        en: "Field service management software in Mallorca",
+        de: "Branchensoftware für Dienstleister auf Mallorca",
       }),
       template: "%s | Nexo4Pymes",
     },
@@ -96,7 +106,7 @@ export default async function RootLayout({ children, params }: { children: React
         <BannerCookies />
         <Analitica />
         <Medicion />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(esquemaNegocio) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(grafoBase(lang)) }} />
       </body>
     </html>
   );

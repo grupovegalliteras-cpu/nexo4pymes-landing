@@ -4,6 +4,8 @@ import { Reveal } from "@/components/motion/Reveal";
 import { TarjetaGlow } from "@/components/ui/TarjetaGlow";
 import { contenido } from "@/content/i18n";
 import { alternativas, idiomaOBase, tr } from "@/lib/i18n";
+import { esquemaMigas, grafoPagina, urlAbsoluta } from "@/lib/esquema";
+import { marca } from "@/content/marca";
 import { fijarIdioma } from "@/lib/idioma-servidor";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -78,6 +80,30 @@ export default async function PaginaBlog({ params }: { params: Promise<{ lang: s
           </div>
         </Reveal>
       </div>
+
+      {/* El blog como entidad propia, colgando del sitio. Es lo que
+          permite que un buscador entienda que los artículos futuros
+          son del mismo sitio y del mismo autor, en vez de páginas
+          sueltas que coinciden en dominio. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            grafoPagina([
+              esquemaMigas(lang, [{ nombre: "Blog", ruta: "/blog" }]),
+              {
+                "@type": "Blog",
+                "@id": urlAbsoluta(lang, "/blog") + "#blog",
+                name: tr(lang, { es: "Blog de Nexo4Pymes", en: "The Nexo4Pymes blog", de: "Der Nexo4Pymes-Blog" }),
+                description: blogHome.entradilla,
+                url: urlAbsoluta(lang, "/blog"),
+                publisher: { "@id": marca.dominio + "/#business" },
+                isPartOf: { "@id": marca.dominio + "/#website" },
+              },
+            ]),
+          ),
+        }}
+      />
     </>
   );
 }

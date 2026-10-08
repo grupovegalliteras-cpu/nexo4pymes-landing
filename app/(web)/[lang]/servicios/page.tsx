@@ -15,7 +15,7 @@ import { contenido } from "@/content/i18n";
 import { OG_LOCALE, alternativas, idiomaOBase, tr } from "@/lib/i18n";
 import { fijarIdioma } from "@/lib/idioma-servidor";
 import { marca, oferta } from "@/content/marca";
-import { esquemaFaq } from "@/lib/esquema";
+import { esquemaFaq, esquemaMigas, grafoPagina, urlAbsoluta } from "@/lib/esquema";
 import { waLink } from "@/lib/whatsapp";
 
 /* /servicios — el catálogo largo: qué construimos con su alcance
@@ -28,10 +28,21 @@ import { waLink } from "@/lib/whatsapp";
    iba. Ahora los sectores viven en la home (como selector) y
    quiénes somos + RGPD en /nosotros. Aquí solo queda servicio. */
 
+/* EL TÍTULO NOMBRA EL SERVICIO Y EL SITIO, EN ESE ORDEN.
+   Se miraron los diez primeros resultados de "software a medida
+   mallorca": los diez llevan "Mallorca" o "Palma de Mallorca" en el
+   título y casi todos son una página de servicio dedicada, no una
+   portada. Esta página era la candidata natural a ese resultado y era
+   la única del grupo sin el topónimo.
+
+   NO PISA A LA PORTADA. La portada va a por el producto ("programa de
+   gestión para empresas de servicios en Mallorca") y esta va a por el
+   servicio ("desarrollo de software a medida"). Si las dos dijeran lo
+   mismo, Google elegiría una y la otra sobraría. */
 const TITULO = {
-  es: "Soluciones digitales a medida para pymes",
-  en: "Custom software for small businesses",
-  de: "Individuelle Software für kleine Unternehmen",
+  es: "Desarrollo de software a medida en Mallorca",
+  en: "Custom software development in Mallorca",
+  de: "Individuelle Softwareentwicklung auf Mallorca",
 };
 const DESCRIPCION = {
   es: "Qué construimos: CRM a medida, fichaje, configuradores web e integraciones. Cómo trabajamos, en cuatro pasos. Y CentralAvisos, que ya está hecho.",
@@ -128,7 +139,12 @@ export default async function PaginaServicios({ params }: { params: Promise<{ la
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(esquemaFaq(faqServicios, `${marca.dominio}${alternativas(lang, "/servicios").canonical}#faq`)),
+          __html: JSON.stringify(
+            grafoPagina([
+              esquemaMigas(lang, [{ nombre: t({ es: "Servicios", en: "Services", de: "Leistungen" }), ruta: "/servicios" }]),
+              esquemaFaq(faqServicios, urlAbsoluta(lang, "/servicios") + "#faq", lang),
+            ]),
+          ),
         }}
       />
     </>

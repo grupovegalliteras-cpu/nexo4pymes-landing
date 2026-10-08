@@ -71,6 +71,22 @@ const nextConfig = {
     // Las URLs .html de la web anterior ya están indexadas en Google.
     // Sin estos 301 se perdería el posicionamiento acumulado.
     return [
+      /* UNA PÁGINA, UNA DIRECCIÓN.
+         El español se sirve sin prefijo (/servicios) por la reescritura
+         de abajo, pero /es/servicios también contestaba 200 porque la
+         página existe de verdad en esa ruta. Resultado: el sitio entero
+         duplicado en catorce direcciones de más. La etiqueta canónica
+         las apuntaba bien, que es por lo que esto no fue un incendio,
+         pero una canónica es una sugerencia y un 301 es un hecho: así
+         le decimos a Google cuál es la buena y además le ahorramos
+         rastrear dos veces lo mismo.
+
+         El orden importa y está bien: los redirects se miran antes que
+         las reescrituras, así que /servicios entra limpio, no coincide
+         con /es/… y sigue su camino. */
+      { source: "/es", destination: "/", permanent: true },
+      { source: "/es/:path*", destination: "/:path*", permanent: true },
+
       { source: "/index.html", destination: "/", permanent: true },
       { source: "/legal.html", destination: "/legal", permanent: true },
       {
@@ -96,7 +112,9 @@ const nextConfig = {
 
       // Enlaces antiguos a /sectores (sin más): al selector de sectores
       // de la home, que es donde vive ahora esa información.
-      { source: "/sectores", destination: "/#sectores", permanent: false },
+      // Permanente: era una dirección indexada, y un 307 no le traslada
+      // a la portada lo que tuviera ganado. Un 301 sí.
+      { source: "/sectores", destination: "/#sectores", permanent: true },
 
       // La demo tenía su propia página de privacidad; en la web conjunta manda /legal.
       { source: "/privacidad", destination: "/legal", permanent: true },

@@ -74,6 +74,13 @@ export const marca = {
   calle: "Carrer General Riera 64",
   codigoPostal: "07010",
   municipio: "Palma",
+
+  /* Coordenadas del portal. No están puestas a ojo: salen de
+     geocodificar la dirección de arriba en OpenStreetMap. Las usa
+     lib/esquema.ts para que la ficha de empresa se ancle a Palma.
+     Si cambia la dirección, hay que volver a geocodificar. */
+  latitud: 39.5843,
+  longitud: 2.6465,
 } as const;
 
 /* ============================================================

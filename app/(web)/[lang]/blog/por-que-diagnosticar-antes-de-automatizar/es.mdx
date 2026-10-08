@@ -1,6 +1,6 @@
 import Link from "@/components/i18n/Enlace";
 import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
-import { esquemaArticulo } from "@/lib/esquema";
+import { esquemaArticulo, grafoPagina } from "@/lib/esquema";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
 
@@ -140,13 +140,16 @@ Y cuando toque elegir, empezad por lo que más tiempo libera con menos riesgo. L
   type="application/ld+json"
   dangerouslySetInnerHTML={{
     __html: JSON.stringify(
+      grafoPagina([
       esquemaArticulo({
+        lang: "es",
         titulo: "Por qué automatizar sin diagnosticar antes puede hundiros el negocio",
         descripcion:
           "La automatización no arregla un proceso, lo amplifica. El caso del taller que se llenó la agenda y acabó perdiendo clientes.",
         url: `${marca.dominio}/blog/por-que-diagnosticar-antes-de-automatizar`,
         fecha: "2026-08-05",
       }),
+      ]),
     ),
   }}
 />

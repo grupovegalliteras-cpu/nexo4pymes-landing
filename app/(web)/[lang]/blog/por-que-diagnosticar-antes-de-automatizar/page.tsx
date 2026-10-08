@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { alternativas, idiomaOBase, tr } from "@/lib/i18n";
+import { esquemaMigas, grafoPagina } from "@/lib/esquema";
 import { fijarIdioma } from "@/lib/idioma-servidor";
 import ArticuloEs from "./es.mdx";
 import ArticuloEn from "./en.mdx";
@@ -32,5 +33,32 @@ export default async function Articulo({ params }: { params: Promise<{ lang: str
   const lang = idiomaOBase((await params).lang);
   fijarIdioma(lang);
   const Contenido = ARTICULO[lang];
-  return <Contenido />;
+  return (
+    <>
+      <Contenido />
+      {/* El artículo ya se identifica a sí mismo (ver el final del
+          .mdx). Lo que faltaba era decir de dónde cuelga: la misma
+          ruta Inicio › Blog › artículo que ya se ve escrita arriba. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            grafoPagina([
+              esquemaMigas(lang, [
+                { nombre: "Blog", ruta: "/blog" },
+                {
+                  nombre: tr(lang, {
+                    es: "Por qué diagnosticar antes de automatizar",
+                    en: "Why diagnose before automating",
+                    de: "Warum erst analysieren, dann automatisieren",
+                  }),
+                  ruta: RUTA,
+                },
+              ]),
+            ]),
+          ),
+        }}
+      />
+    </>
+  );
 }

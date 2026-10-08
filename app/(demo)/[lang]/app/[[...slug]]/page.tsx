@@ -19,6 +19,15 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/app/[[...s
       de: "Die App für Techniker im Außendienst: Route, Berichte, Fotos, Unterschrift und Zeiterfassung.",
     }),
     alternates: alternativas(lang, slug?.[0] ? `/app/${slug[0]}` : "/app"),
+    /* FUERA DEL ÍNDICE, DENTRO DE LA WEB. Esto es la demo navegable:
+       trece pantallas de la app y cuarenta módulos del panel, por tres
+       idiomas. Son más de cien direcciones que no contestan a ninguna
+       búsqueda —la pantalla "Fichar" de una demo no es la respuesta a
+       nada— y que no están en el sitemap, o sea que ya se dijo que no
+       se querían indexar. Dejarlas indexables gasta en ellas el
+       rastreo que necesitan las páginas que sí venden.
+       follow: true a propósito: que siga los enlaces de vuelta. */
+    robots: { index: false, follow: true },
   };
 }
 

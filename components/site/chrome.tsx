@@ -28,7 +28,7 @@ const T = {
     columnas: [
       ["Demo", [["Modo presentación", "/demo"], ["Panel de oficina", "/panel"], ["App de operarios", "/app"], ["Ver recorrido guiado", "/demo?tour=1"]]],
       ["Producto", [["Central Avisos", "/panel/central-avisos"], ["Todos los módulos", "/modulos"], ["Facturación con VeriFactu", "/panel/facturacion"], ["Fichaje", "/panel/fichaje"]]],
-      ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"], ["Clubes de pádel", "/padel"]]],
+      ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"], ["Jardinería", "/sectores/jardineria"], ["Control de plagas", "/sectores/plagas"], ["Instalaciones solares", "/sectores/solar"], ["Reformas", "/sectores/reformas"], ["Clubes de pádel", "/padel"]]],
       ["Empresa", [["Servicios", "/servicios"], ["Nosotros", "/nosotros"], ["Blog", "/blog"], ["Contacto", "/contacto"]]],
     ],
     ficticias: "Todas las empresas, personas y cifras de esta demo son ficticias.",
@@ -49,7 +49,7 @@ const T = {
     columnas: [
       ["Demo", [["Presentation mode", "/demo"], ["Office dashboard", "/panel"], ["Technician app", "/app"], ["Guided tour", "/demo?tour=1"]]],
       ["Product", [["Central Avisos", "/panel/central-avisos"], ["All modules", "/modulos"], ["Invoicing with VeriFactu", "/panel/facturacion"], ["Time clock", "/panel/fichaje"]]],
-      ["Industries", [["Building maintenance", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["HVAC", "/sectores/climatizacion"], ["Cleaning", "/sectores/limpieza"]]],
+      ["Industries", [["Building maintenance", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["HVAC", "/sectores/climatizacion"], ["Cleaning", "/sectores/limpieza"], ["Landscaping", "/sectores/jardineria"], ["Pest control", "/sectores/plagas"], ["Solar", "/sectores/solar"], ["Renovations", "/sectores/reformas"]]],
       ["Company", [["Services", "/servicios"], ["About us", "/nosotros"], ["Blog", "/blog"], ["Contact", "/contacto"]]],
     ],
     ficticias: "All companies, people and figures in this demo are fictitious.",
@@ -70,7 +70,7 @@ const T = {
     columnas: [
       ["Demo", [["Präsentationsmodus", "/demo"], ["Büro-Dashboard", "/panel"], ["Techniker-App", "/app"], ["Geführte Tour", "/demo?tour=1"]]],
       ["Produkt", [["Central Avisos", "/panel/central-avisos"], ["Alle Module", "/modulos"], ["Rechnungen mit VeriFactu", "/panel/facturacion"], ["Zeiterfassung", "/panel/fichaje"]]],
-      ["Branchen", [["Gebäudetechnik", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["Klimatechnik", "/sectores/climatizacion"], ["Reinigung", "/sectores/limpieza"]]],
+      ["Branchen", [["Gebäudetechnik", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["Klimatechnik", "/sectores/climatizacion"], ["Reinigung", "/sectores/limpieza"], ["Garten", "/sectores/jardineria"], ["Schädlingsbekämpfung", "/sectores/plagas"], ["Solaranlagen", "/sectores/solar"], ["Renovierungen", "/sectores/reformas"]]],
       ["Unternehmen", [["Leistungen", "/servicios"], ["Über uns", "/nosotros"], ["Blog", "/blog"], ["Kontakt", "/contacto"]]],
     ],
     ficticias: "Alle Firmen, Personen und Zahlen in dieser Demo sind frei erfunden.",

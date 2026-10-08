@@ -1,6 +1,6 @@
 import Link from "@/components/i18n/Enlace";
 import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
-import { esquemaArticulo } from "@/lib/esquema";
+import { esquemaArticulo, grafoPagina } from "@/lib/esquema";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
 
@@ -137,12 +137,15 @@ Und wenn es ans Auswählen geht, beginnen Sie mit dem, was am meisten Zeit freis
   type="application/ld+json"
   dangerouslySetInnerHTML={{
     __html: JSON.stringify(
+      grafoPagina([
       esquemaArticulo({
+        lang: "de",
         titulo: "Warum Automatisieren ohne vorherige Analyse Ihr Geschäft versenken kann",
         descripcion: "Automatisierung repariert keinen Prozess, sie verstärkt ihn. Die Geschichte der Werkstatt, die ihren Kalender füllte und am Ende Kunden verlor.",
         url: `${marca.dominio}/de/blog/por-que-diagnosticar-antes-de-automatizar`,
         fecha: "2026-08-05",
       }),
+      ]),
     ),
   }}
 />

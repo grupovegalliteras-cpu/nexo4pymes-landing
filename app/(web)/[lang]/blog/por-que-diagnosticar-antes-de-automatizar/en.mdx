@@ -1,6 +1,6 @@
 import Link from "@/components/i18n/Enlace";
 import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
-import { esquemaArticulo } from "@/lib/esquema";
+import { esquemaArticulo, grafoPagina } from "@/lib/esquema";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
 
@@ -137,12 +137,15 @@ And when it's time to choose, start with what frees up the most time with the le
   type="application/ld+json"
   dangerouslySetInnerHTML={{
     __html: JSON.stringify(
+      grafoPagina([
       esquemaArticulo({
+        lang: "en",
         titulo: "Why automating without a diagnosis first can sink your business",
         descripcion: "Automation doesn't fix a process, it amplifies it. The story of the workshop that filled its diary and ended up losing customers.",
         url: `${marca.dominio}/en/blog/por-que-diagnosticar-antes-de-automatizar`,
         fecha: "2026-08-05",
       }),
+      ]),
     ),
   }}
 />

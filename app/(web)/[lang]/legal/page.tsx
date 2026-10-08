@@ -45,7 +45,17 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       de: "Impressum, Datenschutzerklärung und Cookie-Richtlinie von Nexo4Pymes, individuelle Softwareentwicklung für kleine Unternehmen und Selbstständige.",
     }),
     alternates: alternativas(lang, "/legal"),
-    robots: { index: false, follow: true },
+    /* ESTA PÁGINA PASA A INDEXARSE Y NO ES UN DESCUIDO. Estaba con
+       noindex y a la vez en el sitemap, que es una contradicción que
+       Search Console reporta como error ("enviada en el sitemap,
+       excluida por noindex").
+
+       De las dos salidas posibles se eligió la de indexar, porque el
+       aviso legal es donde está el nombre, el NIF, el domicilio y el
+       teléfono: es la página que le confirma a Google que detrás de
+       la web hay una empresa real en Palma, y eso es exactamente lo
+       que hace falta para competir en búsquedas locales. */
+    robots: { index: true, follow: true },
   };
 }
 

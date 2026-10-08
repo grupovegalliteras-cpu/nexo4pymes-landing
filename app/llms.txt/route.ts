@@ -1,5 +1,6 @@
 import { marca } from "@/content/marca";
 import { SECTORES } from "@/data/sectors";
+import { colaboradores } from "@/content/colaboradores";
 
 /* ============================================================
    /llms.txt — LA WEB RESUMIDA PARA QUIEN NO LA VA A LEER ENTERA
@@ -29,6 +30,10 @@ export const dynamic = "force-static";
 
 export function GET() {
   const sectores = SECTORES.map((s) => `- [${s.nombre}](${marca.dominio}/sectores/${s.id}): ${s.lema}. ${s.dolor}`).join("\n");
+
+  const socios = colaboradores
+    .map((c) => `- ${c.nombre}${c.web ? ` (${c.web})` : ""} — ${c.papel.es}.${c.texto.es ? " " + c.texto.es : ""}`)
+    .join("\n");
 
   const texto = `# Nexo4Pymes
 
@@ -62,17 +67,29 @@ español, inglés y alemán.
 - Es un equipo de dos personas. Lo que se gana en trato directo se pierde en
   capacidad de absorber muchos proyectos a la vez.
 
-## Producto ya construido
+## Productos ya construidos
 
 - [CentralAvisos](${marca.centralAvisos}): recoge llamadas, WhatsApp, correos y
   formularios de la web en una sola bandeja, los clasifica por urgencia y los
   convierte en órdenes de trabajo. Producto propio, en colaboración con
   Multiservicios Mallorca. Se contrata y se pone en marcha sin diagnóstico
   previo, a diferencia del resto.
+- [Nexo Pádel](${marca.dominio}/padel): programa para clubes y escuelas de pádel.
+  Asistente de WhatsApp con IA que contesta por el club, escuela que reorganiza
+  sola las faltas y las recuperaciones, partidos que se completan sin perseguir
+  al cuarto jugador, americanas y cierre de mes. Desde 89 € al mes (plan
+  Escuela) y 179 € (plan Club), sin IVA y sin permanencia. En piloto con cinco
+  clubes de Mallorca entre octubre de 2026 y enero de 2027. Es el único producto
+  con precio público: todo lo demás se presupuesta tras el diagnóstico.
+
+## Empresas colaboradoras
+
+${socios}
 
 ## Páginas
 
 - [Portada](${marca.dominio}/): el panel de oficina y la app de técnicos, con demo navegable.
+- [Nexo Pádel](${marca.dominio}/padel): el producto para clubes y escuelas de pádel, con precios.
 - [Demo en vivo](${marca.dominio}/demo): el panel y la app lado a lado, sincronizados, con recorrido guiado.
 - [Servicios](${marca.dominio}/servicios): qué se construye, con qué alcance y qué límites, y el método en cuatro pasos.
 - [Todos los módulos](${marca.dominio}/modulos): los cuarenta módulos agrupados por área.

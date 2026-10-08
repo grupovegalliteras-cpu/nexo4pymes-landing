@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Landing } from "@/components/site/landing";
 import { FAQ_PORTADA } from "@/content/faq-portada";
+import { colaboradores } from "@/content/colaboradores";
 import { esquemaFaq, grafoPagina, urlAbsoluta } from "@/lib/esquema";
 import { alternativas, idiomaOBase } from "@/lib/i18n";
 
@@ -27,6 +28,16 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 urlAbsoluta(lang, "/") + "#faq",
                 lang,
               ),
+              {
+                "@type": "WebPage",
+                "@id": urlAbsoluta(lang, "/") + "#pagina",
+                url: urlAbsoluta(lang, "/"),
+                mentions: colaboradores.map((c) => ({
+                  "@type": "Organization",
+                  name: c.nombre,
+                  ...(c.web ? { url: c.web } : {}),
+                })),
+              },
             ]),
           ),
         }}

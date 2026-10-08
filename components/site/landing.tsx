@@ -19,6 +19,7 @@ import { Icon } from "@/components/icon";
 import { PanelShell } from "@/components/panel/shell";
 import { AppShell, PhoneFrame } from "@/components/app/shell";
 import { FAQ_PORTADA } from "@/content/faq-portada";
+import { colaboradores, textosColaboradores } from "@/content/colaboradores";
 import { Caustics } from "./caustics";
 import { HeroAnim } from "./hero-anim";
 import { PruebaAviso } from "./prueba-aviso";
@@ -267,6 +268,7 @@ export function Landing() {
       <Hero />
       <SectorPicker />
       <AvisoPadel />
+      <Colaboradores />
       <Recorrido />
       <PruebaAviso />
       <SoftwareReal />
@@ -323,6 +325,63 @@ function Hero() {
           </div>
         </div>
         <HeroAnim />
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Empresas colaboradoras ----------------
+   Va detrás del aviso de Nexo Pádel y antes del recorrido del día: el
+   visitante acaba de ver los sectores y el producto, y es justo ahí
+   donde se pregunta quién está detrás de todo esto.
+
+   Los datos están en content/colaboradores.ts. Una empresa sin web
+   sale como texto y no como enlace, y una sin descripción sale solo
+   con su papel: ver el comentario de ese archivo. */
+function Colaboradores() {
+  const lang = useIdioma();
+  const t = textosColaboradores[lang];
+  return (
+    <section id="colaboradores" className="scroll-mt-20 bg-[#041820] pb-16 text-white">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="rounded-2xl border border-white/12 bg-white/[0.04] p-6 sm:p-8">
+          <span className="font-mono text-[11px] font-medium tracking-[0.14em] text-white/50 uppercase">{t.categoria}</span>
+          <h2 className="mt-3 font-display text-[24px] leading-tight font-semibold tracking-tight sm:text-[30px]">{t.titulo}</h2>
+          <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-white/70">{t.entradilla}</p>
+          <ul className="mt-7 grid gap-4 sm:grid-cols-2">
+            {colaboradores.map((c) => {
+              const texto = c.texto[lang];
+              const cuerpo = (
+                <>
+                  <span className="block font-display text-[18px] font-semibold">{c.nombre}</span>
+                  <span className="mt-1 block text-[13px] font-medium text-sun">{c.papel[lang]}</span>
+                  {texto ? <span className="mt-2.5 block text-[14.5px] leading-relaxed text-white/65">{texto}</span> : null}
+                  {c.web ? (
+                    <span className="mt-3 block text-[13.5px] font-medium text-[#8fd9ea]">
+                      {c.web.replace(/^https?:\/\//, "")} <span aria-hidden="true">↗</span>
+                    </span>
+                  ) : null}
+                </>
+              );
+              return (
+                <li key={c.nombre} className="min-w-0">
+                  {c.web ? (
+                    <a
+                      href={c.web}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="block h-full rounded-xl border border-white/12 bg-white/[0.03] p-5 transition hover:border-white/25 hover:bg-white/[0.06]"
+                    >
+                      {cuerpo}
+                    </a>
+                  ) : (
+                    <div className="h-full rounded-xl border border-white/12 bg-white/[0.03] p-5">{cuerpo}</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </section>
   );

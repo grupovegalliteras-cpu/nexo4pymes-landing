@@ -57,6 +57,18 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       de: "Büro-Dashboard und Techniker-App, in Echtzeit verbunden. Aufträge, Einsätze, Routen, Rechnungen mit VeriFactu, Team und Lohnzettel. Made in Mallorca.",
     }),
     applicationName: "Nexo4Pymes",
+    /* EL ICONO SE DECLARA AQUÍ Y NO POR CONVENCIÓN DE ARCHIVO.
+       Había un icon.png dentro de [lang]/ y Next le ponía de dirección
+       "/-/icon-8t26lv.png", que es un 404: la portada llevaba meses sin
+       icono y Google enseña el icono junto a cada resultado en el móvil.
+       Apuntando a archivos de public/ no hay nada que adivinar. */
+    icons: {
+      icon: [
+        { url: "/assets/favicon-32.png", sizes: "32x32", type: "image/png" },
+        { url: "/assets/favicon-512.png", sizes: "512x512", type: "image/png" },
+      ],
+      apple: [{ url: "/assets/favicon-180.png", sizes: "180x180" }],
+    },
     robots: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
     // lo que se ve al pegar el enlace en WhatsApp
     openGraph: {

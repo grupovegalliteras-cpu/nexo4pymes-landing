@@ -15,15 +15,21 @@ const ARTICULO = { es: ArticuloEs, en: ArticuloEn, de: ArticuloDe };
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const lang = idiomaOBase((await params).lang);
   return {
-    title: tr(lang, {
-      es: "Por qué automatizar sin diagnosticar antes puede hundiros el negocio",
-      en: "Why automating without a diagnosis first can sink your business",
-      de: "Warum Automatisieren ohne vorherige Analyse Ihr Geschäft versenken kann",
-    }),
+    /* 68 caracteres ya con el titular entero: con "| Nexo4Pymes" detrás
+       se iba a 81 y Google cortaba justo la marca. */
+    title: {
+      absolute: tr(lang, {
+        es: "Por qué automatizar sin diagnosticar antes puede hundiros el negocio",
+        en: "Why automating without a diagnosis first can sink your business",
+        de: "Warum Automatisieren ohne vorherige Analyse Ihr Geschäft versenken kann",
+      }),
+    },
+    /* Estaba en 213 caracteres: Google corta sobre 155 y se perdía el
+       final, que era la parte que daba ganas de entrar. */
     description: tr(lang, {
-      es: "La automatización no arregla un proceso, lo amplifica. El caso del taller que se llenó la agenda y acabó perdiendo clientes, las tres formas típicas de estropearlo y cuándo la respuesta correcta es no automatizar.",
-      en: "Automation doesn't fix a process, it amplifies it. The workshop that filled its diary and ended up losing customers, the three typical ways to get it wrong and when the right answer is not to automate.",
-      de: "Automatisierung repariert keinen Prozess, sie verstärkt ihn. Die Werkstatt, die ihren Kalender füllte und Kunden verlor, die drei typischen Fehler und wann die richtige Antwort lautet: nicht automatisieren.",
+      es: "La automatización no arregla un proceso, lo amplifica. El taller que se llenó la agenda y acabó perdiendo clientes, y cuándo la respuesta es no automatizar.",
+      en: "Automation doesn't fix a process, it amplifies it. The workshop that filled its diary and lost customers, and when the right answer is not to automate.",
+      de: "Automatisierung repariert keinen Prozess, sie verstärkt ihn: die Werkstatt, die ihren Kalender füllte und Kunden verlor — und wann man nicht automatisiert.",
     }),
     alternates: alternativas(lang, RUTA),
   };

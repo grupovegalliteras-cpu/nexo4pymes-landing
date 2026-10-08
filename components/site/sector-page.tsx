@@ -70,16 +70,16 @@ export function SectorPage({ id }: { id: SectorId }) {
       <section className="mx-auto max-w-7xl px-5 py-14 sm:px-6 sm:py-20">
         <div className="grid gap-6 lg:grid-cols-3">
           <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="rounded-2xl border border-line bg-surface p-6">
-            <div className="flex items-center gap-2 text-[13px] font-semibold text-sun">
+            <h2 className="flex items-center gap-2 text-[13px] font-semibold text-sun">
               <PhoneIncoming className="size-4" /> {tx.tipico}
-            </div>
+            </h2>
             <p className="mt-3 font-display text-[20px] leading-snug font-semibold">«{s.llamada.lineas.find((l) => l[0] === "cliente" && l[1].length > 40)?.[1]}»</p>
             <p className="mt-3 text-[14px] text-fg-2">{s.llamada.resumen}</p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.08 }} className="rounded-2xl border border-line bg-surface p-6">
-            <div className="flex items-center gap-2 text-[13px] font-semibold text-brand">
+            <h2 className="flex items-center gap-2 text-[13px] font-semibold text-brand">
               <Smartphone className="size-4" /> {tx.parte}
-            </div>
+            </h2>
             <ul className="mt-3 grid gap-2 text-[14px]">
               {s.checklist.map((c) => (
                 <li key={c} className="flex items-center gap-2">
@@ -89,7 +89,7 @@ export function SectorPage({ id }: { id: SectorId }) {
             </ul>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.16 }} className="rounded-2xl border border-line bg-surface p-6">
-            <div className="text-[13px] font-semibold text-ai">{tx.mediciones}</div>
+            <h2 className="text-[13px] font-semibold text-ai">{tx.mediciones}</h2>
             <div className="mt-3 grid grid-cols-2 gap-2">
               {s.mediciones.map((m) => (
                 <div key={m.nombre} className="rounded-xl bg-surface-2 p-3">
@@ -103,7 +103,7 @@ export function SectorPage({ id }: { id: SectorId }) {
           </motion.div>
         </div>
         <div className="mt-6 rounded-2xl border border-line bg-surface p-6">
-          <div className="text-[13px] font-semibold text-fg-2">{tx.servicios}</div>
+          <h2 className="text-[13px] font-semibold text-fg-2">{tx.servicios}</h2>
           <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
             {s.servicios.map((x) => (
               <div key={x.nombre} className="rounded-xl bg-surface-2 p-3">
@@ -116,7 +116,7 @@ export function SectorPage({ id }: { id: SectorId }) {
           </div>
         </div>
         <div className="mt-14">
-          <div className="text-[13px] font-semibold text-fg-3">{tx.otros}</div>
+          <h2 className="text-[13px] font-semibold text-fg-3">{tx.otros}</h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {sectoresDe(lang).filter((x) => x.id !== s.id).map((x) => (
               <Link key={x.id} href={`/sectores/${x.id}`} className="flex items-center gap-2 rounded-xl border border-line bg-surface px-3 py-2 text-[14px] hover:bg-surface-2">

@@ -11,9 +11,9 @@ import { sectoresDe } from "@/data/sectors-i18n";
 import { useIdioma } from "@/components/i18n/idioma";
 
 const TX = {
-  es: { inicio: "Inicio de Nexo4Pymes", modo: "Modo presentación", sector: "Sector de la demo", reiniciarT: "Reiniciar demo", reiniciar: "Reiniciar", otraT: "Abrir la app en otra pestaña", otra: "App en otra pestaña", verRecorrido: "Ver recorrido", recorrido: "Recorrido", oficina: "Oficina", movil: "Móvil del técnico", conectados: "Conectados en tiempo real" },
-  en: { inicio: "Nexo4Pymes home", modo: "Presentation mode", sector: "Demo industry", reiniciarT: "Reset demo", reiniciar: "Reset", otraT: "Open the app in another tab", otra: "App in another tab", verRecorrido: "Guided tour", recorrido: "Tour", oficina: "Office", movil: "Technician's phone", conectados: "Connected in real time" },
-  de: { inicio: "Nexo4Pymes Startseite", modo: "Präsentationsmodus", sector: "Branche der Demo", reiniciarT: "Demo zurücksetzen", reiniciar: "Zurücksetzen", otraT: "App in neuem Tab öffnen", otra: "App in neuem Tab", verRecorrido: "Geführte Tour", recorrido: "Tour", oficina: "Büro", movil: "Handy des Technikers", conectados: "In Echtzeit verbunden" },
+  es: { h1: "Demo en vivo: panel de oficina y app del técnico, sincronizados", inicio: "Inicio de Nexo4Pymes", modo: "Modo presentación", sector: "Sector de la demo", reiniciarT: "Reiniciar demo", reiniciar: "Reiniciar", otraT: "Abrir la app en otra pestaña", otra: "App en otra pestaña", verRecorrido: "Ver recorrido", recorrido: "Recorrido", oficina: "Oficina", movil: "Móvil del técnico", conectados: "Conectados en tiempo real" },
+  en: { h1: "Live demo: office dashboard and technician app, in sync", inicio: "Nexo4Pymes home", modo: "Presentation mode", sector: "Demo industry", reiniciarT: "Reset demo", reiniciar: "Reset", otraT: "Open the app in another tab", otra: "App in another tab", verRecorrido: "Guided tour", recorrido: "Tour", oficina: "Office", movil: "Technician's phone", conectados: "Connected in real time" },
+  de: { h1: "Live-Demo: Büro-Dashboard und Techniker-App, synchron", inicio: "Nexo4Pymes Startseite", modo: "Präsentationsmodus", sector: "Branche der Demo", reiniciarT: "Demo zurücksetzen", reiniciar: "Zurücksetzen", otraT: "App in neuem Tab öffnen", otra: "App in neuem Tab", verRecorrido: "Geführte Tour", recorrido: "Tour", oficina: "Büro", movil: "Handy des Technikers", conectados: "In Echtzeit verbunden" },
 };
 import { useDemo, useSector } from "@/store/demo";
 import { useUi } from "@/store/ui";
@@ -97,6 +97,7 @@ export function DemoPage() {
 
   return (
     <div className="flex h-dvh flex-col bg-[#0a161c] text-fg">
+      <h1 className="sr-only">{tx.h1}</h1>
       {/* en el móvil, durante el recorrido, fuera barras: toda la pantalla para la demo */}
       <header className={cn("flex h-14 shrink-0 items-center gap-3 border-b border-white/10 px-3 text-white sm:px-4", guiado && "hidden")}>
         <Link href="/" className="flex items-center gap-2" aria-label={tx.inicio}>

@@ -32,7 +32,9 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/sectores/[
     de: `${s.lema}. Dashboard und Techniker-App für Ihren Betrieb auf Mallorca: Aufträge, unterschriebene Berichte, Routen und Rechnungen.`,
   });
   return {
-    title,
+    /* absolute: sin "| Nexo4Pymes" detrás. Con la plantilla, el título
+       más largo ("mantenimiento multiservicio") se iba a 78 caracteres. */
+    title: { absolute: title },
     description,
     alternates: alternativas(lang, `/sectores/${sector}`),
     openGraph: { type: "website", locale: OG_LOCALE[lang], siteName: "Nexo4Pymes", title: `Nexo4Pymes · ${s.nombre}`, description },

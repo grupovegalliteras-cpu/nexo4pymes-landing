@@ -1,0 +1,182 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { centralAvisos } from "@/content/en/inicio";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_AVISOS } from "@/content/blog-faq";
+
+<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
+  <Link href="/" className="text-[#9FB6FF]">Home</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Centralising enquiries
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Enquiries · 6 min read</div>
+
+# How to organise calls, WhatsApp and customer requests in a Mallorca business
+
+<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+  Your customers do not all have to use the same channel. What matters is that everything coming
+  in ends up in the same place. It takes four steps: log every request in one place, mark which
+  ones are urgent, give each an owner, and connect it to the work that follows. Most companies
+  feel the difference after the first two.
+</div>
+
+## Why small companies lose customer requests
+
+Picture a [maintenance](/sectores/mantenimiento) company with an office and several technicians
+spread across the island.
+
+One customer rings about a breakdown. Another sends a photo on WhatsApp. An email with a request
+arrives at the office. And a technician reports a problem by phone while on another job.
+
+Everyone sorts out what they can, but the information ends up scattered across phones, chats,
+inboxes and notes on paper.
+
+This works while there are few requests. As soon as the volume rises, it gets hard to know what
+is outstanding and who has to act.
+
+<Senales items={[
+  { fuerte: "Missed calls with no follow-up.", texto: "Nobody is sure whether the call was returned or not." },
+  { fuerte: "Messages stuck on one phone.", texto: "The rest of the team neither knows about the request nor can check on it." },
+  { fuerte: "Jobs with no owner.", texto: "Everyone assumes somebody else is dealing with it." },
+  { fuerte: "Urgent work mixed in with routine.", texto: "A serious breakdown sits in the same list as a question about prices." },
+  { fuerte: "The same job logged three times.", texto: "In WhatsApp, in a spreadsheet and in the management software." },
+  { fuerte: "The office flying blind.", texto: "Hard to tell what is still open, what is done and what is ready to invoice." },
+]} />
+
+The problem is not using WhatsApp or the phone: they are good channels and customers prefer
+them. The problem is relying on them as the **only** system for controlling the work.
+
+## The four steps to centralise it
+
+### 1. Log every request in one place
+
+Every call, message, email or form should become a record with the basics: customer, reason,
+date, priority and status. From then on anyone on the team can check a request without depending
+on whoever answered the phone.
+
+### 2. Separate urgent from what can wait
+
+Not all requests weigh the same. Categories and a few simple rules tell a breakdown that has
+left a customer without water from a question about prices. Each business sets its own rules:
+what counts as urgent for a pool company is not what counts for a renovation firm.
+
+### 3. Give every request an owner and a status
+
+One person responsible and a clear status: pending, assigned, in progress, resolved or awaiting
+confirmation. With that, the office knows what needs attention without ringing every technician
+to ask.
+
+### 4. Connect it to what comes next
+
+A request turns into a visit, a job report, a quote and an invoice. If the tools are connected,
+that data gets reused at each step instead of being typed again. That is exactly what the
+[operations and invoicing modules](/modulos) do.
+
+<Nota>
+  Not every company needs all four steps. Logging and assigning requests properly — the first
+  two — usually removes most of the noise. The rest can come later, when it is clearly needed.
+</Nota>
+
+## What CentralAvisos is
+
+CentralAvisos is our own product, developed in partnership with Multiservicios Mallorca, for
+companies that need to get their customer communications in order.
+
+It gathers into one dashboard what comes in by phone, WhatsApp, email and the website form, so
+the office and the technicians work from the same list. Among other things it lets you:
+
+- See every request in one dashboard, whichever channel it arrived by.
+- Check what is outstanding and what state it is in.
+- Spot at a glance what needs attention now.
+- Coordinate office and technicians without a chain of phone calls.
+- Know what came in, what is still open and what is ready to invoice.
+
+<Destacado titulo="The idea underneath">
+  No important request should depend on a person **remembering** that they took a call or a
+  message.
+
+  What can be connected in each case depends on the phone service, how the company's WhatsApp is
+  set up and which integrations are put in place. That gets checked before starting, not after.
+</Destacado>
+
+Terms: {centralAvisos.condiciones.join(" · ")}. You can
+<Link href="/servicios#central-avisos"> see how it works</Link> without going through a
+diagnosis first, which is what makes it different from everything else we do.
+
+## Which companies it suits
+
+Businesses that receive customer requests and coordinate people, visits or incidents:
+
+- Maintenance of residential blocks and buildings.
+- Electrical, [HVAC](/sectores/climatizacion) and plumbing installers.
+- [Pool](/sectores/piscinas) companies and technical services.
+- Repairs and breakdown assistance.
+- [Multi-service firms](/sectores/mantenimiento) with several technicians.
+- Property managers tracking incidents across several buildings.
+
+In these businesses the work does not end when the phone rings: someone has to assign it,
+coordinate the visit and check it was resolved. That is why centralising requests pays off more
+than switching on automatic replies in WhatsApp.
+
+## Hire someone, or automate?
+
+It depends. If the workload consistently exceeds what the team can handle, you need to hire:
+technology does not replace dealing with customers or resolving problems.
+
+But before expanding the payroll it is worth measuring how much time goes on logging messages,
+hunting for information, returning calls and asking about the status of a job. When a good part
+of that time is lost to disorder rather than volume, a system pays off more than a hire.
+
+The rule is the same as always: [find the bottleneck before you
+invest](/blog/por-que-diagnosticar-antes-de-automatizar).
+
+## Frequently asked questions
+
+{FAQ_AVISOS.en.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Tell us how requests reach you today"
+  boton="Message us on WhatsApp"
+  href={waLink("AVISOS", undefined, "en")}
+  externo
+>
+  <p>
+    If the office loses the day hunting for messages, returning calls or asking what happened to
+    a job, we will look together at where the time escapes.
+  </p>
+  <p>
+    CentralAvisos is one option. If yours calls for something else, we will say so. **Without
+    adding tools you do not need.**
+  </p>
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "en",
+          titulo: "How to organise calls, WhatsApp and customer requests in a Mallorca business",
+          descripcion:
+            "The four steps so no request depends on somebody remembering it: log it, prioritise it, assign it and connect it to the work that follows.",
+          url: `${marca.dominio}/en/blog/centralizar-avisos-llamadas-whatsapp-mallorca`,
+          fecha: "2026-10-09",
+        }),
+        esquemaFaq(
+          FAQ_AVISOS.en.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/en/blog/centralizar-avisos-llamadas-whatsapp-mallorca#faq`,
+          "en",
+        ),
+      ]),
+    ),
+  }}
+/>

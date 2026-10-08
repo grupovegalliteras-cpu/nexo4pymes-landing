@@ -47,16 +47,22 @@ export const colaboradores: Colaborador[] = [
     },
   },
   {
-    nombre: "Conexia",
-    /* TODO(HUMANO): la dirección de su web. No la pongo a ojo: hay varias
-       empresas llamadas Conexia en otros países y enlazar a la que no es
-       sería peor que no enlazar. */
-    web: "",
-    papel: { es: "Partner tecnológico", en: "Technology partner", de: "Technologiepartner" },
-    /* TODO(HUMANO): una frase de qué hacen y en qué colaboramos, como la
-       de arriba. Hasta entonces la tarjeta sale con el nombre y el papel:
-       es lo único que puedo afirmar sin inventármelo. */
-    texto: { es: "", en: "", de: "" },
+    nombre: "Conexia Telecom",
+    web: "https://conexiatec.com",
+    papel: {
+      es: "Partner en telecomunicaciones",
+      en: "Telecoms partner",
+      de: "Telekommunikationspartner",
+    },
+    /* Lo que hacen sale de su propia web: operador telecom B2B de
+       centralita virtual, fibra, móvil y WhatsApp. Que eso sea
+       justamente de lo que depende CentralAvisos para recoger llamadas
+       y mensajes no es marketing, es la razón de la colaboración. */
+    texto: {
+      es: "Operador de telecomunicaciones para empresas: centralita virtual, fibra, móvil y WhatsApp. Es el terreno del que depende CentralAvisos para recoger las llamadas y los mensajes de vuestros clientes.",
+      en: "Business telecoms operator: virtual switchboard, fibre, mobile and WhatsApp. That is precisely what CentralAvisos relies on to capture your customers' calls and messages.",
+      de: "Telekommunikationsanbieter für Unternehmen: virtuelle Telefonanlage, Glasfaser, Mobilfunk und WhatsApp. Genau darauf stützt sich CentralAvisos, um Anrufe und Nachrichten Ihrer Kunden zu erfassen.",
+    },
   },
 ];
 

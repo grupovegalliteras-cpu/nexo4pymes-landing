@@ -35,35 +35,31 @@ export default async function PaginaBlog({ params }: { params: Promise<{ lang: s
       </Reveal>
 
       <div className="mt-12 space-y-4">
-        <Reveal retraso={0.1}>
-          <TarjetaGlow className="group relative">
-            <span className="inline-flex rounded-full border border-white/12 bg-white/[.04] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-white/60">
-              {blogHome.publicado.etiqueta}
-            </span>
-            <h2 className="mt-4 text-[22px] leading-snug text-[#F4F6FF] sm:text-[26px]">
-              <Link
-                href={blogHome.publicado.href}
-                className="after:absolute after:inset-0 after:content-['']"
-              >
-                {blogHome.publicado.titulo}
-              </Link>
-            </h2>
-            <p className="mt-3 text-[15.5px] leading-relaxed text-white/62">
-              {blogHome.publicado.resumen}
-            </p>
-            <span className="mt-5 inline-flex items-center gap-1.5 text-[14.5px] font-medium text-[#9FB6FF]">
-              {tr(lang, { es: "Leer el artículo", en: "Read the article", de: "Artikel lesen" })}
-              <span
-                aria-hidden="true"
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              >
-                →
+        {/* Un artículo por tarjeta, el más reciente primero. El orden lo
+            manda content/blog.ts: aquí no se decide nada. */}
+        {blogHome.publicados.map((entrada, i) => (
+          <Reveal key={entrada.href} retraso={0.1 + i * 0.05}>
+            <TarjetaGlow className="group relative">
+              <span className="inline-flex rounded-full border border-white/12 bg-white/[.04] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-white/60">
+                {entrada.etiqueta}
               </span>
-            </span>
-          </TarjetaGlow>
-        </Reveal>
+              <h2 className="mt-4 text-[22px] leading-snug text-[#F4F6FF] sm:text-[26px]">
+                <Link href={entrada.href} className="after:absolute after:inset-0 after:content-['']">
+                  {entrada.titulo}
+                </Link>
+              </h2>
+              <p className="mt-3 text-[15.5px] leading-relaxed text-white/62">{entrada.resumen}</p>
+              <span className="mt-5 inline-flex items-center gap-1.5 text-[14.5px] font-medium text-[#9FB6FF]">
+                {tr(lang, { es: "Leer el artículo", en: "Read the article", de: "Artikel lesen" })}
+                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
+            </TarjetaGlow>
+          </Reveal>
+        ))}
 
-        <Reveal retraso={0.16}>
+        <Reveal retraso={0.3}>
           <div className="rounded-tarjeta border border-mint/20 bg-mint/[.05] p-6 sm:p-7">
             <span className="inline-flex rounded-full border border-mint/25 bg-bottle-900/40 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-mint">
               {tr(lang, { es: "En preparación", en: "Coming soon", de: "In Vorbereitung" })}
@@ -99,6 +95,16 @@ export default async function PaginaBlog({ params }: { params: Promise<{ lang: s
                 url: urlAbsoluta(lang, "/blog"),
                 publisher: { "@id": marca.dominio + "/#business" },
                 isPartOf: { "@id": marca.dominio + "/#website" },
+                /* Los artículos que cuelgan de este blog. Sin esto, un
+                   buscador tiene que deducir del HTML cuáles son entradas
+                   y cuáles enlaces cualesquiera. */
+                blogPost: blogHome.publicados.map((entrada) => ({
+                  "@type": "BlogPosting",
+                  "@id": urlAbsoluta(lang, entrada.href) + "#articulo",
+                  headline: entrada.titulo,
+                  description: entrada.resumen,
+                  url: urlAbsoluta(lang, entrada.href),
+                })),
               },
             ]),
           ),

@@ -1,0 +1,191 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { centralAvisos } from "@/content/de/inicio";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_AVISOS } from "@/content/blog-faq";
+
+<nav aria-label="Brotkrumennavigation" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
+  <Link href="/" className="text-[#9FB6FF]">Start</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Aufträge bündeln
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Auftragsannahme · 6 Min. Lesezeit</div>
+
+# Anrufe, WhatsApp und Kundenanfragen in einem Betrieb auf Mallorca ordnen
+
+<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+  Ihre Kunden müssen nicht alle denselben Kanal nutzen. Wichtig ist, dass alles, was hereinkommt,
+  an derselben Stelle landet. Dafür braucht es vier Schritte: jede Anfrage an einem Ort erfassen,
+  das Dringende kennzeichnen, eine zuständige Person festlegen und das Ganze mit der folgenden
+  Arbeit verbinden. Die meisten Betriebe merken den Unterschied schon nach den ersten beiden.
+</div>
+
+## Warum in kleinen Betrieben Anfragen verloren gehen
+
+Stellen Sie sich einen [Wartungsbetrieb](/sectores/mantenimiento) mit einem Büro und mehreren
+Technikern vor, die über die Insel verteilt arbeiten.
+
+Ein Kunde ruft wegen einer Störung an. Ein anderer schickt ein Foto per WhatsApp. Im Büro
+landet eine E-Mail mit einer Anfrage. Und ein Techniker meldet telefonisch einen Vorfall,
+während er bei einem anderen Einsatz ist.
+
+Jeder löst, was er kann, aber die Information verteilt sich am Ende auf Handys, Chats,
+Postfächer und Notizzettel.
+
+Das funktioniert, solange es wenige Anfragen sind. Sobald das Aufkommen steigt, wird schwer
+erkennbar, was offen ist und wer handeln muss.
+
+<Senales items={[
+  { fuerte: "Verpasste Anrufe ohne Nachverfolgung.", texto: "Niemand weiß sicher, ob zurückgerufen wurde." },
+  { fuerte: "Nachrichten, die auf einem Handy liegen bleiben.", texto: "Der Rest des Teams kennt die Anfrage nicht und kann den Stand nicht einsehen." },
+  { fuerte: "Vorgänge ohne Zuständigen.", texto: "Alle gehen davon aus, dass sich jemand anderes darum kümmert." },
+  { fuerte: "Dringendes zwischen Routine.", texto: "Eine ernste Störung steht in derselben Liste wie eine Preisanfrage." },
+  { fuerte: "Derselbe Vorgang dreimal notiert.", texto: "In WhatsApp, in einer Tabelle und in der Warenwirtschaft." },
+  { fuerte: "Das Büro im Blindflug.", texto: "Schwer zu sagen, was offen ist, was erledigt und was abrechenbar." },
+]} />
+
+Das Problem ist nicht WhatsApp oder das Telefon: Das sind gute Kanäle, und Kunden bevorzugen
+sie. Das Problem ist, sich auf sie als **einziges** System zur Steuerung der Arbeit zu
+verlassen.
+
+## Die vier Schritte
+
+### 1. Jede Anfrage an einer Stelle erfassen
+
+Jeder Anruf, jede Nachricht, E-Mail oder Formulareingabe sollte zu einem Eintrag werden, mit dem
+Nötigsten: Kunde, Anliegen, Datum, Priorität und Status. Danach kann jeder im Team eine Anfrage
+einsehen, ohne darauf angewiesen zu sein, wer ans Telefon gegangen ist.
+
+### 2. Dringendes von Wartbarem trennen
+
+Nicht jede Anfrage wiegt gleich. Mit Kategorien und wenigen einfachen Regeln lässt sich eine
+Störung, die einen Kunden ohne Wasser lässt, von einer Preisanfrage unterscheiden. Die Regeln
+setzt jeder Betrieb selbst: Was für eine Poolfirma dringend ist, ist es für einen
+Renovierungsbetrieb nicht.
+
+### 3. Zuständigkeit und Status festlegen
+
+Eine verantwortliche Person und ein klarer Status: offen, zugewiesen, in Arbeit, erledigt oder
+wartet auf Bestätigung. So weiß das Büro, was Aufmerksamkeit braucht, ohne jeden Techniker
+anzurufen.
+
+### 4. Mit dem verbinden, was danach kommt
+
+Aus einem Vorfall wird ein Einsatz, ein Arbeitsbericht, ein Angebot und eine Rechnung. Sind die
+Werkzeuge verbunden, werden diese Daten in jedem Schritt wiederverwendet, statt erneut eingegeben
+zu werden. Genau das leisten die [Module für Einsätze und Rechnungen](/modulos).
+
+<Nota>
+  Nicht jeder Betrieb braucht alle vier Schritte. Anfragen sauber zu erfassen und zuzuweisen —
+  die ersten beiden — nimmt meist schon den größten Teil des Lärms heraus. Der Rest kann später
+  kommen, wenn er spürbar fehlt.
+</Nota>
+
+## Was CentralAvisos ist
+
+CentralAvisos ist unser eigenes Produkt, entwickelt in Zusammenarbeit mit Multiservicios
+Mallorca, für Betriebe, die ihre Kundenkommunikation ordnen müssen.
+
+Es führt in einem Dashboard zusammen, was über Anrufe, WhatsApp, E-Mail und das Formular der
+Website hereinkommt, damit Büro und Techniker mit derselben Liste arbeiten. Unter anderem
+können Sie damit:
+
+- Alle Anfragen in einem Dashboard sehen, unabhängig vom Kanal.
+- Nachsehen, was offen ist und in welchem Status.
+- Auf einen Blick erkennen, was sofort Aufmerksamkeit braucht.
+- Büro und Techniker ohne Telefonketten abstimmen.
+- Wissen, was hereinkam, was offen ist und was abgerechnet werden kann.
+
+<Destacado titulo="Der Gedanke dahinter">
+  Keine wichtige Anfrage sollte davon abhängen, dass sich jemand **daran erinnert**, einen Anruf
+  oder eine Nachricht erhalten zu haben.
+
+  Was sich im Einzelfall anbinden lässt, hängt vom Telefondienst ab, davon, wie das
+  Firmen-WhatsApp eingerichtet ist, und von den umgesetzten Integrationen. Das wird vorher
+  geprüft, nicht hinterher.
+</Destacado>
+
+Konditionen: {centralAvisos.condiciones.join(" · ")}.
+<Link href="/servicios#central-avisos"> Wie es funktioniert</Link> lässt sich ansehen, ohne
+vorher eine Analyse zu durchlaufen — das unterscheidet es von allem anderen, was wir machen.
+
+## Zu welchen Betrieben es passt
+
+Zu Betrieben, die Kundenanfragen erhalten und Personen, Einsätze oder Vorfälle koordinieren:
+
+- Wartung von Wohnanlagen und Gebäuden.
+- Elektro-, [Klima-](/sectores/climatizacion) und Sanitärinstallateure.
+- [Pool](/sectores/piscinas)-Firmen und technische Dienste.
+- Reparatur- und Notdienste.
+- [Multiservice-Betriebe](/sectores/mantenimiento) mit mehreren Technikern.
+- Hausverwaltungen, die Vorfälle in mehreren Gebäuden verfolgen.
+
+In diesen Betrieben endet die Arbeit nicht, wenn das Telefon klingelt: Der Vorgang muss
+zugewiesen, der Einsatz koordiniert und die Erledigung geprüft werden. Deshalb bringt das
+Bündeln der Anfragen mehr als automatische Antworten in WhatsApp.
+
+## Einstellen oder automatisieren?
+
+Das kommt darauf an. Übersteigt das Arbeitsaufkommen dauerhaft die Kapazität des Teams, führt
+kein Weg an einer Einstellung vorbei: Technik ersetzt weder die Betreuung noch das Lösen von
+Störungen.
+
+Vor der Aufstockung lohnt es sich aber zu messen, wie viel Zeit für das Erfassen von
+Nachrichten, das Suchen von Informationen, Rückrufe und Nachfragen zum Stand eines Auftrags
+draufgeht. Geht ein guter Teil dieser Zeit durch Unordnung verloren und nicht durch Volumen,
+bringt ein System mehr als eine Einstellung.
+
+Die Regel bleibt dieselbe: [den Engpass finden, bevor man
+investiert](/blog/por-que-diagnosticar-antes-de-automatizar).
+
+## Häufige Fragen
+
+{FAQ_AVISOS.de.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Erzählen Sie uns, wie Anfragen heute bei Ihnen ankommen"
+  boton="Schreiben Sie uns AVISOS auf WhatsApp"
+  href={waLink("AVISOS", undefined, "de")}
+  externo
+>
+  <p>
+    Wenn im Büro der Tag damit vergeht, Nachrichten zu suchen, Anrufe zurückzugeben oder
+    nachzufragen, was aus einem Vorgang geworden ist, schauen wir gemeinsam, wo die Zeit
+    entweicht.
+  </p>
+  <p>
+    CentralAvisos ist eine Möglichkeit. Verlangt Ihr Fall etwas anderes, sagen wir das.
+    **Ohne Werkzeuge hinzuzufügen, die Sie nicht brauchen.**
+  </p>
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "de",
+          titulo: "Anrufe, WhatsApp und Kundenanfragen in einem Betrieb auf Mallorca ordnen",
+          descripcion:
+            "Die vier Schritte, damit keine Anfrage davon abhängt, dass sich jemand erinnert: erfassen, priorisieren, zuweisen und mit der folgenden Arbeit verbinden.",
+          url: `${marca.dominio}/de/blog/centralizar-avisos-llamadas-whatsapp-mallorca`,
+          fecha: "2026-10-09",
+        }),
+        esquemaFaq(
+          FAQ_AVISOS.de.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/de/blog/centralizar-avisos-llamadas-whatsapp-mallorca#faq`,
+          "de",
+        ),
+      ]),
+    ),
+  }}
+/>

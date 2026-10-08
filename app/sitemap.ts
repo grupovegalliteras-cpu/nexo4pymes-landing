@@ -26,7 +26,9 @@ const PAGINAS: { ruta: string; prioridad: number; frecuencia: "monthly" | "yearl
   { ruta: "/nosotros", prioridad: 0.7, frecuencia: "yearly", fecha: "2026-10-02" },
   ...SECTORES.map((s) => ({ ruta: `/sectores/${s.id}`, prioridad: 0.7, frecuencia: "monthly" as const, fecha: "2026-10-08" })),
   { ruta: "/modulos", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-02" },
-  { ruta: "/blog", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-08" },
+  { ruta: "/blog", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-09" },
+  { ruta: "/blog/centralizar-avisos-llamadas-whatsapp-mallorca", prioridad: 0.6, frecuencia: "yearly", fecha: "2026-10-09" },
+  { ruta: "/blog/automatizar-presupuestos-pymes-mallorca", prioridad: 0.6, frecuencia: "yearly", fecha: "2026-10-09" },
   { ruta: "/blog/por-que-diagnosticar-antes-de-automatizar", prioridad: 0.6, frecuencia: "yearly", fecha: "2026-08-05" },
   /* /legal se queda en el sitemap y ahora además se indexa: es la
      página que acredita quién está detrás. Ver app/(web)/[lang]/legal. */

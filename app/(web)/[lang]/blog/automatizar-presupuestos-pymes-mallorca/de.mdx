@@ -1,0 +1,169 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_PRESUPUESTOS } from "@/content/blog-faq";
+
+<nav aria-label="Brotkrumennavigation" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
+  <Link href="/" className="text-[#9FB6FF]">Start</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Angebote automatisieren
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Angebote · 6 Min. Lesezeit</div>
+
+# Wie Sie in einem kleinen Betrieb auf Mallorca aufhören, Angebote von Hand zu schreiben
+
+<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+  Es gibt drei Wege, Angebote nicht mehr von Hand zu schreiben, vom einfachsten zum
+  aufwendigsten: eine Vorlage, die selbst rechnet, eine Verbindung zwischen Angebot und
+  Warenwirtschaft, oder ein Konfigurator auf Ihrer Website, in dem der Kunde Maße und Materialien
+  wählt und den Preis sofort sieht. Welcher zu Ihnen passt, hängt an einer einzigen Frage: wie
+  viele Preisregeln Sie haben und wie oft am Tag Sie sie anwenden.
+</div>
+
+## Warum ein Angebot einen ganzen Vormittag kostet
+
+Stellen Sie sich einen Installationsbetrieb in Palma vor, der ein Angebot für den Einbau eines
+Geräts abgeben soll. Jemand muss die Maße prüfen, Preise heraussuchen, Material berechnen,
+Anfahrt addieren, die Marge aufschlagen und ein Dokument bauen, das man dem Kunden zeigen kann.
+
+Danach geht das Angebot per E-Mail oder WhatsApp raus und bleibt liegen. Will der Kunde eine
+Änderung: neu rechnen. Nimmt er an, überträgt jemand die Daten in die Warenwirtschaft, legt den
+Vorgang an und plant die Arbeit.
+
+Jeder Schritt wirkt klein. Das Problem entsteht, wenn er viermal am Tag passiert.
+
+<Senales items={[
+  { fuerte: "Jedes Angebot beginnt bei null.", texto: "Dieselben Rechnungen werden wiederholt und Daten aus früheren Aufträgen kopiert." },
+  { fuerte: "Die Preise liegen verstreut.", texto: "Preislisten in drei Dateien, und niemand ist ganz sicher, welche gilt." },
+  { fuerte: "Rechenfehler rutschen durch.", texto: "Eine Formel eine Zeile zu weit gezogen oder ein zwei Jahre alter Preis frisst still die Marge." },
+  { fuerte: "Der Kunde wartet.", texto: "Das Angebot verzögert sich, weil die Person, die es schreibt, auf der Baustelle ist." },
+  { fuerte: "Niemand weiß, was offen ist.", texto: "Welche raus sind, welche angenommen wurden und wo ein Anruf fällig wäre." },
+]} />
+
+Dafür muss man kein großes Unternehmen sein. Es genügen mehrere Preislisten, konfigurierbare
+Produkte oder ein Verkauf, der von viel Handarbeit beim Rechnen abhängt. Bei
+[Renovierungen](/sectores/reformas), im Schreinerhandwerk und bei Installateuren ist das fast
+die Regel.
+
+## Die drei Wege, von einfach bis aufwendig
+
+Die richtige Antwort hängt davon ab, wie der Betrieb arbeitet, und oft muss gar nichts Neues
+gebaut werden: manchmal reicht es, die vorhandene Tabelle aufzuräumen oder zwei Werkzeuge zu
+verbinden, die Sie ohnehin bezahlen. Wird es komplexer, gibt es drei Wege.
+
+### 1. Eine Angebotsvorlage, die selbst rechnet
+
+Folgen alle Ihre Angebote ungefähr derselben Struktur, wendet eine gut gebaute Vorlage die
+Preise an, rechnet die Summen und erzeugt das Dokument, ohne dass die Schritte von Hand
+wiederholt werden.
+
+Das ist die vernünftige Lösung, wenn es nicht viele Preisregeln gibt und eher Ordnung fehlt als
+Software. Sie kostet wenig und wirkt schon in derselben Woche.
+
+### 2. Das Angebot mit der Warenwirtschaft verbinden
+
+Die nächste Stufe: Das Angebot spricht mit Ihrem [CRM](/modulos), dem Lager oder der
+Rechnungsstellung. Kundendaten werden einmal eingegeben. Wird ein Angebot angenommen und zum
+Auftrag, wandert die Information von selbst weiter, statt wieder bei null anzufangen.
+
+### 3. Ein Angebotskonfigurator auf Ihrer Website
+
+Wählen Ihre Kunden Maße, Materialien, Oberflächen, Mengen oder Extras, lässt ein Konfigurator
+sie zusammenstellen, was sie möchten, und zeigt sofort eine Zahl.
+
+Eine Schreinerei auf Mallorca kann den Kunden etwa die Maße eines Möbels, die Holzart und die
+Oberfläche wählen lassen. Das System wendet Ihre Preisregeln an, nennt den Betrag und hinterlässt
+Ihnen die Angaben, die Sie für den weiteren Verkauf brauchen. Je nach Komplexität liefert es
+einen Richtpreis oder ein vollständiges Angebot, das auf Ihre Freigabe wartet.
+
+<Nota>
+  Eine Kalkulation zu automatisieren heißt **nicht**, dass jedes Angebot ungesehen hinausgeht.
+  Sonderarbeiten, schwankende Kosten und ungewöhnliche Bedingungen brauchen weiterhin eine
+  Freigabe durch einen Menschen. Ein gut gebauter Konfigurator weiß, wann er aufhören und Ihnen
+  die Entscheidung zurückgeben muss.
+</Nota>
+
+## Wann es sich nicht lohnt
+
+Wenn Sie drei Angebote pro Woche schreiben und jedes anders aussieht als das letzte, geben Sie
+Geld aus, um etwas zu lösen, das Sie kein Geld kostet. Dasselbe gilt, wenn Ihr Preis erst bei
+der Besichtigung entsteht: Dann automatisiert man den Papierkram danach, nicht die Kalkulation.
+
+Wir sagen das nicht aus Bescheidenheit, sondern weil es der häufigste Fehler ist, den wir sehen:
+[automatisieren, bevor jemand den Prozess angeschaut
+hat](/blog/por-que-diagnosticar-antes-de-automatizar), repariert ihn nicht, es beschleunigt ihn.
+
+## Was wir tun können
+
+Bei Nexo4Pymes bauen wir [individuelle Lösungen](/servicios) um die Prozesse herum, die ein
+Betrieb wirklich hat. In diesem Bereich heißt das meistens:
+
+- Ein Web-Konfigurator, der mit Ihren Preisen und Ihren Bedingungen rechnet.
+- Kunden, Angebote und Verkaufshistorie an einem Ort.
+- Das Formular der Website, verbunden mit Ihrer Warenwirtschaft.
+- Dokumente, die automatisch entstehen, ohne dieselben Daten zweimal einzugeben.
+- Nachverfolgung dessen, was auf eine Antwort wartet.
+- Vorhandene Werkzeuge einbinden, wenn es sinnvoll ist, statt sie aus Prinzip zu ersetzen.
+
+## Was es kostet
+
+Einen Einheitspreis gibt es nicht, und misstrauen Sie jedem, der Ihnen einen nennt, ohne zu
+fragen. Es hängt davon ab, wie viele Preisregeln es gibt, wie viele Produkte oder Leistungen, was
+angebunden werden muss und wie weit Sie gehen wollen. Eine Vorlage und ein Konfigurator, der an
+Lager und Vertrieb hängt, sind nicht annähernd dieselbe Arbeit.
+
+Deshalb beginnen wir immer gleich: ein kostenloser Videocall von fünfzehn Minuten und, wenn es
+sich lohnt, eine Analyse, die schriftlich festhält, was sich zu verbessern lohnt, in welchem
+Umfang und in welcher Reihenfolge. Lautet die Antwort, dass ein fertiges Werkzeug genügt, sagen
+wir Ihnen auch das.
+
+## Häufige Fragen
+
+{FAQ_PRESUPUESTOS.de.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Bauen Sie jedes Angebot noch bei null zusammen?"
+  boton="Schreiben Sie uns auf WhatsApp"
+  href={waLink("GENERAL", undefined, "de")}
+  externo
+>
+  <p>
+    Erzählen Sie uns, wie Sie Ihre Preise ermitteln, mit welchen Werkzeugen und wo die Zeit
+    verloren geht. Wir schauen, ob bei Ihnen eine Vorlage, eine Anbindung oder ein individueller
+    Konfigurator passt.
+  </p>
+  <p>
+    Wir suchen die kleinste Lösung, die das Problem löst. **Ohne mehr zu bauen als nötig.**
+  </p>
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "de",
+          titulo: "Wie Sie in einem kleinen Betrieb auf Mallorca aufhören, Angebote von Hand zu schreiben",
+          descripcion:
+            "Die drei Wege, Angebote zu automatisieren — Vorlage, Anbindung oder Web-Konfigurator —, welcher zu Ihren Preisregeln passt und wann es sich nicht lohnt.",
+          url: `${marca.dominio}/de/blog/automatizar-presupuestos-pymes-mallorca`,
+          fecha: "2026-10-09",
+        }),
+        esquemaFaq(
+          FAQ_PRESUPUESTOS.de.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/de/blog/automatizar-presupuestos-pymes-mallorca#faq`,
+          "de",
+        ),
+      ]),
+    ),
+  }}
+/>

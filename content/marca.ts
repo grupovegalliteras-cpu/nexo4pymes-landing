@@ -18,15 +18,22 @@
 export const marca = {
   nombre: "Nexo4Pymes",
   dominio: "https://nexo4pymes.com",
-  /* Email y Calendly salen de variables de entorno para poder pasar
-     del correo personal al del dominio sin tocar código ni desplegar
-     a mano. Si la variable no existe, se usa el valor de siempre y la
-     web sigue funcionando igual.
+  /* Email y Calendly salen de variables de entorno para poder cambiarlos
+     sin tocar código ni desplegar a mano. Si la variable no existe, se usa
+     el valor de aquí abajo y la web sigue funcionando igual.
 
-     TODO(HUMANO): crear contacto@nexo4pymes.com y el Calendly de
-     Nexo4Pymes, y rellenar NEXT_PUBLIC_CONTACT_EMAIL y
+     EL CORREO YA ES EL DEL DOMINIO. Sale en el aviso legal, en /contacto,
+     en el pie, en los datos estructurados y en /llms.txt, todo desde aquí.
+
+     OJO SI ALGUNA VEZ NO CAMBIA EN LA WEB: puede haber un
+     NEXT_PUBLIC_CONTACT_EMAIL puesto en Vercel con el correo antiguo. La
+     variable de entorno manda sobre esta línea, así que habría que
+     borrarla allí o actualizarla.
+
+     TODO(HUMANO): queda el Calendly, que sigue siendo el personal. Cuando
+     exista el de Nexo4Pymes, se cambia abajo o se pone
      NEXT_PUBLIC_CALENDLY_URL en Vercel. */
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "grupovegalliteras@gmail.com",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contacto@nexo4pymes.com",
   calendly:
     process.env.NEXT_PUBLIC_CALENDLY_URL ||
     "https://calendly.com/grupovegalliteras/demo-15-minutos",

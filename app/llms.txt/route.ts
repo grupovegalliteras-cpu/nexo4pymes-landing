@@ -96,6 +96,8 @@ ${socios}
 - [Quiénes somos](${marca.dominio}/nosotros): las dos personas, cómo se trabaja y qué pasa con los datos de los clientes.
 - [Contacto](${marca.dominio}/contacto): videollamada de 15 minutos o formulario.
 - [Blog](${marca.dominio}/blog)
+- [Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca](${marca.dominio}/blog/centralizar-avisos-llamadas-whatsapp-mallorca): los cuatro pasos para centralizar los avisos y qué hace CentralAvisos.
+- [Cómo dejar de hacer presupuestos a mano en una pyme de Mallorca](${marca.dominio}/blog/automatizar-presupuestos-pymes-mallorca): plantilla, integración o configurador web, y cuándo no compensa.
 - [Por qué automatizar sin diagnosticar antes puede hundiros el negocio](${marca.dominio}/blog/por-que-diagnosticar-antes-de-automatizar)
 - [Aviso legal, privacidad y cookies](${marca.dominio}/legal)
 

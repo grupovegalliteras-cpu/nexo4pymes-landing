@@ -1,0 +1,166 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_PRESUPUESTOS } from "@/content/blog-faq";
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
+  <Link href="/" className="text-[#9FB6FF]">Inicio</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Automatizar presupuestos
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Presupuestos · 6 min de lectura</div>
+
+# Cómo dejar de hacer presupuestos a mano en una pyme de Mallorca
+
+<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+  Hay tres formas de dejar de hacer presupuestos a mano, y van de menos a más: una plantilla que
+  calcule sola, una conexión entre el presupuesto y el programa de gestión, o un configurador en
+  la web donde el cliente elija medidas y materiales y vea el precio al momento. Cuál os toca
+  depende de una sola cosa: cuántas reglas de precio tenéis y cuántas veces al día las aplicáis.
+</div>
+
+## Por qué preparar un presupuesto se come la mañana
+
+Imaginad una empresa de instalaciones de Palma a la que le piden presupuesto para montar un
+equipo. Alguien tiene que mirar las medidas, buscar precios, calcular material, sumar
+desplazamiento, aplicar margen y montar un documento presentable.
+
+Después ese presupuesto se manda por correo o por WhatsApp y se queda esperando. Si el cliente
+pide un cambio, a recalcular. Si lo acepta, alguien pasa los datos al programa de gestión, crea
+la ficha y organiza el trabajo.
+
+Cada paso parece pequeño. El problema aparece cuando se repite cuatro veces al día.
+
+<Senales items={[
+  { fuerte: "Cada presupuesto empieza de cero.", texto: "Se repiten los mismos cálculos y se copian datos de trabajos anteriores." },
+  { fuerte: "Los precios están repartidos.", texto: "Hay tarifas en tres archivos y nadie está del todo seguro de cuál es la buena." },
+  { fuerte: "Se cuelan errores de cálculo.", texto: "Una fórmula mal arrastrada o un precio de hace dos años se come el margen sin que se note." },
+  { fuerte: "El cliente espera.", texto: "El presupuesto se retrasa porque quien lo prepara está trabajando en una obra." },
+  { fuerte: "No se sabe qué hay pendiente.", texto: "Cuáles se enviaron, cuáles se aceptaron y a cuáles habría que dar un toque." },
+]} />
+
+No hace falta ser una empresa grande para tener este problema. Basta con tener varias tarifas,
+productos que se configuran o una venta que depende de muchos cálculos a mano. En
+[reformas](/sectores/reformas), carpintería e instalaciones es casi la norma.
+
+## Las tres formas de automatizarlo, de menos a más
+
+La solución depende de cómo trabaja cada negocio, y no siempre hace falta desarrollar nada
+nuevo: a veces basta con ordenar la hoja de cálculo que ya usáis o conectar dos herramientas que
+ya tenéis. Cuando el proceso es más complicado, hay tres caminos.
+
+### 1. Una plantilla de presupuestos que calcule sola
+
+Si todos vuestros presupuestos siguen más o menos la misma estructura, una plantilla bien montada
+aplica tarifas, calcula importes y genera el documento sin repetir los pasos a mano.
+
+Es la opción sensata cuando no hay demasiadas reglas de precio y lo que falta es orden, no
+software. Cuesta poco y se nota la misma semana.
+
+### 2. Conectar el presupuesto con el programa de gestión
+
+El siguiente escalón es que el presupuesto hable con vuestro [CRM](/modulos), el inventario o el
+programa de facturación. Los datos del cliente se teclean una vez. Cuando un presupuesto se
+acepta y se convierte en trabajo, la información pasa sola a la siguiente fase en vez de
+empezar otra vez desde el principio.
+
+### 3. Un configurador de presupuestos en vuestra web
+
+Si vuestros clientes eligen medidas, materiales, acabados, cantidades o extras, un configurador
+en la web les deja montar lo que quieren y ver un cálculo al momento.
+
+Una carpintería de Mallorca, por ejemplo, puede dejar que el cliente elija las dimensiones de un
+mueble, el tipo de madera y los acabados. El sistema aplica vuestras reglas de precio, da la
+cifra y os deja los datos listos para seguir la venta. Según lo complejo que sea, puede dar un
+precio orientativo o una propuesta completa pendiente de que la validéis vosotros.
+
+<Nota>
+  Automatizar un cálculo **no** significa que todos los presupuestos salgan sin que nadie los
+  mire. Los trabajos especiales, los costes que se mueven y las condiciones raras siguen
+  necesitando que una persona dé el visto bueno. Un configurador bien montado sabe cuándo parar
+  y pasaros la pelota.
+</Nota>
+
+## Cuándo no merece la pena
+
+Si hacéis tres presupuestos a la semana y cada uno es distinto del anterior, automatizarlo es
+gastar dinero en resolver algo que no os está costando dinero. Lo mismo si vuestro precio
+depende de ir a ver la obra: ahí lo que se automatiza es el papeleo de después, no el cálculo.
+
+Esto no lo decimos por modestia. Lo decimos porque es el error que más veces hemos visto:
+[automatizar antes de haber mirado el proceso](/blog/por-que-diagnosticar-antes-de-automatizar)
+no arregla nada, lo acelera.
+
+## Qué podemos hacer nosotros
+
+En Nexo4Pymes desarrollamos [soluciones a medida](/servicios) para los procesos reales de cada
+negocio. En este terreno, eso suele ser:
+
+- Un configurador web que calcule con vuestras tarifas y vuestras condiciones.
+- Clientes, presupuestos e histórico comercial en un solo sitio.
+- El formulario de la web conectado con el programa de gestión.
+- Documentos que se generan solos, sin teclear el mismo dato dos veces.
+- Seguimiento de lo que está pendiente de respuesta.
+- Integrar lo que ya usáis cuando tenga sentido, en vez de sustituirlo porque sí.
+
+## Cuánto cuesta
+
+No hay un precio único, y desconfiad de quien os dé uno sin preguntar nada. Depende de cuántas
+reglas de cálculo haya, cuántos productos o servicios, qué haya que conectar y hasta dónde
+queráis llegar. Una plantilla y un configurador conectado al inventario y a la gestión comercial
+no son el mismo trabajo ni de lejos.
+
+Por eso empezamos siempre igual: una videollamada de quince minutos, gratis, y si hace falta un
+diagnóstico que deja por escrito qué conviene mejorar, con qué alcance y en qué orden. Si la
+respuesta es que os sirve una herramienta que ya existe, también os lo decimos.
+
+## Preguntas frecuentes
+
+{FAQ_PRESUPUESTOS.es.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="¿Seguís preparando cada presupuesto desde cero?"
+  boton="Escribidnos por WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Contadnos cómo calculáis los precios, con qué herramientas y dónde se os va el tiempo.
+    Miramos si lo vuestro es una plantilla, una integración o un configurador a medida.
+  </p>
+  <p>
+    Buscamos la solución más pequeña que resuelva el problema. **Sin construir más de lo que
+    hace falta.**
+  </p>
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "es",
+          titulo: "Cómo dejar de hacer presupuestos a mano en una pyme de Mallorca",
+          descripcion:
+            "Las tres formas de automatizar presupuestos —plantilla, integración o configurador web—, cuál encaja según vuestras reglas de precio y cuándo no merece la pena.",
+          url: `${marca.dominio}/blog/automatizar-presupuestos-pymes-mallorca`,
+          fecha: "2026-10-09",
+        }),
+        esquemaFaq(
+          FAQ_PRESUPUESTOS.es.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/blog/automatizar-presupuestos-pymes-mallorca#faq`,
+          "es",
+        ),
+      ]),
+    ),
+  }}
+/>

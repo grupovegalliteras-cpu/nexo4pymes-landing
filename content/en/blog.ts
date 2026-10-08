@@ -4,16 +4,32 @@ export const blogHome = {
   categoria: "Blog",
   titular: "Technology for small businesses, explained without jargon",
   entradilla: "Articles on what software a small business really needs, in what order it's best set up and which mistakes turn out expensive.",
-  publicado: {
-    etiqueta: "Diagnosis first · 5 min",
-    titulo: "Why automating without a diagnosis first can sink your business",
-    resumen:
-      "Automation doesn't fix a process, it amplifies it. The story of the workshop that filled its diary and ended up losing customers, the three typical ways to get it wrong and when the right answer is not to automate.",
-    href: "/blog/por-que-diagnosticar-antes-de-automatizar",
-  },
+  publicados: [
+    {
+      etiqueta: "Enquiries · 6 min",
+      titulo: "How to organise calls, WhatsApp and customer requests in a Mallorca business",
+      resumen:
+        "The four steps so no request depends on somebody remembering it: log it, prioritise it, assign it and connect it to the work that follows.",
+      href: "/blog/centralizar-avisos-llamadas-whatsapp-mallorca",
+    },
+    {
+      etiqueta: "Quotes · 6 min",
+      titulo: "How to stop writing quotes by hand in a small business in Mallorca",
+      resumen:
+        "Template, integration with your management software or web configurator: the three ways to automate quotes, which one fits your pricing rules and when it is not worth it.",
+      href: "/blog/automatizar-presupuestos-pymes-mallorca",
+    },
+    {
+      etiqueta: "Diagnosis first · 5 min",
+      titulo: "Why automating without a diagnosis first can sink your business",
+      resumen:
+        "Automation doesn't fix a process, it amplifies it. The story of the workshop that filled its diary and ended up losing customers, the three typical ways to get it wrong and when the right answer is not to automate.",
+      href: "/blog/por-que-diagnosticar-antes-de-automatizar",
+    },
+  ],
   proximos: [
     "What a process diagnosis is and what you get out of it",
     "Custom CRM or off-the-shelf software: how to choose without getting it wrong",
-    "Product configurators: when they pay off and when they don't",
+    "VeriFactu: what a service company in the Balearics has to do",
   ],
 };

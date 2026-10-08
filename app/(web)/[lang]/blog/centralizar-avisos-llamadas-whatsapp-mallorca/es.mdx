@@ -1,0 +1,186 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { centralAvisos } from "@/content/inicio";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_AVISOS } from "@/content/blog-faq";
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
+  <Link href="/" className="text-[#9FB6FF]">Inicio</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Centralizar avisos
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Avisos y comunicación · 6 min de lectura</div>
+
+# Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca
+
+<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+  No hace falta que vuestros clientes usen todos el mismo canal. Hace falta que todo lo que
+  entre acabe en el mismo sitio. Son cuatro pasos: registrar cada aviso en un único lugar,
+  marcar cuál es urgente, ponerle un responsable y conectarlo con el trabajo que viene después.
+  Muchas empresas notan la mejora con los dos primeros.
+</div>
+
+## Por qué se pierden avisos en una empresa pequeña
+
+Imaginad una empresa de [mantenimiento](/sectores/mantenimiento) con una oficina y varios
+técnicos repartidos por la isla.
+
+Un cliente llama para avisar de una avería. Otro manda una foto por WhatsApp. A la oficina le
+entra un correo con una solicitud. Y un técnico comunica una incidencia por teléfono mientras
+está en otra visita.
+
+Cada uno resuelve lo que puede, pero la información acaba repartida entre móviles,
+conversaciones, correos y notas en un papel.
+
+Esto funciona cuando hay pocas solicitudes. En cuanto sube el volumen, cuesta saber qué está
+pendiente y quién tiene que moverse.
+
+<Senales items={[
+  { fuerte: "Llamadas perdidas sin seguimiento.", texto: "Nadie sabe con seguridad si se ha devuelto o no." },
+  { fuerte: "Mensajes que se quedan en un móvil.", texto: "El resto del equipo ni conoce la solicitud ni puede consultar cómo va." },
+  { fuerte: "Incidencias sin responsable.", texto: "Todo el mundo da por hecho que se encarga otro." },
+  { fuerte: "Urgencias mezcladas con rutina.", texto: "Una avería seria queda en la misma lista que una consulta de precios." },
+  { fuerte: "La misma incidencia, apuntada tres veces.", texto: "En WhatsApp, en una hoja de cálculo y en el programa de gestión." },
+  { fuerte: "La oficina a ciegas.", texto: "Cuesta saber qué sigue abierto, qué se ha resuelto y qué está listo para facturar." },
+]} />
+
+El problema no es usar WhatsApp o el teléfono: son canales buenos y el cliente los prefiere. El
+problema es depender de ellos como **único** sistema para controlar el trabajo.
+
+## Los cuatro pasos para centralizarlo
+
+### 1. Que cada aviso quede registrado en un sitio
+
+Cada llamada, mensaje, correo o formulario debería convertirse en un registro con lo mínimo:
+cliente, motivo, fecha, prioridad y estado. A partir de ahí, cualquiera del equipo puede
+consultar un aviso sin depender de quién cogió el teléfono.
+
+### 2. Separar lo urgente de lo que puede esperar
+
+No todas las solicitudes pesan igual. Con categorías y unas reglas sencillas se distingue una
+avería que deja a un cliente sin agua de una consulta de precios. Las reglas las pone cada
+negocio: lo que para una empresa de piscinas es urgente no lo es para una de reformas.
+
+### 3. Ponerle nombre y estado a cada aviso
+
+Un responsable y un estado claro: pendiente, asignado, en curso, resuelto o pendiente de
+confirmar. Con eso, la oficina sabe qué necesita atención sin tener que llamar a cada técnico
+para preguntar.
+
+### 4. Conectarlo con lo que viene después
+
+Una incidencia acaba convirtiéndose en una visita, un parte de trabajo, un presupuesto y una
+factura. Si las herramientas están conectadas, ese dato se reutiliza en cada paso en vez de
+teclearse otra vez. Es justo lo que hacen los [módulos de operaciones y
+facturación](/modulos).
+
+<Nota>
+  No todas las empresas necesitan los cuatro pasos. Registrar y asignar bien los avisos —los dos
+  primeros— ya suele quitar la mayor parte del ruido. Lo demás puede venir después, cuando se
+  note que hace falta.
+</Nota>
+
+## Qué es CentralAvisos
+
+CentralAvisos es un producto nuestro, desarrollado en colaboración con Multiservicios Mallorca,
+para empresas que necesitan ordenar las comunicaciones y los avisos de sus clientes.
+
+Reúne en un panel lo que entra por llamadas, WhatsApp, correo y el formulario de la web, para
+que la oficina y los técnicos trabajen sobre la misma lista. Entre otras cosas permite:
+
+- Ver todos los avisos en el mismo panel, entren por donde entren.
+- Consultar qué está pendiente y en qué estado.
+- Distinguir de un vistazo lo que necesita atención ya.
+- Coordinar oficina y técnicos sin cadenas de llamadas.
+- Saber qué ha entrado, qué sigue abierto y qué está listo para facturar.
+
+<Destacado titulo="La idea de fondo">
+  Ningún aviso importante debería depender de que una persona **se acuerde** de que ha recibido
+  una llamada o un mensaje.
+
+  Lo que se puede conectar en cada caso depende del servicio telefónico, de cómo esté montado el
+  WhatsApp de la empresa y de las integraciones que se implanten. Eso se mira antes de empezar,
+  no después.
+</Destacado>
+
+Condiciones: {centralAvisos.condiciones.join(" · ")}. Se puede
+<Link href="/servicios#central-avisos"> ver cómo funciona</Link> sin pasar por un diagnóstico
+previo, que es la diferencia con el resto de lo que hacemos.
+
+## A qué empresas les encaja
+
+A negocios que reciben solicitudes de clientes y coordinan personas, visitas o incidencias:
+
+- Mantenimiento de comunidades y edificios.
+- Instaladores de electricidad, [climatización](/sectores/climatizacion) o fontanería.
+- Empresas de [piscinas](/sectores/piscinas) y servicios técnicos.
+- Reparaciones y asistencia.
+- [Multiservicios](/sectores/mantenimiento) con varios técnicos.
+- Administradores de fincas que siguen incidencias de varios edificios.
+
+En estos negocios el trabajo no termina cuando suena el teléfono: hay que asignar, coordinar la
+visita y comprobar que se ha resuelto. Por eso centralizar los avisos rinde más que poner
+respuestas automáticas en WhatsApp.
+
+## ¿Contratar a alguien o automatizar?
+
+Depende. Si el volumen de trabajo supera de forma constante lo que da de sí el equipo, hará
+falta contratar: la tecnología no sustituye la atención ni la resolución de incidencias.
+
+Pero antes de ampliar plantilla conviene medir cuánto tiempo se va en registrar mensajes, buscar
+información, devolver llamadas y preguntar por el estado de un trabajo. Cuando buena parte de
+ese tiempo se pierde por desorden y no por volumen, el sistema rinde más que la contratación.
+
+La clave es la misma de siempre: [encontrar el cuello de botella antes de
+invertir](/blog/por-que-diagnosticar-antes-de-automatizar).
+
+## Preguntas frecuentes
+
+{FAQ_AVISOS.es.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Contadnos cómo os entran los avisos hoy"
+  boton="Escribidnos AVISOS por WhatsApp"
+  href={waLink("AVISOS")}
+  externo
+>
+  <p>
+    Si la oficina se va el día buscando mensajes, devolviendo llamadas o preguntando qué ha
+    pasado con una incidencia, miramos juntos por dónde se escapa el tiempo.
+  </p>
+  <p>
+    CentralAvisos es una opción. Si lo vuestro pide otra cosa, lo decimos. **Sin añadir
+    herramientas que no hagan falta.**
+  </p>
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "es",
+          titulo: "Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca",
+          descripcion:
+            "Los cuatro pasos para que ningún aviso dependa de que alguien se acuerde: registrarlo, priorizarlo, asignarlo y conectarlo con el trabajo que viene después.",
+          url: `${marca.dominio}/blog/centralizar-avisos-llamadas-whatsapp-mallorca`,
+          fecha: "2026-10-09",
+        }),
+        esquemaFaq(
+          FAQ_AVISOS.es.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/blog/centralizar-avisos-llamadas-whatsapp-mallorca#faq`,
+          "es",
+        ),
+      ]),
+    ),
+  }}
+/>

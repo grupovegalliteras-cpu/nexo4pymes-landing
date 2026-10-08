@@ -1,0 +1,165 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_PRESUPUESTOS } from "@/content/blog-faq";
+
+<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
+  <Link href="/" className="text-[#9FB6FF]">Home</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Automating quotes
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Quotes · 6 min read</div>
+
+# How to stop writing quotes by hand in a small business in Mallorca
+
+<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+  There are three ways to stop writing quotes by hand, from least to most involved: a template
+  that does the maths, a connection between the quote and your management software, or a
+  configurator on your website where the customer picks sizes and materials and sees the price
+  straight away. Which one you need comes down to a single question: how many pricing rules you
+  have, and how many times a day you apply them.
+</div>
+
+## Why one quote eats a whole morning
+
+Picture an installation company in Palma asked to quote for fitting a unit. Someone has to check
+the measurements, look up prices, work out materials, add travel, apply the margin and put
+together a document the customer can read.
+
+Then that quote goes out by email or WhatsApp and sits there. If the customer asks for a change,
+recalculate. If they accept, someone copies the data into the management software, creates the
+record and schedules the work.
+
+Each step looks small. The problem shows up when it happens four times a day.
+
+<Senales items={[
+  { fuerte: "Every quote starts from scratch.", texto: "The same calculations get repeated and data is copied from previous jobs." },
+  { fuerte: "Prices live in several places.", texto: "There are rates in three files and nobody is entirely sure which one is current." },
+  { fuerte: "Calculation errors slip through.", texto: "A formula dragged one row too far or a two-year-old price quietly eats the margin." },
+  { fuerte: "The customer waits.", texto: "The quote is late because whoever writes it is out on a job." },
+  { fuerte: "Nobody knows what is outstanding.", texto: "Which were sent, which were accepted and which deserve a follow-up call." },
+]} />
+
+You do not need to be a large company to have this problem. It is enough to have several rate
+cards, configurable products or a sale that depends on a lot of manual arithmetic. In
+[renovations](/sectores/reformas), joinery and installation work it is close to universal.
+
+## The three ways to automate it, from least to most
+
+The right answer depends on how each business works, and often nothing new needs building: it
+can be enough to tidy up the spreadsheet you already have or connect two tools you already pay
+for. When the process is more involved, there are three routes.
+
+### 1. A quote template that does the maths
+
+If all your quotes follow roughly the same structure, a well-built template applies the rates,
+calculates the totals and produces the document without repeating the steps by hand.
+
+It is the sensible option when there are not many pricing rules and what is missing is order,
+not software. It costs little and you feel it the same week.
+
+### 2. Connecting quotes to your management software
+
+The next step up is for the quote to talk to your [CRM](/modulos), your stock or your invoicing.
+Customer details get typed once. When a quote is accepted and turns into a job, the information
+moves on by itself instead of starting again from the beginning.
+
+### 3. A quote configurator on your website
+
+If your customers choose sizes, materials, finishes, quantities or extras, a configurator on
+your site lets them build what they want and see a figure immediately.
+
+A joinery in Mallorca, for instance, can let the customer pick the dimensions of a unit, the
+timber and the finish. The system applies your pricing rules, gives the number and leaves you
+the details you need to carry on the sale. Depending on how complex it is, it can produce a
+guide price or a full proposal waiting for you to approve it.
+
+<Nota>
+  Automating a calculation does **not** mean every quote goes out unseen. Unusual jobs, costs
+  that move and awkward conditions still need a person to sign them off. A well-built
+  configurator knows when to stop and hand the decision back to you.
+</Nota>
+
+## When it is not worth it
+
+If you write three quotes a week and each one is unlike the last, automating it means spending
+money to solve something that is not costing you money. The same goes if your price comes out of
+visiting the site: what gets automated there is the paperwork afterwards, not the calculation.
+
+We are not saying this out of modesty. We are saying it because it is the mistake we see most
+often: [automating before anyone looked at the
+process](/blog/por-que-diagnosticar-antes-de-automatizar) does not fix it, it speeds it up.
+
+## What we can do
+
+At Nexo4Pymes we build [custom solutions](/servicios) around the processes a business actually
+has. In this area that usually means:
+
+- A web configurator that calculates with your rates and your conditions.
+- Customers, quotes and sales history in one place.
+- The website form connected to your management software.
+- Documents generated automatically, without typing the same data twice.
+- Follow-up on whatever is waiting for an answer.
+- Integrating what you already use when it makes sense, rather than replacing it on principle.
+
+## What it costs
+
+There is no single price, and be wary of anyone who gives you one without asking anything. It
+depends on how many pricing rules there are, how many products or services, what has to be
+connected and how far you want to take it. A template and a configurator wired into stock and
+sales are nowhere near the same job.
+
+That is why we always start the same way: a free fifteen-minute video call and, if it is
+warranted, a diagnosis that puts in writing what is worth improving, how far it goes and in what
+order. If the answer is that an off-the-shelf tool will do, we tell you that too.
+
+## Frequently asked questions
+
+{FAQ_PRESUPUESTOS.en.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Still building every quote from scratch?"
+  boton="Message us on WhatsApp"
+  href={waLink("GENERAL", undefined, "en")}
+  externo
+>
+  <p>
+    Tell us how you work out your prices, which tools you use and where the time goes. We will
+    look at whether yours is a template, an integration or a custom configurator.
+  </p>
+  <p>
+    We look for the smallest thing that solves the problem. **Without building more than you
+    need.**
+  </p>
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "en",
+          titulo: "How to stop writing quotes by hand in a small business in Mallorca",
+          descripcion:
+            "The three ways to automate quotes — template, integration or web configurator — which one fits your pricing rules, and when it is not worth doing.",
+          url: `${marca.dominio}/en/blog/automatizar-presupuestos-pymes-mallorca`,
+          fecha: "2026-10-09",
+        }),
+        esquemaFaq(
+          FAQ_PRESUPUESTOS.en.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/en/blog/automatizar-presupuestos-pymes-mallorca#faq`,
+          "en",
+        ),
+      ]),
+    ),
+  }}
+/>

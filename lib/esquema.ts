@@ -188,9 +188,13 @@ export function esquemaNegocio(lang: Idioma) {
       })),
     },
     /* sameAs le dice a Google qué perfiles son de esta misma empresa.
-       Solo Instagram: el perfil de Facebook ya no se enlaza, y listar
-       aquí una página que no reconocemos en la web sería incoherente. */
-    sameAs: [marca.instagram],
+       El de más peso con diferencia es la ficha de Google Business
+       Profile: es lo que une esta web con el negocio verificado del
+       mapa. Entra sola en cuanto esté puesta en content/marca.ts.
+
+       El perfil de Facebook ya no se enlaza, y listar aquí una página
+       que no reconocemos en la web sería incoherente. */
+    sameAs: [marca.instagram, marca.googleBusiness].filter(Boolean),
   };
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarClock, Check, Mail, MapPin, MessageCircle, Phone, ShieldCheck } from "lucide-react";
+import { CalendarClock, Check, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Star } from "lucide-react";
 import Link from "@/components/i18n/Enlace";
 import { marca } from "@/content/marca";
 import { contenido } from "@/content/i18n";
@@ -38,7 +38,7 @@ const TX = {
     nosotros: "os contestamos nosotros, no un robot",
     agendar: "Ver huecos en el calendario",
     rapido: "Lo más rápido",
-    datos: { razon: "Razón social", ubicacion: "Dónde estamos", ambito: "Ámbito", ambitoTexto: "Mallorca y Baleares en persona, toda España en remoto" },
+    datos: { razon: "Razón social", ubicacion: "Dónde estamos", ambito: "Ámbito", ambitoTexto: "Mallorca y Baleares en persona, toda España en remoto", google: "Ficha en Google", googleTexto: "Vernos en Google Maps" },
     nav: [
       ["Agendar", "#agendar"],
       ["Formulario", "#formulario"],
@@ -51,7 +51,7 @@ const TX = {
     nosotros: "you get one of us, not a bot",
     agendar: "See available slots",
     rapido: "Quickest way",
-    datos: { razon: "Registered name", ubicacion: "Where we are", ambito: "Coverage", ambitoTexto: "Mallorca and the Balearics in person, all of Spain remotely" },
+    datos: { razon: "Registered name", ubicacion: "Where we are", ambito: "Coverage", ambitoTexto: "Mallorca and the Balearics in person, all of Spain remotely", google: "Google listing", googleTexto: "See us on Google Maps" },
     nav: [
       ["Book a call", "#agendar"],
       ["Form", "#formulario"],
@@ -64,7 +64,7 @@ const TX = {
     nosotros: "Sie bekommen uns, keinen Bot",
     agendar: "Freie Termine ansehen",
     rapido: "Am schnellsten",
-    datos: { razon: "Firmenname", ubicacion: "Wo wir sind", ambito: "Tätigkeitsgebiet", ambitoTexto: "Mallorca und die Balearen persönlich, ganz Spanien aus der Ferne" },
+    datos: { razon: "Firmenname", ubicacion: "Wo wir sind", ambito: "Tätigkeitsgebiet", ambitoTexto: "Mallorca und die Balearen persönlich, ganz Spanien aus der Ferne", google: "Google-Eintrag", googleTexto: "Auf Google Maps ansehen" },
     nav: [
       ["Termin buchen", "#agendar"],
       ["Formular", "#formulario"],
@@ -216,6 +216,13 @@ export function ContactoPage() {
             <Dato icono={Phone} etiqueta="WhatsApp" valor={marca.whatsappVisible} href={wa} externo />
             <Dato icono={Mail} etiqueta="Email" valor={marca.email} href={`mailto:${marca.email}`} />
             <Dato icono={MapPin} etiqueta={t.datos.ubicacion} valor={`${marca.calle}, ${marca.codigoPostal} ${marca.municipio}`} />
+            {/* La ficha de Google, si ya existe. Sale aquí y no en el pie
+                porque esta es la página donde alguien comprueba si la
+                empresa es real, y una ficha verificada con reseñas es la
+                comprobación que de verdad hace la gente. */}
+            {marca.googleBusiness ? (
+              <Dato icono={Star} etiqueta={t.datos.google} valor={t.datos.googleTexto} href={marca.googleBusiness} externo />
+            ) : null}
             <div className="sm:col-span-2">
               <Dato icono={MapPin} etiqueta={t.datos.ambito} valor={t.datos.ambitoTexto} />
             </div>

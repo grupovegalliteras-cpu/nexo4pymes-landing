@@ -63,6 +63,28 @@ export const marca = {
      a añadir la clave aquí y el enlace en el pie y en /nosotros. */
   instagram: "https://instagram.com/nexo4pymes",
 
+  /* FICHA DE GOOGLE BUSINESS PROFILE.
+     Es la pieza que une esta web con el negocio verificado que sale en
+     el mapa. En cuanto esté aquí, pasan tres cosas solas:
+
+       · entra en el `sameAs` de los datos estructurados, que es como se
+         le dice a Google «esta web y esa ficha son la misma empresa»;
+       · aparece un enlace en los datos de empresa de /contacto;
+       · deja de salir el aviso del build.
+
+     TODO(HUMANO): pegar aquí la dirección de la ficha. Sirve la del
+     botón «Compartir» del perfil (un enlace de maps.app.goo.gl o de
+     g.page). Lo que NO sirve es la dirección de la pantalla de
+     administración, que empieza por business.google.com y solo la veis
+     vosotros. */
+  googleBusiness: "",
+
+  /* Enlace directo para dejar una reseña. Google lo da en la ficha, en
+     «Pedir reseñas». Es el que hay que mandar a los clientes: cualquier
+     otro los deja en una búsqueda y la mitad se pierde por el camino.
+     TODO(HUMANO). */
+  googleResenas: "",
+
   /* CENTRALAVISOS — producto propio con landing aparte.
      A 19 de septiembre de 2026 centralavisos.com todavía no resuelve,
      así que se enlaza el despliegue de Vercel.

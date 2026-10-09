@@ -61,12 +61,31 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
        Había un icon.png dentro de [lang]/ y Next le ponía de dirección
        "/-/icon-8t26lv.png", que es un 404: la portada llevaba meses sin
        icono y Google enseña el icono junto a cada resultado en el móvil.
-       Apuntando a archivos de public/ no hay nada que adivinar. */
+       Apuntando a archivos de public/ no hay nada que adivinar.
+
+       POR QUÉ ESTAS TRES Y EN ESTE ORDEN:
+
+         · /favicon.ico primero. Es la dirección por convención, la que
+           prueba cualquiera que no encuentre la etiqueta, y la que
+           tampoco existía: 404 hasta el 9 de octubre. Lleva dentro los
+           tres tamaños pequeños (16, 32 y 48).
+
+         · 48 px. Google documenta que el favicon debería ser cuadrado y
+           de un múltiplo de 48. Había 32 y 512, y ninguno lo es.
+
+         · 512 px para pantallas de mucha densidad y para quien quiera
+           el icono grande.
+
+       OJO SI SE CAMBIA EL ICONO: conviene mantener las mismas
+       direcciones. Google rastrea el favicon por su cuenta y cachea el
+       resultado; cambiar la ruta reinicia esa espera. */
     icons: {
       icon: [
-        { url: "/assets/favicon-32.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon.ico", sizes: "48x48 32x32 16x16" },
+        { url: "/assets/favicon-48.png", sizes: "48x48", type: "image/png" },
         { url: "/assets/favicon-512.png", sizes: "512x512", type: "image/png" },
       ],
+      shortcut: "/favicon.ico",
       apple: [{ url: "/assets/favicon-180.png", sizes: "180x180" }],
     },
     robots: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },

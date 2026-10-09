@@ -84,11 +84,17 @@ const metadataComun: Metadata = {
   metadataBase: new URL(marca.dominio),
   authors: [{ name: "Nexo4Pymes" }],
   robots: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
+  /* Los mismos que la otra plantilla, y tienen que seguir siéndolo: si
+     las dos mitades del sitio declararan iconos distintos, Google
+     elegiría uno y no sabríamos cuál. El porqué de cada uno está
+     explicado en app/(demo)/[lang]/layout.tsx. */
   icons: {
     icon: [
-      { url: "/assets/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico", sizes: "48x48 32x32 16x16" },
+      { url: "/assets/favicon-48.png", sizes: "48x48", type: "image/png" },
       { url: "/assets/favicon-512.png", sizes: "512x512", type: "image/png" },
     ],
+    shortcut: "/favicon.ico",
     apple: [{ url: "/assets/favicon-180.png", sizes: "180x180" }],
   },
   other: {

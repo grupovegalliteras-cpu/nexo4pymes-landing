@@ -26,6 +26,15 @@
      npm run indexnow                      → todas las URLs del sitemap
      npm run indexnow -- /servicios /blog  → solo esas
 
+   OJO EN GIT BASH (Windows). Convierte cualquier argumento que
+   empiece por "/" en una ruta de disco: "/servicios" le llega al
+   script como "C:/Program Files/Git/servicios". Pasó de verdad y se
+   anunciaron tres direcciones inventadas. Por eso hay una
+   comprobación más abajo que lo corta antes de enviar nada. Para
+   evitarlo del todo, en Git Bash se pasan las direcciones enteras:
+
+     npm run indexnow -- https://nexo4pymes.com/servicios
+
    Avisar de una página que no ha cambiado no rompe nada, pero no
    sirve de nada y gasta la paciencia del buscador. Si el cambio es
    de dos páginas, se nombran las dos.
@@ -61,6 +70,29 @@ let urls;
 
 if (pedidas.length > 0) {
   urls = pedidas.map((p) => (p.startsWith("http") ? p : `${DOMINIO}${p.startsWith("/") ? p : `/${p}`}`));
+
+  /* Que lo que se va a anunciar sea de verdad una dirección de este
+     dominio. Sin esto, la conversión de rutas de Git Bash (ver
+     arriba) manda direcciones inventadas y el buscador las acepta
+     con un 200 tan tranquilo: él solo mira el dominio. */
+  const malas = urls.filter((u) => {
+    try {
+      const x = new URL(u);
+      /* La unidad de disco se busca como "/C:/", con la barra delante.
+         Sin esa barra, el "s:/" de "https:/" cuenta como unidad y la
+         comprobación tumba también las direcciones buenas. */
+      return x.origin !== DOMINIO || /\s|%20|\/[A-Za-z]:\//.test(u);
+    } catch {
+      return true;
+    }
+  });
+  if (malas.length > 0) {
+    salir(
+      `Estas direcciones no son de ${DOMINIO} o están mal formadas:\n    ` +
+        malas.join("\n    ") +
+        `\n\n  Si estás en Git Bash, escribe la dirección entera:\n    npm run indexnow -- ${DOMINIO}/servicios`,
+    );
+  }
 } else {
   /* El sitemap del sitio en vivo, no el del proyecto: así no se
      anuncia una página que todavía no está desplegada. */

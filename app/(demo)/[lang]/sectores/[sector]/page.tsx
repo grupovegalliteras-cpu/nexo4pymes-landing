@@ -29,7 +29,9 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/sectores/[
   });
   const description = tr(lang, {
     es: `${s.lema}. Panel y app para empresas de ${s.nombre.toLowerCase()} en Mallorca: avisos, partes con firma, rutas y facturación.`,
-    en: `${s.lema}. Dashboard and technician app for ${s.nombre.toLowerCase()} companies in Mallorca: jobs, signed reports, routes and invoicing.`,
+    /* Más corta que la española a propósito: los lemas en inglés son
+       largos y con «HVAC and refrigeration» se iba a 181 caracteres. */
+    en: `${s.lema}. Dashboard and app for ${s.nombre.toLowerCase()} firms in Mallorca: jobs, signed reports, invoicing.`,
     de: `${s.lema}. Dashboard und Techniker-App für Ihren Betrieb auf Mallorca: Aufträge, unterschriebene Berichte, Routen und Rechnungen.`,
   });
   return {

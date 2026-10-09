@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   });
   const descripcion = tr(lang, {
     es: "Las tres formas de dejar de hacer presupuestos a mano: plantilla, integración o configurador web. Cuál encaja en vuestro caso y cuándo no compensa.",
-    en: "Three ways to stop writing quotes by hand: a template, an integration with your management software, or a web configurator. Which one fits, and when it is not worth it.",
+    en: "Three ways to stop writing quotes by hand: a template, an integration or a web configurator. Which one fits your pricing rules, and when it is not worth it.",
     de: "Drei Wege, Angebote nicht mehr von Hand zu schreiben: Vorlage, Anbindung an die Warenwirtschaft oder Web-Konfigurator. Welcher passt und wann es sich nicht lohnt.",
   });
   return {

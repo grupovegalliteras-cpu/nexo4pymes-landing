@@ -34,7 +34,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       title: "Nexo Pádel: tu club de pádel, sin estar pegado al WhatsApp",
       description: DESCRIPCION,
       url: alternativas("es", "/padel").canonical,
+      /* El fotograma del vídeo del hero (1280×720), no la imagen genérica
+         de la marca: quien recibe el enlace ve pistas de pádel y entiende
+         de qué va antes de abrirlo. */
+      images: [{ url: "/padel/hero.jpg", width: 1280, height: 720, alt: "Nexo Pádel" }],
     },
+    twitter: { card: "summary_large_image", images: ["/padel/hero.jpg"] },
   };
 }
 

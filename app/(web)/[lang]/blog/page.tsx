@@ -10,7 +10,19 @@ import { fijarIdioma } from "@/lib/idioma-servidor";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const lang = idiomaOBase((await params).lang);
-  return { title: "Blog", description: contenido(lang).blog.blogHome.entradilla, alternates: alternativas(lang, "/blog") };
+  /* title absoluto: con la plantilla quedaba «Blog | Nexo4Pymes», 17
+     caracteres que no contestan a ninguna búsqueda. */
+  return {
+    title: {
+      absolute: tr(lang, {
+        es: "Blog de software para pymes en Mallorca | Nexo4Pymes",
+        en: "Blog: software for small businesses in Mallorca | Nexo4Pymes",
+        de: "Blog: Software für kleine Betriebe auf Mallorca | Nexo4Pymes",
+      }),
+    },
+    description: contenido(lang).blog.blogHome.entradilla,
+    alternates: alternativas(lang, "/blog"),
+  };
 }
 
 export default async function PaginaBlog({ params }: { params: Promise<{ lang: string }> }) {
@@ -31,6 +43,16 @@ export default async function PaginaBlog({ params }: { params: Promise<{ lang: s
       <Reveal retraso={0.06}>
         <p className="mt-5 max-w-[60ch] text-[16.5px] leading-relaxed text-white/65">
           {blogHome.entradilla}
+        </p>
+      </Reveal>
+      {/* Un párrafo más, y no de relleno: la página listaba tres
+          artículos y 246 palabras, que para un buscador es un índice sin
+          contenido propio. Esto dice desde dónde se escribe, que es lo
+          que distingue estos artículos de los mil que hay sobre lo
+          mismo. */}
+      <Reveal retraso={0.1}>
+        <p className="mt-4 max-w-[60ch] text-[16px] leading-relaxed text-white/55">
+          {blogHome.desde}
         </p>
       </Reveal>
 

@@ -21,7 +21,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       absolute: tr(lang, {
         es: "Por qué automatizar sin diagnosticar antes puede hundiros el negocio",
         en: "Why automating without a diagnosis first can sink your business",
-        de: "Warum Automatisieren ohne vorherige Analyse Ihr Geschäft versenken kann",
+        /* 65 caracteres. El titular del artículo sigue siendo el largo;
+           este es solo el del buscador, que cortaba a los 70. */
+        de: "Automatisieren ohne Analyse kann Ihr Geschäft versenken",
       }),
     },
     /* Estaba en 213 caracteres: Google corta sobre 155 y se perdía el

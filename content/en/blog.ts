@@ -4,6 +4,8 @@ export const blogHome = {
   categoria: "Blog",
   titular: "Technology for small businesses, explained without jargon",
   entradilla: "Articles on what software a small business really needs, in what order it's best set up and which mistakes turn out expensive.",
+  desde:
+    "We write this from Palma, working with service companies across Mallorca: maintenance, cleaning, pools, HVAC, landscaping, pest control, solar and renovations. The examples come from real cases, the figures are the ones we actually work with, and when the honest answer is \"you don't need software\", we say that too.",
   publicados: [
     {
       etiqueta: "Enquiries · 6 min",

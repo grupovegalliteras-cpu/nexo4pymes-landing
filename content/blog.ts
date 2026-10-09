@@ -10,6 +10,11 @@ export const blogHome = {
   /* ORDEN: el más reciente arriba. Al publicar uno nuevo se añade aquí,
      en app/sitemap.ts y en app/llms.txt/route.ts, y se quita de `proximos`
      si estaba anunciado. */
+  /* El párrafo de debajo de la entradilla. Dice desde dónde se escribe
+     esto, que es lo único que lo separa de los mil artículos que hay
+     sobre lo mismo. */
+  desde:
+    "Lo escribimos desde Palma, trabajando con empresas de servicios de Mallorca: mantenimiento, limpieza, piscinas, climatización, jardinería, control de plagas, solar y reformas. Los ejemplos salen de casos reales, los precios que aparecen son los que manejamos, y cuando la respuesta honesta es «no hace falta software», también lo decimos.",
   publicados: [
     {
       etiqueta: "Avisos y comunicación · 6 min",

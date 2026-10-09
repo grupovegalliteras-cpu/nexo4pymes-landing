@@ -99,8 +99,19 @@ export const marca = {
      quiere juntas en una línea y schema.org las quiere separadas
      (streetAddress / addressLocality). Partiendo de aquí no puede
      haber una dirección en la página legal y otra en los datos
-     estructurados. */
-  calle: "Carrer General Riera 64",
+     estructurados.
+
+     EL NOMBRE DE LA CALLE LLEVA "del" porque es como la escribe la
+     ficha verificada de Google: "Carrer del General Riera". Para una
+     búsqueda local, que la web y la ficha digan exactamente lo mismo
+     es lo que confirma que son la misma empresa; dos variantes
+     parecidas son dos empresas a medias.
+
+     EL CÓDIGO POSTAL ES 07010 Y ESTÁ CONFIRMADO. Al geocodificar para
+     sacar las coordenadas, OpenStreetMap devolvía 07003 para este
+     número y quedó la duda apuntada. La ficha de Google, que es el
+     dato verificado, dice 07010. Queda cerrado. */
+  calle: "Carrer del General Riera 64",
   codigoPostal: "07010",
   municipio: "Palma",
 

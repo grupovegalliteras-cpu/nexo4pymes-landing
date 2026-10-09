@@ -72,18 +72,29 @@ export const marca = {
        · aparece un enlace en los datos de empresa de /contacto;
        · deja de salir el aviso del build.
 
-     TODO(HUMANO): pegar aquí la dirección de la ficha. Sirve la del
-     botón «Compartir» del perfil (un enlace de maps.app.goo.gl o de
-     g.page). Lo que NO sirve es la dirección de la pantalla de
-     administración, que empieza por business.google.com y solo la veis
-     vosotros. */
-  googleBusiness: "",
+     POR QUÉ ESTA DIRECCIÓN Y NO LA DE «COMPARTIR». El botón de
+     compartir da un share.google/… que es un acortador con parámetros
+     de seguimiento y que Google puede rotar. Esta se construye con el
+     identificador de sitio (place_id), que no cambia mientras exista
+     la ficha, y es el formato que documenta Google para enlazar a un
+     sitio concreto.
 
-  /* Enlace directo para dejar una reseña. Google lo da en la ficha, en
-     «Pedir reseñas». Es el que hay que mandar a los clientes: cualquier
-     otro los deja en una búsqueda y la mitad se pierde por el camino.
-     TODO(HUMANO). */
-  googleResenas: "",
+     El place_id salió del propio enlace de reseñas de abajo: al
+     seguirlo, Google redirige a search.google.com/local/writereview
+     con placeid=ChIJBW1Kl7WTlxIRPz17tKA2Im0. */
+  googleBusiness: "https://www.google.com/maps/place/?q=place_id:ChIJBW1Kl7WTlxIRPz17tKA2Im0",
+
+  /* Enlace directo para dejar una reseña, el que da Google en la ficha
+     en «Pedir reseñas». Es el que hay que mandar a los clientes:
+     cualquier otro los deja en una búsqueda y por el camino se pierde
+     la mitad.
+
+     NO SE ENSEÑA EN LA WEB Y ES A PROPÓSITO: pedir una reseña a quien
+     acaba de entrar en la página no tiene sentido, y una web que la
+     pide a cualquiera recoge opiniones de gente que no es cliente. Se
+     manda por WhatsApp a quien ya ha trabajado con vosotros. Está aquí
+     para tenerlo en un sitio y que no se pierda. */
+  googleResenas: "https://g.page/r/CT89e7SgNiJtECE/review",
 
   /* CENTRALAVISOS — producto propio con landing aparte.
      A 19 de septiembre de 2026 centralavisos.com todavía no resuelve,

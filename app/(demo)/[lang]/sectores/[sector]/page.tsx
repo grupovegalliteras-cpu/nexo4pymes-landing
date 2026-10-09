@@ -4,7 +4,8 @@ import { SECTORES, isSectorId } from "@/data/sectors";
 import { sectorDe } from "@/data/sectors-i18n";
 import { SectorPage } from "@/components/site/sector-page";
 import { OG_LOCALE, alternativas, idiomaOBase, tr } from "@/lib/i18n";
-import { esquemaMigas, esquemaServicio, grafoPagina } from "@/lib/esquema";
+import { esquemaFaq, esquemaMigas, esquemaServicio, grafoPagina, urlAbsoluta } from "@/lib/esquema";
+import { textoSector } from "@/content/sectores-seo-i18n";
 
 export function generateStaticParams() {
   return SECTORES.map((s) => ({ sector: s.id }));
@@ -60,6 +61,15 @@ export default async function Page({ params }: PageProps<"/[lang]/sectores/[sect
           __html: JSON.stringify(
             grafoPagina([
               esquemaMigas(lang, [{ nombre: s.nombre, ruta }]),
+              /* Las tres preguntas que se ven en la página, también como
+                 dato. Son distintas en cada sector: es lo que puede hacer
+                 que a una AI Overview le valga esta página y no la de un
+                 competidor que habla de software en general. */
+              esquemaFaq(
+                textoSector(lang, sector).faq.map(([p, r]) => ({ p, r })),
+                urlAbsoluta(lang, ruta) + "#faq",
+                lang,
+              ),
               esquemaServicio({
                 lang,
                 nombre: tr(lang, {

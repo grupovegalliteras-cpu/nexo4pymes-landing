@@ -7,7 +7,46 @@ import { whatsappLink } from "@/data/site";
 import { useEffect } from "react";
 import type { SectorId } from "@/data/sectors";
 import { sectorDe, sectoresDe } from "@/data/sectors-i18n";
+import { textoSector } from "@/content/sectores-seo-i18n";
 import { useFmt, useIdioma } from "@/components/i18n/idioma";
+
+/* Rótulos de las secciones nuevas. El texto largo de cada sector vive
+   en content/sectores-seo.ts (y sus hermanos en/ y de/). */
+const TX2 = {
+  es: {
+    comoEs: "Cómo es el día en",
+    queCambia: "Qué cambia con Nexo4Pymes",
+    preguntas: "Preguntas frecuentes",
+    seguir: "Para seguir leyendo",
+    posts: [
+      ["Cómo organizar llamadas, WhatsApp y avisos de clientes", "/blog/centralizar-avisos-llamadas-whatsapp-mallorca"],
+      ["Cómo dejar de hacer presupuestos a mano", "/blog/automatizar-presupuestos-pymes-mallorca"],
+      ["Qué construimos y cómo trabajamos", "/servicios"],
+    ] as [string, string][],
+  },
+  en: {
+    comoEs: "What the day looks like:",
+    queCambia: "What changes with Nexo4Pymes",
+    preguntas: "Frequently asked questions",
+    seguir: "Further reading",
+    posts: [
+      ["How to organise calls, WhatsApp and customer requests", "/blog/centralizar-avisos-llamadas-whatsapp-mallorca"],
+      ["How to stop writing quotes by hand", "/blog/automatizar-presupuestos-pymes-mallorca"],
+      ["What we build and how we work", "/servicios"],
+    ] as [string, string][],
+  },
+  de: {
+    comoEs: "So sieht der Tag aus:",
+    queCambia: "Was sich mit Nexo4Pymes ändert",
+    preguntas: "Häufige Fragen",
+    seguir: "Weiterlesen",
+    posts: [
+      ["Anrufe, WhatsApp und Kundenanfragen ordnen", "/blog/centralizar-avisos-llamadas-whatsapp-mallorca"],
+      ["Aufhören, Angebote von Hand zu schreiben", "/blog/automatizar-presupuestos-pymes-mallorca"],
+      ["Was wir bauen und wie wir arbeiten", "/servicios"],
+    ] as [string, string][],
+  },
+};
 
 const TX = {
   es: { h1: (n: string) => `Tu empresa de ${n.toLowerCase()}, sin papeles ni llamadas perdidas`, asi: "Así lo resolvemos para empresas como la tuya.", verDemo: "Ver la demo", de: (e: string) => ` de ${e}`, enVivo: " en vivo", pide: "Pide la tuya por WhatsApp", tipico: "Un aviso típico", parte: "El parte del técnico", mediciones: "Mediciones propias del sector", a: "a", servicios: "Servicios y precios de ejemplo en la demo", desde: "Desde", otros: "Otros sectores", msg: (n: string) => `Hola, tengo una empresa de ${n.toLowerCase()} y he visto vuestra demo. Me gustaría verla con los datos de mi empresa.` },
@@ -26,6 +65,8 @@ export function SectorPage({ id }: { id: SectorId }) {
   const tx = TX[lang];
   const fmt = useFmt();
   const s = sectorDe(lang, id);
+  const seo = textoSector(lang, id);
+  const t2 = TX2[lang];
   const hydrated = useHydrated();
   const mensaje = tx.msg(s.nombre);
   // Una sola vez al abrir: si luego otra pestaña cambia de sector, no se lo disputamos (evita un bucle entre pestañas).
@@ -115,6 +156,72 @@ export function SectorPage({ id }: { id: SectorId }) {
             ))}
           </div>
         </div>
+        {/* ---------- Cómo es el día ----------
+            Prosa, y no otra tarjeta más. Una página de sector sin texto
+            corrido no contesta a ninguna búsqueda: es el motivo por el
+            que estas ocho páginas existían y no las encontraba nadie. */}
+        <div className="mt-14 grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
+          <div>
+            <h2 className="font-display text-[24px] leading-tight font-semibold tracking-tight sm:text-[30px]">
+              {t2.comoEs} {s.nombre.toLowerCase()}
+            </h2>
+            {seo.intro.map((parrafo) => (
+              <p key={parrafo.slice(0, 40)} className="mt-4 max-w-[62ch] text-[16px] leading-relaxed text-fg-2 sm:text-[17px]">
+                {parrafo}
+              </p>
+            ))}
+          </div>
+
+          <div>
+            <h2 className="font-display text-[24px] leading-tight font-semibold tracking-tight sm:text-[30px]">
+              {t2.queCambia}
+            </h2>
+            <ul className="mt-5 grid gap-4">
+              {seo.claves.map((clave) => (
+                <li key={clave.titulo} className="rounded-2xl border border-line bg-surface p-5">
+                  <h3 className="flex items-start gap-2 text-[15.5px] font-semibold">
+                    <Check className="mt-0.5 size-4 shrink-0 text-ok" />
+                    {clave.titulo}
+                  </h3>
+                  <p className="mt-2 text-[14.5px] leading-relaxed text-fg-2">{clave.texto}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* ---------- Preguntas ----------
+            Las mismas que se publican como FAQPage en la página de
+            servidor. Cada respuesta tiene que poder leerse suelta: así
+            es como la recorta un buscador de respuestas. */}
+        <div className="mt-14 max-w-[70ch]">
+          <h2 className="font-display text-[24px] leading-tight font-semibold tracking-tight sm:text-[30px]">
+            {t2.preguntas}
+          </h2>
+          <dl className="mt-6 grid gap-6">
+            {seo.faq.map(([pregunta, respuesta]) => (
+              <div key={pregunta} className="border-t border-line pt-5">
+                <dt className="text-[16.5px] font-semibold">{pregunta}</dt>
+                <dd className="mt-2 text-[15.5px] leading-relaxed text-fg-2">{respuesta}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="mt-12 rounded-2xl border border-line bg-surface-2/60 p-5 sm:p-6">
+          <h2 className="text-[13px] font-semibold text-fg-3">{t2.seguir}</h2>
+          <ul className="mt-3 grid gap-2.5 sm:grid-cols-3">
+            {t2.posts.map(([titulo, href]) => (
+              <li key={href}>
+                <Link href={href} className="flex items-start gap-2 text-[14.5px] leading-snug text-brand hover:underline">
+                  <span aria-hidden="true" className="mt-0.5">→</span>
+                  {titulo}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div className="mt-14">
           <h2 className="text-[13px] font-semibold text-fg-3">{tx.otros}</h2>
           <div className="mt-3 flex flex-wrap gap-2">

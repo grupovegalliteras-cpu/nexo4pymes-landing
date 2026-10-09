@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import Link from "@/components/i18n/Enlace";
-import { Boton } from "@/components/ui/Boton";
+import { MessageCircle } from "lucide-react";
 import { marca } from "@/content/marca";
 import { waLink } from "@/lib/whatsapp";
 /* `evento` se renombra: el manejador del formulario ya tiene un
@@ -123,13 +123,17 @@ function cuerpoWeb3Forms(campos: Campos, atribucion: Atribucion) {
   };
 }
 
+/* Los campos se ven igual en el tema claro y en el oscuro porque
+   todo sale de los mismos tokens (surface, line, fg). El anillo de
+   foco es visible a propósito: es el único indicador que tiene quien
+   navega con teclado. */
 const CAMPO =
-  "w-full rounded-tarjeta border border-white/12 bg-white/[.04] px-4 py-3 text-[15px] text-white " +
-  "placeholder:text-white/30 transition-colors duration-200 " +
-  "focus:border-azul/60 focus:bg-white/[.06] focus:outline-none";
+  "w-full rounded-xl border border-line bg-surface px-4 py-3 text-[15px] text-fg " +
+  "placeholder:text-fg-3 transition-colors duration-200 " +
+  "focus:border-brand focus:ring-2 focus:ring-brand/25 focus:outline-none";
 
-const ETIQUETA = "block text-[14px] font-medium text-white/80";
-const AYUDA = "mt-1.5 text-[12.5px] leading-snug text-white/45";
+const ETIQUETA = "block text-[14px] font-medium text-fg";
+const AYUDA = "mt-1.5 text-[12.5px] leading-snug text-fg-3";
 
 const TXF = {
   es: { whatsapp: "Escribidnos por WhatsApp", phNombre: "Marta García", phEmpresa: "Nombre del negocio", phEmail: "marta@sunegocio.com", elegir: "Elegid uno (opcional)", phMensaje: "Se nos van las mañanas contestando los mismos mensajes de siempre…", privacidad: "Ver la política de privacidad", revisad: "Revisad estos campos:" },
@@ -215,21 +219,26 @@ export function FormularioContacto() {
   /* ---------- ESTADO: ENVIADO ---------- */
   if (estado === "enviado") {
     return (
-      <div className="rounded-panel border border-mint/25 bg-mint/[.07] p-6 text-center sm:p-10">
+      <div className="rounded-2xl border border-ok/30 bg-ok-soft p-6 text-center sm:p-10">
         <span
           aria-hidden="true"
-          className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-mint/15 text-[26px] text-mint"
+          className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-ok/15 text-[26px] text-ok"
         >
           ✓
         </span>
-        <h3 className="mt-5 text-[22px] text-white sm:text-[26px]">{formulario.exito.titulo}</h3>
-        <p className="mx-auto mt-3 max-w-[46ch] text-[15px] leading-relaxed text-white/65">
+        <h3 className="mt-5 font-display text-[22px] font-semibold text-fg sm:text-[26px]">{formulario.exito.titulo}</h3>
+        <p className="mx-auto mt-3 max-w-[46ch] text-[15px] leading-relaxed text-fg-2">
           {formulario.exito.texto}
         </p>
         <div className="mt-7 flex justify-center">
-          <Boton href={waLink("GENERAL", undefined, lang)} externo tamano="md" flecha>
-            {TXF[lang].whatsapp}
-          </Boton>
+          <a
+            href={waLink("GENERAL", undefined, lang)}
+            target="_blank"
+            rel="noreferrer"
+            className="flex h-12 items-center justify-center gap-2 rounded-xl bg-[#1faa59] px-5 text-[15px] font-semibold text-white transition hover:brightness-110"
+          >
+            <MessageCircle className="size-5" /> {TXF[lang].whatsapp}
+          </a>
         </div>
       </div>
     );
@@ -242,14 +251,14 @@ export function FormularioContacto() {
     <form
       onSubmit={enviar}
       noValidate
-      className="rounded-panel border border-white/10 bg-gradient-to-br from-white/[.055] to-white/[.015] p-5 sm:p-8"
+      className="rounded-2xl border border-line bg-bg p-5 shadow-e1 sm:p-8"
     >
       {estado === "error" && (
         <div
           role="alert"
-          className="mb-6 rounded-tarjeta border border-coral/35 bg-coral/10 px-4 py-3.5 text-[14px] leading-relaxed text-white/85"
+          className="mb-6 rounded-xl border border-bad/35 bg-bad-soft px-4 py-3.5 text-[14px] leading-relaxed text-fg"
         >
-          <strong className="block font-semibold text-coral">{formulario.error.titulo}</strong>
+          <strong className="block font-semibold text-bad">{formulario.error.titulo}</strong>
           {faltan.length > 0 ? (
             <span className="mt-1 block">
               {TXF[lang].revisad} {faltan.map((k) => (formulario.campos as Record<string, { etiqueta: string }>)[k]?.etiqueta ?? k).join(", ")}.
@@ -257,7 +266,7 @@ export function FormularioContacto() {
           ) : (
             <span className="mt-1 block">
               {formulario.error.texto}{" "}
-              <a href={`mailto:${marca.email}`} className="text-coral underline underline-offset-4">
+              <a href={`mailto:${marca.email}`} className="text-bad underline underline-offset-4">
                 {marca.email}
               </a>
               . No hemos borrado lo que habíais escrito.
@@ -269,7 +278,7 @@ export function FormularioContacto() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor={`${id}-nombre`} className={ETIQUETA}>
-            {formulario.campos.nombre.etiqueta} <span className="text-coral">*</span>
+            {formulario.campos.nombre.etiqueta} <span className="text-bad">*</span>
           </label>
           <input
             id={`${id}-nombre`}
@@ -300,7 +309,7 @@ export function FormularioContacto() {
 
         <div>
           <label htmlFor={`${id}-email`} className={ETIQUETA}>
-            {formulario.campos.email.etiqueta} <span className="text-coral">*</span>
+            {formulario.campos.email.etiqueta} <span className="text-bad">*</span>
           </label>
           <input
             id={`${id}-email`}
@@ -348,7 +357,7 @@ export function FormularioContacto() {
             /* El desplegable nativo pinta su lista con el fondo del
                sistema: sin colorear las <option> a mano, en Windows y
                Android salen en texto blanco sobre blanco. */
-            className={`mt-2 ${CAMPO} [&>option]:bg-bottle-800 [&>option]:text-white`}
+            className={`mt-2 ${CAMPO} [&>option]:bg-surface [&>option]:text-fg`}
           >
             <option value="">{TXF[lang].elegir}</option>
             {formulario.sectores.map((sector) => (
@@ -361,7 +370,7 @@ export function FormularioContacto() {
 
         <div className="sm:col-span-2">
           <label htmlFor={`${id}-mensaje`} className={ETIQUETA}>
-            {formulario.campos.mensaje.etiqueta} <span className="text-coral">*</span>
+            {formulario.campos.mensaje.etiqueta} <span className="text-bad">*</span>
           </label>
           <textarea
             id={`${id}-mensaje`}
@@ -396,11 +405,11 @@ export function FormularioContacto() {
           type="checkbox"
           value="si"
           required
-          className="mt-1 h-5 w-5 shrink-0 rounded border-white/25 bg-white/10 accent-azul"
+          className="mt-1 h-5 w-5 shrink-0 rounded border-line accent-brand"
         />
-        <label htmlFor={`${id}-consentimiento`} className="text-[13.5px] leading-relaxed text-white/60">
+        <label htmlFor={`${id}-consentimiento`} className="text-[13.5px] leading-relaxed text-fg-2">
           {formulario.consentimiento}{" "}
-          <Link href="/legal#privacidad" className="text-azul underline underline-offset-4">
+          <Link href="/legal#privacidad" className="text-brand underline underline-offset-4">
             {TXF[lang].privacidad}
           </Link>
           .
@@ -408,9 +417,14 @@ export function FormularioContacto() {
       </div>
 
       <div className="mt-7">
-        <Boton type="submit" tamano="lg" flecha={!enviando} disabled={enviando} className="w-full sm:w-auto">
+        <button
+          type="submit"
+          disabled={enviando}
+          className="flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-brand px-6 text-[16px] font-semibold text-brand-ink transition hover:brightness-110 disabled:opacity-60 sm:h-12 sm:w-auto sm:text-[15px]"
+        >
           {enviando ? formulario.enviando : formulario.enviar}
-        </Boton>
+          {!enviando && <span aria-hidden="true">→</span>}
+        </button>
       </div>
 
       <p aria-live="polite" className="sr-only">

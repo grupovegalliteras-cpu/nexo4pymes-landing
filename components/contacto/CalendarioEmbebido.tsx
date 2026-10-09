@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Boton } from "@/components/ui/Boton";
-import { Icono } from "@/components/ui/Icono";
+import { CalendarClock } from "lucide-react";
 import { marca } from "@/content/marca";
 import { contenido } from "@/content/i18n";
 import { useIdioma } from "@/components/i18n/idioma";
@@ -42,14 +41,23 @@ export function CalendarioEmbebido() {
   const { calendario } = contenido(lang).contacto;
   const [cargado, setCargado] = useState(false);
 
-  /* Parámetros de tema para que el widget no aparezca en blanco puro
-     dentro de una web oscura. Son los que documenta Calendly para
-     incrustaciones. */
-  const url = `${marca.calendly}?hide_gdpr_banner=1&background_color=0b0e1a&text_color=e9ebf4&primary_color=4c7dff`;
+  /* Parámetros de tema de Calendly. Antes iban fijos en oscuro, de
+     cuando la web entera era oscura; ahora el sitio tiene tema claro y
+     oscuro, así que se miran en el momento de pulsar. Se lee el
+     atributo que pone el script de app/(demo)/[lang]/layout.tsx. */
+  function urlCalendly() {
+    const oscuro =
+      typeof document !== "undefined" && document.documentElement.getAttribute("data-theme") === "dark";
+    const tema = oscuro
+      ? "&background_color=0d1a21&text_color=e6eef2&primary_color=3db1d3"
+      : "&background_color=ffffff&text_color=0c1a22&primary_color=0a5d78";
+    return `${marca.calendly}?hide_gdpr_banner=1${tema}`;
+  }
+  const url = cargado ? urlCalendly() : marca.calendly;
 
   if (cargado) {
     return (
-      <div className="overflow-hidden rounded-panel border border-white/10 bg-bottle-800">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface">
         <iframe
           src={url}
           title={calendario.titular}
@@ -61,30 +69,33 @@ export function CalendarioEmbebido() {
   }
 
   return (
-    <div
-      className="rounded-panel border border-white/10 bg-gradient-to-br from-white/[.055] to-white/[.015]
-                 p-6 text-center sm:p-10"
-    >
-      <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-caja bg-gradient-to-br from-azul to-violeta text-white">
-        <Icono nombre="agenda" size={24} />
+    <div className="rounded-2xl border border-line bg-surface p-6 text-center shadow-e1 sm:p-10">
+      <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-soft text-brand">
+        <CalendarClock className="size-6" />
       </span>
 
-      <h3 className="mt-5 text-[20px] text-white sm:text-[23px]">{calendario.consentimiento.titulo}</h3>
+      <h3 className="mt-5 font-display text-[20px] font-semibold text-fg sm:text-[23px]">
+        {calendario.consentimiento.titulo}
+      </h3>
 
-      <p className="mx-auto mt-3 max-w-[52ch] text-[14.5px] leading-relaxed text-white/60">
+      <p className="mx-auto mt-3 max-w-[52ch] text-[14.5px] leading-relaxed text-fg-2">
         {calendario.consentimiento.texto}
       </p>
 
       <div className="mt-7 flex flex-col items-center gap-3">
-        <Boton type="button" onClick={() => setCargado(true)} tamano="lg" className="w-full sm:w-auto">
+        <button
+          type="button"
+          onClick={() => setCargado(true)}
+          className="flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-brand px-5 text-[16px] font-semibold text-brand-ink transition hover:brightness-110 sm:h-12 sm:w-auto sm:text-[15px]"
+        >
           {calendario.consentimiento.boton}
-        </Boton>
+        </button>
 
         <a
           href={marca.calendly}
           target="_blank"
           rel="noopener"
-          className="inline-flex min-h-[44px] items-center text-[14px] text-white/55 underline-offset-4 hover:text-white hover:underline"
+          className="inline-flex min-h-[44px] items-center text-[14px] text-fg-3 underline-offset-4 hover:text-fg hover:underline"
         >
           {calendario.consentimiento.alternativa} ↗
         </a>

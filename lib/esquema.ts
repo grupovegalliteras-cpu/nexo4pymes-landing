@@ -1,4 +1,4 @@
-import { marca } from "@/content/marca";
+import { horarioAtencion, marca } from "@/content/marca";
 import { LOCALE, conIdioma, type Idioma } from "@/lib/i18n";
 
 /* ============================================================
@@ -136,6 +136,21 @@ export function esquemaNegocio(lang: Idioma) {
        están puestas a ojo. Anclan la ficha a Palma y no a "Baleares"
        en general. */
     geo: { "@type": "GeoCoordinates", latitude: marca.latitud, longitude: marca.longitud },
+    /* EL HORARIO, SI ESTÁ PUESTO. Sale de content/marca.ts y tiene
+       que coincidir con el de la ficha de Google: es el campo que
+       Google cruza entre la ficha verificada y el sitio oficial.
+       Si el array está vacío no se publica el campo, porque un
+       horario inventado o a medias hace más daño que no tenerlo. */
+    ...(horarioAtencion.length
+      ? {
+          openingHoursSpecification: horarioAtencion.map((tramo) => ({
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: tramo.dias,
+            opens: tramo.abre,
+            closes: tramo.cierra,
+          })),
+        }
+      : {}),
     /* El mismo número que el botón de WhatsApp de toda la web, en
        formato internacional, que es el que pide schema.org. */
     telephone: `+${marca.whatsapp}`,

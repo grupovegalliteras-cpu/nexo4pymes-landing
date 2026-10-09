@@ -1,8 +1,9 @@
 "use client";
 
-import { CalendarClock, Check, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Star } from "lucide-react";
+import { CalendarClock, Check, Clock, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Star } from "lucide-react";
 import Link from "@/components/i18n/Enlace";
 import { marca } from "@/content/marca";
+import { horarioTexto } from "@/lib/horario";
 import { contenido } from "@/content/i18n";
 import { useIdioma } from "@/components/i18n/idioma";
 import { whatsappLink } from "@/data/site";
@@ -38,7 +39,7 @@ const TX = {
     nosotros: "os contestamos nosotros, no un robot",
     agendar: "Ver huecos en el calendario",
     rapido: "Lo más rápido",
-    datos: { razon: "Razón social", ubicacion: "Dónde estamos", ambito: "Ámbito", ambitoTexto: "Mallorca y Baleares en persona, toda España en remoto", google: "Ficha en Google", googleTexto: "Vernos en Google Maps" },
+    datos: { razon: "Razón social", ubicacion: "Dónde estamos", ambito: "Ámbito", ambitoTexto: "Mallorca y Baleares en persona, toda España en remoto", google: "Ficha en Google", googleTexto: "Vernos en Google Maps", horario: "Horario" },
     nav: [
       ["Agendar", "#agendar"],
       ["Formulario", "#formulario"],
@@ -51,7 +52,7 @@ const TX = {
     nosotros: "you get one of us, not a bot",
     agendar: "See available slots",
     rapido: "Quickest way",
-    datos: { razon: "Registered name", ubicacion: "Where we are", ambito: "Coverage", ambitoTexto: "Mallorca and the Balearics in person, all of Spain remotely", google: "Google listing", googleTexto: "See us on Google Maps" },
+    datos: { razon: "Registered name", ubicacion: "Where we are", ambito: "Coverage", ambitoTexto: "Mallorca and the Balearics in person, all of Spain remotely", google: "Google listing", googleTexto: "See us on Google Maps", horario: "Opening hours" },
     nav: [
       ["Book a call", "#agendar"],
       ["Form", "#formulario"],
@@ -64,7 +65,7 @@ const TX = {
     nosotros: "Sie bekommen uns, keinen Bot",
     agendar: "Freie Termine ansehen",
     rapido: "Am schnellsten",
-    datos: { razon: "Firmenname", ubicacion: "Wo wir sind", ambito: "Tätigkeitsgebiet", ambitoTexto: "Mallorca und die Balearen persönlich, ganz Spanien aus der Ferne", google: "Google-Eintrag", googleTexto: "Auf Google Maps ansehen" },
+    datos: { razon: "Firmenname", ubicacion: "Wo wir sind", ambito: "Tätigkeitsgebiet", ambitoTexto: "Mallorca und die Balearen persönlich, ganz Spanien aus der Ferne", google: "Google-Eintrag", googleTexto: "Auf Google Maps ansehen", horario: "Öffnungszeiten" },
     nav: [
       ["Termin buchen", "#agendar"],
       ["Formular", "#formulario"],
@@ -79,6 +80,7 @@ export function ContactoPage() {
   const t = TX[lang];
   const { calendario, formulario, heroContacto, viasContacto } = contenido(lang).contacto;
   const wa = whatsappLink(waHola(lang));
+  const horario = horarioTexto(lang);
 
   return (
     <div className="bg-bg text-fg">
@@ -223,6 +225,11 @@ export function ContactoPage() {
             {marca.googleBusiness ? (
               <Dato icono={Star} etiqueta={t.datos.google} valor={t.datos.googleTexto} href={marca.googleBusiness} externo />
             ) : null}
+            {/* El horario, si está puesto en content/marca.ts. El mismo
+                dato que va en openingHoursSpecification, así que la
+                página y los datos estructurados no pueden decir cosas
+                distintas. */}
+            {horario ? <Dato icono={Clock} etiqueta={t.datos.horario} valor={horario.join(" · ")} /> : null}
             <div className="sm:col-span-2">
               <Dato icono={MapPin} etiqueta={t.datos.ambito} valor={t.datos.ambitoTexto} />
             </div>

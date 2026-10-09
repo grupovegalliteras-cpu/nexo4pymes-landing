@@ -135,6 +135,50 @@ export const marca = {
 } as const;
 
 /* ============================================================
+   HORARIO DE ATENCIÓN
+
+   Va aparte del objeto `marca` por una razón técnica: `marca` lleva
+   `as const` y eso congela el array vacío en un tipo que no admite
+   tramos. Aquí se declara con su tipo y se puede rellenar sin pelear
+   con TypeScript.
+
+   De aquí salen dos cosas y solo estas dos:
+     · `openingHoursSpecification` en los datos estructurados
+       (lib/esquema.ts);
+     · la fila "Horario" de /contacto, ya traducida (lib/horario.ts).
+
+   TIENE QUE DECIR LO MISMO QUE LA FICHA DE GOOGLE. No es una
+   recomendación de estilo: cuando la ficha verificada y el sitio
+   oficial de la misma empresa publican horarios distintos, el dato
+   deja de ser fiable para Google y pierde fuerza en los dos sitios.
+
+   Los días van con el nombre inglés que pide schema.org, que es
+   además el formato que la documentación de Google usa en sus
+   ejemplos de negocio local. Las horas, en 24 h y "HH:MM".
+
+   Un tramo por cada bloque de días con el mismo horario. Si hay
+   pausa al mediodía, son dos tramos de los mismos días:
+
+     { dias: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+       abre: "09:00", cierra: "14:00" },
+     { dias: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+       abre: "15:00", cierra: "18:00" },
+
+   TODO(HUMANO): copiar aquí el horario que publica la ficha.
+   ============================================================ */
+export type Dia = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
+
+export type TramoHorario = {
+  dias: Dia[];
+  /** Hora de apertura en formato 24 h, "HH:MM". */
+  abre: string;
+  /** Hora de cierre en formato 24 h, "HH:MM". */
+  cierra: string;
+};
+
+export const horarioAtencion: TramoHorario[] = [];
+
+/* ============================================================
    DATOS LEGALES — ÚNICO SITIO DONDE SE TOCAN
 
    Antes estaban escritos a mano dentro de app/legal/page.tsx, con

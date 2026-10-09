@@ -10,6 +10,7 @@ import { AvisosServicios } from "@/components/servicios/AvisosServicios";
 import { MetodoServicios } from "@/components/servicios/MetodoServicios";
 import { CasoDiagnostico } from "@/components/servicios/CasoDiagnostico";
 import { ComoEmpezar } from "@/components/servicios/ComoEmpezar";
+import { SectoresServicios } from "@/components/servicios/SectoresServicios";
 import { CierreServicios } from "@/components/servicios/CierreServicios";
 import { contenido } from "@/content/i18n";
 import { OG_LOCALE, alternativas, idiomaOBase, tr } from "@/lib/i18n";
@@ -105,6 +106,7 @@ export default async function PaginaServicios({ params }: { params: Promise<{ la
         <MetodoServicios />
         <CasoDiagnostico />
         <ComoEmpezar />
+        <SectoresServicios />
         <FaqSeccion id="faq" categoria={t({ es: "Preguntas frecuentes", en: "Frequently asked questions", de: "Häufige Fragen" })} titular={t({ es: "Antes de escribirnos", en: "Before you write to us", de: "Bevor Sie uns schreiben" })} preguntas={faqServicios} />
         <CierreServicios />
       </main>
@@ -115,6 +117,7 @@ export default async function PaginaServicios({ params }: { params: Promise<{ la
           { href: "#servicios", texto: t({ es: "Servicios", en: "Services", de: "Leistungen" }) },
           { href: "#metodo", texto: t({ es: "Método", en: "Method", de: "Methode" }) },
           { href: "#como-empezar", texto: t({ es: "Cómo se empieza", en: "How to start", de: "So beginnt es" }) },
+          { href: "#sectores", texto: t({ es: "Por oficio", en: "By trade", de: "Nach Branche" }) },
           { href: "/nosotros", texto: t({ es: "Quiénes somos", en: "About us", de: "Über uns" }) },
           { href: "/contacto", texto: t({ es: "Contacto", en: "Contact", de: "Kontakt" }) },
           { href: "/blog", texto: "Blog" },

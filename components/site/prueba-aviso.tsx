@@ -333,7 +333,7 @@ export function PruebaAviso() {
                 </button>
               )}
             </div>
-            <div ref={chat} data-lenis-prevent className="flex-1 space-y-2 overflow-y-auto bg-[radial-gradient(rgb(255_255_255/0.035)_1px,transparent_1px)] [background-size:14px_14px] px-3 py-4">
+            <div ref={chat} className="flex-1 space-y-2 overflow-y-auto bg-[radial-gradient(rgb(255_255_255/0.035)_1px,transparent_1px)] [background-size:14px_14px] px-3 py-4">
               {!msgs.length && (
                 <div className="mx-auto mt-2 max-w-[260px] rounded-xl bg-white/[0.06] px-3 py-2 text-center text-[12px] text-white/55">
                   {tx.ayuda}

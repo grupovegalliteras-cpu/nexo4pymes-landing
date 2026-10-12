@@ -25,8 +25,8 @@ import { ContactDock, SiteFooter, SiteNav, waHola } from "./chrome";
 import type { Idioma } from "@/lib/i18n";
 import { HeroNucleo } from "@/components/deeptech/hero";
 import { Metricas } from "@/components/deeptech/metricas";
-import { Cursor, Magnetico, moverFoco } from "@/components/deeptech/interaccion";
-import { Etiqueta, TituloGlitch } from "@/components/deeptech/piezas";
+import { Magnetico, moverFoco } from "@/components/deeptech/interaccion";
+import { Etiqueta, Titulo } from "@/components/deeptech/piezas";
 import { useMovimientoPortada } from "@/components/deeptech/movimiento";
 
 /* El panel y la app incrustados solo se pintan en el navegador (al llegar a
@@ -274,13 +274,13 @@ const T = {
 const TD = {
   es: {
     kSectores: "Tu sector",
-    kRecorrido: "Pipeline · un día",
-    kReal: "Software real",
-    kModulos: "Módulos",
-    kComo: "Método",
-    kFaq: "Preguntas",
-    kContacto: "Contacto",
-    escK: "En directo",
+    kRecorrido: "Un día de trabajo",
+    kReal: "El programa por dentro",
+    kModulos: "Qué incluye",
+    kComo: "Cómo empezamos",
+    kFaq: "Preguntas frecuentes",
+    kContacto: "Hablemos",
+    escK: "Así funciona",
     escH: "Así entra una llamada y así sale el trabajo.",
     escP: "La animación usa la empresa de ejemplo del sector que tengas elegido. Cámbialo un poco más abajo y verás otra llamada, otro cliente y otro técnico.",
     escPuntos: [
@@ -291,13 +291,13 @@ const TD = {
   },
   en: {
     kSectores: "Your industry",
-    kRecorrido: "Pipeline · one day",
-    kReal: "Real software",
-    kModulos: "Modules",
-    kComo: "Method",
-    kFaq: "FAQ",
-    kContacto: "Contact",
-    escK: "Live",
+    kRecorrido: "A working day",
+    kReal: "Inside the software",
+    kModulos: "What's included",
+    kComo: "How we start",
+    kFaq: "Frequently asked questions",
+    kContacto: "Let's talk",
+    escK: "How it works",
     escH: "This is how a call comes in and the job goes out.",
     escP: "The animation uses the sample company for the industry you have selected. Change it a little further down and you'll see another call, another customer and another technician.",
     escPuntos: [
@@ -308,13 +308,13 @@ const TD = {
   },
   de: {
     kSectores: "Ihre Branche",
-    kRecorrido: "Pipeline · ein Tag",
-    kReal: "Echte Software",
-    kModulos: "Module",
-    kComo: "Methode",
-    kFaq: "Fragen",
-    kContacto: "Kontakt",
-    escK: "Live",
+    kRecorrido: "Ein Arbeitstag",
+    kReal: "Die Software von innen",
+    kModulos: "Was dazugehört",
+    kComo: "So starten wir",
+    kFaq: "Häufige Fragen",
+    kContacto: "Sprechen wir",
+    escK: "So funktioniert es",
     escH: "So kommt ein Anruf rein und so geht der Auftrag raus.",
     escP: "Die Animation nutzt die Beispielfirma der Branche, die Sie gewählt haben. Ändern Sie sie etwas weiter unten, und Sie sehen einen anderen Anruf, einen anderen Kunden und einen anderen Techniker.",
     escPuntos: [
@@ -349,7 +349,6 @@ export function Landing() {
   useMovimientoPortada();
   return (
     <div data-theme="dark" className="deeptech text-fg">
-      <Cursor />
       <SiteNav dark />
       <Hero />
       <Metricas />
@@ -374,7 +373,7 @@ export function Landing() {
 function Hero() {
   const t = useT();
   const lang = useIdioma();
-  const eventos = t.pasos.map(([titulo, , modulo], i) => ({ hora: PASOS[i].h, texto: titulo, modulo }));
+  const eventos = t.pasos.map(([titulo], i) => ({ hora: PASOS[i].h, texto: titulo }));
   return (
     <HeroNucleo
       kicker={t.heroKicker}
@@ -399,15 +398,15 @@ function Escaparate() {
     <section id="en-directo" className="relative scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
         <div>
-          <Etiqueta num="03">{t.escK}</Etiqueta>
-          <TituloGlitch className="mt-5 text-[32px] sm:text-[46px]">{t.escH}</TituloGlitch>
+          <Etiqueta>{t.escK}</Etiqueta>
+          <Titulo className="mt-5 text-[32px] sm:text-[46px]">{t.escH}</Titulo>
           <p data-revelar className="mt-4 text-[17px] leading-relaxed text-fg-2">
             {t.escP}
           </p>
           <ol className="mt-8 grid gap-4">
             {t.escPuntos.map(([titulo, desc], i) => (
               <li key={titulo} data-revelar className="flex gap-4" style={{ "--d": `${120 + i * 100}ms` } as CSSProperties}>
-                <span className="dt-mono grid size-9 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.03] text-[11px] text-[var(--dt-cian)]">0{i + 1}</span>
+                <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-[14px] font-semibold text-[var(--dt-cian)]">{i + 1}</span>
                 <span>
                   <span className="block font-semibold text-fg">{titulo}</span>
                   <span className="mt-0.5 block text-[15px] leading-relaxed text-fg-2">{desc}</span>
@@ -440,7 +439,7 @@ function Colaboradores() {
     <section id="colaboradores" className="scroll-mt-20 pb-16 text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="dt-cristal rounded-[28px] p-6 sm:p-8">
-          <span className="dt-mono text-[11px] font-medium tracking-[0.16em] text-fg-3 uppercase">{t.categoria}</span>
+          <span className="text-[14px] font-semibold text-fg-3">{t.categoria}</span>
           <h2 className="mt-3 font-display text-[24px] leading-tight font-semibold tracking-[-0.03em] sm:text-[30px]">{t.titulo}</h2>
           <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-fg-2">{t.entradilla}</p>
           <ul className="dt-foco-grupo mt-7 grid gap-4 sm:grid-cols-2" onPointerMove={moverFoco}>
@@ -512,8 +511,8 @@ function SectorPicker() {
         <div onPointerMove={moverFoco} className="dt-foco dt-cristal rounded-[30px] p-5 sm:p-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <Etiqueta num="04">{t.kSectores}</Etiqueta>
-              <TituloGlitch className="mt-4 text-[28px] sm:text-[38px]">{t.sectH}</TituloGlitch>
+              <Etiqueta>{t.kSectores}</Etiqueta>
+              <Titulo className="mt-4 text-[28px] sm:text-[38px]">{t.sectH}</Titulo>
               <p className="mt-2 text-fg-2">{t.sectP}</p>
             </div>
           </div>
@@ -560,7 +559,7 @@ function SectorPicker() {
                 </div>
               </div>
               <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4">
-                <div className="dt-mono text-[11px] tracking-[0.14em] text-fg-3 uppercase">{t.checklist}</div>
+                <div className="text-[13px] font-semibold text-fg-3">{t.checklist}</div>
                 <ul className="mt-3 grid gap-1.5 text-[14px]">
                   {sector.checklist.map((c, i) => (
                     <motion.li key={c} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }} className="flex items-center gap-2">
@@ -573,7 +572,7 @@ function SectorPicker() {
                 </ul>
               </div>
               <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4">
-                <div className="dt-mono text-[11px] tracking-[0.14em] text-fg-3 uppercase">{t.mediciones}</div>
+                <div className="text-[13px] font-semibold text-fg-3">{t.mediciones}</div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   {sector.mediciones.slice(0, 4).map((m) => (
                     <div key={m.nombre} className="rounded-xl border border-white/[0.05] bg-white/[0.03] p-2.5">
@@ -584,7 +583,7 @@ function SectorPicker() {
                     </div>
                   ))}
                 </div>
-                <div className="dt-mono mt-4 text-[11px] tracking-[0.14em] text-fg-3 uppercase">{t.servicios}</div>
+                <div className="mt-4 text-[13px] font-semibold text-fg-3">{t.servicios}</div>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {sector.servicios.map((s) => (
                     <span key={s.nombre} className="rounded-md border border-white/[0.06] bg-white/[0.04] px-2 py-1 text-[12px]">
@@ -619,8 +618,8 @@ function Recorrido() {
     <section id="recorrido" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <Etiqueta num="05">{t.kRecorrido}</Etiqueta>
-          <TituloGlitch className="mt-5 text-[30px] sm:text-[46px]">{t.recH}</TituloGlitch>
+          <Etiqueta>{t.kRecorrido}</Etiqueta>
+          <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.recH}</Titulo>
           <p data-revelar className="mt-3 text-[17px] text-fg-2">
             {t.recP}
           </p>
@@ -636,7 +635,7 @@ function Recorrido() {
                 <li key={i} data-revelar className={cn("relative grid items-center gap-4 pl-16 md:grid-cols-2 md:gap-16 md:pl-0", i % 2 && "md:[&>*:first-child]:order-2")}>
                   <span className={cn("absolute top-1 left-[14px] grid size-[27px] place-items-center rounded-full shadow-[0_0_22px_-4px_rgb(56_225_255/0.8)] ring-4 ring-bg md:left-[calc(50%-13px)]", p.tone)}>{p.icon}</span>
                   <div className={cn(i % 2 ? "md:pl-4" : "md:pr-4 md:text-right")}>
-                    <div className="dt-mono text-[12px] font-medium tracking-[0.12em] text-[var(--dt-cian)] tabular">{p.h}</div>
+                    <div className="text-[14px] font-semibold text-[var(--dt-cian)] tabular">{p.h}</div>
                     <div className="font-display text-[24px] font-semibold tracking-[-0.025em]">{titulo}</div>
                     <p className="mt-1 text-[15px] text-fg-2">{desc}</p>
                   </div>
@@ -702,6 +701,19 @@ function SoftwareReal() {
   const { wide, vw } = useWide();
   useEffect(() => {
     useUi.getState().setPanelSection("direccion");
+    // el panel y la app se descargan en un rato libre tras cargar, no al
+    // llegar a la sección: así montarlos no da un tirón en mitad del scroll
+    const precargar = () => {
+      import("@/components/panel/shell");
+      import("@/components/app/shell");
+    };
+    // Safari tardó en tener requestIdleCallback: si no está, un temporizador
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(precargar, { timeout: 4000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(precargar, 2500);
+    return () => clearTimeout(id);
   }, []);
   return (
     <section className="relative overflow-hidden py-16 sm:py-24">
@@ -709,8 +721,8 @@ function SoftwareReal() {
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
-            <Etiqueta num="07">{t.kReal}</Etiqueta>
-            <TituloGlitch className="mt-5 text-[30px] sm:text-[46px]">{t.realH}</TituloGlitch>
+            <Etiqueta>{t.kReal}</Etiqueta>
+            <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.realH}</Titulo>
             <p className="mt-3 text-[16px] text-fg-2 sm:text-[17px]">
               <span className="lg:hidden">{t.realMovil}</span>
               <span className="max-lg:hidden">{t.realPc}</span>
@@ -726,18 +738,18 @@ function SoftwareReal() {
         <div data-scrub="inclinar">
           {wide === true && (
             <div className="mt-10 grid items-end gap-6 lg:grid-cols-[1fr_auto]">
-              <div className="dt-monitor overflow-hidden" data-lenis-prevent data-cursor="nativo">
+              <div className="dt-monitor overflow-hidden">
                 <div className="flex h-9 items-center gap-2 border-b border-white/[0.07] bg-[#080b11] px-3">
                   <span className="flex gap-1.5">
                     <span className="size-2.5 rounded-full bg-[#ff5f57]" />
                     <span className="size-2.5 rounded-full bg-[#febc2e]" />
                     <span className="size-2.5 rounded-full bg-[#28c840]" />
                   </span>
-                  <span className="dt-mono mx-auto rounded-md border border-white/[0.06] bg-white/[0.03] px-3 py-0.5 text-[11px] text-fg-3">panel.nexo4pymes.com</span>
+                  <span className="mx-auto rounded-md border border-white/[0.06] bg-white/[0.03] px-3 py-0.5 text-[11px] text-fg-3">panel.nexo4pymes.com</span>
                 </div>
                 <ScaledPanel />
               </div>
-              <div className="flex justify-center" data-lenis-prevent data-cursor="nativo">
+              <div className="flex justify-center">
                 <PhoneFrame scale={0.72}>
                   <AppShell />
                 </PhoneFrame>
@@ -747,7 +759,7 @@ function SoftwareReal() {
           {wide === false && (
             <>
               {/* en el móvil el panel de 1280 px no se lee: se enseña la app, que es nativa de esta pantalla */}
-              <div className="mt-8 flex justify-center" data-lenis-prevent>
+              <div className="mt-8 flex justify-center">
                 <PhoneFrame scale={Math.min(0.86, (vw - 40) / 390)}>
                   <AppShell />
                 </PhoneFrame>
@@ -781,8 +793,8 @@ function Modulos() {
     <section id="modulos" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <Etiqueta num="08">{t.kModulos}</Etiqueta>
-          <TituloGlitch className="mt-5 text-[30px] sm:text-[46px]">{t.modH}</TituloGlitch>
+          <Etiqueta>{t.kModulos}</Etiqueta>
+          <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.modH}</Titulo>
           <p data-revelar className="mt-3 text-[17px] text-fg-2">
             {t.modP(modulos.length)}
           </p>
@@ -842,12 +854,12 @@ function Como() {
   return (
     <section id="como" className="scroll-mt-20 py-16 text-white sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <Etiqueta num="09">{t.kComo}</Etiqueta>
-        <TituloGlitch className="mt-5 max-w-2xl text-[30px] sm:text-[46px]">{t.comoH}</TituloGlitch>
+        <Etiqueta>{t.kComo}</Etiqueta>
+        <Titulo className="mt-5 max-w-2xl text-[30px] sm:text-[46px]">{t.comoH}</Titulo>
         <div className="dt-foco-grupo relative mt-12 grid gap-5 md:grid-cols-3" onPointerMove={moverFoco}>
           {t.como.map(([titulo, desc], i) => (
             <div key={i} data-revelar className="dt-foco dt-cristal relative rounded-[24px] p-6" style={{ "--d": `${i * 110}ms` } as CSSProperties}>
-              <div className="dt-numero-paso font-display text-[84px] leading-none font-semibold tracking-[-0.06em]">0{i + 1}</div>
+              <div className="dt-numero-paso font-display text-[84px] leading-none font-semibold tracking-[-0.06em]">{i + 1}</div>
               <div className="mt-2 font-display text-[22px] font-semibold tracking-[-0.025em]">{titulo}</div>
               <p className="mt-2 text-[15px] leading-relaxed text-fg-2">{desc}</p>
             </div>
@@ -866,8 +878,8 @@ function Faq() {
     <section id="preguntas" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.4fr]">
         <div>
-          <Etiqueta num="10">{t.kFaq}</Etiqueta>
-          <TituloGlitch className="mt-5 text-[30px] sm:text-[46px]">{t.faqH}</TituloGlitch>
+          <Etiqueta>{t.kFaq}</Etiqueta>
+          <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.faqH}</Titulo>
           <p className="mt-3 text-[17px] text-fg-2">{t.faqP}</p>
         </div>
         <div data-revelar className="dt-cristal divide-y divide-white/[0.07] overflow-hidden rounded-[24px]">
@@ -906,8 +918,8 @@ function Contacto() {
       <div className="dt-luz-cierre pointer-events-none" />
       <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2">
         <div>
-          <Etiqueta num="11">{t.kContacto}</Etiqueta>
-          <TituloGlitch className="mt-5 text-[34px] leading-[1.02] sm:text-[56px]">{t.ctH}</TituloGlitch>
+          <Etiqueta>{t.kContacto}</Etiqueta>
+          <Titulo className="mt-5 text-[34px] leading-[1.02] sm:text-[56px]">{t.ctH}</Titulo>
           <p className="mt-4 max-w-lg text-[17px] text-fg-2">{t.ctP}</p>
           <div className="mt-8 grid gap-3 text-[15px]">
             {t.ctPuntos.map((x, i) => (

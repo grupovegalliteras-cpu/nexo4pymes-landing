@@ -75,6 +75,11 @@ html:has(.deeptech) body {
   background: #020306;
   color-scheme: dark;
 }
+/* los enlaces del menú a secciones de la portada bajan suave (el scroll de
+   la rueda es el del navegador: el suavizado con Lenis se quitó por lento) */
+html:has(.deeptech) {
+  scroll-behavior: smooth;
+}
 
 /* Rejilla de toda la página, fija: se pinta una vez y no cuesta nada al hacer scroll */
 .deeptech::before {
@@ -104,23 +109,6 @@ html:has(.deeptech) body {
   outline-offset: 3px;
 }
 
-/* Lenis (copiado de lenis/dist/lenis.css) */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis:not(.lenis-autoToggle).lenis-stopped {
-  overflow: clip;
-}
-.lenis [data-lenis-prevent],
-.lenis [data-lenis-prevent-wheel],
-.lenis [data-lenis-prevent-touch] {
-  overscroll-behavior: contain;
-}
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-}
-
 /* ---------------- Hero ---------------- */
 
 .dt-rejilla {
@@ -145,7 +133,6 @@ html.lenis body {
     radial-gradient(closest-side at 62% 46%, rgb(56 225 255 / 0.17), transparent 72%),
     radial-gradient(closest-side at 72% 36%, rgb(157 123 255 / 0.16), transparent 78%),
     conic-gradient(from 196deg at 66% -6%, transparent 0deg, rgb(56 225 255 / 0.07) 9deg, transparent 18deg, transparent 26deg, rgb(157 123 255 / 0.07) 34deg, transparent 44deg, rgb(44 245 176 / 0.05) 52deg, transparent 60deg);
-  filter: blur(26px);
 }
 @media (max-width: 1023px) {
   .dt-luz-volumen {
@@ -182,17 +169,18 @@ html.lenis body {
 @keyframes dt-entra {
   from {
     opacity: 0;
-    transform: translateY(16px);
-    filter: blur(6px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 .dt-entra {
-  animation: dt-entra 1s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms) both;
+  animation: dt-entra 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms) both;
+}
+.dt-linea-nueva {
+  animation: dt-entra 0.4s ease both;
 }
 .dt-hero h1 {
   perspective: 900px;
@@ -200,39 +188,25 @@ html.lenis body {
 @keyframes dt-palabra {
   from {
     opacity: 0;
-    transform: translate3d(0, 0.38em, -60px) rotateX(-42deg);
-    filter: blur(12px);
+    transform: translate3d(0, 0.3em, 0) rotateX(-30deg);
   }
   to {
     opacity: 1;
     transform: none;
-    filter: none;
   }
 }
 .dt-palabra {
   display: inline-block;
   transform-origin: 50% 100%;
-  animation: dt-palabra 1.1s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
+  animation: dt-palabra 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
 }
 
 .dt-texto-luz {
   background: linear-gradient(100deg, #eafcff 0%, var(--dt-cian) 28%, var(--dt-menta) 62%, #e6fff6 82%, var(--dt-cian) 100%);
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
+    -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation:
-    dt-palabra 1.1s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both,
-    dt-brillo 9s ease-in-out 1.5s infinite;
-}
-@keyframes dt-brillo {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  animation: dt-palabra 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
 }
 
 .dt-esquina {
@@ -267,11 +241,9 @@ html.lenis body {
 
 .dt-registro {
   border-radius: 14px;
-  background: rgb(6 10 16 / 0.55);
+  background: rgb(6 9 14 / 0.88);
   border: 1px solid rgb(255 255 255 / 0.08);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 20px 50px -20px rgb(0 0 0 / 0.8);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }
 
 .dt-raton {
@@ -298,14 +270,6 @@ html.lenis body {
   0% { transform: translateY(0); opacity: 1; }
   70% { transform: translateY(9px); opacity: 0; }
   100% { transform: translateY(0); opacity: 0; }
-}
-
-@keyframes dt-parpadeo {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
-.dt-parpadeo {
-  animation: dt-parpadeo 1.6s steps(2, jump-none) infinite;
 }
 
 /* ---------------- Botones ---------------- */
@@ -358,10 +322,8 @@ html.lenis body {
 }
 .dt-boton-cristal {
   color: var(--text);
-  background: rgb(255 255 255 / 0.04);
+  background: rgb(255 255 255 / 0.05);
   border: 1px solid rgb(255 255 255 / 0.13);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 .dt-boton-cristal:hover {
   background: rgb(255 255 255 / 0.08);
@@ -386,139 +348,6 @@ html.lenis body {
   transition: transform 0.18s ease-out;
 }
 
-/* ---------------- Cursor propio ---------------- */
-
-html.dt-cursor-activo .deeptech,
-html.dt-cursor-activo .deeptech * {
-  cursor: none !important;
-}
-html.dt-cursor-activo .deeptech :is(input, textarea, select, [contenteditable="true"]),
-html.dt-cursor-activo .deeptech [data-cursor="nativo"],
-html.dt-cursor-activo .deeptech [data-cursor="nativo"] * {
-  cursor: auto !important;
-}
-html.dt-cursor-activo .deeptech [data-cursor="nativo"] :is(a, button, [role="button"], label) {
-  cursor: pointer !important;
-}
-
-.dt-cursor {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-}
-.dt-cursor-aro,
-.dt-cursor-punto {
-  position: fixed;
-  top: 0;
-  left: 0;
-  will-change: transform;
-  transition: opacity 0.25s ease;
-}
-.dt-cursor-punto::before {
-  content: "";
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  left: -3px;
-  top: -3px;
-  border-radius: 50%;
-  background: var(--dt-cian);
-  box-shadow: 0 0 10px var(--dt-cian);
-  transition: scale 0.25s ease;
-}
-.dt-cursor-aro::before {
-  content: "";
-  position: absolute;
-  width: 36px;
-  height: 36px;
-  left: -18px;
-  top: -18px;
-  border-radius: 50%;
-  border: 1px solid rgb(56 225 255 / 0.5);
-  transition:
-    scale 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    opacity 0.3s ease;
-}
-.dt-cursor-aro[data-estado="oculto"],
-.dt-cursor-punto[data-estado="oculto"] {
-  opacity: 0;
-}
-.dt-cursor-aro[data-estado="enlace"]::before {
-  scale: 1.7;
-  background: rgb(56 225 255 / 0.1);
-  border-color: rgb(56 225 255 / 0.9);
-}
-.dt-cursor-punto[data-estado="enlace"]::before {
-  scale: 0;
-}
-.dt-cursor-aro.pulsado::before {
-  scale: 0.75;
-}
-.dt-cursor-aro[data-estado="enlace"].pulsado::before {
-  scale: 1.45;
-}
-
-/* retícula: cuatro esquinas que giran a su sitio sobre lo que es 3D */
-.dt-esq {
-  position: absolute;
-  width: 58px;
-  height: 58px;
-  left: -29px;
-  top: -29px;
-  opacity: 0;
-  scale: 0.5;
-  rotate: 45deg;
-  --l: 13px;
-  --g: 1.5px;
-  --c: var(--dt-cian);
-  background:
-    linear-gradient(var(--c), var(--c)) top left / var(--l) var(--g) no-repeat,
-    linear-gradient(var(--c), var(--c)) top left / var(--g) var(--l) no-repeat,
-    linear-gradient(var(--c), var(--c)) top right / var(--l) var(--g) no-repeat,
-    linear-gradient(var(--c), var(--c)) top right / var(--g) var(--l) no-repeat,
-    linear-gradient(var(--c), var(--c)) bottom left / var(--l) var(--g) no-repeat,
-    linear-gradient(var(--c), var(--c)) bottom left / var(--g) var(--l) no-repeat,
-    linear-gradient(var(--c), var(--c)) bottom right / var(--l) var(--g) no-repeat,
-    linear-gradient(var(--c), var(--c)) bottom right / var(--g) var(--l) no-repeat;
-  filter: drop-shadow(0 0 6px rgb(56 225 255 / 0.7));
-  transition:
-    opacity 0.3s ease,
-    scale 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
-    rotate 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.dt-cursor-aro[data-estado="3d"]::before {
-  opacity: 0;
-  scale: 0.4;
-}
-.dt-cursor-aro[data-estado="3d"] .dt-esq {
-  opacity: 1;
-  scale: 1;
-  rotate: 0deg;
-}
-.dt-cursor-aro[data-estado="3d"].pulsado .dt-esq {
-  scale: 0.8;
-}
-.dt-cursor-etiqueta {
-  position: absolute;
-  top: 38px;
-  left: 0;
-  translate: -50% 0;
-  font-family: var(--fuente-mono), ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: var(--dt-cian);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.dt-cursor-aro[data-estado="3d"] .dt-cursor-etiqueta {
-  opacity: 0.85;
-}
-
 /* ---------------- Cristal y linterna ---------------- */
 
 .dt-cristal {
@@ -528,9 +357,10 @@ html.dt-cursor-activo .deeptech [data-cursor="nativo"] :is(a, button, [role="but
     inset 0 1px 0 rgb(255 255 255 / 0.05),
     0 30px 80px -40px rgb(0 0 0 / 0.9);
 }
+/* sin backdrop-filter a propósito: al hacer scroll obliga a recalcular el
+   desenfoque en cada fotograma. Un fondo algo más opaco da el mismo aire. */
 .dt-cristal-blur {
-  backdrop-filter: blur(18px) saturate(1.2);
-  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  background: linear-gradient(180deg, rgb(14 18 26 / 0.92), rgb(8 11 16 / 0.92));
 }
 
 /* El borde se ilumina alrededor del ratón. Las dos capas van detrás del
@@ -578,70 +408,20 @@ html.dt-cursor-activo .deeptech [data-cursor="nativo"] :is(a, button, [role="but
 }
 
 /* ---------------- Entradas al hacer scroll ----------------
-   Solo se esconden si hay JavaScript para volver a enseñarlas
-   (@media scripting) y si el visitante no ha pedido menos movimiento. */
+   Un fundido corto hacia arriba. Solo se esconde si hay JavaScript para
+   volver a enseñarlo (@media scripting) y si el visitante no ha pedido
+   menos movimiento. Sin desenfoques: cuestan mucho al hacer scroll. */
 
 [data-revelar] {
   transition:
-    opacity 1s cubic-bezier(0.2, 0.75, 0.2, 1) var(--d, 0ms),
-    transform 1.25s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms),
-    filter 1s cubic-bezier(0.2, 0.75, 0.2, 1) var(--d, 0ms);
-}
-.dt-glitch {
-  position: relative;
-  transition:
-    opacity 0.9s ease,
-    filter 0.9s ease,
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.5s ease var(--d, 0ms),
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms);
 }
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   [data-revelar]:not([data-visto]) {
     opacity: 0;
-    transform: perspective(1200px) translate3d(0, 48px, -170px) rotateX(9deg);
-    filter: blur(10px);
+    transform: translateY(18px);
   }
-  .dt-glitch:not([data-visto]) {
-    opacity: 0;
-    filter: blur(14px);
-    transform: scale(1.045);
-  }
-}
-
-/* glitch: dos copias del titular, en magenta y cian, cortadas en franjas */
-.dt-glitch::before,
-.dt-glitch::after {
-  content: attr(data-texto);
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  mix-blend-mode: screen;
-}
-.dt-glitch[data-visto]::before {
-  color: #ff3d9a;
-  animation: dt-glitch-a 0.75s steps(1, end) 0.18s both;
-}
-.dt-glitch[data-visto]::after {
-  color: var(--dt-cian);
-  animation: dt-glitch-b 0.75s steps(1, end) 0.18s both;
-}
-@keyframes dt-glitch-a {
-  0% { opacity: 0.9; clip-path: inset(8% 0 72% 0); transform: translate(-7px, 0); }
-  16% { clip-path: inset(58% 0 12% 0); transform: translate(6px, 0); }
-  32% { clip-path: inset(28% 0 48% 0); transform: translate(-4px, 1px); }
-  48% { clip-path: inset(80% 0 3% 0); transform: translate(5px, 0); }
-  64% { clip-path: inset(4% 0 86% 0); transform: translate(-3px, 0); }
-  80% { clip-path: inset(44% 0 40% 0); transform: translate(2px, 0); }
-  100% { opacity: 0; clip-path: inset(0); transform: none; }
-}
-@keyframes dt-glitch-b {
-  0% { opacity: 0.85; clip-path: inset(66% 0 8% 0); transform: translate(7px, 0); }
-  16% { clip-path: inset(14% 0 66% 0); transform: translate(-6px, 0); }
-  32% { clip-path: inset(46% 0 30% 0); transform: translate(4px, -1px); }
-  48% { clip-path: inset(2% 0 84% 0); transform: translate(-5px, 0); }
-  64% { clip-path: inset(74% 0 10% 0); transform: translate(3px, 0); }
-  80% { clip-path: inset(22% 0 62% 0); transform: translate(-2px, 0); }
-  100% { opacity: 0; clip-path: inset(0); transform: none; }
 }
 
 /* ---------------- Anillos de progreso ---------------- */
@@ -662,12 +442,6 @@ html.dt-cursor-activo .deeptech [data-cursor="nativo"] :is(a, button, [role="but
   stroke: rgb(255 255 255 / 0.16);
   stroke-width: 3;
   stroke-dasharray: 0.35 1.65;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: dt-girar 60s linear infinite;
-}
-@keyframes dt-girar {
-  to { rotate: 360deg; }
 }
 .dt-anillo-trazo,
 .dt-anillo-segmento {
@@ -679,10 +453,10 @@ html.dt-cursor-activo .deeptech [data-cursor="nativo"] :is(a, button, [role="but
   stroke-linecap: round;
   stroke-dasharray: 100;
   stroke-dashoffset: calc(100 - var(--p));
-  transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+  transition: stroke-dashoffset 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s;
 }
 .dt-anillo-segmento {
-  transition: opacity 0.35s ease calc(var(--i) * 110ms + 250ms);
+  transition: opacity 0.3s ease calc(var(--i) * 60ms + 100ms);
 }
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   [data-al-ver]:not([data-visto]) .dt-anillo-trazo {
@@ -731,20 +505,6 @@ html.dt-cursor-activo .deeptech [data-cursor="nativo"] :is(a, button, [role="but
     translate: -14px 0;
   }
 }
-.dt-suelo-barrido {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 28%;
-  background: linear-gradient(90deg, transparent, rgb(56 225 255 / 0.22), transparent);
-  animation: dt-barrido 5.5s linear infinite;
-}
-/* el barrido no puede recortarse con overflow (aplanaría las cajas): se
-   queda dentro del suelo y se desvanece en los bordes */
-@keyframes dt-barrido {
-  0% { transform: translateX(0); opacity: 0; }
-  15%, 85% { opacity: 1; }
-  100% { transform: translateX(257%); opacity: 0; }
-}
 .dt-caja {
   --w: 40px;
   --h: 190px;
@@ -760,7 +520,7 @@ html.dt-cursor-activo .deeptech [data-cursor="nativo"] :is(a, button, [role="but
   transform-style: preserve-3d;
   transform-origin: 50% 50% 0;
   transform: scaleZ(var(--k));
-  transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 110ms + 250ms);
+  transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--i) * 60ms + 100ms);
 }
 .dt-cara {
   position: absolute;
@@ -805,7 +565,7 @@ html.dt-cursor-activo .deeptech [data-cursor="nativo"] :is(a, button, [role="but
   translate: -50% -50%;
   background: radial-gradient(circle, color-mix(in oklab, var(--c) 55%, transparent), transparent 62%);
   opacity: 0.55;
-  transition: opacity 1.2s ease calc(var(--i) * 110ms + 700ms);
+  transition: opacity 0.6s ease calc(var(--i) * 60ms + 300ms);
 }
 .dt-caja-dato {
   position: absolute;
@@ -813,8 +573,8 @@ html.dt-cursor-activo .deeptech [data-cursor="nativo"] :is(a, button, [role="but
   transform-style: preserve-3d;
   transform: translateZ(calc(var(--h) * var(--k) + 18px));
   transition:
-    transform 1.6s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 110ms + 250ms),
-    opacity 0.6s ease calc(var(--i) * 110ms + 900ms);
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--i) * 60ms + 100ms),
+    opacity 0.4s ease calc(var(--i) * 60ms + 500ms);
 }
 .dt-caja-dato span {
   position: absolute;
@@ -872,7 +632,6 @@ html.dt-cursor-activo .deeptech [data-cursor="nativo"] :is(a, button, [role="but
     radial-gradient(ellipse 60% 55% at 50% 0%, rgb(44 245 176 / 0.16), transparent 70%),
     radial-gradient(ellipse 40% 40% at 85% 80%, rgb(157 123 255 / 0.12), transparent 70%),
     conic-gradient(from 160deg at 50% -10%, transparent 0deg, rgb(56 225 255 / 0.06) 14deg, transparent 22deg, transparent 32deg, rgb(44 245 176 / 0.06) 40deg, transparent 50deg);
-  filter: blur(20px);
 }
 
 .dt-numero-paso {

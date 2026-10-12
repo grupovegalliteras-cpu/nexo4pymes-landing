@@ -4,22 +4,21 @@ import { cn } from "@/lib/utils";
 /* Piezas de texto comunes a las secciones de la portada. Sin estado: valen
    igual en servidor que en cliente. */
 
-/** Rótulo de sección al estilo de un panel de control: número, raya y nombre. */
-export function Etiqueta({ num, children, className }: { num?: string; children: ReactNode; className?: string }) {
+/** Rótulo pequeño encima del titular de cada sección. En palabras de
+    todos los días: lo lee el gerente de una pyme, no un ingeniero. */
+export function Etiqueta({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <div data-revelar className={cn("dt-mono flex items-center gap-3 text-[11.5px] font-medium tracking-[0.18em] text-[var(--dt-cian)] uppercase", className)}>
-      {num && <span className="text-fg-3">{num}</span>}
-      <i className="h-px w-8 bg-gradient-to-r from-[var(--dt-cian)] to-transparent" />
+    <div data-revelar className={cn("flex items-center gap-2.5 text-[14px] font-semibold text-[var(--dt-cian)]", className)}>
+      <i className="h-px w-6 bg-gradient-to-r from-[var(--dt-cian)] to-transparent" />
       <span>{children}</span>
     </div>
   );
 }
 
-/** Titular de sección que entra enfocándose, con un glitch breve de color
-    (rojo y cian desplazados) la primera vez que aparece. */
-export function TituloGlitch({ children, className, as: Tag = "h2" }: { children: string; className?: string; as?: "h2" | "h3" | "div" }) {
+/** Titular de sección. Entra con un fundido corto; se lee desde el primer momento. */
+export function Titulo({ children, className, as: Tag = "h2" }: { children: ReactNode; className?: string; as?: "h2" | "h3" | "div" }) {
   return (
-    <Tag data-glitch data-texto={children} className={cn("dt-glitch font-display leading-[1.04] font-semibold tracking-[-0.035em] text-fg", className)}>
+    <Tag data-revelar className={cn("font-display leading-[1.06] font-semibold tracking-[-0.03em] text-fg", className)}>
       {children}
     </Tag>
   );

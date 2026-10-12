@@ -125,25 +125,38 @@ por clasificar.
 
 | Qué | Dónde |
 |---|---|
-| Colores, cristal, cursor, linterna, barras 3D, anillos, glitch | `app/(demo)/deeptech.css` |
+| Colores, cristal, linterna, barras 3D, anillos, entradas | `app/(demo)/deeptech.css` |
 | El núcleo WebGL del hero (three.js, shaders propios) | `components/deeptech/nucleo-escena.ts` |
-| El hero, su HUD y el registro en vivo | `components/deeptech/hero.tsx` |
-| Telemetría: cifras, barras de luz 3D y anillos | `components/deeptech/metricas.tsx` |
-| Cursor propio, botones magnéticos, linterna, contador | `components/deeptech/interaccion.tsx` |
-| Scroll suave (Lenis), entradas y animaciones atadas al scroll (GSAP) | `components/deeptech/movimiento.ts` |
+| El hero, los tres pasos alrededor del núcleo y el día de ejemplo | `components/deeptech/hero.tsx` |
+| «En cifras»: contadores, barras de luz 3D y anillos | `components/deeptech/metricas.tsx` |
+| Botones magnéticos, linterna, contador | `components/deeptech/interaccion.tsx` |
+| Entradas al hacer scroll y animaciones atadas al scroll (GSAP) | `components/deeptech/movimiento.ts` |
 
-**Las cifras de Telemetría salen de los datos, no se escriben.** Los
+**Las cifras de «En cifras» salen de los datos, no se escriben.** Los
 módulos y sectores se cuentan de `data/modules.ts` y `data/sectors.ts`;
 el 8 son los pasos del recorrido y el 100 % es lo que dice la FAQ del
 alojamiento. Ahí no van clientes, facturación ni satisfacción: no hay
 datos reales que lo respalden (ver «Testimonios»).
 
-**Rendimiento.** three, GSAP y Lenis se descargan después de pintar el
-titular, y el panel y la app incrustados solo cuando se llega a
-«Software real». La escena no tiene postprocesado, baja la resolución
-sola si el equipo no llega a ~42 fps y se para cuando el hero no se ve.
-Con «reducir movimiento» no hay scroll suave ni animaciones: todo
-aparece en su sitio y el núcleo queda quieto.
+**Se escribe para el gerente de una pyme, no para un ingeniero.** La
+estética es tecnológica, pero los textos no: nada de «telemetría»,
+«pipeline», «núcleo IA», rótulos en mayúsculas de máquina de escribir ni
+efectos que desordenan las letras. La escena 3D va explicada en tres
+pasos con palabras normales (llegan los avisos, se ordenan solos, sale
+el trabajo).
+
+**Rendimiento: lo que se quitó y por qué.** Se probó y se retiró a
+propósito: el cursor propio (no gustaba), el scroll suave con Lenis (la
+página iba por detrás de la rueda y se notaba lenta), el glitch de los
+titulares y los desenfoques (`filter: blur` y `backdrop-filter`), que al
+hacer scroll obligan a repintar en cada fotograma. Si se vuelve a meter
+alguno, que sea sabiendo esto.
+
+three y GSAP se descargan después de pintar el titular, y el panel y la
+app incrustados solo cuando se llega a «El programa por dentro». La
+escena no tiene postprocesado, baja la resolución sola si el equipo no
+llega a ~55 fps y se para cuando el hero no se ve. Con «reducir
+movimiento» todo aparece en su sitio y el núcleo queda quieto.
 
 **Para animar algo nuevo al entrar en pantalla** basta con
 `data-revelar` (y `style={{ "--d": "120ms" }}` para escalonar). Para

@@ -565,7 +565,7 @@ export function montarNucleo(canvas: HTMLCanvasElement, { ancla, seccion, reduci
   const movil = window.matchMedia("(max-width: 1023px), (pointer: coarse)").matches;
   const renderer = new WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: "high-performance" });
   renderer.setClearColor(0x000000, 0);
-  const dprMax = Math.min(window.devicePixelRatio || 1, movil ? 1.5 : 1.75);
+  const dprMax = Math.min(window.devicePixelRatio || 1, movil ? 1.25 : 1.5);
   let dpr = dprMax;
   renderer.setPixelRatio(dpr);
 
@@ -610,7 +610,7 @@ export function montarNucleo(canvas: HTMLCanvasElement, { ancla, seccion, reduci
   add(new Mesh(plano.clone(), material(HALO_VERT, HALO_FRAG, { uEscala: { value: 2.4 }, uColorA: { value: new Color("#e8fdff") }, uColorB: { value: COLORES.cian }, uIntensidad: { value: 0.55 }, uDureza: { value: 9 } })));
 
   // la red
-  const red = crearRed(movil ? 560 : 1000);
+  const red = crearRed(movil ? 420 : 760);
   add(new LineSegments(red.sinapsis, material(SINAPSIS_VERT, SINAPSIS_FRAG, u)), nucleo);
   add(new Points(red.nodos, material(NODOS_VERT, PUNTO_FRAG, u)), nucleo);
 
@@ -648,7 +648,7 @@ export function montarNucleo(canvas: HTMLCanvasElement, { ancla, seccion, reduci
   });
 
   // corriente de entrada (caos)
-  const entrada = crearCorriente(tramosEntrada(movil ? 650 : 1400, movil));
+  const entrada = crearCorriente(tramosEntrada(movil ? 420 : 900, movil));
   const uEntrada = { ...u, uCaos: { value: 1 }, uColorA: { value: COLORES.violeta }, uColorB: { value: COLORES.cian } };
   add(new LineSegments(entrada.cola, material(CORRIENTE_COLA_VERT, CORRIENTE_COLA_FRAG, uEntrada)));
   add(new Points(entrada.cab, material(CORRIENTE_PUNTOS_VERT, CORRIENTE_PUNTOS_FRAG, uEntrada)));
@@ -662,7 +662,7 @@ export function montarNucleo(canvas: HTMLCanvasElement, { ancla, seccion, reduci
   add(new Points(corrSalida.cab, material(CORRIENTE_PUNTOS_VERT, CORRIENTE_PUNTOS_FRAG, uSalidaC)));
 
   // estrellas lejanas, fuera del mundo: solo se mueven con la cámara
-  const nE = movil ? 350 : 800;
+  const nE = movil ? 200 : 500;
   const ep = new Float32Array(nE * 3);
   const ef = new Float32Array(nE);
   for (let i = 0; i < nE; i++) {
@@ -785,11 +785,11 @@ export function montarNucleo(canvas: HTMLCanvasElement, { ancla, seccion, reduci
     const dt = Math.min(0.05, (ahora - previo) / 1000);
     previo = ahora;
     pintar(dt);
-    // calidad adaptable: si el equipo no llega, menos píxeles
+    // calidad adaptable: si el equipo no llega a ~55 fps, menos píxeles
     acumulado += dt;
-    if (++muestras === 90) {
-      if (acumulado / muestras > 1 / 42 && dpr > 1) {
-        dpr = Math.max(1, dpr - 0.25);
+    if (++muestras === 60) {
+      if (acumulado / muestras > 1 / 55 && dpr > 0.75) {
+        dpr = Math.max(0.75, dpr - 0.25);
         renderer.setPixelRatio(dpr);
         u.uPixel.value = dpr;
         medir();

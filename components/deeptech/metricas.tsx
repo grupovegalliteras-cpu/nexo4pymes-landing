@@ -7,7 +7,7 @@ import { sectoresDe } from "@/data/sectors-i18n";
 import { useIdioma } from "@/components/i18n/idioma";
 import type { Idioma } from "@/lib/i18n";
 import { Contador, moverFoco } from "./interaccion";
-import { Etiqueta, TituloGlitch } from "./piezas";
+import { Etiqueta, Titulo } from "./piezas";
 
 /* Telemetría del sistema: cifras del propio producto, ninguna inventada.
    Todas salen de los datos que usa la demo (data/modules.ts y
@@ -21,13 +21,11 @@ import { Etiqueta, TituloGlitch } from "./piezas";
 
 const TX = {
   es: {
-    num: "02",
-    kicker: "Telemetría del sistema",
+    kicker: "En cifras",
     h2: "Un sistema entero, no una app suelta.",
     p: "Cifras del propio producto, no promesas: cada módulo y cada sector que se cuenta aquí lo puedes abrir en la demo ahora mismo.",
     barras: "Módulos por área",
     conectados: "módulos conectados",
-    mueve: "Mueve",
     kpis: {
       modulos: { texto: "módulos que encajan entre sí", detalle: (d: number, m: number) => `${d} listos hoy · ${m} a medida` },
       sectores: { texto: "sectores con su propia demo", detalle: "Cambian empresa, servicios, checklists y mediciones" },
@@ -36,13 +34,11 @@ const TX = {
     },
   },
   en: {
-    num: "02",
-    kicker: "System telemetry",
+    kicker: "In figures",
     h2: "A whole system, not a lone app.",
     p: "Figures from the product itself, not promises: every module and industry counted here can be opened in the demo right now.",
     barras: "Modules by area",
     conectados: "connected modules",
-    mueve: "Move",
     kpis: {
       modulos: { texto: "modules that fit together", detalle: (d: number, m: number) => `${d} ready today · ${m} custom` },
       sectores: { texto: "industries with their own demo", detalle: "Company, services, checklists and readings change" },
@@ -51,13 +47,11 @@ const TX = {
     },
   },
   de: {
-    num: "02",
-    kicker: "System-Telemetrie",
+    kicker: "In Zahlen",
     h2: "Ein ganzes System, keine einzelne App.",
     p: "Zahlen aus dem Produkt selbst, keine Versprechen: Jedes Modul und jede Branche, die hier gezählt wird, können Sie jetzt in der Demo öffnen.",
     barras: "Module nach Bereich",
     conectados: "verbundene Module",
-    mueve: "Bewegen",
     kpis: {
       modulos: { texto: "Module, die zusammenpassen", detalle: (d: number, m: number) => `${d} sofort einsatzbereit · ${m} individuell` },
       sectores: { texto: "Branchen mit eigener Demo", detalle: "Firma, Leistungen, Checklisten und Messwerte passen sich an" },
@@ -100,26 +94,26 @@ export function Metricas() {
     <section id="telemetria" className="relative scroll-mt-20 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="max-w-3xl">
-          <Etiqueta num={tx.num}>{tx.kicker}</Etiqueta>
-          <TituloGlitch className="mt-5 text-[34px] sm:text-[52px]">{tx.h2}</TituloGlitch>
-          <p data-revelar className="mt-4 max-w-2xl text-[17px] leading-relaxed text-fg-2 sm:text-[18px]" style={{ "--d": "120ms" } as CSSProperties}>
+          <Etiqueta>{tx.kicker}</Etiqueta>
+          <Titulo className="mt-4 text-[34px] sm:text-[52px]">{tx.h2}</Titulo>
+          <p data-revelar className="mt-4 max-w-2xl text-[17px] leading-relaxed text-fg-2 sm:text-[18px]" style={{ "--d": "60ms" } as CSSProperties}>
             {tx.p}
           </p>
         </div>
 
         <div className="dt-foco-grupo mt-12 grid gap-5 lg:grid-cols-[1.15fr_1fr]" onPointerMove={moverFoco}>
-          <Barras3D datos={porGrupo} max={max} total={modulos.length} titulo={tx.barras} conectados={tx.conectados} mueve={tx.mueve} lang={lang} />
+          <Barras3D datos={porGrupo} max={max} total={modulos.length} titulo={tx.barras} conectados={tx.conectados} lang={lang} />
           <div className="grid gap-5 sm:grid-cols-2">
             {kpis.map((k, i) => (
-              <div key={k.texto} data-revelar data-al-ver className="dt-foco dt-cristal relative flex flex-col items-center rounded-[22px] p-5 text-center sm:p-6" style={{ "--d": `${i * 90}ms` } as CSSProperties}>
+              <div key={k.texto} data-revelar data-al-ver className="dt-foco dt-cristal relative flex flex-col items-center rounded-[22px] p-5 text-center sm:p-6" style={{ "--d": `${i * 50}ms` } as CSSProperties}>
                 <Anillo {...k.anillo} color={k.color} indice={i}>
                   <span className="font-display text-[36px] leading-none font-semibold tracking-[-0.04em] text-fg sm:text-[40px]">
-                    <Contador valor={k.valor} locale={lang} retraso={i * 120} />
+                    <Contador valor={k.valor} locale={lang} retraso={i * 60} />
                     {k.sufijo && <span className="text-[0.55em] text-fg-2">{k.sufijo}</span>}
                   </span>
                 </Anillo>
                 <div className="mt-4 text-[15px] leading-snug font-semibold text-fg">{k.texto}</div>
-                <div className="dt-mono mt-1.5 text-[11.5px] leading-snug tracking-[0.04em] text-fg-3 uppercase">{k.detalle}</div>
+                <div className="mt-1 text-[13.5px] leading-snug text-fg-3">{k.detalle}</div>
               </div>
             ))}
           </div>
@@ -179,7 +173,6 @@ function Barras3D({
   total,
   titulo,
   conectados,
-  mueve,
   lang,
 }: {
   datos: { g: ModuleGroup; nombre: string; n: number }[];
@@ -187,7 +180,6 @@ function Barras3D({
   total: number;
   titulo: string;
   conectados: string;
-  mueve: string;
   lang: Idioma;
 }) {
   const escena = useRef<HTMLDivElement>(null);
@@ -205,24 +197,16 @@ function Barras3D({
   };
   return (
     <div data-revelar data-al-ver className="dt-foco dt-cristal relative overflow-hidden rounded-[26px] p-5 sm:p-7">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <div className="dt-mono text-[11px] tracking-[0.16em] text-fg-3 uppercase">{titulo}</div>
-          <div className="mt-2 flex items-baseline gap-2.5">
-            <span className="font-display text-[52px] leading-none font-semibold tracking-[-0.05em] text-fg sm:text-[64px]">
-              <Contador valor={total} locale={lang} />
-            </span>
-            <span className="text-[15px] text-fg-2">{conectados}</span>
-          </div>
-        </div>
-        <span className="dt-mono dt-parpadeo mt-1 hidden items-center gap-1.5 rounded-full border border-white/10 px-2.5 py-1 text-[10.5px] tracking-[0.14em] text-[var(--dt-menta)] uppercase sm:flex">
-          <i className="size-1.5 rounded-full bg-[var(--dt-menta)] shadow-[0_0_10px_var(--dt-menta)]" /> live
+      <div className="text-[14px] font-semibold text-fg-2">{titulo}</div>
+      <div className="mt-2 flex items-baseline gap-2.5">
+        <span className="font-display text-[52px] leading-none font-semibold tracking-[-0.05em] text-fg sm:text-[64px]">
+          <Contador valor={total} locale={lang} />
         </span>
+        <span className="text-[15px] text-fg-2">{conectados}</span>
       </div>
 
-      <div ref={escena} className="dt-barras" onPointerMove={inclinar} onPointerLeave={soltar} data-cursor="3d" data-cursor-texto={mueve} aria-hidden="true">
+      <div ref={escena} className="dt-barras" onPointerMove={inclinar} onPointerLeave={soltar} aria-hidden="true">
         <div className="dt-suelo">
-          <i className="dt-suelo-barrido" />
           {datos.map((d, i) => (
             <div key={d.g} className="dt-caja" style={{ "--k": d.n / max, "--i": i, "--c": COLOR_GRUPO[d.g], left: `${18 + i * 66}px` } as CSSProperties}>
               <i className="dt-charco" />
@@ -246,7 +230,7 @@ function Barras3D({
           <li key={d.g} className="flex min-w-0 items-center gap-2.5 text-[13px] text-fg-2">
             <i className="size-2 shrink-0 rounded-[2px]" style={{ background: COLOR_GRUPO[d.g], boxShadow: `0 0 10px ${COLOR_GRUPO[d.g]}` }} />
             <span className="truncate">{d.nombre}</span>
-            <span className="dt-mono ml-auto text-fg tabular">{d.n}</span>
+            <span className="ml-auto font-semibold text-fg tabular">{d.n}</span>
           </li>
         ))}
       </ul>

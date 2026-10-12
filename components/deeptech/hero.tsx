@@ -7,23 +7,49 @@ import { useIdioma } from "@/components/i18n/idioma";
 import type { Idioma } from "@/lib/i18n";
 import type { ControlNucleo } from "./nucleo-escena";
 import { Nucleo } from "./nucleo";
-import { Descifrar, Magnetico } from "./interaccion";
+import { Magnetico } from "./interaccion";
 
-/* Hero de la portada: el núcleo WebGL a la derecha (arriba en el móvil),
-   el texto a la izquierda y, alrededor del núcleo, un HUD que explica lo
-   que se ve: entra el caos, el núcleo lo ordena, sale el trabajo.
+/* Hero de la portada: el núcleo WebGL a la derecha (arriba en el móvil) y
+   el texto a la izquierda. La escena es abstracta, así que va explicada en
+   tres pasos con palabras de todos los días: llegan los avisos, se ordenan
+   solos, sale el trabajo. En escritorio, alrededor del núcleo; en el
+   móvil, en una fila debajo.
 
-   El registro de abajo repite el día de ejemplo del recorrido de la
-   portada (las mismas horas y los mismos pasos) y cada línea nueva lanza
-   una onda por la red. Lleva «demo» en el rótulo: son datos de ejemplo. */
+   El cuadro de abajo repite el día de ejemplo del recorrido de la portada
+   (las mismas horas y los mismos pasos) y cada línea nueva lanza una onda
+   por la red. Dice «de ejemplo» porque lo es. */
 
 const HX = {
-  es: { entrada: "Entrada", entradaD: "Llamadas · WhatsApp · Email · Web", nucleo: "Núcleo IA", nucleoD: "Clasifica · Prioriza · Asigna", salida: "Salida", salidaD: "Orden · Parte · Factura · Cobro", registro: "Registro en vivo · demo", pulsa: "Pulsa", desliza: "Desliza", enLinea: "Sistema en línea" },
-  en: { entrada: "Input", entradaD: "Calls · WhatsApp · Email · Web", nucleo: "AI core", nucleoD: "Sorts · Prioritises · Assigns", salida: "Output", salidaD: "Order · Report · Invoice · Payment", registro: "Live log · demo", pulsa: "Click", desliza: "Scroll", enLinea: "System online" },
-  de: { entrada: "Eingang", entradaD: "Anrufe · WhatsApp · E-Mail · Web", nucleo: "KI-Kern", nucleoD: "Ordnet · Priorisiert · Weist zu", salida: "Ausgang", salidaD: "Auftrag · Bericht · Rechnung · Zahlung", registro: "Live-Protokoll · Demo", pulsa: "Klicken", desliza: "Scrollen", enLinea: "System online" },
-} satisfies Record<Idioma, Record<string, string>>;
+  es: {
+    pasos: [
+      ["Llegan los avisos", "Llamadas, WhatsApp, email y web"],
+      ["Se ordenan solos", "La IA los clasifica y los asigna"],
+      ["Sale el trabajo", "Orden, parte, factura y cobro"],
+    ],
+    registro: "Un día de ejemplo",
+    desliza: "Desliza para ver cómo funciona",
+  },
+  en: {
+    pasos: [
+      ["Requests come in", "Calls, WhatsApp, email and web"],
+      ["They sort themselves", "AI classifies and assigns them"],
+      ["The job goes out", "Order, report, invoice and payment"],
+    ],
+    registro: "A sample day",
+    desliza: "Scroll to see how it works",
+  },
+  de: {
+    pasos: [
+      ["Anfragen kommen rein", "Anrufe, WhatsApp, E-Mail und Web"],
+      ["Sie ordnen sich selbst", "Die KI ordnet sie ein und weist sie zu"],
+      ["Der Auftrag geht raus", "Auftrag, Bericht, Rechnung und Zahlung"],
+    ],
+    registro: "Ein Beispieltag",
+    desliza: "Scrollen Sie, um zu sehen, wie es funktioniert",
+  },
+} satisfies Record<Idioma, unknown>;
 
-export type EventoHero = { hora: string; texto: string; modulo: string };
+export type EventoHero = { hora: string; texto: string };
 
 export function HeroNucleo({
   kicker,
@@ -54,44 +80,40 @@ export function HeroNucleo({
   const palabras = a.split(" ");
 
   return (
-    <section ref={seccion} className="dt-hero relative isolate flex min-h-[100svh] flex-col overflow-hidden" data-cursor="3d" data-cursor-texto={hx.pulsa}>
+    <section ref={seccion} className="dt-hero relative isolate flex min-h-[100svh] flex-col overflow-hidden">
       <div className="absolute inset-0 -z-10" aria-hidden="true">
         <div className="dt-rejilla absolute inset-0" />
         <div className="dt-luz-volumen" />
         <Nucleo ancla={ancla} seccion={seccion} control={control} />
         <div className="dt-velo absolute inset-0" />
-        <div className="grain absolute inset-0 opacity-[0.05] mix-blend-overlay" />
       </div>
 
       <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-4 px-5 pt-20 pb-6 sm:px-6 lg:grid-cols-[1.06fr_1fr] lg:gap-2 lg:pt-24">
         <div data-scrub="salida-hero" className="relative z-10 max-lg:order-2">
-          <div className="dt-entra dt-mono inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] py-1.5 pr-3.5 pl-2.5 text-[10px] tracking-[0.06em] text-fg-2 uppercase backdrop-blur-md min-[400px]:text-[11px] sm:text-[11.5px] sm:tracking-[0.12em]">
-            <span className="relative grid size-2 place-items-center">
-              <i className="absolute inset-0 animate-ping rounded-full bg-[var(--dt-menta)] opacity-60" />
-              <i className="size-2 rounded-full bg-[var(--dt-menta)] shadow-[0_0_12px_var(--dt-menta)]" />
-            </span>
+          <div className="dt-entra inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-[#070a10] py-1.5 pr-3.5 pl-2.5 text-[13px] font-medium text-fg-2 sm:text-[14px]">
+            <i className="size-2 shrink-0 rounded-full bg-[var(--dt-menta)] shadow-[0_0_12px_var(--dt-menta)]" />
             {kicker}
           </div>
 
           <h1 className="mt-6 font-display text-[44px] leading-[0.98] font-semibold tracking-[-0.045em] text-fg min-[400px]:text-[48px] sm:text-[64px] lg:text-[70px] xl:text-[80px]">
             <span className="block">
               {palabras.map((w, i) => (
-                <span key={i} className="dt-palabra" style={{ "--d": `${80 + i * 70}ms` } as CSSProperties}>
+                <span key={i} className="dt-palabra" style={{ "--d": `${40 + i * 50}ms` } as CSSProperties}>
                   {w}
                   {i < palabras.length - 1 ? " " : ""}
                 </span>
               ))}
             </span>
-            <span className="dt-palabra dt-texto-luz block pb-1" style={{ "--d": `${120 + palabras.length * 70}ms` } as CSSProperties}>
+            <span className="dt-palabra dt-texto-luz block pb-1" style={{ "--d": `${80 + palabras.length * 50}ms` } as CSSProperties}>
               {b}
             </span>
           </h1>
 
-          <p className="dt-entra mt-6 max-w-[560px] text-[16.5px] leading-relaxed text-fg-2 sm:text-[18px]" style={{ "--d": "380ms" } as CSSProperties}>
+          <p className="dt-entra mt-6 max-w-[560px] text-[16.5px] leading-relaxed text-fg-2 sm:text-[18px]" style={{ "--d": "200ms" } as CSSProperties}>
             {p}
           </p>
 
-          <div className="dt-entra mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center" style={{ "--d": "480ms" } as CSSProperties}>
+          <div className="dt-entra mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center" style={{ "--d": "260ms" } as CSSProperties}>
             <Magnetico className="max-sm:w-full">
               <Link href="/demo?tour=1" className="dt-boton dt-boton-primario h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]">
                 <PlayCircle className="size-5" /> <span>{verDemo}</span>
@@ -104,52 +126,56 @@ export function HeroNucleo({
             </Magnetico>
           </div>
 
-          <ul className="dt-entra dt-mono mt-9 grid max-w-[560px] grid-cols-2 gap-x-5 gap-y-2.5 text-[11.5px] tracking-[0.08em] text-fg-3 uppercase" style={{ "--d": "600ms" } as CSSProperties}>
+          <ul className="dt-entra mt-8 grid max-w-[560px] grid-cols-2 gap-x-5 gap-y-2 text-[14px] text-fg-2" style={{ "--d": "320ms" } as CSSProperties}>
             {sellos.map((x) => (
               <li key={x} className="flex items-center gap-2">
-                <Check className="size-3.5 shrink-0 text-[var(--dt-menta)]" /> {x}
+                <Check className="size-4 shrink-0 text-[var(--dt-menta)]" /> {x}
               </li>
             ))}
           </ul>
         </div>
 
-        <div ref={ancla} className="dt-ancla relative mx-auto h-[min(270px,32svh)] w-full max-lg:order-1 lg:aspect-square lg:h-auto lg:max-w-[600px]">
-          <i className="dt-esquina dt-esquina-1" />
-          <i className="dt-esquina dt-esquina-2" />
-          <i className="dt-esquina dt-esquina-3" />
-          <i className="dt-esquina dt-esquina-4" />
-          <Hud num="01" titulo={hx.entrada} texto={hx.entradaD} className="top-[9%] left-[-6%] xl:left-[-10%]" tono="violeta" />
-          <Hud num="02" titulo={hx.nucleo} texto={hx.nucleoD} className="top-[2%] right-[2%] items-end text-right" tono="cian" />
-          <Hud num="03" titulo={hx.salida} texto={hx.salidaD} className="right-[-2%] bottom-[16%] items-end text-right" tono="menta" />
-          <Registro eventos={eventos} control={control} titulo={hx.registro} />
+        <div className="max-lg:order-1">
+          <div ref={ancla} className="dt-ancla relative mx-auto h-[min(250px,30svh)] w-full lg:aspect-square lg:h-auto lg:max-w-[600px]">
+            <i className="dt-esquina dt-esquina-1" />
+            <i className="dt-esquina dt-esquina-2" />
+            <i className="dt-esquina dt-esquina-3" />
+            <i className="dt-esquina dt-esquina-4" />
+            <Paso n={1} titulo={hx.pasos[0][0]} texto={hx.pasos[0][1]} className="top-[9%] left-[-6%] xl:left-[-10%]" tono="violeta" />
+            <Paso n={2} titulo={hx.pasos[1][0]} texto={hx.pasos[1][1]} className="top-[2%] right-[2%] items-end text-right" tono="cian" />
+            <Paso n={3} titulo={hx.pasos[2][0]} texto={hx.pasos[2][1]} className="right-[-2%] bottom-[16%] items-end text-right" tono="menta" />
+            <Registro eventos={eventos} control={control} titulo={hx.registro} />
+          </div>
+          {/* en el móvil, los tres pasos en fila debajo del núcleo */}
+          <ol className="dt-entra mt-3 grid grid-cols-3 gap-2 text-center lg:hidden" style={{ "--d": "300ms" } as CSSProperties}>
+            {hx.pasos.map(([titulo], i) => (
+              <li key={titulo} className={`dt-hud-${["violeta", "cian", "menta"][i]} rounded-xl border border-white/[0.08] bg-[#070a10] px-1.5 py-2 text-[12px] leading-tight font-semibold text-fg`}>
+                <span className="mb-0.5 block text-[11px] text-[var(--tono)]">{i + 1}</span>
+                {titulo}
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
 
-      <div className="dt-entra relative mx-auto hidden w-full max-w-7xl items-center justify-between px-6 pb-7 lg:flex" style={{ "--d": "800ms" } as CSSProperties}>
-        <span className="dt-mono flex items-center gap-3 text-[11px] tracking-[0.18em] text-fg-3 uppercase">
+      <div className="dt-entra relative mx-auto hidden w-full max-w-7xl items-center px-6 pb-7 lg:flex" style={{ "--d": "500ms" } as CSSProperties}>
+        <span className="flex items-center gap-3 text-[13px] text-fg-3">
           <span className="dt-raton" aria-hidden="true" />
           {hx.desliza}
-        </span>
-        <span className="dt-mono flex items-center gap-4 text-[11px] tracking-[0.14em] text-fg-3 uppercase">
-          <span>39.5696° N · 2.6502° E · Palma</span>
-          <span className="flex items-center gap-1.5 text-[var(--dt-menta)]">
-            <i className="size-1.5 rounded-full bg-current shadow-[0_0_8px_currentColor]" /> {hx.enLinea}
-          </span>
         </span>
       </div>
     </section>
   );
 }
 
-function Hud({ num, titulo, texto, className, tono }: { num: string; titulo: string; texto: string; className?: string; tono: "cian" | "violeta" | "menta" }) {
+function Paso({ n, titulo, texto, className, tono }: { n: number; titulo: string; texto: string; className?: string; tono: "cian" | "violeta" | "menta" }) {
   return (
-    <div className={`dt-hud dt-hud-${tono} dt-entra absolute hidden flex-col gap-1 lg:flex ${className ?? ""}`} style={{ "--d": `${700 + Number(num) * 140}ms` } as CSSProperties}>
-      <span className="dt-mono flex items-center gap-2 text-[11px] font-medium tracking-[0.18em] uppercase">
-        <span className="opacity-60">{num}</span>
-        <i className="dt-hud-raya" />
+    <div className={`dt-hud dt-hud-${tono} dt-entra absolute hidden flex-col gap-0.5 lg:flex ${className ?? ""}`} style={{ "--d": `${360 + n * 90}ms` } as CSSProperties}>
+      <span className="flex items-center gap-2 text-[14px] font-semibold">
+        <span className="grid size-5 place-items-center rounded-full border border-current text-[11px]">{n}</span>
         {titulo}
       </span>
-      <span className="text-[12.5px] text-fg-2">{texto}</span>
+      <span className="text-[13px] text-fg-2">{texto}</span>
     </div>
   );
 }
@@ -168,16 +194,12 @@ function Registro({ eventos, control, titulo }: { eventos: EventoHero[]; control
   }, [n, control]);
   const lineas = [i - 2, i - 1, i].map((k) => eventos[(k + n) % n]);
   return (
-    <div className="dt-registro dt-entra absolute bottom-[1%] left-[2%] hidden w-[min(330px,64%)] lg:block" style={{ "--d": "1200ms" } as CSSProperties} data-no-onda>
-      <div className="dt-mono flex items-center justify-between border-b border-white/[0.07] px-3.5 py-2 text-[10px] tracking-[0.18em] text-fg-3 uppercase">
-        <span>{titulo}</span>
-        <span className="dt-parpadeo text-[var(--dt-menta)]">● rec</span>
-      </div>
-      <ol className="dt-mono grid gap-1 px-3.5 py-2.5 text-[11.5px] leading-snug" aria-live="off">
+    <div className="dt-registro dt-entra absolute bottom-[1%] left-[2%] hidden w-[min(320px,62%)] lg:block" style={{ "--d": "650ms" } as CSSProperties} data-no-onda>
+      <div className="border-b border-white/[0.07] px-3.5 py-2 text-[12px] font-medium text-fg-3">{titulo}</div>
+      <ol className="grid gap-1.5 px-3.5 py-2.5 text-[13px] leading-snug" aria-live="off">
         {lineas.map((e, k) => (
-          <li key={`${i}-${k}`} className={k === 2 ? "text-fg" : k === 1 ? "text-fg-2" : "text-fg-3"}>
-            <span className="text-[var(--dt-cian)]">[{e.hora}]</span> {k === 2 ? <Descifrar texto={e.texto} /> : e.texto}
-            <span className="text-fg-3"> → {e.modulo}</span>
+          <li key={`${i}-${k}`} className={k === 2 ? "dt-linea-nueva text-fg" : k === 1 ? "text-fg-2" : "text-fg-3"}>
+            <span className="tabular text-[var(--dt-cian)]">{e.hora}</span> · {e.texto}
           </li>
         ))}
       </ol>

@@ -50,9 +50,15 @@ copy de `/` y `/servicios`:
 | Configuradores y diseñadores web | El cliente final personaliza, diseña o cotiza en la web del cliente |
 | Automatización e integraciones con IA | El pegamento entre las piezas. Aquí vive lo que antes se vendía suelto |
 
-**Voz:** toda la web habla de «vosotros». El hero de la home es la única
-excepción — está en «tú» — porque su texto vino dado palabra por palabra.
-Es el único bloque que habría que tocar para unificarlo.
+**Voz:** toda la web habla de «vosotros», también la portada, las
+páginas de sector, Pádel y el recorrido guiado de la demo (antes la
+portada iba en «tú»). Las excepciones son a propósito: `/legal` y el
+banner de cookies siguen en «tú» porque ahí se le habla a la persona cuyos
+datos se tratan; las pantallas del panel y de la app son el producto y
+le hablan a quien lo usa; y los chats de ejemplo dentro de las demos (el
+club que escribe a un alumno, la empresa que contesta a su cliente) son
+conversaciones entre personajes. Lo que el visitante nos manda (mensajes
+de WhatsApp, asunto del email) va en su primera persona.
 
 ## Estructura del sitio
 
@@ -128,11 +134,11 @@ por clasificar.
 | Colores, cristal, linterna, barras 3D, anillos, entradas | `app/(demo)/deeptech.css` |
 | El núcleo WebGL del hero (three.js, shaders propios) | `components/deeptech/nucleo-escena.ts` |
 | El hero, los tres pasos alrededor del núcleo y el día de ejemplo | `components/deeptech/hero.tsx` |
-| «En cifras»: contadores, barras de luz 3D y anillos | `components/deeptech/metricas.tsx` |
+| Las cifras de «Qué incluye»: barras de luz 3D y anillos | `components/deeptech/metricas.tsx` |
 | Botones magnéticos, linterna, contador | `components/deeptech/interaccion.tsx` |
 | Entradas al hacer scroll y animaciones atadas al scroll (GSAP) | `components/deeptech/movimiento.ts` |
 
-**Las cifras de «En cifras» salen de los datos, no se escriben.** Los
+**Las cifras de «Qué incluye» salen de los datos, no se escriben.** Antes eran una sección aparte, «En cifras»; se fusionó con los módulos porque contaban lo mismo. Los
 módulos y sectores se cuentan de `data/modules.ts` y `data/sectors.ts`;
 el 8 son los pasos del recorrido y el 100 % es lo que dice la FAQ del
 alojamiento. Ahí no van clientes, facturación ni satisfacción: no hay
@@ -154,7 +160,8 @@ estética es tecnológica, pero los textos no: nada de «telemetría»,
 «pipeline», «núcleo IA», rótulos en mayúsculas de máquina de escribir ni
 efectos que desordenan las letras. La escena 3D va explicada en tres
 pasos con palabras normales (llegan los avisos, se ordenan solos, sale
-el trabajo).
+el trabajo). Es fondo, no una caja: en el móvil va detrás del titular y
+en escritorio sin marco, para que el hero no parezca partido en dos.
 
 **Rendimiento: lo que se quitó y por qué.** Se probó y se retiró a
 propósito: el cursor propio (no gustaba), el scroll suave con Lenis (la

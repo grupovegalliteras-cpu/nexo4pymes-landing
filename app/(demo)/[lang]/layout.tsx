@@ -100,7 +100,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         de: "Nexo4Pymes: Der Anruf kommt rein, der Auftrag läuft von selbst",
       }),
       description: tr(lang, {
-        es: "Mira en vivo cómo un aviso se convierte en orden, parte firmado y factura con VeriFactu. Panel de oficina y app de técnicos.",
+        es: "Mirad en vivo cómo un aviso se convierte en orden, parte firmado y factura con VeriFactu. Panel de oficina y app de técnicos.",
         en: "Watch a customer request become a work order, a signed job report and a VeriFactu invoice, live. Office dashboard and technician app.",
         de: "Sehen Sie live, wie aus einer Kundenanfrage ein Auftrag, ein unterschriebener Arbeitsbericht und eine VeriFactu-Rechnung wird.",
       }),

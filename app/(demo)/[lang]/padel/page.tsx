@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       type: "website",
       locale: "es_ES",
       siteName: "Nexo4Pymes",
-      title: "Nexo Pádel: tu club de pádel, sin estar pegado al WhatsApp",
+      title: "Nexo Pádel: vuestro club de pádel, sin estar pegados al WhatsApp",
       description: DESCRIPCION,
       url: alternativas("es", "/padel").canonical,
       /* El fotograma del vídeo del hero (1280×720), no la imagen genérica

@@ -7,9 +7,8 @@ import { sectoresDe } from "@/data/sectors-i18n";
 import { useIdioma } from "@/components/i18n/idioma";
 import type { Idioma } from "@/lib/i18n";
 import { Contador, moverFoco } from "./interaccion";
-import { Etiqueta, Titulo } from "./piezas";
 
-/* Telemetría del sistema: cifras del propio producto, ninguna inventada.
+/* Cifras del propio producto, ninguna inventada.
    Todas salen de los datos que usa la demo (data/modules.ts y
    data/sectors.ts), así que si se añade un módulo o un sector, el número
    cambia solo. El 8 son los pasos del recorrido de la portada y el 100 %
@@ -21,39 +20,30 @@ import { Etiqueta, Titulo } from "./piezas";
 
 const TX = {
   es: {
-    kicker: "En cifras",
-    h2: "Un sistema entero, no una app suelta.",
-    p: "Cifras del propio producto, no promesas: cada módulo y cada sector que se cuenta aquí lo puedes abrir en la demo ahora mismo.",
     barras: "Módulos por área",
     conectados: "módulos conectados",
+    listos: (d: number, m: number) => `${d} listos hoy · ${m} a medida`,
     kpis: {
-      modulos: { texto: "módulos que encajan entre sí", detalle: (d: number, m: number) => `${d} listos hoy · ${m} a medida` },
       sectores: { texto: "sectores con su propia demo", detalle: "Cambian empresa, servicios, checklists y mediciones" },
       pasos: { texto: "pasos de la llamada al cobro", detalle: "Y ninguno se teclea a mano" },
       ue: { texto: "de los datos, alojados en la UE", detalle: "Con copia de seguridad cada día" },
     },
   },
   en: {
-    kicker: "In figures",
-    h2: "A whole system, not a lone app.",
-    p: "Figures from the product itself, not promises: every module and industry counted here can be opened in the demo right now.",
     barras: "Modules by area",
     conectados: "connected modules",
+    listos: (d: number, m: number) => `${d} ready today · ${m} custom`,
     kpis: {
-      modulos: { texto: "modules that fit together", detalle: (d: number, m: number) => `${d} ready today · ${m} custom` },
       sectores: { texto: "industries with their own demo", detalle: "Company, services, checklists and readings change" },
       pasos: { texto: "steps from the call to payment", detalle: "And none of them typed by hand" },
       ue: { texto: "of the data, hosted in the EU", detalle: "With a backup every day" },
     },
   },
   de: {
-    kicker: "In Zahlen",
-    h2: "Ein ganzes System, keine einzelne App.",
-    p: "Zahlen aus dem Produkt selbst, keine Versprechen: Jedes Modul und jede Branche, die hier gezählt wird, können Sie jetzt in der Demo öffnen.",
     barras: "Module nach Bereich",
     conectados: "verbundene Module",
+    listos: (d: number, m: number) => `${d} sofort einsatzbereit · ${m} individuell`,
     kpis: {
-      modulos: { texto: "Module, die zusammenpassen", detalle: (d: number, m: number) => `${d} sofort einsatzbereit · ${m} individuell` },
       sectores: { texto: "Branchen mit eigener Demo", detalle: "Firma, Leistungen, Checklisten und Messwerte passen sich an" },
       pasos: { texto: "Schritte vom Anruf bis zur Zahlung", detalle: "Und keiner wird von Hand abgetippt" },
       ue: { texto: "der Daten, gehostet in der EU", detalle: "Mit täglichem Backup" },
@@ -72,7 +62,11 @@ const COLOR_GRUPO: Record<ModuleGroup, string> = {
 
 const PASOS_RECORRIDO = 8;
 
-export function Metricas() {
+/** Las cifras de «Qué incluye»: barras de luz con los módulos por área y
+    tres anillos. Va dentro de la sección de módulos (landing.tsx), entre el
+    titular y la lista: antes era una sección aparte, «En cifras», y
+    contaba lo mismo que la lista de módulos. */
+export function CifrasModulos() {
   const lang = useIdioma();
   const tx = TX[lang];
   const grupos = gruposDe(lang);
@@ -84,42 +78,31 @@ export function Metricas() {
   const max = Math.max(...porGrupo.map((x) => x.n));
 
   const kpis = [
-    { valor: modulos.length, sufijo: "", texto: tx.kpis.modulos.texto, detalle: tx.kpis.modulos.detalle(listos, modulos.length - listos), anillo: { tipo: "continuo" as const, p: listos / modulos.length }, color: "cian" },
     { valor: nSectores, sufijo: "", texto: tx.kpis.sectores.texto, detalle: tx.kpis.sectores.detalle, anillo: { tipo: "segmentos" as const, n: nSectores }, color: "violeta" },
     { valor: PASOS_RECORRIDO, sufijo: "", texto: tx.kpis.pasos.texto, detalle: tx.kpis.pasos.detalle, anillo: { tipo: "segmentos" as const, n: PASOS_RECORRIDO }, color: "menta" },
     { valor: 100, sufijo: "%", texto: tx.kpis.ue.texto, detalle: tx.kpis.ue.detalle, anillo: { tipo: "continuo" as const, p: 1 }, color: "cian" },
   ];
 
   return (
-    <section id="telemetria" className="relative scroll-mt-20 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <div className="max-w-3xl">
-          <Etiqueta>{tx.kicker}</Etiqueta>
-          <Titulo className="mt-4 text-[34px] sm:text-[52px]">{tx.h2}</Titulo>
-          <p data-revelar className="mt-4 max-w-2xl text-[17px] leading-relaxed text-fg-2 sm:text-[18px]" style={{ "--d": "60ms" } as CSSProperties}>
-            {tx.p}
-          </p>
-        </div>
-
-        <div className="dt-foco-grupo mt-12 grid gap-5 lg:grid-cols-[1.15fr_1fr]" onPointerMove={moverFoco}>
-          <Barras3D datos={porGrupo} max={max} total={modulos.length} titulo={tx.barras} conectados={tx.conectados} lang={lang} />
-          <div className="grid gap-5 sm:grid-cols-2">
-            {kpis.map((k, i) => (
-              <div key={k.texto} data-revelar data-al-ver className="dt-foco dt-cristal relative flex flex-col items-center rounded-[22px] p-5 text-center sm:p-6" style={{ "--d": `${i * 50}ms` } as CSSProperties}>
-                <Anillo {...k.anillo} color={k.color} indice={i}>
-                  <span className="font-display text-[36px] leading-none font-semibold tracking-[-0.04em] text-fg sm:text-[40px]">
-                    <Contador valor={k.valor} locale={lang} retraso={i * 60} />
-                    {k.sufijo && <span className="text-[0.55em] text-fg-2">{k.sufijo}</span>}
-                  </span>
-                </Anillo>
-                <div className="mt-4 text-[15px] leading-snug font-semibold text-fg">{k.texto}</div>
-                <div className="mt-1 text-[13.5px] leading-snug text-fg-3">{k.detalle}</div>
-              </div>
-            ))}
+    <div className="dt-foco-grupo grid gap-5 lg:grid-cols-[1.3fr_1fr]" onPointerMove={moverFoco}>
+      <Barras3D datos={porGrupo} max={max} total={modulos.length} titulo={tx.barras} conectados={tx.conectados} detalle={tx.listos(listos, modulos.length - listos)} lang={lang} />
+      <div className="grid gap-5">
+        {kpis.map((k, i) => (
+          <div key={k.texto} data-revelar data-al-ver className="dt-foco dt-cristal relative flex items-center gap-5 rounded-[22px] p-5" style={{ "--d": `${i * 50}ms` } as CSSProperties}>
+            <Anillo {...k.anillo} color={k.color} indice={i}>
+              <span className="font-display text-[28px] leading-none font-semibold tracking-[-0.04em] text-fg">
+                <Contador valor={k.valor} locale={lang} retraso={i * 60} />
+                {k.sufijo && <span className="text-[0.55em] text-fg-2">{k.sufijo}</span>}
+              </span>
+            </Anillo>
+            <div className="min-w-0">
+              <div className="text-[16px] leading-snug font-semibold text-fg">{k.texto}</div>
+              <div className="mt-1 text-[14px] leading-snug text-fg-3">{k.detalle}</div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -129,7 +112,7 @@ function Anillo({ tipo, p = 1, n = 1, color, indice, children }: { tipo: "contin
   const id = `dt-anillo-${indice}`;
   const hueco = 2.2;
   return (
-    <div className={`dt-anillo dt-anillo-${color} relative grid size-[132px] place-items-center`}>
+    <div className={`dt-anillo dt-anillo-${color} relative grid size-[100px] shrink-0 place-items-center`}>
       <svg viewBox="0 0 140 140" className="absolute inset-0 size-full -rotate-90" aria-hidden="true">
         <defs>
           <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
@@ -173,6 +156,7 @@ function Barras3D({
   total,
   titulo,
   conectados,
+  detalle,
   lang,
 }: {
   datos: { g: ModuleGroup; nombre: string; n: number }[];
@@ -180,6 +164,7 @@ function Barras3D({
   total: number;
   titulo: string;
   conectados: string;
+  detalle: string;
   lang: Idioma;
 }) {
   const escena = useRef<HTMLDivElement>(null);
@@ -204,6 +189,7 @@ function Barras3D({
         </span>
         <span className="text-[15px] text-fg-2">{conectados}</span>
       </div>
+      <div className="mt-1 text-[14px] text-fg-3">{detalle}</div>
 
       <div ref={escena} className="dt-barras" onPointerMove={inclinar} onPointerLeave={soltar} aria-hidden="true">
         <div className="dt-suelo">

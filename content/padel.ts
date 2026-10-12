@@ -26,11 +26,11 @@ export const padel = {
     ["Precios", "#precios"],
     ["Preguntas", "#preguntas"],
   ] as [string, string][],
-  navCta: "Pide tu demo",
+  navCta: "Pedid la demo",
 
   hero: {
     etiqueta: "Nexo Pádel · para clubes y escuelas",
-    titulo: "Tu club de pádel, sin estar pegado al WhatsApp",
+    titulo: "Vuestro club de pádel, sin estar pegados al WhatsApp",
     texto:
       "Un WhatsApp que contesta por vosotros, una escuela que reorganiza sola faltas y recuperaciones, y partidos que se completan sin perseguir al cuarto jugador. La oficina solo ve lo que necesita a una persona.",
     /* Vídeo de fondo del hero: un dron sobre las pistas vacías de un club al anochecer.

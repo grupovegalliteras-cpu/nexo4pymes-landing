@@ -27,7 +27,7 @@ const HX = {
       ["Sale el trabajo", "Orden, parte, factura y cobro"],
     ],
     registro: "Un día de ejemplo",
-    desliza: "Desliza para ver cómo funciona",
+    desliza: "Cómo funciona, aquí debajo",
   },
   en: {
     pasos: [
@@ -92,7 +92,7 @@ export function HeroNucleo({
       </div>
 
       <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-4 px-5 pt-20 pb-6 sm:px-6 lg:grid-cols-[1.06fr_1fr] lg:gap-2 lg:pt-24">
-        <div data-scrub="salida-hero" className="relative z-10 max-lg:order-2">
+        <div data-scrub="salida-hero" className="dt-sobre-escena relative z-10 max-lg:pt-[12svh]">
           <div className="dt-entra inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-[#070a10] py-1.5 pr-3.5 pl-2.5 text-[13px] font-medium text-fg-2 sm:text-[14px]">
             <i className="size-2 shrink-0 rounded-full bg-[var(--dt-menta)] shadow-[0_0_12px_var(--dt-menta)]" />
             {kicker}
@@ -139,28 +139,28 @@ export function HeroNucleo({
               </li>
             ))}
           </ul>
-        </div>
 
-        <div className="max-lg:order-1">
-          <div ref={ancla} className="dt-ancla relative mx-auto h-[min(250px,30svh)] w-full lg:aspect-square lg:h-auto lg:max-w-[600px]">
-            <i className="dt-esquina dt-esquina-1" />
-            <i className="dt-esquina dt-esquina-2" />
-            <i className="dt-esquina dt-esquina-3" />
-            <i className="dt-esquina dt-esquina-4" />
-            <Paso n={1} titulo={hx.pasos[0][0]} texto={hx.pasos[0][1]} className="top-[14%] left-[3%]" tono="violeta" />
-            <Paso n={2} titulo={hx.pasos[1][0]} texto={hx.pasos[1][1]} className="top-[2%] right-[2%] items-end text-right" tono="cian" />
-            <Paso n={3} titulo={hx.pasos[2][0]} texto={hx.pasos[2][1]} className="right-[-2%] bottom-[16%] items-end text-right" tono="menta" />
-            <Registro eventos={eventos} control={control} titulo={hx.registro} />
-          </div>
-          {/* en el móvil, los tres pasos en fila debajo del núcleo */}
-          <ol className="dt-entra mt-3 grid grid-cols-3 gap-2 text-center lg:hidden" style={{ "--d": "300ms" } as CSSProperties}>
+          {/* en el móvil, los tres pasos que explican la escena de detrás */}
+          <ol className="dt-entra mt-7 grid grid-cols-3 gap-2 text-center lg:hidden" style={{ "--d": "380ms" } as CSSProperties}>
             {hx.pasos.map(([titulo], i) => (
-              <li key={titulo} className={`dt-hud-${["violeta", "cian", "menta"][i]} rounded-xl border border-white/[0.08] bg-[#070a10] px-1.5 py-2 text-[12px] leading-tight font-semibold text-fg`}>
+              <li key={titulo} className={`dt-hud-${["violeta", "cian", "menta"][i]} rounded-xl border border-white/[0.08] bg-[#070a10]/80 px-1.5 py-2 text-[12px] leading-tight font-semibold text-fg`}>
                 <span className="mb-0.5 block text-[11px] text-[var(--tono)]">{i + 1}</span>
                 {titulo}
               </li>
             ))}
           </ol>
+        </div>
+
+        {/* El ancla solo marca dónde va el núcleo y cuánto mide. En el móvil
+            cubre la parte de arriba del hero, así que el núcleo queda DETRÁS
+            del titular (antes iba en un bloque aparte encima y la portada
+            parecía partida en dos). En escritorio ocupa la columna derecha.
+            Sin marco ni esquinas: la escena es fondo, no una caja. */}
+        <div ref={ancla} className="dt-ancla pointer-events-none absolute inset-x-0 top-0 h-[58%] lg:relative lg:inset-auto lg:mx-auto lg:aspect-square lg:h-auto lg:w-full lg:max-w-[600px]">
+          <Paso n={1} titulo={hx.pasos[0][0]} texto={hx.pasos[0][1]} className="top-[14%] left-[3%]" tono="violeta" />
+          <Paso n={2} titulo={hx.pasos[1][0]} texto={hx.pasos[1][1]} className="top-[2%] right-[2%] items-end text-right" tono="cian" />
+          <Paso n={3} titulo={hx.pasos[2][0]} texto={hx.pasos[2][1]} className="right-[-2%] bottom-[16%] items-end text-right" tono="menta" />
+          <Registro eventos={eventos} control={control} titulo={hx.registro} />
         </div>
       </div>
 

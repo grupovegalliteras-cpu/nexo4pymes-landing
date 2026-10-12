@@ -19,13 +19,13 @@ export type ParFaq = readonly [pregunta: string, respuesta: string];
 
 export const FAQ_PORTADA = {
   es: [
-    ["¿Qué pasa con mis datos?", "Son tuyos. Se alojan en servidores de la Unión Europea, con copias de seguridad diarias, y puedes exportarlos cuando quieras. Cada persona del equipo ve solo lo que le toca."],
-    ["¿Tengo que cambiar de número de teléfono?", "No. Tus clientes siguen llamando al número de siempre. Las llamadas se desvían a Central Avisos, que las atiende, las graba y las registra."],
-    ["¿Funciona si el técnico no tiene cobertura?", "Sí. La app guarda el parte, las fotos y la firma en el móvil y lo envía todo en cuanto vuelve la señal. En la demo puedes probarlo desde el menú Más."],
-    ["¿Tengo que instalar algo?", "No hace falta tienda de aplicaciones. La app se instala desde el navegador del móvil y el panel se abre en cualquier ordenador o tablet."],
-    ["¿Sustituye a mi gestoría?", "No. Las nóminas las sigue haciendo tu gestoría: nosotros se las repartimos a cada trabajador. Y la contabilidad queda ordenada y lista para que tu gestoría trabaje menos."],
+    ["¿Qué pasa con nuestros datos?", "Son vuestros. Se alojan en servidores de la Unión Europea, con copias de seguridad diarias, y podéis exportarlos cuando queráis. Cada persona del equipo ve solo lo que le toca."],
+    ["¿Tenemos que cambiar de número de teléfono?", "No. Vuestros clientes siguen llamando al número de siempre. Las llamadas se desvían a Central Avisos, que las atiende, las graba y las registra."],
+    ["¿Funciona si el técnico no tiene cobertura?", "Sí. La app guarda el parte, las fotos y la firma en el móvil y lo envía todo en cuanto vuelve la señal. En la demo podéis probarlo desde el menú Más."],
+    ["¿Tenemos que instalar algo?", "No hace falta tienda de aplicaciones. La app se instala desde el navegador del móvil y el panel se abre en cualquier ordenador o tablet."],
+    ["¿Sustituye a nuestra gestoría?", "No. Las nóminas las sigue haciendo vuestra gestoría: nosotros se las repartimos a cada trabajador. Y la contabilidad queda ordenada y lista para que vuestra gestoría trabaje menos."],
     ["¿Cómo se factura?", "Facturación integrada con VeriFactu: la factura sale del parte de trabajo, con su QR, y se envía por email o WhatsApp con enlace de pago."],
-    ["¿Cuánto cuesta?", "Depende de los módulos y del tamaño del equipo. Tras el diagnóstico te damos un precio cerrado por escrito, sin sorpresas."],
+    ["¿Cuánto cuesta?", "Depende de los módulos y del tamaño del equipo. Tras el diagnóstico os damos un precio cerrado por escrito, sin sorpresas."],
   ],
   en: [
     ["What happens to my data?", "It's yours. It's hosted on servers in the European Union, with daily backups, and you can export it whenever you like. Each team member only sees what concerns them."],

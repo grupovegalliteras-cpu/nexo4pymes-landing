@@ -17,8 +17,8 @@ export default async function Image({ params }: { params: Promise<{ lang: string
   const s = sectorDe(lang, isSectorId(sector) ? sector : SECTORES[0].id);
   return await ogImage({
     kicker: s.nombre,
-    title: tr(lang, { es: `Tu empresa de ${s.nombre.toLowerCase()}, sin papeles`, en: `Your ${s.nombre.toLowerCase()} business, paperless`, de: `${s.nombre} ohne Papierkram` }),
+    title: tr(lang, { es: `Vuestra empresa de ${s.nombre.toLowerCase()}, sin papeles`, en: `Your ${s.nombre.toLowerCase()} business, paperless`, de: `${s.nombre} ohne Papierkram` }),
     sub: s.dolor,
-    chips: [tr(lang, { es: "Mira la demo de tu sector", en: "See the demo for your industry", de: "Demo für Ihre Branche ansehen" }), "Made in Mallorca"],
+    chips: [tr(lang, { es: "Mirad la demo de vuestro sector", en: "See the demo for your industry", de: "Demo für Ihre Branche ansehen" }), "Made in Mallorca"],
   });
 }

@@ -27,7 +27,7 @@ import { PruebaAviso } from "./prueba-aviso";
 import { ContactDock, SiteFooter, SiteNav, waHola } from "./chrome";
 import type { Idioma } from "@/lib/i18n";
 import { HeroNucleo } from "@/components/deeptech/hero";
-import { Metricas } from "@/components/deeptech/metricas";
+import { CifrasModulos } from "@/components/deeptech/metricas";
 import { Magnetico, moverFoco } from "@/components/deeptech/interaccion";
 import { Etiqueta, Titulo } from "@/components/deeptech/piezas";
 import { useMovimientoPortada } from "@/components/deeptech/movimiento";
@@ -45,11 +45,11 @@ const T = {
     heroKicker: "Software a medida para pymes",
     heroA: "La llamada entra.",
     heroB: "El trabajo sale solo.",
-    heroP: "Recogemos cada llamada y cada WhatsApp de tus clientes, los convertimos en órdenes de trabajo y los mandamos al móvil de tus técnicos. Parte, fotos, firma, factura con VeriFactu y cobro, sin pasar nada a mano.",
+    heroP: "Recogemos cada llamada y cada WhatsApp de vuestros clientes, los convertimos en órdenes de trabajo y los mandamos al móvil de vuestros técnicos. Parte, fotos, firma, factura con VeriFactu y cobro, sin pasar nada a mano.",
     verDemo: "Ver la demo en vivo",
-    escribenos: "Escríbenos por WhatsApp",
+    escribenos: "Escribidnos por WhatsApp",
     sellos: ["Sin cambiar de número", "Funciona sin cobertura", "Datos en la UE", "Hecho en Mallorca"],
-    sectH: "Elige tu sector y mira la demo con tu día a día",
+    sectH: "Elegid vuestro sector y mirad la demo con vuestro día a día",
     sectP: "La demo cambia la empresa, los servicios, los checklists, las mediciones y los avisos.",
     ejemplo: "Empresa de ejemplo",
     problema: "El problema de siempre: ",
@@ -63,22 +63,22 @@ const T = {
       ["Llama un cliente", "Central Avisos graba, transcribe y clasifica la llamada. También los WhatsApp, emails y formularios.", "Central Avisos"],
       ["La oficina crea la orden", "Con el técnico recomendado por zona y carga de trabajo. Un clic.", "Órdenes de trabajo"],
       ["Le llega al técnico", "Notificación en el móvil con dirección, notas de la oficina e historial del cliente.", "App de operarios"],
-      ["Va de camino", "El cliente recibe un aviso. En la oficina ves en el mapa dónde está cada uno.", "Rutas"],
+      ["Va de camino", "El cliente recibe un aviso. En la oficina veis en el mapa dónde está cada uno.", "Rutas"],
       ["Parte con fotos y firma", "Checklist, mediciones del sector, material de la furgoneta, fotos y firma con el dedo. Aunque no haya cobertura.", "Parte de trabajo"],
-      ["Informe al cliente", "Un PDF con tu marca, las fotos y la firma, enviado solo.", "Informes"],
-      ["Factura con VeriFactu", "Sale del parte, con su QR y el enlace de pago. Tú solo la revisas.", "Facturación"],
+      ["Informe al cliente", "Un PDF con vuestra marca, las fotos y la firma, enviado solo.", "Informes"],
+      ["Factura con VeriFactu", "Sale del parte, con su QR y el enlace de pago. Vosotros solo la revisáis.", "Facturación"],
       ["Cobrada por Bizum", "El cliente paga desde el móvil y el panel de dirección lo refleja al instante.", "Cobros"],
     ],
-    realH: "No es una maqueta. Tócalo.",
-    realMovil: "Esta es la app que llevarían tus técnicos, funcionando con datos de ejemplo. Toca un trabajo, ficha o abre el menú Más.",
-    realPc: "Esto que ves abajo es el panel de oficina funcionando, con datos de ejemplo. Navega, abre fichas, emite una factura. Y el móvil del técnico está conectado.",
+    realH: "No es una maqueta. Tocadlo.",
+    realMovil: "Esta es la app que llevarían vuestros técnicos, funcionando con datos de ejemplo. Tocad un trabajo, fichad o abrid el menú Más.",
+    realPc: "Esto que veis abajo es el panel de oficina funcionando, con datos de ejemplo. Navegad, abrid fichas, emitid una factura. Y el móvil del técnico está conectado.",
     pantallaCompleta: "Abrir a pantalla completa",
     oficinaYMovil: "Ver oficina y móvil conectados",
     abrirPanel: "Abrir el panel de oficina",
-    modH: "Empieza por lo que más te duele. Añade el resto cuando quieras.",
+    modH: "Empezad por lo que más os duele. Añadid el resto cuando queráis.",
     modP: (n: number) => `${n} módulos que encajan entre sí. Cada uno tiene su pantalla en la demo.`,
     caH: "Ningún aviso vuelve a quedarse en un pósit.",
-    caP: "Llamadas grabadas y transcritas, WhatsApp, email y web en una bandeja. La IA clasifica por tipo, urgencia y cliente, y crea la orden de trabajo en un clic. Mantienes tu número de siempre.",
+    caP: "Llamadas grabadas y transcritas, WhatsApp, email y web en una bandeja. La IA clasifica por tipo, urgencia y cliente, y crea la orden de trabajo en un clic. Mantenéis vuestro número de siempre.",
     caBoton: "Verlo funcionando",
     disponible: "disponible",
     aMedida: "a medida",
@@ -86,30 +86,30 @@ const T = {
     comoH: "Cómo trabajamos",
     como: [
       ["Diagnóstico", "Vemos cómo trabajáis hoy: quién coge las llamadas, cómo se reparten los trabajos, cómo se factura. Detectamos dónde se pierde más tiempo."],
-      ["Primera versión funcionando", "Empezamos por el módulo que más te duele, con tus clientes, tus servicios y tu marca. Tu equipo lo usa desde el primer día."],
+      ["Primera versión funcionando", "Empezamos por el módulo que más os duele, con vuestros clientes, vuestros servicios y vuestra marca. Vuestro equipo lo usa desde el primer día."],
       ["Ampliación por módulos", "Cuando lo primero ya funciona, sumamos lo siguiente: facturación, fichaje, almacén… Sin cambiar de sistema cada vez."],
     ],
     faqH: "Preguntas que nos hacen siempre",
-    faqP: "Respuestas claras. Si falta la tuya, escríbenos.",
+    faqP: "Respuestas claras. Si falta la vuestra, escribidnos.",
     /* Las preguntas viven en content/faq-portada.ts porque el
        servidor también las necesita, para publicarlas como datos
        estructurados. Ver el comentario de ese archivo. */
     faq: FAQ_PORTADA.es,
-    ctH: "Pide tu demo con los datos de tu empresa",
-    ctP: "Te enseñamos esta misma demo con tus servicios, tus clientes y tu marca, para que tu equipo se vea usándola. Sin compromiso.",
-    ctPuntos: ["Una llamada de 20 minutos para entender cómo trabajáis", "Una demo personalizada con tus datos", "Un precio cerrado por escrito"],
+    ctH: "Pedid vuestra demo con los datos de vuestra empresa",
+    ctP: "Os enseñamos esta misma demo con vuestros servicios, vuestros clientes y vuestra marca, para que vuestro equipo se vea usándola. Sin compromiso.",
+    ctPuntos: ["Una llamada de 20 minutos para entender cómo trabajáis", "Una demo personalizada con vuestros datos", "Un precio cerrado por escrito"],
     gracias: (n: string) => `¡Gracias, ${n || "hablamos pronto"}!`,
-    abierto: (e: string) => `Se ha abierto WhatsApp con tu mensaje. Si prefieres email, escríbenos a ${e}.`,
+    abierto: (e: string) => `Se ha abierto WhatsApp con vuestro mensaje. Si preferís email, escribidnos a ${e}.`,
     volver: "Volver al formulario",
-    fNombre: "Tu nombre",
+    fNombre: "Nombre",
     fEmpresa: "Empresa",
     fTel: "Teléfono",
     fTecnicos: "Técnicos en campo",
     tecnicos: ["1", "2 a 5", "6 a 15", "Más de 15"],
     fSector: "Sector",
-    cambialo: "(cámbialo arriba)",
+    cambialo: "(cambiadlo arriba)",
     enviar: "Enviar por WhatsApp",
-    email: "Prefiero email",
+    email: "Mejor por email",
     asunto: "Quiero una demo con mis datos",
     msg: (f: { nombre: string; empresa: string; tel: string; tecnicos: string }, sector: string) =>
       `Hola, soy ${f.nombre || "…"} de ${f.empresa || "…"} (${sector.toLowerCase()}, ${f.tecnicos} técnicos). He visto la demo de Nexo4Pymes y quiero verla con los datos de mi empresa.${f.tel ? ` Mi teléfono: ${f.tel}.` : ""}`,
@@ -269,7 +269,7 @@ const TD = {
   es: {
     heroLinea: "Por ejemplo, este programa para empresas de mantenimiento, piscinas, climatización o limpieza, adaptado a cada una:",
     piezasEnlace: "Ver el detalle de cada pieza",
-    kSectores: "Tu sector",
+    kSectores: "Vuestro sector",
     kReal: "El programa por dentro",
     kModulos: "Qué incluye",
     kComo: "Cómo empezamos",
@@ -277,9 +277,9 @@ const TD = {
     kContacto: "Hablemos",
     escK: "Así funciona",
     escH: "Así entra una llamada y así sale el trabajo.",
-    escP: "La animación usa la empresa de ejemplo del sector que tengas elegido. Cámbialo un poco más abajo y verás otra llamada, otro cliente y otro técnico.",
+    escP: "La animación usa la empresa de ejemplo del sector que tengáis elegido. Cambiadlo un poco más abajo y veréis otra llamada, otro cliente y otro técnico.",
     escPuntos: [
-      ["Grabada y transcrita", "Central Avisos coge la llamada en tu número de siempre."],
+      ["Grabada y transcrita", "Central Avisos coge la llamada en vuestro número de siempre."],
       ["Clasificada por IA", "Tipo de aviso, urgencia y cliente, sin que nadie lo teclee."],
       ["Asignada y avisada", "La orden llega al móvil del técnico más cercano y el cliente recibe su aviso."],
     ],
@@ -341,16 +341,18 @@ function useT() {
      Núcleo           qué hacemos, y el ejemplo en una imagen
      Qué construimos  las cuatro piezas (textos de /servicios)
      Así funciona     la animación de la llamada, ejemplo en marcha
-     En cifras        cifras reales del ejemplo, con barras 3D y anillos
      Tu sector        el visitante elige su sector y todo lo demás cambia
                       Pádel y colaboradores
      Pruébalo         escribe un aviso y mira lo que pasa
      Por dentro       el panel y la app de verdad, incrustados
-     Qué incluye · Cómo empezamos · Preguntas · Hablemos
+     Qué incluye      los módulos, con sus cifras (barras 3D y anillos)
+     Cómo empezamos · Preguntas · Hablemos
 
    Hubo una sección «Un día de trabajo» con los 8 pasos del día y se
    quitó: contaba lo mismo que «Así funciona» y «Pruébalo». Sus horas y
-   pasos siguen vivos en el cuadro del hero (HORAS, más abajo). */
+   pasos siguen vivos en el cuadro del hero (HORAS, más abajo). Y hubo una
+   sección «En cifras» que ahora va dentro de «Qué incluye»: las dos
+   hablaban de los módulos. */
 export function Landing() {
   useMovimientoPortada();
   return (
@@ -359,7 +361,6 @@ export function Landing() {
       <Hero />
       <QueConstruimos />
       <Escaparate />
-      <Metricas />
       <SectorPicker />
       <AvisoPadel />
       <Colaboradores />
@@ -807,6 +808,10 @@ function Modulos() {
           <p data-revelar className="mt-3 text-[17px] text-fg-2">
             {t.modP(modulos.length)}
           </p>
+        </div>
+
+        <div className="mt-10">
+          <CifrasModulos />
         </div>
 
         <Link href="/panel/central-avisos" onPointerMove={moverFoco} className="dt-foco group relative mt-10 block overflow-hidden rounded-[30px] border border-white/10 bg-[#04070c] p-6 sm:p-8">

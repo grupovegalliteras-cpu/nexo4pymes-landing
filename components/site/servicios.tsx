@@ -15,7 +15,7 @@ import { Icon } from "@/components/icon";
 import { ContactDock, SiteFooter, SiteNav } from "./chrome";
 
 const TX = {
-  es: { h1: "Todos los módulos", p: "Todo lo que podemos montar para tu empresa. Empiezas por un módulo y vas sumando. Cada uno se puede probar en la demo.", buscar: "Busca: fichaje, factura, WhatsApp…", aria: "Buscar módulo", disponible: "Disponible", aMedida: "A medida", pensado: "Pensado para", ver: "Verlo en la demo", nada: (q: string) => `No hay módulos que coincidan con «${q}».` },
+  es: { h1: "Todos los módulos", p: "Todo lo que podemos montar para vuestra empresa. Empezáis por un módulo y vais sumando. Cada uno se puede probar en la demo.", buscar: "Buscad: fichaje, factura, WhatsApp…", aria: "Buscar módulo", disponible: "Disponible", aMedida: "A medida", pensado: "Pensado para", ver: "Verlo en la demo", nada: (q: string) => `No hay módulos que coincidan con «${q}».` },
   en: { h1: "All modules", p: "Everything we can build for your company. Start with one module and add more as you go. Each one can be tried in the demo.", buscar: "Search: time clock, invoice, WhatsApp…", aria: "Search modules", disponible: "Available", aMedida: "Custom", pensado: "Designed for", ver: "See it in the demo", nada: (q: string) => `No modules match "${q}".` },
   de: { h1: "Alle Module", p: "Alles, was wir für Ihre Firma aufbauen können. Sie beginnen mit einem Modul und ergänzen nach und nach. Jedes lässt sich in der Demo ausprobieren.", buscar: "Suche: Zeiterfassung, Rechnung, WhatsApp…", aria: "Module durchsuchen", disponible: "Verfügbar", aMedida: "Individuell", pensado: "Gedacht für", ver: "In der Demo ansehen", nada: (q: string) => `Keine Module passen zu „${q}“.` },
 };

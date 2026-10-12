@@ -55,6 +55,7 @@ export function HeroNucleo({
   kicker,
   a,
   b,
+  linea,
   p,
   verDemo,
   escribenos,
@@ -65,6 +66,8 @@ export function HeroNucleo({
   kicker: string;
   a: string;
   b: string;
+  /** Qué es lo de debajo: el programa de servicios como ejemplo del software a medida. */
+  linea: string;
   p: string;
   verDemo: string;
   escribenos: string;
@@ -109,7 +112,10 @@ export function HeroNucleo({
             </span>
           </h1>
 
-          <p className="dt-entra mt-6 max-w-[560px] text-[16.5px] leading-relaxed text-fg-2 sm:text-[18px]" style={{ "--d": "200ms" } as CSSProperties}>
+          <p className="dt-entra mt-6 max-w-[560px] text-[17px] leading-snug font-medium text-fg sm:text-[19px]" style={{ "--d": "180ms" } as CSSProperties}>
+            {linea}
+          </p>
+          <p className="dt-entra mt-3 max-w-[560px] text-[16px] leading-relaxed text-fg-2 sm:text-[17px]" style={{ "--d": "220ms" } as CSSProperties}>
             {p}
           </p>
 
@@ -141,7 +147,7 @@ export function HeroNucleo({
             <i className="dt-esquina dt-esquina-2" />
             <i className="dt-esquina dt-esquina-3" />
             <i className="dt-esquina dt-esquina-4" />
-            <Paso n={1} titulo={hx.pasos[0][0]} texto={hx.pasos[0][1]} className="top-[9%] left-[-6%] xl:left-[-10%]" tono="violeta" />
+            <Paso n={1} titulo={hx.pasos[0][0]} texto={hx.pasos[0][1]} className="top-[14%] left-[3%]" tono="violeta" />
             <Paso n={2} titulo={hx.pasos[1][0]} texto={hx.pasos[1][1]} className="top-[2%] right-[2%] items-end text-right" tono="cian" />
             <Paso n={3} titulo={hx.pasos[2][0]} texto={hx.pasos[2][1]} className="right-[-2%] bottom-[16%] items-end text-right" tono="menta" />
             <Registro eventos={eventos} control={control} titulo={hx.registro} />

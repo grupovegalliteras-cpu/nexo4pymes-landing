@@ -138,6 +138,17 @@ el 8 son los pasos del recorrido y el 100 % es lo que dice la FAQ del
 alojamiento. Ahí no van clientes, facturación ni satisfacción: no hay
 datos reales que lo respalden (ver «Testimonios»).
 
+**Lo primero que tiene que entenderse es que hacemos software a medida.**
+El rótulo del hero dice «Software a medida para pymes», la línea bajo el
+titular presenta el programa de servicios como *un ejemplo*, y justo
+después va «Qué construimos» con las cuatro piezas, que lee los mismos
+textos que `/servicios` (`content/servicios.ts` y sus traducciones). Ahí
+no se promete «sin licencia» ni «el sistema es vuestro»: es verdad del
+software a medida pero no de CentralAvisos, que es una cuota y sale en la
+misma página. La sección «Un día de trabajo» se quitó porque contaba lo
+mismo que «Así funciona» y «Pruébalo»; el menú «Producto» (`/#recorrido`)
+lleva ahora a «Así funciona».
+
 **Se escribe para el gerente de una pyme, no para un ingeniero.** La
 estética es tecnológica, pero los textos no: nada de «telemetría»,
 «pipeline», «núcleo IA», rótulos en mayúsculas de máquina de escribir ni

@@ -3,9 +3,9 @@
 import Link from "@/components/i18n/Enlace";
 import { AnimatePresence, motion } from "motion/react";
 import {
-  BadgeCheck, Bell, Check, ChevronDown, ClipboardCheck, FileSignature, Mail, MessageCircle, Monitor, Navigation, PhoneIncoming, PlayCircle, Receipt, Sparkles, Wallet, Wrench,
+  ArrowRight, BadgeCheck, Check, ChevronDown, Clock, Globe, ListChecks, Mail, MessageCircle, Monitor, PhoneIncoming, PlayCircle, Sparkles, Workflow,
 } from "lucide-react";
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { ModuleGroup } from "@/data/modules";
 import { gruposDe, modulosDe } from "@/data/modules-i18n";
 import { sectoresDe } from "@/data/sectors-i18n";
@@ -19,6 +19,9 @@ import { Icon } from "@/components/icon";
 import dynamic from "next/dynamic";
 import { FAQ_PORTADA } from "@/content/faq-portada";
 import { colaboradores, textosColaboradores } from "@/content/colaboradores";
+import { servicios as serviciosEs } from "@/content/servicios";
+import { servicios as serviciosEn } from "@/content/en/servicios";
+import { servicios as serviciosDe } from "@/content/de/servicios";
 import { HeroAnim } from "./hero-anim";
 import { PruebaAviso } from "./prueba-aviso";
 import { ContactDock, SiteFooter, SiteNav, waHola } from "./chrome";
@@ -39,7 +42,7 @@ const PhoneFrame = dynamic(() => import("@/components/app/shell").then((m) => m.
 /* Textos de la portada en los tres idiomas. En alemán, trato de usted (Sie). */
 const T = {
   es: {
-    heroKicker: "Panel de oficina y app de técnicos, conectados",
+    heroKicker: "Software a medida para pymes",
     heroA: "La llamada entra.",
     heroB: "El trabajo sale solo.",
     heroP: "Recogemos cada llamada y cada WhatsApp de tus clientes, los convertimos en órdenes de trabajo y los mandamos al móvil de tus técnicos. Parte, fotos, firma, factura con VeriFactu y cobro, sin pasar nada a mano.",
@@ -56,9 +59,6 @@ const T = {
     checklist: "Checklist del parte",
     mediciones: "Mediciones en campo",
     servicios: "Servicios",
-    recH: "Un día cualquiera, de la llamada a la factura cobrada",
-    recP: "Cada paso es una pantalla real de la demo. Pulsa en cualquiera para verla.",
-    ver: (x: string) => `Ver ${x}`,
     pasos: [
       ["Llama un cliente", "Central Avisos graba, transcribe y clasifica la llamada. También los WhatsApp, emails y formularios.", "Central Avisos"],
       ["La oficina crea la orden", "Con el técnico recomendado por zona y carga de trabajo. Un clic.", "Órdenes de trabajo"],
@@ -115,7 +115,7 @@ const T = {
       `Hola, soy ${f.nombre || "…"} de ${f.empresa || "…"} (${sector.toLowerCase()}, ${f.tecnicos} técnicos). He visto la demo de Nexo4Pymes y quiero verla con los datos de mi empresa.${f.tel ? ` Mi teléfono: ${f.tel}.` : ""}`,
   },
   en: {
-    heroKicker: "Office dashboard and technician app, connected",
+    heroKicker: "Custom software for small businesses",
     heroA: "The call comes in.",
     heroB: "The job gets done.",
     heroP: "We pick up every call and every WhatsApp from your customers, turn them into work orders and send them to your technicians' phones. Job report, photos, signature, VeriFactu invoice and payment, with nothing typed up by hand.",
@@ -132,9 +132,6 @@ const T = {
     checklist: "Job report checklist",
     mediciones: "On-site readings",
     servicios: "Services",
-    recH: "An ordinary day, from the call to the paid invoice",
-    recP: "Every step is a real screen from the demo. Tap any of them to see it.",
-    ver: (x: string) => `See ${x}`,
     pasos: [
       ["A customer calls", "Central Avisos records, transcribes and sorts the call. WhatsApp messages, emails and web forms too.", "Central Avisos"],
       ["The office creates the order", "With the technician suggested by area and workload. One click.", "Work orders"],
@@ -191,7 +188,7 @@ const T = {
       `Hi, I'm ${f.nombre || "…"} from ${f.empresa || "…"} (${sector.toLowerCase()}, ${f.tecnicos} technicians). I've seen the Nexo4Pymes demo and I'd like to see it with my company's data.${f.tel ? ` My phone: ${f.tel}.` : ""}`,
   },
   de: {
-    heroKicker: "Büro-Dashboard und Techniker-App, verbunden",
+    heroKicker: "Individuelle Software für kleine Unternehmen",
     heroA: "Der Anruf kommt rein.",
     heroB: "Der Auftrag läuft von selbst.",
     heroP: "Wir nehmen jeden Anruf und jede WhatsApp Ihrer Kunden auf, machen daraus Arbeitsaufträge und schicken sie aufs Handy Ihrer Techniker. Arbeitsbericht, Fotos, Unterschrift, Rechnung mit VeriFactu und Zahlung, ohne etwas abzutippen.",
@@ -208,9 +205,6 @@ const T = {
     checklist: "Checkliste im Arbeitsbericht",
     mediciones: "Messwerte vor Ort",
     servicios: "Leistungen",
-    recH: "Ein ganz normaler Tag, vom Anruf bis zur bezahlten Rechnung",
-    recP: "Jeder Schritt ist ein echter Bildschirm der Demo. Tippen Sie darauf, um ihn zu sehen.",
-    ver: (x: string) => `${x} ansehen`,
     pasos: [
       ["Ein Kunde ruft an", "Central Avisos zeichnet den Anruf auf, transkribiert und ordnet ihn ein. Auch WhatsApp, E-Mails und Formulare.", "Central Avisos"],
       ["Das Büro erstellt den Auftrag", "Mit dem Techniker, der nach Gebiet und Auslastung vorgeschlagen wird. Ein Klick.", "Arbeitsaufträge"],
@@ -273,8 +267,9 @@ const T = {
    comparten con versiones anteriores de la portada. */
 const TD = {
   es: {
+    heroLinea: "Por ejemplo, este programa para empresas de mantenimiento, piscinas, climatización o limpieza, adaptado a cada una:",
+    piezasEnlace: "Ver el detalle de cada pieza",
     kSectores: "Tu sector",
-    kRecorrido: "Un día de trabajo",
     kReal: "El programa por dentro",
     kModulos: "Qué incluye",
     kComo: "Cómo empezamos",
@@ -290,8 +285,9 @@ const TD = {
     ],
   },
   en: {
+    heroLinea: "For example, this software for maintenance, pool, HVAC and cleaning companies, adapted to each one:",
+    piezasEnlace: "See each piece in detail",
     kSectores: "Your industry",
-    kRecorrido: "A working day",
     kReal: "Inside the software",
     kModulos: "What's included",
     kComo: "How we start",
@@ -307,8 +303,9 @@ const TD = {
     ],
   },
   de: {
+    heroLinea: "Zum Beispiel diese Software für Wartungs-, Pool-, Klima- und Reinigungsfirmen, angepasst an jede einzelne:",
+    piezasEnlace: "Jeden Baustein im Detail ansehen",
     kSectores: "Ihre Branche",
-    kRecorrido: "Ein Arbeitstag",
     kReal: "Die Software von innen",
     kModulos: "Was dazugehört",
     kComo: "So starten wir",
@@ -335,28 +332,37 @@ function useT() {
    activa las variantes dark: de los componentes de dentro, aunque el
    visitante tenga el tema claro en el resto de la web.
 
-   Arquitectura, de arriba abajo:
-     01 Núcleo        el gancho: WebGL que cuenta el producto en una imagen
-     02 Telemetría    cifras reales del producto, con barras 3D y anillos
-     03 En directo    la animación de la llamada, ahora con espacio propio
-     04 Sectores      el visitante elige su sector y todo lo demás cambia
-        Pádel y colaboradores
-     05 Pipeline      el día de ejemplo, con un haz que se dibuja al bajar
-     06 Pruébalo      escribe un aviso y mira lo que pasa
-     07 Software real el panel y la app de verdad, incrustados
-     08 Módulos · 09 Método · 10 Preguntas · 11 Contacto */
+   LO PRIMERO QUE TIENE QUE ENTENDERSE ES QUE HACEMOS SOFTWARE A MEDIDA.
+   El programa para empresas de servicios (panel + app) es el ejemplo que
+   se enseña a fondo, no el único producto. Por eso el rótulo del hero y
+   «Qué construimos» van antes que la demo.
+
+   De arriba abajo:
+     Núcleo           qué hacemos, y el ejemplo en una imagen
+     Qué construimos  las cuatro piezas (textos de /servicios)
+     Así funciona     la animación de la llamada, ejemplo en marcha
+     En cifras        cifras reales del ejemplo, con barras 3D y anillos
+     Tu sector        el visitante elige su sector y todo lo demás cambia
+                      Pádel y colaboradores
+     Pruébalo         escribe un aviso y mira lo que pasa
+     Por dentro       el panel y la app de verdad, incrustados
+     Qué incluye · Cómo empezamos · Preguntas · Hablemos
+
+   Hubo una sección «Un día de trabajo» con los 8 pasos del día y se
+   quitó: contaba lo mismo que «Así funciona» y «Pruébalo». Sus horas y
+   pasos siguen vivos en el cuadro del hero (HORAS, más abajo). */
 export function Landing() {
   useMovimientoPortada();
   return (
     <div data-theme="dark" className="deeptech text-fg">
       <SiteNav dark />
       <Hero />
-      <Metricas />
+      <QueConstruimos />
       <Escaparate />
+      <Metricas />
       <SectorPicker />
       <AvisoPadel />
       <Colaboradores />
-      <Recorrido />
       <PruebaAviso />
       <SoftwareReal />
       <Modulos />
@@ -373,12 +379,13 @@ export function Landing() {
 function Hero() {
   const t = useT();
   const lang = useIdioma();
-  const eventos = t.pasos.map(([titulo], i) => ({ hora: PASOS[i].h, texto: titulo }));
+  const eventos = t.pasos.map(([titulo], i) => ({ hora: HORAS[i], texto: titulo }));
   return (
     <HeroNucleo
       kicker={t.heroKicker}
       a={t.heroA}
       b={t.heroB}
+      linea={t.heroLinea}
       p={t.heroP}
       verDemo={t.verDemo}
       escribenos={t.escribenos}
@@ -389,13 +396,66 @@ function Hero() {
   );
 }
 
+/* ---------------- Qué construimos ----------------
+   Las cuatro piezas de software que se venden, con los mismos textos que
+   /servicios (content/servicios.ts y sus traducciones): un solo sitio
+   donde cambiarlos. Va justo después del hero porque es lo primero que
+   tiene que entenderse; la demo de servicios viene después, como ejemplo.
+
+   OJO: aquí no se promete «sin licencia» ni «el sistema es vuestro». Es
+   verdad del software a medida y no de CentralAvisos, que es una cuota y
+   sale en esta misma página. Ver el comentario de pruebaInicio en
+   content/inicio.ts. */
+const PIEZAS = { es: serviciosEs, en: serviciosEn, de: serviciosDe };
+const ICONO_PIEZA = { lista: ListChecks, globo: Globe, reloj: Clock, engranaje: Workflow } as const;
+const TONO_PIEZA = { azul: "var(--dt-cian)", violeta: "var(--dt-violeta)", mint: "var(--dt-menta)" } as const;
+
+function QueConstruimos() {
+  const t = useT();
+  const lang = useIdioma();
+  const d = PIEZAS[lang];
+  return (
+    <section id="que-construimos" className="relative scroll-mt-20 py-16 sm:py-24">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6">
+        <div className="max-w-3xl">
+          <Etiqueta>{d.categoria}</Etiqueta>
+          <Titulo className="mt-4 text-[32px] sm:text-[48px]">{d.titular}</Titulo>
+          <p data-revelar className="mt-4 text-[17px] leading-relaxed text-fg-2">
+            {d.intro}
+          </p>
+        </div>
+        <ul className="dt-foco-grupo mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" onPointerMove={moverFoco}>
+          {d.tarjetas.map((p, i) => {
+            const Ico = ICONO_PIEZA[p.icono];
+            const color = TONO_PIEZA[p.tono];
+            return (
+              <li key={p.titulo} data-revelar className="dt-foco dt-cristal flex flex-col rounded-[24px] p-6" style={{ "--d": `${i * 60}ms` } as CSSProperties}>
+                <span className="grid size-11 place-items-center rounded-xl border border-white/10 bg-white/[0.03]" style={{ color, boxShadow: `0 0 28px -10px ${color}` }}>
+                  <Ico className="size-5" />
+                </span>
+                <h3 className="mt-5 font-display text-[19px] leading-snug font-semibold tracking-[-0.02em] text-fg">{p.titulo}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-fg-2">{p.texto}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="mt-6">
+          <Link href="/servicios" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
+            {t.piezasEnlace} <ArrowRight className="size-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- En directo ----------------
    La animación de la llamada que antes iba a la derecha del hero. Llega
    inclinada en 3D y se endereza con el scroll. */
 function Escaparate() {
   const t = useT();
   return (
-    <section id="en-directo" className="relative scroll-mt-20 py-16 sm:py-24">
+    <section id="recorrido" className="relative scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
         <div>
           <Etiqueta>{t.escK}</Etiqueta>
@@ -600,60 +660,9 @@ function SectorPicker() {
   );
 }
 
-/* ---------------- Recorrido del día ---------------- */
-const PASOS: { h: string; icon: ReactNode; href: string; tone: string }[] = [
-  { h: "8:02", icon: <PhoneIncoming className="size-4" />, href: "/panel/central-avisos", tone: "bg-sun text-[#00170f]" },
-  { h: "8:03", icon: <Wrench className="size-4" />, href: "/panel/trabajos", tone: "bg-brand text-brand-ink" },
-  { h: "8:03", icon: <Bell className="size-4" />, href: "/app", tone: "bg-info text-white" },
-  { h: "9:10", icon: <Navigation className="size-4" />, href: "/panel/rutas", tone: "bg-brand text-brand-ink" },
-  { h: "10:25", icon: <ClipboardCheck className="size-4" />, href: "/app", tone: "bg-ok text-[#00170f]" },
-  { h: "10:26", icon: <FileSignature className="size-4" />, href: "/panel/informes", tone: "bg-ai text-white" },
-  { h: "10:40", icon: <Receipt className="size-4" />, href: "/panel/facturacion", tone: "bg-fg text-bg" },
-  { h: "12:15", icon: <Wallet className="size-4" />, href: "/panel/cobros", tone: "bg-ok text-[#00170f]" },
-];
-
-function Recorrido() {
-  const t = useT();
-  return (
-    <section id="recorrido" className="scroll-mt-20 py-16 sm:py-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <div className="max-w-2xl">
-          <Etiqueta>{t.kRecorrido}</Etiqueta>
-          <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.recH}</Titulo>
-          <p data-revelar className="mt-3 text-[17px] text-fg-2">
-            {t.recP}
-          </p>
-        </div>
-        <div className="relative mt-14">
-          <div className="absolute top-0 bottom-0 left-[27px] w-px bg-white/[0.07] md:left-1/2" />
-          {/* sin JavaScript o con «reducir movimiento», el haz se queda entero */}
-          <div data-scrub="haz" className="dt-haz absolute top-0 bottom-0 left-[27px] w-px md:left-1/2" />
-          <ol className="dt-foco-grupo grid gap-8" onPointerMove={moverFoco}>
-            {PASOS.map((p, i) => {
-              const [titulo, desc, etiqueta] = t.pasos[i];
-              return (
-                <li key={i} data-revelar className={cn("relative grid items-center gap-4 pl-16 md:grid-cols-2 md:gap-16 md:pl-0", i % 2 && "md:[&>*:first-child]:order-2")}>
-                  <span className={cn("absolute top-1 left-[14px] grid size-[27px] place-items-center rounded-full shadow-[0_0_22px_-4px_rgb(56_225_255/0.8)] ring-4 ring-bg md:left-[calc(50%-13px)]", p.tone)}>{p.icon}</span>
-                  <div className={cn(i % 2 ? "md:pl-4" : "md:pr-4 md:text-right")}>
-                    <div className="text-[14px] font-semibold text-[var(--dt-cian)] tabular">{p.h}</div>
-                    <div className="font-display text-[24px] font-semibold tracking-[-0.025em]">{titulo}</div>
-                    <p className="mt-1 text-[15px] text-fg-2">{desc}</p>
-                  </div>
-                  <div className={cn(i % 2 ? "md:pr-4 md:text-right" : "md:pl-4")}>
-                    <Link href={p.href} className="dt-foco group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.025] py-2 pr-4 pl-2 text-[14px] font-medium transition-colors hover:border-white/20 hover:bg-white/[0.05]">
-                      <span className={cn("grid size-7 place-items-center rounded-full", p.tone)}>{p.icon}</span>
-                      {t.ver(etiqueta)}
-                    </Link>
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-      </div>
-    </section>
-  );
-}
+/* Horas del día de ejemplo, en el mismo orden que t.pasos. Las enseña el
+   cuadro del hero; las mismas que usa la demo guiada. */
+const HORAS = ["8:02", "8:03", "8:03", "9:10", "10:25", "10:26", "10:40", "12:15"];
 
 /* ---------------- Software real ---------------- */
 function ScaledPanel() {

@@ -303,14 +303,14 @@ export function PruebaAviso() {
   const fin = paso >= PASOS;
 
   return (
-    <section id="pruebalo" data-hide-dock className="relative scroll-mt-20 overflow-hidden bg-[#061c25] py-16 text-white sm:py-24">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,rgb(15_90_112/0.55),transparent_60%),radial-gradient(ellipse_at_90%_100%,rgb(245_171_46/0.10),transparent_55%)]" />
+    <section id="pruebalo" data-hide-dock className="relative scroll-mt-20 overflow-hidden py-16 text-white sm:py-24">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,rgb(56_225_255/0.12),transparent_60%),radial-gradient(ellipse_at_90%_100%,rgb(157_123_255/0.12),transparent_55%)]" />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-6">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 rounded-full bg-sun px-2.5 py-1 text-[12px] font-semibold text-[#1d1300]">
             <span className="size-1.5 rounded-full bg-[#1d1300]" /> {tx.kicker}
           </div>
-          <h2 className="mt-4 font-display text-[32px] leading-[1.05] font-semibold tracking-tight sm:text-[48px]">{tx.h2}</h2>
+          <h2 className="mt-4 font-display text-[32px] leading-[1.04] font-semibold tracking-[-0.035em] sm:text-[48px]">{tx.h2}</h2>
           <p className="mt-3 text-[16px] text-white/70 sm:text-[18px]">
             {tx.p(sector.empresa)}
           </p>
@@ -318,7 +318,7 @@ export function PruebaAviso() {
 
         <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-8">
           {/* Chat del cliente */}
-          <div className="flex h-[520px] min-w-0 flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0b141a] shadow-e3 sm:h-[560px]">
+          <div className="flex h-[520px] min-w-0 flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#070b10] shadow-[0_40px_100px_-40px_rgb(56_225_255/0.35)] sm:h-[560px]">
             <div className="flex items-center gap-3 border-b border-white/10 bg-[#111d24] px-4 py-3">
               <span className="grid size-10 place-items-center rounded-full font-display text-[15px] font-bold" style={{ background: sector.color }}>
                 {sector.empresaCorta[0]}
@@ -333,7 +333,7 @@ export function PruebaAviso() {
                 </button>
               )}
             </div>
-            <div ref={chat} className="flex-1 space-y-2 overflow-y-auto bg-[radial-gradient(rgb(255_255_255/0.035)_1px,transparent_1px)] [background-size:14px_14px] px-3 py-4">
+            <div ref={chat} data-lenis-prevent className="flex-1 space-y-2 overflow-y-auto bg-[radial-gradient(rgb(255_255_255/0.035)_1px,transparent_1px)] [background-size:14px_14px] px-3 py-4">
               {!msgs.length && (
                 <div className="mx-auto mt-2 max-w-[260px] rounded-xl bg-white/[0.06] px-3 py-2 text-center text-[12px] text-white/55">
                   {tx.ayuda}
@@ -393,7 +393,7 @@ export function PruebaAviso() {
           </div>
 
           {/* Lo que hace la empresa sola */}
-          <div ref={pipe} className="min-w-0 scroll-mt-4 rounded-3xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur sm:p-6">
+          <div ref={pipe} className="dt-cristal min-w-0 scroll-mt-4 rounded-[28px] p-4 sm:p-6">
             <div className="flex items-center justify-between gap-3">
               <div className="text-[13px] font-medium text-white/60">{tx.mientras}</div>
               <div className={cn("rounded-lg px-2.5 py-1 font-display text-[15px] font-semibold tabular", fin ? "bg-[#37c28a]/15 text-[#7fe3b8]" : "bg-white/10 text-white/80")}>

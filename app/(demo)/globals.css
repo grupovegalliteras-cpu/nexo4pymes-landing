@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../(web)/tema-web.css";
+@import "./deeptech.css";
 
 @source inline("{bg,text,border}-{brand,ok,warn,bad,ai,info,sun,fg-3}");
 @source inline("bg-{brand,ok,warn,bad,ai,info,sun}-soft");

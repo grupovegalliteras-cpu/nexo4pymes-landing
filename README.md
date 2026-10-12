@@ -110,6 +110,47 @@ en llamadas en frío y hay gente con esa dirección apuntada en papel, y la
 tercera estuvo indexada en Google. El 301 traslada a la home lo que esas
 URLs tuvieran ganado en buscadores en vez de tirarlo.
 
+## La portada «Deep Tech»
+
+La home es siempre oscura (negro OLED, cristal, rejilla) aunque el
+visitante tenga el tema claro: el envoltorio lleva `.deeptech`, que
+redefine los tokens del sistema de diseño, y el panel y la app
+incrustados se ven en oscuro sin tocarlos. El resto de la web
+(`/servicios`, `/nosotros`, el blog, `/padel`) no cambia.
+
+Los tres acentos significan algo y conviene no mezclarlos: **menta**
+(el verde del logo) es lo que sale hecho y los botones principales;
+**cian**, lo interactivo y los datos; **violeta**, la IA y lo que entra
+por clasificar.
+
+| Qué | Dónde |
+|---|---|
+| Colores, cristal, cursor, linterna, barras 3D, anillos, glitch | `app/(demo)/deeptech.css` |
+| El núcleo WebGL del hero (three.js, shaders propios) | `components/deeptech/nucleo-escena.ts` |
+| El hero, su HUD y el registro en vivo | `components/deeptech/hero.tsx` |
+| Telemetría: cifras, barras de luz 3D y anillos | `components/deeptech/metricas.tsx` |
+| Cursor propio, botones magnéticos, linterna, contador | `components/deeptech/interaccion.tsx` |
+| Scroll suave (Lenis), entradas y animaciones atadas al scroll (GSAP) | `components/deeptech/movimiento.ts` |
+
+**Las cifras de Telemetría salen de los datos, no se escriben.** Los
+módulos y sectores se cuentan de `data/modules.ts` y `data/sectors.ts`;
+el 8 son los pasos del recorrido y el 100 % es lo que dice la FAQ del
+alojamiento. Ahí no van clientes, facturación ni satisfacción: no hay
+datos reales que lo respalden (ver «Testimonios»).
+
+**Rendimiento.** three, GSAP y Lenis se descargan después de pintar el
+titular, y el panel y la app incrustados solo cuando se llega a
+«Software real». La escena no tiene postprocesado, baja la resolución
+sola si el equipo no llega a ~42 fps y se para cuando el hero no se ve.
+Con «reducir movimiento» no hay scroll suave ni animaciones: todo
+aparece en su sitio y el núcleo queda quieto.
+
+**Para animar algo nuevo al entrar en pantalla** basta con
+`data-revelar` (y `style={{ "--d": "120ms" }}` para escalonar). Para
+atarlo al scroll, `data-scrub="inclinar"` o `data-scrub="haz"`. No se
+pone `data-revelar` en algo que se pinte después de cargar (lo que
+depende de `useEffect`): el vigilante solo ve lo que hay al montar.
+
 ## Dónde se toca cada cosa
 
 | Quiero cambiar… | Archivo |

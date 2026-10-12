@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import {
   BadgeCheck, Bell, Check, ChevronDown, ClipboardCheck, FileSignature, Mail, MessageCircle, Monitor, Navigation, PhoneIncoming, PlayCircle, Receipt, Sparkles, Wallet, Wrench,
 } from "lucide-react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import type { ModuleGroup } from "@/data/modules";
 import { gruposDe, modulosDe } from "@/data/modules-i18n";
 import { sectoresDe } from "@/data/sectors-i18n";
@@ -16,14 +16,25 @@ import { useUi } from "@/store/ui";
 import { cn } from "@/lib/utils";
 import { useFmt, useIdioma } from "@/components/i18n/idioma";
 import { Icon } from "@/components/icon";
-import { PanelShell } from "@/components/panel/shell";
-import { AppShell, PhoneFrame } from "@/components/app/shell";
+import dynamic from "next/dynamic";
 import { FAQ_PORTADA } from "@/content/faq-portada";
 import { colaboradores, textosColaboradores } from "@/content/colaboradores";
-import { Caustics } from "./caustics";
 import { HeroAnim } from "./hero-anim";
 import { PruebaAviso } from "./prueba-aviso";
 import { ContactDock, SiteFooter, SiteNav, waHola } from "./chrome";
+import type { Idioma } from "@/lib/i18n";
+import { HeroNucleo } from "@/components/deeptech/hero";
+import { Metricas } from "@/components/deeptech/metricas";
+import { Cursor, Magnetico, moverFoco } from "@/components/deeptech/interaccion";
+import { Etiqueta, TituloGlitch } from "@/components/deeptech/piezas";
+import { useMovimientoPortada } from "@/components/deeptech/movimiento";
+
+/* El panel y la app incrustados solo se pintan en el navegador (al llegar a
+   «Software real»), así que se descargan aparte: sacarlos del paquete
+   inicial es lo que más aligera la primera carga de la portada. */
+const PanelShell = dynamic(() => import("@/components/panel/shell").then((m) => m.PanelShell), { ssr: false });
+const AppShell = dynamic(() => import("@/components/app/shell").then((m) => m.AppShell), { ssr: false });
+const PhoneFrame = dynamic(() => import("@/components/app/shell").then((m) => m.PhoneFrame), { ssr: false });
 
 /* Textos de la portada en los tres idiomas. En alemán, trato de usted (Sie). */
 const T = {
@@ -257,15 +268,92 @@ const T = {
   },
 };
 
+/* Textos nuevos de la portada Deep Tech: el rótulo de cada sección y el
+   bloque «En directo». Van aparte para no tocar los de arriba, que se
+   comparten con versiones anteriores de la portada. */
+const TD = {
+  es: {
+    kSectores: "Tu sector",
+    kRecorrido: "Pipeline · un día",
+    kReal: "Software real",
+    kModulos: "Módulos",
+    kComo: "Método",
+    kFaq: "Preguntas",
+    kContacto: "Contacto",
+    escK: "En directo",
+    escH: "Así entra una llamada y así sale el trabajo.",
+    escP: "La animación usa la empresa de ejemplo del sector que tengas elegido. Cámbialo un poco más abajo y verás otra llamada, otro cliente y otro técnico.",
+    escPuntos: [
+      ["Grabada y transcrita", "Central Avisos coge la llamada en tu número de siempre."],
+      ["Clasificada por IA", "Tipo de aviso, urgencia y cliente, sin que nadie lo teclee."],
+      ["Asignada y avisada", "La orden llega al móvil del técnico más cercano y el cliente recibe su aviso."],
+    ],
+  },
+  en: {
+    kSectores: "Your industry",
+    kRecorrido: "Pipeline · one day",
+    kReal: "Real software",
+    kModulos: "Modules",
+    kComo: "Method",
+    kFaq: "FAQ",
+    kContacto: "Contact",
+    escK: "Live",
+    escH: "This is how a call comes in and the job goes out.",
+    escP: "The animation uses the sample company for the industry you have selected. Change it a little further down and you'll see another call, another customer and another technician.",
+    escPuntos: [
+      ["Recorded and transcribed", "Central Avisos picks up the call on your usual number."],
+      ["Sorted by AI", "Request type, urgency and customer, without anyone typing it."],
+      ["Assigned and notified", "The order reaches the nearest technician's phone and the customer gets a message."],
+    ],
+  },
+  de: {
+    kSectores: "Ihre Branche",
+    kRecorrido: "Pipeline · ein Tag",
+    kReal: "Echte Software",
+    kModulos: "Module",
+    kComo: "Methode",
+    kFaq: "Fragen",
+    kContacto: "Kontakt",
+    escK: "Live",
+    escH: "So kommt ein Anruf rein und so geht der Auftrag raus.",
+    escP: "Die Animation nutzt die Beispielfirma der Branche, die Sie gewählt haben. Ändern Sie sie etwas weiter unten, und Sie sehen einen anderen Anruf, einen anderen Kunden und einen anderen Techniker.",
+    escPuntos: [
+      ["Aufgezeichnet und transkribiert", "Central Avisos nimmt den Anruf unter Ihrer gewohnten Nummer an."],
+      ["Von der KI eingeordnet", "Art der Anfrage, Dringlichkeit und Kunde, ohne dass jemand etwas abtippt."],
+      ["Zugewiesen und benachrichtigt", "Der Auftrag landet auf dem Handy des nächstgelegenen Technikers, und der Kunde bekommt eine Nachricht."],
+    ],
+  },
+} satisfies Record<Idioma, unknown>;
+
 function useT() {
-  return T[useIdioma()];
+  const lang = useIdioma();
+  return { ...T[lang], ...TD[lang] };
 }
 
+/* La portada es siempre oscura («Deep Tech»): .deeptech redefine los
+   tokens del sistema de diseño (app/(demo)/deeptech.css) y data-theme
+   activa las variantes dark: de los componentes de dentro, aunque el
+   visitante tenga el tema claro en el resto de la web.
+
+   Arquitectura, de arriba abajo:
+     01 Núcleo        el gancho: WebGL que cuenta el producto en una imagen
+     02 Telemetría    cifras reales del producto, con barras 3D y anillos
+     03 En directo    la animación de la llamada, ahora con espacio propio
+     04 Sectores      el visitante elige su sector y todo lo demás cambia
+        Pádel y colaboradores
+     05 Pipeline      el día de ejemplo, con un haz que se dibuja al bajar
+     06 Pruébalo      escribe un aviso y mira lo que pasa
+     07 Software real el panel y la app de verdad, incrustados
+     08 Módulos · 09 Método · 10 Preguntas · 11 Contacto */
 export function Landing() {
+  useMovimientoPortada();
   return (
-    <div className="bg-bg text-fg">
+    <div data-theme="dark" className="deeptech text-fg">
+      <Cursor />
       <SiteNav dark />
       <Hero />
+      <Metricas />
+      <Escaparate />
       <SectorPicker />
       <AvisoPadel />
       <Colaboradores />
@@ -286,45 +374,52 @@ export function Landing() {
 function Hero() {
   const t = useT();
   const lang = useIdioma();
+  const eventos = t.pasos.map(([titulo, , modulo], i) => ({ hora: PASOS[i].h, texto: titulo, modulo }));
   return (
-    <section className="relative overflow-hidden bg-[#041820] text-white">
-      <div className="absolute inset-0">
-        <Caustics />
-        {/* en móvil el texto ocupa todo el ancho: velo vertical; en escritorio, de izquierda a derecha */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(4_24_32/0.5)_0%,rgb(4_24_32/0.78)_45%,rgb(4_24_32/0.92)_100%)] lg:bg-[linear-gradient(90deg,rgb(4_24_32/0.92)_0%,rgb(4_24_32/0.55)_45%,rgb(4_24_32/0.15)_100%)]" />
-        <div className="grain absolute inset-0 opacity-[0.07] mix-blend-overlay" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[#041820]" />
-      </div>
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pt-24 pb-14 sm:px-6 sm:pt-28 lg:grid-cols-[1fr_1.05fr] lg:gap-10 lg:pt-32 lg:pb-24">
+    <HeroNucleo
+      kicker={t.heroKicker}
+      a={t.heroA}
+      b={t.heroB}
+      p={t.heroP}
+      verDemo={t.verDemo}
+      escribenos={t.escribenos}
+      waHref={whatsappLink(waHola(lang))}
+      sellos={t.sellos}
+      eventos={eventos}
+    />
+  );
+}
+
+/* ---------------- En directo ----------------
+   La animación de la llamada que antes iba a la derecha del hero. Llega
+   inclinada en 3D y se endereza con el scroll. */
+function Escaparate() {
+  const t = useT();
+  return (
+    <section id="en-directo" className="relative scroll-mt-20 py-16 sm:py-24">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
         <div>
-          <div className="fade-up inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[12px] text-white/80 backdrop-blur sm:text-[13px]">
-            <span className="size-1.5 rounded-full bg-sun" /> {t.heroKicker}
-          </div>
-          <h1 className="fade-up mt-5 font-display text-[42px] leading-[1.02] font-semibold tracking-[-0.03em] min-[400px]:text-[46px] sm:text-[60px] lg:text-[64px]" style={{ animationDelay: "80ms" }}>
-            {t.heroA}
-            <br />
-            <span className="text-[#8fd9ea]">{t.heroB}</span>
-          </h1>
-          <p className="fade-up mt-4 max-w-xl text-[16px] leading-relaxed text-white/75 sm:mt-5 sm:text-[18px]" style={{ animationDelay: "160ms" }}>
-            {t.heroP}
+          <Etiqueta num="03">{t.escK}</Etiqueta>
+          <TituloGlitch className="mt-5 text-[32px] sm:text-[46px]">{t.escH}</TituloGlitch>
+          <p data-revelar className="mt-4 text-[17px] leading-relaxed text-fg-2">
+            {t.escP}
           </p>
-          <div className="fade-up mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap" style={{ animationDelay: "240ms" }}>
-            <Link href="/demo?tour=1" className="group flex h-13 items-center justify-center gap-2 rounded-xl bg-sun px-5 text-[16px] font-semibold text-[#1d1300] shadow-[0_10px_30px_-10px_rgb(245_171_46/0.7)] transition hover:brightness-105 sm:h-12 sm:text-[15px]">
-              <PlayCircle className="size-5" /> {t.verDemo}
-            </Link>
-            <a href={whatsappLink(waHola(lang))} target="_blank" rel="noreferrer" className="vibrar flex h-13 items-center justify-center gap-2 rounded-xl bg-[#1faa59] px-5 text-[16px] font-semibold text-white shadow-[0_10px_30px_-10px_rgb(31_170_89/0.7)] transition hover:brightness-110 sm:h-12 sm:text-[15px]">
-              <MessageCircle className="size-5" /> {t.escribenos}
-            </a>
-          </div>
-          <div className="fade-up mt-8 grid grid-cols-2 gap-x-4 gap-y-2 text-[13px] text-white/65 sm:mt-10 sm:flex sm:flex-wrap sm:gap-x-6" style={{ animationDelay: "400ms" }}>
-            {t.sellos.map((x) => (
-              <span key={x} className="flex items-center gap-1.5">
-                <Check className="size-3.5 text-[#7fe3b8]" /> {x}
-              </span>
+          <ol className="mt-8 grid gap-4">
+            {t.escPuntos.map(([titulo, desc], i) => (
+              <li key={titulo} data-revelar className="flex gap-4" style={{ "--d": `${120 + i * 100}ms` } as CSSProperties}>
+                <span className="dt-mono grid size-9 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.03] text-[11px] text-[var(--dt-cian)]">0{i + 1}</span>
+                <span>
+                  <span className="block font-semibold text-fg">{titulo}</span>
+                  <span className="mt-0.5 block text-[15px] leading-relaxed text-fg-2">{desc}</span>
+                </span>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
-        <HeroAnim />
+        <div data-scrub="inclinar" className="dt-cristal relative rounded-[30px] p-3 sm:p-6">
+          <div className="pointer-events-none absolute -inset-px rounded-[30px] bg-[radial-gradient(ellipse_at_70%_0%,rgb(56_225_255/0.14),transparent_55%),radial-gradient(ellipse_at_10%_100%,rgb(157_123_255/0.12),transparent_55%)]" />
+          <HeroAnim />
+        </div>
       </div>
     </section>
   );
@@ -342,22 +437,22 @@ function Colaboradores() {
   const lang = useIdioma();
   const t = textosColaboradores[lang];
   return (
-    <section id="colaboradores" className="scroll-mt-20 bg-[#041820] pb-16 text-white">
+    <section id="colaboradores" className="scroll-mt-20 pb-16 text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="rounded-2xl border border-white/12 bg-white/[0.04] p-6 sm:p-8">
-          <span className="font-mono text-[11px] font-medium tracking-[0.14em] text-white/50 uppercase">{t.categoria}</span>
-          <h2 className="mt-3 font-display text-[24px] leading-tight font-semibold tracking-tight sm:text-[30px]">{t.titulo}</h2>
-          <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-white/70">{t.entradilla}</p>
-          <ul className="mt-7 grid gap-4 sm:grid-cols-2">
+        <div className="dt-cristal rounded-[28px] p-6 sm:p-8">
+          <span className="dt-mono text-[11px] font-medium tracking-[0.16em] text-fg-3 uppercase">{t.categoria}</span>
+          <h2 className="mt-3 font-display text-[24px] leading-tight font-semibold tracking-[-0.03em] sm:text-[30px]">{t.titulo}</h2>
+          <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-fg-2">{t.entradilla}</p>
+          <ul className="dt-foco-grupo mt-7 grid gap-4 sm:grid-cols-2" onPointerMove={moverFoco}>
             {colaboradores.map((c) => {
               const texto = c.texto[lang];
               const cuerpo = (
                 <>
                   <span className="block font-display text-[18px] font-semibold">{c.nombre}</span>
                   <span className="mt-1 block text-[13px] font-medium text-sun">{c.papel[lang]}</span>
-                  {texto ? <span className="mt-2.5 block text-[14.5px] leading-relaxed text-white/65">{texto}</span> : null}
+                  {texto ? <span className="mt-2.5 block text-[14.5px] leading-relaxed text-fg-2">{texto}</span> : null}
                   {c.web ? (
-                    <span className="mt-3 block text-[13.5px] font-medium text-[#8fd9ea]">
+                    <span className="mt-3 block text-[13.5px] font-medium text-[var(--dt-cian)]">
                       {c.web.replace(/^https?:\/\//, "")} <span aria-hidden="true">↗</span>
                     </span>
                   ) : null}
@@ -366,16 +461,11 @@ function Colaboradores() {
               return (
                 <li key={c.nombre} className="min-w-0">
                   {c.web ? (
-                    <a
-                      href={c.web}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="block h-full rounded-xl border border-white/12 bg-white/[0.03] p-5 transition hover:border-white/25 hover:bg-white/[0.06]"
-                    >
+                    <a href={c.web} target="_blank" rel="noreferrer" className="dt-foco block h-full rounded-[18px] border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04]">
                       {cuerpo}
                     </a>
                   ) : (
-                    <div className="h-full rounded-xl border border-white/12 bg-white/[0.03] p-5">{cuerpo}</div>
+                    <div className="dt-foco h-full rounded-[18px] border border-white/10 bg-white/[0.02] p-5">{cuerpo}</div>
                   )}
                 </li>
               );
@@ -394,15 +484,15 @@ function AvisoPadel() {
   const lang = useIdioma();
   if (lang !== "es") return null;
   return (
-    <section className="bg-[#041820] pb-16 text-white">
+    <section className="pb-16 text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <Link href="/padel" className="group flex flex-col gap-3 rounded-2xl border border-sun/40 bg-sun/10 p-5 transition hover:bg-sun/15 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+        <Link href="/padel" onPointerMove={moverFoco} className="dt-foco group flex flex-col gap-3 rounded-[22px] border border-sun/35 bg-sun/[0.06] p-5 transition-colors hover:bg-sun/10 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <span>
             <span className="block text-[13px] font-semibold text-sun">🎾 Nuevo: Nexo Pádel</span>
-            <span className="mt-1 block font-display text-[20px] font-semibold sm:text-[22px]">¿Tenéis un club o una escuela de pádel?</span>
-            <span className="mt-1 block text-[15px] text-white/70">Un WhatsApp que contesta por vosotros, faltas y recuperaciones automáticas y partidos que se completan solos.</span>
+            <span className="mt-1 block font-display text-[20px] font-semibold tracking-[-0.02em] sm:text-[22px]">¿Tenéis un club o una escuela de pádel?</span>
+            <span className="mt-1 block text-[15px] text-fg-2">Un WhatsApp que contesta por vosotros, faltas y recuperaciones automáticas y partidos que se completan solos.</span>
           </span>
-          <span className="flex h-11 shrink-0 items-center justify-center rounded-xl bg-sun px-4 text-[15px] font-semibold text-[#1d1300]">Ver Nexo Pádel →</span>
+          <span className="dt-boton dt-boton-primario h-11 shrink-0 px-5 text-[15px]">Ver Nexo Pádel →</span>
         </Link>
       </div>
     </section>
@@ -417,13 +507,14 @@ function SectorPicker() {
   const sector = useSector();
   const setSector = useDemo((s) => s.setSector);
   return (
-    <section id="sectores" className="relative scroll-mt-20 bg-[#041820] pb-20 text-white">
+    <section id="sectores" className="relative scroll-mt-20 py-16 text-white sm:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur sm:p-8">
+        <div onPointerMove={moverFoco} className="dt-foco dt-cristal rounded-[30px] p-5 sm:p-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <h2 className="font-display text-[26px] leading-tight font-semibold tracking-tight sm:text-[34px]">{t.sectH}</h2>
-              <p className="mt-1 text-white/60">{t.sectP}</p>
+              <Etiqueta num="04">{t.kSectores}</Etiqueta>
+              <TituloGlitch className="mt-4 text-[28px] sm:text-[38px]">{t.sectH}</TituloGlitch>
+              <p className="mt-2 text-fg-2">{t.sectP}</p>
             </div>
           </div>
           <div className="-mx-5 mt-6 flex gap-2 overflow-x-auto px-5 pb-1 no-scrollbar [mask-image:linear-gradient(90deg,transparent,#000_20px,#000_calc(100%-40px),transparent)] sm:mx-0 sm:px-0 sm:[mask-image:none]">
@@ -431,7 +522,10 @@ function SectorPicker() {
               <button
                 key={s.id}
                 onClick={() => setSector(s.id as SectorId)}
-                className={cn("flex h-11 shrink-0 items-center gap-2 rounded-xl border px-3.5 text-[14px] font-medium transition", sector.id === s.id ? "border-sun bg-sun text-[#1d1300]" : "border-white/15 text-white/80 hover:bg-white/10")}
+                className={cn(
+                  "flex h-11 shrink-0 items-center gap-2 rounded-full border px-4 text-[14px] font-medium transition",
+                  sector.id === s.id ? "border-sun bg-sun text-[#00170f] shadow-[0_0_28px_-6px_var(--dt-menta)]" : "border-white/12 bg-white/[0.02] text-fg-2 hover:border-white/25 hover:text-fg",
+                )}
                 aria-pressed={sector.id === s.id}
               >
                 <Icon name={s.icono} className="size-4" />
@@ -440,37 +534,37 @@ function SectorPicker() {
             ))}
           </div>
           <AnimatePresence mode="wait" initial={false}>
-            <motion.div key={sector.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }} className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_1fr_1fr]">
+            <motion.div key={sector.id} initial={{ opacity: 0, y: 8, filter: "blur(6px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -8, filter: "blur(6px)" }} transition={{ duration: 0.3 }} className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_1fr_1fr]">
               <div>
                 <div className="flex items-center gap-3">
-                  <span className="grid size-11 place-items-center rounded-xl font-display text-lg font-bold text-white" style={{ background: sector.color }}>
+                  <span className="grid size-11 place-items-center rounded-xl font-display text-lg font-bold text-white" style={{ background: sector.color, boxShadow: `0 0 30px -6px ${sector.color}` }}>
                     {sector.empresaCorta[0]}
                   </span>
                   <div>
-                    <div className="text-[13px] text-white/50">{t.ejemplo}</div>
+                    <div className="text-[13px] text-fg-3">{t.ejemplo}</div>
                     <div className="font-display text-xl font-semibold">{sector.empresa}</div>
                   </div>
                 </div>
-                <p className="mt-4 text-[15px] leading-relaxed text-white/75">
-                  <span className="text-white/45">{t.problema}</span>
+                <p className="mt-4 text-[15px] leading-relaxed text-fg-2">
+                  <span className="text-fg-3">{t.problema}</span>
                   {sector.dolor}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
-                  <Link href={`/demo?sector=${sector.id}&tour=1`} className="flex h-10 items-center gap-2 rounded-lg bg-white px-4 text-[14px] font-semibold text-[#041820]">
+                  <Link href={`/demo?sector=${sector.id}&tour=1`} className="dt-boton dt-boton-primario h-10 px-4 text-[14px]">
                     <PlayCircle className="size-4" /> {t.verDemoCorta}
-                    <span className="-ml-2 max-sm:hidden">{t.verDemoDe(sector.nombre)}</span>
+                    <span className="-ml-[0.25rem] max-sm:hidden">{t.verDemoDe(sector.nombre)}</span>
                   </Link>
-                  <Link href={`/sectores/${sector.id}`} className="flex h-10 items-center rounded-lg border border-white/20 px-4 text-[14px] font-medium hover:bg-white/10">
+                  <Link href={`/sectores/${sector.id}`} className="dt-boton dt-boton-cristal h-10 px-4 text-[14px] font-medium">
                     {t.masSector}
                   </Link>
                 </div>
               </div>
-              <div className="rounded-2xl bg-white/[0.05] p-4">
-                <div className="text-[13px] font-medium text-white/50">{t.checklist}</div>
-                <ul className="mt-2 grid gap-1.5 text-[14px]">
+              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4">
+                <div className="dt-mono text-[11px] tracking-[0.14em] text-fg-3 uppercase">{t.checklist}</div>
+                <ul className="mt-3 grid gap-1.5 text-[14px]">
                   {sector.checklist.map((c, i) => (
                     <motion.li key={c} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }} className="flex items-center gap-2">
-                      <span className="grid size-4 shrink-0 place-items-center rounded-full bg-[#37c28a] text-[#04150e]">
+                      <span className="grid size-4 shrink-0 place-items-center rounded-full bg-sun text-[#00170f]">
                         <Check className="size-2.5" />
                       </span>
                       {c}
@@ -478,22 +572,22 @@ function SectorPicker() {
                   ))}
                 </ul>
               </div>
-              <div className="rounded-2xl bg-white/[0.05] p-4">
-                <div className="text-[13px] font-medium text-white/50">{t.mediciones}</div>
-                <div className="mt-2 grid grid-cols-2 gap-2">
+              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4">
+                <div className="dt-mono text-[11px] tracking-[0.14em] text-fg-3 uppercase">{t.mediciones}</div>
+                <div className="mt-3 grid grid-cols-2 gap-2">
                   {sector.mediciones.slice(0, 4).map((m) => (
-                    <div key={m.nombre} className="rounded-xl bg-white/[0.06] p-2.5">
-                      <div className="text-[11px] text-white/50">{m.nombre}</div>
+                    <div key={m.nombre} className="rounded-xl border border-white/[0.05] bg-white/[0.03] p-2.5">
+                      <div className="text-[11px] text-fg-3">{m.nombre}</div>
                       <div className="font-display text-lg font-semibold tabular">
-                        {f.num((m.ok[0] + m.ok[1]) / 2, m.dec)} <span className="text-xs font-normal text-white/50">{m.unidad}</span>
+                        {f.num((m.ok[0] + m.ok[1]) / 2, m.dec)} <span className="text-xs font-normal text-fg-3">{m.unidad}</span>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-3 text-[13px] font-medium text-white/50">{t.servicios}</div>
-                <div className="mt-1.5 flex flex-wrap gap-1.5">
+                <div className="dt-mono mt-4 text-[11px] tracking-[0.14em] text-fg-3 uppercase">{t.servicios}</div>
+                <div className="mt-2 flex flex-wrap gap-1.5">
                   {sector.servicios.map((s) => (
-                    <span key={s.nombre} className="rounded-md bg-white/[0.07] px-2 py-1 text-[12px]">
+                    <span key={s.nombre} className="rounded-md border border-white/[0.06] bg-white/[0.04] px-2 py-1 text-[12px]">
                       {s.nombre}
                     </span>
                   ))}
@@ -509,14 +603,14 @@ function SectorPicker() {
 
 /* ---------------- Recorrido del día ---------------- */
 const PASOS: { h: string; icon: ReactNode; href: string; tone: string }[] = [
-  { h: "8:02", icon: <PhoneIncoming className="size-4" />, href: "/panel/central-avisos", tone: "bg-sun text-[#1d1300]" },
+  { h: "8:02", icon: <PhoneIncoming className="size-4" />, href: "/panel/central-avisos", tone: "bg-sun text-[#00170f]" },
   { h: "8:03", icon: <Wrench className="size-4" />, href: "/panel/trabajos", tone: "bg-brand text-brand-ink" },
   { h: "8:03", icon: <Bell className="size-4" />, href: "/app", tone: "bg-info text-white" },
   { h: "9:10", icon: <Navigation className="size-4" />, href: "/panel/rutas", tone: "bg-brand text-brand-ink" },
-  { h: "10:25", icon: <ClipboardCheck className="size-4" />, href: "/app", tone: "bg-ok text-white" },
+  { h: "10:25", icon: <ClipboardCheck className="size-4" />, href: "/app", tone: "bg-ok text-[#00170f]" },
   { h: "10:26", icon: <FileSignature className="size-4" />, href: "/panel/informes", tone: "bg-ai text-white" },
   { h: "10:40", icon: <Receipt className="size-4" />, href: "/panel/facturacion", tone: "bg-fg text-bg" },
-  { h: "12:15", icon: <Wallet className="size-4" />, href: "/panel/cobros", tone: "bg-ok text-white" },
+  { h: "12:15", icon: <Wallet className="size-4" />, href: "/panel/cobros", tone: "bg-ok text-[#00170f]" },
 ];
 
 function Recorrido() {
@@ -525,37 +619,34 @@ function Recorrido() {
     <section id="recorrido" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <h2 className="font-display text-[30px] leading-tight font-semibold tracking-tight sm:text-[44px]">{t.recH}</h2>
-          <p className="mt-3 text-[17px] text-fg-2">{t.recP}</p>
+          <Etiqueta num="05">{t.kRecorrido}</Etiqueta>
+          <TituloGlitch className="mt-5 text-[30px] sm:text-[46px]">{t.recH}</TituloGlitch>
+          <p data-revelar className="mt-3 text-[17px] text-fg-2">
+            {t.recP}
+          </p>
         </div>
         <div className="relative mt-14">
-          <div className="absolute top-0 bottom-0 left-[27px] w-px bg-line md:left-1/2" />
-          <motion.div className="absolute top-0 left-[27px] w-px origin-top bg-gradient-to-b from-sun to-brand md:left-1/2" initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 2.2, ease: "easeOut" }} style={{ height: "100%" }} />
-          <ol className="grid gap-8">
+          <div className="absolute top-0 bottom-0 left-[27px] w-px bg-white/[0.07] md:left-1/2" />
+          {/* sin JavaScript o con «reducir movimiento», el haz se queda entero */}
+          <div data-scrub="haz" className="dt-haz absolute top-0 bottom-0 left-[27px] w-px md:left-1/2" />
+          <ol className="dt-foco-grupo grid gap-8" onPointerMove={moverFoco}>
             {PASOS.map((p, i) => {
               const [titulo, desc, etiqueta] = t.pasos[i];
               return (
-                <motion.li
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.5 }}
-                  className={cn("relative grid items-center gap-4 pl-16 md:grid-cols-2 md:gap-16 md:pl-0", i % 2 && "md:[&>*:first-child]:order-2")}
-                >
-                  <span className={cn("absolute top-1 left-[14px] grid size-[27px] place-items-center rounded-full ring-4 ring-bg md:left-[calc(50%-13px)]", p.tone)}>{p.icon}</span>
+                <li key={i} data-revelar className={cn("relative grid items-center gap-4 pl-16 md:grid-cols-2 md:gap-16 md:pl-0", i % 2 && "md:[&>*:first-child]:order-2")}>
+                  <span className={cn("absolute top-1 left-[14px] grid size-[27px] place-items-center rounded-full shadow-[0_0_22px_-4px_rgb(56_225_255/0.8)] ring-4 ring-bg md:left-[calc(50%-13px)]", p.tone)}>{p.icon}</span>
                   <div className={cn(i % 2 ? "md:pl-4" : "md:pr-4 md:text-right")}>
-                    <div className="text-[13px] font-semibold text-fg-3 tabular">{p.h}</div>
-                    <div className="font-display text-[24px] font-semibold tracking-tight">{titulo}</div>
+                    <div className="dt-mono text-[12px] font-medium tracking-[0.12em] text-[var(--dt-cian)] tabular">{p.h}</div>
+                    <div className="font-display text-[24px] font-semibold tracking-[-0.025em]">{titulo}</div>
                     <p className="mt-1 text-[15px] text-fg-2">{desc}</p>
                   </div>
                   <div className={cn(i % 2 ? "md:pr-4 md:text-right" : "md:pl-4")}>
-                    <Link href={p.href} className="group inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-3.5 py-2.5 text-[14px] font-medium shadow-e1 transition hover:-translate-y-0.5 hover:shadow-e2">
-                      <span className={cn("grid size-6 place-items-center rounded-md", p.tone)}>{p.icon}</span>
+                    <Link href={p.href} className="dt-foco group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.025] py-2 pr-4 pl-2 text-[14px] font-medium transition-colors hover:border-white/20 hover:bg-white/[0.05]">
+                      <span className={cn("grid size-7 place-items-center rounded-full", p.tone)}>{p.icon}</span>
                       {t.ver(etiqueta)}
                     </Link>
                   </div>
-                </motion.li>
+                </li>
               );
             })}
           </ol>
@@ -613,59 +704,66 @@ function SoftwareReal() {
     useUi.getState().setPanelSection("direccion");
   }, []);
   return (
-    <section className="relative overflow-hidden bg-surface-2/60 py-16 sm:py-24">
+    <section className="relative overflow-hidden py-16 sm:py-24">
+      <div className="pointer-events-none absolute inset-x-0 top-1/3 -z-10 h-[70%] bg-[radial-gradient(ellipse_55%_50%_at_50%_50%,rgb(56_225_255/0.1),transparent_70%)]" />
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
-            <h2 className="font-display text-[30px] leading-tight font-semibold tracking-tight sm:text-[44px]">{t.realH}</h2>
+            <Etiqueta num="07">{t.kReal}</Etiqueta>
+            <TituloGlitch className="mt-5 text-[30px] sm:text-[46px]">{t.realH}</TituloGlitch>
             <p className="mt-3 text-[16px] text-fg-2 sm:text-[17px]">
               <span className="lg:hidden">{t.realMovil}</span>
               <span className="max-lg:hidden">{t.realPc}</span>
             </p>
           </div>
-          <Link href="/demo" className="hidden h-11 items-center gap-2 rounded-xl bg-fg px-4 text-[14px] font-semibold text-bg lg:flex">
-            {t.pantallaCompleta}
-          </Link>
+          <Magnetico className="hidden lg:inline-flex">
+            <Link href="/demo" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
+              <span>{t.pantallaCompleta}</span>
+            </Link>
+          </Magnetico>
         </div>
-        {wide === true && (
-          <div className="mt-10 grid items-end gap-6 lg:grid-cols-[1fr_auto]">
-            <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-e3">
-              <div className="flex h-9 items-center gap-2 border-b border-line bg-surface px-3">
-                <span className="flex gap-1.5">
-                  <span className="size-2.5 rounded-full bg-[#ff5f57]" />
-                  <span className="size-2.5 rounded-full bg-[#febc2e]" />
-                  <span className="size-2.5 rounded-full bg-[#28c840]" />
-                </span>
-                <span className="mx-auto rounded-md bg-surface-2 px-3 py-0.5 text-[11px] text-fg-3">panel.nexo4pymes.com</span>
+        {/* el envoltorio está siempre: GSAP lo encuentra aunque el contenido se decida después */}
+        <div data-scrub="inclinar">
+          {wide === true && (
+            <div className="mt-10 grid items-end gap-6 lg:grid-cols-[1fr_auto]">
+              <div className="dt-monitor overflow-hidden" data-lenis-prevent data-cursor="nativo">
+                <div className="flex h-9 items-center gap-2 border-b border-white/[0.07] bg-[#080b11] px-3">
+                  <span className="flex gap-1.5">
+                    <span className="size-2.5 rounded-full bg-[#ff5f57]" />
+                    <span className="size-2.5 rounded-full bg-[#febc2e]" />
+                    <span className="size-2.5 rounded-full bg-[#28c840]" />
+                  </span>
+                  <span className="dt-mono mx-auto rounded-md border border-white/[0.06] bg-white/[0.03] px-3 py-0.5 text-[11px] text-fg-3">panel.nexo4pymes.com</span>
+                </div>
+                <ScaledPanel />
               </div>
-              <ScaledPanel />
+              <div className="flex justify-center" data-lenis-prevent data-cursor="nativo">
+                <PhoneFrame scale={0.72}>
+                  <AppShell />
+                </PhoneFrame>
+              </div>
             </div>
-            <div className="flex justify-center">
-              <PhoneFrame scale={0.72}>
-                <AppShell />
-              </PhoneFrame>
-            </div>
-          </div>
-        )}
-        {wide === false && (
-          <>
-            {/* en el móvil el panel de 1280 px no se lee: se enseña la app, que es nativa de esta pantalla */}
-            <div className="mt-8 flex justify-center">
-              <PhoneFrame scale={Math.min(0.86, (vw - 40) / 390)}>
-                <AppShell />
-              </PhoneFrame>
-            </div>
-            <div className="mx-auto mt-6 grid max-w-md gap-2">
-              <Link href="/demo?tour=1" className="flex h-12 items-center justify-center gap-2 rounded-xl bg-fg text-[15px] font-semibold text-bg">
-                <PlayCircle className="size-5" /> {t.oficinaYMovil}
-              </Link>
-              <Link href="/panel" className="flex h-12 items-center justify-center gap-2 rounded-xl border border-line bg-surface text-[15px] font-medium">
-                <Monitor className="size-5 text-brand" /> {t.abrirPanel}
-              </Link>
-            </div>
-          </>
-        )}
-        {wide === null && <div className="mt-8 h-[640px]" />}
+          )}
+          {wide === false && (
+            <>
+              {/* en el móvil el panel de 1280 px no se lee: se enseña la app, que es nativa de esta pantalla */}
+              <div className="mt-8 flex justify-center" data-lenis-prevent>
+                <PhoneFrame scale={Math.min(0.86, (vw - 40) / 390)}>
+                  <AppShell />
+                </PhoneFrame>
+              </div>
+              <div className="mx-auto mt-6 grid max-w-md gap-2">
+                <Link href="/demo?tour=1" className="dt-boton dt-boton-primario h-12 text-[15px]">
+                  <PlayCircle className="size-5" /> {t.oficinaYMovil}
+                </Link>
+                <Link href="/panel" className="dt-boton dt-boton-cristal h-12 text-[15px] font-medium">
+                  <Monitor className="size-5 text-brand" /> {t.abrirPanel}
+                </Link>
+              </div>
+            </>
+          )}
+          {wide === null && <div className="mt-8 h-[640px]" />}
+        </div>
       </div>
     </section>
   );
@@ -683,39 +781,41 @@ function Modulos() {
     <section id="modulos" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="max-w-2xl">
-          <h2 className="font-display text-[30px] leading-tight font-semibold tracking-tight sm:text-[44px]">{t.modH}</h2>
-          <p className="mt-3 text-[17px] text-fg-2">{t.modP(modulos.length)}</p>
+          <Etiqueta num="08">{t.kModulos}</Etiqueta>
+          <TituloGlitch className="mt-5 text-[30px] sm:text-[46px]">{t.modH}</TituloGlitch>
+          <p data-revelar className="mt-3 text-[17px] text-fg-2">
+            {t.modP(modulos.length)}
+          </p>
         </div>
 
-        <Link href="/panel/central-avisos" className="group relative mt-10 block overflow-hidden rounded-3xl bg-[#041820] p-6 text-white sm:p-8">
-          <div className="absolute inset-0 opacity-60">
-            <Caustics deep="#041820" mid="#0b3a48" light="#f5ab2e" />
-          </div>
+        <Link href="/panel/central-avisos" onPointerMove={moverFoco} className="dt-foco group relative mt-10 block overflow-hidden rounded-[30px] border border-white/10 bg-[#04070c] p-6 sm:p-8">
+          <div className="dt-rejilla pointer-events-none absolute inset-0 opacity-70" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_90%_at_100%_50%,rgb(44_245_176/0.16),transparent_70%),radial-gradient(ellipse_40%_80%_at_0%_100%,rgb(157_123_255/0.14),transparent_70%)]" />
           <div className="relative grid items-center gap-6 md:grid-cols-[1fr_auto]">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-sun px-2.5 py-1 text-[12px] font-semibold text-[#1d1300]">
+              <div className="inline-flex items-center gap-2 rounded-full bg-sun px-2.5 py-1 text-[12px] font-semibold text-[#00170f] shadow-[0_0_24px_-6px_var(--dt-menta)]">
                 <PhoneIncoming className="size-3.5" /> Central Avisos
               </div>
-              <div className="mt-3 max-w-2xl font-display text-[28px] leading-tight font-semibold tracking-tight">{t.caH}</div>
-              <p className="mt-2 max-w-2xl text-white/70">{t.caP}</p>
+              <div className="mt-3 max-w-2xl font-display text-[28px] leading-tight font-semibold tracking-[-0.03em]">{t.caH}</div>
+              <p className="mt-2 max-w-2xl text-fg-2">{t.caP}</p>
             </div>
-            <span className="flex h-11 items-center gap-2 rounded-xl bg-white px-4 text-[14px] font-semibold text-[#041820] transition group-hover:bg-sun">
+            <span className="dt-boton dt-boton-primario h-11 px-5 text-[14px]">
               <Sparkles className="size-4" /> {t.caBoton}
             </span>
           </div>
         </Link>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="dt-foco-grupo mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" onPointerMove={moverFoco}>
           {groups.map((g, gi) => (
-            <motion.div key={g} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }} transition={{ delay: (gi % 3) * 0.06 }} className="rounded-2xl border border-line bg-surface p-5">
-              <div className="font-display text-lg font-semibold">{grupos[g].nombre}</div>
+            <div key={g} data-revelar className="dt-foco dt-cristal rounded-[24px] p-5" style={{ "--d": `${(gi % 3) * 80}ms` } as CSSProperties}>
+              <div className="font-display text-lg font-semibold tracking-[-0.02em]">{grupos[g].nombre}</div>
               <div className="text-[13px] text-fg-3">{grupos[g].lema}</div>
               <ul className="mt-4 grid gap-0.5">
                 {modulos
                   .filter((m) => m.grupo === g)
                   .map((m) => (
                     <li key={m.id}>
-                      <Link href={`/panel/${m.id}`} className="group flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-[14px] hover:bg-surface-2">
+                      <Link href={`/panel/${m.id}`} className="group flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-[14px] transition-colors hover:bg-white/[0.05]">
                         <Icon name={m.icono} className="size-4 shrink-0 text-brand" />
                         <span className="flex-1">{m.nombre}</span>
                         {showEstado && <span className={cn("rounded px-1.5 text-[10px]", m.estado === "disponible" ? "bg-ok-soft text-ok" : "bg-ai-soft text-ai")}>{m.estado === "disponible" ? t.disponible : t.aMedida}</span>}
@@ -723,11 +823,11 @@ function Modulos() {
                     </li>
                   ))}
               </ul>
-            </motion.div>
+            </div>
           ))}
         </div>
         <div className="mt-6">
-          <Link href="/modulos" className="inline-flex h-11 items-center rounded-xl border border-line bg-surface px-4 text-[14px] font-semibold shadow-e1 hover:bg-surface-2">
+          <Link href="/modulos" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
             {t.catalogo}
           </Link>
         </div>
@@ -740,16 +840,17 @@ function Modulos() {
 function Como() {
   const t = useT();
   return (
-    <section id="como" className="scroll-mt-20 bg-[#041820] py-16 text-white sm:py-24">
+    <section id="como" className="scroll-mt-20 py-16 text-white sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <h2 className="max-w-2xl font-display text-[30px] leading-tight font-semibold tracking-tight sm:text-[44px]">{t.comoH}</h2>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <Etiqueta num="09">{t.kComo}</Etiqueta>
+        <TituloGlitch className="mt-5 max-w-2xl text-[30px] sm:text-[46px]">{t.comoH}</TituloGlitch>
+        <div className="dt-foco-grupo relative mt-12 grid gap-5 md:grid-cols-3" onPointerMove={moverFoco}>
           {t.como.map(([titulo, desc], i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="relative">
-              <div className="font-display text-[80px] leading-none font-semibold text-white/[0.08]">{i + 1}</div>
-              <div className="-mt-6 font-display text-[22px] font-semibold">{titulo}</div>
-              <p className="mt-2 text-[15px] leading-relaxed text-white/65">{desc}</p>
-            </motion.div>
+            <div key={i} data-revelar className="dt-foco dt-cristal relative rounded-[24px] p-6" style={{ "--d": `${i * 110}ms` } as CSSProperties}>
+              <div className="dt-numero-paso font-display text-[84px] leading-none font-semibold tracking-[-0.06em]">0{i + 1}</div>
+              <div className="mt-2 font-display text-[22px] font-semibold tracking-[-0.025em]">{titulo}</div>
+              <p className="mt-2 text-[15px] leading-relaxed text-fg-2">{desc}</p>
+            </div>
           ))}
         </div>
       </div>
@@ -765,15 +866,16 @@ function Faq() {
     <section id="preguntas" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.4fr]">
         <div>
-          <h2 className="font-display text-[30px] leading-tight font-semibold tracking-tight sm:text-[44px]">{t.faqH}</h2>
+          <Etiqueta num="10">{t.kFaq}</Etiqueta>
+          <TituloGlitch className="mt-5 text-[30px] sm:text-[46px]">{t.faqH}</TituloGlitch>
           <p className="mt-3 text-[17px] text-fg-2">{t.faqP}</p>
         </div>
-        <div className="divide-y divide-line rounded-2xl border border-line bg-surface">
+        <div data-revelar className="dt-cristal divide-y divide-white/[0.07] overflow-hidden rounded-[24px]">
           {t.faq.map(([q, a], i) => (
-            <div key={i}>
-              <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[16px] font-semibold" aria-expanded={open === i}>
+            <div key={i} className={cn("transition-colors", open === i && "bg-white/[0.02]")}>
+              <button onClick={() => setOpen(open === i ? null : i)} className={cn("flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[16px] font-semibold transition-colors", open === i && "text-[var(--dt-cian)]")} aria-expanded={open === i}>
                 {q}
-                <ChevronDown className={cn("size-5 shrink-0 text-fg-3 transition-transform", open === i && "rotate-180")} />
+                <ChevronDown className={cn("size-5 shrink-0 text-fg-3 transition-transform", open === i && "rotate-180 text-[var(--dt-cian)]")} />
               </button>
               <AnimatePresence initial={false}>
                 {open === i && (
@@ -797,21 +899,20 @@ function Contacto() {
   const [f, setF] = useState({ nombre: "", empresa: "", tel: "", tecnicos: t.tecnicos[1] as string });
   const [sent, setSent] = useState(false);
   const msg = t.msg(f, sector.nombre);
-  const input = "h-12 w-full rounded-xl border border-white/15 bg-white/[0.06] px-3.5 text-[16px] text-white outline-none placeholder:text-white/35 focus:border-sun";
+  const input = "h-12 w-full rounded-xl border border-white/12 bg-white/[0.04] px-3.5 text-[16px] text-white outline-none transition placeholder:text-white/35 focus:border-sun focus:shadow-[0_0_0_4px_rgb(44_245_176/0.12)]";
   return (
-    <section id="contacto" className="relative scroll-mt-20 overflow-hidden bg-[#041820] py-16 text-white sm:py-24">
-      <div className="absolute inset-0 opacity-70">
-        <Caustics />
-      </div>
-      <div className="absolute inset-0 bg-[#041820]/60" />
+    <section id="contacto" className="relative scroll-mt-20 overflow-hidden py-20 text-white sm:py-28">
+      <div className="dt-rejilla pointer-events-none absolute inset-0 opacity-60" />
+      <div className="dt-luz-cierre pointer-events-none" />
       <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2">
         <div>
-          <h2 className="font-display text-[34px] leading-[1.05] font-semibold tracking-tight sm:text-[52px]">{t.ctH}</h2>
-          <p className="mt-4 max-w-lg text-[17px] text-white/70">{t.ctP}</p>
+          <Etiqueta num="11">{t.kContacto}</Etiqueta>
+          <TituloGlitch className="mt-5 text-[34px] leading-[1.02] sm:text-[56px]">{t.ctH}</TituloGlitch>
+          <p className="mt-4 max-w-lg text-[17px] text-fg-2">{t.ctP}</p>
           <div className="mt-8 grid gap-3 text-[15px]">
-            {t.ctPuntos.map((x) => (
-              <div key={x} className="flex items-center gap-3">
-                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-sun text-[#1d1300]">
+            {t.ctPuntos.map((x, i) => (
+              <div key={x} data-revelar className="flex items-center gap-3" style={{ "--d": `${i * 90}ms` } as CSSProperties}>
+                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-sun text-[#00170f] shadow-[0_0_18px_-4px_var(--dt-menta)]">
                   <Check className="size-3.5" />
                 </span>
                 {x}
@@ -819,16 +920,16 @@ function Contacto() {
             ))}
           </div>
         </div>
-        <div className="rounded-3xl border border-white/12 bg-white/[0.06] p-5 backdrop-blur-xl sm:p-6">
+        <div onPointerMove={moverFoco} className="dt-foco dt-cristal dt-cristal-blur rounded-[30px] p-5 sm:p-7">
           <AnimatePresence mode="wait">
             {sent ? (
               <motion.div key="ok" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="grid place-items-center gap-3 py-12 text-center">
-                <span className="grid size-14 place-items-center rounded-full bg-[#37c28a] text-[#04150e]">
+                <span className="grid size-14 place-items-center rounded-full bg-sun text-[#00170f] shadow-[0_0_40px_-6px_var(--dt-menta)]">
                   <BadgeCheck className="size-7" />
                 </span>
                 <div className="font-display text-2xl font-semibold">{t.gracias(f.nombre.split(" ")[0])}</div>
-                <p className="max-w-sm text-white/70">{t.abierto(CONTACTO.email)}</p>
-                <button onClick={() => setSent(false)} className="mt-2 text-[14px] text-white/70 underline">
+                <p className="max-w-sm text-fg-2">{t.abierto(CONTACTO.email)}</p>
+                <button onClick={() => setSent(false)} className="mt-2 text-[14px] text-fg-2 underline">
                   {t.volver}
                 </button>
               </motion.div>
@@ -843,19 +944,19 @@ function Contacto() {
                 }}
               >
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <label className="grid gap-1.5 text-[13px] text-white/60">
+                  <label className="grid gap-1.5 text-[13px] text-fg-2">
                     {t.fNombre}
                     <input required className={input} value={f.nombre} onChange={(e) => setF({ ...f, nombre: e.target.value })} autoComplete="name" />
                   </label>
-                  <label className="grid gap-1.5 text-[13px] text-white/60">
+                  <label className="grid gap-1.5 text-[13px] text-fg-2">
                     {t.fEmpresa}
                     <input required className={input} value={f.empresa} onChange={(e) => setF({ ...f, empresa: e.target.value })} autoComplete="organization" />
                   </label>
-                  <label className="grid gap-1.5 text-[13px] text-white/60">
+                  <label className="grid gap-1.5 text-[13px] text-fg-2">
                     {t.fTel}
                     <input type="tel" className={input} value={f.tel} onChange={(e) => setF({ ...f, tel: e.target.value })} autoComplete="tel" />
                   </label>
-                  <label className="grid gap-1.5 text-[13px] text-white/60">
+                  <label className="grid gap-1.5 text-[13px] text-fg-2">
                     {t.fTecnicos}
                     <select className={input} value={f.tecnicos} onChange={(e) => setF({ ...f, tecnicos: e.target.value })}>
                       {t.tecnicos.map((x) => (
@@ -866,13 +967,15 @@ function Contacto() {
                     </select>
                   </label>
                 </div>
-                <div className="text-[13px] text-white/60">
-                  {t.fSector}: <span className="text-white">{sector.nombre}</span> <span className="text-white/40">{t.cambialo}</span>
+                <div className="text-[13px] text-fg-2">
+                  {t.fSector}: <span className="text-white">{sector.nombre}</span> <span className="text-fg-3">{t.cambialo}</span>
                 </div>
-                <button type="submit" className="mt-2 flex h-12 items-center justify-center gap-2 rounded-xl bg-sun text-[15px] font-semibold text-[#1d1300] hover:brightness-105">
-                  <MessageCircle className="size-5" /> {t.enviar}
-                </button>
-                <a href={`mailto:${CONTACTO.email}?subject=${encodeURIComponent(t.asunto)}&body=${encodeURIComponent(msg)}`} className="flex h-11 items-center justify-center gap-2 rounded-xl border border-white/15 text-[14px] font-medium hover:bg-white/10">
+                <Magnetico className="mt-2 w-full" fuerza={0.12}>
+                  <button type="submit" className="dt-boton dt-boton-primario h-12 w-full text-[15px]">
+                    <MessageCircle className="size-5" /> <span>{t.enviar}</span>
+                  </button>
+                </Magnetico>
+                <a href={`mailto:${CONTACTO.email}?subject=${encodeURIComponent(t.asunto)}&body=${encodeURIComponent(msg)}`} className="dt-boton dt-boton-cristal h-11 text-[14px] font-medium">
                   <Mail className="size-4" /> {t.email}
                 </a>
               </motion.form>

@@ -7,17 +7,17 @@ import { centralAvisos } from "@/content/inicio";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_AVISOS } from "@/content/blog-faq";
 
-<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
-  <Link href="/" className="text-[#9FB6FF]">Inicio</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Centralizar avisos
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Centralizar avisos
 </nav>
 
-<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Avisos y comunicación · 6 min de lectura</div>
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Avisos y comunicación · 6 min de lectura</div>
 
 <FechaArticulo ruta="/blog/centralizar-avisos-llamadas-whatsapp-mallorca" />
 
 # Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca
 
-<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
   No hace falta que vuestros clientes usen todos el mismo canal. Hace falta que todo lo que
   entre acabe en el mismo sitio. Son cuatro pasos: registrar cada aviso en un único lugar,
   marcar cuál es urgente, ponerle un responsable y conectarlo con el trabajo que viene después.
@@ -142,8 +142,8 @@ invertir](/blog/por-que-diagnosticar-antes-de-automatizar).
 
 {FAQ_AVISOS.es.map(([p, r]) => (
   <div key={p} className="mt-8">
-    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
-    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+    <h3 className="text-[18px] text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
   </div>
 ))}
 
@@ -174,7 +174,7 @@ invertir](/blog/por-que-diagnosticar-antes-de-automatizar).
           lang: "es",
           titulo: "Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca",
           descripcion:
-            "Los cuatro pasos para que ningún aviso dependa de que alguien se acuerde: registrarlo, priorizarlo, asignarlo y conectarlo con el trabajo que viene después.",
+ "Los cuatro pasos para que ningún aviso dependa de que alguien se acuerde: registrarlo, priorizarlo, asignarlo y conectarlo con el trabajo que viene después.",
           url: `${marca.dominio}/blog/centralizar-avisos-llamadas-whatsapp-mallorca`,
           fecha: fechaPublicacion("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
         actualizado: fechaRevision("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
@@ -182,7 +182,7 @@ invertir](/blog/por-que-diagnosticar-antes-de-automatizar).
         esquemaFaq(
           FAQ_AVISOS.es.map(([p, r]) => ({ p, r })),
           `${marca.dominio}/blog/centralizar-avisos-llamadas-whatsapp-mallorca#faq`,
-          "es",
+ "es",
         ),
       ]),
     ),

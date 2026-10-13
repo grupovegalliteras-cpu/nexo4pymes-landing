@@ -22,8 +22,8 @@ export function BotonPreferencias({
 }) {
   const clases =
     estilo === "pie"
-      ? "flex min-h-[44px] items-center text-left text-[14px] text-white/60 transition-colors hover:text-white"
-      : "inline-flex min-h-[44px] items-center text-[15.5px] text-[#9FB6FF] underline underline-offset-4 hover:text-white";
+      ? "flex min-h-[44px] items-center text-left text-[14px] text-fg-2 transition-colors hover:text-fg"
+      : "inline-flex min-h-[44px] items-center text-[15.5px] text-brand underline underline-offset-4 hover:text-fg";
 
   return (
     <button type="button" onClick={abrirPreferencias} className={clases}>

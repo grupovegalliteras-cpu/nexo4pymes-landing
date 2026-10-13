@@ -17,12 +17,12 @@ export function Destacado({
 }) {
   return (
     <Reveal direccion="escala">
-      <div className="mt-10 overflow-hidden rounded-tarjeta border border-coral/25 bg-gradient-to-br from-white/[.06] to-white/[.015] backdrop-blur-xl">
-        <div className="border-l-[3px] border-coral p-6 sm:p-7">
+      <div className="mt-10 overflow-hidden rounded-tarjeta border border-brand/30 bg-surface">
+        <div className="border-l-[3px] border-brand p-6 sm:p-7">
           {titulo && (
             <div className="flex items-center gap-2.5">
-              <AlertTriangle size={16} className="text-aviso" aria-hidden="true" />
-              <h3 className="text-[17px] text-[#F4F6FF]">{titulo}</h3>
+              <AlertTriangle size={16} className="text-warn" aria-hidden="true" />
+              <h3 className="text-[17px] text-fg">{titulo}</h3>
             </div>
           )}
           <div className="[&>p:first-child]:mt-3">{children}</div>
@@ -35,8 +35,8 @@ export function Destacado({
 export function Nota({ children }: { children: React.ReactNode }) {
   return (
     <Reveal>
-      <div className="mt-10 flex gap-3 rounded-2xl border border-azul/25 bg-azul/[.07] p-5">
-        <Info size={18} className="mt-1 shrink-0 text-[#9FB6FF]" aria-hidden="true" />
+      <div className="mt-10 flex gap-3 rounded-2xl border border-brand/40 bg-brand-soft p-5">
+        <Info size={18} className="mt-1 shrink-0 text-brand" aria-hidden="true" />
         <div className="[&>p:first-child]:mt-0">{children}</div>
       </div>
     </Reveal>
@@ -49,15 +49,15 @@ export function Senales({ items }: { items: { fuerte: string; texto: string }[] 
       {items.map((item) => (
         <li
           key={item.fuerte}
-          className="flex gap-3 rounded-xl border border-white/10 bg-white/[.03] px-4 py-3.5"
+          className="flex gap-3 rounded-xl border border-line bg-surface-2 px-4 py-3.5"
         >
           <AlertTriangle
             size={15}
-            className="mt-1 shrink-0 text-aviso"
+            className="mt-1 shrink-0 text-warn"
             aria-hidden="true"
           />
-          <p className="text-[15.5px] leading-relaxed text-white/68">
-            <strong className="font-medium text-[#F4F6FF]">{item.fuerte}</strong> {item.texto}
+          <p className="text-[15.5px] leading-relaxed text-fg-2">
+            <strong className="font-medium text-fg">{item.fuerte}</strong> {item.texto}
           </p>
         </li>
       ))}
@@ -80,10 +80,10 @@ export function CtaPost({
 }) {
   return (
     <Reveal direccion="escala">
-      <div className="relative mt-14 overflow-hidden rounded-panel border border-white/9 bg-gradient-to-br from-white/[.06] to-white/[.015] p-7 text-white shadow-[0_28px_70px_rgba(0,0,0,.42)] backdrop-blur-xl sm:p-9">
-        <div className="malla malla-fade absolute inset-0 opacity-60" aria-hidden="true" />
-        <h2 className="relative mt-0 text-[24px] text-[#F4F6FF] sm:text-[28px]">{titulo}</h2>
-        <div className="relative text-white/65 [&>p]:mt-4 [&>p]:text-[15.5px] [&>p]:leading-relaxed [&_strong]:text-[#F4F6FF]">
+      <div className="relative mt-14 overflow-hidden rounded-panel border border-line bg-surface p-7 text-fg shadow-e2 sm:p-9">
+        <div className=" absolute inset-0 opacity-60" aria-hidden="true" />
+        <h2 className="relative mt-0 text-[24px] text-fg sm:text-[28px]">{titulo}</h2>
+        <div className="relative text-fg-2 [&>p]:mt-4 [&>p]:text-[15.5px] [&>p]:leading-relaxed [&_strong]:text-fg">
           {children}
         </div>
         <div className="relative mt-7">
@@ -100,7 +100,7 @@ export function VolverAlBlog() {
   return (
     <Link
       href="/blog"
-      className="group mt-12 inline-flex items-center gap-2 text-[14.5px] font-medium text-[#9FB6FF] transition-colors hover:text-white"
+      className="group mt-12 inline-flex items-center gap-2 text-[14.5px] font-medium text-brand transition-colors hover:text-fg"
     >
       <span aria-hidden="true" className="transition-transform duration-300 group-hover:-translate-x-1">
         ←
@@ -130,7 +130,7 @@ export function FechaArticulo({ ruta }: { ruta: string }) {
   if (!a) return null;
   const rev = a.actualizado && a.actualizado !== a.publicado;
   return (
-    <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-white/45">
+    <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
       <time dateTime={a.publicado}>{fechaLegible(a.publicado, lang)}</time>
       {rev ? (
         <>

@@ -6,17 +6,17 @@ import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_PRESUPUESTOS } from "@/content/blog-faq";
 
-<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
-  <Link href="/" className="text-[#9FB6FF]">Home</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Automating quotes
+<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Home</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Automating quotes
 </nav>
 
-<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Quotes · 6 min read</div>
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Quotes · 6 min read</div>
 
 <FechaArticulo ruta="/blog/automatizar-presupuestos-pymes-mallorca" />
 
 # How to stop writing quotes by hand in a small business in Mallorca
 
-<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
   There are three ways to stop writing quotes by hand, from least to most involved: a template
   that does the maths, a connection between the quote and your management software, or a
   configurator on your website where the customer picks sizes and materials and sees the price
@@ -121,8 +121,8 @@ order. If the answer is that an off-the-shelf tool will do, we tell you that too
 
 {FAQ_PRESUPUESTOS.en.map(([p, r]) => (
   <div key={p} className="mt-8">
-    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
-    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+    <h3 className="text-[18px] text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
   </div>
 ))}
 
@@ -153,7 +153,7 @@ order. If the answer is that an off-the-shelf tool will do, we tell you that too
           lang: "en",
           titulo: "How to stop writing quotes by hand in a small business in Mallorca",
           descripcion:
-            "The three ways to automate quotes — template, integration or web configurator — which one fits your pricing rules, and when it is not worth doing.",
+ "The three ways to automate quotes — template, integration or web configurator — which one fits your pricing rules, and when it is not worth doing.",
           url: `${marca.dominio}/en/blog/automatizar-presupuestos-pymes-mallorca`,
           fecha: fechaPublicacion("/blog/automatizar-presupuestos-pymes-mallorca"),
         actualizado: fechaRevision("/blog/automatizar-presupuestos-pymes-mallorca"),
@@ -161,7 +161,7 @@ order. If the answer is that an off-the-shelf tool will do, we tell you that too
         esquemaFaq(
           FAQ_PRESUPUESTOS.en.map(([p, r]) => ({ p, r })),
           `${marca.dominio}/en/blog/automatizar-presupuestos-pymes-mallorca#faq`,
-          "en",
+ "en",
         ),
       ]),
     ),

@@ -38,19 +38,19 @@ const TX = {
     categoria: "Por oficio",
     titular: "Hay una página para lo vuestro",
     intro:
-      "Un instalador de climatización y una empresa de plagas no tienen el mismo problema, aunque los dos manden técnicos a domicilio. Cada una de estas páginas cuenta cómo queda el sistema para ese oficio concreto: qué se mide, qué se firma y qué se factura.",
+ "Un instalador de climatización y una empresa de plagas no tienen el mismo problema, aunque los dos manden técnicos a domicilio. Cada una de estas páginas cuenta cómo queda el sistema para ese oficio concreto: qué se mide, qué se firma y qué se factura.",
   },
   en: {
     categoria: "By trade",
     titular: "There's a page for your line of work",
     intro:
-      "An air-conditioning installer and a pest-control company don't share the same problem, even though both send technicians to customers' premises. Each of these pages explains how the system ends up looking for that specific trade: what gets measured, what gets signed and what gets invoiced.",
+ "An air-conditioning installer and a pest-control company don't share the same problem, even though both send technicians to customers' premises. Each of these pages explains how the system ends up looking for that specific trade: what gets measured, what gets signed and what gets invoiced.",
   },
   de: {
     categoria: "Nach Branche",
     titular: "Für Ihr Gewerbe gibt es eine eigene Seite",
     intro:
-      "Ein Klimatechnik-Betrieb und ein Schädlingsbekämpfer haben nicht dasselbe Problem, auch wenn beide Techniker zum Kunden schicken. Jede dieser Seiten zeigt, wie das System für genau dieses Gewerbe aussieht: was gemessen, was unterschrieben und was abgerechnet wird.",
+ "Ein Klimatechnik-Betrieb und ein Schädlingsbekämpfer haben nicht dasselbe Problem, auch wenn beide Techniker zum Kunden schicken. Jede dieser Seiten zeigt, wie das System für genau dieses Gewerbe aussieht: was gemessen, was unterschrieben und was abgerechnet wird.",
   },
 };
 
@@ -65,7 +65,7 @@ export function SectoresServicios() {
         <Antetitulo>{t.categoria}</Antetitulo>
         <TituloSeccion>{t.titular}</TituloSeccion>
         <Reveal retraso={0.06}>
-          <p className="mt-5 text-[17px] leading-relaxed text-ink/70">{t.intro}</p>
+          <p className="mt-5 text-[17px] leading-relaxed text-fg/70">{t.intro}</p>
         </Reveal>
       </div>
 
@@ -74,13 +74,13 @@ export function SectoresServicios() {
           <Reveal key={s.id} as="li" retraso={Math.min(i, 4) * 0.05}>
             <Link
               href={`/sectores/${s.id}`}
-              className="group flex h-full flex-col rounded-2xl border border-ink/10 bg-cream p-4 transition-colors hover:border-teal/40 hover:bg-white"
+              className="group flex h-full flex-col rounded-2xl border border-ink/10 bg-bg p-4 transition-colors hover:border-teal/40 hover:bg-white"
             >
-              <span className="text-[15.5px] font-semibold text-ink group-hover:text-teal">{s.nombre}</span>
+              <span className="text-[15.5px] font-semibold text-fg group-hover:text-brand">{s.nombre}</span>
               {/* El lema, no el nombre repetido: es la única línea que
                   distingue un enlace de otro para quien decide si
                   merece la pena entrar. */}
-              <span className="mt-1 text-[14px] leading-snug text-ink/60">{s.lema}</span>
+              <span className="mt-1 text-[14px] leading-snug text-fg/60">{s.lema}</span>
             </Link>
           </Reveal>
         ))}

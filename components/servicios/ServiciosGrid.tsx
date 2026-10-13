@@ -18,9 +18,9 @@ export function ServiciosGrid() {
     <Seccion id="servicios" tono="oscuro" ancho="ancho">
       <div className="max-w-[60ch]">
         <Antetitulo tono="oscuro">{servicios.categoria}</Antetitulo>
-        <TituloSeccion className="text-[#F4F6FF]">{servicios.titular}</TituloSeccion>
+        <TituloSeccion className="text-fg">{servicios.titular}</TituloSeccion>
         <Reveal retraso={0.06}>
-          <p className="mt-5 text-[17px] leading-relaxed text-white/62">{servicios.intro}</p>
+          <p className="mt-5 text-[17px] leading-relaxed text-fg-2">{servicios.intro}</p>
         </Reveal>
       </div>
 
@@ -29,19 +29,19 @@ export function ServiciosGrid() {
           <Reveal key={tarjeta.titulo} retraso={(i % 3) * 0.08}>
             <TarjetaGlow color={GLOW[tarjeta.tono]} className="h-full">
               <CajaIcono nombre={tarjeta.icono} tono={tarjeta.tono} />
-              <h3 className="mt-5 text-[20px] font-semibold text-[#F4F6FF]">{tarjeta.titulo}</h3>
+              <h3 className="mt-5 text-[20px] font-semibold text-fg">{tarjeta.titulo}</h3>
 
               {/* Aquí había un `badge` opcional que solo usaba una tarjeta,
                   la de recordatorios, para marcarla como "clave en
                   veterinarias". Con el giro de posicionamiento esa
                   distinción ya no existe: ningún servicio es más de un
                   sector que de otro. */}
-              <p className="mt-3 text-[14.5px] leading-relaxed text-white/60">{tarjeta.texto}</p>
+              <p className="mt-3 text-[14.5px] leading-relaxed text-fg-2">{tarjeta.texto}</p>
 
               <ul className="mt-4 space-y-2.5">
                 {tarjeta.items.map((item) => (
-                  <li key={item} className="flex gap-2.5 text-[14px] leading-relaxed text-white/62">
-                    <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-white/40" />
+                  <li key={item} className="flex gap-2.5 text-[14px] leading-relaxed text-fg-2">
+                    <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-surface-2" />
                     {item}
                   </li>
                 ))}

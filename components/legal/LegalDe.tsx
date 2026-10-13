@@ -28,7 +28,7 @@ export function LegalDe() {
               <strong className={FUERTE}>{datosLegales.etiquetaIdentificacion === "NIF" ? "Steuernummer (NIF)" : datosLegales.etiquetaIdentificacion}:</strong>{" "}
               <Dato valor={datosLegales.identificacion} falta="wird noch vergeben" />
               {datosLegales.tipoTitular === "persona" && (
-                <span className="text-white/50">
+                <span className="text-fg-3">
                   {" "}
                   — die Gesellschaft befindet sich in Gründung; bis zur Vergabe ihrer Steuernummer haftet einer der Gesellschafter als natürliche Person für die
                   Website
@@ -53,7 +53,7 @@ export function LegalDe() {
                 <strong className={FUERTE}>Registerangaben:</strong> {datosLegales.registroMercantil}
               </li>
             ) : (
-              <li className="text-white/55">
+              <li className="text-fg-2">
                 <strong className={FUERTE}>Registerangaben:</strong> werden veröffentlicht, sobald die Gesellschaft im Handelsregister eingetragen ist.
               </li>
             )}
@@ -200,14 +200,14 @@ export function LegalDe() {
           <p className={P}>Cookies sind kleine Dateien, die eine Website in Ihrem Browser speichern kann, um sich an Informationen über Ihren Besuch zu erinnern.</p>
 
           <h3 className={H3}>2. Cookies auf dieser Website</h3>
-          <p className="mt-4 rounded-tarjeta border border-mint/22 bg-gradient-to-br from-mint/[.09] to-mint/[.02] p-5 text-[15.5px] leading-relaxed text-white/78 shadow-[0_24px_60px_rgba(0,0,0,.4),inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-xl">
-            <strong className="font-medium text-mint">Kein nicht notwendiges Cookie wird gesetzt, bevor Sie zustimmen.</strong> Beim ersten Besuch sehen Sie ein
+          <p className="mt-4 rounded-tarjeta border border-brand/30 bg-gradient-to-br from-mint/[.09] to-mint/[.02] p-5 text-[15.5px] leading-relaxed text-fg shadow-e2">
+            <strong className="font-medium text-brand">Kein nicht notwendiges Cookie wird gesetzt, bevor Sie zustimmen.</strong> Beim ersten Besuch sehen Sie ein
             Banner mit zwei gleichrangigen Optionen: alle akzeptieren oder alle ablehnen. Wenn Sie ablehnen — oder einfach weitersurfen, ohne zu antworten —,
             wird kein Statistik- oder Werbewerkzeug geladen, und die Website funktioniert genauso.
           </p>
 
           <h4 className={H4}>Notwendig</h4>
-          <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+          <p className="mt-2 text-[15.5px] leading-relaxed text-fg-2">
             Für die Erbringung des Dienstes unerlässlich und daher nicht einwilligungspflichtig (Art. 22.2 LSSICE). Es sind keine Cookies von Drittanbietern:
             Ihre Entscheidung zu diesem Hinweis und die gewählte Sprache werden im lokalen Speicher Ihres Browsers und in einem eigenen Cookie abgelegt,
             damit wir nicht auf jeder Seite erneut fragen. Die Live-Demo speichert dort außerdem, was Sie in ihr tun (Testanfragen, Arbeitsberichte und
@@ -217,7 +217,7 @@ export function LegalDe() {
           </p>
 
           <h4 className={H4}>Statistik (optional)</h4>
-          <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+          <p className="mt-2 text-[15.5px] leading-relaxed text-fg-2">
             Google Analytics 4 von Google Ireland Ltd. Zeigt uns, wie viele Menschen die Website besuchen, woher sie kommen und welche Seiten sie aufrufen,
             damit wir sie verbessern können. Die Berichte sind zusammengefasst und dienen nicht Ihrer Identifizierung. Es setzt die Cookies{" "}
             <code className={CODE}>_ga</code> und <code className={CODE}>_ga_*</code> mit einer Laufzeit von 24 Monaten. Die IP-Adresse wird vor der
@@ -225,7 +225,7 @@ export function LegalDe() {
           </p>
 
           <h4 className={H4}>Marketing (optional)</h4>
-          <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+          <p className="mt-2 text-[15.5px] leading-relaxed text-fg-2">
             Meta Pixel von Meta Platforms Ireland Ltd. Damit messen wir die Ergebnisse unserer Anzeigen auf Instagram und Facebook und zeigen Menschen, die
             die Website schon besucht haben, Werbung. Es setzt die Cookies <code className={CODE}>_fbp</code> und <code className={CODE}>_fbc</code> mit
             einer Laufzeit von 3 Monaten. Dies beinhaltet eine Datenübermittlung in die USA auf Grundlage des EU-US-Datenschutzrahmens und von
@@ -252,7 +252,7 @@ export function LegalDe() {
           <p className="mt-4">
             <BotonPreferencias estilo="enlace">Cookie-Einstellungen öffnen</BotonPreferencias>
           </p>
-          <p className="mt-4 text-[15.5px] leading-relaxed text-white/68">
+          <p className="mt-4 text-[15.5px] leading-relaxed text-fg-2">
             In jedem Fall fragen wir Sie nach 24 Monaten erneut. Sie können Ihren Browser außerdem in den Datenschutzeinstellungen so konfigurieren, dass er
             Cookies blockiert, löscht oder Sie vorher warnt.
           </p>

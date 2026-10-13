@@ -7,17 +7,17 @@ import { centralAvisos } from "@/content/de/inicio";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_AVISOS } from "@/content/blog-faq";
 
-<nav aria-label="Brotkrumennavigation" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
-  <Link href="/" className="text-[#9FB6FF]">Start</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Aufträge bündeln
+<nav aria-label="Brotkrumennavigation" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Start</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Aufträge bündeln
 </nav>
 
-<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Auftragsannahme · 6 Min. Lesezeit</div>
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Auftragsannahme · 6 Min. Lesezeit</div>
 
 <FechaArticulo ruta="/blog/centralizar-avisos-llamadas-whatsapp-mallorca" />
 
 # Anrufe, WhatsApp und Kundenanfragen in einem Betrieb auf Mallorca ordnen
 
-<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
   Ihre Kunden müssen nicht alle denselben Kanal nutzen. Wichtig ist, dass alles, was hereinkommt,
   an derselben Stelle landet. Dafür braucht es vier Schritte: jede Anfrage an einem Ort erfassen,
   das Dringende kennzeichnen, eine zuständige Person festlegen und das Ganze mit der folgenden
@@ -146,8 +146,8 @@ investiert](/blog/por-que-diagnosticar-antes-de-automatizar).
 
 {FAQ_AVISOS.de.map(([p, r]) => (
   <div key={p} className="mt-8">
-    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
-    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+    <h3 className="text-[18px] text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
   </div>
 ))}
 
@@ -179,7 +179,7 @@ investiert](/blog/por-que-diagnosticar-antes-de-automatizar).
           lang: "de",
           titulo: "Anrufe, WhatsApp und Kundenanfragen in einem Betrieb auf Mallorca ordnen",
           descripcion:
-            "Die vier Schritte, damit keine Anfrage davon abhängt, dass sich jemand erinnert: erfassen, priorisieren, zuweisen und mit der folgenden Arbeit verbinden.",
+ "Die vier Schritte, damit keine Anfrage davon abhängt, dass sich jemand erinnert: erfassen, priorisieren, zuweisen und mit der folgenden Arbeit verbinden.",
           url: `${marca.dominio}/de/blog/centralizar-avisos-llamadas-whatsapp-mallorca`,
           fecha: fechaPublicacion("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
         actualizado: fechaRevision("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
@@ -187,7 +187,7 @@ investiert](/blog/por-que-diagnosticar-antes-de-automatizar).
         esquemaFaq(
           FAQ_AVISOS.de.map(([p, r]) => ({ p, r })),
           `${marca.dominio}/de/blog/centralizar-avisos-llamadas-whatsapp-mallorca#faq`,
-          "de",
+ "de",
         ),
       ]),
     ),

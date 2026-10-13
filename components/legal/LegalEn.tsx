@@ -28,7 +28,7 @@ export function LegalEn() {
               <strong className={FUERTE}>{datosLegales.etiquetaIdentificacion === "NIF" ? "Tax ID (NIF)" : datosLegales.etiquetaIdentificacion}:</strong>{" "}
               <Dato valor={datosLegales.identificacion} falta="to be assigned" />
               {datosLegales.tipoTitular === "persona" && (
-                <span className="text-white/50"> — the company is being incorporated, so until it is assigned a tax ID one of the partners is responsible for the site as an individual</span>
+                <span className="text-fg-3"> — the company is being incorporated, so until it is assigned a tax ID one of the partners is responsible for the site as an individual</span>
               )}
             </li>
             <li>
@@ -49,7 +49,7 @@ export function LegalEn() {
                 <strong className={FUERTE}>Registration details:</strong> {datosLegales.registroMercantil}
               </li>
             ) : (
-              <li className="text-white/55">
+              <li className="text-fg-2">
                 <strong className={FUERTE}>Registration details:</strong> will be published once the company is entered in the Mercantile Register.
               </li>
             )}
@@ -194,14 +194,14 @@ export function LegalEn() {
           <p className={P}>Cookies are small files that a website can store in your browser to remember information about your visit.</p>
 
           <h3 className={H3}>2. Cookies used on this site</h3>
-          <p className="mt-4 rounded-tarjeta border border-mint/22 bg-gradient-to-br from-mint/[.09] to-mint/[.02] p-5 text-[15.5px] leading-relaxed text-white/78 shadow-[0_24px_60px_rgba(0,0,0,.4),inset_0_1px_0_rgba(255,255,255,.1)] backdrop-blur-xl">
-            <strong className="font-medium text-mint">No non-essential cookie is set until you accept it.</strong> When you first visit you will see a banner
+          <p className="mt-4 rounded-tarjeta border border-brand/30 bg-gradient-to-br from-mint/[.09] to-mint/[.02] p-5 text-[15.5px] leading-relaxed text-fg shadow-e2">
+            <strong className="font-medium text-brand">No non-essential cookie is set until you accept it.</strong> When you first visit you will see a banner
             with two options at the same level: accept all or reject all. If you reject — or simply keep browsing without answering — no analytics or
             advertising tool is loaded, and the site works exactly the same.
           </p>
 
           <h4 className={H4}>Essential</h4>
-          <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+          <p className="mt-2 text-[15.5px] leading-relaxed text-fg-2">
             Needed to provide the service, so they do not require consent (art. 22.2 LSSICE). They are not third-party cookies: your choice about this notice
             and the language you pick are stored in your own browser&apos;s local storage and in a first-party cookie, so we don&apos;t ask you again on
             every page. The live demo also stores there what you do in it (test requests, job reports and invoices, with fictitious data) and whether you
@@ -210,14 +210,14 @@ export function LegalEn() {
           </p>
 
           <h4 className={H4}>Analytics (optional)</h4>
-          <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+          <p className="mt-2 text-[15.5px] leading-relaxed text-fg-2">
             Google Analytics 4, from Google Ireland Ltd. It tells us how many people visit the site, where they come from and which pages they view, so we
             can improve it. Reports are aggregated and not used to identify you. It sets the cookies <code className={CODE}>_ga</code> and{" "}
             <code className={CODE}>_ga_*</code>, lasting 24 months. The IP address is truncated before being stored.
           </p>
 
           <h4 className={H4}>Marketing (optional)</h4>
-          <p className="mt-2 text-[15.5px] leading-relaxed text-white/68">
+          <p className="mt-2 text-[15.5px] leading-relaxed text-fg-2">
             Meta Pixel, from Meta Platforms Ireland Ltd. It lets us measure the results of our Instagram and Facebook ads and show advertising to people who
             have already visited the website. It sets the cookies <code className={CODE}>_fbp</code> and <code className={CODE}>_fbc</code>, lasting 3
             months. It involves an international data transfer to the USA, covered by the EU-US Data Privacy Framework and standard contractual clauses.
@@ -242,7 +242,7 @@ export function LegalEn() {
           <p className="mt-4">
             <BotonPreferencias estilo="enlace">Open cookie preferences</BotonPreferencias>
           </p>
-          <p className="mt-4 text-[15.5px] leading-relaxed text-white/68">
+          <p className="mt-4 text-[15.5px] leading-relaxed text-fg-2">
             In any case, we will ask you again after 24 months. You can also set your browser to block, delete or warn you about cookies from its privacy
             settings.
           </p>

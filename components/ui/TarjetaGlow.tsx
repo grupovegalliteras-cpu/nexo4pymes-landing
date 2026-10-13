@@ -1,63 +1,38 @@
-"use client";
-
-import { useRef, useState, type ReactNode } from "react";
-import { usarPunteroFino } from "@/components/motion/usarMovimiento";
+import type { ReactNode } from "react";
 
 /* ============================================================
-   TARJETA CON BRILLO (equivalente a `data-glow` de la maqueta)
-   Cristal oscuro con un resplandor radial que sigue al cursor y un
-   ligero levantamiento en hover. La posición del resplandor se
-   escribe en variables CSS (--x/--y): no dispara render de React ni
-   recalcula layout, solo repinta una capa.
+   TARJETA DE CONTENIDO
 
-   `color` es un triplete RGB ("76,125,255") para poder variar el
-   tinte del brillo por tarjeta, como en la maqueta.
+   QUÉ ERA Y POR QUÉ HA CAMBIADO. Era un cristal oscuro con un
+   resplandor radial que seguía al cursor, de la paleta anterior. Ese
+   efecto necesita un fondo casi negro para leerse: sobre el fondo
+   claro de ahora el resplandor no se ve, y lo único que quedaba era
+   el coste de repintar una capa de 380 px en cada movimiento del
+   ratón. En el modo oscuro tampoco hacía falta: las sombras del
+   sistema (shadow-e1/e2) ya separan la tarjeta del fondo.
+
+   Lo que sí se queda es el levantamiento en hover, que es lo que
+   dice "esto se puede pulsar", y ahora funciona igual en los dos
+   modos porque el borde y el fondo salen de variables.
+
+   SIGUE SIENDO UN COMPONENTE Y NO UNA CLASE porque lo usan seis
+   secciones; y mantiene la prop `color` sin usarla para no tocar
+   esas seis llamadas. Es una tarjeta: no tiene que saber de colores.
    ============================================================ */
 export function TarjetaGlow({
   children,
   className = "",
-  color = "76,125,255",
 }: {
   children: ReactNode;
   className?: string;
+  /** Ya no se usa. Queda para no reescribir las llamadas que lo pasan. */
   color?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [activo, setActivo] = useState(false);
-  /* Sin ratón no se engancha nada. En táctil el navegador emula
-     mouseenter al tocar la tarjeta: eso disparaba un render de React y
-     pintaba un degradado radial de 380 px con cada toque, en el
-     dispositivo más lento y justo mientras el dedo hace scroll. */
-  const fino = usarPunteroFino();
-
-  function mover(e: React.MouseEvent<HTMLDivElement>) {
-    const caja = ref.current?.getBoundingClientRect();
-    if (!caja || !ref.current) return;
-    ref.current.style.setProperty("--x", `${e.clientX - caja.left}px`);
-    ref.current.style.setProperty("--y", `${e.clientY - caja.top}px`);
-  }
-
   return (
     <div
-      ref={ref}
-      onMouseMove={fino ? mover : undefined}
-      onMouseEnter={fino ? () => setActivo(true) : undefined}
-      onMouseLeave={fino ? () => setActivo(false) : undefined}
-      className={`group relative overflow-hidden rounded-panel border border-white/9 bg-gradient-to-br
-                  from-white/[.065] to-white/[.015] p-5 sm:p-7 shadow-[0_24px_60px_-24px_rgba(0,0,0,.55)]
-                  backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-400
-                  ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-1.5 hover:border-white/22 ${className}`}
+      className={`group border-line bg-surface shadow-e1 hover:shadow-e2 relative overflow-hidden rounded-2xl border p-5 transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(.2,.8,.2,1)] hover:-translate-y-0.5 sm:p-6 ${className}`}
     >
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-400 group-hover:opacity-100"
-        style={{
-          background: activo
-            ? `radial-gradient(380px circle at var(--x) var(--y), rgba(${color},.18), transparent 65%)`
-            : undefined,
-        }}
-      />
-      <div className="relative">{children}</div>
+      {children}
     </div>
   );
 }

@@ -7,17 +7,17 @@ import { centralAvisos } from "@/content/en/inicio";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_AVISOS } from "@/content/blog-faq";
 
-<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
-  <Link href="/" className="text-[#9FB6FF]">Home</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Centralising enquiries
+<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Home</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Centralising enquiries
 </nav>
 
-<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Enquiries · 6 min read</div>
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Enquiries · 6 min read</div>
 
 <FechaArticulo ruta="/blog/centralizar-avisos-llamadas-whatsapp-mallorca" />
 
 # How to organise calls, WhatsApp and customer requests in a Mallorca business
 
-<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
   Your customers do not all have to use the same channel. What matters is that everything coming
   in ends up in the same place. It takes four steps: log every request in one place, mark which
   ones are urgent, give each an owner, and connect it to the work that follows. Most companies
@@ -138,8 +138,8 @@ invest](/blog/por-que-diagnosticar-antes-de-automatizar).
 
 {FAQ_AVISOS.en.map(([p, r]) => (
   <div key={p} className="mt-8">
-    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
-    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+    <h3 className="text-[18px] text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
   </div>
 ))}
 
@@ -170,7 +170,7 @@ invest](/blog/por-que-diagnosticar-antes-de-automatizar).
           lang: "en",
           titulo: "How to organise calls, WhatsApp and customer requests in a Mallorca business",
           descripcion:
-            "The four steps so no request depends on somebody remembering it: log it, prioritise it, assign it and connect it to the work that follows.",
+ "The four steps so no request depends on somebody remembering it: log it, prioritise it, assign it and connect it to the work that follows.",
           url: `${marca.dominio}/en/blog/centralizar-avisos-llamadas-whatsapp-mallorca`,
           fecha: fechaPublicacion("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
         actualizado: fechaRevision("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
@@ -178,7 +178,7 @@ invest](/blog/por-que-diagnosticar-antes-de-automatizar).
         esquemaFaq(
           FAQ_AVISOS.en.map(([p, r]) => ({ p, r })),
           `${marca.dominio}/en/blog/centralizar-avisos-llamadas-whatsapp-mallorca#faq`,
-          "en",
+ "en",
         ),
       ]),
     ),

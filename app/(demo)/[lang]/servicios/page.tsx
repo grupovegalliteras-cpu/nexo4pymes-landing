@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import { Cabecera } from "@/components/layout/Cabecera";
-import { PieDePagina } from "@/components/layout/PieDePagina";
-import { CtaMovil } from "@/components/layout/CtaMovil";
-import { FondoAmbiente } from "@/components/ui/FondoAmbiente";
+import { ContactDock, SiteFooter, SiteNav } from "@/components/site/chrome";
 import { FaqSeccion } from "@/components/ui/FaqSeccion";
 import { HeroServicios } from "@/components/servicios/HeroServicios";
 import { ServiciosGrid } from "@/components/servicios/ServiciosGrid";
@@ -15,9 +12,8 @@ import { CierreServicios } from "@/components/servicios/CierreServicios";
 import { contenido } from "@/content/i18n";
 import { OG_LOCALE, alternativas, idiomaOBase, tr } from "@/lib/i18n";
 import { fijarIdioma } from "@/lib/idioma-servidor";
-import { marca, oferta } from "@/content/marca";
+import { marca } from "@/content/marca";
 import { esquemaFaq, esquemaMigas, grafoPagina, urlAbsoluta } from "@/lib/esquema";
-import { waLink } from "@/lib/whatsapp";
 
 /* /servicios — el catálogo largo: qué construimos con su alcance
    y sus límites, cómo trabajamos en cinco pasos, por qué el
@@ -27,7 +23,14 @@ import { waLink } from "@/lib/whatsapp";
    "servicios + sectores + quiénes somos + RGPD", o sea la empresa
    entera en una URL: nadie llegaba al final y Google no sabía de qué
    iba. Ahora los sectores viven en la home (como selector) y
-   quiénes somos + RGPD en /nosotros. Aquí solo queda servicio. */
+   quiénes somos + RGPD en /nosotros. Aquí solo queda servicio.
+
+   LA CABECERA Y EL PIE SON LOS DE TODA LA WEB (SiteNav/SiteFooter).
+   Esta página tenía los suyos propios, de cuando era otra web con
+   otra paleta: al pulsar «Servicios» desde la portada se cambiaba de
+   sitio sin cambiar de dominio. La barra flotante de WhatsApp
+   también era propia (CtaMovil) y ahora la pone ContactDock, que
+   además se aparta solo cuando hay un formulario a la vista. */
 
 /* EL TÍTULO NOMBRA EL SERVICIO Y EL SITIO, EN ESE ORDEN.
    Se miraron los diez primeros resultados de "software a medida
@@ -56,50 +59,46 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const titulo = TITULO[lang];
   const descripcion = DESCRIPCION[lang];
   return {
-  title: { absolute: `${titulo} | Nexo4Pymes` },
-  description: descripcion,
-  alternates: alternativas(lang, "/servicios"),
-  openGraph: {
-    type: "website",
-    siteName: marca.nombre,
-    locale: OG_LOCALE[lang],
-    title: titulo,
+    title: { absolute: `${titulo} | Nexo4Pymes` },
     description: descripcion,
-    url: alternativas(lang, "/servicios").canonical,
-    images: [
-      {
-        url: "/assets/og-nexo4pymes.jpg",
-        width: 1200,
-        height: 630,
-        alt: `Nexo4Pymes — ${titulo}`,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: titulo,
-    description: descripcion,
-    images: ["/assets/og-nexo4pymes.jpg"],
-  },
+    alternates: alternativas(lang, "/servicios"),
+    openGraph: {
+      type: "website",
+      siteName: marca.nombre,
+      locale: OG_LOCALE[lang],
+      title: titulo,
+      description: descripcion,
+      url: alternativas(lang, "/servicios").canonical,
+      images: [
+        {
+          url: "/assets/og-nexo4pymes.jpg",
+          width: 1200,
+          height: 630,
+          alt: `Nexo4Pymes — ${titulo}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: titulo,
+      description: descripcion,
+      images: ["/assets/og-nexo4pymes.jpg"],
+    },
   };
 }
 
 export default async function PaginaServicios({ params }: { params: Promise<{ lang: string }> }) {
   const lang = idiomaOBase((await params).lang);
   fijarIdioma(lang);
-  const { faqServicios, navServicios } = contenido(lang).servicios;
+  const { faqServicios } = contenido(lang).servicios;
   const t = (x: { es: string; en: string; de: string }) => tr(lang, x);
   return (
-    <>
-      <FondoAmbiente />
+    <div className="bg-bg text-fg">
+      {/* dark: el hero es la franja de agua azul, así que la cabecera
+          entra transparente y sólo se vuelve opaca al hacer scroll. */}
+      <SiteNav dark />
 
-      <Cabecera
-        enlaces={navServicios}
-        cta={{ texto: "WhatsApp", href: waLink("GENERAL", undefined, lang), externo: true }}
-        enlacePill={{ href: "/contacto", texto: t({ es: "Contacto ↗", en: "Contact ↗", de: "Kontakt ↗" }) }}
-      />
-
-      <main id="contenido" className="relative z-10">
+      <main id="contenido">
         <HeroServicios />
         <ServiciosGrid />
         <AvisosServicios />
@@ -107,36 +106,22 @@ export default async function PaginaServicios({ params }: { params: Promise<{ la
         <CasoDiagnostico />
         <ComoEmpezar />
         <SectoresServicios />
-        <FaqSeccion id="faq" categoria={t({ es: "Preguntas frecuentes", en: "Frequently asked questions", de: "Häufige Fragen" })} titular={t({ es: "Antes de escribirnos", en: "Before you write to us", de: "Bevor Sie uns schreiben" })} preguntas={faqServicios} />
+        <FaqSeccion
+          id="faq"
+          categoria={t({ es: "Preguntas frecuentes", en: "Frequently asked questions", de: "Häufige Fragen" })}
+          titular={t({ es: "Antes de escribirnos", en: "Before you write to us", de: "Bevor Sie uns schreiben" })}
+          preguntas={faqServicios}
+        />
         <CierreServicios />
       </main>
 
-      <PieDePagina
-        redes
-        enlaces={[
-          { href: "#servicios", texto: t({ es: "Servicios", en: "Services", de: "Leistungen" }) },
-          { href: "#metodo", texto: t({ es: "Método", en: "Method", de: "Methode" }) },
-          { href: "#como-empezar", texto: t({ es: "Cómo se empieza", en: "How to start", de: "So beginnt es" }) },
-          { href: "#sectores", texto: t({ es: "Por oficio", en: "By trade", de: "Nach Branche" }) },
-          { href: "/nosotros", texto: t({ es: "Quiénes somos", en: "About us", de: "Über uns" }) },
-          { href: "/contacto", texto: t({ es: "Contacto", en: "Contact", de: "Kontakt" }) },
-          { href: "/blog", texto: "Blog" },
-        ]}
-        cruce={{
-          pregunta: t({ es: "¿Queréis saber quién está detrás?", en: "Want to know who's behind it?", de: "Möchten Sie wissen, wer dahintersteht?" }),
-          texto: t({ es: "Quiénes somos y qué pasa con vuestros datos", en: "Who we are and what happens to your data", de: "Wer wir sind und was mit Ihren Daten passiert" }),
-          href: "/nosotros",
-        }}
-      />
-
-      <CtaMovil
-        texto={t({ es: "Escribidnos por WhatsApp", en: "Message us on WhatsApp", de: "Schreiben Sie uns auf WhatsApp" })}
-        href={waLink("GENERAL", undefined, lang)}
-        externo
-        /* La barra flotante llevaba aquí "Diagnóstico 150€ · quedan N
-            plazas". Se quitó al retirar los precios de esta página:
-            era el único importe que seguía a la vista al hacer scroll. */
-        nota={oferta.ofertaActiva ? t({ es: `Quedan ${oferta.plazasLibres} plazas`, en: `${oferta.plazasLibres} places left`, de: `Noch ${oferta.plazasLibres} Plätze frei` }) : undefined}
+      <SiteFooter />
+      <ContactDock
+        mensaje={t({
+          es: "Hola, he visto los servicios de Nexo4Pymes y me gustaría comentaros lo que necesitamos.",
+          en: "Hi, I've seen the Nexo4Pymes services and I'd like to talk about what we need.",
+          de: "Hallo, ich habe die Leistungen von Nexo4Pymes gesehen und möchte über unseren Bedarf sprechen.",
+        })}
       />
 
       <script
@@ -150,6 +135,6 @@ export default async function PaginaServicios({ params }: { params: Promise<{ la
           ),
         }}
       />
-    </>
+    </div>
   );
 }

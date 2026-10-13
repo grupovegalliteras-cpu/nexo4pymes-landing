@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "../(web)/tema-web.css";
+@import "./tema-web.css";
 @import "./deeptech.css";
 
 @source inline("{bg,text,border}-{brand,ok,warn,bad,ai,info,sun,fg-3}");
@@ -135,6 +135,11 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* LOS ANCLAS NO SE PUEDEN METER DEBAJO DE LA CABECERA. La cabecera
+     es fija; sin esto, /legal#privacidad o #faq dejan el titular
+     tapado y el visitante cree que el enlace no ha hecho nada. Venía
+     de la plantilla de la web, que es de donde llegan esas páginas. */
+  scroll-padding-top: 84px;
 }
 
 body {

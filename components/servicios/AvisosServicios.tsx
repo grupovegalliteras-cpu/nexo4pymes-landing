@@ -11,7 +11,7 @@ import { idiomaServidor } from "@/lib/idioma-servidor";
 
    Va justo después del catálogo de piezas a medida y antes del
    método, porque su razón de ser es contrastar con lo anterior:
-   "todo esto se construye para vosotros… y además hay una cosa
+ "todo esto se construye para vosotros… y además hay una cosa
    que ya está hecha".
 
    UN SOLO PANEL, no la rejilla de tres tarjetas de la home. Quien
@@ -32,20 +32,19 @@ export function AvisosServicios() {
     <Seccion id="central-avisos" tono="oscuro" ancho="ancho">
       <Reveal>
         <div
-          className="rounded-panel border border-white/10 bg-gradient-to-br from-white/[.06]
-                     to-white/[.015] p-6 sm:p-9"
+          className="rounded-panel border border-line bg-surface p-6 sm:p-9"
         >
           <div className="max-w-[720px]">
             <Antetitulo tono="oscuro">{avisosServicios.categoria}</Antetitulo>
-            <TituloSeccion className="text-[#F4F6FF]">{avisosServicios.titular}</TituloSeccion>
-            <p className="mt-5 text-[16px] leading-relaxed text-white/65 sm:text-[17.5px]">
+            <TituloSeccion className="text-fg">{avisosServicios.titular}</TituloSeccion>
+            <p className="mt-5 text-[16px] leading-relaxed text-fg-2 sm:text-[17.5px]">
               {avisosServicios.parrafo}
             </p>
 
             {/* La nota va destacada con el filete a la izquierda: es
                 la línea que le dice a quien solo necesita esto que
                 puede saltarse el diagnóstico. */}
-            <p className="mt-5 border-l-2 border-mint/40 pl-4 text-[15px] leading-relaxed text-mint">
+            <p className="mt-5 border-l-2 border-brand/30 pl-4 text-[15px] leading-relaxed text-brand">
               {avisosServicios.nota}
             </p>
           </div>
@@ -54,8 +53,8 @@ export function AvisosServicios() {
             {centralAvisos.condiciones.map((condicion) => (
               <li
                 key={condicion}
-                className="rounded-full border border-white/12 bg-white/[.04] px-3.5 py-1.5
-                           font-mono text-[11.5px] uppercase tracking-[0.1em] text-white/60"
+                className="rounded-full border border-line bg-surface-2 px-3.5 py-1.5
+                           font-mono text-[11.5px] uppercase tracking-[0.1em] text-fg-2"
               >
                 {condicion}
               </li>
@@ -69,7 +68,7 @@ export function AvisosServicios() {
               tamano="lg"
               flecha
               magnetico
-              className="w-full font-titular font-semibold sm:w-auto"
+              className="w-full font-display font-semibold sm:w-auto"
             >
               {avisosServicios.ctaPrincipal}
             </Boton>

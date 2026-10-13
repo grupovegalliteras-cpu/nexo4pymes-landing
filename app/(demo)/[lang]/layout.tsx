@@ -12,10 +12,22 @@ import { SugerenciaIdioma } from "@/components/i18n/SugerenciaIdioma";
 import { IDIOMAS, OG_LOCALE, idiomaOBase, tr } from "@/lib/i18n";
 import { fijarIdioma } from "@/lib/idioma-servidor";
 
-/* Plantilla de la portada (la demo), el panel y la app.
-   La web de siempre (servicios, contacto, nosotros, blog, legal) tiene la suya en app/(web).
-   Lo que es de toda la marca se repite aquí igual: cookies, analítica, medición,
-   verificación de Meta y datos de empresa para Google. */
+/* LA PLANTILLA RAÍZ DE TODO EL SITIO.
+
+   Antes había dos: esta (portada, demo, panel, app) y otra en
+   app/(web) para servicios, nosotros, blog y legal. Dos plantillas
+   raíz son dos tipografías, dos paletas y dos cabeceras, y eso es
+   exactamente lo que se notaba al pulsar «Servicios» desde la
+   portada: se cambiaba de web. Ahora hay una.
+
+   Lo que vino de la plantilla vieja al unificar, y hay que conservar:
+   la imagen de vista previa por defecto (los artículos del blog se
+   comparten por WhatsApp y salían como enlace pelado), `authors`, y
+   el <noscript> que devuelve la visibilidad a lo que iba a animarse.
+
+   Lo que es de toda la marca se queda aquí y en ningún otro sitio:
+   cookies, analítica, medición, verificación de Meta y los datos de
+   empresa para Google. */
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
 const bricolage = Bricolage_Grotesque({ variable: "--font-bricolage", subsets: ["latin"] });
@@ -57,6 +69,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       de: "Büro-Dashboard und Techniker-App, in Echtzeit verbunden. Aufträge, Einsätze, Routen, Rechnungen mit VeriFactu, Team und Lohnzettel. Made in Mallorca.",
     }),
     applicationName: "Nexo4Pymes",
+    authors: [{ name: "Nexo4Pymes" }],
     /* EL ICONO SE DECLARA AQUÍ Y NO POR CONVENCIÓN DE ARCHIVO.
        Había un icon.png dentro de [lang]/ y Next le ponía de dirección
        "/-/icon-8t26lv.png", que es un 404: la portada llevaba meses sin
@@ -104,8 +117,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
         en: "Watch a customer request become a work order, a signed job report and a VeriFactu invoice, live. Office dashboard and technician app.",
         de: "Sehen Sie live, wie aus einer Kundenanfrage ein Auftrag, ein unterschriebener Arbeitsbericht und eine VeriFactu-Rechnung wird.",
       }),
+      /* VISTA PREVIA POR DEFECTO AL PEGAR UN ENLACE. Venía de la
+         plantilla de la web y la portada no la tenía: cada página de
+         este grupo (portada, demo, módulos, sectores) se compartía en
+         WhatsApp sin imagen. Lo que una página defina por su cuenta
+         sigue mandando sobre esto. */
+      images: [{ url: "/assets/og-nexo4pymes.jpg", width: 1200, height: 630, alt: "Nexo4Pymes" }],
     },
-    twitter: { card: "summary_large_image" },
+    twitter: { card: "summary_large_image", images: ["/assets/og-nexo4pymes.jpg"] },
     formatDetection: { telephone: false },
     appleWebApp: { capable: true, title: "Nexo Campo", statusBarStyle: "black-translucent" },
     other: {
@@ -132,6 +151,12 @@ export default async function RootLayout({ children, params }: { children: React
     <html lang={lang} suppressHydrationWarning className={`${geist.variable} ${bricolage.variable} ${titular.variable} ${texto.variable} ${mono.variable} antialiased`}>
       <body className="min-h-dvh">
         <Script id="nexo-theme" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* Sin JavaScript, Framer Motion deja escrito opacity:0 en el HTML y
+            media página se quedaría en blanco. Esto devuelve la visibilidad a
+            lo que iba a animarse; con JS activo el navegador ignora el bloque. */}
+        <noscript>
+          <style>{`[style*="opacity:0"],[style*="opacity: 0"]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <Providers>{children}</Providers>
         <SugerenciaIdioma />
         <BannerCookies />

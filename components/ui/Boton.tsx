@@ -6,34 +6,39 @@ import { useMagnetico } from "@/components/motion/useMagnetico";
 
 /* ============================================================
    BOTÓN
-   Tres variantes. La "principal" es el degradado azul → violeta de
-   marca: aparece una sola vez por pantalla como máximo. Si está en
-   todas partes deja de significar "pulsa aquí".
 
-   El glow es un pseudo-elemento con blur que solo cambia de
-   opacidad y escala en hover: nada de animar box-shadow, que
-   repinta en cada frame.
+   LAS TRES VARIANTES, TRADUCIDAS A LA PALETA UNIFICADA. Eran el
+   degradado azul → violeta, un contorno sobre cristal oscuro y un
+   botón blanco. Las tres daban por hecho un fondo casi negro.
 
-   `magnetico` añade el efecto de la maqueta: el botón sigue un poco
-   al cursor y crece levemente. Solo se usa en los CTA más
-   importantes de cada pantalla — puesto en todos los botones deja
-   de notarse.
+     principal  → azul de marca. Es el color que la portada y las
+                  páginas de sector usan para la acción principal, y
+                  tiene valor propio en claro y en oscuro.
+     secundario → contorno sobre el fondo de tarjeta.
+     claro      → el verde de WhatsApp. Era el botón blanco de los
+                  cierres, y en los dos sitios donde se usa lo que
+                  hay detrás es «escribidnos por WhatsApp»: con el
+                  verde se reconoce antes de leerlo.
+
+   RADIO: rounded-xl y no rounded-full. Todo lo pulsable del sitio
+   nuevo (cabecera, demo, sectores) usa la esquina de 12 px; la
+   píldora era de la estética anterior y aquí cantaba.
+
+   El halo de la variante principal se fue con ella: un resplandor
+   azul difuminado sobre fondo claro es una mancha gris.
    ============================================================ */
 
 type Variante = "principal" | "secundario" | "claro";
 
 const base =
-  "group relative inline-flex items-center justify-center gap-2 rounded-full font-medium " +
+  "group relative inline-flex items-center justify-center gap-2 rounded-xl font-semibold " +
   "transition-[transform,background-color,border-color,color,box-shadow] duration-300 ease-[cubic-bezier(.22,1,.36,1)] " +
   "active:translate-y-0 select-none";
 
 const variantes: Record<Variante, string> = {
-  principal:
-    "bg-gradient-to-br from-azul to-violeta text-white shadow-[0_14px_40px_-12px_rgba(76,125,255,.55)] " +
-    "hover:-translate-y-0.5 hover:shadow-[0_20px_54px_-10px_rgba(130,110,250,.65)]",
-  secundario:
-    "border border-white/14 bg-white/[.03] text-white hover:-translate-y-0.5 hover:border-azul/45 hover:bg-azul/10",
-  claro: "bg-white text-bottle-900 hover:-translate-y-0.5 hover:bg-white/90",
+  principal: "bg-brand text-brand-ink shadow-e1 hover:-translate-y-0.5 hover:bg-brand-strong hover:shadow-e2",
+  secundario: "border border-line bg-surface text-fg hover:-translate-y-0.5 hover:border-brand/40 hover:text-brand",
+  claro: "bg-[#1faa59] text-white hover:-translate-y-0.5 hover:brightness-110",
 };
 
 /* OJO: el tamaño NO se puede sobrescribir desde `className`. Tailwind
@@ -47,8 +52,8 @@ const tamanos = {
   /* py-3 y no py-2.5: con 13 px de texto son los 44 px de alto que
      piden la WCAG 2.5.8 y las guías de iOS. Con py-2.5 se quedaba en 41. */
   sm: "px-4 py-3 text-[13px]",
-  md: "px-6 py-3 text-[15px]",
-  lg: "px-7 py-4 text-[16px] sm:text-[17px]",
+  md: "px-5 py-3 text-[15px]",
+  lg: "px-6 py-4 text-[16px] sm:text-[17px]",
 };
 
 export function Boton({
@@ -82,14 +87,6 @@ export function Boton({
 
   const contenido = (
     <>
-      {/* Halo de la variante principal. Sube de opacidad en hover. */}
-      {variante === "principal" && (
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -inset-2 -z-10 rounded-full bg-azul/35 blur-xl opacity-0
-                     transition-opacity duration-500 group-hover:opacity-100"
-        />
-      )}
       <span>{children}</span>
       {flecha && (
         <span

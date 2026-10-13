@@ -16,11 +16,11 @@ export function FaqSeccion({
 }) {
   return (
     <Seccion id={id} tono={tono} ancho="medido">
-      <Antetitulo tono="oscuro">{categoria}</Antetitulo>
-      <TituloSeccion className="mb-10 text-[#F4F6FF]">{titular}</TituloSeccion>
+      <Antetitulo>{categoria}</Antetitulo>
+      <TituloSeccion className="mb-10">{titular}</TituloSeccion>
       {/* Todas cerradas al entrar: con la primera abierta la sección arrancaba
           ~200 px más alta en móvil sin que nadie hubiera pedido esa respuesta. */}
-      <Acordeon preguntas={preguntas} tono="oscuro" abiertaPorDefecto={null} />
+      <Acordeon preguntas={preguntas} abiertaPorDefecto={null} />
     </Seccion>
   );
 }

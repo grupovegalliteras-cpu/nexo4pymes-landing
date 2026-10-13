@@ -6,17 +6,17 @@ import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_PRESUPUESTOS } from "@/content/blog-faq";
 
-<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
-  <Link href="/" className="text-[#9FB6FF]">Inicio</Link> › <Link href="/blog" className="text-[#9FB6FF]">Blog</Link> › Automatizar presupuestos
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Automatizar presupuestos
 </nav>
 
-<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Presupuestos · 6 min de lectura</div>
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Presupuestos · 6 min de lectura</div>
 
 <FechaArticulo ruta="/blog/automatizar-presupuestos-pymes-mallorca" />
 
 # Cómo dejar de hacer presupuestos a mano en una pyme de Mallorca
 
-<div className="mt-6 border-l-2 border-coral pl-5 text-[18px] leading-relaxed text-[#F4F6FF]">
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
   Hay tres formas de dejar de hacer presupuestos a mano, y van de menos a más: una plantilla que
   calcule sola, una conexión entre el presupuesto y el programa de gestión, o un configurador en
   la web donde el cliente elija medidas y materiales y vea el precio al momento. Cuál os toca
@@ -122,8 +122,8 @@ respuesta es que os sirve una herramienta que ya existe, también os lo decimos.
 
 {FAQ_PRESUPUESTOS.es.map(([p, r]) => (
   <div key={p} className="mt-8">
-    <h3 className="text-[18px] text-[#F4F6FF]">{p}</h3>
-    <p className="mt-2 text-[16px] leading-relaxed text-white/70">{r}</p>
+    <h3 className="text-[18px] text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
   </div>
 ))}
 
@@ -154,7 +154,7 @@ respuesta es que os sirve una herramienta que ya existe, también os lo decimos.
           lang: "es",
           titulo: "Cómo dejar de hacer presupuestos a mano en una pyme de Mallorca",
           descripcion:
-            "Las tres formas de automatizar presupuestos —plantilla, integración o configurador web—, cuál encaja según vuestras reglas de precio y cuándo no merece la pena.",
+ "Las tres formas de automatizar presupuestos —plantilla, integración o configurador web—, cuál encaja según vuestras reglas de precio y cuándo no merece la pena.",
           url: `${marca.dominio}/blog/automatizar-presupuestos-pymes-mallorca`,
           fecha: fechaPublicacion("/blog/automatizar-presupuestos-pymes-mallorca"),
         actualizado: fechaRevision("/blog/automatizar-presupuestos-pymes-mallorca"),
@@ -162,7 +162,7 @@ respuesta es que os sirve una herramienta que ya existe, también os lo decimos.
         esquemaFaq(
           FAQ_PRESUPUESTOS.es.map(([p, r]) => ({ p, r })),
           `${marca.dominio}/blog/automatizar-presupuestos-pymes-mallorca#faq`,
-          "es",
+ "es",
         ),
       ]),
     ),

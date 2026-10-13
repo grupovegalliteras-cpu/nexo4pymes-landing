@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import Link from "@/components/i18n/Enlace";
-import { FondoAmbiente } from "@/components/ui/FondoAmbiente";
+import { SiteFooter, SiteNav } from "@/components/site/chrome";
 import { Reveal } from "@/components/motion/Reveal";
-import { datosLegales, marca } from "@/content/marca";
+import { datosLegales } from "@/content/marca";
 import { revisarDatosLegales } from "@/lib/legal";
 import { LegalEs } from "@/components/legal/LegalEs";
 import { LegalEn } from "@/components/legal/LegalEn";
 import { LegalDe } from "@/components/legal/LegalDe";
-import { SelectorIdioma } from "@/components/i18n/SelectorIdioma";
 import { LOCALE, alternativas, idiomaOBase, tr } from "@/lib/i18n";
 import { fijarIdioma } from "@/lib/idioma-servidor";
 
@@ -70,39 +68,28 @@ export default async function PaginaLegal({ params }: { params: Promise<{ lang: 
     { id: "cookies", texto: "Cookies" },
   ];
   return (
-    <>
-      <FondoAmbiente />
+    /* LA MISMA CABECERA Y EL MISMO PIE QUE TODA LA WEB. Esta página
+       tenía los suyos: un logo dibujado a mano aquí, un enlace
+       «volver al inicio» y ningún otro. Era la página más huérfana
+       del sitio, y además la que Google usa para comprobar que
+       detrás hay una empresa real en Palma. Con el pie entero, de
+       aquí se sale a cualquier sitio.
 
-      <header className="relative z-10 sticky top-0 border-b border-white/7 bg-bottle/72 backdrop-blur-2xl backdrop-saturate-150">
-        <div className="mx-auto flex max-w-[900px] items-center justify-between gap-4 px-5 py-3.5 sm:px-8">
-          <Link href="/" className="flex items-center gap-2.5" aria-label={t({ es: "Nexo4Pymes, inicio", en: "Nexo4Pymes, home", de: "Nexo4Pymes, Startseite" })}>
-            <span className="flex h-9 w-9 items-center justify-center rounded-caja bg-gradient-to-br from-azul to-violeta shadow-[0_6px_22px_rgba(76,125,255,.4),inset_0_1px_0_rgba(255,255,255,.35)]">
-              <span className="font-titular text-[15px] font-bold text-white">4</span>
-            </span>
-            <span className="font-titular text-[16px] font-semibold text-white">
-              Nexo<span className="texto-degradado">4</span>Pymes
-            </span>
-          </Link>
-          <Link
-            href="/"
-            className="rounded-full border border-white/12 bg-white/[.03] px-4 py-2 text-[13.5px] text-white/75 backdrop-blur-md transition-colors hover:border-azul/45 hover:bg-azul/10 hover:text-white"
-          >
-            {t({ es: "← Volver al inicio", en: "← Back to home", de: "← Zur Startseite" })}
-          </Link>
-          <SelectorIdioma tono="oscuro" className="max-sm:hidden" />
-        </div>
-      </header>
+       Sin ContactDock a propósito: la barra flotante de WhatsApp
+       sobre un texto legal no viene a cuento. */
+    <div className="bg-bg text-fg">
+      <SiteNav />
 
-      <main className="relative z-10 px-5 py-14 sm:px-8 sm:py-20">
+      <main id="contenido" className="px-5 pt-24 pb-14 sm:px-6 sm:pt-28 sm:pb-20">
         <div className="mx-auto max-w-[900px]">
           <Reveal as="span" className="block">
-            <span className="inline-flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-mint">
-              <span aria-hidden="true" className="h-px w-6 bg-mint/60" />
+            <span className="inline-flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-brand">
+              <span aria-hidden="true" className="h-px w-6 bg-brand/50" />
               {t({ es: "Información legal", en: "Legal information", de: "Rechtliche Hinweise" })}
             </span>
           </Reveal>
           <Reveal>
-            <h1 className="mt-4 text-[clamp(1.9rem,5vw,2.8rem)] text-[#F4F6FF]">
+            <h1 className="mt-4 text-[clamp(1.9rem,5vw,2.8rem)] text-fg">
               {t({ es: "Aviso legal, privacidad y cookies", en: "Legal notice, privacy and cookies", de: "Impressum, Datenschutz und Cookies" })}
             </h1>
           </Reveal>
@@ -111,11 +98,11 @@ export default async function PaginaLegal({ params }: { params: Promise<{ lang: 
                 quedaba vieja cada vez que se tocaba el texto legal, y una
                 política de privacidad con fecha antigua resta credibilidad
                 justo donde se está pidiendo confianza. */}
-            <p className="mt-3 text-[14px] text-white/58">
+            <p className="mt-3 text-[14px] text-fg-2">
               {t({ es: "Última actualización", en: "Last updated", de: "Letzte Aktualisierung" })}: {lang === "es" ? datosLegales.ultimaRevision : new Intl.DateTimeFormat(LOCALE[lang], { day: "numeric", month: "long", year: "numeric" }).format(new Date(datosLegales.ultimaRevisionISO))}
             </p>
             {lang !== "es" && (
-              <p className="mt-3 max-w-[70ch] rounded-tarjeta border border-white/10 bg-white/[.03] p-4 text-[13.5px] leading-relaxed text-white/60">
+              <p className="mt-3 max-w-[70ch] rounded-tarjeta border border-line bg-surface-2 p-4 text-[13.5px] leading-relaxed text-fg-2">
                 {t({ es: "", en: "This is a courtesy translation. In case of any discrepancy, the Spanish version prevails.", de: "Dies ist eine Übersetzung zur Information. Bei Abweichungen ist die spanische Fassung maßgeblich." })}
               </p>
             )}
@@ -127,7 +114,7 @@ export default async function PaginaLegal({ params }: { params: Promise<{ lang: 
                 <a
                   key={seccion.id}
                   href={`#${seccion.id}`}
-                  className="rounded-full border border-white/10 bg-white/[.03] px-4 py-2 text-[14px] text-white/65 backdrop-blur-md transition-colors hover:border-azul/40 hover:bg-azul/10 hover:text-white"
+                  className="rounded-full border border-line bg-surface-2 px-4 py-2 text-[14px] text-fg-2 transition-colors hover:border-brand/40 hover:bg-brand-soft hover:text-fg"
                 >
                   {seccion.texto}
                 </a>
@@ -139,12 +126,7 @@ export default async function PaginaLegal({ params }: { params: Promise<{ lang: 
         </div>
       </main>
 
-      <footer className="relative z-10 bg-bottle-900/60 px-5 py-8 text-center text-[13.5px] text-white/50 backdrop-blur-xl sm:px-8">
-        {marca.razonSocial} ·{" "}
-        <a href={`mailto:${marca.email}`} className="text-mint/80 underline underline-offset-4 hover:text-mint">
-          {marca.email}
-        </a>
-      </footer>
-    </>
+      <SiteFooter />
+    </div>
   );
 }

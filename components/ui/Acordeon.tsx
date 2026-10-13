@@ -29,11 +29,15 @@ export function Acordeon({
   const [abierta, setAbierta] = useState<number | null>(abiertaPorDefecto);
   const reducido = usarMovimientoReducido();
 
-  const linea = tono === "oscuro" ? "border-white/12" : "border-linea";
-  const textoP = tono === "oscuro" ? "text-white" : "text-bottle";
-  const textoR = tono === "oscuro" ? "text-white/72" : "text-suave";
-  const acento = tono === "oscuro" ? "text-mint" : "text-teal";
-  const hoverP = tono === "oscuro" ? "hover:text-mint" : "hover:text-teal";
+  /* Ya no hay dos juegos de color. Los había porque el acordeón vivía
+     sobre crema o sobre casi negro según la sección; ahora el fondo
+     sale de variables y cambia solo con el modo claro/oscuro, así que
+     un solo juego vale para los dos. `tono` se sigue aceptando. */
+  const linea = "border-line";
+  const textoP = "text-fg";
+  const textoR = "text-fg-2";
+  const acento = "text-brand";
+  const hoverP = "hover:text-brand";
 
   return (
     <div className={`border-t ${linea}`}>
@@ -48,7 +52,7 @@ export function Acordeon({
                 aria-expanded={activa}
                 aria-controls={`respuesta-${i}`}
                 className={`flex w-full cursor-pointer items-start justify-between gap-6 py-5 text-left
-                            font-titular text-[17px] font-medium transition-colors sm:text-[19px]
+                            font-display text-[17px] font-semibold transition-colors sm:text-[19px]
                             ${textoP} ${hoverP}`}
               >
                 <span className="flex-1">{item.p}</span>

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { marca } from "@/content/marca";
 import { SECTORES } from "@/data/sectors";
+import { ARTICULOS, fechaSitemap } from "@/content/articulos";
 import { IDIOMAS, conIdioma } from "@/lib/i18n";
 
 /* Sitemap de la web en sus tres idiomas. Cada página sale en español, inglés y
@@ -27,9 +28,10 @@ const PAGINAS: { ruta: string; prioridad: number; frecuencia: "monthly" | "yearl
   ...SECTORES.map((s) => ({ ruta: `/sectores/${s.id}`, prioridad: 0.7, frecuencia: "monthly" as const, fecha: "2026-10-08" })),
   { ruta: "/modulos", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-02" },
   { ruta: "/blog", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-09" },
-  { ruta: "/blog/centralizar-avisos-llamadas-whatsapp-mallorca", prioridad: 0.6, frecuencia: "yearly", fecha: "2026-10-09" },
-  { ruta: "/blog/automatizar-presupuestos-pymes-mallorca", prioridad: 0.6, frecuencia: "yearly", fecha: "2026-10-09" },
-  { ruta: "/blog/por-que-diagnosticar-antes-de-automatizar", prioridad: 0.6, frecuencia: "yearly", fecha: "2026-08-05" },
+  /* Los articulos ya no llevan la fecha escrita aqui: sale de
+     content/articulos.ts, que es donde esta la de publicacion y la de
+     revision. Antes estaban en dos sitios y se contradecian. */
+  ...ARTICULOS.map((a) => ({ ruta: a.ruta, prioridad: 0.6, frecuencia: "yearly" as const, fecha: fechaSitemap(a) })),
   /* /legal se queda en el sitemap y ahora además se indexa: es la
      página que acredita quién está detrás. Ver app/(web)/[lang]/legal. */
   { ruta: "/legal", prioridad: 0.3, frecuencia: "yearly", fecha: "2026-09-19" },

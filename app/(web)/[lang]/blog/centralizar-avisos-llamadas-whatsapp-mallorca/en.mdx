@@ -1,7 +1,8 @@
 import Link from "@/components/i18n/Enlace";
-import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog , FechaArticulo } from "@/components/blog/Bloques";
 import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
 import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { centralAvisos } from "@/content/en/inicio";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_AVISOS } from "@/content/blog-faq";
@@ -11,6 +12,8 @@ import { FAQ_AVISOS } from "@/content/blog-faq";
 </nav>
 
 <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Enquiries · 6 min read</div>
+
+<FechaArticulo ruta="/blog/centralizar-avisos-llamadas-whatsapp-mallorca" />
 
 # How to organise calls, WhatsApp and customer requests in a Mallorca business
 
@@ -169,7 +172,8 @@ invest](/blog/por-que-diagnosticar-antes-de-automatizar).
           descripcion:
             "The four steps so no request depends on somebody remembering it: log it, prioritise it, assign it and connect it to the work that follows.",
           url: `${marca.dominio}/en/blog/centralizar-avisos-llamadas-whatsapp-mallorca`,
-          fecha: "2026-10-09",
+          fecha: fechaPublicacion("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
+        actualizado: fechaRevision("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
         }),
         esquemaFaq(
           FAQ_AVISOS.en.map(([p, r]) => ({ p, r })),

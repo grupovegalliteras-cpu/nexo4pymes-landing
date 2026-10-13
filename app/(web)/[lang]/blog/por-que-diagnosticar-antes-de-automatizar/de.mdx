@@ -1,7 +1,8 @@
 import Link from "@/components/i18n/Enlace";
-import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog , FechaArticulo } from "@/components/blog/Bloques";
 import { esquemaArticulo, grafoPagina } from "@/lib/esquema";
 import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { waLink } from "@/lib/whatsapp";
 
 <nav aria-label="Brotkrumen" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
@@ -9,6 +10,8 @@ import { waLink } from "@/lib/whatsapp";
 </nav>
 
 <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Analyse zuerst · 5 Min. Lesezeit</div>
+
+<FechaArticulo ruta="/blog/por-que-diagnosticar-antes-de-automatizar" />
 
 # Warum Automatisieren ohne vorherige Analyse Ihr Geschäft versenken kann
 
@@ -143,7 +146,8 @@ Und wenn es ans Auswählen geht, beginnen Sie mit dem, was am meisten Zeit freis
         titulo: "Warum Automatisieren ohne vorherige Analyse Ihr Geschäft versenken kann",
         descripcion: "Automatisierung repariert keinen Prozess, sie verstärkt ihn. Die Geschichte der Werkstatt, die ihren Kalender füllte und am Ende Kunden verlor.",
         url: `${marca.dominio}/de/blog/por-que-diagnosticar-antes-de-automatizar`,
-        fecha: "2026-08-05",
+        fecha: fechaPublicacion("/blog/por-que-diagnosticar-antes-de-automatizar"),
+        actualizado: fechaRevision("/blog/por-que-diagnosticar-antes-de-automatizar"),
       }),
       ]),
     ),

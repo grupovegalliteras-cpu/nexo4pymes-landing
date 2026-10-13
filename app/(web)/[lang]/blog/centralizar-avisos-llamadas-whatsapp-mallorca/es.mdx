@@ -1,7 +1,8 @@
 import Link from "@/components/i18n/Enlace";
-import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog , FechaArticulo } from "@/components/blog/Bloques";
 import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
 import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { centralAvisos } from "@/content/inicio";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_AVISOS } from "@/content/blog-faq";
@@ -11,6 +12,8 @@ import { FAQ_AVISOS } from "@/content/blog-faq";
 </nav>
 
 <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Avisos y comunicación · 6 min de lectura</div>
+
+<FechaArticulo ruta="/blog/centralizar-avisos-llamadas-whatsapp-mallorca" />
 
 # Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca
 
@@ -173,7 +176,8 @@ invertir](/blog/por-que-diagnosticar-antes-de-automatizar).
           descripcion:
             "Los cuatro pasos para que ningún aviso dependa de que alguien se acuerde: registrarlo, priorizarlo, asignarlo y conectarlo con el trabajo que viene después.",
           url: `${marca.dominio}/blog/centralizar-avisos-llamadas-whatsapp-mallorca`,
-          fecha: "2026-10-09",
+          fecha: fechaPublicacion("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
+        actualizado: fechaRevision("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
         }),
         esquemaFaq(
           FAQ_AVISOS.es.map(([p, r]) => ({ p, r })),

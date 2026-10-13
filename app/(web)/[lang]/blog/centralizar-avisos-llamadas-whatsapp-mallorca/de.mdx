@@ -1,7 +1,8 @@
 import Link from "@/components/i18n/Enlace";
-import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog , FechaArticulo } from "@/components/blog/Bloques";
 import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
 import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { centralAvisos } from "@/content/de/inicio";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_AVISOS } from "@/content/blog-faq";
@@ -11,6 +12,8 @@ import { FAQ_AVISOS } from "@/content/blog-faq";
 </nav>
 
 <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Auftragsannahme · 6 Min. Lesezeit</div>
+
+<FechaArticulo ruta="/blog/centralizar-avisos-llamadas-whatsapp-mallorca" />
 
 # Anrufe, WhatsApp und Kundenanfragen in einem Betrieb auf Mallorca ordnen
 
@@ -178,7 +181,8 @@ investiert](/blog/por-que-diagnosticar-antes-de-automatizar).
           descripcion:
             "Die vier Schritte, damit keine Anfrage davon abhängt, dass sich jemand erinnert: erfassen, priorisieren, zuweisen und mit der folgenden Arbeit verbinden.",
           url: `${marca.dominio}/de/blog/centralizar-avisos-llamadas-whatsapp-mallorca`,
-          fecha: "2026-10-09",
+          fecha: fechaPublicacion("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
+        actualizado: fechaRevision("/blog/centralizar-avisos-llamadas-whatsapp-mallorca"),
         }),
         esquemaFaq(
           FAQ_AVISOS.de.map(([p, r]) => ({ p, r })),

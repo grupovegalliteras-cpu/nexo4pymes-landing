@@ -1,7 +1,8 @@
 import Link from "@/components/i18n/Enlace";
-import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog , FechaArticulo } from "@/components/blog/Bloques";
 import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
 import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_PRESUPUESTOS } from "@/content/blog-faq";
 
@@ -10,6 +11,8 @@ import { FAQ_PRESUPUESTOS } from "@/content/blog-faq";
 </nav>
 
 <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Quotes · 6 min read</div>
+
+<FechaArticulo ruta="/blog/automatizar-presupuestos-pymes-mallorca" />
 
 # How to stop writing quotes by hand in a small business in Mallorca
 
@@ -152,7 +155,8 @@ order. If the answer is that an off-the-shelf tool will do, we tell you that too
           descripcion:
             "The three ways to automate quotes — template, integration or web configurator — which one fits your pricing rules, and when it is not worth doing.",
           url: `${marca.dominio}/en/blog/automatizar-presupuestos-pymes-mallorca`,
-          fecha: "2026-10-09",
+          fecha: fechaPublicacion("/blog/automatizar-presupuestos-pymes-mallorca"),
+        actualizado: fechaRevision("/blog/automatizar-presupuestos-pymes-mallorca"),
         }),
         esquemaFaq(
           FAQ_PRESUPUESTOS.en.map(([p, r]) => ({ p, r })),

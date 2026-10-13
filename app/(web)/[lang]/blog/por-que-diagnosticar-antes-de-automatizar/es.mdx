@@ -1,7 +1,8 @@
 import Link from "@/components/i18n/Enlace";
-import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog , FechaArticulo } from "@/components/blog/Bloques";
 import { esquemaArticulo, grafoPagina } from "@/lib/esquema";
 import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { waLink } from "@/lib/whatsapp";
 
 <nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/50">
@@ -9,6 +10,8 @@ import { waLink } from "@/lib/whatsapp";
 </nav>
 
 <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Diagnóstico previo · 5 min de lectura</div>
+
+<FechaArticulo ruta="/blog/por-que-diagnosticar-antes-de-automatizar" />
 
 # Por qué automatizar sin diagnosticar antes puede hundiros el negocio
 
@@ -147,7 +150,8 @@ Y cuando toque elegir, empezad por lo que más tiempo libera con menos riesgo. L
         descripcion:
           "La automatización no arregla un proceso, lo amplifica. El caso del taller que se llenó la agenda y acabó perdiendo clientes.",
         url: `${marca.dominio}/blog/por-que-diagnosticar-antes-de-automatizar`,
-        fecha: "2026-08-05",
+        fecha: fechaPublicacion("/blog/por-que-diagnosticar-antes-de-automatizar"),
+        actualizado: fechaRevision("/blog/por-que-diagnosticar-antes-de-automatizar"),
       }),
       ]),
     ),

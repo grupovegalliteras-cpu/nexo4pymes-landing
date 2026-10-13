@@ -3,6 +3,7 @@ import { AlertTriangle, Info } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import { Boton } from "@/components/ui/Boton";
 import { tr } from "@/lib/i18n";
+import { articuloDe, fechaLegible } from "@/content/articulos";
 import { idiomaServidor } from "@/lib/idioma-servidor";
 
 /* Bloques destacados de los artículos. Se importan desde el .mdx. */
@@ -106,5 +107,38 @@ export function VolverAlBlog() {
       </span>
       {tr(idiomaServidor(), { es: "Volver al blog", en: "Back to the blog", de: "Zurück zum Blog" })}
     </Link>
+  );
+}
+
+/* ============================================================
+   LA FECHA DEL ARTICULO
+
+   POR QUE EXISTE. Los articulos no mostraban fecha. Para el lector,
+   un texto sin fecha sobre normativa fiscal no se sabe si vale; para
+   el buscador, sin una fecha declarada se la inventa a partir del
+   rastreo, y entonces cada despliegue rejuvenecia todos los
+   articulos a la vez. Esta linea y el dateModified del esquema salen
+   los dos de content/articulos.ts, asi que no pueden contradecirse.
+
+   Solo dice actualizado si el contenido se reviso de verdad. Un
+   cambio de CSS no es una actualizacion y fingir que si lo es se paga
+   cuando Google lo comprueba.
+   ============================================================ */
+export function FechaArticulo({ ruta }: { ruta: string }) {
+  const lang = idiomaServidor();
+  const a = articuloDe(ruta);
+  if (!a) return null;
+  const rev = a.actualizado && a.actualizado !== a.publicado;
+  return (
+    <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-white/45">
+      <time dateTime={a.publicado}>{fechaLegible(a.publicado, lang)}</time>
+      {rev ? (
+        <>
+          {' · '}
+          {tr(lang, { es: 'revisado el', en: 'reviewed on', de: 'überprüft am' })}{' '}
+          <time dateTime={a.actualizado}>{fechaLegible(a.actualizado!, lang)}</time>
+        </>
+      ) : null}
+    </p>
   );
 }

@@ -1,7 +1,8 @@
 import Link from "@/components/i18n/Enlace";
-import { Destacado, Nota, Senales, CtaPost, VolverAlBlog } from "@/components/blog/Bloques";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog , FechaArticulo } from "@/components/blog/Bloques";
 import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
 import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_PRESUPUESTOS } from "@/content/blog-faq";
 
@@ -10,6 +11,8 @@ import { FAQ_PRESUPUESTOS } from "@/content/blog-faq";
 </nav>
 
 <div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mint">Angebote · 6 Min. Lesezeit</div>
+
+<FechaArticulo ruta="/blog/automatizar-presupuestos-pymes-mallorca" />
 
 # Wie Sie in einem kleinen Betrieb auf Mallorca aufhören, Angebote von Hand zu schreiben
 
@@ -156,7 +159,8 @@ wir Ihnen auch das.
           descripcion:
             "Die drei Wege, Angebote zu automatisieren — Vorlage, Anbindung oder Web-Konfigurator —, welcher zu Ihren Preisregeln passt und wann es sich nicht lohnt.",
           url: `${marca.dominio}/de/blog/automatizar-presupuestos-pymes-mallorca`,
-          fecha: "2026-10-09",
+          fecha: fechaPublicacion("/blog/automatizar-presupuestos-pymes-mallorca"),
+        actualizado: fechaRevision("/blog/automatizar-presupuestos-pymes-mallorca"),
         }),
         esquemaFaq(
           FAQ_PRESUPUESTOS.de.map(([p, r]) => ({ p, r })),

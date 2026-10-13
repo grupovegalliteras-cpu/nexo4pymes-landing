@@ -3,7 +3,7 @@
 import Link from "@/components/i18n/Enlace";
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, MessageCircle, PlayCircle, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { CONTACTO, whatsappLink } from "@/data/site";
 import { Logo } from "./logo";
@@ -108,12 +108,71 @@ export function SiteNav({
   const t = T[lang];
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  /* Si el menu se cierra porque el usuario ha pulsado un enlace, NO
+     hay que devolver la posicion anterior: estorbaria al salto al
+     ancla (/#sectores) o al cambio de pagina. */
+  const navegando = useRef(false);
   useEffect(() => {
     const f = () => setScrolled(window.scrollY > 24);
     f();
     window.addEventListener("scroll", f, { passive: true });
     return () => window.removeEventListener("scroll", f);
   }, []);
+
+  /* ============================================================
+     EL MENU ABIERTO BLOQUEA EL DESPLAZAMIENTO DE DETRAS
+
+     EL FALLO QUE ARREGLA. El panel es `fixed inset-0`, asi que tapa
+     la pantalla, pero el documento de debajo seguia desplazandose.
+     En un movil eso significa que deslizas el dedo sobre el menu,
+     se mueve la pagina de atras, y al cerrar apareces en un sitio
+     distinto del que estabas. Medido: con el menu abierto la pagina
+     se iba 600 px.
+
+     POR QUE `position: fixed` Y NO `overflow: hidden`. En iOS Safari
+     el overflow del body no frena el desplazamiento; lo unico que lo
+     para de verdad es sacar el documento del flujo. Hay que guardar
+     la posicion antes y devolverla al cerrar, porque al fijar el body
+     el navegador la pierde y se vuelve arriba del todo.
+
+     `scrollRestoration` en manual evita que, ademas, el navegador
+     intente recolocar por su cuenta durante ese salto.
+     ============================================================ */
+  useEffect(() => {
+    if (!open) return;
+    const y = window.scrollY;
+    const body = document.body;
+    const previo = {
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+      overflow: body.style.overflow,
+    };
+    body.style.position = "fixed";
+    body.style.top = `-${y}px`;
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+    return () => {
+      body.style.position = previo.position;
+      body.style.top = previo.top;
+      body.style.width = previo.width;
+      body.style.overflow = previo.overflow;
+      /* instant: devolver la posicion no es un desplazamiento que el
+         usuario haya pedido, y animarlo se ve como un tiron. */
+      if (navegando.current) navegando.current = false;
+      else window.scrollTo({ top: y, behavior: "instant" as ScrollBehavior });
+    };
+  }, [open]);
+
+  /* Cerrar con Escape. Cuesta tres lineas y es lo que espera
+     cualquiera que navegue con teclado. */
+  useEffect(() => {
+    if (!open) return;
+    const f = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", f);
+    return () => window.removeEventListener("keydown", f);
+  }, [open]);
+
   const onDark = dark && !scrolled;
   return (
     <header className={cn("fixed inset-x-0 top-0 z-50 transition-[background,box-shadow,border-color] duration-300", scrolled ? "border-b border-line bg-bg/85 backdrop-blur-xl" : "border-b border-transparent")}>
@@ -159,24 +218,59 @@ export function SiteNav({
           </button>
         </div>
       </div>
+      /* ============================================================
+         `pointerEvents` ANIMADO: NO ES ADORNO, ES EL ARREGLO
+
+         EL FALLO. Al pulsar un enlace del menu, la animacion de
+         salida se quedaba a medias: el panel seguia en el DOM con
+         opacidad 0, 812 px de alto y pointer-events auto. Medido
+         siete segundos despues y ahi seguia. Invisible, pero
+         ocupando la pantalla entera: un toque en el centro
+         aterrizaba en un enlace del menu que no se veia. La web
+         quedaba muerta al tacto hasta recargar.
+
+         POR QUE ASI. Animar tambien pointerEvents hace que, pase
+         lo que pase con la animacion, un panel que no esta
+         "abierto" no pueda recibir un toque. Aunque se quede
+         clavado otra vez por cualquier motivo, ya no estorba.
+         ============================================================ */
       <AnimatePresence>
         {open && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex flex-col bg-bg p-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:hidden">
+          <motion.div
+            initial={{ opacity: 0, pointerEvents: "none" }}
+            animate={{ opacity: 1, pointerEvents: "auto" }}
+            exit={{ opacity: 0, pointerEvents: "none" }}
+            className="fixed inset-0 z-50 flex flex-col bg-bg p-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:hidden"
+          >
             <div className="flex items-center justify-between">
               <Logo className="h-7" />
+              {/* Cerrar NO es navegar: aqui si hay que devolver al
+                  usuario a donde estaba leyendo. */}
               <button onClick={() => setOpen(false)} className="grid size-9 place-items-center" aria-label={t.cerrarMenu}>
                 <X className="size-5" />
               </button>
             </div>
             <nav className="mt-6 grid min-h-0 flex-1 content-start gap-0.5 overflow-y-auto">
+              {/* Estos iban con <a> crudo, que fuerza una navegacion del
+                  navegador y corta en seco la animacion de salida del
+                  panel: de ahi que se quedara clavado. Con Link la
+                  navegacion es de cliente y React desmonta el panel
+                  como toca. Los externos siguen con <a>, que es lo
+                  correcto para salir del sitio. */}
               {enlaces
-                ? [...enlaces, [t.abrirDemo, demo ?? "/demo"] as const].map(([l, h]) => (
-                    <a key={h} href={h} onClick={() => setOpen(false)} className="rounded-xl px-3 py-2.5 font-display text-[22px] font-semibold">
-                      {l}
-                    </a>
-                  ))
+                ? [...enlaces, [t.abrirDemo, demo ?? "/demo"] as const].map(([l, h]) =>
+                    h.startsWith("/") ? (
+                      <Link key={h} href={h} onClick={() => { navegando.current = true; setOpen(false); }} className="rounded-xl px-3 py-2.5 font-display text-[22px] font-semibold">
+                        {l}
+                      </Link>
+                    ) : (
+                      <a key={h} href={h} onClick={() => { navegando.current = true; setOpen(false); }} className="rounded-xl px-3 py-2.5 font-display text-[22px] font-semibold">
+                        {l}
+                      </a>
+                    ),
+                  )
                 : [...t.links, [t.abrirDemo, "/demo"] as const].map(([l, h]) => (
-                    <Link key={h} href={h} onClick={() => setOpen(false)} className="rounded-xl px-3 py-2.5 font-display text-[22px] font-semibold">
+                    <Link key={h} href={h} onClick={() => { navegando.current = true; setOpen(false); }} className="rounded-xl px-3 py-2.5 font-display text-[22px] font-semibold">
                       {l}
                     </Link>
                   ))}

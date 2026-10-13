@@ -6,6 +6,7 @@ import { ExternalLink, Monitor, PlayCircle, RotateCcw, Smartphone } from "lucide
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PanelShell } from "@/components/panel/shell";
 import { AppShell, PhoneFrame } from "@/components/app/shell";
+import { MODULO_POR_ID } from "@/data/modules";
 import type { SectorId } from "@/data/sectors";
 import { sectoresDe } from "@/data/sectors-i18n";
 import { useIdioma } from "@/components/i18n/idioma";
@@ -90,8 +91,28 @@ export function DemoPage() {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  /* ============================================================
+     ABRIR LA DEMO YA PUESTA EN UN MÓDULO: /demo?modulo=facturacion
+
+     Para qué. Cada landing de módulo tiene un botón «Ver la demo», y
+     lo que tiene que enseñar es ESE módulo. Sin esto, la demo abría
+     siempre por Dirección y el visitante que venía de la página de
+     facturación tenía que buscarse la vida por el menú lateral —que
+     en el móvil ni se ve— hasta encontrar lo que acababa de leer.
+     La mitad se iba antes.
+
+     Se comprueba contra MODULO_POR_ID a propósito: el parámetro llega
+     de la barra de direcciones y cualquiera puede escribir lo que
+     quiera. Si no es un módulo que existe, se abre por Dirección como
+     siempre, sin error y sin pantalla en blanco.
+
+     NO LLEVA ?tour=1. El recorrido guiado se mueve solo por las
+     pantallas, así que empezaría por apartar al visitante justo de lo
+     que ha venido a ver. Para el recorrido está el botón de la
+     portada y el de la propia demo. */
   useEffect(() => {
-    useUi.getState().setPanelSection("direccion");
+    const m = new URLSearchParams(window.location.search).get("modulo");
+    useUi.getState().setPanelSection(m && MODULO_POR_ID[m] ? m : "direccion");
     useUi.getState().appReset({ screen: "hoy" });
   }, []);
 

@@ -12,12 +12,13 @@ import { useUi } from "@/store/ui";
 import { cn } from "@/lib/utils";
 import { useIdioma } from "@/components/i18n/idioma";
 import { Icon } from "@/components/icon";
+import { landingDelModulo } from "@/content/landings-seo-i18n";
 import { ContactDock, SiteFooter, SiteNav } from "./chrome";
 
 const TX = {
-  es: { h1: "Todos los módulos", p: "Todo lo que podemos montar para vuestra empresa. Empezáis por un módulo y vais sumando. Cada uno se puede probar en la demo.", buscar: "Buscad: fichaje, factura, WhatsApp…", aria: "Buscar módulo", disponible: "Disponible", aMedida: "A medida", pensado: "Pensado para", ver: "Verlo en la demo", nada: (q: string) => `No hay módulos que coincidan con «${q}».` },
-  en: { h1: "All modules", p: "Everything we can build for your company. Start with one module and add more as you go. Each one can be tried in the demo.", buscar: "Search: time clock, invoice, WhatsApp…", aria: "Search modules", disponible: "Available", aMedida: "Custom", pensado: "Designed for", ver: "See it in the demo", nada: (q: string) => `No modules match "${q}".` },
-  de: { h1: "Alle Module", p: "Alles, was wir für Ihre Firma aufbauen können. Sie beginnen mit einem Modul und ergänzen nach und nach. Jedes lässt sich in der Demo ausprobieren.", buscar: "Suche: Zeiterfassung, Rechnung, WhatsApp…", aria: "Module durchsuchen", disponible: "Verfügbar", aMedida: "Individuell", pensado: "Gedacht für", ver: "In der Demo ansehen", nada: (q: string) => `Keine Module passen zu „${q}“.` },
+  es: { h1: "Todos los módulos", p: "Todo lo que podemos montar para vuestra empresa. Empezáis por un módulo y vais sumando. Cada uno se puede probar en la demo.", buscar: "Buscad: fichaje, factura, WhatsApp…", aria: "Buscar módulo", disponible: "Disponible", aMedida: "A medida", pensado: "Pensado para", ver: "Verlo en la demo", verPagina: "Ver la página", nada: (q: string) => `No hay módulos que coincidan con «${q}».` },
+  en: { h1: "All modules", p: "Everything we can build for your company. Start with one module and add more as you go. Each one can be tried in the demo.", buscar: "Search: time clock, invoice, WhatsApp…", aria: "Search modules", disponible: "Available", aMedida: "Custom", pensado: "Designed for", ver: "See it in the demo", verPagina: "See the page", nada: (q: string) => `No modules match "${q}".` },
+  de: { h1: "Alle Module", p: "Alles, was wir für Ihre Firma aufbauen können. Sie beginnen mit einem Modul und ergänzen nach und nach. Jedes lässt sich in der Demo ausprobieren.", buscar: "Suche: Zeiterfassung, Rechnung, WhatsApp…", aria: "Module durchsuchen", disponible: "Verfügbar", aMedida: "Individuell", pensado: "Gedacht für", ver: "In der Demo ansehen", verPagina: "Zur Seite", nada: (q: string) => `Keine Module passen zu „${q}“.` },
 };
 
 const norm = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -52,9 +53,20 @@ export function Servicios() {
                   <span className="text-[14px] text-fg-3">{grupos[g].lema}</span>
                 </div>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  {mods.map((m, i) => (
+                  {mods.map((m, i) => {
+                    /* SI EL MÓDULO TIENE PÁGINA PROPIA, LA TARJETA LLEVA ALLÍ.
+                       Antes todas saltaban a la demo. La demo no se indexa
+                       (es noindex a propósito: cien pantallas que no
+                       contestan a ninguna búsqueda), así que una rejilla de
+                       cuarenta tarjetas que apuntan todas a la demo era
+                       cuarenta enlaces que no llevaban a ninguna página que
+                       pudiera posicionar. Los que sí tienen página van a
+                       ella, y desde ella se entra a la demo por el módulo
+                       correcto. */
+                    const landing = landingDelModulo(m.id);
+                    return (
                     <motion.div key={m.id} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 3) * 0.05 }}>
-                      <Link href={`/panel/${m.id}`} className={cn("group flex h-full flex-col rounded-2xl border bg-surface p-5 transition hover:-translate-y-0.5 hover:shadow-e2", m.destacado ? "border-brand/30" : "border-line")}>
+                      <Link href={landing ? `/modulos/${landing}` : `/panel/${m.id}`} className={cn("group flex h-full flex-col rounded-2xl border bg-surface p-5 transition hover:-translate-y-0.5 hover:shadow-e2", m.destacado ? "border-brand/30" : "border-line")}>
                         <div className="flex items-center justify-between">
                           <span className={cn("grid size-10 place-items-center rounded-xl", m.id === "central-avisos" ? "bg-sun text-[#1d1300]" : "bg-brand-soft text-brand")}>
                             <Icon name={m.icono} className="size-5" />
@@ -68,10 +80,11 @@ export function Servicios() {
                             {tx.pensado}: {(m.sectores as SectorId[]).map((s) => sectorDe(lang, s)?.nombre.toLowerCase()).join(", ")}
                           </div>
                         )}
-                        <div className="mt-4 text-[13px] font-medium text-brand">{tx.ver}</div>
+                        <div className="mt-4 text-[13px] font-medium text-brand">{landing ? tx.verPagina : tx.ver}</div>
                       </Link>
                     </motion.div>
-                  ))}
+                    );
+                  })}
                 </div>
               </section>
             );

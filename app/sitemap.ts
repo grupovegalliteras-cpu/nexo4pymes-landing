@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { marca } from "@/content/marca";
 import { SECTORES } from "@/data/sectors";
 import { ARTICULOS, fechaSitemap } from "@/content/articulos";
+import { LANDINGS_PUBLICADAS } from "@/content/landings-seo-i18n";
 import { IDIOMAS, conIdioma } from "@/lib/i18n";
 
 /* Sitemap de la web en sus tres idiomas. Cada página sale en español, inglés y
@@ -26,7 +27,18 @@ const PAGINAS: { ruta: string; prioridad: number; frecuencia: "monthly" | "yearl
   { ruta: "/contacto", prioridad: 0.8, frecuencia: "yearly", fecha: "2026-10-02" },
   { ruta: "/nosotros", prioridad: 0.7, frecuencia: "yearly", fecha: "2026-10-02" },
   ...SECTORES.map((s) => ({ ruta: `/sectores/${s.id}`, prioridad: 0.7, frecuencia: "monthly" as const, fecha: "2026-10-08" })),
-  { ruta: "/modulos", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-02" },
+  { ruta: "/modulos", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-14" },
+  /* LAS LANDINGS DE MÓDULO. Salen de la lista de publicadas, no de una
+     lista escrita aquí: una landing cuenta como publicada cuando está
+     escrita en los tres idiomas (ver content/landings-seo-i18n.ts), y
+     hasta entonces no tiene por qué estar en el sitemap.
+
+     Prioridad 0.8, por encima de /modulos y de los artículos: son las
+     páginas que van a por las consultas con demanda medida
+     (facturación VeriFactu, control horario, partes de trabajo), y
+     eso es exactamente lo que esta web necesita que Google rastree
+     primero. */
+  ...LANDINGS_PUBLICADAS.map((slug) => ({ ruta: `/modulos/${slug}`, prioridad: 0.8, frecuencia: "monthly" as const, fecha: "2026-10-14" })),
   { ruta: "/blog", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-09" },
   /* Los articulos ya no llevan la fecha escrita aqui: sale de
      content/articulos.ts, que es donde esta la de publicacion y la de

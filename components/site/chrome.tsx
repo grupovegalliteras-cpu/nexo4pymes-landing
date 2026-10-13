@@ -27,7 +27,12 @@ const T = {
     pie: "Paneles de gestión y apps para empresas de servicios, con automatización e inteligencia artificial. Desde",
     columnas: [
       ["Demo", [["Modo presentación", "/demo"], ["Panel de oficina", "/panel"], ["App de operarios", "/app"], ["Ver recorrido guiado", "/demo?tour=1"]]],
-      ["Producto", [["Central Avisos", "/panel/central-avisos"], ["Todos los módulos", "/modulos"], ["Facturación con VeriFactu", "/panel/facturacion"], ["Fichaje", "/panel/fichaje"]]],
+      /* EL PIE APUNTA A LAS PÁGINAS, NO A LA DEMO. Estos enlaces iban a
+         /panel/…, que es la demo y es noindex: el pie del sitio entero
+         —la plantilla que se repite en todas las páginas— gastaba sus
+         enlaces en direcciones que Google no indexa. Ahora llevan a las
+         landings, que es donde hay texto que posicionar. */
+      ["Producto", [["Central Avisos", "/panel/central-avisos"], ["Todos los módulos", "/modulos"], ["Facturación con VeriFactu", "/modulos/facturacion-verifactu"], ["Control horario y fichaje", "/modulos/control-horario"], ["Partes de trabajo", "/modulos/partes-de-trabajo"]]],
       ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"], ["Jardinería", "/sectores/jardineria"], ["Control de plagas", "/sectores/plagas"], ["Instalaciones solares", "/sectores/solar"], ["Reformas", "/sectores/reformas"], ["Clubes de pádel", "/padel"]]],
       ["Empresa", [["Servicios", "/servicios"], ["Nosotros", "/nosotros"], ["Blog", "/blog"], ["Contacto", "/contacto"]]],
     ],
@@ -48,7 +53,7 @@ const T = {
     pie: "Management dashboards and apps for service companies, with automation and artificial intelligence. From",
     columnas: [
       ["Demo", [["Presentation mode", "/demo"], ["Office dashboard", "/panel"], ["Technician app", "/app"], ["Guided tour", "/demo?tour=1"]]],
-      ["Product", [["Central Avisos", "/panel/central-avisos"], ["All modules", "/modulos"], ["Invoicing with VeriFactu", "/panel/facturacion"], ["Time clock", "/panel/fichaje"]]],
+      ["Product", [["Central Avisos", "/panel/central-avisos"], ["All modules", "/modulos"], ["Invoicing with VeriFactu", "/modulos/facturacion-verifactu"], ["Time clock", "/modulos/control-horario"], ["Job reports", "/modulos/partes-de-trabajo"]]],
       ["Industries", [["Building maintenance", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["HVAC", "/sectores/climatizacion"], ["Cleaning", "/sectores/limpieza"], ["Landscaping", "/sectores/jardineria"], ["Pest control", "/sectores/plagas"], ["Solar", "/sectores/solar"], ["Renovations", "/sectores/reformas"]]],
       ["Company", [["Services", "/servicios"], ["About us", "/nosotros"], ["Blog", "/blog"], ["Contact", "/contacto"]]],
     ],
@@ -69,7 +74,7 @@ const T = {
     pie: "Management-Dashboards und Apps für Dienstleistungsunternehmen, mit Automatisierung und künstlicher Intelligenz. Aus",
     columnas: [
       ["Demo", [["Präsentationsmodus", "/demo"], ["Büro-Dashboard", "/panel"], ["Techniker-App", "/app"], ["Geführte Tour", "/demo?tour=1"]]],
-      ["Produkt", [["Central Avisos", "/panel/central-avisos"], ["Alle Module", "/modulos"], ["Rechnungen mit VeriFactu", "/panel/facturacion"], ["Zeiterfassung", "/panel/fichaje"]]],
+      ["Produkt", [["Central Avisos", "/panel/central-avisos"], ["Alle Module", "/modulos"], ["Rechnungen mit VeriFactu", "/modulos/facturacion-verifactu"], ["Zeiterfassung", "/modulos/control-horario"], ["Arbeitsberichte", "/modulos/partes-de-trabajo"]]],
       ["Branchen", [["Gebäudetechnik", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["Klimatechnik", "/sectores/climatizacion"], ["Reinigung", "/sectores/limpieza"], ["Garten", "/sectores/jardineria"], ["Schädlingsbekämpfung", "/sectores/plagas"], ["Solaranlagen", "/sectores/solar"], ["Renovierungen", "/sectores/reformas"]]],
       ["Unternehmen", [["Leistungen", "/servicios"], ["Über uns", "/nosotros"], ["Blog", "/blog"], ["Kontakt", "/contacto"]]],
     ],

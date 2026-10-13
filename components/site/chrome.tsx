@@ -218,7 +218,7 @@ export function SiteNav({
           </button>
         </div>
       </div>
-      /* ============================================================
+      {/* ============================================================
          `pointerEvents` ANIMADO: NO ES ADORNO, ES EL ARREGLO
 
          EL FALLO. Al pulsar un enlace del menu, la animacion de
@@ -233,7 +233,7 @@ export function SiteNav({
          lo que pase con la animacion, un panel que no esta
          "abierto" no pueda recibir un toque. Aunque se quede
          clavado otra vez por cualquier motivo, ya no estorba.
-         ============================================================ */
+         ============================================================ */}
       <AnimatePresence>
         {open && (
           <motion.div

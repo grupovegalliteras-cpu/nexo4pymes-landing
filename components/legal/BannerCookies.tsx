@@ -190,18 +190,18 @@ export function BannerCookies() {
           animate={{ opacity: 1, y: 0 }}
           exit={reducido ? { opacity: 0 } : { opacity: 0, y: 28 }}
           transition={{ duration: reducido ? 0.001 : 0.4, ease: SALIDA }}
-          className="blur-si fixed inset-x-0 bottom-0 z-80 border-t border-white/12 bg-bottle-900/95
-                     px-4 pb-[calc(env(safe-area-inset-bottom)+14px)] pt-4 backdrop-blur-2xl
-                     shadow-[0_-20px_60px_rgba(0,0,0,.6)] sm:px-6 sm:pb-5 sm:pt-5"
+          className="blur-si fixed inset-x-0 bottom-0 z-80 border-t border-line bg-surface
+                     px-4 pb-[calc(env(safe-area-inset-bottom)+14px)] pt-4
+                     shadow-e2 sm:px-6 sm:pb-5 sm:pt-5"
         >
           <div className="mx-auto flex max-w-[1180px] flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
             <div className="lg:flex-1">
-              <h2 id="titulo-cookies" className="font-titular text-[16px] font-semibold text-white sm:text-[17px]">
+              <h2 id="titulo-cookies" className="font-display text-[16px] font-semibold text-fg sm:text-[17px]">
                 {tx.titulo}
               </h2>
-              <p className="mt-1.5 max-w-[70ch] text-[13.5px] leading-relaxed text-white/60 sm:text-[14px]">
+              <p className="mt-1.5 max-w-[70ch] text-[13.5px] leading-relaxed text-fg-2 sm:text-[14px]">
                 {tx.texto}{" "}
-                <Link href="/legal#cookies" className="text-azul underline underline-offset-4">
+                <Link href="/legal#cookies" className="text-brand underline underline-offset-4">
                   {tx.politica}
                 </Link>
                 .
@@ -214,9 +214,9 @@ export function BannerCookies() {
               <button
                 type="button"
                 onClick={() => decidir(TODO_RECHAZADO)}
-                className="min-h-[44px] rounded-full border border-white/20 bg-white/[.06] px-5 py-2.5
-                           text-[14px] font-medium text-white transition-colors duration-200
-                           hover:border-white/35 hover:bg-white/[.12]"
+                className="min-h-[44px] rounded-xl border border-line bg-surface-2 px-5 py-2.5
+                           text-[14px] font-medium text-fg transition-colors duration-200
+                           hover:border-line-strong hover:bg-surface-2"
               >
                 {tx.rechazar}
               </button>
@@ -224,8 +224,8 @@ export function BannerCookies() {
               <button
                 type="button"
                 onClick={() => decidir(TODO_ACEPTADO)}
-                className="min-h-[44px] rounded-full bg-gradient-to-br from-azul to-violeta px-5 py-2.5
-                           text-[14px] font-medium text-white shadow-[0_10px_30px_-12px_rgba(76,125,255,.75)]
+                className="min-h-[44px] rounded-xl bg-brand px-5 py-2.5
+                           text-[14px] font-semibold text-brand-ink shadow-e2
                            transition-transform duration-200 hover:-translate-y-0.5"
               >
                 {tx.aceptar}
@@ -237,8 +237,8 @@ export function BannerCookies() {
                   devolverFocoA.current = document.activeElement;
                   setVista("preferencias");
                 }}
-                className="min-h-[44px] rounded-full px-5 py-2.5 text-[14px] text-white/65
-                           underline-offset-4 transition-colors duration-200 hover:text-white hover:underline"
+                className="min-h-[44px] rounded-full px-5 py-2.5 text-[14px] text-fg-2
+                           underline-offset-4 transition-colors duration-200 hover:text-fg hover:underline"
               >
                 {tx.configurar}
               </button>
@@ -261,7 +261,7 @@ export function BannerCookies() {
             type="button"
             aria-label={tx.cerrarSin}
             onClick={cerrar}
-            className="absolute inset-0 bg-bottle-900/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-surface"
           />
 
           <motion.div
@@ -274,19 +274,19 @@ export function BannerCookies() {
             exit={reducido ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: reducido ? 0.001 : 0.32, ease: SALIDA }}
             className="relative max-h-[88vh] w-full max-w-[640px] overflow-y-auto rounded-t-panel
-                       border border-white/12 bg-bottle-800 p-5 shadow-[0_40px_120px_rgba(0,0,0,.7)]
+                       border border-line bg-surface-2 p-5 shadow-e2
                        sm:rounded-panel sm:p-8"
           >
             <div className="flex items-start justify-between gap-4">
-              <h2 id="titulo-preferencias" className="font-titular text-[21px] font-semibold text-white sm:text-[24px]">
+              <h2 id="titulo-preferencias" className="font-display text-[21px] font-semibold text-fg sm:text-[24px]">
                 {tx.preferencias}
               </h2>
               <button
                 type="button"
                 onClick={cerrar}
                 aria-label={tx.cerrar}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/12
-                           text-white/60 transition-colors hover:border-white/30 hover:text-white"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line
+                           text-fg-2 transition-colors hover:border-line hover:text-fg"
               >
                 <span aria-hidden="true" className="text-[18px]">
                   ✕
@@ -294,7 +294,7 @@ export function BannerCookies() {
               </button>
             </div>
 
-            <p className="mt-3 text-[14px] leading-relaxed text-white/60">
+            <p className="mt-3 text-[14px] leading-relaxed text-fg-2">
               {tx.elegid}
             </p>
 
@@ -329,8 +329,8 @@ export function BannerCookies() {
               <button
                 type="button"
                 onClick={() => decidir({ necesarias: true, analitica, marketing })}
-                className="min-h-[44px] flex-1 rounded-full bg-gradient-to-br from-azul to-violeta px-5 py-3
-                           text-[14.5px] font-medium text-white shadow-[0_10px_30px_-12px_rgba(76,125,255,.75)]
+                className="min-h-[44px] flex-1 rounded-xl bg-brand px-5 py-3
+                           text-[14.5px] font-semibold text-brand-ink shadow-e2
                            transition-transform duration-200 hover:-translate-y-0.5"
               >
                 {tx.guardar}
@@ -339,9 +339,9 @@ export function BannerCookies() {
               <button
                 type="button"
                 onClick={() => decidir(TODO_RECHAZADO)}
-                className="min-h-[44px] flex-1 rounded-full border border-white/20 bg-white/[.06] px-5 py-3
-                           text-[14.5px] font-medium text-white transition-colors duration-200
-                           hover:border-white/35 hover:bg-white/[.12]"
+                className="min-h-[44px] flex-1 rounded-xl border border-line bg-surface-2 px-5 py-3
+                           text-[14.5px] font-medium text-fg transition-colors duration-200
+                           hover:border-line-strong hover:bg-surface-2"
               >
                 {tx.rechazar}
               </button>
@@ -349,17 +349,17 @@ export function BannerCookies() {
               <button
                 type="button"
                 onClick={() => decidir(TODO_ACEPTADO)}
-                className="min-h-[44px] flex-1 rounded-full border border-white/20 bg-white/[.06] px-5 py-3
-                           text-[14.5px] font-medium text-white transition-colors duration-200
-                           hover:border-white/35 hover:bg-white/[.12]"
+                className="min-h-[44px] flex-1 rounded-xl border border-line bg-surface-2 px-5 py-3
+                           text-[14.5px] font-medium text-fg transition-colors duration-200
+                           hover:border-line-strong hover:bg-surface-2"
               >
                 {tx.aceptar}
               </button>
             </div>
 
-            <p className="mt-4 text-center text-[12.5px] text-white/40">
+            <p className="mt-4 text-center text-[12.5px] text-fg-3">
               Más detalle en la{" "}
-              <Link href="/legal#cookies" className="text-azul underline underline-offset-4" onClick={cerrar}>
+              <Link href="/legal#cookies" className="text-brand underline underline-offset-4" onClick={cerrar}>
                 política de cookies
               </Link>
               .
@@ -394,7 +394,7 @@ function Categoria({
   alCambiar?: (valor: boolean) => void;
 }) {
   return (
-    <div className="rounded-tarjeta border border-white/10 bg-white/[.03] p-4">
+    <div className="rounded-tarjeta border border-line bg-surface-2 p-4">
       <label className={`flex items-start gap-3 ${bloqueada ? "" : "cursor-pointer"}`}>
         <span className="relative mt-0.5 inline-flex shrink-0">
           <input
@@ -408,7 +408,7 @@ function Categoria({
           <span
             aria-hidden="true"
             className={`block h-6 w-11 rounded-full transition-colors duration-300 ${
-              activa ? "bg-gradient-to-r from-azul to-violeta" : "bg-white/15"
+              activa ? "bg-brand" : "bg-surface-3"
             } ${bloqueada ? "opacity-55" : ""} peer-focus-visible:outline peer-focus-visible:outline-2
               peer-focus-visible:outline-offset-2 peer-focus-visible:outline-azul`}
           />
@@ -422,15 +422,15 @@ function Categoria({
 
         <span className="min-w-0">
           <span className="flex flex-wrap items-center gap-2">
-            <span className="text-[15px] font-medium text-white">{titulo}</span>
+            <span className="text-[15px] font-medium text-fg">{titulo}</span>
             {bloqueada && (
-              <span className="rounded-full border border-white/15 bg-white/[.05] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.08em] text-white/50">
+              <span className="rounded-full border border-line bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.08em] text-fg-3">
                 {siempre}
               </span>
             )}
           </span>
-          <span className="mt-1.5 block text-[13.5px] leading-relaxed text-white/60">{descripcion}</span>
-          <span className="mt-2 block font-mono text-[11.5px] leading-relaxed text-white/35">{detalle}</span>
+          <span className="mt-1.5 block text-[13.5px] leading-relaxed text-fg-2">{descripcion}</span>
+          <span className="mt-2 block font-mono text-[11.5px] leading-relaxed text-fg-3">{detalle}</span>
         </span>
       </label>
     </div>

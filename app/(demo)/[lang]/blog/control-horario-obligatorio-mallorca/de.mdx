@@ -1,0 +1,165 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_CONTROL_HORARIO } from "@/content/blog-faq";
+
+<nav aria-label="Brotkrumennavigation" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Start</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Zeiterfassung
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Zeiterfassung · 6 Min. Lesezeit</div>
+
+<FechaArticulo ruta="/blog/control-horario-obligatorio-mallorca" />
+
+# Arbeitszeiterfassung in Spanien: Was wirklich Pflicht ist, und was man Ihnen verkauft
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Die Erfassung der Arbeitszeit ist seit 2019 Pflicht, und viele Betriebe wissen es bis heute nicht.
+  Sie digital zu führen ist **keine** Pflicht, und viele glauben es, weil es ihnen jemand gesagt
+  hat, der etwas verkaufen wollte. Hier steht der Unterschied, und was sich wirklich ändert, wenn
+  das Team draußen arbeitet.
+</div>
+
+## Was seit 2019 gilt
+
+Artikel 34.9 des Arbeitnehmerstatuts in der Fassung des Königlichen Gesetzesdekrets 8/2019
+verpflichtet jedes Unternehmen, **täglich den Arbeitstag** jeder beschäftigten Person mit Beginn
+und Ende zu erfassen. In Kraft seit dem 12. Mai 2019.
+
+Es gibt keine Schwelle bei der Beschäftigtenzahl. Ein Betrieb mit drei Personen ist genauso
+gebunden wie einer mit dreihundert. Auch die Branche spielt keine Rolle, ebenso wenig, ob im Büro
+oder von Einsatz zu Einsatz gearbeitet wird.
+
+Die Aufzeichnungen sind **vier Jahre aufzubewahren** und den Beschäftigten, ihren gesetzlichen
+Vertretungen und der Arbeitsinspektion zur Verfügung zu halten.
+
+## Was NICHT Pflicht ist, so oft man es auch hört
+
+Hier lohnt sich Vorsicht, denn damit wird viel verkauft.
+
+**Das Gesetz verlangt kein digitales Stempeln.** Es verlangt die Erfassung und schreibt kein Mittel
+vor. Eine unterschriebene Papieraufzeichnung, die das Verlangte enthält und vier Jahre aufbewahrt
+wird, ist heute zulässig.
+
+Eine Verordnung, die die Erfassung digital und aus der Ferne abrufbar machen soll, wurde tatsächlich
+entworfen. Sie erhielt ein **ablehnendes Gutachten des Staatsrats** und ist nicht im Gesetzblatt
+veröffentlicht.
+
+<Destacado titulo="So erkennen Sie das Verkaufsargument">
+  Wenn Ihnen jemand sagt, Stempeln per App sei „schon Pflicht" oder ohne digitales System drohe ein
+  Bußgeld, dann gibt er als Gesetz aus, was keines ist.
+
+  Das macht Papier nicht zur guten Idee. Es heißt nur: **Der Grund zu wechseln ist nicht das
+  Bußgeld**, sondern dass Papier nicht leistet, wofür Sie es brauchen. Und das ist ein anderes
+  Gespräch — eines, in dem Sie in Ruhe wählen statt aus Angst zu kaufen.
+</Destacado>
+
+## Warum Papier in einem Dienstleistungsbetrieb zerbricht
+
+In einem Büro mit festen Zeiten funktioniert ein unterschriebener Bogen passabel. In einem Wartungs-,
+Reinigungs-, Garten- oder Klimabetrieb auf Mallorca, wo man an einem Ort beginnt und an einem
+anderen aufhört, zerbricht er an mehreren Stellen zugleich.
+
+<Senales items={[
+  { fuerte: "Niemand kommt im Büro vorbei.", texto: "Steht die Uhr im Lager und liegt der erste Einsatz eine halbe Stunde entfernt, ist die notierte Uhrzeit nicht die tatsächliche." },
+  { fuerte: "Ausgefüllt wird freitags, aus dem Gedächtnis.", texto: "Und eine aus dem Gedächtnis rekonstruierte Woche ist keine tägliche Aufzeichnung." },
+  { fuerte: "Überstunden tauchen nie auf.", texto: "Steht auf jedem Bogen 8 bis 17 Uhr, erscheint der Mehraufwand nicht, auch wenn er geleistet wird." },
+  { fuerte: "Niemand weiß, wer gerade arbeitet.", texto: "Das Büro kann einem Kunden nicht sagen, ob jemand unterwegs ist." },
+  { fuerte: "Und dann wird von Hand addiert.", texto: "Für die Lohnabrechnung arbeitet sich jeden Monat jemand durch einen Papierstapel." },
+]}/>
+
+Das eigentliche Problem ist nicht rechtlich: Die Aufzeichnung nützt sonst nichts. Sie ist Papier,
+das vier Jahre liegt, falls die Inspektion kommt, und bis dahin keine einzige Entscheidung stützt.
+
+## Was sich ändert, wenn das Stempeln dort ist, wo die Arbeit ist
+
+Lebt die Zeiterfassung auf dem Handy, das der Techniker ohnehin dabeihat, hört sie auf, Formsache
+zu sein, und beantwortet Fragen, die sich das Büro täglich stellt.
+
+- **Die Uhrzeit stimmt.** Gestempelt wird beim Beginn, vor Ort, nicht aus der Freitagserinnerung.
+- **Das Büro sieht, wer im Dienst ist.** Und kann einem Kunden sagen, dass jemand unterwegs ist,
+  ohne vier Handys anzurufen.
+- **Die Stunden addieren sich selbst.** Für die Lohnabrechnung entfällt der Papierstapel.
+- **Und die Aufzeichnung bleibt erhalten.** Alle vier Jahre, ohne Ordner, den jemand hüten muss.
+
+<Nota>
+  Der Standort darf im Moment des Stempelns erfasst werden, wenn das verhältnismäßig ist und klar
+  darüber informiert wird. Unzulässig ist, die Person den ganzen Arbeitstag über zu verfolgen. Die
+  Grenze verläuft genau zwischen einem einzelnen Punkt und einer dauerhaften Spur, und sie gehört
+  schriftlich in die Information an die Belegschaft, nicht bloß stillschweigend vorausgesetzt.
+</Nota>
+
+## Die Änderung, die es wirklich lohnend macht
+
+Nun der Teil, den fast niemand erwähnt und der eine Zeiterfassung von einer nützlichen
+Zeiterfassung trennt.
+
+Stempelt der Techniker in einer App und notiert die geleistete Arbeit anschließend woanders, haben
+Sie seinem Tag eine Pflicht hinzugefügt. Zwei Anwendungen, zweimal tippen, und das zweite Mal
+gerät schlecht, weil es sieben Uhr abends ist.
+
+Sind Zeiterfassung und <Link href="/modulos/partes-de-trabajo">Arbeitsbericht</Link> dasselbe, dreht
+sich die Rechnung um: Der Techniker öffnet das Handy einmal pro Einsatz, und daraus entstehen die
+Stunden, die geleistete Arbeit, das Material und die Unterschrift des Kunden. Ein Handgriff statt
+drei, und das Büro erfährt alles auf einmal.
+
+## Häufige Fragen
+
+{FAQ_CONTROL_HORARIO.de.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Addieren Sie die Stunden noch aus einem Papierstapel?"
+  boton="Schreiben Sie uns auf WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Sagen Sie uns, wie viele Sie sind, wie Sie die Arbeitszeit heute erfassen und was danach mit
+    diesen Stunden geschieht. Wir sagen Ihnen, ob Sie reine Zeiterfassung brauchen oder
+    Zeiterfassung zusammen mit dem Arbeitsbericht.
+  </p>
+  <p>
+    Wenn das Vorhandene die Vorgaben erfüllt und Ihnen genügt, **sagen wir Ihnen das und verkaufen
+    Ihnen nichts.**
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  Wie das Stempeln per Handy und der Dienstplan im Büro aussehen, sehen Sie auf der{" "}
+  <Link href="/modulos/control-horario">Seite zur Zeiterfassung</Link>, mit der Demo, die direkt bei
+  diesem Modul öffnet.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "de",
+          titulo: "Arbeitszeiterfassung in Spanien: Was wirklich Pflicht ist, und was man Ihnen verkauft",
+          descripcion:
+            "Die Erfassung der Arbeitszeit ist seit 2019 Pflicht, die digitale Führung nicht. Was Artikel 34.9 verlangt, warum Papier im Außendienst zerbricht und was sich mit dem Handy ändert.",
+          url: `${marca.dominio}/de/blog/control-horario-obligatorio-mallorca`,
+          fecha: fechaPublicacion("/blog/control-horario-obligatorio-mallorca"),
+          actualizado: fechaRevision("/blog/control-horario-obligatorio-mallorca"),
+        }),
+        esquemaFaq(
+          FAQ_CONTROL_HORARIO.de.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/de/blog/control-horario-obligatorio-mallorca#faq`,
+          "de",
+        ),
+      ]),
+    ),
+  }}
+/>

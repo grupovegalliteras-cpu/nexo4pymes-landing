@@ -8,6 +8,20 @@ export const blogHome = {
     "We write this from Palma, working with service companies across Mallorca: maintenance, cleaning, pools, HVAC, landscaping, pest control, solar and renovations. The examples come from real cases, the figures are the ones we actually work with, and when the honest answer is \"you don't need software\", we say that too.",
   publicados: [
     {
+      etiqueta: "Job reports · 6 min",
+      titulo: "Job reports on a phone: why the ones that fail, fail",
+      resumen:
+        "What paper job reports cost you, why job report apps get abandoned, which fields are genuinely needed, and why it has to work without a signal.",
+      href: "/blog/partes-de-trabajo-movil-mallorca",
+    },
+    {
+      etiqueta: "Time tracking · 6 min",
+      titulo: "Time tracking in Spain: what the law requires, and what you are being sold",
+      resumen:
+        "Recording working hours has been mandatory since 2019; doing it digitally is not. What article 34.9 says, why paper breaks in field work, and what changes with clocking in from a phone.",
+      href: "/blog/control-horario-obligatorio-mallorca",
+    },
+    {
       etiqueta: "Invoicing · 7 min",
       titulo: "VeriFactu: what a service company in Mallorca actually has to do",
       resumen:

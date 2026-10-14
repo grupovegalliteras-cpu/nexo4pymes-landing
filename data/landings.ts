@@ -70,8 +70,8 @@ export type Landing = {
 
 export const LANDINGS = [
   { slug: "facturacion-verifactu", modulo: "facturacion", consulta: "software facturación VeriFactu", senal: 273, articulo: "/blog/verifactu-empresas-servicios-mallorca" },
-  { slug: "control-horario", modulo: "fichaje", consulta: "control horario", senal: 215 },
-  { slug: "partes-de-trabajo", modulo: "trabajos", consulta: "partes de trabajo app", senal: 169 },
+  { slug: "control-horario", modulo: "fichaje", consulta: "control horario", senal: 215, articulo: "/blog/control-horario-obligatorio-mallorca" },
+  { slug: "partes-de-trabajo", modulo: "trabajos", consulta: "partes de trabajo app", senal: 169, articulo: "/blog/partes-de-trabajo-movil-mallorca" },
   { slug: "presupuestos", modulo: "presupuestos", consulta: "software presupuestos", senal: 10, articulo: "/blog/automatizar-presupuestos-pymes-mallorca" },
   { slug: "chatbot-whatsapp", modulo: "asistente-atencion", consulta: "chatbot WhatsApp Business", senal: 10, articulo: "/blog/centralizar-avisos-llamadas-whatsapp-mallorca" },
 ] as const satisfies readonly Landing[];

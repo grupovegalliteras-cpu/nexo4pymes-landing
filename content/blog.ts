@@ -17,6 +17,20 @@ export const blogHome = {
     "Lo escribimos desde Palma, trabajando con empresas de servicios de Mallorca: mantenimiento, limpieza, piscinas, climatización, jardinería, control de plagas, solar y reformas. Los ejemplos salen de casos reales, los precios que aparecen son los que manejamos, y cuando la respuesta honesta es «no hace falta software», también lo decimos.",
   publicados: [
     {
+      etiqueta: "Partes de trabajo · 6 min",
+      titulo: "Partes de trabajo en el móvil: por qué fallan los que fallan",
+      resumen:
+        "Qué se pierde con el parte en papel, por qué se abandonan las apps de partes, qué campos hacen falta de verdad y por qué tiene que funcionar sin cobertura.",
+      href: "/blog/partes-de-trabajo-movil-mallorca",
+    },
+    {
+      etiqueta: "Control horario · 6 min",
+      titulo: "Control horario: qué obliga de verdad y qué os están vendiendo",
+      resumen:
+        "Registrar la jornada es obligatorio desde 2019; hacerlo digitalmente no lo es. Qué dice el artículo 34.9, por qué el papel se rompe en el trabajo de campo y qué cambia con el fichaje en el móvil.",
+      href: "/blog/control-horario-obligatorio-mallorca",
+    },
+    {
       etiqueta: "Facturación · 7 min",
       titulo: "VeriFactu: qué tiene que hacer una empresa de servicios de Mallorca",
       resumen:

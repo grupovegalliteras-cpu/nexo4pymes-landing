@@ -1,0 +1,156 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_PARTES } from "@/content/blog-faq";
+
+<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Home</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Job reports
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Job reports · 6 min read</div>
+
+<FechaArticulo ruta="/blog/partes-de-trabajo-movil-mallorca" />
+
+# Job reports on a phone: why the ones that fail, fail
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Moving job reports from paper to a phone looks like the easiest change of all, and it is one of
+  the most often abandoned after three months. Not because of the technology: because the report
+  gets designed around what the office wants to know, and it is filled in by somebody standing on a
+  rooftop at two in the afternoon.
+</div>
+
+## What paper job reports cost you
+
+Paper does not fail because it is paper. It fails because of the journey it makes afterwards.
+
+<Senales items={[
+  { fuerte: "The report arrives days later.", texto: "Monday's work gets invoiced when somebody empties the folder in the van." },
+  { fuerte: "Materials that never get charged.", texto: "They were used, but not written down, or the handwriting was unreadable." },
+  { fuerte: "Somebody has to call the technician to understand it.", texto: "And the technician is somewhere else now and does not remember that job." },
+  { fuerte: "The customer says it was not done.", texto: "With no signature and no photos, the argument goes to whoever has evidence." },
+  { fuerte: "And then somebody types it again.", texto: "From paper to a spreadsheet, and from the spreadsheet to the invoicing program." },
+]}/>
+
+Added up, that is a company invoicing a week late and losing money on materials it really did use.
+It is not a tidiness problem: it is cash.
+
+## Why job report apps get abandoned
+
+Here is the uncomfortable part, and we have seen it several times in companies that had already
+tried before calling us.
+
+The digital report gets designed in an office meeting. And in an office meeting fields always get
+added, because each one looks free: while they are filling it in, let them add the serial number
+too, and the vehicle plate, and a general condition rating. Thirty fields later, filling in the
+report takes longer than writing it by hand.
+
+<Destacado titulo="The test worth running before buying anything">
+  Time how long it takes a technician to close a report on a phone, standing up, wearing gloves, and
+  compare it with writing it on paper.
+
+  If the phone does not win, the app will be abandoned. It does not matter how good the reports look
+  in the office: **the person who decides whether this works is the person filling it in**, and they
+  decide in the first week.
+</Destacado>
+
+## What a report needs, and nothing more
+
+The short list, the one genuinely needed to invoice and to defend yourself:
+
+- **Who, when and where.** Comes from clocking in and from the job itself; nobody types it.
+- **What was done.** Free text, short, plus ticked tasks if it is routine maintenance.
+- **How long it took.** If clocking in and the report are the same thing, this comes for free too.
+- **Materials used.** From a list of what is usual in your trade, not by typing full names.
+- **Photos.** Two: before and after. Worth more than three paragraphs.
+- **The customer's signature.** On screen, at the time, with the name and time stored beside it.
+
+Everything else is optional and should stay that way. A field that is not used to invoice or to
+decide anything is a field whose only effect is making the report take longer.
+
+<Nota>
+  In contract maintenance every customer tends to want their own format. The answer is different
+  report templates, not one generic report somebody rewrites back at the office. The technician sees
+  that customer's fields and no others.
+</Nota>
+
+## Without a signal, too
+
+Half of Mallorca has poor coverage: hotel basements, plant rooms, rooftops, inland estates. A
+report that needs a connection to be closed ends up being filled in from the van on the way out, or
+at home at night, which is exactly the situation you were trying to avoid.
+
+The report is filled in on the phone with no network and syncs when coverage returns. It is a
+requirement, not an advanced feature: without it, the rest does not matter.
+
+## What changes in the office
+
+When the report is closed on site, the office stops chasing information.
+
+It knows what was done the same day, it can invoice without calling anyone, and when a customer
+disputes a job there is a signature, a time and photos. The hours on the report go to payroll and
+the materials go to the <Link href="/modulos/facturacion-verifactu">invoice</Link> without anybody
+typing them again.
+
+And there is an effect nobody mentions: technicians stop getting calls from the office asking about
+jobs from three days ago. That is a good half hour a day nobody was counting as a cost.
+
+## Frequently asked questions
+
+{FAQ_PARTES.en.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Do the reports reach you on Friday and get invoiced the week after?"
+  boton="Message us on WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Show us your paper job report exactly as it is. That is where we work out which fields are
+    genuinely needed and which can go, and that is the difference between an app that gets used and
+    one that gets abandoned.
+  </p>
+  <p>
+    If tidying up the paper trail would have done the job, **we will tell you that too.**
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  To see the report exactly as the technician closes it and how it reaches the office, it is on the{" "}
+  <Link href="/modulos/partes-de-trabajo">job reports page</Link>, with the demo opening on that
+  module.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "en",
+          titulo: "Job reports on a phone: why the ones that fail, fail",
+          descripcion:
+            "What paper job reports cost you, why job report apps get abandoned, which fields are genuinely needed, and why it has to work without a signal.",
+          url: `${marca.dominio}/en/blog/partes-de-trabajo-movil-mallorca`,
+          fecha: fechaPublicacion("/blog/partes-de-trabajo-movil-mallorca"),
+          actualizado: fechaRevision("/blog/partes-de-trabajo-movil-mallorca"),
+        }),
+        esquemaFaq(
+          FAQ_PARTES.en.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/en/blog/partes-de-trabajo-movil-mallorca#faq`,
+          "en",
+        ),
+      ]),
+    ),
+  }}
+/>

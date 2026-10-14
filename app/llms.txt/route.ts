@@ -101,6 +101,8 @@ ${socios}
 - [Quiénes somos](${marca.dominio}/nosotros): las dos personas, cómo se trabaja y qué pasa con los datos de los clientes.
 - [Contacto](${marca.dominio}/contacto): videollamada de 15 minutos o formulario.
 - [Blog](${marca.dominio}/blog)
+- [Partes de trabajo en el móvil: por qué fallan los que fallan](${marca.dominio}/blog/partes-de-trabajo-movil-mallorca): qué campos hacen falta de verdad, por qué se abandonan estas apps y por qué tiene que funcionar sin cobertura.
+- [Control horario: qué obliga de verdad y qué os están vendiendo](${marca.dominio}/blog/control-horario-obligatorio-mallorca): registrar la jornada es obligatorio desde 2019; hacerlo digitalmente no lo es.
 - [VeriFactu: qué tiene que hacer una empresa de servicios de Mallorca](${marca.dominio}/blog/verifactu-empresas-servicios-mallorca): qué obliga hoy y qué es solo un anuncio sin publicar, qué cambia en la factura y qué hacer ahora.
 - [Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca](${marca.dominio}/blog/centralizar-avisos-llamadas-whatsapp-mallorca): los cuatro pasos para centralizar los avisos y qué hace CentralAvisos.
 - [Cómo dejar de hacer presupuestos a mano en una pyme de Mallorca](${marca.dominio}/blog/automatizar-presupuestos-pymes-mallorca): plantilla, integración o configurador web, y cuándo no compensa.

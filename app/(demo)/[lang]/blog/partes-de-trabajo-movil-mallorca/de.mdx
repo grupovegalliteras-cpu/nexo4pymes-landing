@@ -1,0 +1,158 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_PARTES } from "@/content/blog-faq";
+
+<nav aria-label="Brotkrumennavigation" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Start</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Arbeitsberichte
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Arbeitsberichte · 6 Min. Lesezeit</div>
+
+<FechaArticulo ruta="/blog/partes-de-trabajo-movil-mallorca" />
+
+# Arbeitsberichte auf dem Handy: Warum die scheitern, die scheitern
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Arbeitsberichte von Papier aufs Handy zu holen wirkt wie die leichteste Umstellung von allen, und
+  sie gehört zu denen, die nach drei Monaten am häufigsten aufgegeben werden. Nicht wegen der
+  Technik: weil der Bericht danach entworfen wird, was das Büro wissen will, ausgefüllt aber von
+  jemandem, der um zwei Uhr nachmittags auf einem Dach steht.
+</div>
+
+## Was der Papierbericht kostet
+
+Papier scheitert nicht, weil es Papier ist. Es scheitert an dem Weg, den es danach zurücklegt.
+
+<Senales items={[
+  { fuerte: "Der Bericht kommt Tage später an.", texto: "Die Arbeit vom Montag wird abgerechnet, wenn jemand die Mappe im Transporter leert." },
+  { fuerte: "Material, das nie berechnet wird.", texto: "Es wurde verbaut, aber nicht notiert, oder die Handschrift war nicht zu lesen." },
+  { fuerte: "Man muss den Techniker anrufen, um ihn zu verstehen.", texto: "Und der ist längst woanders und erinnert sich an diesen Einsatz nicht mehr." },
+  { fuerte: "Der Kunde sagt, das sei nicht gemacht worden.", texto: "Ohne Unterschrift und ohne Fotos gewinnt die Diskussion, wer einen Nachweis hat." },
+  { fuerte: "Und dann tippt es jemand erneut.", texto: "Vom Papier in die Tabelle und von der Tabelle in die Rechnungssoftware." },
+]}/>
+
+Zusammengenommen ist das ein Betrieb, der eine Woche zu spät abrechnet und an Material verliert, das
+er tatsächlich verbaut hat. Das ist kein Ordnungsproblem, sondern Liquidität.
+
+## Warum Berichts-Apps aufgegeben werden
+
+Hier kommt der unangenehme Teil, und wir haben ihn mehrfach bei Betrieben gesehen, die es vor
+unserem Anruf schon einmal versucht hatten.
+
+Der digitale Bericht entsteht in einer Bürobesprechung. Und in einer Bürobesprechung kommen immer
+Felder hinzu, denn jedes wirkt kostenlos: Wenn er ihn schon ausfüllt, soll er auch die
+Seriennummer eintragen, und das Kennzeichen, und eine Einschätzung des Gesamtzustands. Dreißig
+Felder später dauert der Bericht länger als handschriftlich.
+
+<Destacado titulo="Der Test, der sich vor jedem Kauf lohnt">
+  Stoppen Sie die Zeit, die ein Techniker braucht, um einen Bericht auf dem Handy abzuschließen —
+  im Stehen, mit Handschuhen — und vergleichen Sie sie mit dem Ausfüllen auf Papier.
+
+  Gewinnt das Handy nicht, wird die App aufgegeben. Wie gut die Auswertungen im Büro aussehen, ist
+  dabei gleichgültig: **Darüber, ob das funktioniert, entscheidet, wer es ausfüllt**, und zwar in
+  der ersten Woche.
+</Destacado>
+
+## Was ein Bericht enthalten muss, und sonst nichts
+
+Die kurze Liste, die man wirklich braucht, um abzurechnen und sich abzusichern:
+
+- **Wer, wann und wo.** Ergibt sich aus Zeiterfassung und Auftrag; niemand tippt es.
+- **Was getan wurde.** Kurzer Freitext, dazu abgehakte Aufgaben bei Routinewartung.
+- **Wie lange es gedauert hat.** Sind Zeiterfassung und Bericht dasselbe, kommt auch das von selbst.
+- **Verwendetes Material.** Aus einer Liste mit dem Branchenüblichen, nicht durch Tippen ganzer Namen.
+- **Fotos.** Zwei: vorher und nachher. Mehr wert als drei Absätze.
+- **Unterschrift des Kunden.** Auf dem Bildschirm, im Moment, mit Name und Uhrzeit daneben.
+
+Alles Weitere ist optional und sollte es bleiben. Ein Feld, das weder zum Abrechnen noch zum
+Entscheiden dient, bewirkt nur, dass der Bericht länger dauert.
+
+<Nota>
+  In der Vertragswartung will jeder Kunde meist sein eigenes Format. Die Lösung sind verschiedene
+  Berichtsvorlagen, nicht ein allgemeiner Bericht, den hinterher jemand im Büro umschreibt. Der
+  Techniker sieht die Felder dieses Kunden und keine anderen.
+</Nota>
+
+## Auch ohne Empfang
+
+Auf halb Mallorca ist der Empfang schlecht: Hotelkeller, Technikräume, Dächer, Fincas im
+Inselinneren. Ein Bericht, der zum Abschließen eine Verbindung braucht, wird am Ende beim
+Wegfahren im Auto oder abends zu Hause ausgefüllt — genau die Situation, die vermieden werden
+sollte.
+
+Der Bericht wird ohne Netz auf dem Handy ausgefüllt und synchronisiert sich, sobald der Empfang
+zurück ist. Das ist eine Grundvoraussetzung, kein Zusatzmerkmal: Ohne sie ist der Rest gleichgültig.
+
+## Was sich im Büro ändert
+
+Wird der Bericht vor Ort abgeschlossen, hört das Büro auf, Informationen hinterherzulaufen.
+
+Es weiß noch am selben Tag, was getan wurde, kann abrechnen, ohne jemanden anzurufen, und wenn ein
+Kunde einen Einsatz bestreitet, gibt es Unterschrift, Uhrzeit und Fotos. Die Stunden aus dem Bericht
+gehen in die Lohnabrechnung und das Material in die{" "}
+<Link href="/modulos/facturacion-verifactu">Rechnung</Link>, ohne dass jemand es erneut tippt.
+
+Und es gibt eine Wirkung, die nie erwähnt wird: Die Techniker bekommen keine Anrufe mehr aus dem
+Büro zu Einsätzen von vor drei Tagen. Das ist eine gute halbe Stunde am Tag, die niemand als Kosten
+gerechnet hat.
+
+## Häufige Fragen
+
+{FAQ_PARTES.de.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Kommen die Berichte freitags an und abgerechnet wird nächste Woche?"
+  boton="Schreiben Sie uns auf WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Zeigen Sie uns Ihren Papierbericht genau so, wie er ist. Daraus ergibt sich, welche Felder
+    wirklich nötig sind und welche entfallen können — und das ist der Unterschied zwischen einer App,
+    die genutzt wird, und einer, die liegen bleibt.
+  </p>
+  <p>
+    Wenn es gereicht hätte, den Papierweg zu ordnen, **sagen wir Ihnen auch das.**
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  Wie der Bericht aussieht, den der Techniker abschließt, und wie er im Büro ankommt, sehen Sie auf
+  der <Link href="/modulos/partes-de-trabajo">Seite zu den Arbeitsberichten</Link>, mit der Demo,
+  die direkt bei diesem Modul öffnet.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "de",
+          titulo: "Arbeitsberichte auf dem Handy: Warum die scheitern, die scheitern",
+          descripcion:
+            "Was der Papierbericht kostet, warum Berichts-Apps aufgegeben werden, welche Felder wirklich nötig sind und warum es ohne Empfang funktionieren muss.",
+          url: `${marca.dominio}/de/blog/partes-de-trabajo-movil-mallorca`,
+          fecha: fechaPublicacion("/blog/partes-de-trabajo-movil-mallorca"),
+          actualizado: fechaRevision("/blog/partes-de-trabajo-movil-mallorca"),
+        }),
+        esquemaFaq(
+          FAQ_PARTES.de.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/de/blog/partes-de-trabajo-movil-mallorca#faq`,
+          "de",
+        ),
+      ]),
+    ),
+  }}
+/>

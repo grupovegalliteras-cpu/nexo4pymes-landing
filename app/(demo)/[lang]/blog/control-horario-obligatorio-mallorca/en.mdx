@@ -1,0 +1,163 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_CONTROL_HORARIO } from "@/content/blog-faq";
+
+<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Home</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Time tracking
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Time tracking · 6 min read</div>
+
+<FechaArticulo ruta="/blog/control-horario-obligatorio-mallorca" />
+
+# Time tracking in Spain: what the law requires, and what you are being sold
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Recording working hours has been mandatory since 2019 and plenty of companies still do not know
+  it. Doing it digitally is **not** mandatory, and plenty believe it is because someone selling
+  something told them so. Here is the difference, and what actually changes when your team works
+  out on the road.
+</div>
+
+## What has been mandatory since 2019
+
+Article 34.9 of the Workers' Statute, as worded by Royal Decree-Law 8/2019, requires every company
+to keep **a daily record of the working day** of each employee, with its start and end time. It has
+been in force since 12 May 2019.
+
+There is no headcount threshold. A company of three is as bound as one of three hundred. Nor does it
+depend on the sector, or on whether people work in an office or move from site to site.
+
+Records have to be **kept for four years** and remain available to the employees, to their legal
+representatives and to the Labour Inspectorate.
+
+## What is NOT required, however often you are told otherwise
+
+This is where care pays off, because a lot gets sold on the back of it.
+
+**The law does not require digital clocking in.** It requires a record; it does not impose the
+means. A signed paper record that holds what the rule asks for and is kept for four years is legal
+today.
+
+A regulation has indeed been drafted to require records to be digital and remotely accessible to
+the Inspectorate. That draft received an **unfavourable opinion from the Council of State** and has
+not been published in the official gazette.
+
+<Destacado titulo="How to spot the sales argument">
+  If somebody tells you that "clocking in through an app is already compulsory", or that "you will
+  be fined without a digital system", they are presenting as law something that is not.
+
+  That does not make paper a good idea. It means **the reason to change is not the fine**: it is
+  that paper does not do the job you need it to do. And that is a different conversation, one where
+  you can choose calmly instead of buying out of fear.
+</Destacado>
+
+## Why paper breaks in a service company
+
+In an office with fixed hours, a signed sheet works reasonably well. In a maintenance, cleaning,
+landscaping or HVAC company in Mallorca, where people start in one place and finish in another, it
+breaks in several places at once.
+
+<Senales items={[
+  { fuerte: "Nobody passes through the office.", texto: "If the clock is in the warehouse and the first job is half an hour away, the hour written down is not the hour that happened." },
+  { fuerte: "It gets filled in on Friday, from memory.", texto: "And a whole week reconstructed from memory is not a daily record." },
+  { fuerte: "Overtime never shows up.", texto: "If every sheet says 8 to 5, the excess does not appear even when it is being worked." },
+  { fuerte: "Nobody knows who is working right now.", texto: "The office cannot tell a customer whether somebody is on the way." },
+  { fuerte: "And then it is added up by hand.", texto: "Every month, somebody works through a stack of paper for the payroll." },
+]}/>
+
+The underlying problem is not legal: it is that the record is no use for anything else. It is paper
+kept for four years in case the Inspectorate calls, and until then it informs not one decision.
+
+## What changes when clocking in lives where the work is
+
+If clocking in lives on the phone the technician already carries, it stops being paperwork and
+starts answering questions the office asks every day.
+
+- **The time is the real one.** Clocked at the start, on site, not from Friday's memory.
+- **The office sees who is on the clock.** And can tell a customer somebody is on the way without
+  calling four phones.
+- **Hours add themselves up.** Payroll no longer means working through a stack of paper.
+- **And the record is kept.** All four years, without a folder somebody has to guard.
+
+<Nota>
+  Location can be recorded at the moment of clocking in if it is proportionate and clearly
+  disclosed. What is not acceptable is tracking the person throughout the working day. The line runs
+  exactly between a single point and a permanent trail, and it belongs in writing in the notice given
+  to staff, not merely understood.
+</Nota>
+
+## The change that actually makes it pay
+
+Now the part almost nobody mentions, and the one that separates clocking in from clocking in that
+is worth having.
+
+If the technician clocks in on one app and then records the work done somewhere else, you have
+added one more chore to their day. Two apps, two moments of typing, and the second gets filled in
+badly because it is seven in the evening.
+
+If clocking in and the <Link href="/modulos/partes-de-trabajo">job report</Link> are the same thing,
+the arithmetic reverses: the technician opens the phone once per job, and out of it come the hours,
+the work done, the materials and the customer's signature. One gesture instead of three, and the
+office learns all of it at once.
+
+## Frequently asked questions
+
+{FAQ_CONTROL_HORARIO.en.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Still adding up hours from a stack of paper?"
+  boton="Message us on WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Tell us how many of you there are, how you record the working day now and what happens to those
+    hours afterwards. We will tell you whether you need clocking in on its own or clocking in joined
+    to the job report.
+  </p>
+  <p>
+    If what you already have complies and serves you, **we will say so and sell you nothing.**
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  To see what clocking in from a phone and the office rota look like, they are on the{" "}
+  <Link href="/modulos/control-horario">time tracking page</Link>, with the demo opening on that
+  module.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "en",
+          titulo: "Time tracking in Spain: what the law requires, and what you are being sold",
+          descripcion:
+            "Recording working hours has been mandatory since 2019; doing it digitally is not. What article 34.9 says, why paper breaks in field work, and what changes with clocking in from a phone.",
+          url: `${marca.dominio}/en/blog/control-horario-obligatorio-mallorca`,
+          fecha: fechaPublicacion("/blog/control-horario-obligatorio-mallorca"),
+          actualizado: fechaRevision("/blog/control-horario-obligatorio-mallorca"),
+        }),
+        esquemaFaq(
+          FAQ_CONTROL_HORARIO.en.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/en/blog/control-horario-obligatorio-mallorca#faq`,
+          "en",
+        ),
+      ]),
+    ),
+  }}
+/>

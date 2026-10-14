@@ -8,6 +8,20 @@ export const blogHome = {
     "Wir schreiben das aus Palma, in der Arbeit mit Dienstleistungsbetrieben auf ganz Mallorca: Wartung, Reinigung, Pools, Klimatechnik, Garten, Schädlingsbekämpfung, Solar und Renovierung. Die Beispiele stammen aus echten Fällen, die Zahlen sind die, mit denen wir arbeiten — und wenn die ehrliche Antwort «Sie brauchen keine Software» lautet, sagen wir auch das.",
   publicados: [
     {
+      etiqueta: "Arbeitsberichte · 6 Min.",
+      titulo: "Arbeitsberichte auf dem Handy: Warum die scheitern, die scheitern",
+      resumen:
+        "Was der Papierbericht kostet, warum Berichts-Apps aufgegeben werden, welche Felder wirklich nötig sind und warum es ohne Empfang funktionieren muss.",
+      href: "/blog/partes-de-trabajo-movil-mallorca",
+    },
+    {
+      etiqueta: "Zeiterfassung · 6 Min.",
+      titulo: "Arbeitszeiterfassung in Spanien: Was wirklich Pflicht ist, und was man Ihnen verkauft",
+      resumen:
+        "Die Erfassung der Arbeitszeit ist seit 2019 Pflicht, die digitale Führung nicht. Was Artikel 34.9 verlangt, warum Papier im Außendienst zerbricht und was sich mit dem Handy ändert.",
+      href: "/blog/control-horario-obligatorio-mallorca",
+    },
+    {
       etiqueta: "Rechnungsstellung · 7 Min.",
       titulo: "VeriFactu: Was ein Dienstleistungsbetrieb auf Mallorca wirklich tun muss",
       resumen:

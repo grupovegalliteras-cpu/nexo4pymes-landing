@@ -1,0 +1,154 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_PARTES } from "@/content/blog-faq";
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Partes de trabajo
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Partes de trabajo · 6 min de lectura</div>
+
+<FechaArticulo ruta="/blog/partes-de-trabajo-movil-mallorca" />
+
+# Partes de trabajo en el móvil: por qué fallan los que fallan
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Pasar los partes del papel al móvil parece el cambio más fácil de todos, y es de los que más se
+  abandonan a los tres meses. No por la tecnología: porque se diseña el parte pensando en lo que la
+  oficina quiere saber, y lo rellena alguien que está de pie en una azotea a las dos de la tarde.
+</div>
+
+## Qué se pierde con el parte en papel
+
+El papel no falla por ser papel. Falla por el camino que recorre después.
+
+<Senales items={[
+  { fuerte: "El parte llega días más tarde.", texto: "Lo que se hizo el lunes se factura cuando alguien vacía la carpeta de la furgoneta." },
+  { fuerte: "Materiales que no se cobran.", texto: "Se pusieron, pero no estaban escritos o no se entendía la letra." },
+  { fuerte: "Hay que llamar al técnico para entenderlo.", texto: "Y el técnico ya está en otro sitio y no se acuerda de aquel aviso." },
+  { fuerte: "El cliente dice que eso no se hizo.", texto: "Sin firma ni foto, la discusión la pierde quien no tiene prueba." },
+  { fuerte: "Y alguien lo teclea otra vez.", texto: "Del papel a la hoja de cálculo, y de la hoja al programa de facturación." },
+]}/>
+
+Sumado, eso es una empresa que factura con una semana de retraso y que pierde dinero en materiales
+que puso de verdad. No es un problema de orden: es caja.
+
+## Por qué se abandonan las apps de partes
+
+Aquí está la parte incómoda, y la hemos visto varias veces en empresas que ya lo habían intentado
+antes de llamarnos.
+
+El parte digital se diseña en una reunión de oficina. Y en una reunión de oficina siempre se añaden
+campos, porque cada campo parece gratis: ya que lo rellenan, que pongan también el número de serie,
+y la matrícula, y una valoración del estado general. Treinta campos más tarde, rellenar el parte
+tarda más que escribirlo a mano.
+
+<Destacado titulo="La prueba que conviene hacer antes de comprar nada">
+  Cronometrad cuánto tarda un técnico en cerrar un parte en el móvil, de pie, con guantes, y
+  comparadlo con lo que tarda escribiéndolo en papel.
+
+  Si el móvil no gana, la app se va a abandonar. No importa lo bien que se vean los informes en la
+  oficina: **quien decide si esto funciona es quien lo rellena**, y lo decide en la primera semana.
+</Destacado>
+
+## Qué tiene que llevar un parte, y nada más
+
+La lista corta, la que de verdad hace falta para facturar y para defenderse:
+
+- **Quién, cuándo y dónde.** Sale solo del fichaje y del aviso, no hay que escribirlo.
+- **Qué se ha hecho.** En texto libre, breve, más las tareas marcadas si es un mantenimiento con
+  rutina.
+- **Cuánto ha llevado.** Si el fichaje y el parte son lo mismo, también sale solo.
+- **Materiales empleados.** De una lista con lo habitual del sector, no escribiendo el nombre entero.
+- **Fotos.** Dos: el antes y el después. Valen más que tres párrafos.
+- **Firma del cliente.** En la pantalla, en el momento, con el nombre y la hora guardados al lado.
+
+Todo lo demás es optativo y conviene que lo siga siendo. Un campo que no se usa para facturar ni
+para decidir nada es un campo que solo sirve para que el parte tarde más.
+
+<Nota>
+  En mantenimiento con contrato cada cliente suele querer su propio formato. Eso se resuelve con
+  plantillas de parte distintas, no con un parte genérico que luego alguien reescribe en la oficina.
+  El técnico ve los campos de ese cliente y ninguno más.
+</Nota>
+
+## Sin cobertura también
+
+Medio Mallorca tiene mala cobertura: sótanos de hoteles, cuartos de máquinas, azoteas, fincas del
+interior. Un parte que necesita conexión para cerrarse se acaba rellenando en el coche al salir, o
+en casa por la noche, que es exactamente la situación que se quería evitar.
+
+El parte se rellena en el móvil sin red y se sincroniza cuando vuelve la cobertura. Es un requisito,
+no una característica avanzada: si no está, el resto da igual.
+
+## Lo que cambia en la oficina
+
+Cuando el parte se cierra en el sitio, la oficina deja de perseguir información.
+
+Sabe qué se ha hecho el mismo día, puede facturar sin llamar a nadie, y cuando un cliente discute
+un trabajo hay firma, hora y fotos. Las horas del parte van a la nómina y los materiales van a la
+<Link href="/modulos/facturacion-verifactu"> factura</Link> sin que nadie los teclee otra vez.
+
+Y hay un efecto que no se cuenta nunca: los técnicos dejan de recibir llamadas de la oficina
+preguntando por trabajos de hace tres días. Eso es media hora larga al día que nadie estaba
+contando como coste.
+
+## Preguntas frecuentes
+
+{FAQ_PARTES.es.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="¿Los partes os llegan el viernes y facturáis la semana siguiente?"
+  boton="Escribidnos por WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Enseñadnos vuestro parte de papel tal cual está. De ahí sale qué campos hacen falta de verdad y
+    cuáles se pueden quitar, que es la diferencia entre una app que se usa y otra que se abandona.
+  </p>
+  <p>
+    Si con ordenar el circuito de papel ya os arreglabais, **también os lo decimos.**
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  Para ver el parte tal como lo cierra el técnico y cómo llega a la oficina, está en la{" "}
+  <Link href="/modulos/partes-de-trabajo">página de partes de trabajo</Link>, con la demo abierta
+  por ese módulo.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "es",
+          titulo: "Partes de trabajo en el móvil: por qué fallan los que fallan",
+          descripcion:
+            "Qué se pierde con el parte en papel, por qué se abandonan las apps de partes, qué campos hacen falta de verdad y por qué tiene que funcionar sin cobertura.",
+          url: `${marca.dominio}/blog/partes-de-trabajo-movil-mallorca`,
+          fecha: fechaPublicacion("/blog/partes-de-trabajo-movil-mallorca"),
+          actualizado: fechaRevision("/blog/partes-de-trabajo-movil-mallorca"),
+        }),
+        esquemaFaq(
+          FAQ_PARTES.es.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/blog/partes-de-trabajo-movil-mallorca#faq`,
+          "es",
+        ),
+      ]),
+    ),
+  }}
+/>

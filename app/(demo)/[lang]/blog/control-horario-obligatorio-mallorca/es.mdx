@@ -1,0 +1,160 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_CONTROL_HORARIO } from "@/content/blog-faq";
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Control horario
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Control horario · 6 min de lectura</div>
+
+<FechaArticulo ruta="/blog/control-horario-obligatorio-mallorca" />
+
+# Control horario: qué obliga de verdad y qué os están vendiendo
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Registrar la jornada es obligatorio desde 2019 y mucha gente todavía no lo sabe. Hacerlo
+  digitalmente **no** lo es, y mucha gente cree que sí porque se lo han dicho vendiendo algo. Esto
+  separa una cosa de la otra, y explica qué cambia de verdad cuando el equipo trabaja en la calle.
+</div>
+
+## Lo que obliga desde 2019
+
+El artículo 34.9 del Estatuto de los Trabajadores, en la redacción que le dio el Real Decreto-ley
+8/2019, obliga a toda empresa a llevar **un registro diario de la jornada** de cada persona
+trabajadora, con la hora de inicio y la de finalización. Está en vigor desde el 12 de mayo de 2019.
+
+No hay umbral de plantilla. Una empresa de tres personas está igual de obligada que una de
+trescientas. Tampoco depende del sector ni de si la gente trabaja en una oficina o va de obra en
+obra.
+
+Los registros hay que **conservarlos cuatro años** y mantenerlos a disposición de las personas
+trabajadoras, de sus representantes legales y de la Inspección de Trabajo.
+
+## Lo que NO obliga, por mucho que os lo digan
+
+Aquí es donde conviene tener cuidado, porque se vende mucho con esto.
+
+**La ley no exige fichar digitalmente.** Obliga a registrar, no impone el medio. Un registro en
+papel, firmado, que recoja lo que la norma pide y se conserve cuatro años, es legal hoy.
+
+Sí se ha tramitado un reglamento para exigir que el registro sea digital y accesible en remoto para
+la Inspección. Ese reglamento recibió **dictamen desfavorable del Consejo de Estado** y no está
+publicado en el BOE.
+
+<Destacado titulo="Cómo reconocer el argumento de venta">
+  Si alguien os dice que «ya es obligatorio fichar con una app» o que «os van a multar si no tenéis
+  un sistema digital», está contando como norma algo que no lo es.
+
+  Eso no significa que el papel sea buena idea. Significa que **la razón para cambiar no es la
+  multa**: es que el papel no os sirve para lo que lo necesitáis. Y ésa es una conversación distinta,
+  en la que podéis elegir con calma en vez de comprar con miedo.
+</Destacado>
+
+## Por qué el papel se rompe en una empresa de servicios
+
+En una oficina con horario fijo, una hoja firmada funciona razonablemente. En una empresa de
+mantenimiento, limpieza, jardinería o climatización de Mallorca, donde la gente empieza en un sitio
+y acaba en otro, se rompe por varios lados a la vez.
+
+<Senales items={[
+  { fuerte: "Nadie pasa por la oficina.", texto: "Si el reloj está en el almacén de Son Castelló y el primer aviso es en Calvià, la hora que se apunta no es la que fue." },
+  { fuerte: "Se rellena el viernes, de memoria.", texto: "Y una semana entera reconstruida de memoria no es un registro diario." },
+  { fuerte: "Las horas extra no salen.", texto: "Si todas las hojas ponen de 8 a 17, el exceso no aparece aunque se esté haciendo." },
+  { fuerte: "Nadie sabe quién está trabajando ahora.", texto: "La oficina no puede decirle a un cliente si va alguien de camino." },
+  { fuerte: "Y luego hay que sumarlo a mano.", texto: "Para la nómina, alguien echa cuentas de un taco de papeles cada mes." },
+]}/>
+
+El problema de fondo no es legal: es que ese registro no os sirve para nada más. Es papel que se
+guarda cuatro años por si viene la Inspección, y hasta entonces no aporta una sola decisión.
+
+## Lo que cambia cuando el fichaje está donde está el trabajo
+
+Si el fichaje vive en el móvil que el técnico ya lleva encima, deja de ser un trámite y empieza a
+responder preguntas que la oficina se hace todos los días.
+
+- **La hora es la que fue.** Se ficha al empezar, en el sitio, no a la memoria del viernes.
+- **La oficina ve quién está dentro.** Y puede decirle a un cliente que hay alguien de camino sin
+  llamar a cuatro móviles.
+- **Las horas se suman solas.** Para la nómina ya no hay que echar cuentas de un taco de papeles.
+- **Y el registro queda guardado.** Los cuatro años, sin una carpeta que alguien tenga que custodiar.
+
+<Nota>
+  Se puede registrar la ubicación en el momento de fichar si es proporcionada y se informa con
+  claridad. Lo que no cabe es seguir a la persona durante toda la jornada. La diferencia entre un
+  punto concreto y un rastro permanente es exactamente la línea, y conviene que esté escrita en la
+  información que se entrega a la plantilla, no solo entendida.
+</Nota>
+
+## El cambio que de verdad lo hace rentable
+
+Ahora la parte que casi nadie cuenta, y que es la que separa un fichaje de un fichaje útil.
+
+Si el técnico ficha en una app y luego apunta en otro sitio el trabajo que ha hecho, habéis sumado
+un trámite más a su día. Dos aplicaciones, dos momentos de teclear, y la segunda se rellena mal
+porque son las siete de la tarde.
+
+Si el fichaje y el <Link href="/modulos/partes-de-trabajo">parte de trabajo</Link> son lo mismo, la
+cuenta sale al revés: el técnico abre el móvil una vez por trabajo, y de ahí salen la hora, lo que
+se ha hecho, los materiales y la firma del cliente. Un gesto en lugar de tres, y la oficina se entera
+de todo a la vez.
+
+## Preguntas frecuentes
+
+{FAQ_CONTROL_HORARIO.es.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="¿Seguís sumando horas de un taco de papeles?"
+  boton="Escribidnos por WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Contadnos cuánta gente sois, cómo registráis ahora la jornada y qué se hace después con esas
+    horas. Os decimos si os conviene fichaje a secas o fichaje unido al parte de trabajo.
+  </p>
+  <p>
+    Si lo que tenéis ya cumple y os vale, **os lo decimos y no os vendemos nada.**
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  Para ver cómo queda el fichaje desde el móvil y el cuadrante en la oficina, está en la{" "}
+  <Link href="/modulos/control-horario">página de control horario</Link>, con la demo abierta por
+  ese módulo.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "es",
+          titulo: "Control horario: qué obliga de verdad y qué os están vendiendo",
+          descripcion:
+            "Registrar la jornada es obligatorio desde 2019; hacerlo digitalmente no lo es. Qué dice el artículo 34.9, por qué el papel se rompe en el trabajo de campo y qué cambia con el fichaje en el móvil.",
+          url: `${marca.dominio}/blog/control-horario-obligatorio-mallorca`,
+          fecha: fechaPublicacion("/blog/control-horario-obligatorio-mallorca"),
+          actualizado: fechaRevision("/blog/control-horario-obligatorio-mallorca"),
+        }),
+        esquemaFaq(
+          FAQ_CONTROL_HORARIO.es.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/blog/control-horario-obligatorio-mallorca#faq`,
+          "es",
+        ),
+      ]),
+    ),
+  }}
+/>

@@ -241,7 +241,37 @@ export function grafoPagina(items: object[]) {
 }
 
 /** Migas de pan. Le dicen al buscador dónde encaja la página dentro del sitio. */
-export function esquemaMigas(lang: Idioma, pasos: { nombre: string; ruta?: string }[]) {
+/* ============================================================
+   LAS MIGAS, Y EL ERROR QUE TUVIERON DURANTE MESES
+
+   AQUÍ DECÍA que el último escalón no lleva `item` porque «es la
+   página en la que ya estás y Google pide que se omita». Esa frase
+   era mía y era falsa. Lo que dice la documentación es que en el
+   último elemento `item` es OPCIONAL; de ahí a omitirlo hay un paso
+   que no había que dar.
+
+   LO QUE PASÓ. El 14 de octubre de 2026 Search Console avisó por
+   correo de un problema GRAVE —de los que impiden que la función
+   salga en los resultados— en los datos estructurados de rutas de
+   navegación: «Falta el campo item (en itemListElement)». Al
+   revisar las 82 páginas publicadas, las 70 que llevan migas tenían
+   el fallo. Google solo había marcado una porque aún no había
+   vuelto a rastrear el resto.
+
+   O sea: el sitio entero llevaba meses publicando migas que Google
+   no podía usar, y la única señal fue un correo.
+
+   AHORA `item` VA SIEMPRE, también en el último escalón, apuntando a
+   la propia página. Es válido en schema.org, es lo que hace todo el
+   mundo, y no deja margen a que un validador lo interprete de otra
+   manera.
+
+   Y `ruta` PASA A SER OBLIGATORIA. Era opcional, y un escalón sin
+   ruta volvía a producir un elemento sin `item` sin que nadie se
+   enterase hasta el siguiente correo de Google. Ahora eso no
+   compila, que es donde se tienen que ver estas cosas.
+   ============================================================ */
+export function esquemaMigas(lang: Idioma, pasos: { nombre: string; ruta: string }[]) {
   const inicio = { es: "Inicio", en: "Home", de: "Start" }[lang];
   const todos = [{ nombre: inicio, ruta: "/" }, ...pasos];
   return {
@@ -251,9 +281,7 @@ export function esquemaMigas(lang: Idioma, pasos: { nombre: string; ruta?: strin
       "@type": "ListItem",
       position: i + 1,
       name: p.nombre,
-      /* El último escalón no lleva item: es la página en la que ya
-         estás y Google pide que se omita. */
-      ...(i < todos.length - 1 && p.ruta ? { item: urlAbsoluta(lang, p.ruta) } : {}),
+      item: urlAbsoluta(lang, p.ruta),
     })),
   };
 }

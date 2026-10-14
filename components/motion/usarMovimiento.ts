@@ -28,6 +28,36 @@ export function usarMovimientoReducido(): boolean {
 }
 
 /* ============================================================
+   ¿ES UNA PANTALLA GRANDE?
+
+   La entrada de las secciones se acortó en su día (22 → 12 px, 0,62 →
+   0,38 s) porque en móvil una entrada larga no se lee como elegancia,
+   se lee como que la página va lenta: el pulgar va rápido y las
+   secciones entran una detrás de otra.
+
+   En un monitor de 2560 px ese mismo recorrido de 12 px es
+   prácticamente invisible: la animación ocurre, pero nadie la ve.
+   Así que el recorrido y la duración vuelven a ser los largos a
+   partir de 1024 px, y se quedan cortos por debajo.
+
+   Devuelve false en el primer render, como asume el servidor, y pasa
+   al valor real en el primer efecto: así no hay error de hidratación.
+   ============================================================ */
+export function usarPantallaAncha(): boolean {
+  const [ancha, setAncha] = useState(false);
+
+  useEffect(() => {
+    const consulta = window.matchMedia("(min-width: 1024px)");
+    const actualizar = () => setAncha(consulta.matches);
+    actualizar();
+    consulta.addEventListener("change", actualizar);
+    return () => consulta.removeEventListener("change", actualizar);
+  }, []);
+
+  return ancha;
+}
+
+/* ============================================================
    ¿HAY UN RATÓN DE VERDAD?
    Tres efectos del sitio solo tienen sentido con puntero fino: la
    inclinación 3D de la tarjeta del hero, el botón magnético y el

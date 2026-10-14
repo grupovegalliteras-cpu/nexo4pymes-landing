@@ -8,6 +8,13 @@ export const blogHome = {
     "Wir schreiben das aus Palma, in der Arbeit mit Dienstleistungsbetrieben auf ganz Mallorca: Wartung, Reinigung, Pools, Klimatechnik, Garten, Schädlingsbekämpfung, Solar und Renovierung. Die Beispiele stammen aus echten Fällen, die Zahlen sind die, mit denen wir arbeiten — und wenn die ehrliche Antwort «Sie brauchen keine Software» lautet, sagen wir auch das.",
   publicados: [
     {
+      etiqueta: "Rechnungsstellung · 7 Min.",
+      titulo: "VeriFactu: Was ein Dienstleistungsbetrieb auf Mallorca wirklich tun muss",
+      resumen:
+        "Was heute gilt und was nur angekündigt ist, was sich an Ihren Rechnungen ändert, die zwei Varianten und die vier Schritte, die sich jetzt lohnen.",
+      href: "/blog/verifactu-empresas-servicios-mallorca",
+    },
+    {
       etiqueta: "Auftragsannahme · 6 Min.",
       titulo: "Anrufe, WhatsApp und Kundenanfragen in einem Betrieb auf Mallorca ordnen",
       resumen:
@@ -32,6 +39,5 @@ export const blogHome = {
   proximos: [
     "Was eine Prozessanalyse ist und was Sie davon haben",
     "Individuelles CRM oder Standardsoftware: richtig wählen",
-    "VeriFactu: was ein Dienstleistungsbetrieb auf den Balearen tun muss",
   ],
 };

@@ -9,6 +9,7 @@ import { moduloDe } from "@/data/modules-i18n";
 import { textoLanding } from "@/content/landings-seo-i18n";
 import { LANDINGS_PUBLICADAS } from "@/content/landings-seo-i18n";
 import { COMPROBADO, HITOS } from "@/content/verifactu-estado";
+import { contenido } from "@/content/i18n";
 import { useIdioma } from "@/components/i18n/idioma";
 import { Icon } from "@/components/icon";
 import { Caustics } from "./caustics";
@@ -35,6 +36,8 @@ const TX = {
     pide: "Preguntar por WhatsApp",
     msg: (n: string) => `Hola, me interesa ${n}. ¿Me contáis cómo funciona?`,
     otras: "Otros módulos con página propia",
+    seguir: "Para leerlo con calma",
+    leer: "Leer el artículo",
     calendario: "Qué obliga y desde cuándo",
     enVigor: "En vigor",
     anunciado: "Anunciado, sin publicar",
@@ -50,6 +53,8 @@ const TX = {
     pide: "Ask on WhatsApp",
     msg: (n: string) => `Hello, I'm interested in ${n}. Could you tell me how it works?`,
     otras: "Other modules with their own page",
+    seguir: "The long read",
+    leer: "Read the article",
     calendario: "What binds, and from when",
     enVigor: "In force",
     anunciado: "Announced, not yet published",
@@ -65,6 +70,8 @@ const TX = {
     pide: "Per WhatsApp fragen",
     msg: (n: string) => `Guten Tag, ich interessiere mich für ${n}. Wie funktioniert das?`,
     otras: "Weitere Module mit eigener Seite",
+    seguir: "Zum Nachlesen",
+    leer: "Artikel lesen",
     calendario: "Was gilt, und ab wann",
     enVigor: "In Kraft",
     anunciado: "Angekündigt, nicht veröffentlicht",
@@ -124,6 +131,13 @@ export function ModuloPage({ slug }: { slug: LandingSlug }) {
   const seo = textoLanding(lang, slug);
   const mensaje = tx.msg(m.nombre);
   const otras = LANDINGS_PUBLICADAS.filter((s) => s !== slug);
+  /* La ficha del artículo pareja, buscada por su ruta en el listado del
+     blog. Si la landing todavía no tiene artículo escrito, o si el
+     artículo se retirase, esto queda en undefined y el bloque no se
+     pinta: ni enlace roto ni hueco. */
+  const articulo = landing.articulo
+    ? contenido(lang).blog.blogHome.publicados.find((e) => e.href === landing.articulo)
+    : undefined;
 
   return (
     <div className="bg-bg text-fg">
@@ -230,6 +244,38 @@ export function ModuloPage({ slug }: { slug: LandingSlug }) {
             ))}
           </dl>
         </div>
+
+        {/* ============================================================
+            EL ARTÍCULO QUE LE HACE PAREJA A ESTA LANDING
+
+            Quien llega aquí buscando «software control horario» ya sabe
+            lo que quiere. Quien llega buscando si el fichaje digital es
+            obligatorio, no: ése necesita leer antes de mirar un
+            producto, y es mucha más gente. Para ése está el artículo, y
+            este bloque es el puente.
+
+            El título y el resumen salen del listado del blog
+            (content/blog.ts) y no se escriben aquí: si se cambia el
+            titular de un artículo, cambia también en esta tarjeta y no
+            quedan dos versiones distintas del mismo título dando
+            vueltas por el sitio.
+            ============================================================ */}
+        {articulo ? (
+          <div className="mt-14">
+            <h2 className="text-[13px] font-semibold text-fg-3">{tx.seguir}</h2>
+            <Link
+              href={articulo.href}
+              className="group mt-3 flex flex-col rounded-2xl border border-line bg-surface p-5 transition hover:-translate-y-0.5 hover:shadow-e2 sm:p-6"
+            >
+              <span className="font-mono text-[11px] tracking-[0.12em] text-brand uppercase">{articulo.etiqueta}</span>
+              <span className="font-display mt-3 text-[20px] leading-snug font-semibold sm:text-[22px]">{articulo.titulo}</span>
+              <span className="mt-2 text-[15px] leading-relaxed text-fg-2">{articulo.resumen}</span>
+              <span className="mt-4 text-[14px] font-medium text-brand">
+                {tx.leer} <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">→</span>
+              </span>
+            </Link>
+          </div>
+        ) : null}
 
         {otras.length > 0 ? (
           <div className="mt-14">

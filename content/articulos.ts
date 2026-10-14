@@ -43,6 +43,7 @@ export type Articulo = {
 };
 
 export const ARTICULOS: Articulo[] = [
+  { ruta: "/blog/verifactu-empresas-servicios-mallorca", publicado: "2026-10-14" },
   { ruta: "/blog/centralizar-avisos-llamadas-whatsapp-mallorca", publicado: "2026-10-09" },
   { ruta: "/blog/automatizar-presupuestos-pymes-mallorca", publicado: "2026-10-09" },
   /* El primero de todos. Lo que pasó el 28/09 fue la reforma de

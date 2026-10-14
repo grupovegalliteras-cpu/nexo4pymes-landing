@@ -1,0 +1,184 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_VERIFACTU } from "@/content/blog-faq";
+
+<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Home</Link> › <Link href="/blog" className="text-brand">Blog</Link> › VeriFactu
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Invoicing · 7 min read</div>
+
+<FechaArticulo ruta="/blog/verifactu-empresas-servicios-mallorca" />
+
+# VeriFactu: what a service company in Mallorca actually has to do
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  The VeriFactu deadline has moved three times, and that has done more damage than the rule itself:
+  plenty of people have stopped paying attention. Here is what binds today, what has only been
+  announced, and the four things worth doing now even if the date moves again.
+</div>
+
+## What binds today, and what is only an announcement
+
+Two things get mixed up constantly, in conversation and in the odd headline.
+
+**What is published and binds.** The invoicing systems regulation (Royal Decree 1007/2023) has
+applied to software makers since 29 July 2025: the programs they sell have to comply. For those
+who issue invoices, Royal Decree-Law 15/2025 set **1 January 2027** for companies paying corporate
+income tax and **1 July 2027** for the self-employed and other taxpayers.
+
+**What has been announced and does not bind yet.** On 5 October 2026 the Spanish Ministry of
+Finance announced moving the obligation to October 2028 for anyone invoicing under eight million
+euros. That postponement has not appeared in the official gazette.
+
+<Destacado titulo="Why this distinction is not legal nit-picking">
+  An announcement that never gets published can come to nothing, can come back worded differently,
+  or can come late. Until it is in the gazette, **the date that binds you is still the 2027 one**.
+
+  And even if it is published exactly as announced, you would gain eighteen months to do the same
+  work. It does not change what has to be done: it changes when it catches up with you.
+</Destacado>
+
+## What actually changes in your invoices
+
+This is the part almost nobody explains, and the only one worth understanding. VeriFactu is not
+about sending a file to the tax agency once a year. It is about how your invoicing software
+behaves.
+
+At the moment each invoice is issued, the software has to produce an **invoicing record**: an entry
+with that invoice's essential data and a **digital fingerprint** calculated from them and from the
+previous record's fingerprint. Every record is hooked to the one before it, like links in a chain.
+
+That chain is the whole idea. If somebody deletes an invoice or changes an amount, the next link
+stops fitting and it shows. That is why the regulation forbids software from allowing anything to
+be deleted or altered without a trace: a cancelled invoice is cancelled with another entry, not by
+disappearing.
+
+The invoice also carries a **QR code** and, if you are in the mode that submits records, a note
+saying it can be verified on the tax agency's site.
+
+## The two modes, and which suits a small company
+
+The regulation lets you choose between two ways of complying:
+
+1. **VERI*FACTU**: every invoicing record is sent to the tax agency as the invoice is issued. In
+   exchange, you do not have to sign the records electronically or keep anything special: the
+   agency has them.
+2. **Non-verifiable system**: the records stay in your system, electronically signed and chained,
+   available to the agency on request. You have to keep them and answer for them.
+
+<Nota>
+  For a service company of ten or fifteen people, the first is usually less work. The second makes
+  sense when there is a real reason not to submit in real time — poor connectivity on site, for
+  example — and somebody who takes responsibility for keeping the records.
+</Nota>
+
+## The part that really hurts: typing the same invoice twice
+
+This is where the rule stops being paperwork and becomes a decision about how you work.
+
+In most of the maintenance, cleaning, HVAC and pool companies in Mallorca we talk to, the sequence
+goes like this: the technician writes hours and materials on a paper job sheet or in a WhatsApp
+message, somebody in the office copies it into a spreadsheet, and from there somebody types it
+again into the invoicing program. The same data, three times.
+
+<Senales items={[
+  { fuerte: "Job sheets that arrive on Friday.", texto: "Monday's work gets invoiced eight days later, if anyone remembers." },
+  { fuerte: "Materials that never get charged.", texto: "The technician used them, but they never reached the invoice because nobody copied them." },
+  { fuerte: "Invoices corrected by hand.", texto: "And correcting by hand is exactly what VeriFactu stops allowing." },
+  { fuerte: "The invoicing program, off on its own.", texto: "It knows nothing about the jobs, so everything gets typed in." },
+]}/>
+
+If your invoicing program is an island, making it VeriFactu-compliant fixes none of that: it just
+adds a digital fingerprint to a process that still has three manual copies. The real opportunity is
+the opposite one: the invoice coming out of the <Link href="/modulos/partes-de-trabajo">job report
+the technician has already closed and the customer has already signed</Link>, with hours and
+materials already on it.
+
+## What to do now, in this order
+
+**First, ask your current provider.** In writing, with two specific questions: will you issue the
+declaration of compliance, and on what date will the ready version be available? A clear answer
+with a date saves you the rest of this article. Silence, or an "we're working on it" from six
+months ago, is the sign to start looking at alternatives.
+
+**Second, look at where your invoices originate.** Not which program: which moment. If they come
+out of a job report, a delivery note or a maintenance contract, that is where to start, because
+that is where the duplicated work is.
+
+**Third, decide the mode.** It is one configuration setting, but it is worth deciding knowingly
+rather than by default.
+
+**Fourth, test it with real invoices before the deadline.** A month before, not the week of. The
+change touches numbering, cancellations and credit notes, which is where the surprises live.
+
+<Destacado titulo="What not to do">
+  Do not buy in a hurry the month before the deadline. That is exactly when the worst migrations get
+  sold, and at the worst prices, because the seller knows you have no time to compare.
+
+  And do not assume your program will adapt **because it is expensive or because it has been around
+  for years**. Several makers have announced they will not adapt their older versions: the
+  compliance arrives in a new version, charged separately. Ask first.
+</Destacado>
+
+## Frequently asked questions
+
+{FAQ_VERIFACTU.en.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Want the invoice to come out of the job report, without typing it again?"
+  boton="Message us on WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Tell us what you invoice with today and how job reports reach you from the field. We will tell
+    you whether your program adapts, whether it needs replacing, or whether the right move is
+    connecting it to what you already have.
+  </p>
+  <p>
+    If the answer is that an update from your provider covers you,
+    **we will tell you that too.**
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  If you want to see what an invoice looks like with its registration record and chained
+  fingerprint, it is on the <Link href="/modulos/facturacion-verifactu">VeriFactu invoicing
+  page</Link>, with the legal calendar kept up to date and the demo opening on that module.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "en",
+          titulo: "VeriFactu: what a service company in Mallorca actually has to do",
+          descripcion:
+            "What binds today and what is only an announcement, what changes in your invoices, the two modes, and the four steps worth taking now.",
+          url: `${marca.dominio}/en/blog/verifactu-empresas-servicios-mallorca`,
+          fecha: fechaPublicacion("/blog/verifactu-empresas-servicios-mallorca"),
+          actualizado: fechaRevision("/blog/verifactu-empresas-servicios-mallorca"),
+        }),
+        esquemaFaq(
+          FAQ_VERIFACTU.en.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/en/blog/verifactu-empresas-servicios-mallorca#faq`,
+          "en",
+        ),
+      ]),
+    ),
+  }}
+/>

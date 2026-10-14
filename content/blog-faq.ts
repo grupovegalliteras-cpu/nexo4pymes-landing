@@ -168,3 +168,84 @@ export const FAQ_AVISOS = {
     ],
   ],
 } as const satisfies PorIdioma;
+
+export const FAQ_VERIFACTU = {
+  es: [
+    [
+      "¿Cuándo es obligatorio VeriFactu?",
+      "Para las empresas que tributan por el Impuesto sobre Sociedades, el 1 de enero de 2027; para autónomos y el resto de obligados, el 1 de julio de 2027, según el Real Decreto-ley 15/2025. El 5 de octubre de 2026 el Ministerio de Hacienda anunció retrasarlo a octubre de 2028 para quien factura menos de ocho millones de euros, pero ese aplazamiento no está publicado en el BOE: hasta que lo esté, las fechas que obligan son las de 2027.",
+    ],
+    [
+      "¿VeriFactu obliga a enviar todas las facturas a Hacienda?",
+      "Solo si se elige esa modalidad. El Reglamento (RD 1007/2023) permite dos: remitir cada registro de facturación a la Agencia Tributaria en el momento de emitirlo, que es la modalidad llamada VERI*FACTU, o conservarlo firmado y encadenado en el propio sistema, a disposición de la Agencia si lo reclama. La segunda exige además que los registros estén firmados electrónicamente.",
+    ],
+    [
+      "¿Me vale el Excel donde hago las facturas ahora?",
+      "No. El Reglamento exige que el programa genere un registro de facturación por cada factura, lo encadene con el anterior mediante una huella digital y no permita borrar ni alterar nada sin dejar rastro. Una hoja de cálculo no hace nada de eso, y además el fabricante del programa tiene que emitir una declaración responsable de que cumple, cosa que nadie puede emitir sobre una hoja propia.",
+    ],
+    [
+      "¿Qué pasa si emito pocas facturas al año?",
+      "La obligación no depende del número de facturas. Depende de quién sea el obligado tributario y de la fecha que le corresponda. Un autónomo que emite doce facturas al año está igual de obligado que una empresa que emite mil, y tiene exactamente el mismo plazo.",
+    ],
+    [
+      "¿Tengo que cambiar de programa de facturación?",
+      "Solo si el que usáis no va a adaptarse. Lo primero es preguntarle a vuestro proveedor actual, por escrito, si va a emitir la declaración responsable y en qué fecha tendrá la versión lista. Si la respuesta es clara y creíble, no hay nada que hacer. Si no contesta o contesta con vaguedades, ahí es donde conviene empezar a mirar alternativas, y con tiempo.",
+    ],
+    [
+      "¿Qué es el registro de alta de una factura?",
+      "Es el apunte que el programa genera en el momento de emitir una factura y que recoge sus datos esenciales junto con la huella digital que lo enlaza con el registro anterior. Esa cadena es lo que permite demostrar que no se ha borrado ni modificado ninguna factura por el camino: si falta un eslabón, se nota.",
+    ],
+  ],
+  en: [
+    [
+      "When does VeriFactu become mandatory?",
+      "For companies paying Spanish corporate income tax, on 1 January 2027; for the self-employed and other taxpayers, on 1 July 2027, under Royal Decree-Law 15/2025. On 5 October 2026 the Spanish Ministry of Finance announced a delay to October 2028 for those invoicing under eight million euros, but that postponement has not been published in the official gazette: until it is, the 2027 dates are the ones that bind.",
+    ],
+    [
+      "Does VeriFactu mean sending every invoice to the tax agency?",
+      "Only if you choose that mode. The regulation (RD 1007/2023) allows two: sending each invoicing record to the tax agency as it is issued, which is the mode called VERI*FACTU, or keeping it signed and chained within your own system, available to the agency on request. The second also requires the records to be electronically signed.",
+    ],
+    [
+      "Can I keep using the spreadsheet I invoice with now?",
+      "No. The regulation requires the software to generate an invoicing record for every invoice, chain it to the previous one with a digital fingerprint, and make it impossible to delete or alter anything without leaving a trace. A spreadsheet does none of that, and the software maker also has to issue a formal declaration of compliance, which nobody can issue about a spreadsheet of your own.",
+    ],
+    [
+      "What if I only issue a few invoices a year?",
+      "The obligation does not depend on how many invoices you issue. It depends on who the taxpayer is and which date applies to them. A sole trader issuing twelve invoices a year is as bound as a company issuing a thousand, with exactly the same deadline.",
+    ],
+    [
+      "Do I have to change invoicing software?",
+      "Only if the one you use is not going to adapt. The first step is to ask your current provider, in writing, whether they will issue the declaration of compliance and when the ready version will be available. If the answer is clear and credible, there is nothing to do. If they do not reply, or reply vaguely, that is when it is worth looking at alternatives, with time to spare.",
+    ],
+    [
+      "What is an invoice registration record?",
+      "It is the entry the software creates the moment an invoice is issued, holding its essential data together with the digital fingerprint that links it to the previous record. That chain is what proves no invoice has been deleted or altered along the way: a missing link shows.",
+    ],
+  ],
+  de: [
+    [
+      "Ab wann ist VeriFactu Pflicht?",
+      "Für körperschaftsteuerpflichtige Unternehmen ab dem 1. Januar 2027, für Selbstständige und übrige Steuerpflichtige ab dem 1. Juli 2027, nach dem Königlichen Gesetzesdekret 15/2025. Am 5. Oktober 2026 kündigte das spanische Finanzministerium eine Verschiebung auf Oktober 2028 für alle mit weniger als acht Millionen Euro Umsatz an; diese Verschiebung ist jedoch nicht im Gesetzblatt veröffentlicht. Bis dahin gelten die Fristen von 2027.",
+    ],
+    [
+      "Müssen mit VeriFactu alle Rechnungen an die Steuerbehörde gehen?",
+      "Nur wenn Sie diese Variante wählen. Die Verordnung (RD 1007/2023) lässt zwei zu: jeden Rechnungsdatensatz im Moment der Ausstellung an die Steuerverwaltung zu senden, das ist die Variante VERI*FACTU, oder ihn signiert und verkettet im eigenen System aufzubewahren, abrufbar für die Behörde. Die zweite verlangt zusätzlich die elektronische Signatur der Datensätze.",
+    ],
+    [
+      "Reicht die Tabelle, mit der ich jetzt Rechnungen schreibe?",
+      "Nein. Die Verordnung verlangt, dass die Software zu jeder Rechnung einen Datensatz erzeugt, ihn über einen digitalen Fingerabdruck mit dem vorherigen verkettet und kein spurloses Löschen oder Ändern zulässt. Eine Tabellenkalkulation leistet nichts davon, und der Softwarehersteller muss zudem eine Konformitätserklärung abgeben, die niemand über eine eigene Tabelle abgeben kann.",
+    ],
+    [
+      "Was, wenn ich nur wenige Rechnungen im Jahr schreibe?",
+      "Die Pflicht hängt nicht von der Zahl der Rechnungen ab, sondern davon, wer der Steuerpflichtige ist und welches Datum für ihn gilt. Ein Selbstständiger mit zwölf Rechnungen im Jahr ist genauso gebunden wie ein Unternehmen mit tausend, und zwar mit derselben Frist.",
+    ],
+    [
+      "Muss ich die Rechnungssoftware wechseln?",
+      "Nur wenn die bisherige sich nicht anpasst. Fragen Sie zuerst Ihren jetzigen Anbieter schriftlich, ob er die Konformitätserklärung abgeben wird und wann die fertige Version vorliegt. Ist die Antwort klar und glaubwürdig, gibt es nichts zu tun. Bleibt sie aus oder bleibt sie vage, lohnt es sich, rechtzeitig Alternativen anzusehen.",
+    ],
+    [
+      "Was ist ein Rechnungsdatensatz?",
+      "Es ist der Eintrag, den die Software im Moment der Rechnungsstellung erzeugt. Er enthält die wesentlichen Daten der Rechnung und den digitalen Fingerabdruck, der ihn mit dem vorherigen Eintrag verkettet. Diese Kette belegt, dass unterwegs keine Rechnung gelöscht oder geändert wurde: ein fehlendes Glied fällt auf.",
+    ],
+  ],
+} as const satisfies PorIdioma;

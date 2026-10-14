@@ -8,6 +8,13 @@ export const blogHome = {
     "We write this from Palma, working with service companies across Mallorca: maintenance, cleaning, pools, HVAC, landscaping, pest control, solar and renovations. The examples come from real cases, the figures are the ones we actually work with, and when the honest answer is \"you don't need software\", we say that too.",
   publicados: [
     {
+      etiqueta: "Invoicing · 7 min",
+      titulo: "VeriFactu: what a service company in Mallorca actually has to do",
+      resumen:
+        "What binds today and what is only an unpublished announcement, what changes in your invoices, the two modes, and the four steps worth taking now.",
+      href: "/blog/verifactu-empresas-servicios-mallorca",
+    },
+    {
       etiqueta: "Enquiries · 6 min",
       titulo: "How to organise calls, WhatsApp and customer requests in a Mallorca business",
       resumen:
@@ -32,6 +39,5 @@ export const blogHome = {
   proximos: [
     "What a process diagnosis is and what you get out of it",
     "Custom CRM or off-the-shelf software: how to choose without getting it wrong",
-    "VeriFactu: what a service company in the Balearics has to do",
   ],
 };

@@ -1,0 +1,191 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_VERIFACTU } from "@/content/blog-faq";
+
+<nav aria-label="Brotkrumennavigation" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Start</Link> › <Link href="/blog" className="text-brand">Blog</Link> › VeriFactu
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Rechnungsstellung · 7 Min. Lesezeit</div>
+
+<FechaArticulo ruta="/blog/verifactu-empresas-servicios-mallorca" />
+
+# VeriFactu: Was ein Dienstleistungsbetrieb auf Mallorca wirklich tun muss
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Der VeriFactu-Termin wurde dreimal verschoben, und das hat mehr Schaden angerichtet als die
+  Vorschrift selbst: Viele hören gar nicht mehr hin. Hier steht, was heute gilt, was nur angekündigt
+  ist, und welche vier Dinge sich jetzt lohnen, auch wenn der Termin erneut wandert.
+</div>
+
+## Was heute gilt und was nur eine Ankündigung ist
+
+Zwei Dinge werden ständig vermischt, im Gespräch wie in mancher Schlagzeile.
+
+**Was veröffentlicht ist und gilt.** Die Verordnung über Rechnungssysteme (Königliches Dekret
+1007/2023) gilt für Softwarehersteller seit dem 29. Juli 2025: Was sie verkaufen, muss die Vorgaben
+erfüllen. Für die Rechnungssteller legte das Königliche Gesetzesdekret 15/2025 den
+**1. Januar 2027** für körperschaftsteuerpflichtige Unternehmen fest und den **1. Juli 2027** für
+Selbstständige und übrige Steuerpflichtige.
+
+**Was angekündigt ist und noch nicht gilt.** Am 5. Oktober 2026 kündigte das spanische
+Finanzministerium an, die Pflicht für alle mit weniger als acht Millionen Euro Umsatz auf Oktober
+2028 zu verschieben. Diese Verschiebung ist nicht im Gesetzblatt erschienen.
+
+<Destacado titulo="Warum dieser Unterschied keine juristische Haarspalterei ist">
+  Eine Ankündigung, die nie veröffentlicht wird, kann im Sande verlaufen, anders formuliert
+  wiederkommen oder zu spät kommen. Solange sie nicht im Gesetzblatt steht, **gilt für Sie weiterhin
+  der Termin 2027**.
+
+  Und selbst wenn sie genau so veröffentlicht wird, gewinnen Sie anderthalb Jahre für dieselbe
+  Arbeit. Es ändert nicht, was zu tun ist, sondern nur, wann es Sie einholt.
+</Destacado>
+
+## Was sich an Ihren Rechnungen genau ändert
+
+Das erklärt fast niemand, und nur das muss man wirklich verstehen. Bei VeriFactu geht es nicht
+darum, einmal im Jahr eine Datei an die Steuerverwaltung zu schicken. Es geht darum, wie sich Ihre
+Rechnungssoftware verhält.
+
+Im Moment der Rechnungsstellung muss die Software einen **Rechnungsdatensatz** erzeugen: einen
+Eintrag mit den wesentlichen Daten dieser Rechnung und einem **digitalen Fingerabdruck**, der aus
+diesen Daten und aus dem Fingerabdruck des vorherigen Datensatzes berechnet wird. Jeder Datensatz
+hängt am vorherigen wie die Glieder einer Kette.
+
+Diese Kette ist der ganze Gedanke. Löscht jemand eine Rechnung oder ändert einen Betrag, passt das
+nächste Glied nicht mehr, und das fällt auf. Deshalb verbietet die Verordnung, dass die Software
+spurloses Löschen oder Ändern zulässt: Eine stornierte Rechnung wird mit einem weiteren Eintrag
+storniert, nicht dadurch, dass sie verschwindet.
+
+Zusätzlich trägt die Rechnung einen **QR-Code** und, in der übermittelnden Variante, den Hinweis,
+dass sie bei der Steuerverwaltung überprüfbar ist.
+
+## Die zwei Varianten, und welche zu einem kleinen Betrieb passt
+
+Die Verordnung lässt zwei Wege zu:
+
+1. **VERI*FACTU**: Jeder Rechnungsdatensatz geht im Moment der Ausstellung an die Steuerverwaltung.
+   Dafür müssen Sie die Datensätze weder elektronisch signieren noch besonders aufbewahren: Die
+   Behörde hat sie.
+2. **Nicht überprüfbares System**: Die Datensätze bleiben signiert und verkettet in Ihrem System und
+   stehen der Behörde auf Anforderung zur Verfügung. Sie bewahren sie auf und haften dafür.
+
+<Nota>
+  Für einen Dienstleistungsbetrieb mit zehn oder fünfzehn Personen ist die erste Variante meist
+  weniger Aufwand. Die zweite lohnt sich, wenn es einen echten Grund gibt, nicht in Echtzeit zu
+  übermitteln — schlechte Verbindung auf der Baustelle etwa — und jemanden, der die Aufbewahrung
+  verantwortet.
+</Nota>
+
+## Was wirklich wehtut: dieselbe Rechnung zweimal tippen
+
+Hier hört die Vorschrift auf, Papierkram zu sein, und wird zu einer Entscheidung über Ihre
+Arbeitsweise.
+
+In den meisten Wartungs-, Reinigungs-, Klima- und Poolbetrieben auf Mallorca, mit denen wir
+sprechen, läuft es so: Der Techniker notiert Stunden und Material auf einem Papierbericht oder per
+WhatsApp, jemand im Büro überträgt es in eine Tabelle, und von dort tippt es jemand erneut in die
+Rechnungssoftware. Dieselben Daten, dreimal.
+
+<Senales items={[
+  { fuerte: "Berichte, die freitags eintreffen.", texto: "Die Arbeit vom Montag wird acht Tage später abgerechnet, wenn überhaupt jemand daran denkt." },
+  { fuerte: "Material, das nie berechnet wird.", texto: "Der Techniker hat es verbaut, aber es kam nie auf die Rechnung, weil es niemand übertragen hat." },
+  { fuerte: "Rechnungen, die von Hand korrigiert werden.", texto: "Und genau das lässt VeriFactu künftig nicht mehr zu." },
+  { fuerte: "Die Rechnungssoftware, für sich allein.", texto: "Sie weiß nichts von den Einsätzen, also wird alles eingetippt." },
+]}/>
+
+Ist Ihre Rechnungssoftware eine Insel, löst die VeriFactu-Anpassung nichts davon: Sie hängt nur
+einen digitalen Fingerabdruck an einen Ablauf mit drei Handabschriften. Die eigentliche Chance ist
+die umgekehrte: dass die Rechnung aus dem <Link href="/modulos/partes-de-trabajo">Arbeitsbericht
+entsteht, den der Techniker bereits abgeschlossen und der Kunde unterschrieben hat</Link>, mit
+Stunden und Material schon darin.
+
+## Was jetzt zu tun ist, in dieser Reihenfolge
+
+**Erstens: Fragen Sie Ihren jetzigen Anbieter.** Schriftlich, mit zwei konkreten Fragen: Werden Sie
+die Konformitätserklärung abgeben, und wann liegt die fertige Version vor? Eine klare Antwort mit
+Datum erspart Ihnen den Rest dieses Artikels. Schweigen oder ein „wir arbeiten daran" von vor sechs
+Monaten ist das Signal, sich Alternativen anzusehen.
+
+**Zweitens: Sehen Sie nach, wo Ihre Rechnungen entstehen.** Nicht in welchem Programm, sondern in
+welchem Moment. Entstehen sie aus einem Arbeitsbericht, einem Lieferschein oder einem
+Wartungsvertrag, dann fangen Sie dort an — dort liegt die doppelte Arbeit.
+
+**Drittens: Entscheiden Sie die Variante.** Es ist eine Einstellung, aber sie sollte bewusst fallen
+und nicht per Voreinstellung.
+
+**Viertens: Testen Sie mit echten Rechnungen vor dem Stichtag.** Einen Monat vorher, nicht in der
+Woche davor. Die Umstellung betrifft Nummernkreise, Stornos und Korrekturrechnungen, und dort
+warten die Überraschungen.
+
+<Destacado titulo="Was man nicht tun sollte">
+  Kaufen Sie nicht in Eile im Monat vor dem Stichtag. Genau dann werden die schlechtesten
+  Migrationen zu den schlechtesten Preisen verkauft, weil der Verkäufer weiß, dass Ihnen die Zeit
+  zum Vergleichen fehlt.
+
+  Und gehen Sie nicht davon aus, dass Ihr Programm sich anpasst, **weil es teuer ist oder weil es
+  schon lange läuft**. Mehrere Hersteller haben angekündigt, ältere Versionen nicht anzupassen: Die
+  Anpassung kommt in einer neuen Version, die extra kostet. Fragen Sie vorher nach.
+</Destacado>
+
+## Häufige Fragen
+
+{FAQ_VERIFACTU.de.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Soll die Rechnung aus dem Arbeitsbericht entstehen, ohne erneutes Tippen?"
+  boton="Schreiben Sie uns auf WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Sagen Sie uns, womit Sie heute Rechnungen schreiben und wie die Berichte von draußen bei Ihnen
+    ankommen. Wir sagen Ihnen, ob sich Ihr Programm anpassen lässt, ob ein Wechsel nötig ist oder ob
+    es reicht, es mit dem zu verbinden, was Sie schon haben.
+  </p>
+  <p>
+    Wenn ein Update Ihres Anbieters genügt,
+    **sagen wir Ihnen auch das.**
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  Wenn Sie sehen möchten, wie eine Rechnung mit Datensatz und verkettetem Fingerabdruck aussieht:
+  auf der <Link href="/modulos/facturacion-verifactu">Seite zur VeriFactu-Rechnungsstellung</Link>,
+  mit aktuellem Fristenkalender und der Demo, die direkt bei diesem Modul öffnet.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "de",
+          titulo: "VeriFactu: Was ein Dienstleistungsbetrieb auf Mallorca wirklich tun muss",
+          descripcion:
+            "Was heute gilt und was nur angekündigt ist, was sich an Ihren Rechnungen ändert, die zwei Varianten und die vier Schritte, die sich jetzt lohnen.",
+          url: `${marca.dominio}/de/blog/verifactu-empresas-servicios-mallorca`,
+          fecha: fechaPublicacion("/blog/verifactu-empresas-servicios-mallorca"),
+          actualizado: fechaRevision("/blog/verifactu-empresas-servicios-mallorca"),
+        }),
+        esquemaFaq(
+          FAQ_VERIFACTU.de.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/de/blog/verifactu-empresas-servicios-mallorca#faq`,
+          "de",
+        ),
+      ]),
+    ),
+  }}
+/>

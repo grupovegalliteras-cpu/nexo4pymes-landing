@@ -49,14 +49,31 @@ export type Landing = {
   consulta: string;
   /** Señal medida el 13/10/2026: variantes que Google autocompleta. */
   senal: number;
+  /* EL ARTÍCULO DEL BLOG QUE LE HACE PAREJA.
+
+     POR QUÉ CADA LANDING QUIERE UNO. La landing contesta a quien ya
+     busca un programa («software control horario»). El artículo
+     contesta a quien todavía busca entender el problema («es
+     obligatorio el fichaje digital»), que es mucha más gente y llega
+     antes. Si las dos cosas estuvieran en la misma página, competiría
+     consigo misma y Google acabaría eligiendo solo una.
+
+     Se enlazan en los dos sentidos a propósito: el artículo lleva a la
+     landing cuando el lector ya quiere ver algo, y la landing lleva al
+     artículo cuando todavía está decidiendo.
+
+     Vacío mientras el artículo no esté escrito. No se inventa la ruta
+     antes de tiempo: un enlace a una página que no existe es peor que
+     no tener enlace. */
+  articulo?: string;
 };
 
 export const LANDINGS = [
-  { slug: "facturacion-verifactu", modulo: "facturacion", consulta: "software facturación VeriFactu", senal: 273 },
+  { slug: "facturacion-verifactu", modulo: "facturacion", consulta: "software facturación VeriFactu", senal: 273, articulo: "/blog/verifactu-empresas-servicios-mallorca" },
   { slug: "control-horario", modulo: "fichaje", consulta: "control horario", senal: 215 },
   { slug: "partes-de-trabajo", modulo: "trabajos", consulta: "partes de trabajo app", senal: 169 },
-  { slug: "presupuestos", modulo: "presupuestos", consulta: "software presupuestos", senal: 10 },
-  { slug: "chatbot-whatsapp", modulo: "asistente-atencion", consulta: "chatbot WhatsApp Business", senal: 10 },
+  { slug: "presupuestos", modulo: "presupuestos", consulta: "software presupuestos", senal: 10, articulo: "/blog/automatizar-presupuestos-pymes-mallorca" },
+  { slug: "chatbot-whatsapp", modulo: "asistente-atencion", consulta: "chatbot WhatsApp Business", senal: 10, articulo: "/blog/centralizar-avisos-llamadas-whatsapp-mallorca" },
 ] as const satisfies readonly Landing[];
 
 export type LandingSlug = (typeof LANDINGS)[number]["slug"];

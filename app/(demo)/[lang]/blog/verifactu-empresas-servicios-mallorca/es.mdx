@@ -1,0 +1,185 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_VERIFACTU } from "@/content/blog-faq";
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › VeriFactu
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Facturación · 7 min de lectura</div>
+
+<FechaArticulo ruta="/blog/verifactu-empresas-servicios-mallorca" />
+
+# VeriFactu: qué tiene que hacer una empresa de servicios de Mallorca
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  El calendario de VeriFactu ha cambiado tres veces y eso ha hecho más daño que la propia norma:
+  mucha gente ha dejado de prestarle atención. Esto es lo que obliga hoy, lo que solo está
+  anunciado, y las cuatro cosas que conviene hacer ahora aunque la fecha vuelva a moverse.
+</div>
+
+## Qué obliga hoy y qué es solo un anuncio
+
+Hay que separar dos cosas que se mezclan continuamente en las conversaciones de bar y en algún
+titular.
+
+**Lo que está publicado y obliga.** El Reglamento de los sistemas de facturación (Real Decreto
+1007/2023) ya está en vigor para los fabricantes de software desde el 29 de julio de 2025: los
+programas que se vendan tienen que cumplir. Para quien factura, el Real Decreto-ley 15/2025 fijó
+el **1 de enero de 2027** para las empresas que tributan por el Impuesto sobre Sociedades y el
+**1 de julio de 2027** para autónomos y el resto de obligados.
+
+**Lo que se ha anunciado y todavía no obliga.** El 5 de octubre de 2026 el Ministerio de Hacienda
+anunció llevar la obligación a octubre de 2028 para quien factura menos de ocho millones de euros.
+Ese aplazamiento no ha salido en el BOE.
+
+<Destacado titulo="Por qué esta distinción no es una tontería legal">
+  Un anuncio que no se publica puede quedarse en nada, puede salir con otra redacción o puede salir
+  tarde. Mientras no esté en el BOE, **la fecha que os obliga sigue siendo la de 2027**.
+
+  Y aunque acabe publicándose tal cual, ganaríais año y medio para hacer lo mismo. No cambia qué hay
+  que hacer: cambia cuándo os pilla el toro.
+</Destacado>
+
+## Qué cambia exactamente en vuestras facturas
+
+Esto es lo que casi nadie explica y es lo único que de verdad importa entender. VeriFactu no va de
+mandar un fichero a Hacienda una vez al año. Va de cómo se comporta el programa con el que emitís.
+
+El programa tiene que generar, en el momento de emitir cada factura, un **registro de alta**: un
+apunte con los datos esenciales de esa factura y una **huella digital** calculada a partir de ellos
+y de la huella del registro anterior. Cada registro queda enganchado al que vino antes, como los
+eslabones de una cadena.
+
+Esa cadena es el invento entero. Si alguien borra una factura o le cambia el importe, el eslabón
+siguiente deja de encajar y se nota. Por eso el Reglamento prohíbe que el programa permita borrar o
+alterar nada sin dejar rastro: una factura anulada se anula con otro apunte, no desapareciendo.
+
+Además, la factura lleva un **código QR** y, si estáis en la modalidad que lo remite, la mención de
+que es verificable en la sede de la Agencia Tributaria.
+
+## Las dos modalidades, y cuál conviene a una empresa pequeña
+
+El Reglamento deja elegir entre dos formas de cumplir:
+
+1. **VERI*FACTU**: cada registro de facturación se envía a la Agencia Tributaria en el momento de
+   emitir. A cambio, no hay que firmar electrónicamente los registros ni conservar nada especial:
+   lo tiene Hacienda.
+2. **Sistema no verificable**: los registros se quedan en vuestro sistema, firmados
+   electrónicamente y encadenados, a disposición de la Agencia si los pide. Hay que conservarlos y
+   responder de ellos.
+
+<Nota>
+  Para una empresa de servicios de diez o quince personas, la primera suele ser menos trabajo. La
+  segunda tiene sentido cuando hay un motivo real para no enviar en tiempo real —conectividad mala
+  en obra, por ejemplo— y alguien que se responsabilice de la custodia.
+</Nota>
+
+## Lo que de verdad duele: teclear la misma factura dos veces
+
+Aquí es donde la norma deja de ser un trámite y se convierte en una decisión de cómo trabajáis.
+
+En la mayoría de las empresas de mantenimiento, limpieza, climatización o piscinas de Mallorca con
+las que hablamos, la secuencia es esta: el técnico apunta las horas y los materiales en un parte de
+papel o en un WhatsApp, alguien en oficina lo pasa a una hoja de cálculo, y de ahí alguien vuelve a
+teclearlo en el programa de facturación. Tres veces los mismos datos.
+
+<Senales items={[
+  { fuerte: "Partes que llegan el viernes.", texto: "Lo que se hizo el lunes se factura ocho días más tarde, si se acuerda alguien." },
+  { fuerte: "Materiales que no se cobran.", texto: "El técnico los puso, pero no llegaron a la factura porque nadie los copió." },
+  { fuerte: "Facturas corregidas a mano.", texto: "Y una corrección a mano es justo lo que VeriFactu deja de permitir." },
+  { fuerte: "El programa de facturación, aparte.", texto: "No sabe nada de los trabajos, así que todo entra tecleado." },
+]}/>
+
+Si el programa de facturación es una isla, adaptarlo a VeriFactu no arregla nada de eso: solo le
+añade una huella digital a un proceso que sigue teniendo tres copias manuales. La oportunidad real
+es la contraria: que la factura salga del <Link href="/modulos/partes-de-trabajo">parte de trabajo
+que el técnico ya ha cerrado y firmado el cliente</Link>, con las horas y los materiales ya puestos.
+
+## Qué hacer ahora, en este orden
+
+**Primero, preguntad a vuestro proveedor actual.** Por escrito, y con dos preguntas concretas: ¿vais
+a emitir la declaración responsable de cumplimiento?, ¿en qué fecha estará la versión lista? Una
+respuesta clara con fecha os ahorra el resto del artículo. El silencio o un «estamos en ello» de
+hace seis meses es la señal de que toca mirar alternativas.
+
+**Segundo, mirad dónde se originan vuestras facturas.** No el programa: el momento. Si nacen de un
+parte de trabajo, de un albarán o de un contrato de mantenimiento, ese es el sitio por donde
+conviene empezar, porque es donde está el trabajo repetido.
+
+**Tercero, decidid la modalidad.** Es una línea de configuración, pero conviene decidirla a
+sabiendas y no por defecto.
+
+**Cuarto, probadlo con facturas de verdad antes de la fecha.** Un mes antes, no la semana de. El
+cambio toca numeración, anulaciones y rectificativas, que es donde aparecen los sustos.
+
+<Destacado titulo="Lo que no hay que hacer">
+  No compréis con prisa el mes anterior a la fecha. Es exactamente cuando se venden las migraciones
+  peor hechas y a peor precio, porque el que vende sabe que no tenéis tiempo de comparar.
+
+  Y no deis por hecho que vuestro programa se adaptará **porque es caro o porque lleva muchos años**.
+  Varios fabricantes han anunciado que no adaptarán sus versiones antiguas: la adaptación llega en
+  una versión nueva que se paga aparte. Preguntadlo antes.
+</Destacado>
+
+## Preguntas frecuentes
+
+{FAQ_VERIFACTU.es.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="¿Queréis que la factura salga del parte, sin teclearla otra vez?"
+  boton="Escribidnos por WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Contadnos con qué facturáis ahora y cómo os llegan los partes desde la calle. Os decimos si
+    vuestro programa se adapta, si hace falta cambiarlo o si lo que conviene es conectarlo con lo
+    que ya tenéis.
+  </p>
+  <p>
+    Si la respuesta es que con una actualización de vuestro proveedor vais servidos,
+    **también os lo decimos.**
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  Si queréis ver cómo queda una factura con su registro de alta y su huella encadenada,
+  está en la <Link href="/modulos/facturacion-verifactu">página de facturación con VeriFactu</Link>,
+  con el calendario legal al día y la demo abierta por ese módulo.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "es",
+          titulo: "VeriFactu: qué tiene que hacer una empresa de servicios de Mallorca",
+          descripcion:
+            "Qué obliga hoy y qué es solo un anuncio, qué cambia en vuestras facturas, las dos modalidades y los cuatro pasos que conviene dar ahora.",
+          url: `${marca.dominio}/blog/verifactu-empresas-servicios-mallorca`,
+          fecha: fechaPublicacion("/blog/verifactu-empresas-servicios-mallorca"),
+          actualizado: fechaRevision("/blog/verifactu-empresas-servicios-mallorca"),
+        }),
+        esquemaFaq(
+          FAQ_VERIFACTU.es.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/blog/verifactu-empresas-servicios-mallorca#faq`,
+          "es",
+        ),
+      ]),
+    ),
+  }}
+/>

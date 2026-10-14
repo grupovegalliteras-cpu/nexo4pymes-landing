@@ -93,9 +93,15 @@ ${socios}
 - [Demo en vivo](${marca.dominio}/demo): el panel y la app lado a lado, sincronizados, con recorrido guiado.
 - [Servicios](${marca.dominio}/servicios): qué se construye, con qué alcance y qué límites, y el método en cuatro pasos.
 - [Todos los módulos](${marca.dominio}/modulos): los cuarenta módulos agrupados por área.
+- [Facturación con VeriFactu](${marca.dominio}/modulos/facturacion-verifactu): huella encadenada, registro de alta y el calendario legal al día.
+- [Control horario y fichaje](${marca.dominio}/modulos/control-horario): fichaje desde el móvil, con la obligación del artículo 34.9 del Estatuto de los Trabajadores explicada.
+- [Partes de trabajo](${marca.dominio}/modulos/partes-de-trabajo): el parte que el técnico cierra y firma el cliente, y de donde sale la factura.
+- [Presupuestos](${marca.dominio}/modulos/presupuestos): presupuestos con vuestras reglas de precio, sin rehacerlos a mano.
+- [Asistente de WhatsApp](${marca.dominio}/modulos/chatbot-whatsapp): contesta, clasifica y abre el aviso sin que nadie lo teclee.
 - [Quiénes somos](${marca.dominio}/nosotros): las dos personas, cómo se trabaja y qué pasa con los datos de los clientes.
 - [Contacto](${marca.dominio}/contacto): videollamada de 15 minutos o formulario.
 - [Blog](${marca.dominio}/blog)
+- [VeriFactu: qué tiene que hacer una empresa de servicios de Mallorca](${marca.dominio}/blog/verifactu-empresas-servicios-mallorca): qué obliga hoy y qué es solo un anuncio sin publicar, qué cambia en la factura y qué hacer ahora.
 - [Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca](${marca.dominio}/blog/centralizar-avisos-llamadas-whatsapp-mallorca): los cuatro pasos para centralizar los avisos y qué hace CentralAvisos.
 - [Cómo dejar de hacer presupuestos a mano en una pyme de Mallorca](${marca.dominio}/blog/automatizar-presupuestos-pymes-mallorca): plantilla, integración o configurador web, y cuándo no compensa.
 - [Por qué automatizar sin diagnosticar antes puede hundiros el negocio](${marca.dominio}/blog/por-que-diagnosticar-antes-de-automatizar)

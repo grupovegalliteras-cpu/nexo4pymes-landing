@@ -17,6 +17,13 @@ export const blogHome = {
     "Lo escribimos desde Palma, trabajando con empresas de servicios de Mallorca: mantenimiento, limpieza, piscinas, climatización, jardinería, control de plagas, solar y reformas. Los ejemplos salen de casos reales, los precios que aparecen son los que manejamos, y cuando la respuesta honesta es «no hace falta software», también lo decimos.",
   publicados: [
     {
+      etiqueta: "Facturación · 7 min",
+      titulo: "VeriFactu: qué tiene que hacer una empresa de servicios de Mallorca",
+      resumen:
+        "Qué obliga hoy y qué es solo un anuncio sin publicar, qué cambia exactamente en vuestras facturas, las dos modalidades y los cuatro pasos que conviene dar ahora.",
+      href: "/blog/verifactu-empresas-servicios-mallorca",
+    },
+    {
       etiqueta: "Avisos y comunicación · 6 min",
       titulo: "Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca",
       resumen:
@@ -41,6 +48,5 @@ export const blogHome = {
   proximos: [
     "Qué es un diagnóstico de procesos y qué os lleváis de él",
     "CRM a medida o software de catálogo: cómo elegir sin equivocarse",
-    "VeriFactu: qué tiene que hacer una empresa de servicios de Baleares",
   ],
 };

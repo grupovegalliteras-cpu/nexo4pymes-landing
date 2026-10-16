@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type RefObject } from "react";
+import { quietoPorPreferencia } from "./decision-movimiento";
 import type { ControlNucleo } from "./nucleo-escena";
 
 /** Lienzo WebGL del hero. Three se descarga aparte, cuando el titular ya está
@@ -25,7 +26,9 @@ export function Nucleo({
     if (!canvas || !ancla.current || !seccion.current) return;
     let mando: ControlNucleo | undefined;
     let cancelado = false;
-    const reducirMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    /* Decisión de producto: la portada se mueve siempre. El porqué,
+       y cómo revertirlo, en ./decision-movimiento.ts */
+    const reducirMovimiento = quietoPorPreferencia();
     import("./nucleo-escena")
       .then(({ montarNucleo }) => {
         if (cancelado || !ancla.current || !seccion.current) return;

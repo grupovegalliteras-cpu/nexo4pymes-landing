@@ -2,13 +2,17 @@
 
 import { useEffect, useRef, type PointerEvent as PE, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { quietoPorPreferencia } from "./decision-movimiento";
 
-/* Micro-interacciones de la portada. Todas se apagan solas en pantallas
-   táctiles (no hay ratón que seguir) y con «reducir movimiento».
+/* Micro-interacciones de la portada. Se apagan solas en pantallas
+   táctiles (no hay ratón que seguir). Lo de «reducir movimiento» ya no
+   las apaga: ver ./decision-movimiento.ts.
    Hubo un cursor propio y se quitó: el del sistema se entiende mejor. */
 
 const conRaton = () => typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-const sinMovimiento = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* La portada se mueve siempre: ver ./decision-movimiento.ts, que es
+   donde está el porqué y el interruptor para volver atrás. */
+const sinMovimiento = () => quietoPorPreferencia();
 
 /* ---------------- Botón magnético ----------------
    Envuelve un botón: el envoltorio se desplaza hacia el ratón y el

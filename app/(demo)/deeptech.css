@@ -412,7 +412,17 @@ html:has(.deeptech) {
     opacity 0.5s ease var(--d, 0ms),
     transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms);
 }
-@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+/* El estado escondido de las revelaciones por scroll.
+
+   YA NO LLEVA EL FILTRO DE MOVIMIENTO REDUCIDO. Lo llevaba, y por eso
+   en un equipo que pide movimiento reducido estos elementos salian ya
+   colocados y la revelacion no se veia. La portada se mueve siempre:
+   el porque y el interruptor para volver atras estan en
+   components/deeptech/decision-movimiento.ts.
+
+   (scripting: enabled) SI se queda: sin JavaScript nadie marcaria
+   data-visto y esto dejaria media portada escondida para siempre. */
+@media (scripting: enabled) {
   [data-revelar]:not([data-visto]) {
     opacity: 0;
     transform: translateY(18px);
@@ -453,7 +463,9 @@ html:has(.deeptech) {
 .dt-anillo-segmento {
   transition: opacity 0.3s ease calc(var(--i) * 60ms + 100ms);
 }
-@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+/* Sin filtro de movimiento reducido, igual que el bloque de arriba:
+   ver components/deeptech/decision-movimiento.ts */
+@media (scripting: enabled) {
   [data-al-ver]:not([data-visto]) .dt-anillo-trazo {
     stroke-dashoffset: 100;
   }
@@ -583,7 +595,9 @@ html:has(.deeptech) {
   color: #fff;
   text-shadow: 0 0 14px var(--c);
 }
-@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+/* Sin filtro de movimiento reducido, igual que el bloque de arriba:
+   ver components/deeptech/decision-movimiento.ts */
+@media (scripting: enabled) {
   [data-al-ver]:not([data-visto]) .dt-caja-cuerpo {
     transform: scaleZ(0.001);
   }

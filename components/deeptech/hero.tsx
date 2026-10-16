@@ -7,6 +7,7 @@ import { useIdioma } from "@/components/i18n/idioma";
 import type { Idioma } from "@/lib/i18n";
 import type { ControlNucleo } from "./nucleo-escena";
 import { Nucleo } from "./nucleo";
+import { quietoPorPreferencia } from "./decision-movimiento";
 import { Magnetico } from "./interaccion";
 
 /* Hero de la portada: el núcleo WebGL a la derecha (arriba en el móvil) y
@@ -190,7 +191,9 @@ function Registro({ eventos, control, titulo }: { eventos: EventoHero[]; control
   const [i, setI] = useState(0);
   const n = eventos.length;
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    /* El registro deja de rotar solo si decidimos respetar la
+       preferencia del sistema; hoy no. Ver ./decision-movimiento.ts */
+    if (quietoPorPreferencia()) return;
     const id = window.setInterval(() => {
       if (document.hidden) return;
       setI((x) => (x + 1) % n);

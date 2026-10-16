@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { quietoPorPreferencia } from "./decision-movimiento";
 
 /* Todo el movimiento ligado al scroll de la portada, en un solo sitio.
 
@@ -17,10 +18,12 @@ import { useEffect } from "react";
      Van pegadas al scroll (scrub: true), sin retardo que las haga ir detrás.
    GSAP y ScrollTrigger se descargan aparte, después de pintar.
 
-   Con «reducir movimiento» no hay scrub: todo se ve directamente en su sitio. */
+   Con «reducir movimiento» no habría scrub y todo se vería directamente
+   en su sitio — pero hoy la portada se mueve siempre: el porqué está en
+   ./decision-movimiento.ts, que es donde se revierte. */
 export function useMovimientoPortada() {
   useEffect(() => {
-    const reducir = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reducir = quietoPorPreferencia();
 
     const io = new IntersectionObserver(
       (es) => {
@@ -32,9 +35,56 @@ export function useMovimientoPortada() {
       },
       { rootMargin: "0px 0px -4% 0px" },
     );
-    document.querySelectorAll("[data-revelar], [data-al-ver]").forEach((el) => io.observe(el));
+    const porRevelar = document.querySelectorAll<HTMLElement>("[data-revelar], [data-al-ver]");
+    porRevelar.forEach((el) => io.observe(el));
 
-    if (reducir) return () => io.disconnect();
+    /* ============================================================
+       RED DE SEGURIDAD: SI EL OBSERVADOR NO AVISA, SE ENSEÑA IGUAL
+
+       Estos elementos arrancan escondidos (opacidad 0 y desplazados)
+       y solo aparecen cuando el observador les pone data-visto. Son
+       43 en la portada. Si ese aviso no llega, no es que no se
+       animen: es que no se ven.
+
+       Y puede no llegar. Una pestaña abierta en segundo plano —un
+       enlace con el botón central, las pestañas que restaura el
+       navegador al arrancar— tiene los observadores de intersección
+       congelados en Chrome. Se reanudan al mirarla, pero el riesgo
+       es media portada en blanco y es un fallo silencioso: nadie
+       avisa, simplemente se va.
+
+       Así que a los 900 ms se mira a mano quién está en pantalla y
+       se le quita el escondite, y se vuelve a mirar cuando la
+       pestaña pasa a primer plano. Solo rescata lo que de verdad se
+       ve; lo de más abajo conserva su entrada al hacer scroll.
+
+       Hasta hoy esto no hacía falta, porque con movimiento reducido
+       el escondite ni se aplicaba. Ahora la portada se mueve siempre
+       (ver ./decision-movimiento.ts), así que el escondite aplica
+       para todo el mundo y la red pasa a ser necesaria. */
+    const rescatar = () => {
+      for (const el of porRevelar) {
+        if (el.dataset.visto) continue;
+        const caja = el.getBoundingClientRect();
+        if (caja.top < window.innerHeight && caja.bottom > 0) {
+          el.dataset.visto = "1";
+          io.unobserve(el);
+        }
+      }
+    };
+    const reloj = window.setTimeout(rescatar, 900);
+    document.addEventListener("visibilitychange", rescatar);
+    const soltarRed = () => {
+      window.clearTimeout(reloj);
+      document.removeEventListener("visibilitychange", rescatar);
+    };
+
+    if (reducir) {
+      return () => {
+        soltarRed();
+        io.disconnect();
+      };
+    }
 
     let cancelado = false;
     let limpiar = () => {};
@@ -66,6 +116,7 @@ export function useMovimientoPortada() {
 
     return () => {
       cancelado = true;
+      soltarRed();
       io.disconnect();
       limpiar();
     };

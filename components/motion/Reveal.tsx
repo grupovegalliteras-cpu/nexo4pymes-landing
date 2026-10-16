@@ -17,6 +17,29 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export const SALIDA = [0.22, 1, 0.36, 1] as const;
 
+/* ============================================================
+   CON MOVIMIENTO REDUCIDO SE FUNDE, NO SE SALTA
+
+   Antes, con movimiento reducido, la duración bajaba a 0,001 s: el
+   elemento aparecía de golpe. Es lo que hacía que en Mac y en móvil
+   se vieran las entradas y en ningún PC: macOS pide «reducir
+   movimiento» solo si alguien lo activa en Accesibilidad, mientras
+   que Windows enciende esa misma señal con un interruptor general de
+   efectos que se apaga por rendimiento, y que en muchos equipos viene
+   apagado de fábrica.
+
+   Lo que hay que quitar es el MOVIMIENTO —desplazamiento, escala—,
+   que es lo que marea a quien tiene un trastorno vestibular. Un
+   fundido de opacidad no mueve nada, así que se queda. Quien pidió
+   movimiento reducido no ve desplazarse un solo píxel; quien tiene
+   Windows con los efectos apagados deja de ver una web que aparece de
+   golpe.
+
+   Medio segundo: suficiente para percibirlo, corto para no estorbar
+   a quien va con prisa. El equivalente en CSS está en el bloque
+   prefers-reduced-motion de app/(demo)/globals.css. */
+export const FUNDIDO_SIN_MOVIMIENTO = 0.5;
+
 type Direccion = "arriba" | "abajo" | "izquierda" | "derecha" | "escala";
 
 /* EL RECORRIDO DEPENDE DEL TAMAÑO DE PANTALLA, y no es un capricho.
@@ -142,7 +165,7 @@ export function Reveal({
       x: 0,
       scale: 1,
       transition: {
-        duration: reducido ? 0.001 : ancha ? duracion * 1.5 : duracion,
+        duration: reducido ? FUNDIDO_SIN_MOVIMIENTO : ancha ? duracion * 1.5 : duracion,
         delay: reducido ? 0 : retraso,
         ease: SALIDA,
       },
@@ -253,7 +276,7 @@ export function ItemStagger({
       y: 0,
       x: 0,
       scale: 1,
-      transition: { duration: reducido ? 0.001 : ancha ? 0.6 : 0.4, ease: SALIDA },
+      transition: { duration: reducido ? FUNDIDO_SIN_MOVIMIENTO : ancha ? 0.6 : 0.4, ease: SALIDA },
     },
   };
 

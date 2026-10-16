@@ -4,7 +4,7 @@ import Link from "@/components/i18n/Enlace";
 import { motion } from "framer-motion";
 import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
 import { TextoPorPalabras } from "@/components/motion/TextoPorPalabras";
-import { SALIDA } from "@/components/motion/Reveal";
+import { FUNDIDO_SIN_MOVIMIENTO, SALIDA } from "@/components/motion/Reveal";
 import { Caustics } from "@/components/site/caustics";
 import { MessageCircle } from "lucide-react";
 import { waLink } from "@/lib/whatsapp";
@@ -40,7 +40,9 @@ export function HeroServicios() {
   const entrada = (retraso: number) => ({
     initial: reducido ? { opacity: 0 } : { opacity: 0, y: 18 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: reducido ? 0.001 : 0.7, delay: reducido ? 0 : retraso, ease: SALIDA },
+    /* Con movimiento reducido se funde en vez de saltar; el porqué
+       está en components/motion/Reveal.tsx. */
+    transition: { duration: reducido ? FUNDIDO_SIN_MOVIMIENTO : 0.7, delay: reducido ? 0 : retraso, ease: SALIDA },
   });
 
   const palabrasA = heroServicios.titularA.split(" ").length;
@@ -72,7 +74,7 @@ export function HeroServicios() {
             initial={reducido ? { opacity: 0 } : { opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: reducido ? 0.001 : 0.72,
+              duration: reducido ? FUNDIDO_SIN_MOVIMIENTO : 0.72,
               delay: reducido ? 0 : 0.16 + palabrasA * 0.045,
               ease: SALIDA,
             }}

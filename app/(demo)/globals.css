@@ -252,6 +252,34 @@ html:has(.pagina-padel) {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
 }
 
+/* ============================================================
+   MOVIMIENTO REDUCIDO: SIN MOVIMIENTO, PERO NO SIN NADA
+
+   EL PROBLEMA. Esto cortaba TODO a una milésima, así que en un
+   equipo que pide movimiento reducido la web aparecía de golpe,
+   entera, sin una sola transición. Los dueños de la web lo vieron
+   enseguida: en el Mac y en el móvil las entradas se veían, en
+   ningún PC. No era un fallo de la web — era esto funcionando.
+
+   POR QUÉ PASA SOBRE TODO EN WINDOWS. macOS tiene «Reducir
+   movimiento» dentro de Accesibilidad: quien lo activa lo hace a
+   propósito. Windows mezcla esa señal con «Efectos de animación»,
+   que es un interruptor general que mucha gente apaga por
+   rendimiento, y que además viene apagado en equipos configurados
+   para «mejor rendimiento». Resultado: un montón de usuarios de
+   Windows piden movimiento reducido sin saberlo y sin necesitarlo.
+
+   LA DISTINCIÓN QUE IMPORTA. Lo que molesta a quien tiene un
+   trastorno vestibular es el MOVIMIENTO: desplazamientos, escalas,
+   parallax, giros. Un fundido de opacidad no mueve nada. Así que
+   aquí se quita el movimiento y se deja el fundido: quien pidió
+   movimiento reducido no ve ni un píxel desplazarse, y quien tiene
+   Windows con los efectos apagados deja de ver una web que aparece
+   de golpe.
+
+   LO QUE SIGUE CORTADO: todo lo que se repite en bucle
+   (iteration-count: 1) y todo lo que anima transform, porque esas
+   entradas pasan a usar el fundido de abajo, que no lo toca. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -259,6 +287,29 @@ html:has(.pagina-padel) {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Las entradas se quedan en un fundido, sin desplazamiento.
+     Gana al bloque de arriba por especificidad: una clase pesa más
+     que el selector universal, y las dos reglas son !important.
+
+     SI SE AÑADE UNA ENTRADA NUEVA, hay que apuntarla aquí; si no,
+     volverá a aparecer de golpe en estos equipos. */
+  .fade-up,
+  .palabra-sube,
+  .dt-entra,
+  .dt-linea-nueva,
+  .dt-palabra,
+  .dt-texto-luz {
+    animation-name: solo-aparece !important;
+    animation-duration: 450ms !important;
+    animation-timing-function: ease-out !important;
+  }
+}
+
+/* El fundido de cortesía: aparece, y no se mueve. */
+@keyframes solo-aparece {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @media print {

@@ -12,13 +12,18 @@ export function generateStaticParams() {
 export default async function Image({ params }: { params: Promise<{ lang: string }> }) {
   const lang = idiomaOBase((await params).lang);
   return await ogImage({
-    kicker: tr(lang, { es: "Demo en vivo", en: "Live demo", de: "Live-Demo" }),
-    title: tr(lang, { es: "La llamada entra. El trabajo sale solo.", en: "The call comes in. The job gets done.", de: "Der Anruf kommt rein. Der Auftrag läuft von selbst." }),
+    /* ESTA IMAGEN ES LA PORTADA PEGADA EN UN WHATSAPP, así que dice lo
+       mismo que la portada: lo que hacemos nosotros. Decía «La llamada
+       entra. El trabajo sale solo.», que es el programa de servicios —uno
+       de los ejemplos— y no el estudio. Ver el aviso del principio de
+       components/site/landing.tsx. */
+    kicker: tr(lang, { es: "Software a medida · Mallorca", en: "Custom software · Mallorca", de: "Individuelle Software · Mallorca" }),
+    title: tr(lang, { es: "Vuestro negocio no cabe en una plantilla.", en: "Your business does not fit a template.", de: "Ihr Betrieb passt in keine Vorlage." }),
     sub: tr(lang, {
-      es: "Avisos, órdenes de trabajo, parte con fotos y firma, y factura con VeriFactu. Panel de oficina y app de técnicos, conectados.",
-      en: "Requests, work orders, job reports with photos and signature, and VeriFactu invoices. Office dashboard and technician app, connected.",
-      de: "Anfragen, Arbeitsaufträge, Berichte mit Fotos und Unterschrift und Rechnungen mit VeriFactu. Büro-Dashboard und Techniker-App, verbunden.",
+      es: "Sistemas de gestión, configuradores para la web, fichaje y automatizaciones con IA. Dos socios en Palma, y el diagnóstico antes de construir nada.",
+      en: "Management systems, web configurators, time clocking and AI automations. Two partners in Palma, and a diagnosis before anything gets built.",
+      de: "Verwaltungssysteme, Web-Konfiguratoren, Zeiterfassung und KI-Automatisierungen. Zwei Partner in Palma, und erst die Analyse, dann der Bau.",
     }),
-    chips: [tr(lang, { es: "Pruébala desde el móvil", en: "Try it on your phone", de: "Am Handy ausprobieren" }), "Made in Mallorca"],
+    chips: [tr(lang, { es: "Diagnóstico primero", en: "Diagnosis first", de: "Erst die Analyse" }), "Made in Mallorca"],
   });
 }

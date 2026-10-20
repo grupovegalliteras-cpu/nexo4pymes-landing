@@ -55,18 +55,27 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
          Y DÓNDE IMPORTA MÁS QUE NADA. Los diez primeros resultados de
          "software a medida mallorca" llevan todos "Mallorca" en el
          título; esta web no lo llevaba en ninguno. El resto de
-         páginas sí conservan la marca por el template de abajo. */
+         páginas sí conservan la marca por el template de abajo.
+
+         QUÉ CONSULTA PIDE ESTA PÁGINA, Y POR QUÉ CAMBIÓ. Decía
+         "Programa de gestión para empresas de servicios en Mallorca",
+         que es una de las cosas que construimos y la que ya tiene sus
+         propias páginas: /modulos y sus cinco landings. La portada
+         competía con ellas por las mismas búsquedas y, a cambio, nadie
+         estaba pidiendo la consulta del estudio. Ahora la portada pide
+         "software a medida" + Mallorca, que es lo que somos, y las
+         landings se quedan con las consultas de producto. */
       default: tr(lang, {
-        es: "Programa de gestión para empresas de servicios en Mallorca",
-        en: "Field service management software in Mallorca",
-        de: "Branchensoftware für Dienstleister auf Mallorca",
+        es: "Software a medida para pymes en Mallorca",
+        en: "Custom software for small businesses in Mallorca",
+        de: "Individuelle Software für KMU auf Mallorca",
       }),
       template: "%s | Nexo4Pymes",
     },
     description: tr(lang, {
-      es: "Panel de oficina y app de operarios conectados en tiempo real. Avisos, trabajos, rutas, facturación con VeriFactu, equipo y nóminas. Hecho en Mallorca.",
-      en: "Office dashboard and technician app, connected in real time. Service requests, jobs, routes, VeriFactu invoicing, team and payslips. Made in Mallorca.",
-      de: "Büro-Dashboard und Techniker-App, in Echtzeit verbunden. Aufträge, Einsätze, Routen, Rechnungen mit VeriFactu, Team und Lohnzettel. Made in Mallorca.",
+      es: "Estudio de software a medida en Palma de Mallorca: sistemas de gestión, configuradores web, fichaje e integraciones con IA. El diagnóstico va primero.",
+      en: "Custom software studio in Palma de Mallorca: management systems, web configurators, time clocking and AI integrations. The diagnosis comes first.",
+      de: "Softwarestudio in Palma de Mallorca: Verwaltungssysteme, Web-Konfiguratoren, Zeiterfassung und KI-Integrationen. Erst die Analyse, dann der Bau.",
     }),
     applicationName: "Nexo4Pymes",
     authors: [{ name: "Nexo4Pymes" }],
@@ -108,14 +117,14 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       locale: OG_LOCALE[lang],
       siteName: "Nexo4Pymes",
       title: tr(lang, {
-        es: "Nexo4Pymes: la llamada entra, el trabajo sale solo",
-        en: "Nexo4Pymes: the call comes in, the job gets done",
-        de: "Nexo4Pymes: Der Anruf kommt rein, der Auftrag läuft von selbst",
+        es: "Nexo4Pymes: software a medida para pymes de Mallorca",
+        en: "Nexo4Pymes: custom software for small businesses in Mallorca",
+        de: "Nexo4Pymes: individuelle Software für KMU auf Mallorca",
       }),
       description: tr(lang, {
-        es: "Mirad en vivo cómo un aviso se convierte en orden, parte firmado y factura con VeriFactu. Panel de oficina y app de técnicos.",
-        en: "Watch a customer request become a work order, a signed job report and a VeriFactu invoice, live. Office dashboard and technician app.",
-        de: "Sehen Sie live, wie aus einer Kundenanfrage ein Auftrag, ein unterschriebener Arbeitsbericht und eine VeriFactu-Rechnung wird.",
+        es: "Sistemas de gestión, configuradores para la web, fichaje y automatizaciones con IA. Dos socios en Palma, y un programa funcionando que podéis tocar.",
+        en: "Management systems, web configurators, time clocking and AI automations. Two partners in Palma, and a working system you can click through.",
+        de: "Verwaltungssysteme, Web-Konfiguratoren, Zeiterfassung und KI-Automatisierungen. Zwei Partner in Palma und ein System, das Sie ausprobieren können.",
       }),
       /* VISTA PREVIA POR DEFECTO AL PEGAR UN ENLACE. Venía de la
          plantilla de la web y la portada no la tenía: cada página de

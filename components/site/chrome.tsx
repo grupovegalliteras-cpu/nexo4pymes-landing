@@ -14,7 +14,7 @@ import type { Idioma } from "@/lib/i18n";
 
 const T = {
   es: {
-    links: [["Producto", "/#recorrido"], ["Sectores", "/#sectores"], ["Servicios", "/servicios"], ["Nosotros", "/nosotros"], ["Blog", "/blog"], ["Contacto", "/contacto"]],
+    links: [["Qué hacemos", "/#que-construimos"], ["Sectores", "/#sectores"], ["Servicios", "/servicios"], ["Nosotros", "/nosotros"], ["Blog", "/blog"], ["Contacto", "/contacto"]],
     inicio: "Nexo4Pymes, inicio",
     principal: "Principal",
     abrirDemo: "Abrir la demo",
@@ -24,7 +24,7 @@ const T = {
     escribenos: "Escribidnos por WhatsApp",
     verDemo: "Ver la demo",
     hablamos: "¿Hablamos?",
-    pie: "Paneles de gestión y apps para empresas de servicios, con automatización e inteligencia artificial. Desde",
+    pie: "Software a medida para pymes: sistemas de gestión, configuradores web, fichaje y automatizaciones con IA. Desde",
     columnas: [
       ["Demo", [["Modo presentación", "/demo"], ["Panel de oficina", "/panel"], ["App de operarios", "/app"], ["Ver recorrido guiado", "/demo?tour=1"]]],
       /* EL PIE APUNTA A LAS PÁGINAS, NO A LA DEMO. Estos enlaces iban a
@@ -32,7 +32,7 @@ const T = {
          —la plantilla que se repite en todas las páginas— gastaba sus
          enlaces en direcciones que Google no indexa. Ahora llevan a las
          landings, que es donde hay texto que posicionar. */
-      ["Producto", [["Central Avisos", "/panel/central-avisos"], ["Todos los módulos", "/modulos"], ["Facturación con VeriFactu", "/modulos/facturacion-verifactu"], ["Control horario y fichaje", "/modulos/control-horario"], ["Partes de trabajo", "/modulos/partes-de-trabajo"]]],
+      ["Programa de servicios", [["Todos los módulos", "/modulos"], ["Facturación con VeriFactu", "/modulos/facturacion-verifactu"], ["Control horario y fichaje", "/modulos/control-horario"], ["Partes de trabajo", "/modulos/partes-de-trabajo"], ["Central Avisos", "/panel/central-avisos"]]],
       ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"], ["Jardinería", "/sectores/jardineria"], ["Control de plagas", "/sectores/plagas"], ["Instalaciones solares", "/sectores/solar"], ["Reformas", "/sectores/reformas"], ["Clubes de pádel", "/padel"]]],
       ["Empresa", [["Servicios", "/servicios"], ["Nosotros", "/nosotros"], ["Blog", "/blog"], ["Contacto", "/contacto"]]],
     ],
@@ -40,7 +40,7 @@ const T = {
     legal: "Aviso legal, privacidad y cookies",
   },
   en: {
-    links: [["Product", "/#recorrido"], ["Industries", "/#sectores"], ["Services", "/servicios"], ["About us", "/nosotros"], ["Blog", "/blog"], ["Contact", "/contacto"]],
+    links: [["What we do", "/#que-construimos"], ["Industries", "/#sectores"], ["Services", "/servicios"], ["About us", "/nosotros"], ["Blog", "/blog"], ["Contact", "/contacto"]],
     inicio: "Nexo4Pymes, home",
     principal: "Main",
     abrirDemo: "Open the demo",
@@ -50,10 +50,10 @@ const T = {
     escribenos: "Message us on WhatsApp",
     verDemo: "See the demo",
     hablamos: "Let's talk",
-    pie: "Management dashboards and apps for service companies, with automation and artificial intelligence. From",
+    pie: "Custom software for small businesses: management systems, web configurators, time clocking and AI automations. From",
     columnas: [
       ["Demo", [["Presentation mode", "/demo"], ["Office dashboard", "/panel"], ["Technician app", "/app"], ["Guided tour", "/demo?tour=1"]]],
-      ["Product", [["Central Avisos", "/panel/central-avisos"], ["All modules", "/modulos"], ["Invoicing with VeriFactu", "/modulos/facturacion-verifactu"], ["Time clock", "/modulos/control-horario"], ["Job reports", "/modulos/partes-de-trabajo"]]],
+      ["Service software", [["All modules", "/modulos"], ["Invoicing with VeriFactu", "/modulos/facturacion-verifactu"], ["Time clock", "/modulos/control-horario"], ["Job reports", "/modulos/partes-de-trabajo"], ["Central Avisos", "/panel/central-avisos"]]],
       ["Industries", [["Building maintenance", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["HVAC", "/sectores/climatizacion"], ["Cleaning", "/sectores/limpieza"], ["Landscaping", "/sectores/jardineria"], ["Pest control", "/sectores/plagas"], ["Solar", "/sectores/solar"], ["Renovations", "/sectores/reformas"]]],
       ["Company", [["Services", "/servicios"], ["About us", "/nosotros"], ["Blog", "/blog"], ["Contact", "/contacto"]]],
     ],
@@ -61,7 +61,7 @@ const T = {
     legal: "Legal notice, privacy and cookies",
   },
   de: {
-    links: [["Produkt", "/#recorrido"], ["Branchen", "/#sectores"], ["Leistungen", "/servicios"], ["Über uns", "/nosotros"], ["Blog", "/blog"], ["Kontakt", "/contacto"]],
+    links: [["Was wir machen", "/#que-construimos"], ["Branchen", "/#sectores"], ["Leistungen", "/servicios"], ["Über uns", "/nosotros"], ["Blog", "/blog"], ["Kontakt", "/contacto"]],
     inicio: "Nexo4Pymes, Startseite",
     principal: "Hauptmenü",
     abrirDemo: "Demo öffnen",
@@ -71,10 +71,10 @@ const T = {
     escribenos: "Schreiben Sie uns auf WhatsApp",
     verDemo: "Demo ansehen",
     hablamos: "Sprechen wir?",
-    pie: "Management-Dashboards und Apps für Dienstleistungsunternehmen, mit Automatisierung und künstlicher Intelligenz. Aus",
+    pie: "Individuelle Software für kleine Unternehmen: Verwaltungssysteme, Web-Konfiguratoren, Zeiterfassung und KI-Automatisierungen. Aus",
     columnas: [
       ["Demo", [["Präsentationsmodus", "/demo"], ["Büro-Dashboard", "/panel"], ["Techniker-App", "/app"], ["Geführte Tour", "/demo?tour=1"]]],
-      ["Produkt", [["Central Avisos", "/panel/central-avisos"], ["Alle Module", "/modulos"], ["Rechnungen mit VeriFactu", "/modulos/facturacion-verifactu"], ["Zeiterfassung", "/modulos/control-horario"], ["Arbeitsberichte", "/modulos/partes-de-trabajo"]]],
+      ["Dienstleister-Software", [["Alle Module", "/modulos"], ["Rechnungen mit VeriFactu", "/modulos/facturacion-verifactu"], ["Zeiterfassung", "/modulos/control-horario"], ["Arbeitsberichte", "/modulos/partes-de-trabajo"], ["Central Avisos", "/panel/central-avisos"]]],
       ["Branchen", [["Gebäudetechnik", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["Klimatechnik", "/sectores/climatizacion"], ["Reinigung", "/sectores/limpieza"], ["Garten", "/sectores/jardineria"], ["Schädlingsbekämpfung", "/sectores/plagas"], ["Solaranlagen", "/sectores/solar"], ["Renovierungen", "/sectores/reformas"]]],
       ["Unternehmen", [["Leistungen", "/servicios"], ["Über uns", "/nosotros"], ["Blog", "/blog"], ["Kontakt", "/contacto"]]],
     ],

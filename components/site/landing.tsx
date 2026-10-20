@@ -39,16 +39,45 @@ const PanelShell = dynamic(() => import("@/components/panel/shell").then((m) => 
 const AppShell = dynamic(() => import("@/components/app/shell").then((m) => m.AppShell), { ssr: false });
 const PhoneFrame = dynamic(() => import("@/components/app/shell").then((m) => m.PhoneFrame), { ssr: false });
 
-/* Textos de la portada en los tres idiomas. En alemán, trato de usted (Sie). */
+/* Textos de la portada en los tres idiomas. En alemán, trato de usted (Sie).
+
+   ============================================================
+   LA PORTADA ES DE NEXO4PYMES, NO DE CENTRALAVISOS
+
+   El hero decía «La llamada entra. El trabajo sale solo.», el párrafo
+   contaba la bandeja de avisos y los sellos prometían «sin cambiar de
+   número» y «funciona sin cobertura». Todo eso es verdad, pero es verdad
+   de UNA de las cosas que hacemos: el programa para empresas de
+   servicios. Quien abría la portada entendía que Nexo4Pymes es una
+   centralita con app, y no un estudio que construye software a medida
+   —gestión, configuradores web, fichaje e integraciones— para pymes de
+   cualquier sector.
+
+   Se nota más porque detrás del hero vienen CINCO secciones seguidas de
+   ese mismo programa (el recorrido, el selector de sector, el aviso de
+   prueba, el panel y la app incrustados, los módulos). No sobran: es la
+   mejor prueba que tenemos de que sabemos construir, y se enseña
+   funcionando, que es algo que casi nadie hace. Lo que faltaba era
+   DECIR QUE ES UN EJEMPLO. Ahora lo dice el rótulo de «Un ejemplo, a
+   fondo» y lo repite «Qué incluye el ejemplo», así que esas cinco
+   secciones se leen como un caso enseñado a fondo y no como el catálogo.
+
+   AL ESCRIBIR AQUÍ: el hero habla de lo que hacemos nosotros; a partir
+   de «Un ejemplo, a fondo», del programa de servicios. Si una promesa
+   solo vale para ese programa (el número de siempre, el trabajo sin
+   cobertura, los avisos), su sitio es de ahí para abajo, no en el hero.
+   Y al revés: en el hero no cabe nada que no sea cierto de las cuatro
+   piezas a la vez — ver el aviso de «sin licencia» en QueConstruimos.
+   ============================================================ */
 const T = {
   es: {
-    heroKicker: "Software a medida para pymes",
-    heroA: "La llamada entra.",
-    heroB: "El trabajo sale solo.",
-    heroP: "Recogemos cada llamada y cada WhatsApp de vuestros clientes, los convertimos en órdenes de trabajo y los mandamos al móvil de vuestros técnicos. Parte, fotos, firma, factura con VeriFactu y cobro, sin pasar nada a mano.",
-    verDemo: "Ver la demo en vivo",
+    heroKicker: "Software a medida para pymes · Mallorca",
+    heroA: "Vuestro negocio",
+    heroB: "no cabe en una plantilla.",
+    heroP: "Somos dos, en Palma. Empezamos mirando cómo trabajáis, no vendiendo licencias: si no os hace falta software a medida, os lo decimos. Y cuando hace falta, se construye por fases y lo usáis desde la primera.",
+    verDemo: "Ver un programa funcionando",
     escribenos: "Escribidnos por WhatsApp",
-    sellos: ["Sin cambiar de número", "Funciona sin cobertura", "Datos en la UE", "Hecho en Mallorca"],
+    sellos: ["Diagnóstico primero", "Sin contratos de 12 meses", "Datos en la UE", "Hecho en Mallorca"],
     sectH: "Elegid vuestro sector y mirad la demo con vuestro día a día",
     sectP: "La demo cambia la empresa, los servicios, los checklists, las mediciones y los avisos.",
     ejemplo: "Empresa de ejemplo",
@@ -59,15 +88,15 @@ const T = {
     checklist: "Checklist del parte",
     mediciones: "Mediciones en campo",
     servicios: "Servicios",
-    pasos: [
-      ["Llama un cliente", "Central Avisos graba, transcribe y clasifica la llamada. También los WhatsApp, emails y formularios.", "Central Avisos"],
-      ["La oficina crea la orden", "Con el técnico recomendado por zona y carga de trabajo. Un clic.", "Órdenes de trabajo"],
-      ["Le llega al técnico", "Notificación en el móvil con dirección, notas de la oficina e historial del cliente.", "App de operarios"],
-      ["Va de camino", "El cliente recibe un aviso. En la oficina veis en el mapa dónde está cada uno.", "Rutas"],
-      ["Parte con fotos y firma", "Checklist, mediciones del sector, material de la furgoneta, fotos y firma con el dedo. Aunque no haya cobertura.", "Parte de trabajo"],
-      ["Informe al cliente", "Un PDF con vuestra marca, las fotos y la firma, enviado solo.", "Informes"],
-      ["Factura con VeriFactu", "Sale del parte, con su QR y el enlace de pago. Vosotros solo la revisáis.", "Facturación"],
-      ["Cobrada por Bizum", "El cliente paga desde el móvil y el panel de dirección lo refleja al instante.", "Cobros"],
+    heroRegistro: [
+      "Un pedido entra desde la web",
+      "El precio se calcula solo",
+      "Alguien ficha desde el móvil",
+      "Un WhatsApp se clasifica solo",
+      "Un parte se cierra con firma",
+      "La factura sale sin teclearse",
+      "El panel cuadra las horas",
+      "Dos programas se sincronizan",
     ],
     realH: "No es una maqueta. Tocadlo.",
     realMovil: "Esta es la app que llevarían vuestros técnicos, funcionando con datos de ejemplo. Tocad un trabajo, fichad o abrid el menú Más.",
@@ -115,13 +144,13 @@ const T = {
       `Hola, soy ${f.nombre || "…"} de ${f.empresa || "…"} (${sector.toLowerCase()}, ${f.tecnicos} técnicos). He visto la demo de Nexo4Pymes y quiero verla con los datos de mi empresa.${f.tel ? ` Mi teléfono: ${f.tel}.` : ""}`,
   },
   en: {
-    heroKicker: "Custom software for small businesses",
-    heroA: "The call comes in.",
-    heroB: "The job gets done.",
-    heroP: "We pick up every call and every WhatsApp from your customers, turn them into work orders and send them to your technicians' phones. Job report, photos, signature, VeriFactu invoice and payment, with nothing typed up by hand.",
-    verDemo: "See the live demo",
+    heroKicker: "Custom software for small businesses · Mallorca",
+    heroA: "Your business",
+    heroB: "does not fit a template.",
+    heroP: "There are two of us, in Palma. We start by looking at how you work, not by selling licences: if you do not need custom software, we will say so. And when you do, it gets built in phases and you use it from the first one.",
+    verDemo: "See a system running",
     escribenos: "Message us on WhatsApp",
-    sellos: ["Keep your phone number", "Works without signal", "Data stored in the EU", "Made in Mallorca"],
+    sellos: ["Diagnosis first", "No 12-month contracts", "Data stored in the EU", "Made in Mallorca"],
     sectH: "Pick your industry and see the demo with your day-to-day",
     sectP: "The demo changes the company, services, checklists, readings and requests.",
     ejemplo: "Sample company",
@@ -132,15 +161,15 @@ const T = {
     checklist: "Job report checklist",
     mediciones: "On-site readings",
     servicios: "Services",
-    pasos: [
-      ["A customer calls", "Central Avisos records, transcribes and sorts the call. WhatsApp messages, emails and web forms too.", "Central Avisos"],
-      ["The office creates the order", "With the technician suggested by area and workload. One click.", "Work orders"],
-      ["The technician gets it", "A notification on their phone with the address, office notes and the customer's history.", "Technician app"],
-      ["On the way", "The customer gets a message. In the office you see on the map where everyone is.", "Routes"],
-      ["Job report with photos and signature", "Checklist, industry readings, van stock, photos and a finger signature. Even with no signal.", "Job report"],
-      ["Report to the customer", "A branded PDF with the photos and signature, sent automatically.", "Reports"],
-      ["VeriFactu invoice", "Created from the job report, with its QR code and payment link. You just check it.", "Invoicing"],
-      ["Paid by Bizum", "The customer pays from their phone and the management dashboard shows it instantly.", "Payments"],
+    heroRegistro: [
+      "An order comes in from the web",
+      "The price works itself out",
+      "Someone clocks in from a phone",
+      "A WhatsApp sorts itself",
+      "A job report closes, signed",
+      "An invoice goes out untyped",
+      "The dashboard adds up the hours",
+      "Two systems sync themselves",
     ],
     realH: "It's not a mock-up. Try it.",
     realMovil: "This is the app your technicians would carry, running with sample data. Tap a job, clock in or open the More menu.",
@@ -188,13 +217,13 @@ const T = {
       `Hi, I'm ${f.nombre || "…"} from ${f.empresa || "…"} (${sector.toLowerCase()}, ${f.tecnicos} technicians). I've seen the Nexo4Pymes demo and I'd like to see it with my company's data.${f.tel ? ` My phone: ${f.tel}.` : ""}`,
   },
   de: {
-    heroKicker: "Individuelle Software für kleine Unternehmen",
-    heroA: "Der Anruf kommt rein.",
-    heroB: "Der Auftrag läuft von selbst.",
-    heroP: "Wir nehmen jeden Anruf und jede WhatsApp Ihrer Kunden auf, machen daraus Arbeitsaufträge und schicken sie aufs Handy Ihrer Techniker. Arbeitsbericht, Fotos, Unterschrift, Rechnung mit VeriFactu und Zahlung, ohne etwas abzutippen.",
-    verDemo: "Live-Demo ansehen",
+    heroKicker: "Individuelle Software für kleine Unternehmen · Mallorca",
+    heroA: "Ihr Betrieb passt",
+    heroB: "in keine Vorlage.",
+    heroP: "Wir sind zwei, in Palma. Wir fangen damit an, uns Ihre Arbeitsweise anzusehen, nicht mit dem Verkauf von Lizenzen: Wenn Sie keine individuelle Software brauchen, sagen wir Ihnen das. Und wenn doch, wird sie in Phasen gebaut und Sie nutzen sie ab der ersten.",
+    verDemo: "Ein System in Betrieb ansehen",
     escribenos: "Schreiben Sie uns auf WhatsApp",
-    sellos: ["Ihre Nummer bleibt", "Funktioniert ohne Netz", "Daten in der EU", "Made in Mallorca"],
+    sellos: ["Erst die Analyse", "Keine 12-Monats-Verträge", "Daten in der EU", "Made in Mallorca"],
     sectH: "Wählen Sie Ihre Branche und sehen Sie die Demo mit Ihrem Alltag",
     sectP: "Die Demo passt Firma, Leistungen, Checklisten, Messwerte und Anfragen an.",
     ejemplo: "Beispielfirma",
@@ -205,15 +234,15 @@ const T = {
     checklist: "Checkliste im Arbeitsbericht",
     mediciones: "Messwerte vor Ort",
     servicios: "Leistungen",
-    pasos: [
-      ["Ein Kunde ruft an", "Central Avisos zeichnet den Anruf auf, transkribiert und ordnet ihn ein. Auch WhatsApp, E-Mails und Formulare.", "Central Avisos"],
-      ["Das Büro erstellt den Auftrag", "Mit dem Techniker, der nach Gebiet und Auslastung vorgeschlagen wird. Ein Klick.", "Arbeitsaufträge"],
-      ["Der Techniker bekommt ihn", "Benachrichtigung aufs Handy mit Adresse, Hinweisen vom Büro und Kundenhistorie.", "Techniker-App"],
-      ["Unterwegs", "Der Kunde bekommt eine Nachricht. Im Büro sehen Sie auf der Karte, wo jeder ist.", "Routen"],
-      ["Bericht mit Fotos und Unterschrift", "Checkliste, Branchenmesswerte, Material aus dem Fahrzeug, Fotos und Unterschrift mit dem Finger. Auch ohne Netz.", "Arbeitsbericht"],
-      ["Bericht an den Kunden", "Ein PDF mit Ihrem Logo, den Fotos und der Unterschrift, automatisch verschickt.", "Berichte"],
-      ["Rechnung mit VeriFactu", "Entsteht aus dem Arbeitsbericht, mit QR-Code und Zahlungslink. Sie prüfen sie nur noch.", "Rechnungen"],
-      ["Per Bizum bezahlt", "Der Kunde zahlt per Handy und das Dashboard der Geschäftsführung zeigt es sofort.", "Zahlungen"],
+    heroRegistro: [
+      "Eine Bestellung kommt per Website",
+      "Der Preis rechnet sich selbst",
+      "Jemand stempelt per Handy ein",
+      "Eine WhatsApp ordnet sich selbst",
+      "Ein Bericht wird unterschrieben",
+      "Eine Rechnung geht ohne Tippen raus",
+      "Das Dashboard summiert die Stunden",
+      "Zwei Systeme synchronisieren sich",
     ],
     realH: "Kein Mock-up. Probieren Sie es aus.",
     realMovil: "Das ist die App, die Ihre Techniker nutzen würden, mit Beispieldaten. Tippen Sie auf einen Auftrag, stempeln Sie ein oder öffnen Sie das Menü Mehr.",
@@ -267,17 +296,17 @@ const T = {
    comparten con versiones anteriores de la portada. */
 const TD = {
   es: {
-    heroLinea: "Por ejemplo, este programa para empresas de mantenimiento, piscinas, climatización o limpieza, adaptado a cada una:",
+    heroLinea: "Construimos vuestro propio programa de gestión, los configuradores de vuestra web y las automatizaciones con IA que lo conectan todo.",
     piezasEnlace: "Ver el detalle de cada pieza",
     kSectores: "Vuestro sector",
     kReal: "El programa por dentro",
-    kModulos: "Qué incluye",
+    kModulos: "Qué incluye el ejemplo",
     kComo: "Cómo empezamos",
     kFaq: "Preguntas frecuentes",
     kContacto: "Hablemos",
-    escK: "Así funciona",
-    escH: "Así entra una llamada y así sale el trabajo.",
-    escP: "La animación usa la empresa de ejemplo del sector que tengáis elegido. Cambiadlo un poco más abajo y veréis otra llamada, otro cliente y otro técnico.",
+    escK: "Un ejemplo, a fondo",
+    escH: "Por ejemplo: así entra una llamada y así sale el trabajo.",
+    escP: "Este es uno de los programas que hemos construido, el de las empresas de servicios, y de aquí hasta los módulos se enseña entero y funcionando. La animación usa la empresa de ejemplo del sector que tengáis elegido: cambiadlo un poco más abajo y veréis otra llamada, otro cliente y otro técnico.",
     escPuntos: [
       ["Grabada y transcrita", "Central Avisos coge la llamada en vuestro número de siempre."],
       ["Clasificada por IA", "Tipo de aviso, urgencia y cliente, sin que nadie lo teclee."],
@@ -285,17 +314,17 @@ const TD = {
     ],
   },
   en: {
-    heroLinea: "For example, this software for maintenance, pool, HVAC and cleaning companies, adapted to each one:",
+    heroLinea: "We build your own management software, the configurators inside your website and the AI automations that connect it all.",
     piezasEnlace: "See each piece in detail",
     kSectores: "Your industry",
     kReal: "Inside the software",
-    kModulos: "What's included",
+    kModulos: "What the example includes",
     kComo: "How we start",
     kFaq: "Frequently asked questions",
     kContacto: "Let's talk",
-    escK: "How it works",
-    escH: "This is how a call comes in and the job goes out.",
-    escP: "The animation uses the sample company for the industry you have selected. Change it a little further down and you'll see another call, another customer and another technician.",
+    escK: "One example, in full",
+    escH: "For example: this is how a call comes in and the job goes out.",
+    escP: "This is one of the systems we have built, the one for service companies, and from here down to the modules you get all of it, running. The animation uses the sample company for the industry you have selected: change it a little further down and you'll see another call, another customer and another technician.",
     escPuntos: [
       ["Recorded and transcribed", "Central Avisos picks up the call on your usual number."],
       ["Sorted by AI", "Request type, urgency and customer, without anyone typing it."],
@@ -303,17 +332,17 @@ const TD = {
     ],
   },
   de: {
-    heroLinea: "Zum Beispiel diese Software für Wartungs-, Pool-, Klima- und Reinigungsfirmen, angepasst an jede einzelne:",
+    heroLinea: "Wir bauen Ihre eigene Verwaltungssoftware, die Konfiguratoren in Ihrer Website und die KI-Automatisierungen, die alles verbinden.",
     piezasEnlace: "Jeden Baustein im Detail ansehen",
     kSectores: "Ihre Branche",
     kReal: "Die Software von innen",
-    kModulos: "Was dazugehört",
+    kModulos: "Was das Beispiel umfasst",
     kComo: "So starten wir",
     kFaq: "Häufige Fragen",
     kContacto: "Sprechen wir",
-    escK: "So funktioniert es",
-    escH: "So kommt ein Anruf rein und so geht der Auftrag raus.",
-    escP: "Die Animation nutzt die Beispielfirma der Branche, die Sie gewählt haben. Ändern Sie sie etwas weiter unten, und Sie sehen einen anderen Anruf, einen anderen Kunden und einen anderen Techniker.",
+    escK: "Ein Beispiel, im Detail",
+    escH: "Zum Beispiel: So kommt ein Anruf rein und so geht der Auftrag raus.",
+    escP: "Das ist eines der Systeme, die wir gebaut haben — das für Dienstleister —, und von hier bis zu den Modulen sehen Sie es ganz und in Betrieb. Die Animation nutzt die Beispielfirma der Branche, die Sie gewählt haben: Ändern Sie sie etwas weiter unten, und Sie sehen einen anderen Anruf, einen anderen Kunden und einen anderen Techniker.",
     escPuntos: [
       ["Aufgezeichnet und transkribiert", "Central Avisos nimmt den Anruf unter Ihrer gewohnten Nummer an."],
       ["Von der KI eingeordnet", "Art der Anfrage, Dringlichkeit und Kunde, ohne dass jemand etwas abtippt."],
@@ -337,20 +366,30 @@ function useT() {
    se enseña a fondo, no el único producto. Por eso el rótulo del hero y
    «Qué construimos» van antes que la demo.
 
-   De arriba abajo:
-     Núcleo           qué hacemos, y el ejemplo en una imagen
+   De arriba abajo, y la portada se parte en dos mitades:
+
+     — quiénes somos y qué hacemos —
+     Núcleo           software a medida, dicho sin rodeos
      Qué construimos  las cuatro piezas (textos de /servicios)
-     Así funciona     la animación de la llamada, ejemplo en marcha
+
+     — un ejemplo, a fondo: el programa de empresas de servicios —
+     Un ejemplo       la animación de la llamada, el ejemplo en marcha
      Tu sector        el visitante elige su sector y todo lo demás cambia
                       Pádel y colaboradores
      Pruébalo         escribe un aviso y mira lo que pasa
      Por dentro       el panel y la app de verdad, incrustados
      Qué incluye      los módulos, con sus cifras (barras 3D y anillos)
+
      Cómo empezamos · Preguntas · Hablemos
 
+   LA RAYA ENTRE LAS DOS MITADES LA PINTA EL TEXTO, no un separador: el
+   rótulo «Un ejemplo, a fondo» y la primera línea de su párrafo. Son dos
+   frases y son lo único que impide que cinco secciones del programa de
+   servicios se lean como el catálogo entero de Nexo4Pymes. Si alguien
+   reescribe ese bloque, que las conserve.
+
    Hubo una sección «Un día de trabajo» con los 8 pasos del día y se
-   quitó: contaba lo mismo que «Así funciona» y «Pruébalo». Sus horas y
-   pasos siguen vivos en el cuadro del hero (HORAS, más abajo). Y hubo una
+   quitó: contaba lo mismo que «Así funciona» y «Pruébalo». Y hubo una
    sección «En cifras» que ahora va dentro de «Qué incluye»: las dos
    hablaban de los módulos. */
 export function Landing() {
@@ -380,7 +419,7 @@ export function Landing() {
 function Hero() {
   const t = useT();
   const lang = useIdioma();
-  const eventos = t.pasos.map(([titulo], i) => ({ hora: HORAS[i], texto: titulo }));
+  const eventos = t.heroRegistro.map((texto, i) => ({ hora: HORAS[i], texto }));
   return (
     <HeroNucleo
       kicker={t.heroKicker}
@@ -661,9 +700,15 @@ function SectorPicker() {
   );
 }
 
-/* Horas del día de ejemplo, en el mismo orden que t.pasos. Las enseña el
-   cuadro del hero; las mismas que usa la demo guiada. */
-const HORAS = ["8:02", "8:03", "8:03", "9:10", "10:25", "10:26", "10:40", "12:15"];
+/* Horas del cuadro del hero, en el mismo orden que t.heroRegistro.
+
+   Repartidas por el día a propósito. Antes iban de 8:02 a 12:15 con dos
+   horas repetidas, porque las ocho líneas eran los ocho pasos encadenados
+   de un mismo aviso: la llamada de las 8:02 era la orden de las 8:03. Ahora
+   cada línea es una cosa que pasa en un programa distinto de los que hemos
+   construido, así que no hay nada que encadenar y dos sucesos a la misma
+   hora solo parecerían un descuido. */
+const HORAS = ["8:04", "9:12", "9:40", "10:25", "11:08", "12:15", "16:30", "18:02"];
 
 /* ---------------- Software real ---------------- */
 function ScaledPanel() {

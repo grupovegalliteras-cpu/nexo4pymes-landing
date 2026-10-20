@@ -12,41 +12,51 @@ import { Magnetico } from "./interaccion";
 
 /* Hero de la portada: el núcleo WebGL a la derecha (arriba en el móvil) y
    el texto a la izquierda. La escena es abstracta, así que va explicada en
-   tres pasos con palabras de todos los días: llegan los avisos, se ordenan
-   solos, sale el trabajo. En escritorio, alrededor del núcleo; en el
-   móvil, en una fila debajo.
+   tres pasos con palabras de todos los días. En escritorio, alrededor del
+   núcleo; en el móvil, en una fila debajo.
 
-   El cuadro de abajo repite el día de ejemplo del recorrido de la portada
-   (las mismas horas y los mismos pasos) y cada línea nueva lanza una onda
-   por la red. Dice «de ejemplo» porque lo es. */
+   LOS TRES PASOS CUENTAN LO QUE HACEMOS NOSOTROS, NO UN PRODUCTO.
+   Decían «llegan los avisos · se ordenan solos · sale el trabajo», que es
+   el recorrido de CentralAvisos: en la primera pantalla de la web, eso
+   hacía que Nexo4Pymes pareciera una bandeja de avisos y no un estudio que
+   construye software a medida. Ahora cuentan el movimiento del trabajo —lo
+   disperso se vuelve un sistema y las piezas encajan—, que es además lo
+   que la escena enseña: puntos sueltos que convergen en un núcleo y salen
+   ordenados. Si alguien vuelve a poner aquí el recorrido de un aviso,
+   estará volviendo al enfoque antiguo sin darse cuenta.
+
+   El cuadro de abajo enseña cosas que pasan en los programas que hemos
+   construido, cada una de una pieza distinta (web, gestión, fichaje,
+   facturación, integraciones), y cada línea nueva lanza una onda por la
+   red. Van sin nombre de cliente a propósito. */
 
 const HX = {
   es: {
     pasos: [
-      ["Llegan los avisos", "Llamadas, WhatsApp, email y web"],
-      ["Se ordenan solos", "La IA los clasifica y los asigna"],
-      ["Sale el trabajo", "Orden, parte, factura y cobro"],
+      ["Lo de hoy, disperso", "Excels, correos, cuadernos y la cabeza de uno"],
+      ["Se vuelve un sistema", "Hecho sobre cómo trabajáis de verdad"],
+      ["Y cada pieza encaja", "La web, la gestión y lo que ya usáis"],
     ],
-    registro: "Un día de ejemplo",
-    desliza: "Cómo funciona, aquí debajo",
+    registro: "Sistemas que hemos construido",
+    desliza: "Qué construimos, aquí debajo",
   },
   en: {
     pasos: [
-      ["Requests come in", "Calls, WhatsApp, email and web"],
-      ["They sort themselves", "AI classifies and assigns them"],
-      ["The job goes out", "Order, report, invoice and payment"],
+      ["Scattered, as it is today", "Spreadsheets, email, notebooks, one person's head"],
+      ["Becomes one system", "Built around how you actually work"],
+      ["And the pieces fit", "Your site, your admin and the tools you keep"],
     ],
-    registro: "A sample day",
-    desliza: "Scroll to see how it works",
+    registro: "Systems we have built",
+    desliza: "What we build, just below",
   },
   de: {
     pasos: [
-      ["Anfragen kommen rein", "Anrufe, WhatsApp, E-Mail und Web"],
-      ["Sie ordnen sich selbst", "Die KI ordnet sie ein und weist sie zu"],
-      ["Der Auftrag geht raus", "Auftrag, Bericht, Rechnung und Zahlung"],
+      ["Heute: alles verstreut", "Tabellen, E-Mails, Notizbücher, ein Kopf"],
+      ["Wird ein System", "Gebaut auf Ihrer echten Arbeitsweise"],
+      ["Und alles greift ineinander", "Website, Verwaltung und Ihre Werkzeuge"],
     ],
-    registro: "Ein Beispieltag",
-    desliza: "Scrollen Sie, um zu sehen, wie es funktioniert",
+    registro: "Systeme, die wir gebaut haben",
+    desliza: "Was wir bauen, hier darunter",
   },
 } satisfies Record<Idioma, unknown>;
 
@@ -67,7 +77,7 @@ export function HeroNucleo({
   kicker: string;
   a: string;
   b: string;
-  /** Qué es lo de debajo: el programa de servicios como ejemplo del software a medida. */
+  /** La línea en negrita bajo el titular: qué construimos, dicho de una vez. */
   linea: string;
   p: string;
   verDemo: string;
@@ -188,7 +198,13 @@ function Paso({ n, titulo, texto, className, tono }: { n: number; titulo: string
 }
 
 function Registro({ eventos, control, titulo }: { eventos: EventoHero[]; control: React.RefObject<ControlNucleo | null>; titulo: string }) {
-  const [i, setI] = useState(0);
+  /* Empieza en 2 y no en 0 porque la ventana visible es [i-2, i-1, i]: en
+     el primer pintado, con i = 0, esas dos primeras posiciones daban la
+     vuelta y el cuadro abría con las dos últimas horas del día encima de
+     la primera (18:02 sobre las 8:04). Pasaba antes también, y justo en el
+     momento en que todo el mundo lo ve. Arrancando en 2 el primer pintado
+     sale en orden y el salto queda donde no molesta, al cerrar la vuelta. */
+  const [i, setI] = useState(2);
   const n = eventos.length;
   useEffect(() => {
     /* El registro deja de rotar solo si decidimos respetar la

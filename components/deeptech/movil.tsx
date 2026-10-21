@@ -67,14 +67,14 @@ export function MovilErp({
     let desmontar = () => {};
 
     async function montar() {
-      const [THREE, { RoomEnvironment }, { RoundedBoxGeometry }, { gsap }, pantallasMod, { construirMano }] =
+      const [THREE, { RoomEnvironment }, { RoundedBoxGeometry }, { GLTFLoader }, { gsap }, pantallasMod] =
         await Promise.all([
           import("three"),
           import("three/examples/jsm/environments/RoomEnvironment.js"),
           import("three/examples/jsm/geometries/RoundedBoxGeometry.js"),
+          import("three/examples/jsm/loaders/GLTFLoader.js"),
           import("gsap"),
           import("@/lib/pantallas-erp"),
-          import("./mano"),
         ]);
       if (!vivo) return;
       await ceder();
@@ -325,22 +325,53 @@ export function MovilErp({
       escena.add(movil);
 
       /* -------------------------------------------------------------- mano
+         LA MANO ES UN MODELO, NO GEOMETRÍA ESCRITA AQUÍ. La primera versión
+         la construía con cápsulas sueltas —un cilindro por falange— y se veía
+         exactamente a lo que era: tubos separados, sin carne entre los dedos
+         y con bolas por nudillos. Ahora sale de Blender
+         (herramientas/mano-blender.py), donde el modificador Skin le pone
+         carne alrededor de un esqueleto conectado: hay palma de verdad entre
+         los dedos y las articulaciones son continuas.
+
+         Ese script es la fuente; public/modelos/mano.glb es lo que se
+         publica. Para cambiar la pose se toca el script y se vuelve a
+         ejecutar, no se edita el .glb.
+
          La mano va dentro de una envoltura cuyo origen es el punto donde se
-         apoya el móvil. Así la portada coloca la envoltura donde quiere que
-         esté el móvil y la mano se acomoda sola debajo, sin cuentas a mano
-         que haya que rehacer cada vez que se toque la pose. */
-      /* Inclinada hacia atrás: desde la cámara, los dedos quedan escorzados
-         y la mano se lee como una mano que viene hacia ti, no como una
-         silueta plana recortada. */
-      const mano = construirMano();
-      mano.grupo.rotation.set(0.42, -0.16, POSE.z * 0.8);
+         apoya el móvil, que viene marcado en el propio modelo con un vacío
+         llamado «apoyo». Así la portada coloca la envoltura donde quiere que
+         esté el móvil y la mano se acomoda sola debajo. */
       const envolturaMano = new THREE.Group();
-      envolturaMano.add(mano.grupo);
-      mano.grupo.updateMatrixWorld(true);
-      const apoyoLocal = new THREE.Vector3();
-      mano.apoyo.getWorldPosition(apoyoLocal);
-      mano.grupo.position.sub(apoyoLocal);
       escena.add(envolturaMano);
+      /* Se ESPERA a que cargue antes de seguir, en vez de añadirla cuando
+         llegue. Si llega tarde, la entrada ya ha pasado y la mano aparece de
+         golpe debajo del móvil, que es peor que no tenerla. Esperar aquí la
+         mete en el mismo compilado de shaders que el resto y entra con la
+         animación, como una pieza más. Si falla, el móvil flota solo. */
+      try {
+        const glb = await new GLTFLoader().loadAsync("/modelos/mano.glb");
+        if (!vivo) return;
+        const grupo = glb.scene;
+        /* Inclinada hacia atrás: desde la cámara los dedos quedan escorzados
+           y la mano se lee como una mano que viene hacia ti, no como una
+           silueta plana recortada. */
+        grupo.rotation.set(0.42, -0.16, POSE.z * 0.8);
+        /* El modelo está en medidas de mano de verdad (la palma mide unos 9
+           cm); la escena trabaja con el móvil midiendo 1,5 de alto. */
+        grupo.scale.setScalar(7.4);
+        envolturaMano.add(grupo);
+
+        const apoyo = grupo.getObjectByName("apoyo");
+        grupo.updateMatrixWorld(true);
+        if (apoyo) {
+          const sitioApoyo = new THREE.Vector3();
+          apoyo.getWorldPosition(sitioApoyo);
+          grupo.position.sub(sitioApoyo);
+          apoyo.visible = false;
+        }
+      } catch {
+        // Sin mano: el móvil flota solo y la portada se sostiene igual.
+      }
 
       /* En el suelo, la luz de la pantalla y encima la sombra: es lo que hace
          que el conjunto parezca estar en un sitio y no pegado al fondo. */

@@ -153,22 +153,104 @@ html:has(.deeptech) {
   opacity: 1;
 }
 
-/* velo para que el texto se lea por encima de la escena. En escritorio es
-   suave y largo, para que no parezca una página partida en dos (texto a
-   oscuras a la izquierda, escena a la derecha). En el móvil el núcleo va
-   detrás del titular: el velo oscurece por igual y más hacia abajo. */
-.dt-velo {
+/* LA COLUMNA DE LUZ que baja desde arriba y dentro de la cual pasa todo.
+
+   Es la pieza que ata la escena: sin ella, la mano y el móvil son dos objetos
+   flotando sobre un fondo negro; con ella, son dos objetos DENTRO de algo, y
+   el ojo acepta que estén ahí. Tres capas:
+
+     · el foco de arriba del todo, que es de donde sale la luz;
+     · un cono estrecho y claro, centrado en la vertical (180°), que es el haz;
+     · un segundo cono más abierto, violeta y menta, descentrado a propósito:
+       un cono solo se lee como un triángulo pegado, dos desalineados se leen
+       como luz.
+
+   La máscara lo apaga antes de llegar abajo, donde va el texto. */
+.dt-columna {
+  position: absolute;
+  inset: -8% 0 0 0;
   background:
-    linear-gradient(to bottom, transparent 75%, var(--bg) 100%),
-    linear-gradient(90deg, rgb(2 3 6 / 0.72) 0%, rgb(2 3 6 / 0.42) 38%, rgb(2 3 6 / 0.08) 70%, transparent 100%);
+    radial-gradient(ellipse 34% 15% at 50% 0%, rgb(190 240 255 / 0.28), transparent 72%),
+    conic-gradient(
+      from 168deg at 50% -4%,
+      transparent 0deg,
+      rgb(56 225 255 / 0.05) 7deg,
+      rgb(190 240 255 / 0.13) 12deg,
+      rgb(56 225 255 / 0.05) 17deg,
+      transparent 24deg
+    ),
+    conic-gradient(
+      from 160deg at 53% -8%,
+      transparent 0deg,
+      rgb(157 123 255 / 0.07) 14deg,
+      transparent 30deg,
+      transparent 37deg,
+      rgb(44 245 176 / 0.05) 45deg,
+      transparent 55deg
+    );
+  mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 92%);
 }
 @media (max-width: 1023px) {
-  .dt-velo {
-    background: linear-gradient(to bottom, rgb(2 3 6 / 0.3) 0%, rgb(2 3 6 / 0.45) 40%, rgb(2 3 6 / 0.82) 72%, var(--bg) 100%);
+  /* En vertical el cono se abre mucho antes de llegar abajo y se come la
+     pantalla entera: más estrecho y apagado más arriba. */
+  .dt-columna {
+    inset: -6% 0 0 0;
+    background:
+      radial-gradient(ellipse 50% 12% at 50% 0%, rgb(190 240 255 / 0.24), transparent 72%),
+      conic-gradient(
+        from 172deg at 50% -3%,
+        transparent 0deg,
+        rgb(56 225 255 / 0.05) 5deg,
+        rgb(190 240 255 / 0.11) 8deg,
+        rgb(56 225 255 / 0.05) 11deg,
+        transparent 16deg
+      );
+    mask-image: linear-gradient(to bottom, #000 0%, #000 34%, transparent 76%);
   }
-  /* sombra corta bajo las letras: se leen sobre las partículas sin tapar la escena */
-  .dt-sobre-escena :is(h1 > span:first-child, p, li) {
-    text-shadow: 0 1px 2px rgb(2 3 6 / 0.9), 0 0 18px rgb(2 3 6 / 0.85);
+}
+
+/* Viñeta: oscurece los bordes y deja limpio el centro, donde está la escena.
+
+   Antes esto oscurecía por la IZQUIERDA, porque el hero tenía el texto a la
+   izquierda y la escena a la derecha. Ahora la escena está en el centro y el
+   texto encima, así que un velo lateral oscurecería justo la mitad que hay
+   que ver. */
+.dt-velo {
+  background:
+    radial-gradient(ellipse 82% 72% at 50% 40%, transparent 34%, rgb(2 3 6 / 0.58) 100%),
+    linear-gradient(to bottom, rgb(2 3 6 / 0.4) 0%, transparent 16%);
+}
+
+/* El velo de abajo, donde va el texto encima de la imagen. Es lo único que
+   garantiza que el titular se lea pase lo que pase por detrás. */
+.dt-pie-velo {
+  background: linear-gradient(to bottom, transparent 0%, rgb(2 3 6 / 0.5) 40%, rgb(2 3 6 / 0.86) 72%, var(--bg) 100%);
+}
+
+/* Sombra corta bajo las letras. Antes solo en el móvil, porque en escritorio
+   el texto quedaba sobre fondo liso; ahora el texto se monta sobre la escena
+   en los dos sitios. */
+.dt-sobre-escena :is(h1 > span:first-child, p, li) {
+  text-shadow:
+    0 1px 2px rgb(2 3 6 / 0.9),
+    0 0 18px rgb(2 3 6 / 0.85);
+}
+
+/* El punto que señala algo de la pantalla del móvil. */
+.dt-latido {
+  animation: dt-latido 2.4s ease-out infinite;
+}
+@keyframes dt-latido {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 4px rgb(255 255 255 / 0.16),
+      0 0 18px rgb(255 255 255 / 0.55);
+  }
+  50% {
+    box-shadow:
+      0 0 0 9px rgb(255 255 255 / 0.04),
+      0 0 26px rgb(255 255 255 / 0.72);
   }
 }
 

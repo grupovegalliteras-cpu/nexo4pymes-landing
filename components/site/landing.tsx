@@ -72,9 +72,15 @@ const PhoneFrame = dynamic(() => import("@/components/app/shell").then((m) => m.
 const T = {
   es: {
     heroKicker: "Software a medida para pymes · Mallorca",
-    heroA: "Vuestro negocio",
-    heroB: "no cabe en una plantilla.",
-    heroP: "Somos dos, en Palma. Empezamos mirando cómo trabajáis, no vendiendo licencias: si no os hace falta software a medida, os lo decimos. Y cuando hace falta, se construye por fases y lo usáis desde la primera.",
+    /* «VUESTRO» Y NO «TU», aunque se pidiera así de palabra.
+       Toda la web trata de vosotros a la empresa y de tú solo en /legal y en
+       el banner de cookies, donde se le habla a la persona cuyos datos se
+       tratan. El hero fue durante meses la única parte en «tú» y costó
+       unificarlo; volver a meterlo aquí lo rompe otra vez. La idea del
+       titular es la que se pidió, el pronombre es el de la casa. */
+    heroA: "Vuestro negocio,",
+    heroB: "en el bolsillo.",
+    heroP: "Somos dos, en Palma. Si no os hace falta software a medida, os lo decimos.",
     verDemo: "Ver un programa funcionando",
     escribenos: "Escribidnos por WhatsApp",
     sellos: ["Diagnóstico primero", "Sin contratos de 12 meses", "Datos en la UE", "Hecho en Mallorca"],
@@ -88,16 +94,6 @@ const T = {
     checklist: "Checklist del parte",
     mediciones: "Mediciones en campo",
     servicios: "Servicios",
-    heroRegistro: [
-      "Un pedido entra desde la web",
-      "El precio se calcula solo",
-      "Alguien ficha desde el móvil",
-      "Un WhatsApp se clasifica solo",
-      "Un parte se cierra con firma",
-      "La factura sale sin teclearse",
-      "El panel cuadra las horas",
-      "Dos programas se sincronizan",
-    ],
     realH: "No es una maqueta. Tocadlo.",
     realMovil: "Esta es la app que llevarían vuestros técnicos, funcionando con datos de ejemplo. Tocad un trabajo, fichad o abrid el menú Más.",
     realPc: "Esto que veis abajo es el panel de oficina funcionando, con datos de ejemplo. Navegad, abrid fichas, emitid una factura. Y el móvil del técnico está conectado.",
@@ -145,9 +141,9 @@ const T = {
   },
   en: {
     heroKicker: "Custom software for small businesses · Mallorca",
-    heroA: "Your business",
-    heroB: "does not fit a template.",
-    heroP: "There are two of us, in Palma. We start by looking at how you work, not by selling licences: if you do not need custom software, we will say so. And when you do, it gets built in phases and you use it from the first one.",
+    heroA: "Your business,",
+    heroB: "in your pocket.",
+    heroP: "There are two of us, in Palma. If you do not need custom software, we will say so.",
     verDemo: "See a system running",
     escribenos: "Message us on WhatsApp",
     sellos: ["Diagnosis first", "No 12-month contracts", "Data stored in the EU", "Made in Mallorca"],
@@ -161,16 +157,6 @@ const T = {
     checklist: "Job report checklist",
     mediciones: "On-site readings",
     servicios: "Services",
-    heroRegistro: [
-      "An order comes in from the web",
-      "The price works itself out",
-      "Someone clocks in from a phone",
-      "A WhatsApp sorts itself",
-      "A job report closes, signed",
-      "An invoice goes out untyped",
-      "The dashboard adds up the hours",
-      "Two systems sync themselves",
-    ],
     realH: "It's not a mock-up. Try it.",
     realMovil: "This is the app your technicians would carry, running with sample data. Tap a job, clock in or open the More menu.",
     realPc: "What you see below is the office dashboard, running with sample data. Browse, open records, issue an invoice. And the technician's phone is connected.",
@@ -218,9 +204,9 @@ const T = {
   },
   de: {
     heroKicker: "Individuelle Software für kleine Unternehmen · Mallorca",
-    heroA: "Ihr Betrieb passt",
-    heroB: "in keine Vorlage.",
-    heroP: "Wir sind zwei, in Palma. Wir fangen damit an, uns Ihre Arbeitsweise anzusehen, nicht mit dem Verkauf von Lizenzen: Wenn Sie keine individuelle Software brauchen, sagen wir Ihnen das. Und wenn doch, wird sie in Phasen gebaut und Sie nutzen sie ab der ersten.",
+    heroA: "Ihr Betrieb,",
+    heroB: "in der Hosentasche.",
+    heroP: "Wir sind zwei, in Palma. Wenn Sie keine individuelle Software brauchen, sagen wir Ihnen das.",
     verDemo: "Ein System in Betrieb ansehen",
     escribenos: "Schreiben Sie uns auf WhatsApp",
     sellos: ["Erst die Analyse", "Keine 12-Monats-Verträge", "Daten in der EU", "Made in Mallorca"],
@@ -234,16 +220,6 @@ const T = {
     checklist: "Checkliste im Arbeitsbericht",
     mediciones: "Messwerte vor Ort",
     servicios: "Leistungen",
-    heroRegistro: [
-      "Eine Bestellung kommt per Website",
-      "Der Preis rechnet sich selbst",
-      "Jemand stempelt per Handy ein",
-      "Eine WhatsApp ordnet sich selbst",
-      "Ein Bericht wird unterschrieben",
-      "Eine Rechnung geht ohne Tippen raus",
-      "Das Dashboard summiert die Stunden",
-      "Zwei Systeme synchronisieren sich",
-    ],
     realH: "Kein Mock-up. Probieren Sie es aus.",
     realMovil: "Das ist die App, die Ihre Techniker nutzen würden, mit Beispieldaten. Tippen Sie auf einen Auftrag, stempeln Sie ein oder öffnen Sie das Menü Mehr.",
     realPc: "Unten sehen Sie das Büro-Dashboard in Aktion, mit Beispieldaten. Klicken Sie sich durch, öffnen Sie Akten, stellen Sie eine Rechnung aus. Und das Handy des Technikers ist verbunden.",
@@ -415,11 +391,12 @@ export function Landing() {
   );
 }
 
-/* ---------------- Hero ---------------- */
+/* ---------------- Hero ----------------
+   El hero se lleva su propia escena (mano, móvil y columna de luz) dentro de
+   components/deeptech/hero.tsx. Aquí solo se le pasan las palabras. */
 function Hero() {
   const t = useT();
   const lang = useIdioma();
-  const eventos = t.heroRegistro.map((texto, i) => ({ hora: HORAS[i], texto }));
   return (
     <HeroNucleo
       kicker={t.heroKicker}
@@ -431,7 +408,6 @@ function Hero() {
       escribenos={t.escribenos}
       waHref={whatsappLink(waHola(lang))}
       sellos={t.sellos}
-      eventos={eventos}
     />
   );
 }
@@ -699,16 +675,6 @@ function SectorPicker() {
     </section>
   );
 }
-
-/* Horas del cuadro del hero, en el mismo orden que t.heroRegistro.
-
-   Repartidas por el día a propósito. Antes iban de 8:02 a 12:15 con dos
-   horas repetidas, porque las ocho líneas eran los ocho pasos encadenados
-   de un mismo aviso: la llamada de las 8:02 era la orden de las 8:03. Ahora
-   cada línea es una cosa que pasa en un programa distinto de los que hemos
-   construido, así que no hay nada que encadenar y dos sucesos a la misma
-   hora solo parecerían un descuido. */
-const HORAS = ["8:04", "9:12", "9:40", "10:25", "11:08", "12:15", "16:30", "18:02"];
 
 /* ---------------- Software real ---------------- */
 function ScaledPanel() {

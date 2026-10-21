@@ -18,7 +18,7 @@ export default async function Image({ params }: { params: Promise<{ lang: string
        de los ejemplos— y no el estudio. Ver el aviso del principio de
        components/site/landing.tsx. */
     kicker: tr(lang, { es: "Software a medida · Mallorca", en: "Custom software · Mallorca", de: "Individuelle Software · Mallorca" }),
-    title: tr(lang, { es: "Vuestro negocio no cabe en una plantilla.", en: "Your business does not fit a template.", de: "Ihr Betrieb passt in keine Vorlage." }),
+    title: tr(lang, { es: "Vuestro negocio, en el bolsillo.", en: "Your business, in your pocket.", de: "Ihr Betrieb, in der Hosentasche." }),
     sub: tr(lang, {
       es: "Sistemas de gestión, configuradores para la web, fichaje y automatizaciones con IA. Dos socios en Palma, y el diagnóstico antes de construir nada.",
       en: "Management systems, web configurators, time clocking and AI automations. Two partners in Palma, and a diagnosis before anything gets built.",

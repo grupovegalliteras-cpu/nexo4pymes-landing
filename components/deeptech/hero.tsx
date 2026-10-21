@@ -1,66 +1,75 @@
 "use client";
 
 import Link from "@/components/i18n/Enlace";
-import { Check, MessageCircle, PlayCircle } from "lucide-react";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { MessageCircle, PlayCircle } from "lucide-react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { useIdioma } from "@/components/i18n/idioma";
 import type { Idioma } from "@/lib/i18n";
 import type { ControlNucleo } from "./nucleo-escena";
 import { Nucleo } from "./nucleo";
+import { MovilErp } from "./movil";
+import { PANTALLAS } from "@/lib/pantallas-erp";
 import { quietoPorPreferencia } from "./decision-movimiento";
 import { Magnetico } from "./interaccion";
 
-/* Hero de la portada: el núcleo WebGL a la derecha (arriba en el móvil) y
-   el texto a la izquierda. La escena es abstracta, así que va explicada en
-   tres pasos con palabras de todos los días. En escritorio, alrededor del
-   núcleo; en el móvil, en una fila debajo.
+/* ===========================================================================
+   HERO DE LA PORTADA
 
-   LOS TRES PASOS CUENTAN LO QUE HACEMOS NOSOTROS, NO UN PRODUCTO.
-   Decían «llegan los avisos · se ordenan solos · sale el trabajo», que es
-   el recorrido de CentralAvisos: en la primera pantalla de la web, eso
-   hacía que Nexo4Pymes pareciera una bandeja de avisos y no un estudio que
-   construye software a medida. Ahora cuentan el movimiento del trabajo —lo
-   disperso se vuelve un sistema y las piezas encajan—, que es además lo
-   que la escena enseña: puntos sueltos que convergen en un núcleo y salen
-   ordenados. Si alguien vuelve a poner aquí el recorrido de un aviso,
-   estará volviendo al enfoque antiguo sin darse cuenta.
+   LA COMPOSICIÓN. Una sola imagen a sangre: un haz de luz que baja desde
+   arriba, y dentro del haz una mano que sube desde abajo con un móvil
+   flotando encima en el que va pasando un ERP. El texto, abajo a la
+   izquierda, encima de la imagen; y abajo a la derecha, las cuatro piezas
+   que se pueden tocar para cambiar lo que se ve en el móvil.
 
-   El cuadro de abajo enseña cosas que pasan en los programas que hemos
-   construido, cada una de una pieza distinta (web, gestión, fichaje,
-   facturación, integraciones), y cada línea nueva lanza una onda por la
-   red. Van sin nombre de cliente a propósito. */
+   DE DÓNDE SALE. De una referencia que trajo el cliente (un hero de
+   Craftfolio: mano a contraluz subiendo dentro de un haz, texto abajo a la
+   izquierda, dos bloques abajo a la derecha) y del móvil 3D de la web de
+   Priora, que ya existía. Lo que no venía de ningún sitio es la mano, que se
+   construye aquí (./mano.ts).
+
+   POR QUÉ HAY MUCHO MENOS TEXTO QUE ANTES. El hero anterior tenía rótulo,
+   titular, línea, párrafo, dos botones, cuatro sellos, tres pasos flotando
+   alrededor del núcleo y un cuadro con un registro de ocho líneas. Trece
+   piezas de texto. Esa cantidad funcionaba cuando el fondo era abstracto y
+   había que explicarlo con palabras; con una imagen que se explica sola,
+   sobra la mitad y estorba. Lo que se ha ido no se ha perdido:
+
+     · los tres pasos y el registro los sustituye el móvil, que enseña lo
+       mismo en vez de contarlo;
+     · los cuatro sellos («diagnóstico primero», «sin contratos de 12 meses»…)
+       bajan a una línea fina debajo de los botones;
+     · el párrafo largo se queda en dos líneas.
+
+   LAS CUATRO PIEZAS DE LA DERECHA SON EL ARGUMENTO. Cada pantalla del móvil
+   es de una pieza distinta —gestión, configurador web, fichaje, facturación—,
+   y eso es exactamente lo que decimos que hacemos. Un móvil enseñando cuatro
+   pantallas de la MISMA app estaría diciendo «vendemos esta app», que es lo
+   que se quitó de la portada. Si algún día alguien añade aquí una quinta
+   pantalla del mismo programa, está deshaciendo eso.
+   =========================================================================== */
 
 const HX = {
   es: {
-    pasos: [
-      ["Lo de hoy, disperso", "Excels, correos, cuadernos y la cabeza de uno"],
-      ["Se vuelve un sistema", "Hecho sobre cómo trabajáis de verdad"],
-      ["Y cada pieza encaja", "La web, la gestión y lo que ya usáis"],
-    ],
-    registro: "Sistemas que hemos construido",
+    piezas: "Lo que construimos",
     desliza: "Qué construimos, aquí debajo",
+    tocar: "Tocad una para verla",
   },
   en: {
-    pasos: [
-      ["Scattered, as it is today", "Spreadsheets, email, notebooks, one person's head"],
-      ["Becomes one system", "Built around how you actually work"],
-      ["And the pieces fit", "Your site, your admin and the tools you keep"],
-    ],
-    registro: "Systems we have built",
+    piezas: "What we build",
     desliza: "What we build, just below",
+    tocar: "Tap one to see it",
   },
   de: {
-    pasos: [
-      ["Heute: alles verstreut", "Tabellen, E-Mails, Notizbücher, ein Kopf"],
-      ["Wird ein System", "Gebaut auf Ihrer echten Arbeitsweise"],
-      ["Und alles greift ineinander", "Website, Verwaltung und Ihre Werkzeuge"],
-    ],
-    registro: "Systeme, die wir gebaut haben",
+    piezas: "Was wir bauen",
     desliza: "Was wir bauen, hier darunter",
+    tocar: "Tippen Sie eine an",
   },
 } satisfies Record<Idioma, unknown>;
 
-export type EventoHero = { hora: string; texto: string };
+/* Cada cuánto pasa sola a la siguiente pieza. Cuatro segundos y medio: lo
+   suficiente para leer el rótulo y mirar la pantalla sin que dé la sensación
+   de que hay prisa. Al tocar una, deja de pasar sola. */
+const CADA = 4500;
 
 export function HeroNucleo({
   kicker,
@@ -72,162 +81,246 @@ export function HeroNucleo({
   escribenos,
   waHref,
   sellos,
-  eventos,
 }: {
   kicker: string;
   a: string;
   b: string;
-  /** La línea en negrita bajo el titular: qué construimos, dicho de una vez. */
+  /** La línea de debajo del titular: qué construimos. */
   linea: string;
+  /** Y debajo, más floja y más corta, quiénes somos y la promesa incómoda. */
   p: string;
   verDemo: string;
   escribenos: string;
   waHref: string;
   sellos: readonly string[];
-  eventos: EventoHero[];
 }) {
   const lang = useIdioma();
   const hx = HX[lang];
   const seccion = useRef<HTMLElement>(null);
-  const ancla = useRef<HTMLDivElement>(null);
+  const anclaNucleo = useRef<HTMLDivElement>(null);
+  const huecoMovil = useRef<HTMLDivElement>(null);
   const control = useRef<ControlNucleo | null>(null);
   const palabras = a.split(" ");
 
+  const [activa, setActiva] = useState(0);
+  const [manual, setManual] = useState(false);
+
+  /* Pasa sola hasta que alguien toca una pieza. A partir de ahí manda quien
+     está mirando: una lista que sigue cambiando sola debajo del dedo es de las
+     cosas que más molestan de una web. */
+  useEffect(() => {
+    if (manual || quietoPorPreferencia()) return;
+    const id = window.setInterval(() => {
+      if (document.hidden) return;
+      setActiva((x) => (x + 1) % PANTALLAS.length);
+      control.current?.onda();
+    }, CADA);
+    return () => window.clearInterval(id);
+  }, [manual]);
+
+  const elegir = useCallback((i: number) => {
+    setManual(true);
+    setActiva(i);
+    control.current?.onda();
+  }, []);
+
+  const pieza = PANTALLAS[activa]!;
+
   return (
     <section ref={seccion} className="dt-hero relative isolate flex min-h-[100svh] flex-col overflow-hidden">
-      <div className="absolute inset-0 -z-10" aria-hidden="true">
+      {/* ---------------------------------------------------------- el fondo */}
+      <div className="absolute inset-0 -z-20" aria-hidden="true">
         <div className="dt-rejilla absolute inset-0" />
-        <div className="dt-luz-volumen" />
-        <Nucleo ancla={ancla} seccion={seccion} control={control} />
+        {/* El haz: la columna de luz que baja desde arriba y dentro de la cual
+            pasa todo. Es lo que ata la mano, el móvil y el texto a una misma
+            escena en vez de dejarlos flotando sobre un fondo oscuro. */}
+        <div className="dt-columna" />
+        <Nucleo ancla={anclaNucleo} seccion={seccion} control={control} />
         <div className="dt-velo absolute inset-0" />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-4 px-5 pt-20 pb-6 sm:px-6 lg:grid-cols-[1.06fr_1fr] lg:gap-2 lg:pt-24">
-        <div data-scrub="salida-hero" className="dt-sobre-escena relative z-10 max-lg:pt-[12svh]">
-          <div className="dt-entra inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-[#070a10] py-1.5 pr-3.5 pl-2.5 text-[13px] font-medium text-fg-2 sm:text-[14px]">
-            <i className="size-2 shrink-0 rounded-full bg-[var(--dt-menta)] shadow-[0_0_12px_var(--dt-menta)]" />
-            {kicker}
-          </div>
+      {/* EL ANCLA DEL NÚCLEO: dónde se concentran las partículas, y por tanto
+          dónde cae el resplandor. Va ARRIBA DEL TODO, en la boca del haz, no
+          detrás del móvil.
 
-          <h1 className="mt-6 font-display text-[44px] leading-[0.98] font-semibold tracking-[-0.045em] text-fg min-[400px]:text-[48px] sm:text-[64px] lg:text-[70px] xl:text-[80px]">
-            <span className="block">
-              {palabras.map((w, i) => (
-                <span key={i} className="dt-palabra" style={{ "--d": `${40 + i * 50}ms` } as CSSProperties}>
-                  {w}
-                  {i < palabras.length - 1 ? " " : ""}
-                </span>
+          Centrada en el hero —que es donde estaba— el núcleo dejaba su punto
+          de luz justo encima de la pantalla del móvil y se comía las cifras
+          del ERP, que es lo único que hay que ver ahí. Puesta arriba hace de
+          foco: parece la lámpara de la que sale la columna de luz, y la
+          pantalla se lee. */}
+      <div
+        ref={anclaNucleo}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-[-10%] -z-20 h-[34%] lg:top-[-8%] lg:h-[38%]"
+      />
+
+      {/* ------------------------------------------------- la mano y el móvil */}
+      <MovilErp
+        pantalla={activa}
+        nota={pieza.nota}
+        hueco={huecoMovil}
+        className="pointer-events-none absolute inset-0 -z-10"
+      />
+      {/* Solo marca dónde va el móvil y cuánto mide; no pinta nada. En el móvil
+          ocupa la mitad de arriba, con el texto debajo; en escritorio va
+          centrado y alto, y el texto se le monta encima por abajo. */}
+      <div
+        ref={huecoMovil}
+        aria-hidden="true"
+        className="pointer-events-none absolute top-[12%] left-1/2 h-[44%] w-[56%] max-w-[250px] -translate-x-1/2 lg:top-[11%] lg:h-[58%] lg:w-[33%] lg:max-w-[360px]"
+      />
+
+      {/* El velo de abajo: sin esto, el texto se pelea con la mano y con el
+          brillo de la pantalla justo donde hay que leerlo. */}
+      <div className="dt-pie-velo pointer-events-none absolute inset-x-0 bottom-0 -z-[5] h-[62%]" aria-hidden="true" />
+
+      {/* -------------------------------------------------------- el contenido */}
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pt-20 pb-8 sm:px-6 lg:pb-12">
+        <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12">
+          {/* --- abajo a la izquierda: lo que decimos --- */}
+          <div data-scrub="salida-hero" className="dt-sobre-escena relative z-10">
+            <div className="dt-entra inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-[#070a10]/80 py-1.5 pr-3.5 pl-2.5 text-[13px] font-medium text-fg-2 backdrop-blur-sm sm:text-[14px]">
+              <i className="size-2 shrink-0 rounded-full bg-[var(--dt-menta)] shadow-[0_0_12px_var(--dt-menta)]" />
+              {kicker}
+            </div>
+
+            <h1 className="mt-5 font-display text-[40px] leading-[0.97] font-semibold tracking-[-0.045em] text-fg min-[400px]:text-[44px] sm:text-[56px] lg:text-[58px] xl:text-[66px]">
+              {/* EL ESPACIO VA FUERA DEL SPAN, y no es una manía.
+
+                  Cada palabra entra con su propio retraso, así que necesita
+                  ser un elemento aparte, y para poder desplazarla hacia
+                  arriba tiene que ser inline-block. Y un inline-block recorta
+                  el espacio que queda al final de su contenido: con el
+                  espacio dentro, el titular se leía «Vuestronegocio». Pasaba
+                  desapercibido mientras el titular fue «La llamada entra.»,
+                  donde el punto final separaba igual. */}
+              <span className="block">
+                {palabras.map((w, i) => (
+                  <span key={i}>
+                    <span className="dt-palabra" style={{ "--d": `${40 + i * 50}ms` } as CSSProperties}>
+                      {w}
+                    </span>
+                    {i < palabras.length - 1 ? " " : ""}
+                  </span>
+                ))}
+              </span>
+              <span
+                className="dt-palabra dt-texto-luz block pb-1"
+                style={{ "--d": `${80 + palabras.length * 50}ms` } as CSSProperties}
+              >
+                {b}
+              </span>
+            </h1>
+
+            <p
+              className="dt-entra mt-5 max-w-[520px] text-[16px] leading-relaxed text-fg-2 sm:text-[17px]"
+              style={{ "--d": "200ms" } as CSSProperties}
+            >
+              {linea}
+            </p>
+            {/* La frase que de verdad nos separa de una agencia («si no os
+                hace falta, os lo decimos») se queda, pero en una línea y más
+                floja: en esta composición el texto comparte sitio con la
+                imagen, y cada línea que crece aquí es una línea que se le come
+                al móvil por arriba. */}
+            <p
+              className="dt-entra mt-2.5 max-w-[460px] text-[14.5px] leading-relaxed text-fg-3"
+              style={{ "--d": "230ms" } as CSSProperties}
+            >
+              {p}
+            </p>
+
+            <div
+              className="dt-entra mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+              style={{ "--d": "260ms" } as CSSProperties}
+            >
+              <Magnetico className="max-sm:w-full">
+                <Link
+                  href="/demo?tour=1"
+                  className="dt-boton dt-boton-primario h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]"
+                >
+                  <PlayCircle className="size-5" /> <span>{verDemo}</span>
+                </Link>
+              </Magnetico>
+              <Magnetico className="max-sm:w-full">
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="dt-boton dt-boton-cristal h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]"
+                >
+                  <MessageCircle className="size-5 text-[#25d366]" /> <span>{escribenos}</span>
+                </a>
+              </Magnetico>
+            </div>
+
+            {/* Los cuatro sellos, en una línea fina. Antes ocupaban una rejilla
+                de dos columnas con sus iconos; aquí estorbaban a la imagen. */}
+            <ul
+              className="dt-entra mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-fg-3"
+              style={{ "--d": "320ms" } as CSSProperties}
+            >
+              {sellos.map((x, i) => (
+                <li key={x} className="flex items-center gap-3">
+                  {i > 0 && <span className="size-[3px] rounded-full bg-fg-3/60" aria-hidden="true" />}
+                  {x}
+                </li>
               ))}
-            </span>
-            <span className="dt-palabra dt-texto-luz block pb-1" style={{ "--d": `${80 + palabras.length * 50}ms` } as CSSProperties}>
-              {b}
-            </span>
-          </h1>
-
-          <p className="dt-entra mt-6 max-w-[560px] text-[17px] leading-snug font-medium text-fg sm:text-[19px]" style={{ "--d": "180ms" } as CSSProperties}>
-            {linea}
-          </p>
-          <p className="dt-entra mt-3 max-w-[560px] text-[16px] leading-relaxed text-fg-2 sm:text-[17px]" style={{ "--d": "220ms" } as CSSProperties}>
-            {p}
-          </p>
-
-          <div className="dt-entra mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center" style={{ "--d": "260ms" } as CSSProperties}>
-            <Magnetico className="max-sm:w-full">
-              <Link href="/demo?tour=1" className="dt-boton dt-boton-primario h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]">
-                <PlayCircle className="size-5" /> <span>{verDemo}</span>
-              </Link>
-            </Magnetico>
-            <Magnetico className="max-sm:w-full">
-              <a href={waHref} target="_blank" rel="noreferrer" className="dt-boton dt-boton-cristal h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]">
-                <MessageCircle className="size-5 text-[#25d366]" /> <span>{escribenos}</span>
-              </a>
-            </Magnetico>
+            </ul>
           </div>
 
-          <ul className="dt-entra mt-8 grid max-w-[560px] grid-cols-2 gap-x-5 gap-y-2 text-[14px] text-fg-2" style={{ "--d": "320ms" } as CSSProperties}>
-            {sellos.map((x) => (
-              <li key={x} className="flex items-center gap-2">
-                <Check className="size-4 shrink-0 text-[var(--dt-menta)]" /> {x}
-              </li>
-            ))}
-          </ul>
-
-          {/* en el móvil, los tres pasos que explican la escena de detrás */}
-          <ol className="dt-entra mt-7 grid grid-cols-3 gap-2 text-center lg:hidden" style={{ "--d": "380ms" } as CSSProperties}>
-            {hx.pasos.map(([titulo], i) => (
-              <li key={titulo} className={`dt-hud-${["violeta", "cian", "menta"][i]} rounded-xl border border-white/[0.08] bg-[#070a10]/80 px-1.5 py-2 text-[12px] leading-tight font-semibold text-fg`}>
-                <span className="mb-0.5 block text-[11px] text-[var(--tono)]">{i + 1}</span>
-                {titulo}
-              </li>
-            ))}
-          </ol>
+          {/* --- abajo a la derecha: las cuatro piezas --- */}
+          <div
+            className="dt-entra relative z-10 lg:w-[290px]"
+            style={{ "--d": "420ms" } as CSSProperties}
+          >
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="font-mono text-[11px] tracking-[0.14em] text-fg-3 uppercase">{hx.piezas}</span>
+              <span className="text-[11px] text-fg-3 max-lg:hidden">{hx.tocar}</span>
+            </div>
+            <ul className="mt-3 grid gap-1">
+              {PANTALLAS.map((p, i) => {
+                const viva = i === activa;
+                return (
+                  <li key={p.pieza}>
+                    <button
+                      type="button"
+                      onClick={() => elegir(i)}
+                      aria-pressed={viva}
+                      className={`dt-pieza group flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors ${
+                        viva
+                          ? "border-white/15 bg-white/[0.06] text-fg"
+                          : "border-transparent text-fg-3 hover:border-white/10 hover:bg-white/[0.03] hover:text-fg-2"
+                      }`}
+                    >
+                      <span
+                        className={`h-7 w-[3px] shrink-0 rounded-full transition-colors ${
+                          viva ? "bg-[var(--dt-cian)] shadow-[0_0_10px_var(--dt-cian)]" : "bg-white/12"
+                        }`}
+                        aria-hidden="true"
+                      />
+                      <span className="min-w-0">
+                        <span className="block text-[14px] leading-tight font-semibold">{p.pieza}</span>
+                        <span className="mt-0.5 block truncate text-[12.5px] leading-tight text-fg-3">{p.nombre}</span>
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
 
-        {/* El ancla solo marca dónde va el núcleo y cuánto mide. En el móvil
-            cubre la parte de arriba del hero, así que el núcleo queda DETRÁS
-            del titular (antes iba en un bloque aparte encima y la portada
-            parecía partida en dos). En escritorio ocupa la columna derecha.
-            Sin marco ni esquinas: la escena es fondo, no una caja. */}
-        <div ref={ancla} className="dt-ancla pointer-events-none absolute inset-x-0 top-0 h-[58%] lg:relative lg:inset-auto lg:mx-auto lg:aspect-square lg:h-auto lg:w-full lg:max-w-[600px]">
-          <Paso n={1} titulo={hx.pasos[0][0]} texto={hx.pasos[0][1]} className="top-[14%] left-[3%]" tono="violeta" />
-          <Paso n={2} titulo={hx.pasos[1][0]} texto={hx.pasos[1][1]} className="top-[2%] right-[2%] items-end text-right" tono="cian" />
-          <Paso n={3} titulo={hx.pasos[2][0]} texto={hx.pasos[2][1]} className="right-[-2%] bottom-[16%] items-end text-right" tono="menta" />
-          <Registro eventos={eventos} control={control} titulo={hx.registro} />
+        <div
+          className="dt-entra mt-8 hidden items-center lg:flex"
+          style={{ "--d": "520ms" } as CSSProperties}
+        >
+          <span className="flex items-center gap-3 text-[13px] text-fg-3">
+            <span className="dt-raton" aria-hidden="true" />
+            {hx.desliza}
+          </span>
         </div>
-      </div>
-
-      <div className="dt-entra relative mx-auto hidden w-full max-w-7xl items-center px-6 pb-7 lg:flex" style={{ "--d": "500ms" } as CSSProperties}>
-        <span className="flex items-center gap-3 text-[13px] text-fg-3">
-          <span className="dt-raton" aria-hidden="true" />
-          {hx.desliza}
-        </span>
       </div>
     </section>
-  );
-}
-
-function Paso({ n, titulo, texto, className, tono }: { n: number; titulo: string; texto: string; className?: string; tono: "cian" | "violeta" | "menta" }) {
-  return (
-    <div className={`dt-hud dt-hud-${tono} dt-entra absolute hidden flex-col gap-0.5 lg:flex ${className ?? ""}`} style={{ "--d": `${360 + n * 90}ms` } as CSSProperties}>
-      <span className="flex items-center gap-2 text-[14px] font-semibold">
-        <span className="grid size-5 place-items-center rounded-full border border-current text-[11px]">{n}</span>
-        {titulo}
-      </span>
-      <span className="text-[13px] text-fg-2">{texto}</span>
-    </div>
-  );
-}
-
-function Registro({ eventos, control, titulo }: { eventos: EventoHero[]; control: React.RefObject<ControlNucleo | null>; titulo: string }) {
-  /* Empieza en 2 y no en 0 porque la ventana visible es [i-2, i-1, i]: en
-     el primer pintado, con i = 0, esas dos primeras posiciones daban la
-     vuelta y el cuadro abría con las dos últimas horas del día encima de
-     la primera (18:02 sobre las 8:04). Pasaba antes también, y justo en el
-     momento en que todo el mundo lo ve. Arrancando en 2 el primer pintado
-     sale en orden y el salto queda donde no molesta, al cerrar la vuelta. */
-  const [i, setI] = useState(2);
-  const n = eventos.length;
-  useEffect(() => {
-    /* El registro deja de rotar solo si decidimos respetar la
-       preferencia del sistema; hoy no. Ver ./decision-movimiento.ts */
-    if (quietoPorPreferencia()) return;
-    const id = window.setInterval(() => {
-      if (document.hidden) return;
-      setI((x) => (x + 1) % n);
-      control.current?.onda();
-    }, 3400);
-    return () => window.clearInterval(id);
-  }, [n, control]);
-  const lineas = [i - 2, i - 1, i].map((k) => eventos[(k + n) % n]);
-  return (
-    <div className="dt-registro dt-entra absolute bottom-[1%] left-[2%] hidden w-[min(320px,62%)] lg:block" style={{ "--d": "650ms" } as CSSProperties} data-no-onda>
-      <div className="border-b border-white/[0.07] px-3.5 py-2 text-[12px] font-medium text-fg-3">{titulo}</div>
-      <ol className="grid gap-1.5 px-3.5 py-2.5 text-[13px] leading-snug" aria-live="off">
-        {lineas.map((e, k) => (
-          <li key={`${i}-${k}`} className={k === 2 ? "dt-linea-nueva text-fg" : k === 1 ? "text-fg-2" : "text-fg-3"}>
-            <span className="tabular text-[var(--dt-cian)]">{e.hora}</span> · {e.texto}
-          </li>
-        ))}
-      </ol>
-    </div>
   );
 }

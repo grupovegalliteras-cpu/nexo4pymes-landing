@@ -1,17 +1,17 @@
 "use client";
 
 // ---------------------------------------------------------------------------
-// EL MÓVIL DE LA PORTADA: UN ERP FUNCIONANDO, EN UNA MANO
+// EL MÓVIL DE LA PORTADA: UN ERP FUNCIONANDO
 //
 // Es lo que hace concreta la portada. En vez de contar que construimos
 // software, se enseña: un móvil (canto de metal, cristal, botones, las cámaras
-// detrás) que llega desde abajo dando la vuelta y se queda flotando sobre una
-// mano abierta, con cuatro pantallas de cuatro piezas distintas pasando en su
+// detrás) que llega desde abajo dando la vuelta y se queda flotando dentro del
+// haz de luz, con cuatro pantallas de cuatro piezas distintas pasando en su
 // pantalla (lib/pantallas-erp.ts).
 //
-// No se descarga ningún modelo ni ninguna imagen: el móvil y la mano se
-// construyen con geometría y los reflejos salen de RoomEnvironment, un estudio
-// de fotografía que Three genera al momento.
+// No se descarga ningún modelo ni ninguna imagen: el móvil se construye con
+// geometría y los reflejos salen de RoomEnvironment, un estudio de fotografía
+// que Three genera al momento.
 //
 // Dónde va y cuánto ocupa lo decide el CSS: el componente encaja el conjunto
 // en la caja `hueco` que le pasan, sea cual sea el ancho de la pantalla.
@@ -22,7 +22,7 @@
 //
 // PORTADO de components/MovilLoro.tsx de la web de Priora, que resolvió antes
 // el móvil, la entrada y los problemas de rendimiento. Lo nuevo aquí es la
-// mano (./mano.ts), la paleta y las pantallas.
+// paleta y las pantallas.
 //
 // EL MOVIMIENTO NO PREGUNTA POR «MOVIMIENTO REDUCIDO», pregunta a
 // ./decision-movimiento.ts, como todo lo que anima en esta portada. Hoy esa
@@ -67,12 +67,11 @@ export function MovilErp({
     let desmontar = () => {};
 
     async function montar() {
-      const [THREE, { RoomEnvironment }, { RoundedBoxGeometry }, { GLTFLoader }, { gsap }, pantallasMod] =
+      const [THREE, { RoomEnvironment }, { RoundedBoxGeometry }, { gsap }, pantallasMod] =
         await Promise.all([
           import("three"),
           import("three/examples/jsm/environments/RoomEnvironment.js"),
           import("three/examples/jsm/geometries/RoundedBoxGeometry.js"),
-          import("three/examples/jsm/loaders/GLTFLoader.js"),
           import("gsap"),
           import("@/lib/pantallas-erp"),
         ]);
@@ -204,9 +203,9 @@ export function MovilErp({
 
       /* Las luces. La clave viene de arriba a la izquierda, como el haz de la
          portada. Los dos contraluces son los que hacen el trabajo de verdad:
-         recortan el canto del móvil Y el borde de la mano contra el fondo
-         negro, y son lo único que se le ve a la mano. Si algún día la mano
-         deja de verse, es aquí donde hay que mirar. */
+         recortan el canto del móvil contra el fondo negro. Sin ellos el
+         móvil es una silueta negra sobre negro: se le ve la pantalla y nada
+         más, y deja de parecer un objeto. */
       const clave = new THREE.DirectionalLight("#ffffff", 1.5);
       clave.position.set(-2.5, 6, 5);
       const contraluz = new THREE.DirectionalLight(CIAN, 5.5);
@@ -324,54 +323,14 @@ export function MovilErp({
       movil.add(frente, pantallaMesh, brillo, trasera, camaras);
       escena.add(movil);
 
-      /* -------------------------------------------------------------- mano
-         LA MANO ES UN MODELO, NO GEOMETRÍA ESCRITA AQUÍ. La primera versión
-         la construía con cápsulas sueltas —un cilindro por falange— y se veía
-         exactamente a lo que era: tubos separados, sin carne entre los dedos
-         y con bolas por nudillos. Ahora sale de Blender
-         (herramientas/mano-blender.py), donde el modificador Skin le pone
-         carne alrededor de un esqueleto conectado: hay palma de verdad entre
-         los dedos y las articulaciones son continuas.
+      /* AQUÍ IBA UNA MANO que subía desde abajo y sostenía el móvil, que es
+         lo que pedía la referencia de la que salió este hero. Se quitó: el
+         móvil es fotorrealista y cualquier mano que no lo sea —y ninguna de
+         las que probamos lo era— se lo lleva por delante. El móvil flotando
+         en el haz de luz queda limpio y no tiene esa pelea.
 
-         Ese script es la fuente; public/modelos/mano.glb es lo que se
-         publica. Para cambiar la pose se toca el script y se vuelve a
-         ejecutar, no se edita el .glb.
-
-         La mano va dentro de una envoltura cuyo origen es el punto donde se
-         apoya el móvil, que viene marcado en el propio modelo con un vacío
-         llamado «apoyo». Así la portada coloca la envoltura donde quiere que
-         esté el móvil y la mano se acomoda sola debajo. */
-      const envolturaMano = new THREE.Group();
-      escena.add(envolturaMano);
-      /* Se ESPERA a que cargue antes de seguir, en vez de añadirla cuando
-         llegue. Si llega tarde, la entrada ya ha pasado y la mano aparece de
-         golpe debajo del móvil, que es peor que no tenerla. Esperar aquí la
-         mete en el mismo compilado de shaders que el resto y entra con la
-         animación, como una pieza más. Si falla, el móvil flota solo. */
-      try {
-        const glb = await new GLTFLoader().loadAsync("/modelos/mano.glb");
-        if (!vivo) return;
-        const grupo = glb.scene;
-        /* Inclinada hacia atrás: desde la cámara los dedos quedan escorzados
-           y la mano se lee como una mano que viene hacia ti, no como una
-           silueta plana recortada. */
-        grupo.rotation.set(0.42, -0.16, POSE.z * 0.8);
-        /* El modelo está en medidas de mano de verdad (la palma mide unos 9
-           cm); la escena trabaja con el móvil midiendo 1,5 de alto. */
-        grupo.scale.setScalar(7.4);
-        envolturaMano.add(grupo);
-
-        const apoyo = grupo.getObjectByName("apoyo");
-        grupo.updateMatrixWorld(true);
-        if (apoyo) {
-          const sitioApoyo = new THREE.Vector3();
-          apoyo.getWorldPosition(sitioApoyo);
-          grupo.position.sub(sitioApoyo);
-          apoyo.visible = false;
-        }
-      } catch {
-        // Sin mano: el móvil flota solo y la portada se sostiene igual.
-      }
+         Lo que la sostenía sigue en el repo por si se retoma:
+         herramientas/mano-blender.py la genera entera desde cero. */
 
       /* En el suelo, la luz de la pantalla y encima la sombra: es lo que hace
          que el conjunto parezca estar en un sitio y no pegado al fondo. */
@@ -443,7 +402,7 @@ export function MovilErp({
       }
 
       // Lo que mueven la entrada y los cambios de pantalla.
-      const anim = { giro: 0, subida: 0, escala: 1, sombra: 1, empuje: 0, mano: 0 };
+      const anim = { giro: 0, subida: 0, escala: 1, sombra: 1, empuje: 0 };
       const estado = { de: pedida.current, a: pedida.current, paso: 1 };
       let pantallas: Awaited<ReturnType<typeof pantallasMod.crearPantallas>> | null = null;
       let textura: import("three").CanvasTexture | null = null;
@@ -559,22 +518,6 @@ export function MovilErp({
         );
         movil.scale.setScalar(base.escala * anim.escala);
 
-        /* La mano va a lo suyo: sube con la entrada, respira más despacio que
-           el móvil y se inclina con el ratón la mitad. Que no vayan
-           exactamente igual es lo que hace que parezcan dos cosas y no un
-           bloque. */
-        envolturaMano.position.set(
-          base.x,
-          base.y + anim.mano + Math.sin(t * 0.72) * 0.016 * flota,
-          0,
-        );
-        envolturaMano.rotation.set(raton.y * 0.05, raton.x * 0.09, Math.sin(t * 0.44) * 0.01 * flota);
-        /* Un pelo más pequeña que el móvil. Una mano abierta ocupa, con los
-           dedos separados, bastante más ancho que la palma, y a la misma
-           escala el conjunto se leía como una mano enorme con un móvil
-           pequeño dentro. */
-        envolturaMano.scale.setScalar(base.escala * 0.88);
-
         /* La sombra, en el suelo: más pequeña y clara cuanto más sube el
            móvil. A la misma profundidad que él: más atrás, la perspectiva la
            metía debajo y no se veía. */
@@ -658,12 +601,14 @@ export function MovilErp({
       const entrada = gsap.timeline({ onComplete: () => (notaLista = true) });
       entrada.to(canvas, { opacity: 1, duration: reducido ? 1.2 : 0.6, ease: "power1.out" }, 0);
       if (!reducido) {
+        /* Sin retraso al principio. Los arranques iban a 0,22 y 0,3 para
+           dejar que la mano saliera antes y el móvil cayera en ella; ya no
+           hay nada que esperar. */
         entrada
-          .fromTo(anim, { mano: -1.5 }, { mano: 0, duration: 1.9, ease: "expo.out" }, 0)
-          .fromTo(anim, { subida: -1.25 }, { subida: 0, duration: 2, ease: "expo.out" }, 0.22)
-          .fromTo(anim, { giro: Math.PI }, { giro: 0, duration: 2.3, ease: "expo.inOut" }, 0.3)
-          .fromTo(anim, { escala: 0.86 }, { escala: 1, duration: 2.3, ease: "expo.out" }, 0.22)
-          .fromTo(anim, { sombra: 0 }, { sombra: 1, duration: 1.6, ease: "power2.out" }, 0.7);
+          .fromTo(anim, { subida: -1.25 }, { subida: 0, duration: 2, ease: "expo.out" }, 0)
+          .fromTo(anim, { giro: Math.PI }, { giro: 0, duration: 2.3, ease: "expo.inOut" }, 0.1)
+          .fromTo(anim, { escala: 0.86 }, { escala: 1, duration: 2.3, ease: "expo.out" }, 0)
+          .fromTo(anim, { sombra: 0 }, { sombra: 1, duration: 1.6, ease: "power2.out" }, 0.5);
       }
     }
 

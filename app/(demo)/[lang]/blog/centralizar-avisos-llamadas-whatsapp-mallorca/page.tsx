@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = idiomaOBase((await params).lang);
   const titulo = tr(lang, {
     es: "Centralizar avisos y llamadas en Mallorca",
-    en: "Centralising customer requests and calls in Mallorca",
+    en: "Centralising calls and requests in Mallorca",
     de: "Anfragen und Anrufe auf Mallorca bündeln",
   });
   const descripcion = tr(lang, {

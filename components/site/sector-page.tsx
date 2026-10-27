@@ -198,14 +198,21 @@ export function SectorPage({ id }: { id: SectorId }) {
           <h2 className="font-display text-[24px] leading-tight font-semibold tracking-tight sm:text-[30px]">
             {t2.preguntas}
           </h2>
-          <dl className="mt-6 grid gap-6">
+          {/* PREGUNTA EN <h3> Y NO EN <dt>. La lista de definición era
+              correcta como semántica, pero los encabezados son lo que un
+              buscador extrae para «la gente también pregunta», y ahí una
+              <dt> no cuenta. Meter el <h3> DENTRO de la <dt> no vale: el
+              modelo de contenido de <dt> prohíbe encabezados. Así que la
+              lista pasa a ser una sección normal de encabezado y texto,
+              que es como lo marca todo el mundo que sale en esas cajas. */}
+          <div className="mt-6 grid gap-6">
             {seo.faq.map(([pregunta, respuesta]) => (
               <div key={pregunta} className="border-t border-line pt-5">
-                <dt className="text-[16.5px] font-semibold">{pregunta}</dt>
-                <dd className="mt-2 text-[15.5px] leading-relaxed text-fg-2">{respuesta}</dd>
+                <h3 className="text-[16.5px] font-semibold">{pregunta}</h3>
+                <p className="mt-2 text-[15.5px] leading-relaxed text-fg-2">{respuesta}</p>
               </div>
             ))}
-          </dl>
+          </div>
         </div>
 
         <div className="mt-12 rounded-2xl border border-line bg-surface-2/60 p-5 sm:p-6">

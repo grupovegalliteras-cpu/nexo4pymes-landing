@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
        se iba a 81 y Google cortaba justo la marca. */
     title: {
       absolute: tr(lang, {
-        es: "Por qué automatizar sin diagnosticar antes puede hundiros el negocio",
-        en: "Why automating without a diagnosis first can sink your business",
+        es: "Automatizar sin diagnosticar antes: por qué sale mal",
+        en: "Automating without a diagnosis: why it goes wrong",
         /* 65 caracteres. El titular del artículo sigue siendo el largo;
            este es solo el del buscador, que cortaba a los 70. */
         de: "Automatisieren ohne Analyse kann Ihr Geschäft versenken",

@@ -59,12 +59,13 @@ export const servicios = {
   categoria: "Qué construimos",
   titular: "Cuatro piezas de software, y se empieza por una",
   intro:
-    "Nada de «soluciones digitales». Esto es lo que se construye, con su alcance y sus límites. No hace falta encargarlas todas: en el roadmap se decide cuál compensa primero y en qué orden van las demás.",
+    "Nada de «soluciones digitales». Esto es lo que se construye, con su alcance y sus límites. No hace falta encargarlas todas: en el plan se decide cuál compensa primero y en qué orden van las demás.",
   tarjetas: [
     {
       icono: "lista" as const,
       tono: "azul" as const,
       titulo: "CRMs y sistemas de gestión a medida",
+      gancho: "Todo el negocio en un sitio, y no en doce Excels",
       texto:
         "El programa que lleva vuestro negocio por dentro, construido sobre cómo trabajáis de verdad. No una plantilla a la que os tengáis que amoldar.",
       items: [
@@ -79,6 +80,7 @@ export const servicios = {
       icono: "globo" as const,
       tono: "violeta" as const,
       titulo: "Configuradores y diseñadores web",
+      gancho: "El cliente se hace el presupuesto solo, en vuestra web",
       texto:
         "Una herramienta dentro de vuestra web para que el cliente personalice, diseñe o cotice su producto sin que nadie tenga que atenderle.",
       items: [
@@ -102,6 +104,7 @@ export const servicios = {
       icono: "reloj" as const,
       tono: "azul" as const,
       titulo: "Fichaje y control de jornada",
+      gancho: "Cada uno ficha desde su móvil y las horas se suman solas",
       texto:
         "Cada persona ficha desde su propio móvil y las horas se suman solas. Pensado para equipos que no están sentados en una oficina.",
       items: [
@@ -116,6 +119,7 @@ export const servicios = {
       icono: "engranaje" as const,
       tono: "mint" as const,
       titulo: "Automatización e integraciones con IA",
+      gancho: "Un dato se teclea una vez y llega a todas partes",
       texto:
         "El pegamento entre las piezas: la web, el sistema de gestión y las herramientas que ya usáis. Aquí es donde entra la IA, como soporte del proceso y no como producto.",
       items: [

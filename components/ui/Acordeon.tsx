@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { usarMovimientoReducido } from "@/components/motion/usarMovimiento";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { SALIDA } from "@/components/motion/Reveal";
 
@@ -67,28 +67,40 @@ export function Acordeon({
               </button>
             </h3>
 
-            <AnimatePresence initial={false}>
-              {activa && (
-                <motion.div
-                  id={`respuesta-${i}`}
-                  role="region"
-                  key="contenido"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{
-                    duration: reducido ? 0.001 : 0.4,
-                    ease: SALIDA,
-                    opacity: { duration: reducido ? 0.001 : 0.25 },
-                  }}
-                  className="overflow-hidden"
-                >
-                  <p className={`max-w-[70ch] pb-6 text-[15.5px] leading-relaxed ${textoR}`}>
-                    {item.r}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* ============================================================
+                LA RESPUESTA ESTÁ SIEMPRE EN EL HTML, ABIERTA O CERRADA
+
+                Aquí había un `{activa && …}` dentro de AnimatePresence, así
+                que la respuesta no existía en el DOM hasta que alguien
+                pulsaba. En /servicios el acordeón arranca con todas cerradas
+                (`abiertaPorDefecto={null}`), de modo que las SEIS respuestas
+                que la página publica como FAQPage no estaban en la página.
+
+                Google pide que el contenido marcado esté en la página.
+                Plegado detrás de un desplegable vale; ausente del DOM, no.
+                El desajuste no se ve mirando la web y se paga perdiendo el
+                resultado enriquecido.
+
+                Ahora el panel se monta siempre y solo cambia de alto. La
+                animación es la misma. SI ALGUIEN VUELVE A ENVOLVERLO EN UN
+                CONDICIONAL, rompe los datos estructurados sin que se note. */}
+            <motion.div
+              id={`respuesta-${i}`}
+              role="region"
+              initial={false}
+              animate={{ height: activa ? "auto" : 0, opacity: activa ? 1 : 0 }}
+              transition={{
+                duration: reducido ? 0.001 : 0.4,
+                ease: SALIDA,
+                opacity: { duration: reducido ? 0.001 : 0.25 },
+              }}
+              className="overflow-hidden"
+              aria-hidden={!activa}
+            >
+              <p className={`max-w-[70ch] pb-6 text-[15.5px] leading-relaxed ${textoR}`}>
+                {item.r}
+              </p>
+            </motion.div>
           </div>
         );
       })}

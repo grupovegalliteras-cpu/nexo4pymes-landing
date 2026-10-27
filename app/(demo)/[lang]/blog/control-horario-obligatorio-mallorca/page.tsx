@@ -29,9 +29,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       }),
     },
     description: tr(lang, {
-      es: "Registrar la jornada es obligatorio desde 2019; hacerlo digitalmente no lo es. Qué dice el artículo 34.9, por qué el papel se rompe en el trabajo de campo y qué cambia con el móvil.",
-      en: "Recording working hours has been mandatory since 2019; doing it digitally is not. What article 34.9 says, why paper breaks in field work, and what changes with a phone.",
-      de: "Die Arbeitszeiterfassung ist seit 2019 Pflicht, die digitale Führung nicht. Was Artikel 34.9 verlangt, warum Papier im Außendienst zerbricht und was sich mit dem Handy ändert.",
+      es: "Registrar la jornada es obligatorio desde 2019; hacerlo en digital no. Qué dice el artículo 34.9 y qué cambia cuando se ficha desde el móvil.",
+      en: "Recording working hours has been mandatory since 2019; doing it digitally is not. What article 34.9 says and what changes with a phone.",
+      de: "Die Arbeitszeiterfassung ist seit 2019 Pflicht, die digitale Führung nicht. Was Artikel 34.9 verlangt und was sich mit dem Handy ändert.",
     }),
     alternates: alternativas(lang, RUTA),
   };

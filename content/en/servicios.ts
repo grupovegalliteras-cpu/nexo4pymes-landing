@@ -29,12 +29,13 @@ export const servicios = {
   categoria: "What we build",
   titular: "Four pieces of software, and you start with one",
   intro:
-    "No vague “digital solutions”. This is what gets built, with its scope and its limits. You don't have to order them all: the roadmap decides which one pays off first and in what order the rest follow.",
+    "No vague “digital solutions”. This is what gets built, with its scope and its limits. You don't have to order them all: the plan decides which one pays off first and in what order the rest follow.",
   tarjetas: [
     {
       icono: "lista" as const,
       tono: "azul" as const,
       titulo: "Custom CRMs and management systems",
+      gancho: "Your whole business in one place, not in twelve spreadsheets",
       texto: "The software that runs your business behind the scenes, built around how you actually work. Not a template you have to bend to.",
       items: [
         "Customers, orders, quotes and history in one place",
@@ -48,6 +49,7 @@ export const servicios = {
       icono: "globo" as const,
       tono: "violeta" as const,
       titulo: "Web configurators and designers",
+      gancho: "Your customer builds their own quote, on your website",
       texto: "A tool inside your website so the customer can customise, design or price their product without anyone having to attend to them.",
       items: [
         "The customer picks sizes, finishes and options and sees the result instantly",
@@ -61,6 +63,7 @@ export const servicios = {
       icono: "reloj" as const,
       tono: "azul" as const,
       titulo: "Time clock and working hours",
+      gancho: "Everyone clocks in from their phone and the hours add themselves up",
       texto: "Everyone clocks in from their own phone and the hours add themselves up. Designed for teams that don't sit in an office.",
       items: [
         "Clock in, clock out and breaks from the phone, with time and location",
@@ -74,6 +77,7 @@ export const servicios = {
       icono: "engranaje" as const,
       tono: "mint" as const,
       titulo: "Automation and AI integrations",
+      gancho: "Type something once and it reaches everywhere",
       texto: "The glue between the pieces: your website, your management system and the tools you already use. This is where AI comes in, supporting the process rather than being the product.",
       items: [
         "Sync between your website, your management system and your usual tools",

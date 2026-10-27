@@ -29,12 +29,13 @@ export const servicios = {
   categoria: "Was wir bauen",
   titular: "Vier Softwarebausteine, und Sie beginnen mit einem",
   intro:
-    "Keine vagen „digitalen Lösungen“. Das wird gebaut, mit Umfang und Grenzen. Sie müssen nicht alles beauftragen: In der Roadmap wird entschieden, was sich zuerst lohnt und in welcher Reihenfolge der Rest folgt.",
+    "Keine vagen „digitalen Lösungen“. Das wird gebaut, mit Umfang und Grenzen. Sie müssen nicht alles beauftragen: Im Plan wird entschieden, was sich zuerst lohnt und in welcher Reihenfolge der Rest folgt.",
   tarjetas: [
     {
       icono: "lista" as const,
       tono: "azul" as const,
       titulo: "Individuelle CRMs und Verwaltungssysteme",
+      gancho: "Das ganze Geschäft an einem Ort, nicht in zwölf Excel-Dateien",
       texto: "Die Software, die Ihr Geschäft im Hintergrund steuert, gebaut nach Ihrer tatsächlichen Arbeitsweise. Keine Vorlage, an die Sie sich anpassen müssen.",
       items: [
         "Kunden, Aufträge, Angebote und Historie an einem Ort",
@@ -48,6 +49,7 @@ export const servicios = {
       icono: "globo" as const,
       tono: "violeta" as const,
       titulo: "Web-Konfiguratoren und Designer",
+      gancho: "Ihr Kunde erstellt sein Angebot selbst, auf Ihrer Website",
       texto: "Ein Werkzeug in Ihrer Website, mit dem der Kunde sein Produkt anpasst, gestaltet oder kalkuliert, ohne dass ihn jemand betreuen muss.",
       items: [
         "Der Kunde wählt Maße, Oberflächen und Optionen und sieht sofort das Ergebnis",
@@ -61,6 +63,7 @@ export const servicios = {
       icono: "reloj" as const,
       tono: "azul" as const,
       titulo: "Zeiterfassung und Arbeitszeit",
+      gancho: "Jeder stempelt per Handy, und die Stunden addieren sich von selbst",
       texto: "Jeder stempelt mit dem eigenen Handy, und die Stunden summieren sich von selbst. Für Teams, die nicht im Büro sitzen.",
       items: [
         "Kommen, Gehen und Pausen per Handy, mit Uhrzeit und Standort",
@@ -74,6 +77,7 @@ export const servicios = {
       icono: "engranaje" as const,
       tono: "mint" as const,
       titulo: "Automatisierung und KI-Integrationen",
+      gancho: "Einmal eintippen, und es kommt überall an",
       texto: "Der Kitt zwischen den Bausteinen: Website, Verwaltungssystem und die Tools, die Sie schon nutzen. Hier kommt die KI ins Spiel, als Unterstützung des Prozesses und nicht als Produkt.",
       items: [
         "Synchronisierung zwischen Website, Verwaltung und Ihren gewohnten Tools",

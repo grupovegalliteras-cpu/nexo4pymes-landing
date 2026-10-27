@@ -51,7 +51,7 @@ const TITULO = {
 const DESCRIPCION = {
   es: "Qué construimos: CRM a medida, fichaje, configuradores web e integraciones. Cómo trabajamos, en cuatro pasos. Y CentralAvisos, que ya está hecho.",
   en: "What we build: custom CRMs, time clock, web configurators and integrations. How we work, in four steps. And CentralAvisos, which is ready now.",
-  de: "Was wir bauen: individuelle CRMs, Zeiterfassung, Web-Konfiguratoren und Integrationen. Wie wir arbeiten, in vier Schritten. Und CentralAvisos, das schon fertig ist.",
+  de: "Was wir bauen: individuelle CRMs, Zeiterfassung, Web-Konfiguratoren und Integrationen. Und wie wir arbeiten, in vier Schritten.",
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {

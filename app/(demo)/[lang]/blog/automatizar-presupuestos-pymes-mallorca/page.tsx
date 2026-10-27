@@ -19,13 +19,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
      más el topónimo, que es lo que escribe quien tiene el problema. */
   const titulo = tr(lang, {
     es: "Automatizar presupuestos para pymes en Mallorca",
-    en: "Automating quotes for small businesses in Mallorca",
-    de: "Angebote automatisieren für kleine Betriebe auf Mallorca",
+    en: "Automating quotes for small businesses",
+    de: "Angebote automatisieren auf Mallorca",
   });
   const descripcion = tr(lang, {
     es: "Las tres formas de dejar de hacer presupuestos a mano: plantilla, integración o configurador web. Cuál encaja en vuestro caso y cuándo no compensa.",
     en: "Three ways to stop writing quotes by hand: a template, an integration or a web configurator. Which one fits your pricing rules, and when it is not worth it.",
-    de: "Drei Wege, Angebote nicht mehr von Hand zu schreiben: Vorlage, Anbindung an die Warenwirtschaft oder Web-Konfigurator. Welcher passt und wann es sich nicht lohnt.",
+    de: "Drei Wege, Angebote nicht mehr von Hand zu schreiben: Vorlage, Anbindung an die Warenwirtschaft oder Web-Konfigurator. Und wann es sich nicht lohnt.",
   });
   return {
     title: { absolute: `${titulo} | Nexo4Pymes` },

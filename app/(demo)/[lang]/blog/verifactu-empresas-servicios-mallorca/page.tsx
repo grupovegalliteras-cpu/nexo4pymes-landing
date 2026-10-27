@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       }),
     },
     description: tr(lang, {
-      es: "Qué obliga hoy y qué es solo un anuncio sin publicar, qué cambia exactamente en vuestras facturas, las dos modalidades y los cuatro pasos que conviene dar ahora.",
+      es: "Qué obliga hoy y qué es solo un anuncio sin publicar, qué cambia en vuestras facturas y los cuatro pasos que conviene dar ahora.",
       en: "What binds today and what is only an unpublished announcement, what changes in your invoices, the two modes, and the four steps worth taking now.",
       de: "Was heute gilt und was nur angekündigt ist, was sich an Ihren Rechnungen ändert, die zwei Varianten und die vier Schritte, die sich jetzt lohnen.",
     }),

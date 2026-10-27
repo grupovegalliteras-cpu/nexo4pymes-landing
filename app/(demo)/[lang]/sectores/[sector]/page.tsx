@@ -22,18 +22,42 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/sectores/[
      diez agencias. El título lo decía todo menos dónde: "Limpieza:
      panel y app para tu empresa" no contiene ninguna de las dos
      palabras que el cliente escribe en el buscador. */
-  const title = tr(lang, {
-    es: `Software para empresas de ${s.nombre.toLowerCase()} en Mallorca`,
-    en: `Software for ${s.nombre.toLowerCase()} companies in Mallorca`,
+  /* ============================================================
+     EL TÍTULO CABE EN 60 CARACTERES, SEA EL SECTOR QUE SEA
+
+     «Software para empresas de mantenimiento multiservicio en Mallorca»
+     son 65 caracteres y Google corta por los 60: el lector perdía justo
+     «en Mallorca», que es la mitad de por qué entraría. Pasaba solo con
+     ese sector, así que estaba invisible revisando los demás.
+
+     Se prueba la forma natural y, si no cabe, se cae a la corta sin
+     «empresas de». No se recorta con puntos suspensivos: un título
+     cortado a mitad de palabra se lee peor que uno más seco. */
+  const nombre = s.nombre.toLowerCase();
+  const cabe = (s: string) => s.length <= 60;
+  const largo = tr(lang, {
+    es: `Software para empresas de ${nombre} en Mallorca`,
+    en: `Software for ${nombre} companies in Mallorca`,
     de: `${s.nombre}: Branchensoftware auf Mallorca`,
   });
-  const description = tr(lang, {
-    es: `${s.lema}. Panel y app para empresas de ${s.nombre.toLowerCase()} en Mallorca: avisos, partes con firma, rutas y facturación.`,
-    /* Más corta que la española a propósito: los lemas en inglés son
-       largos y con «HVAC and refrigeration» se iba a 181 caracteres. */
-    en: `${s.lema}. Dashboard and app for ${s.nombre.toLowerCase()} firms in Mallorca: jobs, signed reports, invoicing.`,
-    de: `${s.lema}. Dashboard und Techniker-App für Ihren Betrieb auf Mallorca: Aufträge, unterschriebene Berichte, Routen und Rechnungen.`,
+  const corto = tr(lang, {
+    es: `Software para ${nombre} en Mallorca`,
+    en: `Software for ${nombre} in Mallorca`,
+    de: `${s.nombre}: Software auf Mallorca`,
   });
+  const title = cabe(largo) ? largo : corto;
+  /* La descripción también se queda por debajo de 160 caracteres, que es
+     donde Google corta. El lema de cada sector tiene un largo distinto, así
+     que la cola se recorta cuando hace falta en vez de fijar una plantilla
+     corta para todos: el sector de lema breve se lleva la frase completa.
+     En alemán pasaba con jardinería (161) y en inglés con climatización. */
+  const cola = tr(lang, {
+    es: [`Panel y app para empresas de ${s.nombre.toLowerCase()} en Mallorca: avisos, partes con firma, rutas y facturación.`, `Panel y app para empresas de ${s.nombre.toLowerCase()} en Mallorca: avisos, partes con firma y facturación.`],
+    en: [`Dashboard and app for ${s.nombre.toLowerCase()} firms in Mallorca: jobs, signed reports, invoicing.`, `Dashboard and app for ${s.nombre.toLowerCase()} firms in Mallorca.`],
+    de: [`Dashboard und Techniker-App für Ihren Betrieb auf Mallorca: Aufträge, unterschriebene Berichte, Routen und Rechnungen.`, `Dashboard und Techniker-App für Ihren Betrieb auf Mallorca: Aufträge, Berichte und Rechnungen.`],
+  });
+  const descLarga = `${s.lema}. ${cola[0]}`;
+  const description = descLarga.length <= 160 ? descLarga : `${s.lema}. ${cola[1]}`;
   return {
     /* absolute: sin "| Nexo4Pymes" detrás. Con la plantilla, el título
        más largo ("mantenimiento multiservicio") se iba a 78 caracteres. */

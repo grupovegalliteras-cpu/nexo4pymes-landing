@@ -34,11 +34,21 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/modulos/[m
   /* El topónimo va en el título porque es media partida en local, pero
      detrás de la consulta y no delante: quien busca "software
      facturación verifactu" tiene que ver esas palabras primero. */
-  const title = tr(lang, {
+  /* El título cabe en 60 caracteres: con los h1 largos («Time tracking
+     and clock-in software») la forma inglesa se iba a 68 y Google cortaba
+     justo «in Mallorca». Se prueba la natural y si no cabe, la corta.
+     Mismo criterio que en /sectores. */
+  const largo = tr(lang, {
     es: `${h1} para pymes en Mallorca`,
     en: `${h1} for small businesses in Mallorca`,
     de: `${h1} auf Mallorca`,
   });
+  const corto = tr(lang, {
+    es: `${h1} en Mallorca`,
+    en: `${h1} in Mallorca`,
+    de: h1,
+  });
+  const title = largo.length <= 60 ? largo : corto;
 
   return {
     title: { absolute: title },

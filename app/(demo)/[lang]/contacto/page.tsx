@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   });
   const descripcion = tr(lang, {
     es: "Agendad una videollamada gratuita de 15 minutos o escribidnos por WhatsApp. Contestamos en menos de 24 horas laborables, desde Palma de Mallorca.",
-    en: "Book a free 15-minute video call or message us on WhatsApp. We reply within 24 working hours, from Palma de Mallorca.",
+    en: "Book a free 15-minute video call or message us on WhatsApp. We reply within 24 working hours, from Palma de Mallorca. No commitment.",
     de: "Buchen Sie einen kostenlosen 15-minütigen Videocall oder schreiben Sie uns auf WhatsApp. Wir antworten innerhalb von 24 Arbeitsstunden, aus Palma de Mallorca.",
   });
   return {

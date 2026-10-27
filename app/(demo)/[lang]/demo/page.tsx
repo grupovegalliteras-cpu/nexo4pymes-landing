@@ -7,7 +7,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: {
       absolute: tr(lang, {
-        es: "Demo en vivo: panel de oficina y app del técnico | Nexo4Pymes",
+        es: "Demo en vivo: el panel y la app del técnico | Nexo4Pymes",
         en: "Live demo: office dashboard and technician app | Nexo4Pymes",
         de: "Live-Demo: Büro-Dashboard und Techniker-App | Nexo4Pymes",
       }),

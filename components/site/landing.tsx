@@ -23,7 +23,7 @@ import { servicios as serviciosEs } from "@/content/servicios";
 import { servicios as serviciosEn } from "@/content/en/servicios";
 import { servicios as serviciosDe } from "@/content/de/servicios";
 import { HeroAnim } from "./hero-anim";
-import { PruebaAviso } from "./prueba-aviso";
+import { AntesDespues } from "./antes-despues";
 import { ContactDock, SiteFooter, SiteNav, waHola } from "./chrome";
 import type { Idioma } from "@/lib/i18n";
 import { HeroNucleo } from "@/components/deeptech/hero";
@@ -373,16 +373,47 @@ export function Landing() {
   return (
     <div data-theme="dark" className="deeptech text-fg">
       <SiteNav dark />
+      {/* ============================================================
+          EL ORDEN DE LA PORTADA, Y POR QUÉ SE CAMBIÓ
+
+          Antes: piezas, ejemplo, sector, pádel, colaboradores, prueba el
+          aviso, por dentro, módulos, cómo, preguntas, hablemos. Trece
+          secciones en las que las cuatro primeras cosas que leía alguien
+          eran los nombres de lo que vendemos, y tres secciones distintas
+          repetían la misma promesa de «mira, software de verdad»: el
+          recorrido de la llamada, el aviso de prueba y el panel
+          incrustado.
+
+          AHORA. Detrás de las piezas entra «Antes y después», que es la
+          única sección que explica esto sin tecnicismos y la que hace que
+          alguien se reconozca antes de que le enseñemos nada. Y de las
+          tres pruebas interactivas queda una: el panel y la app de verdad
+          (SoftwareReal), que es la más fuerte de las tres porque es
+          software funcionando y no una animación.
+
+          FUERA LA PRUEBA DEL AVISO. Era un juguete bonito —escribes un
+          aviso y ves cómo se clasifica— pero decía lo mismo que
+          SoftwareReal y era lo más específico de CentralAvisos que había
+          en una portada que trata del estudio. El componente sigue en
+          components/site/prueba-aviso.tsx: si vuelve, su sitio es la
+          página de ese producto, no esta.
+
+          PÁDEL Y COLABORADORES BAJAN. Son prueba social y un caso
+          lateral: interrumpían la mitad de arriba, que tiene que ir del
+          problema al software sin desvíos. Ahora van después de «cómo
+          trabajamos», que es donde alguien ya convencido busca con quién
+          se mete.
+          ============================================================ */}
       <Hero />
       <QueConstruimos />
+      <AntesDespues />
       <Escaparate />
       <SectorPicker />
-      <AvisoPadel />
-      <Colaboradores />
-      <PruebaAviso />
       <SoftwareReal />
       <Modulos />
       <Como />
+      <Colaboradores />
+      <AvisoPadel />
       <Faq />
       <Contacto />
       <SiteFooter />
@@ -449,7 +480,15 @@ function QueConstruimos() {
                 <span className="grid size-11 place-items-center rounded-xl border border-white/10 bg-white/[0.03]" style={{ color, boxShadow: `0 0 28px -10px ${color}` }}>
                   <Ico className="size-5" />
                 </span>
-                <h3 className="mt-5 font-display text-[19px] leading-snug font-semibold tracking-[-0.02em] text-fg">{p.titulo}</h3>
+                {/* EL GANCHO VA DE TITULAR Y LA CATEGORÍA DE RÓTULO, no al revés.
+                    «Configuradores y diseñadores web» es lo que vendemos, pero
+                    nadie que regente un taller en Palma busca eso: busca que el
+                    cliente se haga el presupuesto solo. El nombre técnico no se
+                    borra —es la palabra que se teclea en Google y /servicios la
+                    sigue llevando de encabezado—, baja a rótulo. Si alguien
+                    vuelve a subirlo, la portada vuelve a sonar a catálogo. */}
+                <p className="mt-5 text-[11.5px] font-semibold tracking-[0.1em] text-fg-3 uppercase">{p.titulo}</p>
+                <h3 className="mt-2 font-display text-[19px] leading-snug font-semibold tracking-[-0.02em] text-fg">{p.gancho}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-fg-2">{p.texto}</p>
               </li>
             );
@@ -910,17 +949,32 @@ function Faq() {
         <div data-revelar className="dt-cristal divide-y divide-white/[0.07] overflow-hidden rounded-[24px]">
           {t.faq.map(([q, a], i) => (
             <div key={i} className={cn("transition-colors", open === i && "bg-white/[0.02]")}>
-              <button onClick={() => setOpen(open === i ? null : i)} className={cn("flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[16px] font-semibold transition-colors", open === i && "text-[var(--dt-cian)]")} aria-expanded={open === i}>
-                {q}
-                <ChevronDown className={cn("size-5 shrink-0 text-fg-3 transition-transform", open === i && "rotate-180 text-[var(--dt-cian)]")} />
-              </button>
-              <AnimatePresence initial={false}>
-                {open === i && (
-                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                    <p className="px-5 pb-5 text-[15px] leading-relaxed text-fg-2">{a}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* ============================================================
+                  LA RESPUESTA SE PINTA SIEMPRE, AUNQUE EL ACORDEÓN ESTÉ CERRADO
+
+                  Antes iba dentro de un AnimatePresence con «{open === i && …}»,
+                  así que solo la primera respuesta existía en el HTML. Las otras
+                  seis no estaban en el DOM hasta que alguien pulsaba — y aun así
+                  las siete se publican como FAQPage en los datos estructurados de
+                  app/(demo)/[lang]/page.tsx.
+
+                  Eso es exactamente lo que Google prohíbe: el contenido marcado
+                  tiene que estar en la página. Plegado detrás de un desplegable
+                  sí vale; ausente del DOM, no. Un desajuste así se paga con la
+                  pérdida del resultado enriquecido, y es invisible mirando la web.
+
+                  Ahora el bloque está montado siempre y lo que cambia es su alto.
+                  SI ALGUIEN VUELVE A METER UN «&&» AQUÍ, rompe los datos
+                  estructurados de la portada sin que se note. */}
+              <h3>
+                <button onClick={() => setOpen(open === i ? null : i)} className={cn("flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[16px] font-semibold transition-colors", open === i && "text-[var(--dt-cian)]")} aria-expanded={open === i}>
+                  {q}
+                  <ChevronDown className={cn("size-5 shrink-0 text-fg-3 transition-transform", open === i && "rotate-180 text-[var(--dt-cian)]")} />
+                </button>
+              </h3>
+              <motion.div initial={false} animate={{ height: open === i ? "auto" : 0, opacity: open === i ? 1 : 0 }} className="overflow-hidden" aria-hidden={open !== i}>
+                <p className="px-5 pb-5 text-[15px] leading-relaxed text-fg-2">{a}</p>
+              </motion.div>
             </div>
           ))}
         </div>

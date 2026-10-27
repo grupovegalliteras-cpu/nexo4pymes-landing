@@ -357,21 +357,21 @@ export function Preguntas() {
                 <Plus className={cn("size-5 shrink-0 text-brand transition-transform duration-300", activa && "rotate-45")} aria-hidden />
               </button>
             </h3>
-            <AnimatePresence initial={false}>
-              {activa && (
-                <motion.div
-                  id={`faq-${i}`}
-                  role="region"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: reducido ? 0 : 0.35, ease: SALIDA }}
-                  className="overflow-hidden"
-                >
-                  <p className="px-4 pb-4 text-[15px] text-fg-2">{r}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Montada siempre, plegada con alto 0: estas preguntas se
+                publican como FAQPage en la página de servidor y el contenido
+                marcado tiene que estar en la página. Ver el comentario largo
+                en components/ui/Acordeon.tsx. */}
+            <motion.div
+              id={`faq-${i}`}
+              role="region"
+              initial={false}
+              animate={{ height: activa ? "auto" : 0, opacity: activa ? 1 : 0 }}
+              transition={{ duration: reducido ? 0 : 0.35, ease: SALIDA }}
+              className="overflow-hidden"
+              aria-hidden={!activa}
+            >
+              <p className="px-4 pb-4 text-[15px] text-fg-2">{r}</p>
+            </motion.div>
           </div>
         );
       })}

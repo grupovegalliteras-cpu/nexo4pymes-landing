@@ -5,9 +5,8 @@
   envoltorio de la portada (components/site/landing.tsx). El resto de la
   web (panel, app, /padel, las páginas de app/(web)) no se entera.
 
-  La portada alterna crema y noche como dice la paleta de marca: el hero y
-  el cierre son zonas noche (data-theme="dark"), y entre medias todo es
-  crema con tarjetas blancas. Sus acentos:
+  La portada va en crema con tarjetas blancas, hero incluido; el cierre es
+  zona noche (data-theme="dark"). Sus acentos:
     --dt-acento   carmesí sobre crema; melocotón sobre noche, donde el
                   carmesí no se lee en letra pequeña
     --dt-detalle  melocotón: puntos, marcas y detalles
@@ -29,11 +28,10 @@
   --dt-apoyo: var(--carmesi);
 }
 
-/* El principio y el final de la portada son noche: sin franjas claras al
-   estirar la página en el Mac. */
+/* Sin franjas oscuras al estirar la página en el Mac. */
 html:has(.deeptech),
 html:has(.deeptech) body {
-  background: var(--noche);
+  background: var(--crema);
 }
 /* los enlaces del menú a secciones de la portada bajan suave (el scroll de
    la rueda es el del navegador: el suavizado con Lenis se quitó por lento) */
@@ -68,6 +66,11 @@ html:has(.deeptech) {
 
 /* ---------------- Hero ---------------- */
 
+.dt-hero .dt-rejilla {
+  background-image:
+    linear-gradient(to right, rgb(184 164 143 / 0.16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(184 164 143 / 0.16) 1px, transparent 1px);
+}
 .dt-rejilla {
   background-image:
     linear-gradient(to right, rgb(255 247 237 / 0.05) 1px, transparent 1px),
@@ -166,39 +169,13 @@ html:has(.deeptech) {
   }
 }
 
-/* Viñeta: oscurece los bordes y deja limpio el centro, donde está la escena.
-
-   Antes esto oscurecía por la IZQUIERDA, porque el hero tenía el texto a la
-   izquierda y la escena a la derecha. Ahora la escena está en el centro y el
-   texto encima, así que un velo lateral oscurecería justo la mitad que hay
-   que ver. */
-.dt-velo {
-  background:
-    radial-gradient(ellipse 82% 72% at 50% 40%, transparent 34%, rgb(9 8 7 / 0.58) 100%),
-    linear-gradient(to bottom, rgb(9 8 7 / 0.4) 0%, transparent 16%);
-}
-
-/* El velo de abajo, donde va el texto encima de la imagen. Es lo único que
-   garantiza que el titular se lea pase lo que pase por detrás. */
-.dt-pie-velo {
-  background: linear-gradient(to bottom, transparent 0%, rgb(9 8 7 / 0.5) 40%, rgb(9 8 7 / 0.86) 72%, var(--bg) 100%);
-}
-/* En vertical el texto cae encima del móvil, y el carmesí del titular no se lee
-   sobre una pantalla encendida: el velo sube y aprieta antes. */
-@media (max-width: 1023px) {
-  .dt-pie-velo {
-    height: 86%;
-    background: linear-gradient(to bottom, transparent 0%, rgb(9 8 7 / 0.9) 12%, rgb(9 8 7 / 0.92) 60%, var(--bg) 100%);
-  }
-}
-
 /* Sombra corta bajo las letras. Antes solo en el móvil, porque en escritorio
    el texto quedaba sobre fondo liso; ahora el texto se monta sobre la escena
    en los dos sitios. */
 .dt-sobre-escena :is(h1 > span:first-child, p, li) {
   text-shadow:
-    0 1px 2px rgb(9 8 7 / 0.9),
-    0 0 18px rgb(9 8 7 / 0.85);
+    0 1px 2px rgb(255 247 237 / 0.9),
+    0 0 18px rgb(255 247 237 / 0.85);
 }
 
 /* El punto que señala algo de la pantalla del móvil. */
@@ -289,7 +266,7 @@ html:has(.deeptech) {
   position: relative;
   width: 16px;
   height: 26px;
-  border: 1px solid rgb(255 247 237 / 0.28);
+  border: 1px solid var(--arena);
   border-radius: 10px;
 }
 .dt-raton::after {

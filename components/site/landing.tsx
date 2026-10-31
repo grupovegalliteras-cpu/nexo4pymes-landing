@@ -332,9 +332,8 @@ function useT() {
   return { ...T[lang], ...TD[lang] };
 }
 
-/* La portada alterna crema y noche, como pide la paleta de marca: el hero
-   y el cierre (Contacto y pie) son zonas noche con data-theme="dark", y todo
-   lo de en medio va en crema con tarjetas blancas. El data-theme="light" del
+/* La portada va en crema con tarjetas blancas, hero incluido; el cierre
+   (Contacto y pie) es zona noche con data-theme="dark". El data-theme="light" del
    envoltorio la deja en crema aunque el visitante venga del panel en oscuro.
 
    LO PRIMERO QUE TIENE QUE ENTENDERSE ES QUE HACEMOS SOFTWARE A MEDIDA.
@@ -372,7 +371,7 @@ export function Landing() {
   useMovimientoPortada();
   return (
     <div data-theme="light" className="deeptech text-fg">
-      <SiteNav dark />
+      <SiteNav />
       {/* ============================================================
           EL ORDEN DE LA PORTADA, Y POR QUÉ SE CAMBIÓ
 

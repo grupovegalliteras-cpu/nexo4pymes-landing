@@ -120,7 +120,7 @@ export function HeroNucleo({
   const pieza = PANTALLAS[activa]!;
 
   return (
-    <section data-theme="dark" className="dt-hero relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg text-fg">
+    <section className="dt-hero relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg text-fg">
       {/* ---------------------------------------------------------- el fondo */}
       <div className="absolute inset-0 -z-20" aria-hidden="true">
         <div className="dt-rejilla absolute inset-0" />
@@ -128,7 +128,6 @@ export function HeroNucleo({
             pasa todo. Es lo que ata la mano, el móvil y el texto a una misma
             escena en vez de dejarlos flotando sobre un fondo oscuro. */}
         <div className="dt-columna" />
-        <div className="dt-velo absolute inset-0" />
       </div>
 
       {/* ------------------------------------------------- la mano y el móvil */}
@@ -139,24 +138,20 @@ export function HeroNucleo({
         className="pointer-events-none absolute inset-0 -z-10"
       />
       {/* Solo marca dónde va el móvil y cuánto mide; no pinta nada. En el móvil
-          ocupa la mitad de arriba, con el texto debajo; en escritorio va
+          va arriba con su alto fijo, y el texto empieza debajo; en escritorio va
           centrado y alto, y el texto se le monta encima por abajo. */}
       <div
         ref={huecoMovil}
         aria-hidden="true"
-        className="pointer-events-none absolute top-[12%] left-1/2 h-[44%] w-[56%] max-w-[250px] -translate-x-1/2 lg:top-[11%] lg:h-[58%] lg:w-[33%] lg:max-w-[360px]"
+        className="pointer-events-none absolute top-[76px] left-1/2 h-[350px] w-[56%] max-w-[250px] -translate-x-1/2 lg:top-[11%] lg:h-[58%] lg:w-[33%] lg:max-w-[360px]"
       />
 
-      {/* El velo de abajo: sin esto, el texto se pelea con la mano y con el
-          brillo de la pantalla justo donde hay que leerlo. */}
-      <div className="dt-pie-velo pointer-events-none absolute inset-x-0 bottom-0 -z-[5] h-[62%]" aria-hidden="true" />
-
       {/* -------------------------------------------------------- el contenido */}
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pt-20 pb-8 sm:px-6 lg:pb-12">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pt-[440px] pb-8 sm:px-6 lg:pt-20 lg:pb-12">
         <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12">
           {/* --- abajo a la izquierda: lo que decimos --- */}
           <div data-scrub="salida-hero" className="dt-sobre-escena relative z-10">
-            <div className="dt-entra inline-flex items-center gap-2.5 rounded-full border border-crema/10 bg-noche/80 py-1.5 pr-3.5 pl-2.5 text-[13px] font-medium text-fg-2 backdrop-blur-sm sm:text-[14px]">
+            <div className="dt-entra inline-flex items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pr-3.5 pl-2.5 text-[13px] font-medium text-fg-2 backdrop-blur-sm sm:text-[14px]">
               <i className="size-2 shrink-0 rounded-full bg-melocoton" />
               {kicker}
             </div>
@@ -226,7 +221,7 @@ export function HeroNucleo({
                   rel="noreferrer"
                   className="dt-boton dt-boton-cristal h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]"
                 >
-                  <MessageCircle className="size-5 text-melocoton" /> <span>{escribenos}</span>
+                  <MessageCircle className="size-5 text-carmesi" /> <span>{escribenos}</span>
                 </a>
               </Magnetico>
             </div>
@@ -266,8 +261,8 @@ export function HeroNucleo({
                       aria-pressed={viva}
                       className={`dt-pieza group flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors ${
                         viva
-                          ? "border-crema/15 bg-crema/[0.06] text-fg"
-                          : "border-transparent text-fg-3 hover:border-crema/10 hover:bg-crema/[0.03] hover:text-fg-2"
+                          ? "border-line bg-surface text-fg"
+                          : "border-transparent text-fg-3 hover:border-line hover:bg-surface/60 hover:text-fg-2"
                       }`}
                     >
                       <span

@@ -637,10 +637,10 @@ export function MovilErp({
         className="group pointer-events-none absolute top-0 left-0 opacity-0 transition-opacity duration-500 will-change-transform"
       >
         <span className="dt-latido absolute -top-[7px] -left-[7px] size-3.5 rounded-full bg-white shadow-[0_0_0_4px_rgba(255,255,255,.16),0_0_18px_rgba(255,255,255,.55)]" />
-        <span className="absolute top-0 h-px w-7 from-crema/0 to-crema/70 group-data-[lado=abajo]:top-2 group-data-[lado=abajo]:left-0 group-data-[lado=abajo]:h-3 group-data-[lado=abajo]:w-px group-data-[lado=abajo]:bg-gradient-to-t group-data-[lado=derecha]:left-3 group-data-[lado=derecha]:bg-gradient-to-l group-data-[lado=izquierda]:right-3 group-data-[lado=izquierda]:bg-gradient-to-r" />
+        <span className="absolute top-0 h-px w-7 from-carmesi/0 to-carmesi/70 group-data-[lado=abajo]:top-2 group-data-[lado=abajo]:left-0 group-data-[lado=abajo]:h-3 group-data-[lado=abajo]:w-px group-data-[lado=abajo]:bg-gradient-to-t group-data-[lado=derecha]:left-3 group-data-[lado=derecha]:bg-gradient-to-l group-data-[lado=izquierda]:right-3 group-data-[lado=izquierda]:bg-gradient-to-r" />
         <span
           ref={texto}
-          className="absolute top-0 -translate-y-1/2 rounded-full border border-crema/15 bg-noche/90 px-3.5 py-1.5 text-[13px] font-semibold whitespace-nowrap text-fg shadow-[0_10px_30px_-10px_rgba(0,0,0,.8)] group-data-[lado=abajo]:top-5 group-data-[lado=abajo]:left-[var(--nota-x)] group-data-[lado=abajo]:translate-y-0 group-data-[lado=derecha]:left-10 group-data-[lado=izquierda]:right-10"
+          className="absolute top-0 -translate-y-1/2 rounded-full border border-crema/15 bg-noche/90 px-3.5 py-1.5 text-[13px] font-semibold whitespace-nowrap text-crema shadow-[0_10px_30px_-10px_rgba(0,0,0,.8)] group-data-[lado=abajo]:top-5 group-data-[lado=abajo]:left-[var(--nota-x)] group-data-[lado=abajo]:translate-y-0 group-data-[lado=derecha]:left-10 group-data-[lado=izquierda]:right-10"
         >
           {nota}
         </span>

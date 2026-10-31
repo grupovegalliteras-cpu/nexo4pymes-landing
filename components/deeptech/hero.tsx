@@ -5,8 +5,6 @@ import { MessageCircle, PlayCircle } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { useIdioma } from "@/components/i18n/idioma";
 import type { Idioma } from "@/lib/i18n";
-import type { ControlNucleo } from "./nucleo-escena";
-import { Nucleo } from "./nucleo";
 import { MovilErp } from "./movil";
 import { PANTALLAS } from "@/lib/pantallas-erp";
 import { quietoPorPreferencia } from "./decision-movimiento";
@@ -96,10 +94,7 @@ export function HeroNucleo({
 }) {
   const lang = useIdioma();
   const hx = HX[lang];
-  const seccion = useRef<HTMLElement>(null);
-  const anclaNucleo = useRef<HTMLDivElement>(null);
   const huecoMovil = useRef<HTMLDivElement>(null);
-  const control = useRef<ControlNucleo | null>(null);
   const palabras = a.split(" ");
 
   const [activa, setActiva] = useState(0);
@@ -113,7 +108,6 @@ export function HeroNucleo({
     const id = window.setInterval(() => {
       if (document.hidden) return;
       setActiva((x) => (x + 1) % PANTALLAS.length);
-      control.current?.onda();
     }, CADA);
     return () => window.clearInterval(id);
   }, [manual]);
@@ -121,13 +115,12 @@ export function HeroNucleo({
   const elegir = useCallback((i: number) => {
     setManual(true);
     setActiva(i);
-    control.current?.onda();
   }, []);
 
   const pieza = PANTALLAS[activa]!;
 
   return (
-    <section ref={seccion} data-theme="dark" className="dt-hero relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg text-fg">
+    <section data-theme="dark" className="dt-hero relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg text-fg">
       {/* ---------------------------------------------------------- el fondo */}
       <div className="absolute inset-0 -z-20" aria-hidden="true">
         <div className="dt-rejilla absolute inset-0" />
@@ -135,24 +128,8 @@ export function HeroNucleo({
             pasa todo. Es lo que ata la mano, el móvil y el texto a una misma
             escena en vez de dejarlos flotando sobre un fondo oscuro. */}
         <div className="dt-columna" />
-        <Nucleo ancla={anclaNucleo} seccion={seccion} control={control} />
         <div className="dt-velo absolute inset-0" />
       </div>
-
-      {/* EL ANCLA DEL NÚCLEO: dónde se concentran las partículas, y por tanto
-          dónde cae el resplandor. Va ARRIBA DEL TODO, en la boca del haz, no
-          detrás del móvil.
-
-          Centrada en el hero —que es donde estaba— el núcleo dejaba su punto
-          de luz justo encima de la pantalla del móvil y se comía las cifras
-          del ERP, que es lo único que hay que ver ahí. Puesta arriba hace de
-          foco: parece la lámpara de la que sale la columna de luz, y la
-          pantalla se lee. */}
-      <div
-        ref={anclaNucleo}
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-[-10%] -z-20 h-[34%] lg:top-[-8%] lg:h-[38%]"
-      />
 
       {/* ------------------------------------------------- la mano y el móvil */}
       <MovilErp

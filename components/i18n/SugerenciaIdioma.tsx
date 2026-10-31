@@ -36,17 +36,17 @@ export function SugerenciaIdioma() {
     setSugerido(null);
   };
   return (
-    <div role="dialog" aria-label={t.frase} lang={sugerido} className="fixed inset-x-3 top-[4.5rem] z-[60] mx-auto flex max-w-md flex-wrap items-center gap-x-3 gap-y-2 rounded-2xl bg-[#0b1220]/95 p-3 pl-4 text-[14px] text-white shadow-[0_20px_50px_-15px_rgb(0_0_0/0.6)] ring-1 ring-white/12 backdrop-blur-xl">
+    <div role="dialog" aria-label={t.frase} lang={sugerido} className="fixed inset-x-3 top-[4.5rem] z-[60] mx-auto flex max-w-md flex-wrap items-center gap-x-3 gap-y-2 rounded-2xl bg-[#1c2129]/95 p-3 pl-4 text-[14px] text-crema shadow-[0_20px_50px_-15px_rgb(0_0_0/0.6)] ring-1 ring-crema/12 backdrop-blur-xl">
       <span className="min-w-0 flex-1">{t.frase}</span>
       <span className="flex gap-2">
-        <button onClick={() => cerrar("es")} className="rounded-lg px-2.5 py-1.5 text-[13px] text-white/60 hover:text-white">
+        <button onClick={() => cerrar("es")} className="rounded-lg px-2.5 py-1.5 text-[13px] text-crema/60 hover:text-crema">
           {t.cerrar}
         </button>
         <NextLink href={conIdioma(sugerido, base)} onClick={(e) => {
             e.preventDefault();
             cerrar(sugerido);
             window.location.assign(conIdioma(sugerido, base) + window.location.search + window.location.hash);
-          }} className="rounded-lg bg-white px-3 py-1.5 text-[13px] font-semibold text-[#0b1220]">
+          }} className="rounded-lg bg-white px-3 py-1.5 text-[13px] font-semibold text-[#1c2129]">
           {t.boton}
         </NextLink>
       </span>

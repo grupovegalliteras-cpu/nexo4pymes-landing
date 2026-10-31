@@ -117,22 +117,22 @@ export function DemoPage() {
   }, []);
 
   return (
-    <div className="flex h-dvh flex-col bg-[#0a161c] text-fg">
+    <div className="flex h-dvh flex-col bg-[#090807] text-fg">
       <h1 className="sr-only">{tx.h1}</h1>
       {/* en el móvil, durante el recorrido, fuera barras: toda la pantalla para la demo */}
-      <header className={cn("flex h-14 shrink-0 items-center gap-3 border-b border-white/10 px-3 text-white sm:px-4", guiado && "hidden")}>
+      <header className={cn("flex h-14 shrink-0 items-center gap-3 border-b border-crema/10 px-3 text-crema sm:px-4", guiado && "hidden")}>
         <Link href="/" className="flex items-center gap-2" aria-label={tx.inicio}>
           <Logo className="h-6 max-[400px]:[&>span]:hidden" light />
         </Link>
-        <span className="hidden h-5 w-px bg-white/15 md:block" />
-        <span className="hidden text-[13px] text-white/60 md:block">{tx.modo}</span>
+        <span className="hidden h-5 w-px bg-crema/15 md:block" />
+        <span className="hidden text-[13px] text-crema/60 md:block">{tx.modo}</span>
         <select
           value={sector.id}
           onChange={(e) => {
             tour.stop();
             setSector(e.target.value as SectorId);
           }}
-          className="ml-auto h-8 min-w-0 max-w-[46vw] rounded-lg border border-white/15 bg-white/5 px-2 text-[13px] text-white outline-none md:ml-4"
+          className="ml-auto h-8 min-w-0 max-w-[46vw] rounded-lg border border-crema/15 bg-crema/5 px-2 text-[13px] text-crema outline-none md:ml-4"
           aria-label={tx.sector}
         >
           {sectoresDe(lang).map((s) => (
@@ -142,22 +142,22 @@ export function DemoPage() {
           ))}
         </select>
         <div className="flex items-center gap-1.5 md:ml-auto">
-          <button onClick={() => { tour.stop(); reset(); }} className="hidden h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] text-white/70 hover:bg-white/10 sm:flex" title={tx.reiniciarT}>
+          <button onClick={() => { tour.stop(); reset(); }} className="hidden h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] text-crema/70 hover:bg-crema/10 sm:flex" title={tx.reiniciarT}>
             <RotateCcw className="size-3.5" /> {tx.reiniciar}
           </button>
-          <Link href="/app" target="_blank" className="hidden h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] text-white/70 hover:bg-white/10 lg:flex" title={tx.otraT}>
+          <Link href="/app" target="_blank" className="hidden h-8 items-center gap-1.5 rounded-lg px-2.5 text-[13px] text-crema/70 hover:bg-crema/10 lg:flex" title={tx.otraT}>
             <ExternalLink className="size-3.5" /> {tx.otra}
           </Link>
-          <motion.button whileTap={{ scale: 0.96 }} onClick={tour.start} className="flex h-8 items-center gap-1.5 rounded-lg bg-sun px-3 text-[13px] font-semibold text-[#1d1300]" data-tour="ver-recorrido">
+          <motion.button whileTap={{ scale: 0.96 }} onClick={tour.start} className="flex h-8 items-center gap-1.5 rounded-lg bg-carmesi px-3 text-[13px] font-semibold text-crema" data-tour="ver-recorrido">
             <PlayCircle className="size-4" /> <span className="max-[400px]:hidden">{tx.verRecorrido}</span><span className="min-[401px]:hidden">{tx.recorrido}</span>
           </motion.button>
         </div>
       </header>
 
       {/* selector en pantallas pequeñas */}
-      <div className={cn("flex justify-center gap-1 border-b border-white/10 p-1.5 lg:hidden", guiado && "hidden")}>
+      <div className={cn("flex justify-center gap-1 border-b border-crema/10 p-1.5 lg:hidden", guiado && "hidden")}>
         {(["panel", "app"] as const).map((v) => (
-          <button key={v} onClick={() => setView(v)} className={cn("flex h-8 flex-1 items-center justify-center gap-1.5 rounded-lg text-[13px] font-medium", view === v ? "bg-white text-[#0a161c]" : "text-white/70")}>
+          <button key={v} onClick={() => setView(v)} className={cn("flex h-8 flex-1 items-center justify-center gap-1.5 rounded-lg text-[13px] font-medium", view === v ? "bg-white text-[#090807]" : "text-crema/70")}>
             {v === "panel" ? <Monitor className="size-4" /> : <Smartphone className="size-4" />}
             {v === "panel" ? tx.oficina : tx.movil}
           </button>
@@ -165,7 +165,7 @@ export function DemoPage() {
       </div>
 
       <div ref={stage} className={cn("relative flex min-h-0 flex-1 gap-4 p-2 sm:p-3 lg:gap-5", guiado && "pt-[max(0.5rem,env(safe-area-inset-top))]")}>
-        <div className={cn("min-w-0 flex-1 overflow-hidden rounded-2xl border border-white/10 shadow-e3", view !== "panel" && "max-lg:hidden")}>
+        <div className={cn("min-w-0 flex-1 overflow-hidden rounded-2xl border border-crema/10 shadow-e3", view !== "panel" && "max-lg:hidden")}>
           <ScaledBox>
             <PanelShell mode="embedded" compact />
           </ScaledBox>
@@ -177,11 +177,11 @@ export function DemoPage() {
             </PhoneFrame>
           ) : (
             // en un móvil de verdad sobra el marco: la app ocupa el hueco
-            <div className="relative w-full max-w-[430px] flex-1 overflow-hidden rounded-2xl border border-white/10">
+            <div className="relative w-full max-w-[430px] flex-1 overflow-hidden rounded-2xl border border-crema/10">
               <AppShell />
             </div>
           )}
-          <div className="hidden items-center gap-1.5 text-[11px] text-white/40 lg:flex">
+          <div className="hidden items-center gap-1.5 text-[11px] text-crema/40 lg:flex">
             <span className="size-1.5 rounded-full bg-ok" /> {tx.conectados}
           </div>
         </div>

@@ -23,7 +23,7 @@ export function QrSvg({ text, className }: { text: string; className?: string })
   const [svg, setSvg] = useState("");
   useEffect(() => {
     let alive = true;
-    import("qrcode").then((Q) => Q.default.toString(text, { type: "svg", margin: 0, color: { dark: "#0c1a22", light: "#ffffff" } })).then((s) => alive && setSvg(s));
+    import("qrcode").then((Q) => Q.default.toString(text, { type: "svg", margin: 0, color: { dark: "#1c2129", light: "#ffffff" } })).then((s) => alive && setSvg(s));
     return () => {
       alive = false;
     };
@@ -118,40 +118,40 @@ export function InvoiceDrawer({ id, onClose }: { id?: string; onClose: () => voi
     <Drawer open={!!id} onClose={onClose} title={<span className="flex items-center gap-2">{inv.numero} <InvoiceStatusBadge s={inv.estado} /></span>} width={600}>
       <div className="grid gap-4 p-5">
         {/* documento */}
-        <motion.div layout className="rounded-xl border border-line bg-white p-5 text-[#0c1a22] shadow-e1">
+        <motion.div layout className="rounded-xl border border-line bg-white p-5 text-[#1c2129] shadow-e1">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-2">
-              <span className="grid size-8 place-items-center rounded-lg font-display font-bold text-white" style={{ background: sector.color }}>
+              <span className="grid size-8 place-items-center rounded-lg font-display font-bold text-crema" style={{ background: sector.color }}>
                 {trad(sector.empresaCorta[0])}
               </span>
               <div className="leading-tight">
                 <div className="text-[13px] font-semibold">{trad(sector.empresa)}</div>
-                <div className="text-[10px] text-[#7a8893]">{trad("Son Castelló, Palma")}</div>
+                <div className="text-[10px] text-[#5f5a58]">{trad("Son Castelló, Palma")}</div>
               </div>
             </div>
             <div className="text-right">
               <div className="font-display text-lg font-semibold">{inv.serie === "R" ? trad("Rectificativa") : trad("Factura")}</div>
-              <div className="text-[11px] text-[#7a8893]">{trad(inv.numero)}</div>
+              <div className="text-[11px] text-[#5f5a58]">{trad(inv.numero)}</div>
             </div>
           </div>
           <div className="mt-4 grid grid-cols-3 gap-3 text-[11px]">
             <div className="col-span-1">
-              <div className="text-[#7a8893]">{trad("Cliente")}</div>
+              <div className="text-[#5f5a58]">{trad("Cliente")}</div>
               <div className="font-medium">{trad(c.nombre)}</div>
-              <div className="text-[#465661]">{trad(c.cif)}</div>
+              <div className="text-[#5f5a58]">{trad(c.cif)}</div>
             </div>
             <div>
-              <div className="text-[#7a8893]">{trad("Fecha")}</div>
+              <div className="text-[#5f5a58]">{trad("Fecha")}</div>
               <div className="tabular">{fmt.date(inv.fecha)}</div>
             </div>
             <div>
-              <div className="text-[#7a8893]">{trad("Vence")}</div>
+              <div className="text-[#5f5a58]">{trad("Vence")}</div>
               <div className="tabular">{fmt.date(inv.vencimiento)}</div>
             </div>
           </div>
           <table className="mt-4 w-full text-[12px]">
             <thead>
-              <tr className="border-b border-[#dde3e7] text-left text-[10.5px] text-[#7a8893]">
+              <tr className="border-b border-[#eadccc] text-left text-[10.5px] text-[#5f5a58]">
                 <th className="py-1.5 font-medium">{trad("Concepto")}</th>
                 <th className="py-1.5 text-right font-medium">{trad("Cant.")}</th>
                 <th className="py-1.5 text-right font-medium">{trad("Importe")}</th>
@@ -159,7 +159,7 @@ export function InvoiceDrawer({ id, onClose }: { id?: string; onClose: () => voi
             </thead>
             <tbody>
               {inv.lineas.map((l, i) => (
-                <tr key={i} className="border-b border-[#eef2f4]">
+                <tr key={i} className="border-b border-[#fcefe1]">
                   <td className="py-1.5 pr-2">{trad(l.concepto)}</td>
                   <td className="tabular py-1.5 text-right">{trad(l.cantidad)}</td>
                   <td className="tabular py-1.5 text-right">{fmt.eur(l.cantidad * l.precio)}</td>
@@ -168,29 +168,29 @@ export function InvoiceDrawer({ id, onClose }: { id?: string; onClose: () => voi
             </tbody>
           </table>
           <div className="mt-3 ml-auto grid w-48 gap-1 text-[12px]">
-            <div className="flex justify-between text-[#465661]">
+            <div className="flex justify-between text-[#5f5a58]">
               <span>{trad("Base")}</span>
               <span className="tabular">{fmt.eur(inv.base)}</span>
             </div>
-            <div className="flex justify-between text-[#465661]">
+            <div className="flex justify-between text-[#5f5a58]">
               <span>{trad("IVA 21 %")}</span>
               <span className="tabular">{fmt.eur(inv.iva)}</span>
             </div>
-            <div className="flex justify-between border-t border-[#0c1a22] pt-1 text-[14px] font-semibold">
+            <div className="flex justify-between border-t border-[#1c2129] pt-1 text-[14px] font-semibold">
               <span>{trad("Total")}</span>
               <span className="tabular">{fmt.eur(inv.total)}</span>
             </div>
           </div>
           <AnimatePresence>
             {inv.verifactu && (
-              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="mt-4 flex items-center gap-3 overflow-hidden rounded-lg bg-[#f4f6f7] p-2.5">
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="mt-4 flex items-center gap-3 overflow-hidden rounded-lg bg-[#fff7ed] p-2.5">
                 <QrSvg text={`https://nexo4pymes.com/demo?factura=${inv.numero}`} className="size-16 shrink-0 rounded" />
                 <div className="min-w-0 text-[11px] leading-snug">
                   <div className="flex items-center gap-1 font-semibold text-[#13845a]">
                     <BadgeCheck className="size-3.5" />{" "}{trad("Factura registrada con VeriFactu")}
                   </div>
-                  <div className="truncate text-[#465661]">{trad("Huella")}{" "}{trad(inv.verifactu.huella)}</div>
-                  <div className="text-[#7a8893]">
+                  <div className="truncate text-[#5f5a58]">{trad("Huella")}{" "}{trad(inv.verifactu.huella)}</div>
+                  <div className="text-[#5f5a58]">
                     {fmt.date(inv.verifactu.registrada)}{" "}{trad("a las")}{" "}{fmt.time(inv.verifactu.registrada)}
                   </div>
                 </div>
@@ -264,7 +264,7 @@ export function InvoiceDrawer({ id, onClose }: { id?: string; onClose: () => voi
             )}
             {inv.estado === "cobrada" && (
               <motion.div initial={{ scale: 0.96, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex items-center gap-3 rounded-xl bg-ok-soft p-3 text-ok">
-                <span className="grid size-9 place-items-center rounded-full bg-ok text-white">
+                <span className="grid size-9 place-items-center rounded-full bg-ok text-crema">
                   <Check className="size-5" />
                 </span>
                 <div className="text-[13px]">

@@ -26,12 +26,13 @@ type Tono = "claro" | "alt" | "oscuro" | "oscuro-hondo";
 const tonos: Record<Tono, string> = {
   claro: "bg-bg text-fg",
   alt: "bg-surface-2 text-fg",
-  /* "oscuro" y "oscuro-hondo" ya no son oscuros: son las bandas que
-     contrastan con el fondo. El nombre se queda porque lo pasan las
-     secciones; cambiarlo es un renombrado de veinte archivos que no
-     cambia ni un píxel. */
+  /* "oscuro" y "oscuro-hondo" ya no son oscuros: "oscuro" es la banda que
+     contrasta con el fondo y "oscuro-hondo" el crema de siempre, para que
+     las tarjetas blancas sigan siendo tarjetas sobre crema. El nombre se
+     queda porque lo pasan las secciones; cambiarlo es un renombrado de
+     veinte archivos que no cambia ni un píxel. */
   oscuro: "bg-surface-2 text-fg",
-  "oscuro-hondo": "bg-surface text-fg",
+  "oscuro-hondo": "bg-bg text-fg",
 };
 
 export function Seccion({
@@ -64,7 +65,7 @@ export function Seccion({
 }
 
 /* El antetítulo en versalitas con su rayita. `tono` ya no decide
-   nada: el acento es el azul de marca, que tiene su propio valor en
+   nada: el acento es el carmesí de marca, que tiene su propio valor en
    claro y en oscuro. Se mantiene el parámetro porque lo pasan diez
    secciones y no estorba. */
 export function Antetitulo({ children }: { children: ReactNode; tono?: "claro" | "oscuro" }) {

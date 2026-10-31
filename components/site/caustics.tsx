@@ -33,7 +33,7 @@ function hex(h: string) {
 }
 
 /** Fondo de cáusticas de agua en WebGL. Se detiene fuera de pantalla y respeta reducir movimiento. */
-export function Caustics({ className, deep = "#041820", mid = "#0a4a5e", light = "#9fe3f2" }: { className?: string; deep?: string; mid?: string; light?: string }) {
+export function Caustics({ className, deep = "#090807", mid = "#2b0a14", light = "#be123c" }: { className?: string; deep?: string; mid?: string; light?: string }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     const canvas = ref.current;

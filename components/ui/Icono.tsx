@@ -70,10 +70,10 @@ export function CajaIcono({
   const estilos = {
     claro: "bg-teal-claro text-brand",
     oscuro: "bg-surface-2 text-brand ring-1 ring-inset ring-mint/20",
-    coral: "bg-coral/12 text-bad-dark",
+    coral: "bg-brand-soft text-brand",
     azul: "bg-brand-soft text-brand ring-1 ring-inset ring-azul/25",
-    violeta: "bg-violeta/15 text-[#D3B0FF] ring-1 ring-inset ring-violeta/25",
-    mint: "bg-brand/50 text-brand ring-1 ring-inset ring-mint/25",
+    violeta: "bg-brand-soft text-brand ring-1 ring-inset ring-violeta/25",
+    mint: "bg-brand-soft text-brand ring-1 ring-inset ring-mint/25",
   };
 
   return (

@@ -15,10 +15,10 @@ export function CasoDiagnostico() {
             className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-soft blur-[90px]"
           />
           <div className="relative max-w-[70ch]">
-            <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-[#D3B0FF]">
+            <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-brand">
               {casoDiagnostico.categoria}
             </span>
-            <h2 className="mt-4 text-[clamp(1.7rem,3.6vw,2.6rem)] font-semibold tracking-[-0.025em] text-fg">
+            <h2 className="mt-4 text-[clamp(1.7rem,3.6vw,2.6rem)] font-semibold tracking-[-0.01em] text-fg">
               {casoDiagnostico.titular}
             </h2>
             {casoDiagnostico.parrafos.map((p) => (

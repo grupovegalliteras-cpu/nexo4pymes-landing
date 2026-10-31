@@ -157,8 +157,8 @@ export function MallorcaMap({
             const [x, y] = project(lat, lon);
             return (
               <g key={n} opacity={0.75}>
-                <circle cx={x} cy={y} r={2.5 * k} fill="var(--map-town, #7a8893)" />
-                <text x={x + 6 * k} y={y + 4 * k} fontSize={13 * k} fill="var(--map-town, #7a8893)" fontWeight={500} style={{ fontFamily: "var(--font-geist)" }}>
+                <circle cx={x} cy={y} r={2.5 * k} fill="var(--map-town, #5f5a58)" />
+                <text x={x + 6 * k} y={y + 4 * k} fontSize={13 * k} fill="var(--map-town, #5f5a58)" fontWeight={500} style={{ fontFamily: "var(--fuente-texto)" }}>
                   {trad(n)}
                 </text>
               </g>
@@ -201,7 +201,7 @@ export function MallorcaMap({
                   </circle>
                 )}
                 <circle r={14} fill={m.color} stroke="var(--surface)" strokeWidth={3} />
-                <text textAnchor="middle" y={4.5} fontSize={11} fontWeight={700} fill="#fff" style={{ fontFamily: "var(--font-geist)" }}>
+                <text textAnchor="middle" y={4.5} fontSize={11} fontWeight={700} fill="#fff" style={{ fontFamily: "var(--fuente-texto)" }}>
                   {initials(m.label ?? "")}
                 </text>
               </g>
@@ -215,11 +215,11 @@ export function MallorcaMap({
                 </circle>
               )}
               <path d="M0,0 C-7,-9 -11,-13 -11,-19 A11,11 0 1 1 11,-19 C11,-13 7,-9 0,0Z" fill={m.done ? "var(--surface)" : (m.color ?? "var(--brand)")} stroke={m.color ?? "var(--brand)"} strokeWidth={2} />
-              <text textAnchor="middle" y={-15} fontSize={10.5} fontWeight={700} fill={m.done ? (m.color ?? "var(--brand)") : "#fff"} style={{ fontFamily: "var(--font-geist)" }}>
+              <text textAnchor="middle" y={-15} fontSize={10.5} fontWeight={700} fill={m.done ? (m.color ?? "var(--brand)") : "#fff"} style={{ fontFamily: "var(--fuente-texto)" }}>
                 {trad(m.n) ?? "•"}
               </text>
               {m.label && m.kind === "client" && (
-                <text x={14} y={-14} fontSize={11} fill="var(--text-2)" fontWeight={500} style={{ fontFamily: "var(--font-geist)" }}>
+                <text x={14} y={-14} fontSize={11} fill="var(--text-2)" fontWeight={500} style={{ fontFamily: "var(--fuente-texto)" }}>
                   {trad(m.label)}
                 </text>
               )}

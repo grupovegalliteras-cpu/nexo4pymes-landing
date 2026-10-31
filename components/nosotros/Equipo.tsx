@@ -61,19 +61,20 @@ export function Equipo() {
 
       {/* ItemStagger solo admite li/article/div/span, asi que el
           <figure> semantico va dentro y no como elemento raiz. */}
-      <Stagger className="mt-12 flex flex-wrap justify-center gap-10 sm:mt-16 sm:gap-16">
+      <div data-theme="dark" className="mt-12 rounded-panel bg-grafito px-6 py-10 text-fg sm:mt-16 sm:py-14">
+      <Stagger className="flex flex-wrap justify-center gap-10 sm:gap-16">
         {EQUIPO.map((p) => (
           <ItemStagger key={p.nombre} as="div" className="text-center">
             <figure>
-              {/* El borde en menta es lo que separa el circulo claro del
-                  fondo oscuro. Sin el, el retrato flota como una pegatina. */}
+              {/* El borde melocotón es lo que separa el circulo claro del
+                  fondo grafito. Sin el, el retrato flota como una pegatina. */}
               <Image
                 src={p.foto}
                 alt={nombreCompleto(p)}
                 width={512}
                 height={512}
                 sizes="(min-width: 640px) 200px, 150px"
-                className="size-[150px] rounded-full border-2 border-brand/30 object-cover sm:size-[200px]"
+                className="size-[150px] rounded-full border-2 border-melocoton object-cover sm:size-[200px]"
               />
               <figcaption className="mt-5">
                 <div className="text-[19px] text-fg sm:text-[20px]">{nombreCompleto(p)}</div>
@@ -83,6 +84,7 @@ export function Equipo() {
           </ItemStagger>
         ))}
       </Stagger>
+      </div>
     </Seccion>
   );
 }

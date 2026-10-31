@@ -6,9 +6,9 @@ import { contenido } from "@/content/i18n";
 import { idiomaServidor } from "@/lib/idioma-servidor";
 
 const GLOW: Record<string, string> = {
-  azul: "76,125,255",
-  violeta: "176,107,245",
-  mint: "76,224,179",
+  azul: "190,18,60",
+  violeta: "160,15,51",
+  mint: "190,18,60",
 };
 
 export function ServiciosGrid() {

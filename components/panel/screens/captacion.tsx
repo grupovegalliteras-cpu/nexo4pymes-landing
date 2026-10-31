@@ -62,8 +62,8 @@ export function AsistenteAtencion() {
     <div className="pb-8">
       <PageHeader id="asistente-atencion" />
       <div className="grid gap-4 px-4 sm:px-6 lg:grid-cols-[380px_minmax(0,1fr)]">
-        <div className="mx-auto w-full max-w-[380px] overflow-hidden rounded-[28px] border-[6px] border-[#0c1a22] bg-[#e9e3da] shadow-e3 dark:bg-[#0b141a]">
-          <div className="flex items-center gap-2.5 bg-[#075e54] px-3 py-2.5 text-white">
+        <div className="mx-auto w-full max-w-[380px] overflow-hidden rounded-[28px] border-[6px] border-[#1c2129] bg-[#e9e3da] shadow-e3 dark:bg-[#0b141a]">
+          <div className="flex items-center gap-2.5 bg-[#075e54] px-3 py-2.5 text-crema">
             <span className="grid size-8 place-items-center rounded-full text-xs font-bold" style={{ background: sector.color }}>
               {trad(sector.empresaCorta[0])}
             </span>
@@ -101,7 +101,7 @@ export function AsistenteAtencion() {
             className="flex gap-2 bg-[#f0f2f5] p-2 dark:bg-[#202c33]"
           >
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={trad("Escribe como si fueras un cliente")} className="h-9 flex-1 rounded-full bg-white px-3 text-[13px] text-[#111b21] outline-none" aria-label={trad("Mensaje del cliente")} />
-            <button type="submit" className="grid size-9 place-items-center rounded-full bg-[#00a884] text-white" aria-label={trad("Enviar")}>
+            <button type="submit" className="grid size-9 place-items-center rounded-full bg-[#00a884] text-crema" aria-label={trad("Enviar")}>
               <Send className="size-4" />
             </button>
           </form>
@@ -168,9 +168,9 @@ export function WebReservas() {
             <span className="rounded-md bg-surface-2 px-2 py-0.5">{trad("www.")}{sector.empresa.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, "")}.es</span>
           </div>
           <div className="grid lg:grid-cols-2">
-            <div className="relative overflow-hidden p-8 text-white" style={{ background: `linear-gradient(135deg, ${sector.color}, #0c1a22)` }}>
+            <div className="relative overflow-hidden p-8 text-crema" style={{ background: `linear-gradient(135deg, ${sector.color}, #1c2129)` }}>
               <div className="font-display text-3xl font-semibold leading-tight">{trad(sector.empresa)}</div>
-              <div className="mt-2 max-w-sm text-white/80">{trad(sector.lema)}{" "}{trad("en toda Mallorca. Respuesta en el día.")}</div>
+              <div className="mt-2 max-w-sm text-crema/80">{trad(sector.lema)}{" "}{trad("en toda Mallorca. Respuesta en el día.")}</div>
               <div className="mt-6 grid gap-2 text-sm">
                 {sector.servicios.slice(0, 4).map((s) => (
                   <div key={s.nombre} className="flex items-center gap-2">
@@ -178,13 +178,13 @@ export function WebReservas() {
                   </div>
                 ))}
               </div>
-              <div className="pointer-events-none absolute -right-16 -bottom-16 size-64 rounded-full bg-white/10" />
+              <div className="pointer-events-none absolute -right-16 -bottom-16 size-64 rounded-full bg-crema/10" />
             </div>
             <div className="bg-surface p-6">
               <AnimatePresence mode="wait">
                 {ok ? (
                   <motion.div key="ok" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="grid h-full place-items-center gap-3 py-10 text-center">
-                    <span className="grid size-12 place-items-center rounded-full bg-ok text-white">
+                    <span className="grid size-12 place-items-center rounded-full bg-ok text-crema">
                       <Check className="size-6" />
                     </span>
                     <div className="font-semibold">{trad("Solicitud enviada")}</div>

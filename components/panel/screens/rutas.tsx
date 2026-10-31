@@ -170,7 +170,7 @@ export function Rutas() {
                 {(modo === "optimizada" ? sel.optimized : sel.original).map((s, i) => (
                   <li key={s.job.id}>
                     <button onClick={() => setOpen(s.job.id)} className="flex w-full items-center gap-3 px-4 py-2.5 text-left hover:bg-surface-2">
-                      <span className="grid size-6 place-items-center rounded-full text-[11px] font-bold text-white" style={{ background: sel.t.color }}>
+                      <span className="grid size-6 place-items-center rounded-full text-[11px] font-bold text-crema" style={{ background: sel.t.color }}>
                         {i + 1}
                       </span>
                       <div className="min-w-0 flex-1">

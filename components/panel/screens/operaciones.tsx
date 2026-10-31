@@ -62,11 +62,11 @@ export function Informes() {
         </Card>
         <Card className="p-4">
           <div className="text-[13px] font-semibold">{trad("Así lo recibe tu cliente")}</div>
-          <div className="mt-3 rounded-xl border border-line bg-white p-4 text-[#0c1a22] shadow-e1">
+          <div className="mt-3 rounded-xl border border-line bg-white p-4 text-[#1c2129] shadow-e1">
             <div className="flex items-center gap-2">
-              <span className="grid size-7 place-items-center rounded-md text-xs font-bold text-white" style={{ background: sector.color }}>{trad(sector.empresaCorta[0])}</span>
+              <span className="grid size-7 place-items-center rounded-md text-xs font-bold text-crema" style={{ background: sector.color }}>{trad(sector.empresaCorta[0])}</span>
               <span className="text-[13px] font-semibold">{trad(sector.empresa)}</span>
-              <span className="ml-auto text-[10px] text-[#7a8893]">{trad("Informe de servicio")}</span>
+              <span className="ml-auto text-[10px] text-[#5f5a58]">{trad("Informe de servicio")}</span>
             </div>
             <div className="mt-3 grid grid-cols-2 gap-2">
               <FakePhoto seed="demo-a" label={trad("Antes")} tint={sector.color} className="aspect-[4/3]" />
@@ -75,7 +75,7 @@ export function Informes() {
             <div className="mt-3 grid gap-1 text-[11px]">
               {sector.mediciones.slice(0, 3).map((m) => (
                 <div key={m.nombre} className="flex justify-between">
-                  <span className="text-[#465661]">{trad(m.nombre)}</span>
+                  <span className="text-[#5f5a58]">{trad(m.nombre)}</span>
                   <span className="font-medium">{fmt.num((m.ok[0] + m.ok[1]) / 2, m.dec)} {trad(m.unidad)} <span className="text-[#13845a]">{trad("Correcto")}</span></span>
                 </div>
               ))}

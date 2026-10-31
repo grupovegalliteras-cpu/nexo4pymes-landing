@@ -103,7 +103,7 @@ function Calendario({ lang }: { lang: keyof typeof TX }) {
               <span
                 className={
                   "rounded-full px-2 py-0.5 text-[12px] font-semibold " +
-                  (h.estado === "en-vigor" ? "bg-ok/15 text-ok" : "bg-sun/15 text-sun")
+                  (h.estado === "en-vigor" ? "bg-brand-soft text-brand" : "bg-surface-3 text-fg-2")
                 }
               >
                 {h.estado === "en-vigor" ? tx.enVigor : tx.anunciado}
@@ -148,31 +148,31 @@ export function ModuloPage({ slug }: { slug: LandingSlug }) {
           grano al 7 % y desvanecido al color base abajo. La primera
           version de esta pagina era un bloque liso y se notaba al
           instante que no era del mismo sitio. */}
-      <section className="relative overflow-hidden bg-[#041820] text-white">
+      <section data-theme="dark" className="relative overflow-hidden bg-noche text-crema">
         <div className="absolute inset-0">
           <Caustics />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(4_24_32/0.5)_0%,rgb(4_24_32/0.78)_45%,rgb(4_24_32/0.92)_100%)] lg:bg-[linear-gradient(90deg,rgb(4_24_32/0.88)_0%,rgb(4_24_32/0.6)_55%,rgb(4_24_32/0.35)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(9_8_7/0.5)_0%,rgb(9_8_7/0.78)_45%,rgb(9_8_7/0.92)_100%)] lg:bg-[linear-gradient(90deg,rgb(9_8_7/0.88)_0%,rgb(9_8_7/0.6)_55%,rgb(9_8_7/0.35)_100%)]" />
           <div className="grain absolute inset-0 opacity-[0.07] mix-blend-overlay" />
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-[#041820]" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-noche" />
         </div>
 
         <div className="relative mx-auto max-w-4xl px-5 pt-24 pb-14 sm:px-6 sm:pt-28 lg:pt-32 lg:pb-20">
-          <Link href="/modulos" className="fade-up text-[13px] text-white/60 hover:text-white/90">
+          <Link href="/modulos" className="fade-up text-[13px] text-crema/60 hover:text-crema/90">
             ← {tx.volver}
           </Link>
-          <div className="fade-up mt-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[12px] text-white/80 backdrop-blur sm:text-[13px]">
+          <div className="fade-up mt-5 inline-flex items-center gap-2 rounded-full border border-crema/15 bg-crema/5 px-3 py-1 text-[12px] text-crema/80 backdrop-blur sm:text-[13px]">
             <Icon name={m.icono} className="size-4" /> {m.nombre}
           </div>
           <h1
-            className="fade-up mt-5 font-display text-[42px] leading-[1.02] font-semibold tracking-[-0.03em] min-[400px]:text-[46px] sm:text-[56px]"
+            className="fade-up mt-5 font-display text-[42px] leading-[1.02] font-semibold tracking-[-0.01em] min-[400px]:text-[46px] sm:text-[56px]"
             style={{ animationDelay: "80ms" }}
           >
             {seo.h1[0]}
             <br />
-            <span className="text-[#8fd9ea]">{seo.h1[1]}</span>
+            <span className="text-carmesi">{seo.h1[1]}</span>
           </h1>
           <p
-            className="fade-up mt-4 max-w-xl text-[16px] leading-relaxed text-white/75 sm:mt-5 sm:text-[18px]"
+            className="fade-up mt-4 max-w-xl text-[16px] leading-relaxed text-crema/75 sm:mt-5 sm:text-[18px]"
             style={{ animationDelay: "160ms" }}
           >
             {seo.entradilla}
@@ -185,7 +185,7 @@ export function ModuloPage({ slug }: { slug: LandingSlug }) {
                 lee components/demo/demo-page.tsx. */}
             <Link
               href={`/demo?modulo=${landing.modulo}`}
-              className="group flex h-13 items-center justify-center gap-2 rounded-xl bg-sun px-5 text-[16px] font-semibold text-[#1d1300] shadow-[0_10px_30px_-10px_rgb(245_171_46/0.7)] transition hover:brightness-105 sm:h-12 sm:text-[15px]"
+              className="group flex h-13 items-center justify-center gap-2 rounded-xl bg-carmesi px-5 text-[16px] font-semibold text-crema transition hover:bg-carmesi-oscuro sm:h-12 sm:text-[15px]"
             >
               <PlayCircle className="size-5" /> {tx.verDemo}
             </Link>
@@ -193,7 +193,7 @@ export function ModuloPage({ slug }: { slug: LandingSlug }) {
               href={whatsappLink(mensaje)}
               target="_blank"
               rel="noreferrer"
-              className="vibrar flex h-13 items-center justify-center gap-2 rounded-xl bg-[#157e41] px-5 text-[16px] font-semibold text-white shadow-[0_10px_30px_-10px_rgb(21_126_65/0.7)] transition hover:brightness-110 sm:h-12 sm:text-[15px]"
+              className="vibrar flex h-13 items-center justify-center gap-2 rounded-xl bg-carmesi px-5 text-[16px] font-semibold text-crema transition hover:bg-carmesi-oscuro sm:h-12 sm:text-[15px]"
             >
               <MessageCircle className="size-5" /> {tx.pide}
             </a>
@@ -226,7 +226,7 @@ export function ModuloPage({ slug }: { slug: LandingSlug }) {
               className="rounded-2xl border border-line bg-surface p-5"
             >
               <h3 className="flex items-start gap-2 text-[16px] font-semibold">
-                <Check className="mt-0.5 size-4 shrink-0 text-ok" /> {c.titulo}
+                <Check className="mt-0.5 size-4 shrink-0 text-carmesi" /> {c.titulo}
               </h3>
               <p className="mt-2.5 text-[15px] leading-relaxed text-fg-2">{c.texto}</p>
             </motion.div>

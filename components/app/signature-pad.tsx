@@ -17,7 +17,7 @@ export function SignaturePad({ onInk, demoKey, clearKey }: { onInk: (has: boolea
     x.lineCap = "round";
     x.lineJoin = "round";
     x.lineWidth = 2.4;
-    x.strokeStyle = getComputedStyle(c).color || "#0c1a22";
+    x.strokeStyle = getComputedStyle(c).color || "#1c2129";
     return x;
   };
 

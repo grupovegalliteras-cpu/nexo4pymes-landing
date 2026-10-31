@@ -85,7 +85,7 @@ export function CommandPalette() {
     <AnimatePresence>
       {open && (
         <div className="fixed inset-0 z-[90] flex items-start justify-center p-4 pt-[12vh]" role="dialog" aria-modal aria-label={trad("Buscar en todo")}>
-          <motion.div className="absolute inset-0 bg-[#04121a]/40" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)} />
+          <motion.div className="absolute inset-0 bg-[#090807]/40" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)} />
           <motion.div
             initial={{ opacity: 0, scale: 0.97, y: -8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}

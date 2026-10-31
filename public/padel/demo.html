@@ -10,34 +10,38 @@
 <title>Nexo Pádel Demo</title>
 <meta name="description" content="Demo interactiva de Nexo Pádel: panel de la escuela, app del entrenador, app del alumno y asistente de WhatsApp con IA.">
 <style>
+@font-face{font-family:"Barlow Semi Condensed";font-weight:600;font-display:swap;src:url(/padel/fuentes/barlow-semi-condensed-600.woff2) format("woff2")}
+@font-face{font-family:"Barlow Semi Condensed";font-weight:700 800;font-display:swap;src:url(/padel/fuentes/barlow-semi-condensed-700.woff2) format("woff2")}
+@font-face{font-family:"Atkinson Hyperlegible";font-weight:400 500;font-display:swap;src:url(/padel/fuentes/atkinson-hyperlegible-400.woff2) format("woff2")}
+@font-face{font-family:"Atkinson Hyperlegible";font-weight:600 800;font-display:swap;src:url(/padel/fuentes/atkinson-hyperlegible-700.woff2) format("woff2")}
 :root{
-  --bg:#f4f6f7; --bg-2:#e4e9ec; --surface:#ffffff; --surface-2:#eef2f4; --ink:#0c1a22; --muted:#465661; --line:#dde3e7;
-  --teal:#0a5d78; --teal-bright:#0a5d78; --on-bright:#ffffff; --teal-soft:#e1eff4; --coral:#cf3f37; --coral-soft:#fbe6e4;
-  --blue:#2f6ad0; --violet:#5b4bd6; --amber:#b7740a; --amber-soft:#fbf0d9;
-  --k-ini:#13845a; --k-mid:#2f6ad0; --k-adv:#5b4bd6; --k-kids:#e8950c;
+  --bg:#fff7ed; --bg-2:#f6e5d4; --surface:#ffffff; --surface-2:#fcefe1; --ink:#1c2129; --muted:#5f5a58; --line:#eadccc;
+  --teal:#be123c; --teal-bright:#be123c; --on-bright:#fff7ed; --teal-soft:#fbe3e1; --coral:#cf3f37; --coral-soft:#fbe6e4;
+  --blue:#1c2129; --violet:#5f5a58; --amber:#b7740a; --amber-soft:#fbf0d9;
+  --k-ini:#be123c; --k-mid:#1c2129; --k-adv:#5f5a58; --k-kids:#c2702a;
   --shadow:0 1px 2px rgba(12,26,34,.06),0 10px 30px -14px rgba(12,26,34,.22);
-  --phone:#0c1a22;
+  --phone:#1c2129;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#081116; --bg-2:#0d1a21; --surface:#0d1a21; --surface-2:#12232c; --ink:#e6eef2; --muted:#a2b3bd; --line:#1d313c;
-    --teal:#3db1d3; --teal-bright:#3db1d3; --on-bright:#041319; --teal-soft:#0f3342; --coral:#ff6b61; --coral-soft:#3d1715; --blue:#6d9bff; --violet:#9d8fff; --amber:#e8a93a; --amber-soft:#36290f;
-    --k-ini:#37c28a; --k-mid:#6d9bff; --k-adv:#9d8fff; --k-kids:#f5ab2e;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px -16px rgba(0,0,0,.8); --phone:#1a2f3a; color-scheme:dark;
+    --bg:#090807; --bg-2:#151311; --surface:#151311; --surface-2:#1d1a18; --ink:#fff7ed; --muted:#c9bfb5; --line:#2e2925;
+    --teal:#f0607f; --teal-bright:#f0607f; --on-bright:#090807; --teal-soft:#3a0e1b; --coral:#ff6b61; --coral-soft:#3d1715; --blue:#fff7ed; --violet:#c9bfb5; --amber:#e8a93a; --amber-soft:#36290f;
+    --k-ini:#f0607f; --k-mid:#fff7ed; --k-adv:#c9bfb5; --k-kids:#fdba74;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px -16px rgba(0,0,0,.8); --phone:#1d1a18; color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#081116; --bg-2:#0d1a21; --surface:#0d1a21; --surface-2:#12232c; --ink:#e6eef2; --muted:#a2b3bd; --line:#1d313c;
-  --teal:#3db1d3; --teal-bright:#3db1d3; --on-bright:#041319; --teal-soft:#0f3342; --coral:#ff6b61; --coral-soft:#3d1715; --blue:#6d9bff; --violet:#9d8fff; --amber:#e8a93a; --amber-soft:#36290f;
-  --k-ini:#37c28a; --k-mid:#6d9bff; --k-adv:#9d8fff; --k-kids:#f5ab2e;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px -16px rgba(0,0,0,.8); --phone:#1a2f3a; color-scheme:dark;
+  --bg:#090807; --bg-2:#151311; --surface:#151311; --surface-2:#1d1a18; --ink:#fff7ed; --muted:#c9bfb5; --line:#2e2925;
+  --teal:#f0607f; --teal-bright:#f0607f; --on-bright:#090807; --teal-soft:#3a0e1b; --coral:#ff6b61; --coral-soft:#3d1715; --blue:#fff7ed; --violet:#c9bfb5; --amber:#e8a93a; --amber-soft:#36290f;
+  --k-ini:#f0607f; --k-mid:#fff7ed; --k-adv:#c9bfb5; --k-kids:#fdba74;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px -16px rgba(0,0,0,.8); --phone:#1d1a18; color-scheme:dark;
 }
 /* Vista previa dentro de nexo4pymes.com/padel (demo.html?incrustada): solo el panel y el móvil */
 .incrustada .top,.incrustada .steps,.incrustada .mview,.incrustada .demo-note,.incrustada .toasts,.incrustada #modal{display:none!important}
 .incrustada body{overflow:hidden}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Geist",ui-sans-serif,system-ui,sans-serif;font-size:14.5px;line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-h1,h2,h3,h4{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.015em;margin:0;line-height:1.15}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",ui-sans-serif,system-ui,sans-serif;font-size:14.5px;line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:"Barlow Semi Condensed",system-ui,sans-serif;letter-spacing:-.015em;margin:0;line-height:1.15}
 button{font:inherit;color:inherit;cursor:pointer}
 a{color:inherit}
 .muted{color:var(--muted)}
@@ -55,9 +59,9 @@ a{color:inherit}
 /* TOP */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in oklab,var(--bg) 85%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .top-in{max-width:1440px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:9px;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:17px;text-decoration:none}
+.logo{display:flex;align-items:center;gap:9px;font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-weight:800;font-size:17px;text-decoration:none}
 .logo-mark{width:30px;height:30px;border-radius:9px;background:#0c1a22;display:grid;place-items:center;flex:none}
-.logo small{display:block;font-family:"Geist",system-ui,sans-serif;font-weight:500;font-size:11.5px;color:var(--muted);line-height:1.1}
+.logo small{display:block;font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-weight:500;font-size:11.5px;color:var(--muted);line-height:1.1}
 .top-actions{display:flex;gap:8px;align-items:center}
 .icon-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
 @media(max-width:640px){.top .hide-sm{display:none}}
@@ -66,7 +70,7 @@ a{color:inherit}
 .steps{max-width:1440px;margin:0 auto;padding:12px 16px 0}
 .steps-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .steps-title{font-weight:700;font-size:13.5px;display:flex;align-items:center;gap:8px}
-.steps-title .count{font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--ink);color:var(--bg);border-radius:999px;padding:1px 9px;font-size:12.5px}
+.steps-title .count{font-family:"Barlow Semi Condensed",system-ui,sans-serif;background:var(--ink);color:var(--bg);border-radius:999px;padding:1px 9px;font-size:12.5px}
 .step-list{display:flex;gap:8px;flex-wrap:wrap;flex:1}
 .step{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:6px 12px 6px 7px;font-size:12.8px;font-weight:500;text-align:left}
 .step .n{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line);font-size:11px;font-weight:700;flex:none}
@@ -119,7 +123,7 @@ a{color:inherit}
 @container (min-width:640px){.kpis{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .kpi{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface)}
 .kpi .l{font-size:12px;color:var(--muted)}
-.kpi .v{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:26px;line-height:1.1;margin-top:3px;font-variant-numeric:tabular-nums}
+.kpi .v{font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-weight:800;font-size:26px;line-height:1.1;margin-top:3px;font-variant-numeric:tabular-nums}
 .kpi .s{font-size:11.5px;color:var(--muted);margin-top:2px}
 .kpi.flash{animation:flash 1.2s}
 @keyframes flash{0%{background:var(--teal-soft)}100%{background:var(--surface)}}
@@ -213,11 +217,11 @@ tr:last-child td{border-bottom:0}
 .coach dl{display:grid;grid-template-columns:1fr auto;gap:6px 10px;margin:0 0 12px;font-size:13px}
 .coach dt{color:var(--muted)}
 .coach dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
-.coach .total{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:26px;font-weight:800}
+.coach .total{font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-size:26px;font-weight:800}
 
 /* payments summary */
 .pay-sum{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
-.pay-sum .big{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:30px;font-variant-numeric:tabular-nums}
+.pay-sum .big{font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-weight:800;font-size:30px;font-variant-numeric:tabular-nums}
 .progress{height:10px;border-radius:6px;background:var(--surface-2);overflow:hidden;margin:8px 0 4px}
 .progress i{display:block;height:100%;background:var(--teal-bright);transition:width .8s}
 
@@ -271,7 +275,7 @@ tr:last-child td{border-bottom:0}
 :root[data-theme="dark"] .hero-card{background:#1a2f3a}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hero-card{background:#1a2f3a}}
 .hero-card .muted{color:#a2b3bd}
-.hero-card .when{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:26px;font-weight:800;margin:4px 0 2px}
+.hero-card .when{font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-size:26px;font-weight:800;margin:4px 0 2px}
 .dots{display:flex;gap:-4px;margin-top:10px}
 .dots .av{width:26px;height:26px;font-size:10px;border:2px solid #0c1a22;margin-left:-6px;background:#2a4351;color:#e6eef2}
 .dots .av:first-child{margin-left:0}
@@ -280,7 +284,7 @@ tr:last-child td{border-bottom:0}
 .tabbar button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:600;color:var(--muted);padding:4px 0}
 .tabbar button.on{color:var(--teal)}
 .tabbar svg{width:20px;height:20px}
-.big-num{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:34px;line-height:1}
+.big-num{font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-weight:800;font-size:34px;line-height:1}
 .skill{display:grid;grid-template-columns:80px 1fr 30px;gap:8px;align-items:center;font-size:12.5px;margin:7px 0}
 .skill .bar{width:100%}
 .note{background:var(--teal-soft);border-radius:12px;padding:10px 12px;font-size:13px}
@@ -291,7 +295,7 @@ tr:last-child td{border-bottom:0}
 
 /* coach */
 .cls-card{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--k);border-radius:16px;padding:12px 14px;margin-bottom:10px}
-.cls-card .t{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:20px}
+.cls-card .t{font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-weight:800;font-size:20px}
 .att{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
 .att:first-child{border-top:0}
 .att .nm{flex:1;min-width:0}
@@ -317,7 +321,7 @@ textarea.m-note{width:100%;border:1px solid var(--line);border-radius:12px;backg
 .toast .auto{color:#3db1d3;font-size:10px;font-weight:700;letter-spacing:.05em;display:block}
 /* time saved + inbox */
 .saved{display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap;border-radius:16px;padding:14px 16px;margin-bottom:14px;background:linear-gradient(120deg,var(--teal-soft),var(--surface) 75%);border:1px solid var(--line)}
-.saved .big{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.saved .big{font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-weight:800;font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
 .saved .lbl{font-size:12px;color:var(--muted);margin-top:3px}
 .saved.flash{animation:flash 1.2s}
 .saved-pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--teal-soft);color:var(--teal);white-space:nowrap}
@@ -369,7 +373,7 @@ textarea.m-note{width:100%;border:1px solid var(--line);border-radius:12px;backg
 /* club */
 .match{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line)}
 .match:first-of-type{border-top:0}
-.match .when{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:18px;min-width:56px}
+.match .when{font-family:"Barlow Semi Condensed",system-ui,sans-serif;font-weight:800;font-size:18px;min-width:56px}
 .match .info{flex:1;min-width:150px;font-size:13px}
 .seats{display:flex;gap:4px}
 .seats i{width:24px;height:24px;border-radius:50%;background:var(--teal-bright);display:grid;place-items:center;font-size:9px;font-style:normal;font-weight:700;color:var(--on-bright)}
@@ -883,7 +887,7 @@ function vHoy(){
   h+=P.length?`<div class="inbox">${P.join('')}</div>`:`<div class="empty-ok">☕ Nada pendiente. Todo lo demás lo ha resuelto la app.</div>`;
   if(D.length)h+=`<div class="inbox">${D.join('')}</div>`;
   const c1=cls('c1');
-  h+=`<div class="card"><h3>Pistas esta tarde <span class="muted" style="font-size:12px;font-family:Geist;font-weight:500">Clases de la escuela y partidos del club · toca una clase para ver los alumnos</span></h3>
+  h+=`<div class="card"><h3>Pistas esta tarde <span class="muted" style="font-size:12px;font-family:'Atkinson Hyperlegible';font-weight:500">Clases de la escuela y partidos del club · toca una clase para ver los alumnos</span></h3>
   <div class="morning"><span class="pill ok">✓ Hecha</span> 09:30 · ${c1.name} · Pista 1 · Toni · 4/4</div>
   <div class="court-scroll"><div class="court-grid"><div></div>${HOURS.map(x=>`<div class="cg-h">${x}</div>`).join('')}`;
   [1,2,3,4].forEach(k=>{
@@ -957,7 +961,7 @@ function studentRows(){
 }
 function vAlumnos(){
   return `<div class="view-head"><div><h2>Alumnos</h2><p>186 alumnos activos · mostrando los de hoy</p></div><button class="btn sm" data-act="noop">+ Nuevo alumno</button></div>
-  ${S.requests.length?`<div class="card"><h3>Solicitudes de inscripción <span class="muted" style="font-size:12px;font-family:Geist;font-weight:500">La app propone el grupo según edad, nivel, horario y plazas libres</span></h3>
+  ${S.requests.length?`<div class="card"><h3>Solicitudes de inscripción <span class="muted" style="font-size:12px;font-family:'Atkinson Hyperlegible';font-weight:500">La app propone el grupo según edad, nivel, horario y plazas libres</span></h3>
   ${S.requests.map(r=>{const c=r.prop==='trial'?null:cls(r.prop);return `<div class="match"><span class="av">${ini(r.n)}</span><div class="info"><b>${esc(r.n)}</b> · ${r.age} · ${r.lvl}<br><span class="muted">${r.who} · ${r.from} · ${r.avail}</span></div>
   <div>${r.status==='trial'?'<span class="pill ok">Clase de prueba reservada · jue 18:00</span>':r.status==='new'?`<div class="muted" style="font-size:12px;margin-bottom:4px">Propuesta: <b style="color:var(--ink)">${c.name} · L/X ${c.time}</b> (${c.s.length}/${c.cap})</div><button class="btn sm primary" data-assign="${r.id}">Asignar y enviar bienvenida</button>`:r.status==='assigned'?'<span class="pill warn">Documentos enviados · esperando firma</span>':'<span class="pill ok">✓ Alta completa · SEPA firmado</span>'}</div></div>`}).join('')}
   <p class="muted" style="font-size:12px;margin:8px 0 0">Al asignar se envían solos: bienvenida con horario, mandato SEPA, autorización de menores y derechos de imagen. La primera cuota se prorratea.</p></div>`:''}

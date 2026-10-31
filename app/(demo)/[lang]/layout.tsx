@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Bricolage_Grotesque, IBM_Plex_Mono, Sora, Space_Grotesk } from "next/font/google";
+import { Atkinson_Hyperlegible, Barlow_Semi_Condensed } from "next/font/google";
 import Script from "next/script";
 import "../globals.css";
 import { Providers } from "@/components/providers";
@@ -29,12 +29,9 @@ import { fijarIdioma } from "@/lib/idioma-servidor";
    cookies, analítica, medición, verificación de Meta y los datos de
    empresa para Google. */
 
-const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
-const bricolage = Bricolage_Grotesque({ variable: "--font-bricolage", subsets: ["latin"] });
-// tipografías de la web, solo para el banner de cookies: sin precarga
-const titular = Sora({ subsets: ["latin"], weight: ["400", "600", "700"], variable: "--fuente-titular", display: "swap", preload: false });
-const texto = Space_Grotesk({ subsets: ["latin"], variable: "--fuente-texto", display: "swap", preload: false });
-const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--fuente-mono", display: "swap", preload: false });
+// Las dos tipografías de la marca: titulares y texto. No hay más.
+const titular = Barlow_Semi_Condensed({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--fuente-titular", display: "swap" });
+const texto = Atkinson_Hyperlegible({ subsets: ["latin"], weight: ["400", "700"], style: ["normal", "italic"], variable: "--fuente-texto", display: "swap" });
 
 export function generateStaticParams() {
   return IDIOMAS.map((lang) => ({ lang }));
@@ -146,18 +143,21 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f4f6f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#081116" },
+    { media: "(prefers-color-scheme: light)", color: "#fff7ed" },
+    { media: "(prefers-color-scheme: dark)", color: "#090807" },
   ],
 };
 
-const themeScript = `(function(){try{var t=localStorage.getItem('nexo-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)}catch(e){}})()`;
+/* La web pública va siempre en crema, tenga el visitante el tema que tenga: la
+   paleta de marca es esa. El modo oscuro queda solo para quien lo pida con el
+   interruptor del panel de la demo. */
+const themeScript = `(function(){try{var t=/^\\/(?:(?:en|de)\\/)?(?:panel|app|demo)(?:\\/|$)/.test(location.pathname)&&localStorage.getItem('nexo-theme')||'light';document.documentElement.setAttribute('data-theme',t)}catch(e){}})()`;
 
 export default async function RootLayout({ children, params }: { children: React.ReactNode; params: Promise<{ lang: string }> }) {
   const lang = idiomaOBase((await params).lang);
   fijarIdioma(lang);
   return (
-    <html lang={lang} suppressHydrationWarning className={`${geist.variable} ${bricolage.variable} ${titular.variable} ${texto.variable} ${mono.variable} antialiased`}>
+    <html lang={lang} suppressHydrationWarning className={`${titular.variable} ${texto.variable} antialiased`}>
       <body className="min-h-dvh">
         <Script id="nexo-theme" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
         {/* Sin JavaScript, Framer Motion deja escrito opacity:0 en el HTML y

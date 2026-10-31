@@ -138,7 +138,7 @@ function AiChat({ compact }: { compact?: boolean }) {
         {!turns.length && (
           <div className="grid gap-3 pt-2">
             <div className="flex items-center gap-2">
-              <span className="grid size-9 place-items-center rounded-xl bg-ai text-white">
+              <span className="grid size-9 place-items-center rounded-xl bg-ai text-crema">
                 <Sparkles className="size-4" />
               </span>
               <div>
@@ -247,7 +247,7 @@ export function AiDrawer() {
       <AnimatePresence>
         {open && (
           <div className="absolute inset-0 z-[70] flex justify-end [body>&]:fixed">
-            <motion.div className="absolute inset-0 bg-[#04121a]/20" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)} />
+            <motion.div className="absolute inset-0 bg-[#090807]/20" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(false)} />
             <motion.aside initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: 40, opacity: 0 }} transition={{ type: "spring", bounce: 0.1, duration: 0.4 }} className="relative flex h-full w-full max-w-[420px] flex-col border-l border-line bg-bg shadow-e3">
               <div className="flex h-12 items-center justify-between border-b border-line bg-surface px-4">
                 <span className="flex items-center gap-2 text-sm font-semibold">

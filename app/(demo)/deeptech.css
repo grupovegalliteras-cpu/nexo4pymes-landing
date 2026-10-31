@@ -1,79 +1,39 @@
 /*
-  Portada «Deep Tech»
-  -------------------
+  Portada
+  -------
   Todo lo de este archivo cuelga de .deeptech, la clase que lleva el
   envoltorio de la portada (components/site/landing.tsx). El resto de la
   web (panel, app, /padel, las páginas de app/(web)) no se entera.
 
-  Negro OLED y antracita, con tres acentos que significan algo:
-    menta    → lo que sale hecho (es el verde del logo)
-    cian     → lo interactivo y los datos
-    violeta  → la IA y lo que entra por clasificar
-
-  La portada es siempre oscura, aunque el visitante tenga el tema claro:
-  .deeptech redefine los tokens del sistema de diseño, así que el panel y
-  la app incrustados se ven en oscuro sin tocarlos.
+  La portada alterna crema y noche como dice la paleta de marca: el hero y
+  el cierre son zonas noche (data-theme="dark"), y entre medias todo es
+  crema con tarjetas blancas. Sus acentos:
+    --dt-acento   carmesí sobre crema; melocotón sobre noche, donde el
+                  carmesí no se lee en letra pequeña
+    --dt-detalle  melocotón: puntos, marcas y detalles
+    --dt-apoyo    arena sobre crema: lo que acompaña, nunca texto
 */
 
 .deeptech {
-  --dt-negro: #020306;
-  --dt-antracita: #0a0d13;
-  --dt-cian: #38e1ff;
-  --dt-violeta: #9d7bff;
-  --dt-menta: #2cf5b0;
+  --dt-acento: var(--carmesi);
+  --dt-detalle: var(--melocoton);
+  --dt-apoyo: var(--arena);
 
-  --bg: var(--dt-negro);
-  --surface: #0a0d13;
-  --surface-2: #0f131b;
-  --surface-3: #161b26;
-  --border: rgb(255 255 255 / 0.075);
-  --border-strong: rgb(255 255 255 / 0.15);
-  --text: #eef3fb;
-  --text-2: #9ca8bf;
-  --text-3: #66738c;
-
-  --brand: var(--dt-cian);
-  --brand-strong: #86ecff;
-  --brand-soft: rgb(56 225 255 / 0.12);
-  --brand-ink: #00141a;
-  --sun: var(--dt-menta);
-  --sun-soft: rgb(44 245 176 / 0.12);
-  --ok: #34e59a;
-  --ok-soft: rgb(52 229 154 / 0.12);
-  --warn: #ffc65c;
-  --warn-soft: rgb(255 198 92 / 0.12);
-  --bad: #ff5c7a;
-  --bad-soft: rgb(255 92 122 / 0.12);
-  --ai: #a990ff;
-  --ai-soft: rgb(169 144 255 / 0.14);
-  --info: #6aa8ff;
-  --info-soft: rgb(106 168 255 / 0.13);
-
-  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(255 255 255 / 0.05);
-  --shadow-2: 0 12px 32px -12px rgb(0 0 0 / 0.8), 0 0 0 1px rgb(255 255 255 / 0.06);
-  --shadow-3: 0 40px 90px -30px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(255 255 255 / 0.07);
-
-  --map-sea-1: #050b12;
-  --map-sea-2: #03070c;
-  --map-dot: rgb(56 225 255 / 0.08);
-  --map-land: #0e141d;
-  --map-coast: #1f3b52;
-  --map-coast-glow: rgb(56 225 255 / 0.1);
-  --map-sierra: rgb(44 245 176 / 0.06);
-  --map-town: #7d8aa3;
-
-  color-scheme: dark;
   position: relative;
   isolation: isolate;
   background: var(--bg);
   color: var(--text);
 }
+.deeptech [data-theme="dark"] {
+  --dt-acento: var(--melocoton);
+  --dt-apoyo: var(--carmesi);
+}
 
-/* sin franjas claras al estirar la página en el Mac */
+/* El principio y el final de la portada son noche: sin franjas claras al
+   estirar la página en el Mac. */
 html:has(.deeptech),
 html:has(.deeptech) body {
-  background: #020306;
-  color-scheme: dark;
+  background: var(--noche);
 }
 /* los enlaces del menú a secciones de la portada bajan suave (el scroll de
    la rueda es el del navegador: el suavizado con Lenis se quitó por lento) */
@@ -89,23 +49,20 @@ html:has(.deeptech) {
   z-index: -1;
   pointer-events: none;
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.022) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.022) 1px, transparent 1px);
+    linear-gradient(to right, rgb(184 164 143 / 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(184 164 143 / 0.1) 1px, transparent 1px);
   background-size: 96px 96px;
   mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 30%, transparent 90%);
 }
 
-.deeptech .font-display {
-  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-}
 .dt-mono {
-  font-family: var(--fuente-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--fuente-texto), system-ui, sans-serif;
 }
 .deeptech ::selection {
-  background: rgb(56 225 255 / 0.3);
+  background: rgb(190 18 60 / 0.22);
 }
 .deeptech :focus-visible {
-  outline: 2px solid var(--dt-cian);
+  outline: 2px solid var(--dt-acento);
   outline-offset: 3px;
 }
 
@@ -113,8 +70,8 @@ html:has(.deeptech) {
 
 .dt-rejilla {
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgb(255 247 237 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 247 237 / 0.05) 1px, transparent 1px);
   background-size: 64px 64px;
   background-position: center -1px;
   mask-image: radial-gradient(ellipse 75% 65% at 70% 45%, #000 15%, transparent 72%);
@@ -130,9 +87,9 @@ html:has(.deeptech) {
   position: absolute;
   inset: -10% -5% 0 20%;
   background:
-    radial-gradient(closest-side at 62% 46%, rgb(56 225 255 / 0.17), transparent 72%),
-    radial-gradient(closest-side at 72% 36%, rgb(157 123 255 / 0.16), transparent 78%),
-    conic-gradient(from 196deg at 66% -6%, transparent 0deg, rgb(56 225 255 / 0.07) 9deg, transparent 18deg, transparent 26deg, rgb(157 123 255 / 0.07) 34deg, transparent 44deg, rgb(44 245 176 / 0.05) 52deg, transparent 60deg);
+    radial-gradient(closest-side at 62% 46%, rgb(190 18 60 / 0.2), transparent 72%),
+    radial-gradient(closest-side at 72% 36%, rgb(253 186 116 / 0.1), transparent 78%),
+    conic-gradient(from 196deg at 66% -6%, transparent 0deg, rgb(190 18 60 / 0.09) 9deg, transparent 18deg, transparent 26deg, rgb(253 186 116 / 0.05) 34deg, transparent 44deg, rgb(255 247 237 / 0.03) 52deg, transparent 60deg);
 }
 @media (max-width: 1023px) {
   .dt-luz-volumen {
@@ -161,7 +118,7 @@ html:has(.deeptech) {
 
      · el foco de arriba del todo, que es de donde sale la luz;
      · un cono estrecho y claro, centrado en la vertical (180°), que es el haz;
-     · un segundo cono más abierto, violeta y menta, descentrado a propósito:
+     · un segundo cono más abierto, carmesí y melocotón, descentrado a propósito:
        un cono solo se lee como un triángulo pegado, dos desalineados se leen
        como luz.
 
@@ -170,22 +127,22 @@ html:has(.deeptech) {
   position: absolute;
   inset: -8% 0 0 0;
   background:
-    radial-gradient(ellipse 34% 15% at 50% 0%, rgb(190 240 255 / 0.28), transparent 72%),
+    radial-gradient(ellipse 34% 15% at 50% 0%, rgb(253 186 116 / 0.26), transparent 72%),
     conic-gradient(
       from 168deg at 50% -4%,
       transparent 0deg,
-      rgb(56 225 255 / 0.05) 7deg,
-      rgb(190 240 255 / 0.13) 12deg,
-      rgb(56 225 255 / 0.05) 17deg,
+      rgb(190 18 60 / 0.1) 7deg,
+      rgb(253 186 116 / 0.12) 12deg,
+      rgb(190 18 60 / 0.1) 17deg,
       transparent 24deg
     ),
     conic-gradient(
       from 160deg at 53% -8%,
       transparent 0deg,
-      rgb(157 123 255 / 0.07) 14deg,
+      rgb(190 18 60 / 0.1) 14deg,
       transparent 30deg,
       transparent 37deg,
-      rgb(44 245 176 / 0.05) 45deg,
+      rgb(253 186 116 / 0.05) 45deg,
       transparent 55deg
     );
   mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 92%);
@@ -196,13 +153,13 @@ html:has(.deeptech) {
   .dt-columna {
     inset: -6% 0 0 0;
     background:
-      radial-gradient(ellipse 50% 12% at 50% 0%, rgb(190 240 255 / 0.24), transparent 72%),
+      radial-gradient(ellipse 50% 12% at 50% 0%, rgb(253 186 116 / 0.22), transparent 72%),
       conic-gradient(
         from 172deg at 50% -3%,
         transparent 0deg,
-        rgb(56 225 255 / 0.05) 5deg,
-        rgb(190 240 255 / 0.11) 8deg,
-        rgb(56 225 255 / 0.05) 11deg,
+        rgb(190 18 60 / 0.1) 5deg,
+        rgb(253 186 116 / 0.1) 8deg,
+        rgb(190 18 60 / 0.1) 11deg,
         transparent 16deg
       );
     mask-image: linear-gradient(to bottom, #000 0%, #000 34%, transparent 76%);
@@ -217,14 +174,22 @@ html:has(.deeptech) {
    que ver. */
 .dt-velo {
   background:
-    radial-gradient(ellipse 82% 72% at 50% 40%, transparent 34%, rgb(2 3 6 / 0.58) 100%),
-    linear-gradient(to bottom, rgb(2 3 6 / 0.4) 0%, transparent 16%);
+    radial-gradient(ellipse 82% 72% at 50% 40%, transparent 34%, rgb(9 8 7 / 0.58) 100%),
+    linear-gradient(to bottom, rgb(9 8 7 / 0.4) 0%, transparent 16%);
 }
 
 /* El velo de abajo, donde va el texto encima de la imagen. Es lo único que
    garantiza que el titular se lea pase lo que pase por detrás. */
 .dt-pie-velo {
-  background: linear-gradient(to bottom, transparent 0%, rgb(2 3 6 / 0.5) 40%, rgb(2 3 6 / 0.86) 72%, var(--bg) 100%);
+  background: linear-gradient(to bottom, transparent 0%, rgb(9 8 7 / 0.5) 40%, rgb(9 8 7 / 0.86) 72%, var(--bg) 100%);
+}
+/* En vertical el texto cae encima del móvil, y el carmesí del titular no se lee
+   sobre una pantalla encendida: el velo sube y aprieta antes. */
+@media (max-width: 1023px) {
+  .dt-pie-velo {
+    height: 86%;
+    background: linear-gradient(to bottom, transparent 0%, rgb(9 8 7 / 0.9) 12%, rgb(9 8 7 / 0.92) 60%, var(--bg) 100%);
+  }
 }
 
 /* Sombra corta bajo las letras. Antes solo en el móvil, porque en escritorio
@@ -232,8 +197,8 @@ html:has(.deeptech) {
    en los dos sitios. */
 .dt-sobre-escena :is(h1 > span:first-child, p, li) {
   text-shadow:
-    0 1px 2px rgb(2 3 6 / 0.9),
-    0 0 18px rgb(2 3 6 / 0.85);
+    0 1px 2px rgb(9 8 7 / 0.9),
+    0 0 18px rgb(9 8 7 / 0.85);
 }
 
 /* El punto que señala algo de la pantalla del móvil. */
@@ -291,19 +256,16 @@ html:has(.deeptech) {
 }
 
 .dt-texto-luz {
-  background: linear-gradient(100deg, #eafcff 0%, var(--dt-cian) 28%, var(--dt-menta) 62%, #e6fff6 82%, var(--dt-cian) 100%);
-    -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--carmesi);
   animation: dt-palabra 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms) both;
 }
 
 .dt-hud {
   pointer-events: none;
 }
-.dt-hud-cian { --tono: var(--dt-cian); }
-.dt-hud-violeta { --tono: var(--dt-violeta); }
-.dt-hud-menta { --tono: var(--dt-menta); }
+.dt-hud-acento { --tono: var(--dt-acento); }
+.dt-hud-apoyo { --tono: var(--dt-apoyo); }
+.dt-hud-detalle { --tono: var(--dt-detalle); }
 .dt-hud > span:first-child {
   color: var(--tono);
   text-shadow: 0 0 18px color-mix(in oklab, var(--tono) 60%, transparent);
@@ -318,16 +280,16 @@ html:has(.deeptech) {
 
 .dt-registro {
   border-radius: 14px;
-  background: rgb(6 9 14 / 0.88);
-  border: 1px solid rgb(255 255 255 / 0.08);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05), 0 20px 50px -20px rgb(0 0 0 / 0.8);
+  background: rgb(9 8 7 / 0.88);
+  border: 1px solid rgb(255 247 237 / 0.08);
+  box-shadow: inset 0 1px 0 rgb(255 247 237 / 0.05), 0 20px 50px -20px rgb(0 0 0 / 0.8);
 }
 
 .dt-raton {
   position: relative;
   width: 16px;
   height: 26px;
-  border: 1px solid rgb(255 255 255 / 0.28);
+  border: 1px solid rgb(255 247 237 / 0.28);
   border-radius: 10px;
 }
 .dt-raton::after {
@@ -339,8 +301,8 @@ html:has(.deeptech) {
   height: 5px;
   margin-left: -1px;
   border-radius: 2px;
-  background: var(--dt-cian);
-  box-shadow: 0 0 6px var(--dt-cian);
+  background: var(--dt-detalle);
+  box-shadow: 0 0 6px var(--dt-detalle);
   animation: dt-rueda 1.8s cubic-bezier(0.6, 0, 0.4, 1) infinite;
 }
 @keyframes dt-rueda {
@@ -368,21 +330,15 @@ html:has(.deeptech) {
     border-color 0.35s ease,
     color 0.35s ease;
 }
+/* Botón principal: fondo carmesí con letra crema, en crema y en noche. */
 .dt-boton-primario {
-  color: #00170f;
-  background: linear-gradient(180deg, #7dffd6 0%, var(--dt-menta) 100%);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.55),
-    0 0 0 1px rgb(44 245 176 / 0.6),
-    0 12px 40px -12px rgb(44 245 176 / 0.85),
-    0 0 70px -24px rgb(44 245 176 / 0.95);
+  color: var(--crema);
+  background: var(--carmesi);
+  box-shadow: 0 10px 28px -14px rgb(190 18 60 / 0.75);
 }
 .dt-boton-primario:hover {
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.6),
-    0 0 0 1px rgb(44 245 176 / 0.9),
-    0 16px 50px -12px rgb(44 245 176 / 1),
-    0 0 90px -18px rgb(44 245 176 / 1);
+  background: var(--carmesi-oscuro);
+  box-shadow: 0 14px 34px -14px rgb(160 15 51 / 0.85);
 }
 /* destello que cruza el botón al pasar por encima */
 .dt-boton-primario::after {
@@ -390,22 +346,32 @@ html:has(.deeptech) {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.65) 50%, transparent 70%);
+  background: linear-gradient(105deg, transparent 30%, rgb(255 247 237 / 0.22) 50%, transparent 70%);
   transform: translateX(-120%);
   transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .dt-boton-primario:hover::after {
   transform: translateX(120%);
 }
+/* Botón secundario. Se llama cristal por cuando toda la portada era oscura;
+   sobre crema es un contorno y sobre noche, un velo. */
 .dt-boton-cristal {
   color: var(--text);
-  background: rgb(255 255 255 / 0.05);
-  border: 1px solid rgb(255 255 255 / 0.13);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
 }
 .dt-boton-cristal:hover {
-  background: rgb(255 255 255 / 0.08);
-  border-color: rgb(56 225 255 / 0.5);
-  box-shadow: 0 0 34px -8px rgb(56 225 255 / 0.55);
+  border-color: var(--carmesi);
+  color: var(--carmesi);
+}
+[data-theme="dark"] .dt-boton-cristal {
+  background: rgb(255 247 237 / 0.06);
+  border-color: rgb(255 247 237 / 0.2);
+}
+[data-theme="dark"] .dt-boton-cristal:hover {
+  color: var(--crema);
+  background: rgb(255 247 237 / 0.1);
+  border-color: var(--melocoton);
 }
 
 /* botón magnético: el envoltorio sigue al ratón y el contenido algo más */
@@ -427,17 +393,23 @@ html:has(.deeptech) {
 
 /* ---------------- Cristal y linterna ---------------- */
 
+/* Tarjeta. Blanca sobre crema, como manda la paleta; sobre noche, un velo. */
 .dt-cristal {
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0.012));
-  border: 1px solid rgb(255 255 255 / 0.075);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-1);
+}
+[data-theme="dark"] .dt-cristal {
+  background: linear-gradient(180deg, rgb(255 247 237 / 0.04), rgb(255 247 237 / 0.015));
+  border-color: rgb(255 247 237 / 0.1);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    inset 0 1px 0 rgb(255 247 237 / 0.05),
     0 30px 80px -40px rgb(0 0 0 / 0.9);
 }
 /* sin backdrop-filter a propósito: al hacer scroll obliga a recalcular el
    desenfoque en cada fotograma. Un fondo algo más opaco da el mismo aire. */
-.dt-cristal-blur {
-  background: linear-gradient(180deg, rgb(14 18 26 / 0.92), rgb(8 11 16 / 0.92));
+[data-theme="dark"] .dt-cristal-blur {
+  background: linear-gradient(180deg, rgb(29 26 24 / 0.94), rgb(15 13 12 / 0.94));
 }
 
 /* El borde se ilumina alrededor del ratón. Las dos capas van detrás del
@@ -459,7 +431,7 @@ html:has(.deeptech) {
 }
 .dt-foco::before {
   padding: 1px;
-  background: radial-gradient(380px circle at var(--x, -999px) var(--y, -999px), rgb(56 225 255 / 0.85), rgb(157 123 255 / 0.4) 38%, transparent 68%);
+  background: radial-gradient(380px circle at var(--x, -999px) var(--y, -999px), rgb(190 18 60 / 0.75), rgb(253 186 116 / 0.4) 38%, transparent 68%);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -469,7 +441,7 @@ html:has(.deeptech) {
     linear-gradient(#000 0 0);
 }
 .dt-foco::after {
-  background: radial-gradient(520px circle at var(--x, -999px) var(--y, -999px), rgb(56 225 255 / 0.075), transparent 45%);
+  background: radial-gradient(520px circle at var(--x, -999px) var(--y, -999px), rgb(190 18 60 / 0.045), transparent 45%);
 }
 .dt-foco-grupo:hover .dt-foco::before,
 .dt-foco-grupo:hover .dt-foco::after,
@@ -513,20 +485,20 @@ html:has(.deeptech) {
 
 /* ---------------- Anillos de progreso ---------------- */
 
-.dt-anillo-cian { --anillo-a: var(--dt-cian); --anillo-b: var(--dt-violeta); }
-.dt-anillo-violeta { --anillo-a: var(--dt-violeta); --anillo-b: var(--dt-cian); }
-.dt-anillo-menta { --anillo-a: var(--dt-menta); --anillo-b: var(--dt-cian); }
+.dt-anillo-acento { --anillo-a: var(--carmesi); --anillo-b: var(--carmesi-oscuro); }
+.dt-anillo-detalle { --anillo-a: var(--melocoton); --anillo-b: var(--carmesi); }
+.dt-anillo-apoyo { --anillo-a: var(--grafito); --anillo-b: var(--grafito-suave); }
 .dt-anillo svg {
   overflow: visible;
 }
 .dt-anillo-pista {
   fill: none;
-  stroke: rgb(255 255 255 / 0.06);
+  stroke: rgb(184 164 143 / 0.2);
   stroke-width: 7;
 }
 .dt-anillo-marcas {
   fill: none;
-  stroke: rgb(255 255 255 / 0.16);
+  stroke: rgb(184 164 143 / 0.55);
   stroke-width: 3;
   stroke-dasharray: 0.35 1.65;
 }
@@ -534,7 +506,6 @@ html:has(.deeptech) {
 .dt-anillo-segmento {
   fill: none;
   stroke-width: 7;
-  filter: drop-shadow(0 0 5px var(--anillo-a));
 }
 .dt-anillo-trazo {
   stroke-linecap: round;
@@ -578,12 +549,12 @@ html:has(.deeptech) {
   transform-style: preserve-3d;
   transform: translateY(46px) rotateX(var(--rx, 58deg)) rotateZ(var(--rz, -32deg));
   transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-  border: 1px solid rgb(56 225 255 / 0.2);
+  border: 1px solid rgb(184 164 143 / 0.5);
   background-image:
-    linear-gradient(rgb(56 225 255 / 0.11) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(56 225 255 / 0.11) 1px, transparent 1px);
+    linear-gradient(rgb(184 164 143 / 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(184 164 143 / 0.25) 1px, transparent 1px);
   background-size: 21px 21px;
-  background-color: rgb(56 225 255 / 0.02);
+  background-color: rgb(184 164 143 / 0.06);
 }
 @media (max-width: 640px) {
   .dt-barras {
@@ -618,10 +589,7 @@ html:has(.deeptech) {
 .dt-cara-tapa {
   inset: 0;
   transform: translateZ(var(--h));
-  background: color-mix(in oklab, var(--c) 80%, white);
-  box-shadow:
-    0 0 22px var(--c),
-    0 0 60px color-mix(in oklab, var(--c) 55%, transparent);
+  background: color-mix(in oklab, var(--c) 86%, white);
 }
 .dt-cara-x {
   left: 0;
@@ -671,11 +639,10 @@ html:has(.deeptech) {
   top: 50%;
   transform: translate(-50%, -50%) rotateZ(calc(var(--rz, -32deg) * -1)) rotateX(calc(var(--rx, 58deg) * -1));
   transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-  font-family: var(--fuente-mono), ui-monospace, monospace;
+  font-family: var(--fuente-texto), system-ui, sans-serif;
   font-size: 15px;
-  font-weight: 500;
-  color: #fff;
-  text-shadow: 0 0 14px var(--c);
+  font-weight: 700;
+  color: var(--text);
 }
 /* Sin filtro de movimiento reducido, igual que el bloque de arriba:
    ver components/deeptech/decision-movimiento.ts */
@@ -697,22 +664,16 @@ html:has(.deeptech) {
 /* monitor del panel incrustado: llega inclinado y se endereza con el scroll */
 .dt-monitor {
   border-radius: 18px;
-  background: #06080d;
-  border: 1px solid rgb(255 255 255 / 0.09);
-  box-shadow:
-    0 0 0 1px rgb(56 225 255 / 0.08),
-    0 60px 140px -50px rgb(56 225 255 / 0.35),
-    0 40px 100px -40px rgb(0 0 0 / 0.95);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-3);
   will-change: transform;
 }
 
 /* haz del recorrido: la línea que se va encendiendo al bajar */
 .dt-haz {
   transform-origin: top;
-  background: linear-gradient(to bottom, var(--dt-menta), var(--dt-cian) 55%, var(--dt-violeta));
-  box-shadow:
-    0 0 12px rgb(56 225 255 / 0.7),
-    0 0 30px rgb(56 225 255 / 0.35);
+  background: linear-gradient(to bottom, var(--melocoton), var(--carmesi) 55%, var(--carmesi-oscuro));
 }
 
 /* luz del cierre: un foco desde arriba sobre la rejilla */
@@ -720,17 +681,13 @@ html:has(.deeptech) {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 55% at 50% 0%, rgb(44 245 176 / 0.16), transparent 70%),
-    radial-gradient(ellipse 40% 40% at 85% 80%, rgb(157 123 255 / 0.12), transparent 70%),
-    conic-gradient(from 160deg at 50% -10%, transparent 0deg, rgb(56 225 255 / 0.06) 14deg, transparent 22deg, transparent 32deg, rgb(44 245 176 / 0.06) 40deg, transparent 50deg);
+    radial-gradient(ellipse 60% 55% at 50% 0%, rgb(190 18 60 / 0.2), transparent 70%),
+    radial-gradient(ellipse 40% 40% at 85% 80%, rgb(253 186 116 / 0.08), transparent 70%),
+    conic-gradient(from 160deg at 50% -10%, transparent 0deg, rgb(190 18 60 / 0.08) 14deg, transparent 22deg, transparent 32deg, rgb(253 186 116 / 0.04) 40deg, transparent 50deg);
 }
 
 .dt-numero-paso {
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.22), rgb(255 255 255 / 0.02));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-stroke: 1px rgb(56 225 255 / 0.35);
+  color: var(--carmesi);
 }
 
 @media (prefers-reduced-motion: reduce) {

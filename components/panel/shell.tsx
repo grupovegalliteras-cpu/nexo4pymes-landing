@@ -24,7 +24,7 @@ import { trad } from "@/lib/t";
 export function BrandMark({ size = 28 }: { size?: number }) {
   const sector = useSector();
   return (
-    <span className="grid shrink-0 place-items-center rounded-lg font-display font-bold text-white" style={{ width: size, height: size, background: sector.color, fontSize: size * 0.42 }}>
+    <span className="grid shrink-0 place-items-center rounded-lg font-display font-bold text-crema" style={{ width: size, height: size, background: sector.color, fontSize: size * 0.42 }}>
       {sector.empresaCorta.slice(0, 1)}
     </span>
   );
@@ -164,7 +164,7 @@ function Sidebar() {
         <span className="min-w-0 flex-1 truncate">{trad(label)}</span>
         {showEstado && m.estado === "a-medida" && <span className="rounded bg-ai-soft px-1 text-[10px] text-ai">{trad("a medida")}</span>}
         {!!counts[id] && (
-          <motion.span key={counts[id]} initial={{ scale: 0.6 }} animate={{ scale: 1 }} className={cn("tabular grid h-[18px] min-w-[18px] place-items-center rounded-full px-1 text-[11px] font-semibold", id === "central-avisos" ? "bg-sun text-[#1d1300]" : "bg-surface-3 text-fg-2")}>
+          <motion.span key={counts[id]} initial={{ scale: 0.6 }} animate={{ scale: 1 }} className={cn("tabular grid h-[18px] min-w-[18px] place-items-center rounded-full px-1 text-[11px] font-semibold", id === "central-avisos" ? "bg-carmesi text-crema" : "bg-surface-3 text-fg-2")}>
             {trad(counts[id])}
           </motion.span>
         )}
@@ -206,7 +206,7 @@ function Sidebar() {
       </nav>
       <div className="border-t border-line p-2">
         <div className="flex items-center gap-2.5 rounded-lg px-2 py-1.5">
-          <Avatar name="Marga Riera" color="#465661" size={26} />
+          <Avatar name="Marga Riera" color="#5f5a58" size={26} />
           <div className="min-w-0 flex-1 leading-tight">
             <div className="truncate text-[13px] font-medium">{trad("Marga Riera")}</div>
             <div className="text-[11px] text-fg-3">{trad("Oficina")}</div>
@@ -336,7 +336,7 @@ function Notifications() {
     <div className="relative">
       <IconButton label={trad("Notificaciones")} onClick={() => { setOpen((v) => !v); if (!open) setTimeout(() => mark("panel"), 1500); }} className="relative">
         <Bell className="size-4" />
-        {unread > 0 && <span className="absolute top-1 right-1 grid h-3.5 min-w-3.5 place-items-center rounded-full bg-bad px-0.5 text-[9px] font-bold text-white">{trad(unread)}</span>}
+        {unread > 0 && <span className="absolute top-1 right-1 grid h-3.5 min-w-3.5 place-items-center rounded-full bg-bad px-0.5 text-[9px] font-bold text-crema">{trad(unread)}</span>}
       </IconButton>
       <AnimatePresence>
         {open && (

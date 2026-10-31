@@ -10,16 +10,15 @@ export function CierreServicios() {
   const lang = idiomaServidor();
   const { cierreServicios } = contenido(lang).servicios;
   return (
-    <section className="relative overflow-hidden px-5 py-20 text-fg sm:px-8 sm:py-28">
-      <div className=" absolute inset-0 opacity-50" aria-hidden="true" />
+    <section data-theme="dark" className="relative overflow-hidden bg-bg px-5 py-20 text-fg sm:px-8 sm:py-28">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violeta/12 blur-[120px]"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-carmesi/20 blur-[120px]"
       />
 
       <Reveal>
         <div className="relative mx-auto max-w-[820px] rounded-panel border border-line bg-surface p-10 text-center shadow-e2 sm:p-14">
-          <h2 className="text-[clamp(1.9rem,5vw,2.8rem)] font-semibold tracking-[-0.03em] text-fg">
+          <h2 className="text-[clamp(1.9rem,5vw,2.8rem)] font-semibold tracking-[-0.01em] text-fg">
             {cierreServicios.titular}
           </h2>
           <p className="mx-auto mt-5 max-w-[52ch] text-[16.5px] leading-relaxed text-fg-2">

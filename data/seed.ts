@@ -53,12 +53,12 @@ const CLIENTES: [nombre: string, tipo: string, municipio: string, contacto: stri
 ];
 
 const TECNICOS: [nombre: string, zona: string, color: string][] = [
-  ["Toni Ferrer", "Palma y Calvià", "#e8950c"],
-  ["Maria Bauzà", "Palma y Marratxí", "#2f6ad0"],
-  ["Joan Pons", "Inca y Alcúdia", "#13845a"],
-  ["Xisca Vidal", "Manacor y Llevant", "#b8428c"],
-  ["Pep Mas", "Llucmajor y Migjorn", "#5b4bd6"],
-  ["Aina Coll", "Sóller y Tramuntana", "#cf3f37"],
+  ["Toni Ferrer", "Palma y Calvià", "#be123c"],
+  ["Maria Bauzà", "Palma y Marratxí", "#1c2129"],
+  ["Joan Pons", "Inca y Alcúdia", "#c2702a"],
+  ["Xisca Vidal", "Manacor y Llevant", "#5f5a58"],
+  ["Pep Mas", "Llucmajor y Migjorn", "#7a0c27"],
+  ["Aina Coll", "Sóller y Tramuntana", "#8c7660"],
 ];
 
 const ROL: Record<SectorId, string> = {

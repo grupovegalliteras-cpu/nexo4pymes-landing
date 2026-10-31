@@ -170,14 +170,14 @@ function QuoteDrawer({ id, onClose }: { id?: string; onClose: () => void }) {
   return (
     <Drawer open={!!id} onClose={() => { setFirmando(false); onClose(); }} title={<span className="flex items-center gap-2">{q.numero} <Badge tone={Q_TONE[q.estado][1]}>{Q_TONE[q.estado][0]}</Badge></span>} width={560}>
       <div className="grid gap-4 p-5">
-        <div className="rounded-xl border border-line bg-white p-5 text-[#0c1a22]">
-          <div className="text-[11px] text-[#7a8893]">{trad("Presupuesto para")}</div>
+        <div className="rounded-xl border border-line bg-white p-5 text-[#1c2129]">
+          <div className="text-[11px] text-[#5f5a58]">{trad("Presupuesto para")}</div>
           <div className="font-semibold">{trad(c.nombre)}</div>
           <div className="mt-4 font-display text-lg font-semibold">{trad(q.titulo)}</div>
-          <div className="text-xs text-[#465661]">{trad("Duración estimada")}{" "}{fmt.dur(serv.min)}. Válido 30 días.</div>
+          <div className="text-xs text-[#5f5a58]">{trad("Duración estimada")}{" "}{fmt.dur(serv.min)}. Válido 30 días.</div>
           <div className="mt-4 grid gap-1.5 text-[13px]">
             {lineas.map((l) => (
-              <div key={l.c} className="flex justify-between border-b border-[#eef2f4] pb-1.5">
+              <div key={l.c} className="flex justify-between border-b border-[#fcefe1] pb-1.5">
                 <span>{trad(l.c)}</span>
                 <span className="tabular">{fmt.eur(l.i)}</span>
               </div>
@@ -193,7 +193,7 @@ function QuoteDrawer({ id, onClose }: { id?: string; onClose: () => void }) {
                 <div className="font-semibold">{trad("Aceptado con firma")}</div>
                 {trad(c.contacto)}
               </div>
-              <Signature name={c.contacto} className="h-10 w-28 text-[#0c1a22]" />
+              <Signature name={c.contacto} className="h-10 w-28 text-[#1c2129]" />
             </div>
           )}
         </div>

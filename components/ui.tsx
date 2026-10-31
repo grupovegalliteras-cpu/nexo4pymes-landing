@@ -23,12 +23,12 @@ export function Button({ variant = "secondary", size = "md", className, children
         size === "sm" && "h-8 rounded-lg px-2.5 text-[13px]",
         size === "md" && "h-9 rounded-lg px-3.5 text-sm",
         size === "lg" && "h-12 rounded-xl px-5 text-[15px]",
-        variant === "primary" && "bg-brand text-brand-ink shadow-[inset_0_1px_0_rgb(255_255_255/0.18)] hover:bg-brand-strong",
+        variant === "primary" && "bg-carmesi text-crema hover:bg-carmesi-oscuro",
         variant === "secondary" && "border border-line bg-surface text-fg shadow-e1 hover:bg-surface-2",
         variant === "ghost" && "text-fg-2 hover:bg-surface-2 hover:text-fg",
-        variant === "danger" && "bg-bad text-white hover:opacity-90",
-        variant === "sun" && "bg-sun text-[#1d1300] hover:brightness-105",
-        variant === "ai" && "bg-ai text-white hover:opacity-90",
+        variant === "danger" && "bg-bad text-crema hover:opacity-90",
+        variant === "sun" && "bg-carmesi text-crema hover:bg-carmesi-oscuro",
+        variant === "ai" && "bg-ai text-crema hover:opacity-90",
         className,
       )}
     >
@@ -109,7 +109,7 @@ export function UrgencyBadge({ u }: { u: "alta" | "media" | "baja" }) {
 export function Avatar({ name, color, size = 28, ring }: { name: string; color?: string; size?: number; ring?: boolean }) {
   return (
     <span
-      className={cn("inline-grid shrink-0 place-items-center rounded-full font-semibold text-white", ring && "ring-2 ring-surface")}
+      className={cn("inline-grid shrink-0 place-items-center rounded-full font-semibold text-crema", ring && "ring-2 ring-surface")}
       style={{ width: size, height: size, background: color ?? "var(--brand)", fontSize: size * 0.38 }}
       aria-hidden
     >
@@ -223,7 +223,7 @@ export function Modal({ open, onClose, children, className, label }: { open: boo
     <AnimatePresence>
       {open && (
         <div className="absolute inset-0 z-[80] grid place-items-center p-4 [body>&]:fixed" role="dialog" aria-modal aria-label={trad(label)}>
-          <motion.div className="absolute inset-0 bg-[#04121a]/50 backdrop-blur-[2px]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
+          <motion.div className="absolute inset-0 bg-[#090807]/50 backdrop-blur-[2px]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
           <motion.div
             initial={{ opacity: 0, y: 12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -252,7 +252,7 @@ export function Drawer({ open, onClose, children, title, width = 520 }: { open: 
     <AnimatePresence>
       {open && (
         <div className="absolute inset-0 z-40 flex justify-end [body>&]:fixed" role="dialog" aria-modal>
-          <motion.div className="absolute inset-0 bg-[#04121a]/25" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
+          <motion.div className="absolute inset-0 bg-[#090807]/25" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose} />
           <motion.aside
             initial={{ x: 40, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}

@@ -1,0 +1,117 @@
+import type { Metadata } from "next";
+import { ObligacionesPage } from "@/components/site/obligaciones-page";
+import { FAQ_OBLIGACIONES } from "@/content/obligaciones-faq";
+import { COMPROBADO, OBLIGACIONES } from "@/content/obligaciones";
+import { marca } from "@/content/marca";
+import { OG_LOCALE, alternativas, idiomaOBase, tr } from "@/lib/i18n";
+import { esquemaFaq, esquemaMigas, grafoPagina, urlAbsoluta } from "@/lib/esquema";
+import { fijarIdioma } from "@/lib/idioma-servidor";
+
+/* /obligaciones — la puerta.
+
+   De todo lo que se busca en este nicho, las obligaciones legales
+   españolas son lo único que cumple las cuatro condiciones: mucha
+   gente, en España, con una fecha encima y dispuesta a pagar, y
+   ganable por dos personas siendo exactas. El razonamiento largo está
+   en el comentario de components/site/obligaciones-page.tsx.
+
+   HACE PAREJA CON /modulos/facturacion-verifactu y /modulos/control-horario,
+   y no compite con ellas: esas páginas son para quien ya busca un
+   programa; esta es para quien todavía está averiguando si le obliga
+   algo. Son dos intenciones distintas, y por eso son páginas distintas.
+
+   EL TÍTULO NO LLEVA "MALLORCA". Es la única página del sitio donde se
+   deja fuera a propósito: la norma es estatal y quien la busca no
+   escribe el topónimo. Mallorca sigue estando en el negocio declarado
+   en los datos estructurados y en el texto, que es donde sirve. */
+
+const RUTA = "/obligaciones";
+
+const TITULO = {
+  es: "Qué obliga a una empresa en España: fechas reales",
+  en: "What Spanish law requires of a business: the real dates",
+  de: "Was spanisches Recht von Betrieben verlangt: die echten Fristen",
+};
+const DESCRIPCION = {
+  es: "Factura electrónica, VeriFactu y registro de jornada: qué está publicado en el BOE, qué solo está anunciado y desde qué día obliga cada cosa. Con el enlace a cada norma.",
+  en: "E-invoicing, VeriFactu and working-time records: what is published in Spain's official gazette, what is only announced, and the day each duty starts. With a link to every rule.",
+  de: "E-Rechnung, VeriFactu und Arbeitszeiterfassung: was im spanischen Gesetzblatt steht, was nur angekündigt ist und ab wann jede Pflicht gilt. Mit Link zu jeder Vorschrift.",
+};
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const lang = idiomaOBase((await params).lang);
+  const titulo = TITULO[lang];
+  const descripcion = DESCRIPCION[lang];
+  return {
+    title: { absolute: `${titulo} | Nexo4Pymes` },
+    description: descripcion,
+    alternates: alternativas(lang, RUTA),
+    openGraph: {
+      type: "website",
+      siteName: marca.nombre,
+      locale: OG_LOCALE[lang],
+      title: titulo,
+      description: descripcion,
+      url: urlAbsoluta(lang, RUTA),
+      images: [{ url: "/assets/og-nexo4pymes.jpg", width: 1200, height: 630, alt: marca.nombre }],
+    },
+  };
+}
+
+export default async function PaginaObligaciones({ params }: { params: Promise<{ lang: string }> }) {
+  const lang = idiomaOBase((await params).lang);
+  fijarIdioma(lang);
+  const url = urlAbsoluta(lang, RUTA);
+  return (
+    <>
+      <ObligacionesPage lang={lang} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            grafoPagina([
+              esquemaMigas(lang, [
+                {
+                  nombre: tr(lang, {
+                    es: "Obligaciones legales",
+                    en: "Legal obligations",
+                    de: "Gesetzliche Pflichten",
+                  }),
+                  ruta: RUTA,
+                },
+              ]),
+              /* Las ocho preguntas van también como datos: las ocho
+                 respuestas están en el HTML, sin acordeón, así que lo
+                 declarado y lo publicado coinciden. */
+              esquemaFaq(
+                FAQ_OBLIGACIONES[lang].map(([p, r]) => ({ p, r })),
+                `${url}#faq`,
+                lang,
+              ),
+              {
+                "@type": "WebPage",
+                "@id": `${url}#pagina`,
+                url,
+                name: TITULO[lang],
+                description: DESCRIPCION[lang],
+                inLanguage: OG_LOCALE[lang].replace("_", "-"),
+                isPartOf: { "@id": marca.dominio + "/#website" },
+                publisher: { "@id": marca.dominio + "/#business" },
+                /* La fecha de la última comprobación de las fuentes, que
+                   en una página de plazos legales es el dato que decide
+                   si todavía vale. No es la fecha del despliegue. */
+                dateModified: COMPROBADO,
+                about: OBLIGACIONES.map((o) => ({
+                  "@type": "Legislation",
+                  name: o.nombre[lang],
+                  description: o.queObliga[lang],
+                })),
+                mainEntity: { "@id": `${url}#faq` },
+              },
+            ]),
+          ),
+        }}
+      />
+    </>
+  );
+}

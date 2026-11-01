@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { marca } from "@/content/marca";
 import { SECTORES } from "@/data/sectors";
 import { ARTICULOS, fechaSitemap } from "@/content/articulos";
+import { COMPROBADO as OBLIGACIONES_COMPROBADO } from "@/content/obligaciones";
 import { LANDINGS_PUBLICADAS } from "@/content/landings-seo-i18n";
 import { IDIOMAS, conIdioma } from "@/lib/i18n";
 
@@ -24,6 +25,15 @@ const PAGINAS: { ruta: string; prioridad: number; frecuencia: "monthly" | "yearl
   { ruta: "/", prioridad: 1, frecuencia: "monthly", fecha: "2026-10-08" },
   { ruta: "/demo", prioridad: 0.9, frecuencia: "monthly", fecha: "2026-10-02" },
   { ruta: "/servicios", prioridad: 0.9, frecuencia: "monthly", fecha: "2026-10-08" },
+  /* LA PUERTA. Prioridad 0.9 y por encima de las landings de módulo:
+     es la página que va a por "qué obliga", que es lo más buscado de
+     todo lo nuestro y lo único que no se puede aprender en YouTube ni
+     comprar barato fuera de España.
+
+     SU lastmod ES LA FECHA DE COMPROBACIÓN DE LAS FUENTES, no la del
+     despliegue. En una página de plazos legales eso es exactamente lo
+     que Google necesita saber para decidir si volver a pasar. */
+  { ruta: "/obligaciones", prioridad: 0.9, frecuencia: "monthly", fecha: OBLIGACIONES_COMPROBADO },
   { ruta: "/contacto", prioridad: 0.8, frecuencia: "yearly", fecha: "2026-10-02" },
   { ruta: "/nosotros", prioridad: 0.7, frecuencia: "yearly", fecha: "2026-10-02" },
   ...SECTORES.map((s) => ({ ruta: `/sectores/${s.id}`, prioridad: 0.7, frecuencia: "monthly" as const, fecha: "2026-10-08" })),

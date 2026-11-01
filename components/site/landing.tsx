@@ -27,6 +27,7 @@ import type { Idioma } from "@/lib/i18n";
 import { HeroNucleo } from "@/components/deeptech/hero";
 import { Magnetico, moverFoco } from "@/components/deeptech/interaccion";
 import { Etiqueta, Titulo } from "@/components/deeptech/piezas";
+import { OBLIGACIONES, fechaHito, proximoHito } from "@/content/obligaciones";
 import { useMovimientoPortada } from "@/components/deeptech/movimiento";
 
 /* El panel y la app incrustados solo se pintan en el navegador (al llegar a
@@ -81,6 +82,12 @@ const T = {
     verDemo: "Ver un programa funcionando",
     escribenos: "Escribidnos por WhatsApp",
     sellos: ["Primero miramos cómo trabajáis", "Sin contratos de 12 meses", "Vuestros datos, en la UE", "Hecho en Mallorca"],
+    kObl: "Lo que obliga por ley",
+    oblH: "Tres fechas que ya corren, y una que os quieren vender como urgente",
+    oblP: "La factura electrónica entre empresas tiene fecha desde el 6 de octubre de 2026, VeriFactu desde 2027 y el fichaje digital no es obligatorio por mucho que os digan. Lo tenemos todo con el enlace a su norma.",
+    oblDesde: "Desde",
+    oblSinFecha: "Sin fecha publicada",
+    oblEnlace: "Ver qué os obliga y desde cuándo",
     sectH: "¿A qué os dedicáis? Mirad la demo con vuestro día a día",
     sectP: "La demo cambia la empresa, los servicios, los checklists, las mediciones y los avisos.",
     ejemplo: "Empresa de ejemplo",
@@ -144,6 +151,12 @@ const T = {
     verDemo: "See a system running",
     escribenos: "Message us on WhatsApp",
     sellos: ["We look at how you work first", "No 12-month contracts", "Your data, in the EU", "Made in Mallorca"],
+    kObl: "What the law requires",
+    oblH: "Three clocks already running, and one they sell you as urgent",
+    oblP: "Business e-invoicing has had a date since 6 October 2026, VeriFactu since 2027, and digital time clocking is not mandatory however loudly you are told it is. Every date here links to the rule it comes from.",
+    oblDesde: "From",
+    oblSinFecha: "No published date",
+    oblEnlace: "See what binds you, and from when",
     sectH: "What do you do? See the demo with your day-to-day",
     sectP: "The demo changes the company, services, checklists, readings and requests.",
     ejemplo: "Sample company",
@@ -207,6 +220,12 @@ const T = {
     verDemo: "Ein System in Betrieb ansehen",
     escribenos: "Schreiben Sie uns auf WhatsApp",
     sellos: ["Zuerst schauen wir, wie Sie arbeiten", "Keine 12-Monats-Verträge", "Ihre Daten, in der EU", "Auf Mallorca gemacht"],
+    kObl: "Was das Gesetz verlangt",
+    oblH: "Drei Fristen laufen bereits, eine wird Ihnen nur als dringend verkauft",
+    oblP: "Die E-Rechnung zwischen Unternehmen hat seit dem 6. Oktober 2026 ein Datum, VeriFactu seit 2027, und die digitale Zeiterfassung ist keine Pflicht, so laut es auch behauptet wird. Jedes Datum verweist auf seine Vorschrift.",
+    oblDesde: "Ab",
+    oblSinFecha: "Kein Datum veröffentlicht",
+    oblEnlace: "Sehen, was gilt und ab wann",
     sectH: "Was machen Sie? Sehen Sie die Demo mit Ihrem Alltag",
     sectP: "Die Demo passt Firma, Leistungen, Checklisten, Messwerte und Anfragen an.",
     ejemplo: "Beispielfirma",
@@ -401,6 +420,7 @@ export function Landing() {
           se mete.
           ============================================================ */}
       <Hero />
+      <Obligaciones />
       <AntesDespues />
       <QueConstruimos />
       <SectorPicker />
@@ -435,6 +455,69 @@ function Hero() {
       waHref={whatsappLink(waHola(lang))}
       sellos={t.sellos}
     />
+  );
+}
+
+
+/* ---------------- Lo que obliga por ley ----------------
+   LA PUERTA DE LA WEB, y va aquí arriba a propósito.
+
+   De todo lo que se busca en este nicho, las obligaciones legales
+   españolas son lo único que cumple las cuatro condiciones a la vez:
+   lo busca mucha gente, lo busca en España, quien lo busca tiene una
+   fecha encima y paga por resolverlo, y se gana siendo exacto en vez
+   de siendo barato. Automatizar o montar una web se aprende en
+   YouTube y se compra más barato fuera; cumplir con el BOE español,
+   no.
+
+   LO QUE SE ENSEÑA ES LA PRÓXIMA FECHA QUE OBLIGA, no todas: en la
+   portada, tres fechas por norma son una tabla que nadie lee. La
+   tabla entera está en /obligaciones, que es a donde lleva esto.
+
+   Y EL FICHAJE SALE SIN FECHA A PROPÓSITO, con su «sin fecha
+   publicada». Es la única de las tres que no obliga en digital, es lo
+   contrario de lo que cuenta todo el que vende una app de fichaje, y
+   es la fila por la que alguien se queda leyendo. */
+function Obligaciones() {
+  const t = useT();
+  const lang = useIdioma();
+  return (
+    <section id="obligaciones" className="scroll-mt-20 py-16 sm:py-20">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6">
+        <div className="max-w-2xl">
+          <Etiqueta>{t.kObl}</Etiqueta>
+          <Titulo className="mt-5 text-[28px] sm:text-[40px]">{t.oblH}</Titulo>
+          <p data-revelar className="mt-3 text-[17px] leading-relaxed text-fg-2">{t.oblP}</p>
+        </div>
+        <ul className="dt-foco-grupo mt-9 grid gap-3 sm:grid-cols-3" onPointerMove={moverFoco}>
+          {OBLIGACIONES.map((o, i) => {
+            const prox = proximoHito(o);
+            return (
+              <li
+                key={o.id}
+                data-revelar
+                className="dt-foco dt-cristal rounded-[20px] p-5"
+                style={{ "--d": `${i * 70}ms` } as CSSProperties}
+              >
+                <div className="font-display text-[17px] leading-snug font-semibold tracking-[-0.02em]">
+                  {o.nombre[lang]}
+                </div>
+                <div className="mt-3 text-[13px] text-fg-3">{prox ? t.oblDesde : ""}</div>
+                <div className="text-[19px] font-semibold tabular text-fg">
+                  {prox ? fechaHito(prox, lang) : t.oblSinFecha}
+                </div>
+                <p className="mt-3 text-[14.5px] leading-relaxed text-fg-2">{o.loQueNadieCuenta[lang]}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="mt-6">
+          <Link href="/obligaciones" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
+            {t.oblEnlace} <ArrowRight className="size-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }
 

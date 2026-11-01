@@ -79,27 +79,27 @@ export function SectorPage({ id }: { id: SectorId }) {
   return (
     <div className="bg-bg text-fg">
       <SiteNav dark />
-      <section className="relative overflow-hidden bg-[#041820] text-white">
+      <section data-theme="dark" className="relative overflow-hidden bg-noche text-crema">
         <div className="absolute inset-0">
           <Caustics />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(4_24_32/0.55),rgb(4_24_32/0.9))] lg:bg-[linear-gradient(90deg,rgb(4_24_32/0.92),rgb(4_24_32/0.3))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(9_8_7/0.55),rgb(9_8_7/0.9))] lg:bg-[linear-gradient(90deg,rgb(9_8_7/0.92),rgb(9_8_7/0.3))]" />
         </div>
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pt-24 pb-14 sm:px-6 sm:pt-28 lg:grid-cols-2 lg:gap-10">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-[13px] text-white/75">
+            <div className="inline-flex items-center gap-2 rounded-full border border-crema/15 px-3 py-1 text-[13px] text-crema/75">
               <Icon name={s.icono} className="size-4" /> {s.nombre}
             </div>
             <h1 className="mt-5 font-display text-[36px] leading-[1.05] font-semibold tracking-tight min-[400px]:text-[40px] sm:text-[56px]">
               {tx.h1(s.nombre)}
             </h1>
-            <p className="mt-4 max-w-xl text-[16px] text-white/70 sm:text-[17px]">{s.dolor} {tx.asi}</p>
+            <p className="mt-4 max-w-xl text-[16px] text-crema/70 sm:text-[17px]">{s.dolor} {tx.asi}</p>
             <div className="mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap">
-              <Link href={`/demo?sector=${s.id}&tour=1`} className="flex h-13 items-center justify-center gap-2 rounded-xl bg-sun px-5 text-[16px] font-semibold text-[#1d1300] sm:h-12 sm:text-[15px]">
+              <Link href={`/demo?sector=${s.id}&tour=1`} className="flex h-13 items-center justify-center gap-2 rounded-xl bg-carmesi px-5 text-[16px] font-semibold text-crema sm:h-12 sm:text-[15px]">
                 <PlayCircle className="size-5" /> {tx.verDemo}
                 <span className="-ml-2 max-sm:hidden">{tx.de(s.empresa)}</span>
                 <span className="-ml-2 sm:hidden">{tx.enVivo}</span>
               </Link>
-              <a href={whatsappLink(mensaje)} target="_blank" rel="noreferrer" className="vibrar flex h-13 items-center justify-center gap-2 rounded-xl bg-[#1faa59] px-5 text-[16px] font-semibold text-white hover:brightness-110 sm:h-12 sm:text-[15px]">
+              <a href={whatsappLink(mensaje)} target="_blank" rel="noreferrer" className="vibrar flex h-13 items-center justify-center gap-2 rounded-xl bg-carmesi px-5 text-[16px] font-semibold text-crema hover:bg-carmesi-oscuro sm:h-12 sm:text-[15px]">
                 <MessageCircle className="size-5" /> {tx.pide}
               </a>
             </div>
@@ -124,7 +124,7 @@ export function SectorPage({ id }: { id: SectorId }) {
             <ul className="mt-3 grid gap-2 text-[14px]">
               {s.checklist.map((c) => (
                 <li key={c} className="flex items-center gap-2">
-                  <Check className="size-4 text-ok" /> {c}
+                  <Check className="size-4 text-carmesi" /> {c}
                 </li>
               ))}
             </ul>
@@ -180,7 +180,7 @@ export function SectorPage({ id }: { id: SectorId }) {
               {seo.claves.map((clave) => (
                 <li key={clave.titulo} className="rounded-2xl border border-line bg-surface p-5">
                   <h3 className="flex items-start gap-2 text-[15.5px] font-semibold">
-                    <Check className="mt-0.5 size-4 shrink-0 text-ok" />
+                    <Check className="mt-0.5 size-4 shrink-0 text-carmesi" />
                     {clave.titulo}
                   </h3>
                   <p className="mt-2 text-[14.5px] leading-relaxed text-fg-2">{clave.texto}</p>

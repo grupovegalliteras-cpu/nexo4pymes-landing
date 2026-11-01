@@ -21,7 +21,7 @@ export function Destacado({
         <div className="border-l-[3px] border-brand p-6 sm:p-7">
           {titulo && (
             <div className="flex items-center gap-2.5">
-              <AlertTriangle size={16} className="text-warn" aria-hidden="true" />
+              <AlertTriangle size={16} className="text-carmesi" aria-hidden="true" />
               <h3 className="text-[17px] text-fg">{titulo}</h3>
             </div>
           )}
@@ -53,7 +53,7 @@ export function Senales({ items }: { items: { fuerte: string; texto: string }[] 
         >
           <AlertTriangle
             size={15}
-            className="mt-1 shrink-0 text-warn"
+            className="mt-1 shrink-0 text-carmesi"
             aria-hidden="true"
           />
           <p className="text-[15.5px] leading-relaxed text-fg-2">

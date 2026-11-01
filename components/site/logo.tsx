@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Logo real de Nexo4Pymes, extraído del original con scripts/logo.mjs.
- * `light`: sobre fondo oscuro (blanco y menta). Sin él, se adapta al tema claro u oscuro.
+ * `light`: sobre fondo oscuro (crema y carmesí). Sin él, se adapta al tema claro u oscuro.
  * La altura la marca `className` (h-7…); el nombre va en un span para poder ocultarlo.
  */
 export function Logo({ className, light }: { className?: string; light?: boolean }) {

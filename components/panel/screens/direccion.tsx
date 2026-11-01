@@ -108,7 +108,7 @@ export function Direccion() {
             onClick={() => go("central-avisos", live.id)}
             className="mx-4 mb-4 flex w-[calc(100%-2rem)] items-center gap-3 overflow-hidden rounded-xl border border-sun/40 bg-sun-soft px-4 py-3 text-left sm:mx-6 sm:w-[calc(100%-3rem)]"
           >
-            <span className="relative grid size-9 place-items-center rounded-full bg-sun text-[#1d1300]">
+            <span className="relative grid size-9 place-items-center rounded-full bg-carmesi text-crema">
               <span className="absolute inset-0 animate-pulse-ring rounded-full bg-sun" />
               <PhoneIncoming className="relative size-4" />
             </span>

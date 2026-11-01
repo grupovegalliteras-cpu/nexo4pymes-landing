@@ -197,7 +197,7 @@ depende de `useEffect`): el vigilante solo ve lo que hay al montar.
 | Textos de quiénes somos y RGPD | `content/nosotros.ts` |
 | Textos de contacto y del formulario | `content/contacto.ts` |
 | Aviso legal / privacidad / cookies | `app/legal/page.tsx` |
-| Colores, tipografías y radios | `app/globals.css` (bloque `@theme`) |
+| Colores, tipografías y radios | `app/(demo)/globals.css` (paleta de marca al principio) y `app/(demo)/tema-web.css` |
 
 **Añadir un sector nuevo:** un objeto más en `sectoresInicio.sectores`
 (`content/inicio.ts`). Nada más — el selector, el panel y la navegación

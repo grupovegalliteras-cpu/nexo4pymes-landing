@@ -7,25 +7,21 @@ import { useMagnetico } from "@/components/motion/useMagnetico";
 /* ============================================================
    BOTÓN
 
-   LAS TRES VARIANTES, TRADUCIDAS A LA PALETA UNIFICADA. Eran el
-   degradado azul → violeta, un contorno sobre cristal oscuro y un
-   botón blanco. Las tres daban por hecho un fondo casi negro.
+   LAS TRES VARIANTES, EN LA PALETA DE MARCA.
 
-     principal  → azul de marca. Es el color que la portada y las
-                  páginas de sector usan para la acción principal, y
-                  tiene valor propio en claro y en oscuro.
+     principal  → fondo carmesí con letra crema, en claro y en oscuro.
      secundario → contorno sobre el fondo de tarjeta.
-     claro      → el verde de WhatsApp. Era el botón blanco de los
-                  cierres, y en los dos sitios donde se usa lo que
-                  hay detrás es «escribidnos por WhatsApp»: con el
-                  verde se reconoce antes de leerlo.
+     claro      → también carmesí. Era el verde de WhatsApp, y lo que
+                  hay detrás sigue siendo «escribidnos por WhatsApp»,
+                  pero la paleta no tiene verde y es el botón principal
+                  de los cierres.
 
    RADIO: rounded-xl y no rounded-full. Todo lo pulsable del sitio
    nuevo (cabecera, demo, sectores) usa la esquina de 12 px; la
    píldora era de la estética anterior y aquí cantaba.
 
-   El halo de la variante principal se fue con ella: un resplandor
-   azul difuminado sobre fondo claro es una mancha gris.
+   Sin halo en la variante principal: un resplandor difuminado sobre
+   fondo claro es una mancha.
    ============================================================ */
 
 type Variante = "principal" | "secundario" | "claro";
@@ -36,9 +32,9 @@ const base =
   "active:translate-y-0 select-none";
 
 const variantes: Record<Variante, string> = {
-  principal: "bg-brand text-brand-ink shadow-e1 hover:-translate-y-0.5 hover:bg-brand-strong hover:shadow-e2",
-  secundario: "border border-line bg-surface text-fg hover:-translate-y-0.5 hover:border-brand/40 hover:text-brand",
-  claro: "bg-[#1faa59] text-white hover:-translate-y-0.5 hover:brightness-110",
+  principal: "bg-carmesi text-crema shadow-e1 hover:-translate-y-0.5 hover:bg-carmesi-oscuro hover:shadow-e2",
+  secundario: "border border-line-strong bg-surface text-fg hover:-translate-y-0.5 hover:border-brand hover:text-brand",
+  claro: "bg-carmesi text-crema hover:-translate-y-0.5 hover:bg-carmesi-oscuro",
 };
 
 /* OJO: el tamaño NO se puede sobrescribir desde `className`. Tailwind

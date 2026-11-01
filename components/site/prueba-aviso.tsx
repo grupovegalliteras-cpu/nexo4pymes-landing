@@ -298,28 +298,28 @@ export function PruebaAviso() {
     router.push(conIdioma(lang, "/panel/central-avisos"));
   }
 
-  const urgColor = lectura?.urgencia === "alta" ? "bg-[#ff6b61]/15 text-[#ff8a82]" : lectura?.urgencia === "media" ? "bg-sun/15 text-sun" : "bg-white/10 text-white/80";
+  const urgColor = lectura?.urgencia === "alta" ? "bg-[#ff6b61]/15 text-[#ff8a82]" : lectura?.urgencia === "media" ? "bg-sun/15 text-sun" : "bg-crema/10 text-crema/80";
   const segundos = tx.coma((ms / 1000).toFixed(1));
   const fin = paso >= PASOS;
 
   return (
-    <section id="pruebalo" data-hide-dock className="relative scroll-mt-20 overflow-hidden py-16 text-white sm:py-24">
+    <section id="pruebalo" data-hide-dock className="relative scroll-mt-20 overflow-hidden py-16 text-crema sm:py-24">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,rgb(56_225_255/0.12),transparent_60%),radial-gradient(ellipse_at_90%_100%,rgb(157_123_255/0.12),transparent_55%)]" />
       <div className="relative mx-auto max-w-7xl px-5 sm:px-6">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 rounded-full bg-sun px-2.5 py-1 text-[12px] font-semibold text-[#1d1300]">
+          <div className="inline-flex items-center gap-2 rounded-full bg-carmesi px-2.5 py-1 text-[12px] font-semibold text-crema">
             <span className="size-1.5 rounded-full bg-[#1d1300]" /> {tx.kicker}
           </div>
-          <h2 className="mt-4 font-display text-[32px] leading-[1.04] font-semibold tracking-[-0.035em] sm:text-[48px]">{tx.h2}</h2>
-          <p className="mt-3 text-[16px] text-white/70 sm:text-[18px]">
+          <h2 className="mt-4 font-display text-[32px] leading-[1.04] font-semibold tracking-[-0.01em] sm:text-[48px]">{tx.h2}</h2>
+          <p className="mt-3 text-[16px] text-crema/70 sm:text-[18px]">
             {tx.p(sector.empresa)}
           </p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-8">
           {/* Chat del cliente */}
-          <div className="flex h-[520px] min-w-0 flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[#070b10] shadow-[0_40px_100px_-40px_rgb(56_225_255/0.35)] sm:h-[560px]">
-            <div className="flex items-center gap-3 border-b border-white/10 bg-[#111d24] px-4 py-3">
+          <div className="flex h-[520px] min-w-0 flex-col overflow-hidden rounded-[28px] border border-crema/10 bg-[#070b10] shadow-[0_40px_100px_-40px_rgb(56_225_255/0.35)] sm:h-[560px]">
+            <div className="flex items-center gap-3 border-b border-crema/10 bg-[#111d24] px-4 py-3">
               <span className="grid size-10 place-items-center rounded-full font-display text-[15px] font-bold" style={{ background: sector.color }}>
                 {sector.empresaCorta[0]}
               </span>
@@ -328,23 +328,23 @@ export function PruebaAviso() {
                 <div className="text-[12px] text-[#5ee39a]">{escribiendo ? tx.escribiendo : tx.enLinea}</div>
               </div>
               {enviado && (
-                <button onClick={reiniciar} className="grid size-9 place-items-center rounded-full text-white/60 hover:bg-white/10" aria-label={tx.otro}>
+                <button onClick={reiniciar} className="grid size-9 place-items-center rounded-full text-crema/60 hover:bg-crema/10" aria-label={tx.otro}>
                   <RotateCcw className="size-4" />
                 </button>
               )}
             </div>
             <div ref={chat} className="flex-1 space-y-2 overflow-y-auto bg-[radial-gradient(rgb(255_255_255/0.035)_1px,transparent_1px)] [background-size:14px_14px] px-3 py-4">
               {!msgs.length && (
-                <div className="mx-auto mt-2 max-w-[260px] rounded-xl bg-white/[0.06] px-3 py-2 text-center text-[12px] text-white/55">
+                <div className="mx-auto mt-2 max-w-[260px] rounded-xl bg-crema/[0.06] px-3 py-2 text-center text-[12px] text-crema/55">
                   {tx.ayuda}
                 </div>
               )}
               <AnimatePresence initial={false}>
                 {msgs.map((m, i) => (
                   <motion.div key={i} initial={{ opacity: 0, y: 8, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} className={cn("flex", m.de === "cliente" ? "justify-end" : "justify-start")}>
-                    <div className={cn("max-w-[85%] rounded-2xl px-3 py-2 text-[14px] leading-snug shadow-sm", m.de === "cliente" ? "rounded-br-md bg-[#0f5a4a] text-white" : "rounded-bl-md bg-[#1c2a32] text-white")}>
+                    <div className={cn("max-w-[85%] rounded-2xl px-3 py-2 text-[14px] leading-snug shadow-sm", m.de === "cliente" ? "rounded-br-md bg-[#0f5a4a] text-crema" : "rounded-bl-md bg-[#1c2a32] text-crema")}>
                       {m.texto}
-                      <span className="mt-0.5 flex items-center justify-end gap-1 text-[10px] text-white/45">
+                      <span className="mt-0.5 flex items-center justify-end gap-1 text-[10px] text-crema/45">
                         {m.hora} {m.de === "cliente" && <CheckCheck className={cn("size-3", paso >= 1 && "text-[#53bdeb]")} />}
                       </span>
                     </div>
@@ -354,7 +354,7 @@ export function PruebaAviso() {
                   <motion.div key="typing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex">
                     <div className="flex gap-1 rounded-2xl rounded-bl-md bg-[#1c2a32] px-3 py-3">
                       {[0, 1, 2].map((d) => (
-                        <motion.span key={d} className="size-1.5 rounded-full bg-white/60" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: d * 0.15 }} />
+                        <motion.span key={d} className="size-1.5 rounded-full bg-crema/60" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: d * 0.15 }} />
                       ))}
                     </div>
                   </motion.div>
@@ -364,14 +364,14 @@ export function PruebaAviso() {
             {!enviado && (
               <div className="flex gap-2 overflow-x-auto px-3 pb-2 no-scrollbar">
                 {ejemplos.map((e) => (
-                  <button key={e} onClick={() => enviar(e)} className="max-w-[240px] shrink-0 truncate rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 text-[12px] text-white/80 hover:bg-white/10">
+                  <button key={e} onClick={() => enviar(e)} className="max-w-[240px] shrink-0 truncate rounded-full border border-crema/15 bg-crema/[0.04] px-3 py-1.5 text-[12px] text-crema/80 hover:bg-crema/10">
                     {e}
                   </button>
                 ))}
               </div>
             )}
             <form
-              className="flex items-center gap-2 border-t border-white/10 bg-[#111d24] p-2.5"
+              className="flex items-center gap-2 border-t border-crema/10 bg-[#111d24] p-2.5"
               onSubmit={(e) => {
                 e.preventDefault();
                 enviar(texto);
@@ -382,11 +382,11 @@ export function PruebaAviso() {
                 onChange={(e) => setTexto(e.target.value)}
                 disabled={!!enviado}
                 placeholder={enviado ? tx.enviado : tx.placeholder}
-                className="h-11 min-w-0 flex-1 rounded-full bg-white/[0.07] px-4 text-[16px] text-white outline-none placeholder:text-white/35 focus:bg-white/10 disabled:opacity-50"
+                className="h-11 min-w-0 flex-1 rounded-full bg-crema/[0.07] px-4 text-[16px] text-crema outline-none placeholder:text-crema/35 focus:bg-crema/10 disabled:opacity-50"
                 aria-label={tx.aria}
                 enterKeyHint="send"
               />
-              <button type="submit" disabled={!!enviado || texto.trim().length < 6} className="grid size-11 shrink-0 place-items-center rounded-full bg-[#1faa59] text-white transition disabled:opacity-40" aria-label={tx.enviar}>
+              <button type="submit" disabled={!!enviado || texto.trim().length < 6} className="grid size-11 shrink-0 place-items-center rounded-full bg-carmesi text-crema transition disabled:opacity-40" aria-label={tx.enviar}>
                 <Send className="size-5" />
               </button>
             </form>
@@ -395,8 +395,8 @@ export function PruebaAviso() {
           {/* Lo que hace la empresa sola */}
           <div ref={pipe} className="dt-cristal min-w-0 scroll-mt-4 rounded-[28px] p-4 sm:p-6">
             <div className="flex items-center justify-between gap-3">
-              <div className="text-[13px] font-medium text-white/60">{tx.mientras}</div>
-              <div className={cn("rounded-lg px-2.5 py-1 font-display text-[15px] font-semibold tabular", fin ? "bg-[#37c28a]/15 text-[#7fe3b8]" : "bg-white/10 text-white/80")}>
+              <div className="text-[13px] font-medium text-crema/60">{tx.mientras}</div>
+              <div className={cn("rounded-lg px-2.5 py-1 font-display text-[15px] font-semibold tabular", fin ? "bg-[#37c28a]/15 text-[#7fe3b8]" : "bg-crema/10 text-crema/80")}>
                 {segundos} s
               </div>
             </div>
@@ -423,11 +423,11 @@ export function PruebaAviso() {
               <Paso n={3} activo={paso >= 3} icon={<ClipboardList className="size-4" />} titulo={ot && paso >= 3 ? tx.orden(ot) : tx.ordenSin}>
                 {tecnico && cita && (
                   <div className="flex items-center gap-2.5">
-                    <span className="grid size-8 shrink-0 place-items-center rounded-full text-[12px] font-bold text-white" style={{ background: tecnico.color }}>
+                    <span className="grid size-8 shrink-0 place-items-center rounded-full text-[12px] font-bold text-crema" style={{ background: tecnico.color }}>
                       {tecnico.nombre.split(" ").map((p) => p[0]).join("")}
                     </span>
                     <span>
-                      <span className="font-semibold text-white">{tecnico.nombre}</span>, {lectura!.municipioDicho ? tx.tecnicoZona(lectura!.municipio) : tx.tecnico} {tx.carga}. <span className="text-white">{cita.corto}</span>, {fmt.dur(lectura!.servicio.min)}.
+                      <span className="font-semibold text-crema">{tecnico.nombre}</span>, {lectura!.municipioDicho ? tx.tecnicoZona(lectura!.municipio) : tx.tecnico} {tx.carga}. <span className="text-crema">{cita.corto}</span>, {fmt.dur(lectura!.servicio.min)}.
                     </span>
                   </div>
                 )}
@@ -439,12 +439,12 @@ export function PruebaAviso() {
                       <Bell className="size-3.5" />
                     </span>
                     <div className="min-w-0 text-[12px] leading-snug">
-                      <div className="flex justify-between text-white/50">
+                      <div className="flex justify-between text-crema/50">
                         <span>Nexo Campo</span>
                         <span>{tx.ahora}</span>
                       </div>
-                      <div className="font-semibold text-white">{lectura.urgencia === "alta" ? tx.urgente : tx.nuevo}</div>
-                      <div className="truncate text-white/75">
+                      <div className="font-semibold text-crema">{lectura.urgencia === "alta" ? tx.urgente : tx.nuevo}</div>
+                      <div className="truncate text-crema/75">
                         {lectura.servicio.nombre} · {cita.corto}
                       </div>
                     </div>
@@ -463,20 +463,20 @@ export function PruebaAviso() {
 
             <AnimatePresence>
               {fin && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-5 border-t border-white/10 pt-5">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-5 border-t border-crema/10 pt-5">
                   <div className="font-display text-[20px] leading-tight font-semibold sm:text-[24px]">
-                    {tx.todo(segundos)} <span className="text-white/60">{tx.nadie}</span>
+                    {tx.todo(segundos)} <span className="text-crema/60">{tx.nadie}</span>
                   </div>
                   <div className="mt-4 grid gap-2 sm:grid-cols-2">
                     <a
                       href={whatsappLink(tx.waMsg(enviado ?? ""))}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex h-12 items-center justify-center gap-2 rounded-xl bg-sun text-[15px] font-semibold text-[#1d1300] hover:brightness-105"
+                      className="flex h-12 items-center justify-center gap-2 rounded-xl bg-carmesi text-[15px] font-semibold text-crema hover:bg-carmesi-oscuro"
                     >
                       <MessageCircle className="size-5" /> {tx.loQuiero}
                     </a>
-                    <button onClick={verEnPanel} className="flex h-12 items-center justify-center gap-2 rounded-xl border border-white/20 text-[15px] font-medium hover:bg-white/10">
+                    <button onClick={verEnPanel} className="flex h-12 items-center justify-center gap-2 rounded-xl border border-crema/20 text-[15px] font-medium hover:bg-crema/10">
                       {tx.verPanel} <ArrowRight className="size-4" />
                     </button>
                   </div>
@@ -492,21 +492,21 @@ export function PruebaAviso() {
 
 function Paso({ n, activo, icon, titulo, tono, children }: { n: number; activo: boolean; icon: React.ReactNode; titulo: string; tono?: "ai" | "ok"; children?: React.ReactNode }) {
   return (
-    <li className={cn("relative flex gap-3 rounded-2xl border p-3 transition-colors duration-500", activo ? "border-white/12 bg-white/[0.05]" : "border-white/[0.06] bg-transparent")}>
+    <li className={cn("relative flex gap-3 rounded-2xl border p-3 transition-colors duration-500", activo ? "border-crema/12 bg-crema/[0.05]" : "border-crema/[0.06] bg-transparent")}>
       <span
         className={cn(
           "grid size-8 shrink-0 place-items-center rounded-full transition-colors duration-500",
-          !activo ? "bg-white/[0.06] text-white/30" : tono === "ai" ? "bg-[#9d8fff] text-[#140f33]" : tono === "ok" ? "bg-[#37c28a] text-[#04150e]" : "bg-sun text-[#1d1300]",
+          !activo ? "bg-crema/[0.06] text-crema/30" : tono === "ai" ? "bg-[#9d8fff] text-[#140f33]" : tono === "ok" ? "bg-[#37c28a] text-[#04150e]" : "bg-carmesi text-crema",
         )}
       >
         {activo ? icon : <span className="text-[12px] font-semibold">{n}</span>}
       </span>
       <div className="min-w-0 flex-1 pt-1">
-        <div className={cn("text-[14px] font-semibold transition-colors", activo ? "text-white" : "text-white/35")}>{titulo}</div>
+        <div className={cn("text-[14px] font-semibold transition-colors", activo ? "text-crema" : "text-crema/35")}>{titulo}</div>
         <AnimatePresence>
           {activo && children && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="overflow-hidden">
-              <div className="pt-1.5 text-[13px] leading-snug text-white/70">{children}</div>
+              <div className="pt-1.5 text-[13px] leading-snug text-crema/70">{children}</div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -516,5 +516,5 @@ function Paso({ n, activo, icon, titulo, tono, children }: { n: number; activo: 
 }
 
 function Chip({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <span className={cn("rounded-md bg-white/10 px-2 py-0.5 text-[12px] font-medium text-white/85", className)}>{children}</span>;
+  return <span className={cn("rounded-md bg-crema/10 px-2 py-0.5 text-[12px] font-medium text-crema/85", className)}>{children}</span>;
 }

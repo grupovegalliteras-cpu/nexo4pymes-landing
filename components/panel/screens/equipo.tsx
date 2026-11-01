@@ -128,10 +128,10 @@ export function Fichaje() {
         </Card>
       </div>
       <Modal open={tablet} onClose={() => { setTablet(false); setPin(""); setTabletOk(null); }} label={trad("Tablet de fichaje")} className="max-w-sm">
-        <div className="grid gap-4 bg-[#0c1a22] p-6 text-white">
+        <div className="grid gap-4 bg-[#1c2129] p-6 text-crema">
           <div className="text-center">
             <div className="font-display text-4xl font-semibold tabular">{fmt.time(now)}</div>
-            <div className="text-sm text-white/60 capitalize">{fmt.dayLong(now)}</div>
+            <div className="text-sm text-crema/60 capitalize">{fmt.dayLong(now)}</div>
           </div>
           <AnimatePresence mode="wait">
             {tabletOk ? (
@@ -140,13 +140,13 @@ export function Fichaje() {
                   <Check className="size-7" />
                 </span>
                 <div className="text-lg font-semibold">{trad("Hola,")}{" "}{trad(tabletOk)}</div>
-                <div className="text-sm text-white/60">{trad("Entrada registrada a las")}{" "}{fmt.time(now)}</div>
+                <div className="text-sm text-crema/60">{trad("Entrada registrada a las")}{" "}{fmt.time(now)}</div>
               </motion.div>
             ) : (
               <motion.div key="pad" className="grid gap-3">
                 <div className="flex justify-center gap-2">
                   {[0, 1, 2, 3].map((i) => (
-                    <span key={i} className={cn("size-3 rounded-full", i < pin.length ? "bg-sun" : "bg-white/20")} />
+                    <span key={i} className={cn("size-3 rounded-full", i < pin.length ? "bg-sun" : "bg-crema/20")} />
                   ))}
                 </div>
                 <div className="grid grid-cols-3 gap-2">
@@ -166,14 +166,14 @@ export function Fichaje() {
                           }, 250);
                         }
                       }}
-                      className="h-14 rounded-xl bg-white/10 text-xl font-medium transition hover:bg-white/15 active:scale-95 disabled:opacity-0"
+                      className="h-14 rounded-xl bg-crema/10 text-xl font-medium transition hover:bg-crema/15 active:scale-95 disabled:opacity-0"
                       aria-label={k === "⌫" ? trad("Borrar") : trad(k)}
                     >
                       {trad(k)}
                     </button>
                   ))}
                 </div>
-                <div className="text-center text-xs text-white/50">{trad("Introduce tu código de 4 cifras")}</div>
+                <div className="text-center text-xs text-crema/50">{trad("Introduce tu código de 4 cifras")}</div>
               </motion.div>
             )}
           </AnimatePresence>

@@ -54,7 +54,7 @@ export function ComoEmpezar() {
                 <div
                   className={
                     destacado
-                      ? "mt-4 bg-gradient-to-r from-white via-[#9FB6FF] to-[#D3B0FF] bg-clip-text font-display text-[26px] font-bold text-transparent"
+                      ? "mt-4 font-display text-[26px] font-bold text-carmesi"
                       : "mt-4 font-display text-[26px] font-bold text-fg"
                   }
                 >

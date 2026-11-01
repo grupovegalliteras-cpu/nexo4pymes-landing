@@ -52,12 +52,12 @@ const TX = {
 } satisfies Record<Idioma, unknown>;
 
 const COLOR_GRUPO: Record<ModuleGroup, string> = {
-  captacion: "#38e1ff",
-  clientes: "#5aa8ff",
-  operaciones: "#7f8cff",
-  finanzas: "#9d7bff",
-  equipo: "#4fe3d2",
-  datos: "#2cf5b0",
+  captacion: "#be123c",
+  clientes: "#a00f33",
+  operaciones: "#1c2129",
+  finanzas: "#5f5a58",
+  equipo: "#b8a48f",
+  datos: "#fdba74",
 };
 
 const PASOS_RECORRIDO = 8;
@@ -78,9 +78,9 @@ export function CifrasModulos() {
   const max = Math.max(...porGrupo.map((x) => x.n));
 
   const kpis = [
-    { valor: nSectores, sufijo: "", texto: tx.kpis.sectores.texto, detalle: tx.kpis.sectores.detalle, anillo: { tipo: "segmentos" as const, n: nSectores }, color: "violeta" },
-    { valor: PASOS_RECORRIDO, sufijo: "", texto: tx.kpis.pasos.texto, detalle: tx.kpis.pasos.detalle, anillo: { tipo: "segmentos" as const, n: PASOS_RECORRIDO }, color: "menta" },
-    { valor: 100, sufijo: "%", texto: tx.kpis.ue.texto, detalle: tx.kpis.ue.detalle, anillo: { tipo: "continuo" as const, p: 1 }, color: "cian" },
+    { valor: nSectores, sufijo: "", texto: tx.kpis.sectores.texto, detalle: tx.kpis.sectores.detalle, anillo: { tipo: "segmentos" as const, n: nSectores }, color: "apoyo" },
+    { valor: PASOS_RECORRIDO, sufijo: "", texto: tx.kpis.pasos.texto, detalle: tx.kpis.pasos.detalle, anillo: { tipo: "segmentos" as const, n: PASOS_RECORRIDO }, color: "detalle" },
+    { valor: 100, sufijo: "%", texto: tx.kpis.ue.texto, detalle: tx.kpis.ue.detalle, anillo: { tipo: "continuo" as const, p: 1 }, color: "acento" },
   ];
 
   return (
@@ -90,7 +90,7 @@ export function CifrasModulos() {
         {kpis.map((k, i) => (
           <div key={k.texto} data-revelar data-al-ver className="dt-foco dt-cristal relative flex items-center gap-5 rounded-[22px] p-5" style={{ "--d": `${i * 50}ms` } as CSSProperties}>
             <Anillo {...k.anillo} color={k.color} indice={i}>
-              <span className="font-display text-[28px] leading-none font-semibold tracking-[-0.04em] text-fg">
+              <span className="font-display text-[28px] leading-none font-semibold tracking-[-0.01em] text-fg">
                 <Contador valor={k.valor} locale={lang} retraso={i * 60} />
                 {k.sufijo && <span className="text-[0.55em] text-fg-2">{k.sufijo}</span>}
               </span>
@@ -184,7 +184,7 @@ function Barras3D({
     <div data-revelar data-al-ver className="dt-foco dt-cristal relative overflow-hidden rounded-[26px] p-5 sm:p-7">
       <div className="text-[14px] font-semibold text-fg-2">{titulo}</div>
       <div className="mt-2 flex items-baseline gap-2.5">
-        <span className="font-display text-[52px] leading-none font-semibold tracking-[-0.05em] text-fg sm:text-[64px]">
+        <span className="font-display text-[52px] leading-none font-semibold tracking-[-0.01em] text-fg sm:text-[64px]">
           <Contador valor={total} locale={lang} />
         </span>
         <span className="text-[15px] text-fg-2">{conectados}</span>

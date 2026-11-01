@@ -13,10 +13,10 @@ const tam = (nombre: string) => {
 const MARCA = tam("marca");
 const NOMBRE = tam("nombre");
 
-/** Bricolage en negrita para el titular. Si no se puede descargar al compilar, se usa la letra por defecto. */
+/** Barlow Semi Condensed en negrita para el titular. Si no se puede descargar al compilar, se usa la letra por defecto. */
 async function fuente(): Promise<ArrayBuffer | null> {
   try {
-    const css = await (await fetch("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700")).text();
+    const css = await (await fetch("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@700")).text();
     const url = css.match(/src: url\((.+?)\) format\('(?:opentype|truetype)'\)/)?.[1];
     if (!url) return null;
     const r = await fetch(url);
@@ -42,8 +42,8 @@ export async function ogImage({ kicker, title, sub, chips }: { kicker: string; t
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "64px 72px",
-          color: "white",
-          background: "radial-gradient(circle at 85% 0%, #0f5a70 0%, #07303d 40%, #041820 75%)",
+          color: "#fff7ed",
+          background: "radial-gradient(circle at 85% 0%, #5c0a20 0%, #2b0a14 40%, #090807 75%)",
 
         }}
       >
@@ -51,12 +51,12 @@ export async function ogImage({ kicker, title, sub, chips }: { kicker: string; t
           {/* logo real, el mismo que en la web */}
           <img src={pieza("marca")} height={64} width={Math.round((64 * MARCA.w) / MARCA.h)} alt="" />
           <img src={pieza("nombre")} height={38} width={Math.round((38 * NOMBRE.w) / NOMBRE.h)} alt="" />
-          <div style={{ display: "flex", marginLeft: "auto", fontSize: 24, color: "rgba(255,255,255,0.6)" }}>{kicker}</div>
+          <div style={{ display: "flex", marginLeft: "auto", fontSize: 24, color: "rgba(255,247,237,0.6)" }}>{kicker}</div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", fontSize: 78, fontWeight: 700, lineHeight: 1.02, letterSpacing: -2.5, maxWidth: 1000, fontFamily: bold ? "Bricolage" : undefined }}>{title}</div>
-          <div style={{ display: "flex", marginTop: 22, fontSize: 30, lineHeight: 1.35, color: "rgba(255,255,255,0.75)", maxWidth: 960 }}>{sub}</div>
+          <div style={{ display: "flex", fontSize: 88, fontWeight: 700, lineHeight: 1.02, letterSpacing: -0.5, maxWidth: 1000, fontFamily: bold ? "Barlow" : undefined }}>{title}</div>
+          <div style={{ display: "flex", marginTop: 22, fontSize: 30, lineHeight: 1.35, color: "rgba(255,247,237,0.75)", maxWidth: 960 }}>{sub}</div>
         </div>
 
         <div style={{ display: "flex", gap: 14 }}>
@@ -70,9 +70,9 @@ export async function ogImage({ kicker, title, sub, chips }: { kicker: string; t
                 borderRadius: 16,
                 fontSize: 24,
                 fontWeight: 600,
-                background: i === 0 ? "#f5ab2e" : "rgba(255,255,255,0.09)",
-                color: i === 0 ? "#1d1300" : "white",
-                border: i === 0 ? "none" : "1px solid rgba(255,255,255,0.18)",
+                background: i === 0 ? "#be123c" : "rgba(255,247,237,0.09)",
+                color: "#fff7ed",
+                border: i === 0 ? "none" : "1px solid rgba(255,247,237,0.18)",
               }}
             >
               {c}
@@ -81,6 +81,6 @@ export async function ogImage({ kicker, title, sub, chips }: { kicker: string; t
         </div>
       </div>
     ),
-    { ...OG_SIZE, fonts: bold ? [{ name: "Bricolage", data: bold, weight: 700, style: "normal" }] : undefined },
+    { ...OG_SIZE, fonts: bold ? [{ name: "Barlow", data: bold, weight: 700, style: "normal" }] : undefined },
   );
 }

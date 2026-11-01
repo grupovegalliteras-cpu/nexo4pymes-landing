@@ -53,15 +53,15 @@ export function HeroAnim() {
         initial={{ opacity: 0, y: 16, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.6, ease: [0.2, 0.7, 0.2, 1] }}
-        className="absolute top-2 left-0 w-[88%] rounded-[22px] border border-white/12 bg-[#06222c]/75 p-4 text-white shadow-[0_30px_80px_-20px_rgb(0_0_0/0.6)] backdrop-blur-xl sm:w-[76%]"
+        className="absolute top-2 left-0 w-[88%] rounded-[22px] border border-crema/12 bg-grafito p-4 text-crema shadow-[0_30px_80px_-20px_rgb(0_0_0/0.6)] backdrop-blur-xl sm:w-[76%]"
       >
         <div className="flex items-center gap-3">
-          <span className="relative grid size-10 place-items-center rounded-full bg-sun text-[#1d1300]">
+          <span className="relative grid size-10 place-items-center rounded-full bg-carmesi text-crema">
             {phase === 0 && <span className="absolute inset-0 animate-pulse-ring rounded-full bg-sun" />}
             <PhoneIncoming className="relative size-5" />
           </span>
           <div className="min-w-0 flex-1">
-            <div className="text-[11px] text-white/55">{phase === 0 ? tx.entrante : tx.grabando}</div>
+            <div className="text-[11px] text-crema/55">{phase === 0 ? tx.entrante : tx.grabando}</div>
             <div className="truncate text-[15px] font-semibold">{clienteCorto}</div>
           </div>
           {phase >= 1 && (
@@ -80,15 +80,15 @@ export function HeroAnim() {
         <AnimatePresence>
           {phase >= 2 && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="overflow-hidden">
-              <div className="mt-3 flex items-center gap-1.5 text-[11px] font-medium text-[#b9b0ff]">
+              <div className="mt-3 flex items-center gap-1.5 text-[11px] font-medium text-melocoton">
                 <Sparkles className="size-3.5" /> {tx.ia}
               </div>
               <motion.div className="mt-1.5 flex flex-wrap gap-1.5" initial="h" animate="s" variants={{ s: { transition: { staggerChildren: 0.12 } } }}>
                 {[
-                  [TIPO_AVISO[lang][L.tipo], "bg-white/10"],
-                  [L.urgencia === "alta" ? tx.urgente : tx.media, L.urgencia === "alta" ? "bg-[#ff6b61]/25 text-[#ffb3ad]" : "bg-sun/20 text-sun"],
-                  [tx.reconocido, "bg-[#37c28a]/20 text-[#7fe3b8]"],
-                  [serv.nombre, "bg-white/10"],
+                  [TIPO_AVISO[lang][L.tipo], "bg-crema/10"],
+                  [L.urgencia === "alta" ? tx.urgente : tx.media, L.urgencia === "alta" ? "bg-carmesi text-crema" : "bg-melocoton/20 text-melocoton"],
+                  [tx.reconocido, "bg-crema/10 text-crema"],
+                  [serv.nombre, "bg-crema/10"],
                 ].map(([t, cls]) => (
                   <motion.span key={t} variants={{ h: { opacity: 0, y: 6, filter: "blur(4px)" }, s: { opacity: 1, y: 0, filter: "blur(0px)" } }} className={cn("rounded-md px-2 py-1 text-[12px] font-medium", cls)}>
                     {t}
@@ -100,15 +100,15 @@ export function HeroAnim() {
         </AnimatePresence>
         <AnimatePresence>
           {phase >= 3 && (
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-3 flex items-center gap-2.5 rounded-xl bg-white/[0.07] p-2.5">
-              <span className="grid size-8 place-items-center rounded-lg bg-[#3db1d3] text-[#041319]">
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-3 flex items-center gap-2.5 rounded-xl bg-crema/[0.07] p-2.5">
+              <span className="grid size-8 place-items-center rounded-lg bg-carmesi text-crema">
                 <Wrench className="size-4" />
               </span>
               <div className="min-w-0 text-[12.5px] leading-tight">
                 <div className="font-semibold">{tx.ot}</div>
-                <div className="text-white/60">{tx.aToni}</div>
+                <div className="text-crema/60">{tx.aToni}</div>
               </div>
-              <Check className="ml-auto size-4 text-[#7fe3b8]" />
+              <Check className="ml-auto size-4 text-melocoton" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -119,7 +119,7 @@ export function HeroAnim() {
         <motion.path
           d="M 300 300 C 380 320, 360 380, 430 390"
           fill="none"
-          stroke="#f5ab2e"
+          stroke="#fdba74"
           strokeWidth="2"
           strokeDasharray="5 7"
           initial={{ pathLength: 0, opacity: 0 }}
@@ -133,32 +133,32 @@ export function HeroAnim() {
         initial={{ opacity: 0, y: 30, rotate: 4 }}
         animate={{ opacity: 1, y: 0, rotate: 3 }}
         transition={{ duration: 0.9, delay: 0.3, ease: [0.2, 0.7, 0.2, 1] }}
-        className="absolute right-0 bottom-0 h-[380px] w-[200px] rounded-[34px] bg-[#0b1115] p-[7px] shadow-[0_40px_80px_-20px_rgb(0_0_0/0.7),inset_0_0_0_1px_rgb(255_255_255/0.08)] sm:h-[420px] sm:w-[218px]"
+        className="absolute right-0 bottom-0 h-[380px] w-[200px] rounded-[34px] bg-[#090807] p-[7px] shadow-[0_40px_80px_-20px_rgb(0_0_0/0.7),inset_0_0_0_1px_rgb(255_255_255/0.08)] sm:h-[420px] sm:w-[218px]"
       >
-        <div className="relative h-full overflow-hidden rounded-[28px] bg-[#f4f6f7] text-[#0c1a22]">
+        <div className="relative h-full overflow-hidden rounded-[28px] bg-[#fff7ed] text-[#1c2129]">
           <span className="absolute top-2 left-1/2 z-20 h-4 w-16 -translate-x-1/2 rounded-full bg-black" />
           <div className="px-3.5 pt-9">
-            <div className="text-[9px] font-medium text-[#7a8893]">{tx.hoy}</div>
+            <div className="text-[9px] font-medium text-[#5f5a58]">{tx.hoy}</div>
             <div className="font-display text-[17px] leading-tight font-semibold">{tx.hola}</div>
             <div className="mt-2 flex items-center gap-2 rounded-xl bg-white p-2 shadow-sm">
               <span className="size-1.5 rounded-full bg-[#13845a]" />
-              <span className="text-[10px] text-[#465661]">{tx.trabajando}</span>
+              <span className="text-[10px] text-[#5f5a58]">{tx.trabajando}</span>
               <span className="ml-auto font-display text-[12px] font-semibold tabular-nums">02:14:08</span>
             </div>
-            <div className="mt-2.5 text-[9px] font-medium text-[#7a8893]">{tx.siguiente}</div>
+            <div className="mt-2.5 text-[9px] font-medium text-[#5f5a58]">{tx.siguiente}</div>
             <AnimatePresence mode="wait">
               {phase >= 4 ? (
-                <motion.div key="new" initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} className="mt-1 rounded-xl bg-white p-2.5 shadow-md ring-2 ring-[#f5ab2e]">
+                <motion.div key="new" initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} className="mt-1 rounded-xl bg-white p-2.5 shadow-md ring-2 ring-[#be123c]">
                   <div className="flex items-center gap-1.5">
                     <span className="rounded bg-[#fbe6e4] px-1 py-0.5 text-[8px] font-semibold text-[#cf3f37]">{tx.urgente}</span>
-                    <span className={cn("ml-auto rounded px-1 py-0.5 text-[8px] font-semibold", phase >= 5 ? "bg-[#fdf1dc] text-[#b7740a]" : "bg-[#e5edfb] text-[#2f6ad0]")}>{phase >= 5 ? tx.enCamino : tx.asignado}</span>
+                    <span className={cn("ml-auto rounded px-1 py-0.5 text-[8px] font-semibold", phase >= 5 ? "bg-[#fbf0d9] text-[#b7740a]" : "bg-[#fcefe1] text-[#5f5a58]")}>{phase >= 5 ? tx.enCamino : tx.asignado}</span>
                   </div>
                   <div className="mt-1 text-[13px] leading-tight font-semibold">{clienteCorto}</div>
-                  <div className="text-[10px] text-[#465661]">{serv.nombre}</div>
-                  <div className="mt-1 flex items-center gap-1 text-[9px] text-[#7a8893]">
+                  <div className="text-[10px] text-[#5f5a58]">{serv.nombre}</div>
+                  <div className="mt-1 flex items-center gap-1 text-[9px] text-[#5f5a58]">
                     <MapPin className="size-2.5" /> {L.instalacionNombre}
                   </div>
-                  <div className={cn("mt-2 flex h-7 items-center justify-center gap-1 rounded-lg text-[10px] font-semibold transition-colors", phase >= 5 ? "bg-[#13845a] text-white" : "bg-[#0a5d78] text-white")}>
+                  <div className={cn("mt-2 flex h-7 items-center justify-center gap-1 rounded-lg text-[10px] font-semibold transition-colors", phase >= 5 ? "bg-[#13845a] text-crema" : "bg-[#be123c] text-crema")}>
                     {phase >= 5 ? <Check className="size-3" /> : <Navigation className="size-3" />}
                     {phase >= 5 ? tx.avisado : tx.salgo}
                   </div>
@@ -166,28 +166,28 @@ export function HeroAnim() {
               ) : (
                 <motion.div key="old" exit={{ opacity: 0 }} className="mt-1 rounded-xl bg-white p-2.5 shadow-sm">
                   <div className="text-[13px] font-semibold">Comunidad Es Born 12</div>
-                  <div className="text-[10px] text-[#465661]">{sector.servicios[3]?.nombre ?? serv.nombre}, 12:00</div>
+                  <div className="text-[10px] text-[#5f5a58]">{sector.servicios[3]?.nombre ?? serv.nombre}, 12:00</div>
                 </motion.div>
               )}
             </AnimatePresence>
             <div className="mt-2.5 grid gap-1.5">
               {["09:30 Villa Els Tarongers", "16:30 Forn Nou Inca"].map((x, i) => (
                 <div key={x} className="flex items-center gap-2 rounded-lg bg-white px-2 py-1.5 text-[10px] shadow-sm">
-                  <span className={cn("grid size-3.5 place-items-center rounded-full border", i === 0 ? "border-[#13845a] bg-[#13845a] text-white" : "border-[#c6cfd5]")}>{i === 0 && <Check className="size-2" />}</span>
-                  <span className={cn(i === 0 && "text-[#7a8893] line-through")}>{x}</span>
+                  <span className={cn("grid size-3.5 place-items-center rounded-full border", i === 0 ? "border-[#13845a] bg-[#13845a] text-crema" : "border-[#b8a48f]")}>{i === 0 && <Check className="size-2" />}</span>
+                  <span className={cn(i === 0 && "text-[#5f5a58] line-through")}>{x}</span>
                 </div>
               ))}
             </div>
           </div>
           <AnimatePresence>
             {phase === 4 && (
-              <motion.div initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -80, opacity: 0 }} transition={{ type: "spring", bounce: 0.35, duration: 0.6 }} className="absolute top-2 right-2 left-2 z-30 flex gap-2 rounded-2xl bg-[#1b2a33]/95 p-2 text-white shadow-xl backdrop-blur">
-                <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-[#0a5d78]">
+              <motion.div initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -80, opacity: 0 }} transition={{ type: "spring", bounce: 0.35, duration: 0.6 }} className="absolute top-2 right-2 left-2 z-30 flex gap-2 rounded-2xl bg-[#1d1a18]/95 p-2 text-crema shadow-xl backdrop-blur">
+                <span className="grid size-7 shrink-0 place-items-center rounded-lg bg-[#be123c]">
                   <Bell className="size-3.5" />
                 </span>
                 <span className="min-w-0 leading-tight">
                   <span className="block text-[10px] font-semibold">{tx.notif}</span>
-                  <span className="block truncate text-[9.5px] text-white/75">{clienteCorto}: {serv.nombre}</span>
+                  <span className="block truncate text-[9.5px] text-crema/75">{clienteCorto}: {serv.nombre}</span>
                 </span>
               </motion.div>
             )}
@@ -198,13 +198,13 @@ export function HeroAnim() {
       {/* factura cobrada */}
       <AnimatePresence>
         {phase >= 6 && (
-          <motion.div initial={{ opacity: 0, y: 14, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0 }} transition={{ type: "spring", bounce: 0.3 }} className="absolute bottom-6 left-0 flex items-center gap-3 rounded-2xl border border-white/12 bg-[#06222c]/80 p-3 pr-4 text-white shadow-[0_20px_50px_-15px_rgb(0_0_0/0.6)] backdrop-blur-xl sm:left-4">
-            <span className="grid size-9 place-items-center rounded-full bg-[#37c28a] text-[#04150e]">
+          <motion.div initial={{ opacity: 0, y: 14, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0 }} transition={{ type: "spring", bounce: 0.3 }} className="absolute bottom-6 left-0 flex items-center gap-3 rounded-2xl border border-crema/12 bg-grafito p-3 pr-4 text-crema shadow-[0_20px_50px_-15px_rgb(0_0_0/0.6)] backdrop-blur-xl sm:left-4">
+            <span className="grid size-9 place-items-center rounded-full bg-carmesi text-crema">
               <BadgeCheck className="size-5" />
             </span>
             <div className="text-[12.5px] leading-tight">
               <div className="font-semibold">{tx.factura}</div>
-              <div className="text-white/65">{tx.cobrada}</div>
+              <div className="text-crema/65">{tx.cobrada}</div>
             </div>
           </motion.div>
         )}
@@ -228,8 +228,8 @@ function Typed({ text, start, delay, etiqueta }: { text: string; start: boolean;
   }, [start, text, delay]);
   if (!n) return null;
   return (
-    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[13.5px] leading-snug text-white/85">
-      <span className="mr-1.5 text-[11px] text-white/40">{etiqueta}</span>
+    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[13.5px] leading-snug text-crema/85">
+      <span className="mr-1.5 text-[11px] text-crema/40">{etiqueta}</span>
       {text.slice(0, n)}
       {n < text.length && <span className="ml-0.5 inline-block h-3 w-[2px] translate-y-0.5 animate-pulse bg-white" />}
     </motion.p>

@@ -44,7 +44,7 @@ export function AvisosServicios() {
             {/* La nota va destacada con el filete a la izquierda: es
                 la línea que le dice a quien solo necesita esto que
                 puede saltarse el diagnóstico. */}
-            <p className="mt-5 border-l-2 border-brand/30 pl-4 text-[15px] leading-relaxed text-brand">
+            <p className="mt-5 border-l-2 border-carmesi pl-4 text-[15px] leading-relaxed text-fg">
               {avisosServicios.nota}
             </p>
           </div>

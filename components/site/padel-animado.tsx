@@ -51,12 +51,12 @@ export function ChatAnimado() {
 
   return (
     <div ref={caja} className="relative mx-auto w-full max-w-sm">
-      <div className="rounded-3xl border border-white/10 bg-[#0b141a]/95 p-4 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.7)] backdrop-blur">
-        <div className="flex items-center gap-3 border-b border-white/10 pb-3">
-          <span className="grid size-9 place-items-center rounded-full bg-sun font-display text-[14px] font-bold text-[#1d1300]">PD</span>
+      <div className="rounded-3xl border border-crema/10 bg-[#0b141a]/95 p-4 shadow-[0_30px_80px_-20px_rgb(0_0_0/0.7)] backdrop-blur">
+        <div className="flex items-center gap-3 border-b border-crema/10 pb-3">
+          <span className="grid size-9 place-items-center rounded-full bg-carmesi font-display text-[14px] font-bold text-crema">PD</span>
           <div>
             <div className="text-[14px] font-semibold">Club Pádel Demo</div>
-            <div className={cn("text-[12px] transition-colors", estado.escribe ? "text-[#25d366]" : "text-white/50")}>{estado.escribe ? "escribiendo…" : "Asistente · en línea"}</div>
+            <div className={cn("text-[12px] transition-colors", estado.escribe ? "text-melocoton" : "text-crema/50")}>{estado.escribe ? "escribiendo…" : "Asistente · en línea"}</div>
           </div>
         </div>
         <div className="mt-3 grid gap-2">
@@ -80,7 +80,7 @@ export function ChatAnimado() {
                     </span>
                   )}
                   {m.texto}
-                  <span className="ml-2 inline-flex items-center gap-0.5 align-bottom text-[11px] text-white/50">
+                  <span className="ml-2 inline-flex items-center gap-0.5 align-bottom text-[11px] text-crema/50">
                     {m.hora}
                     {m.de === "cliente" && <CheckCheck className="size-3.5 text-[#53bdeb]" />}
                   </span>
@@ -97,7 +97,7 @@ export function ChatAnimado() {
                       {[0, 1, 2].map((p) => (
                         <motion.i
                           key={p}
-                          className="block size-1.5 rounded-full bg-white/70"
+                          className="block size-1.5 rounded-full bg-crema/70"
                           animate={{ opacity: [0.3, 1, 0.3] }}
                           transition={{ duration: 0.9, repeat: Infinity, delay: p * 0.15 }}
                         />
@@ -109,7 +109,7 @@ export function ChatAnimado() {
             );
           })}
         </div>
-        <p className="mt-3 text-center text-[11px] text-white/40 lg:pb-5">Club y personas de ejemplo</p>
+        <p className="mt-3 text-center text-[11px] text-crema/40 lg:pb-5">Club y personas de ejemplo</p>
       </div>
 
       {/* Lo que el programa hace solo mientras tanto: un aviso cada vez, en la esquina del chat */}
@@ -126,14 +126,14 @@ export function ChatAnimado() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.4, ease: SALIDA }}
-                  className="flex items-center gap-2.5 rounded-2xl bg-white px-3 py-2.5 text-[#0c1a22] shadow-[0_18px_40px_-14px_rgb(0_0_0/0.55)]"
+                  className="flex items-center gap-2.5 rounded-2xl bg-white px-3 py-2.5 text-[#1c2129] shadow-[0_18px_40px_-14px_rgb(0_0_0/0.55)]"
                 >
                   <span className={cn("grid size-8 shrink-0 place-items-center rounded-full", i === 0 ? "bg-[#e1f3ea] text-[#13845a]" : "bg-[#fdf1dc] text-[#b7740a]")}>
                     {i === 0 ? <CalendarCheck className="size-4" /> : <Bell className="size-4" />}
                   </span>
                   <span className="min-w-0">
                     <span className="block text-[13px] leading-tight font-semibold">{titulo}</span>
-                    <span className="block text-[12px] text-[#465661]">{detalle}</span>
+                    <span className="block text-[12px] text-[#5f5a58]">{detalle}</span>
                   </span>
                   <span className="ml-auto self-start text-[10px] font-semibold tracking-wide text-[#13845a]">AUTO</span>
                 </motion.div>
@@ -175,7 +175,7 @@ export function VistaDemo() {
   const escala = ancho ? ancho / base : 0;
 
   return (
-    <a href={DEMO} className="group block overflow-hidden rounded-2xl border border-line bg-bg shadow-e3 transition hover:-translate-y-0.5 hover:shadow-[0_30px_70px_-20px_rgb(12_26_34/0.4)]" aria-label={padel.panel.cta}>
+    <a href={DEMO} className="group block overflow-hidden rounded-2xl border border-line bg-bg shadow-e3 transition hover:-translate-y-0.5 hover:shadow-[0_30px_70px_-20px_rgb(28_33_41/0.4)]" aria-label={padel.panel.cta}>
       <div ref={caja} className="relative overflow-hidden" style={{ height: escala ? alto * escala : 560 }}>
         {cargar && escala > 0 && (
           <div inert className="absolute inset-0">
@@ -240,23 +240,23 @@ export function Calculadora() {
         ))}
         <Barra id="coste" texto={c.coste.texto} valor={coste} min={c.coste.min} max={c.coste.max} paso={1} sufijo="€/hora" onCambio={setCoste} />
       </div>
-      <div className="relative flex flex-col justify-between gap-6 overflow-hidden bg-[#041820] p-6 text-white sm:p-8">
+      <div data-theme="dark" className="relative flex flex-col justify-between gap-6 overflow-hidden bg-noche p-6 text-crema sm:p-8">
         <div className="pointer-events-none absolute -top-24 -right-24 size-64 rounded-full bg-sun/15 blur-3xl" aria-hidden />
         <div className="relative">
           <div className="font-display text-[64px] leading-none font-semibold text-sun sm:text-[76px]">
             <NumeroAnimado valor={horas} formato={entero} />
             <span className="ml-2 text-[22px] text-sun/80">h</span>
           </div>
-          <p className="mt-2 text-[16px] text-white/80">{c.resultado}</p>
-          <div className="mt-5 flex items-baseline gap-2 border-t border-white/10 pt-5">
+          <p className="mt-2 text-[16px] text-crema/80">{c.resultado}</p>
+          <div className="mt-5 flex items-baseline gap-2 border-t border-crema/10 pt-5">
             <span className="font-display text-[30px] font-semibold">
               ≈ <NumeroAnimado valor={euros} formato={entero} /> €
             </span>
-            <span className="text-[14px] text-white/60">{c.euros}</span>
+            <span className="text-[14px] text-crema/60">{c.euros}</span>
           </div>
-          <p className="mt-4 text-[13px] leading-relaxed text-white/55">{c.explicacion}</p>
+          <p className="mt-4 text-[13px] leading-relaxed text-crema/55">{c.explicacion}</p>
         </div>
-        <a href={whatsappLink(mensaje)} target="_blank" rel="noreferrer" className="vibrar relative flex h-12 items-center justify-center gap-2 rounded-xl bg-[#1faa59] px-5 text-[15px] font-semibold text-white hover:brightness-110">
+        <a href={whatsappLink(mensaje)} target="_blank" rel="noreferrer" className="vibrar relative flex h-12 items-center justify-center gap-2 rounded-xl bg-carmesi px-5 text-[15px] font-semibold text-crema hover:bg-carmesi-oscuro">
           <MessageCircle className="size-5" /> {c.cta}
         </a>
       </div>

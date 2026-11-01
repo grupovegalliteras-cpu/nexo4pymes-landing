@@ -191,7 +191,7 @@ export function JobDrawer({ jobId, onClose }: { jobId?: string; onClose: () => v
               const ok = done ? (job.checklistHecho?.[i] ?? true) : false;
               return (
                 <div key={item} className="flex items-center gap-2.5 text-[13px]">
-                  <span className={cn("grid size-4.5 place-items-center rounded border", ok ? "border-ok bg-ok text-white" : "border-line-strong")}>{ok && <Check className="size-3" />}</span>
+                  <span className={cn("grid size-4.5 place-items-center rounded border", ok ? "border-ok bg-ok text-crema" : "border-line-strong")}>{ok && <Check className="size-3" />}</span>
                   <span className={cn(!ok && "text-fg-2")}>{trad(item)}</span>
                 </div>
               );

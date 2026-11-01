@@ -329,10 +329,9 @@ function useT() {
   return { ...T[lang], ...TD[lang] };
 }
 
-/* La portada es siempre oscura («Deep Tech»): .deeptech redefine los
-   tokens del sistema de diseño (app/(demo)/deeptech.css) y data-theme
-   activa las variantes dark: de los componentes de dentro, aunque el
-   visitante tenga el tema claro en el resto de la web.
+/* La portada va en crema con tarjetas blancas, hero incluido; el cierre
+   (Contacto y pie) es zona noche con data-theme="dark". El data-theme="light" del
+   envoltorio la deja en crema aunque el visitante venga del panel en oscuro.
 
    LO PRIMERO QUE TIENE QUE ENTENDERSE ES QUE HACEMOS SOFTWARE A MEDIDA.
    El programa para empresas de servicios (panel + app) es el ejemplo que
@@ -368,8 +367,8 @@ function useT() {
 export function Landing() {
   useMovimientoPortada();
   return (
-    <div data-theme="dark" className="deeptech text-fg">
-      <SiteNav dark />
+    <div data-theme="light" className="deeptech text-fg">
+      <SiteNav />
       {/* ============================================================
           EL ORDEN DE LA PORTADA, Y POR QUÉ SE CAMBIÓ
 
@@ -451,7 +450,7 @@ function Hero() {
    content/inicio.ts. */
 const PIEZAS = { es: serviciosEs, en: serviciosEn, de: serviciosDe };
 const ICONO_PIEZA = { lista: ListChecks, globo: Globe, reloj: Clock, engranaje: Workflow } as const;
-const TONO_PIEZA = { azul: "var(--dt-cian)", violeta: "var(--dt-violeta)", mint: "var(--dt-menta)" } as const;
+const TONO_PIEZA = { azul: "var(--carmesi)", violeta: "var(--carmesi-oscuro)", mint: "var(--grafito)" } as const;
 
 function QueConstruimos() {
   const t = useT();
@@ -473,8 +472,9 @@ function QueConstruimos() {
             const color = TONO_PIEZA[p.tono];
             return (
               <li key={p.titulo} data-revelar className="dt-foco dt-cristal flex flex-col rounded-[24px] p-6" style={{ "--d": `${i * 60}ms` } as CSSProperties}>
-                <span className="grid size-11 place-items-center rounded-xl border border-white/10 bg-white/[0.03]" style={{ color, boxShadow: `0 0 28px -10px ${color}` }}>
+                <span className="relative grid size-11 place-items-center rounded-xl border border-line bg-bg" style={{ color }}>
                   <Ico className="size-5" />
+                  <i className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-melocoton" aria-hidden="true" />
                 </span>
                 {/* EL GANCHO VA DE TITULAR Y LA CATEGORÍA DE RÓTULO, no al revés.
                     «Configuradores y diseñadores web» es lo que vendemos, pero
@@ -484,7 +484,7 @@ function QueConstruimos() {
                     sigue llevando de encabezado—, baja a rótulo. Si alguien
                     vuelve a subirlo, la portada vuelve a sonar a catálogo. */}
                 <p className="mt-5 text-[11.5px] font-semibold tracking-[0.1em] text-fg-3 uppercase">{p.titulo}</p>
-                <h3 className="mt-2 font-display text-[19px] leading-snug font-semibold tracking-[-0.02em] text-fg">{p.gancho}</h3>
+                <h3 className="mt-2 font-display text-[19px] leading-snug font-semibold tracking-[-0.01em] text-fg">{p.gancho}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-fg-2">{p.texto}</p>
               </li>
             );
@@ -512,11 +512,11 @@ function Colaboradores() {
   const lang = useIdioma();
   const t = textosColaboradores[lang];
   return (
-    <section id="colaboradores" className="scroll-mt-20 pb-16 text-white">
+    <section id="colaboradores" className="scroll-mt-20 pb-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="dt-cristal rounded-[28px] p-6 sm:p-8">
           <span className="text-[14px] font-semibold text-fg-3">{t.categoria}</span>
-          <h2 className="mt-3 font-display text-[24px] leading-tight font-semibold tracking-[-0.03em] sm:text-[30px]">{t.titulo}</h2>
+          <h2 className="mt-3 font-display text-[24px] leading-tight font-semibold tracking-[-0.01em] sm:text-[30px]">{t.titulo}</h2>
           <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-fg-2">{t.entradilla}</p>
           <ul className="dt-foco-grupo mt-7 grid gap-4 sm:grid-cols-2" onPointerMove={moverFoco}>
             {colaboradores.map((c) => {
@@ -527,7 +527,7 @@ function Colaboradores() {
                   <span className="mt-1 block text-[13px] font-medium text-sun">{c.papel[lang]}</span>
                   {texto ? <span className="mt-2.5 block text-[14.5px] leading-relaxed text-fg-2">{texto}</span> : null}
                   {c.web ? (
-                    <span className="mt-3 block text-[13.5px] font-medium text-[var(--dt-cian)]">
+                    <span className="mt-3 block text-[13.5px] font-medium text-carmesi">
                       {c.web.replace(/^https?:\/\//, "")} <span aria-hidden="true">↗</span>
                     </span>
                   ) : null}
@@ -536,11 +536,11 @@ function Colaboradores() {
               return (
                 <li key={c.nombre} className="min-w-0">
                   {c.web ? (
-                    <a href={c.web} target="_blank" rel="noreferrer" className="dt-foco block h-full rounded-[18px] border border-white/10 bg-white/[0.02] p-5 transition-colors hover:bg-white/[0.04]">
+                    <a href={c.web} target="_blank" rel="noreferrer" className="dt-foco block h-full rounded-[18px] border border-line bg-bg p-5 transition-colors hover:bg-surface-2">
                       {cuerpo}
                     </a>
                   ) : (
-                    <div className="dt-foco h-full rounded-[18px] border border-white/10 bg-white/[0.02] p-5">{cuerpo}</div>
+                    <div className="dt-foco h-full rounded-[18px] border border-line bg-bg p-5">{cuerpo}</div>
                   )}
                 </li>
               );
@@ -559,12 +559,12 @@ function AvisoPadel() {
   const lang = useIdioma();
   if (lang !== "es") return null;
   return (
-    <section className="pb-16 text-white">
+    <section className="pb-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <Link href="/padel" onPointerMove={moverFoco} className="dt-foco group flex flex-col gap-3 rounded-[22px] border border-sun/35 bg-sun/[0.06] p-5 transition-colors hover:bg-sun/10 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <span>
             <span className="block text-[13px] font-semibold text-sun">🎾 Nuevo: Nexo Pádel</span>
-            <span className="mt-1 block font-display text-[20px] font-semibold tracking-[-0.02em] sm:text-[22px]">¿Tenéis un club o una escuela de pádel?</span>
+            <span className="mt-1 block font-display text-[20px] font-semibold tracking-[-0.01em] sm:text-[22px]">¿Tenéis un club o una escuela de pádel?</span>
             <span className="mt-1 block text-[15px] text-fg-2">Un WhatsApp que contesta por vosotros, faltas y recuperaciones automáticas y partidos que se completan solos.</span>
           </span>
           <span className="dt-boton dt-boton-primario h-11 shrink-0 px-5 text-[15px]">Ver Nexo Pádel →</span>
@@ -582,7 +582,7 @@ function SectorPicker() {
   const sector = useSector();
   const setSector = useDemo((s) => s.setSector);
   return (
-    <section id="sectores" className="relative scroll-mt-20 py-16 text-white sm:py-20">
+    <section id="sectores" className="relative scroll-mt-20 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div onPointerMove={moverFoco} className="dt-foco dt-cristal rounded-[30px] p-5 sm:p-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -599,7 +599,7 @@ function SectorPicker() {
                 onClick={() => setSector(s.id as SectorId)}
                 className={cn(
                   "flex h-11 shrink-0 items-center gap-2 rounded-full border px-4 text-[14px] font-medium transition",
-                  sector.id === s.id ? "border-sun bg-sun text-[#00170f] shadow-[0_0_28px_-6px_var(--dt-menta)]" : "border-white/12 bg-white/[0.02] text-fg-2 hover:border-white/25 hover:text-fg",
+                  sector.id === s.id ? "border-carmesi bg-carmesi text-crema" : "border-line bg-surface text-fg-2 hover:border-arena hover:text-fg",
                 )}
                 aria-pressed={sector.id === s.id}
               >
@@ -612,7 +612,7 @@ function SectorPicker() {
             <motion.div key={sector.id} initial={{ opacity: 0, y: 8, filter: "blur(6px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -8, filter: "blur(6px)" }} transition={{ duration: 0.3 }} className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_1fr_1fr]">
               <div>
                 <div className="flex items-center gap-3">
-                  <span className="grid size-11 place-items-center rounded-xl font-display text-lg font-bold text-white" style={{ background: sector.color, boxShadow: `0 0 30px -6px ${sector.color}` }}>
+                  <span className="grid size-11 place-items-center rounded-xl font-display text-lg font-bold text-crema" style={{ background: sector.color }}>
                     {sector.empresaCorta[0]}
                   </span>
                   <div>
@@ -634,12 +634,12 @@ function SectorPicker() {
                   </Link>
                 </div>
               </div>
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4">
+              <div className="rounded-2xl border border-line bg-bg p-4">
                 <div className="text-[13px] font-semibold text-fg-3">{t.checklist}</div>
                 <ul className="mt-3 grid gap-1.5 text-[14px]">
                   {sector.checklist.map((c, i) => (
                     <motion.li key={c} initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }} className="flex items-center gap-2">
-                      <span className="grid size-4 shrink-0 place-items-center rounded-full bg-sun text-[#00170f]">
+                      <span className="grid size-4 shrink-0 place-items-center rounded-full bg-carmesi text-crema">
                         <Check className="size-2.5" />
                       </span>
                       {c}
@@ -647,11 +647,11 @@ function SectorPicker() {
                   ))}
                 </ul>
               </div>
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4">
+              <div className="rounded-2xl border border-line bg-bg p-4">
                 <div className="text-[13px] font-semibold text-fg-3">{t.mediciones}</div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   {sector.mediciones.slice(0, 4).map((m) => (
-                    <div key={m.nombre} className="rounded-xl border border-white/[0.05] bg-white/[0.03] p-2.5">
+                    <div key={m.nombre} className="rounded-xl border border-line bg-surface p-2.5">
                       <div className="text-[11px] text-fg-3">{m.nombre}</div>
                       <div className="font-display text-lg font-semibold tabular">
                         {f.num((m.ok[0] + m.ok[1]) / 2, m.dec)} <span className="text-xs font-normal text-fg-3">{m.unidad}</span>
@@ -662,7 +662,7 @@ function SectorPicker() {
                 <div className="mt-4 text-[13px] font-semibold text-fg-3">{t.servicios}</div>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {sector.servicios.map((s) => (
-                    <span key={s.nombre} className="rounded-md border border-white/[0.06] bg-white/[0.04] px-2 py-1 text-[12px]">
+                    <span key={s.nombre} className="rounded-md border border-line bg-surface px-2 py-1 text-[12px]">
                       {s.nombre}
                     </span>
                   ))}
@@ -738,7 +738,7 @@ function SoftwareReal() {
   }, []);
   return (
     <section className="relative overflow-hidden py-16 sm:py-24">
-      <div className="pointer-events-none absolute inset-x-0 top-1/3 -z-10 h-[70%] bg-[radial-gradient(ellipse_55%_50%_at_50%_50%,rgb(56_225_255/0.1),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-1/3 -z-10 h-[70%] bg-[radial-gradient(ellipse_55%_50%_at_50%_50%,rgb(190_18_60/0.06),transparent_70%)]" />
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
@@ -760,13 +760,13 @@ function SoftwareReal() {
           {wide === true && (
             <div className="mt-10 grid items-end gap-6 lg:grid-cols-[1fr_auto]">
               <div className="dt-monitor overflow-hidden">
-                <div className="flex h-9 items-center gap-2 border-b border-white/[0.07] bg-[#080b11] px-3">
+                <div className="flex h-9 items-center gap-2 border-b border-line bg-surface-2 px-3">
                   <span className="flex gap-1.5">
-                    <span className="size-2.5 rounded-full bg-[#ff5f57]" />
-                    <span className="size-2.5 rounded-full bg-[#febc2e]" />
-                    <span className="size-2.5 rounded-full bg-[#28c840]" />
+                    <span className="size-2.5 rounded-full bg-carmesi" />
+                    <span className="size-2.5 rounded-full bg-melocoton" />
+                    <span className="size-2.5 rounded-full bg-arena" />
                   </span>
-                  <span className="mx-auto rounded-md border border-white/[0.06] bg-white/[0.03] px-3 py-0.5 text-[11px] text-fg-3">panel.nexo4pymes.com</span>
+                  <span className="mx-auto rounded-md border border-line bg-surface px-3 py-0.5 text-[11px] text-fg-3">panel.nexo4pymes.com</span>
                 </div>
                 <ScaledPanel />
               </div>
@@ -868,15 +868,15 @@ function PiezasYaHechas() {
 function Como() {
   const t = useT();
   return (
-    <section id="como" className="scroll-mt-20 py-16 text-white sm:py-24">
+    <section id="como" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <Etiqueta>{t.kComo}</Etiqueta>
         <Titulo className="mt-5 max-w-2xl text-[30px] sm:text-[46px]">{t.comoH}</Titulo>
         <div className="dt-foco-grupo relative mt-12 grid gap-5 md:grid-cols-3" onPointerMove={moverFoco}>
           {t.como.map(([titulo, desc], i) => (
             <div key={i} data-revelar className="dt-foco dt-cristal relative rounded-[24px] p-6" style={{ "--d": `${i * 110}ms` } as CSSProperties}>
-              <div className="dt-numero-paso font-display text-[84px] leading-none font-semibold tracking-[-0.06em]">{i + 1}</div>
-              <div className="mt-2 font-display text-[22px] font-semibold tracking-[-0.025em]">{titulo}</div>
+              <div className="dt-numero-paso font-display text-[84px] leading-none font-semibold tracking-[-0.01em]">{i + 1}</div>
+              <div className="mt-2 font-display text-[22px] font-semibold tracking-[-0.01em]">{titulo}</div>
               <p className="mt-2 text-[15px] leading-relaxed text-fg-2">{desc}</p>
             </div>
           ))}
@@ -898,9 +898,9 @@ function Faq() {
           <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.faqH}</Titulo>
           <p className="mt-3 text-[17px] text-fg-2">{t.faqP}</p>
         </div>
-        <div data-revelar className="dt-cristal divide-y divide-white/[0.07] overflow-hidden rounded-[24px]">
+        <div data-revelar className="dt-cristal divide-y divide-line overflow-hidden rounded-[24px]">
           {t.faq.map(([q, a], i) => (
-            <div key={i} className={cn("transition-colors", open === i && "bg-white/[0.02]")}>
+            <div key={i} className={cn("transition-colors", open === i && "bg-surface-2/50")}>
               {/* ============================================================
                   LA RESPUESTA SE PINTA SIEMPRE, AUNQUE EL ACORDEÓN ESTÉ CERRADO
 
@@ -919,9 +919,9 @@ function Faq() {
                   SI ALGUIEN VUELVE A METER UN «&&» AQUÍ, rompe los datos
                   estructurados de la portada sin que se note. */}
               <h3>
-                <button onClick={() => setOpen(open === i ? null : i)} className={cn("flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[16px] font-semibold transition-colors", open === i && "text-[var(--dt-cian)]")} aria-expanded={open === i}>
+                <button onClick={() => setOpen(open === i ? null : i)} className={cn("flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[16px] font-semibold transition-colors", open === i && "text-carmesi")} aria-expanded={open === i}>
                   {q}
-                  <ChevronDown className={cn("size-5 shrink-0 text-fg-3 transition-transform", open === i && "rotate-180 text-[var(--dt-cian)]")} />
+                  <ChevronDown className={cn("size-5 shrink-0 text-fg-3 transition-transform", open === i && "rotate-180 text-carmesi")} />
                 </button>
               </h3>
               <motion.div initial={false} animate={{ height: open === i ? "auto" : 0, opacity: open === i ? 1 : 0 }} className="overflow-hidden" aria-hidden={open !== i}>
@@ -942,9 +942,9 @@ function Contacto() {
   const [f, setF] = useState({ nombre: "", empresa: "", tel: "", tecnicos: t.tecnicos[1] as string });
   const [sent, setSent] = useState(false);
   const msg = t.msg(f, sector.nombre);
-  const input = "h-12 w-full rounded-xl border border-white/12 bg-white/[0.04] px-3.5 text-[16px] text-white outline-none transition placeholder:text-white/35 focus:border-sun focus:shadow-[0_0_0_4px_rgb(44_245_176/0.12)]";
+  const input = "h-12 w-full rounded-xl border border-line bg-surface-2 px-3.5 text-[16px] text-fg outline-none transition placeholder:text-fg-3 focus:border-melocoton focus:shadow-[0_0_0_4px_rgb(253_186_116/0.14)]";
   return (
-    <section id="contacto" className="relative scroll-mt-20 overflow-hidden py-20 text-white sm:py-28">
+    <section id="contacto" data-theme="dark" className="relative scroll-mt-20 overflow-hidden bg-bg py-20 text-fg sm:py-28">
       <div className="dt-rejilla pointer-events-none absolute inset-0 opacity-60" />
       <div className="dt-luz-cierre pointer-events-none" />
       <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2">
@@ -955,7 +955,7 @@ function Contacto() {
           <div className="mt-8 grid gap-3 text-[15px]">
             {t.ctPuntos.map((x, i) => (
               <div key={x} data-revelar className="flex items-center gap-3" style={{ "--d": `${i * 90}ms` } as CSSProperties}>
-                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-sun text-[#00170f] shadow-[0_0_18px_-4px_var(--dt-menta)]">
+                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-carmesi text-crema">
                   <Check className="size-3.5" />
                 </span>
                 {x}
@@ -967,7 +967,7 @@ function Contacto() {
           <AnimatePresence mode="wait">
             {sent ? (
               <motion.div key="ok" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="grid place-items-center gap-3 py-12 text-center">
-                <span className="grid size-14 place-items-center rounded-full bg-sun text-[#00170f] shadow-[0_0_40px_-6px_var(--dt-menta)]">
+                <span className="grid size-14 place-items-center rounded-full bg-carmesi text-crema">
                   <BadgeCheck className="size-7" />
                 </span>
                 <div className="font-display text-2xl font-semibold">{t.gracias(f.nombre.split(" ")[0])}</div>
@@ -1011,7 +1011,7 @@ function Contacto() {
                   </label>
                 </div>
                 <div className="text-[13px] text-fg-2">
-                  {t.fSector}: <span className="text-white">{sector.nombre}</span> <span className="text-fg-3">{t.cambialo}</span>
+                  {t.fSector}: <span className="text-fg">{sector.nombre}</span> <span className="text-fg-3">{t.cambialo}</span>
                 </div>
                 <Magnetico className="mt-2 w-full" fuerza={0.12}>
                   <button type="submit" className="dt-boton dt-boton-primario h-12 w-full text-[15px]">

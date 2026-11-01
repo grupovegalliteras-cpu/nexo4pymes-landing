@@ -2,7 +2,7 @@ import { hashString, cn } from "@/lib/utils";
 import { trad, tradf } from "@/lib/t";
 
 /** "Foto" generada: una escena abstracta que evoca una foto de obra, con sello de cámara. */
-export function FakePhoto({ seed, label, stamp, tint = "#0a5d78", className, after }: { seed: string; label?: string; stamp?: string; tint?: string; className?: string; after?: boolean }) {
+export function FakePhoto({ seed, label, stamp, tint = "#be123c", className, after }: { seed: string; label?: string; stamp?: string; tint?: string; className?: string; after?: boolean }) {
   const h = hashString(seed);
   const a = (h % 360) / 360;
   const r = (n: number) => ((h >> n) & 255) / 255;
@@ -20,15 +20,15 @@ export function FakePhoto({ seed, label, stamp, tint = "#0a5d78", className, aft
         </defs>
         <rect width="160" height="120" fill={`url(#l${h})`} />
         <g filter={`url(#b${h})`} opacity={0.9}>
-          <rect x={10 + r(1) * 40} y={50 + r(3) * 20} width={70 + r(5) * 40} height={60} rx={6} fill={after ? "#f4f6f7" : "#8c979c"} />
+          <rect x={10 + r(1) * 40} y={50 + r(3) * 20} width={70 + r(5) * 40} height={60} rx={6} fill={after ? "#fff7ed" : "#8c979c"} />
           <circle cx={30 + r(7) * 100} cy={30 + r(9) * 30} r={18 + r(11) * 14} fill={tint} opacity={after ? 0.55 : 0.25} />
           <rect x={90 + r(13) * 40} y={10} width={16} height={90} fill={after ? "#ffffff" : "#5b666b"} opacity={0.6} />
           {!after && <circle cx={60 + r(15) * 60} cy={85 + r(17) * 15} r={14} fill="#4a3f2c" opacity={0.35 + a * 0.2} />}
         </g>
         <rect width="160" height="120" fill={after ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.08)"} />
       </svg>
-      {label && <span className="absolute top-1.5 left-1.5 rounded bg-black/55 px-1.5 py-0.5 text-[10px] font-medium text-white">{trad(label)}</span>}
-      {stamp && <span className="tabular absolute right-1.5 bottom-1.5 text-[9px] font-medium text-white/90 [text-shadow:0_1px_2px_rgb(0_0_0/0.6)]">{trad(stamp)}</span>}
+      {label && <span className="absolute top-1.5 left-1.5 rounded bg-black/55 px-1.5 py-0.5 text-[10px] font-medium text-crema">{trad(label)}</span>}
+      {stamp && <span className="tabular absolute right-1.5 bottom-1.5 text-[9px] font-medium text-crema/90 [text-shadow:0_1px_2px_rgb(0_0_0/0.6)]">{trad(stamp)}</span>}
     </div>
   );
 }

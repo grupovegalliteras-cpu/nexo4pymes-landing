@@ -59,7 +59,7 @@ export function AntesDespues() {
             <div key={i}>
               <p
                 className="font-mono text-[11px] tracking-[0.12em] uppercase"
-                style={{ color: i === 0 ? "var(--dt-fg-3, #8b94a7)" : "var(--dt-cian)" }}
+                style={{ color: i === 0 ? "var(--text-3)" : "var(--carmesi)" }}
               >
                 {lado.etiqueta}
               </p>
@@ -68,14 +68,14 @@ export function AntesDespues() {
           ))}
         </div>
 
-        <ul className="mt-8 border-t border-white/[0.08] lg:mt-6">
+        <ul className="mt-8 border-t border-line lg:mt-6">
           {d.antes.filas.map((antes, i) => {
             const despues = d.despues.filas[i];
             return (
               <li
                 key={antes.titulo}
                 data-revelar
-                className="grid gap-5 border-b border-white/[0.08] py-6 lg:grid-cols-2 lg:gap-10"
+                className="grid gap-5 border-b border-line py-6 lg:grid-cols-2 lg:gap-10"
                 style={{ "--d": `${i * 50}ms` } as CSSProperties}
               >
                 <div className="flex gap-3">
@@ -86,7 +86,7 @@ export function AntesDespues() {
                   </div>
                 </div>
                 <div className="flex gap-3">
-                  <Check className="mt-0.5 size-4 shrink-0" style={{ color: "var(--dt-cian)" }} aria-hidden />
+                  <Check className="mt-0.5 size-4 shrink-0" style={{ color: "var(--carmesi)" }} aria-hidden />
                   <div>
                     <p className="text-[16px] leading-snug font-semibold text-fg">{despues.titulo}</p>
                     <p className="mt-1.5 text-[14.5px] leading-relaxed text-fg-2">{despues.texto}</p>

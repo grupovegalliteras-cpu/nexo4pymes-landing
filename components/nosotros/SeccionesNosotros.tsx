@@ -31,29 +31,29 @@ export function HeroNosotros() {
   const lang = idiomaServidor();
   const { heroNosotros } = contenido(lang).nosotros;
   return (
-    <section id="top" className="relative overflow-hidden bg-[#041820] text-white">
+    <section id="top" data-theme="dark" className="relative overflow-hidden bg-noche text-crema">
       <div className="absolute inset-0">
         <Caustics />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(4_24_32/0.6),rgb(4_24_32/0.93))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(9_8_7/0.6),rgb(9_8_7/0.93))]" />
       </div>
       <div aria-hidden="true" className="to-bg absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent" />
 
       <div className="relative mx-auto max-w-[820px] px-5 pt-28 pb-16 text-center sm:px-6 sm:pt-32 sm:pb-20">
         <Reveal>
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.14em] text-white/75 uppercase">
+          <span className="inline-flex items-center gap-2 rounded-full border border-crema/15 bg-crema/5 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.14em] text-crema/75 uppercase">
             <span aria-hidden="true" className="anim-respirar bg-sun h-1.5 w-1.5 rounded-full" />
             {heroNosotros.categoria}
           </span>
         </Reveal>
 
         <Reveal retraso={0.06}>
-          <h1 className="font-display mt-5 text-[clamp(2.1rem,6.6vw,3.7rem)] leading-[1.07] font-semibold tracking-[-0.03em] text-balance">
-            {heroNosotros.titularA} <span className="text-[#8fd9ea]">{heroNosotros.titularB}</span>
+          <h1 className="font-display mt-5 text-[clamp(2.1rem,6.6vw,3.7rem)] leading-[1.07] font-semibold tracking-[-0.01em] text-balance">
+            {heroNosotros.titularA} <span className="text-carmesi">{heroNosotros.titularB}</span>
           </h1>
         </Reveal>
 
         <Reveal retraso={0.12}>
-          <p className="mx-auto mt-5 max-w-[56ch] text-[16.5px] leading-relaxed text-white/75 sm:text-[18px]">
+          <p className="mx-auto mt-5 max-w-[56ch] text-[16.5px] leading-relaxed text-crema/75 sm:text-[18px]">
             {heroNosotros.parrafo}
           </p>
         </Reveal>
@@ -64,13 +64,13 @@ export function HeroNosotros() {
               href={waLink("GENERAL", undefined, lang)}
               target="_blank"
               rel="noopener"
-              className="vibrar inline-flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-[#1faa59] px-6 text-[16px] font-semibold text-white transition hover:brightness-110 sm:h-12 sm:w-auto sm:text-[15px]"
+              className="vibrar inline-flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-carmesi px-6 text-[16px] font-semibold text-crema transition hover:bg-carmesi-oscuro sm:h-12 sm:w-auto sm:text-[15px]"
             >
               <MessageCircle className="size-5" />
               {heroNosotros.cta}
             </a>
           </div>
-          <p className="mt-4 font-mono text-[12px] tracking-[0.1em] text-white/55 uppercase">
+          <p className="mt-4 font-mono text-[12px] tracking-[0.1em] text-crema/55 uppercase">
             {heroNosotros.micro}
           </p>
         </Reveal>
@@ -200,7 +200,7 @@ export function EnfoquePyme() {
               <span
                 className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.1em] ${
                   columna.bien
-                    ? "border-brand/30 bg-brand/50 text-brand"
+                    ? "border-brand/30 bg-brand-soft text-brand"
                     : "border-line bg-surface-2 text-fg-2"
                 }`}
               >
@@ -213,7 +213,7 @@ export function EnfoquePyme() {
                   <li key={item} className="flex items-start gap-3">
                     <span
                       aria-hidden="true"
-                      className={`mt-2 h-1 w-1 shrink-0 rounded-full ${columna.bien ? "bg-brand" : "bg-surface-2"}`}
+                      className={`mt-2 h-1 w-1 shrink-0 rounded-full ${columna.bien ? "bg-brand" : "bg-arena"}`}
                     />
                     <span
                       className={`text-[14.5px] leading-snug ${columna.bien ? "text-fg" : "text-fg-2"}`}
@@ -236,12 +236,11 @@ export function CierreNosotros() {
   const lang = idiomaServidor();
   const { cierreNosotros } = contenido(lang).nosotros;
   return (
-    <section id="cierre" className="relative overflow-hidden px-5 py-14 text-fg sm:px-8 sm:py-28">
-      <div className=" absolute inset-0 opacity-50" aria-hidden="true" />
+    <section id="cierre" data-theme="dark" className="relative overflow-hidden bg-bg px-5 py-14 text-fg sm:px-8 sm:py-28">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[720px] -translate-x-1/2
-                   -translate-y-1/2 rounded-full bg-brand-soft blur-[120px]"
+                   -translate-y-1/2 rounded-full bg-carmesi/20 blur-[120px]"
       />
 
       <Reveal>
@@ -250,7 +249,7 @@ export function CierreNosotros() {
                      bg-surface p-8 text-center
                      shadow-e2 sm:p-14"
         >
-          <h2 className="text-[clamp(1.9rem,5vw,2.8rem)] font-semibold tracking-[-0.03em] text-fg">
+          <h2 className="text-[clamp(1.9rem,5vw,2.8rem)] font-semibold tracking-[-0.01em] text-fg">
             {cierreNosotros.titular}
           </h2>
           <p className="mx-auto mt-5 max-w-[52ch] text-[16.5px] leading-relaxed text-fg-2">

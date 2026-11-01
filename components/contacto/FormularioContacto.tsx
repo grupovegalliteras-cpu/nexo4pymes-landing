@@ -235,7 +235,7 @@ export function FormularioContacto() {
             href={waLink("GENERAL", undefined, lang)}
             target="_blank"
             rel="noreferrer"
-            className="flex h-12 items-center justify-center gap-2 rounded-xl bg-[#1faa59] px-5 text-[15px] font-semibold text-white transition hover:brightness-110"
+            className="flex h-12 items-center justify-center gap-2 rounded-xl bg-carmesi px-5 text-[15px] font-semibold text-crema transition hover:bg-carmesi-oscuro"
           >
             <MessageCircle className="size-5" /> {TXF[lang].whatsapp}
           </a>

@@ -188,12 +188,12 @@ export function SiteNav({
         <nav className="hidden items-center gap-0.5 lg:flex" aria-label={t.principal}>
           {enlaces
             ? enlaces.map(([l, h]) => (
-                <a key={h} href={h} className={cn("rounded-lg px-2.5 py-2 text-[14px] font-medium whitespace-nowrap transition-colors xl:px-3", onDark ? "text-white/75 hover:text-white" : "text-fg-2 hover:text-fg")}>
+                <a key={h} href={h} className={cn("rounded-lg px-2.5 py-2 text-[14px] font-medium whitespace-nowrap transition-colors xl:px-3", onDark ? "text-crema/75 hover:text-crema" : "text-fg-2 hover:text-fg")}>
                   {l}
                 </a>
               ))
             : t.links.map(([l, h]) => (
-                <Link key={h} href={h} className={cn("rounded-lg px-2.5 py-2 text-[14px] font-medium whitespace-nowrap transition-colors xl:px-3", onDark ? "text-white/75 hover:text-white" : "text-fg-2 hover:text-fg")}>
+                <Link key={h} href={h} className={cn("rounded-lg px-2.5 py-2 text-[14px] font-medium whitespace-nowrap transition-colors xl:px-3", onDark ? "text-crema/75 hover:text-crema" : "text-fg-2 hover:text-fg")}>
                   {l}
                 </Link>
               ))}
@@ -201,24 +201,24 @@ export function SiteNav({
         <div className="ml-auto flex items-center gap-2">
           {!enlaces && <SelectorIdioma tono={onDark ? "oscuro" : "tema"} className="hidden md:flex" />}
           {demo ? (
-            <a href={demo} className={cn("hidden h-9 items-center rounded-lg px-3.5 text-[14px] font-medium whitespace-nowrap xl:flex", onDark ? "text-white hover:bg-white/10" : "text-fg hover:bg-surface-2")}>
+            <a href={demo} className={cn("hidden h-9 items-center rounded-lg px-3.5 text-[14px] font-medium whitespace-nowrap xl:flex", onDark ? "text-crema hover:bg-crema/10" : "text-fg hover:bg-surface-2")}>
               {t.abrirDemo}
             </a>
           ) : (
-            <Link href="/demo" className={cn("hidden h-9 items-center rounded-lg px-3.5 text-[14px] font-medium whitespace-nowrap xl:flex", onDark ? "text-white hover:bg-white/10" : "text-fg hover:bg-surface-2")}>
+            <Link href="/demo" className={cn("hidden h-9 items-center rounded-lg px-3.5 text-[14px] font-medium whitespace-nowrap xl:flex", onDark ? "text-crema hover:bg-crema/10" : "text-fg hover:bg-surface-2")}>
               {t.abrirDemo}
             </Link>
           )}
           {cta ? (
-            <a href={cta.href} target="_blank" rel="noreferrer" className="flex h-9 items-center rounded-lg bg-sun px-3.5 text-[14px] font-semibold whitespace-nowrap text-[#1d1300] shadow-[inset_0_1px_0_rgb(255_255_255/0.3)] hover:brightness-105">
+            <a href={cta.href} target="_blank" rel="noreferrer" className="flex h-9 items-center rounded-lg bg-carmesi px-3.5 text-[14px] font-semibold whitespace-nowrap text-crema transition-colors hover:bg-carmesi-oscuro">
               {cta.texto}
             </a>
           ) : (
-            <Link href="/#contacto" className="flex h-9 items-center rounded-lg bg-sun px-3.5 text-[14px] font-semibold whitespace-nowrap text-[#1d1300] shadow-[inset_0_1px_0_rgb(255_255_255/0.3)] hover:brightness-105">
+            <Link href="/#contacto" className="flex h-9 items-center rounded-lg bg-carmesi px-3.5 text-[14px] font-semibold whitespace-nowrap text-crema transition-colors hover:bg-carmesi-oscuro">
               {t.pideDemo}
             </Link>
           )}
-          <button onClick={() => setOpen(true)} className={cn("grid size-9 place-items-center rounded-lg lg:hidden", onDark ? "text-white" : "text-fg")} aria-label={t.abrirMenu}>
+          <button onClick={() => setOpen(true)} className={cn("grid size-9 place-items-center rounded-lg lg:hidden", onDark ? "text-crema" : "text-fg")} aria-label={t.abrirMenu}>
             <Menu className="size-5" />
           </button>
         </div>
@@ -282,7 +282,7 @@ export function SiteNav({
             </nav>
             <div className="grid shrink-0 gap-3 pt-3">
               {!enlaces && <SelectorIdioma tono="tema" largo className="mx-auto" />}
-              <a href={cta?.href ?? whatsappLink(waHola(lang))} target="_blank" rel="noreferrer" className="vibrar flex h-14 items-center justify-center gap-2 rounded-2xl bg-[#1faa59] text-[16px] font-semibold text-white">
+              <a href={cta?.href ?? whatsappLink(waHola(lang))} target="_blank" rel="noreferrer" className="vibrar flex h-14 items-center justify-center gap-2 rounded-2xl bg-carmesi text-[16px] font-semibold text-crema">
                 <MessageCircle className="size-5" /> {t.escribenos}
               </a>
               <div className="text-center text-[13px] text-fg-3">
@@ -350,7 +350,7 @@ export function ContactDock({ demoHref = "/demo?tour=1", mensaje }: { demoHref?:
                   <PlayCircle className="size-5" /> {t.verDemo}
                 </Link>
               )}
-              <a href={whatsappLink(msg)} target="_blank" rel="noreferrer" className="vibrar flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-[#1faa59] text-[15px] font-semibold text-white">
+              <a href={whatsappLink(msg)} target="_blank" rel="noreferrer" className="vibrar flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-carmesi text-[15px] font-semibold text-crema">
                 <MessageCircle className="size-5" /> WhatsApp
               </a>
             </div>
@@ -363,7 +363,7 @@ export function ContactDock({ demoHref = "/demo?tour=1", mensaje }: { demoHref?:
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            className="vibrar fixed right-6 bottom-6 z-40 hidden h-12 items-center gap-2 rounded-full bg-[#1faa59] pr-5 pl-4 text-[15px] font-semibold text-white shadow-e3 transition hover:brightness-110 lg:flex"
+            className="vibrar fixed right-6 bottom-6 z-40 hidden h-12 items-center gap-2 rounded-full bg-carmesi pr-5 pl-4 text-[15px] font-semibold text-crema shadow-e3 transition hover:bg-carmesi-oscuro lg:flex"
           >
             <MessageCircle className="size-5" /> {t.hablamos}
           </motion.a>
@@ -377,7 +377,7 @@ export function SiteFooter() {
   const lang = useIdioma();
   const t = T[lang];
   return (
-    <footer className="border-t border-line bg-surface pb-20 lg:pb-0">
+    <footer data-theme="dark" className="border-t border-line bg-bg pb-20 text-fg lg:pb-0">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
         <div>
           <Logo className="h-7 text-[17px]" />
@@ -385,7 +385,7 @@ export function SiteFooter() {
             {t.pie} {CONTACTO.ciudad}.
           </p>
           <a href={whatsappLink(waHola(lang))} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 rounded-lg border border-line px-3 py-2 text-[14px] font-medium hover:bg-surface-2">
-            <MessageCircle className="size-4 text-ok" /> WhatsApp {CONTACTO.whatsappVisible}
+            <MessageCircle className="size-4 text-melocoton" /> WhatsApp {CONTACTO.whatsappVisible}
           </a>
           <SelectorIdioma tono="tema" className="mt-4 w-fit" />
         </div>

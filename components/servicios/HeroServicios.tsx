@@ -48,10 +48,10 @@ export function HeroServicios() {
   const palabrasA = heroServicios.titularA.split(" ").length;
 
   return (
-    <section id="top" className="relative overflow-hidden bg-[#041820] text-white">
+    <section id="top" data-theme="dark" className="relative overflow-hidden bg-noche text-crema">
       <div className="absolute inset-0">
         <Caustics />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(4_24_32/0.55),rgb(4_24_32/0.92))] lg:bg-[linear-gradient(100deg,rgb(4_24_32/0.94),rgb(4_24_32/0.45))]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(9_8_7/0.55),rgb(9_8_7/0.92))] lg:bg-[linear-gradient(100deg,rgb(9_8_7/0.94),rgb(9_8_7/0.45))]" />
       </div>
       {/* Degradado al fondo de la página: sin esto el hero acaba en una
           línea recta de color y se ve el corte. */}
@@ -61,16 +61,16 @@ export function HeroServicios() {
         <motion.div {...entrada(0)}>
           <Link
             href={heroServicios.volver.href}
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 font-mono text-[11px] tracking-[0.14em] text-white/75 uppercase transition-colors hover:border-white/35 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-full border border-crema/15 bg-crema/5 px-4 py-2 font-mono text-[11px] tracking-[0.14em] text-crema/75 uppercase transition-colors hover:border-crema/35 hover:text-crema"
           >
             {heroServicios.volver.texto}
           </Link>
         </motion.div>
 
-        <h1 className="font-display mt-6 text-[clamp(2.1rem,6vw,4.2rem)] leading-[1.06] font-semibold tracking-[-0.03em]">
+        <h1 className="font-display mt-6 text-[clamp(2.1rem,6vw,4.2rem)] leading-[1.06] font-semibold tracking-[-0.01em]">
           <TextoPorPalabras texto={heroServicios.titularA} retraso={0.16} />
           <motion.span
-            className="block text-[#8fd9ea]"
+            className="block text-carmesi"
             initial={reducido ? { opacity: 0 } : { opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -83,7 +83,7 @@ export function HeroServicios() {
           </motion.span>
         </h1>
 
-        <motion.p {...entrada(0.55)} className="mt-6 max-w-[62ch] text-[16px] leading-relaxed text-white/75 sm:text-[18.5px]">
+        <motion.p {...entrada(0.55)} className="mt-6 max-w-[62ch] text-[16px] leading-relaxed text-crema/75 sm:text-[18.5px]">
           {heroServicios.parrafo}
         </motion.p>
 
@@ -92,7 +92,7 @@ export function HeroServicios() {
             href={waLink("GENERAL", undefined, lang)}
             target="_blank"
             rel="noopener"
-            className="vibrar inline-flex h-13 items-center justify-center gap-2 rounded-xl bg-[#1faa59] px-6 text-[16px] font-semibold text-white transition hover:brightness-110 sm:h-12 sm:text-[15px]"
+            className="vibrar inline-flex h-13 items-center justify-center gap-2 rounded-xl bg-carmesi px-6 text-[16px] font-semibold text-crema transition hover:bg-carmesi-oscuro sm:h-12 sm:text-[15px]"
           >
             <MessageCircle className="size-5" />
             {heroServicios.cta}
@@ -102,13 +102,13 @@ export function HeroServicios() {
         <motion.nav
           {...entrada(0.74)}
           aria-label={lang === "de" ? "Inhalt" : lang === "en" ? "Contents" : "Índice"}
-          className="mt-10 flex flex-wrap gap-2 border-t border-white/12 pt-8"
+          className="mt-10 flex flex-wrap gap-2 border-t border-crema/12 pt-8"
         >
           {heroServicios.indice.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="rounded-full border border-white/12 bg-white/5 px-3.5 py-1.5 text-[13px] text-white/70 transition-colors duration-200 hover:border-white/30 hover:text-white"
+              className="rounded-full border border-crema/12 bg-crema/5 px-3.5 py-1.5 text-[13px] text-crema/70 transition-colors duration-200 hover:border-crema/30 hover:text-crema"
             >
               {item.texto}
             </a>

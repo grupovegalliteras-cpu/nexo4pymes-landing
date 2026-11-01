@@ -87,22 +87,22 @@ export function ContactoPage() {
       <SiteNav dark enlaces={t.nav} cta={{ texto: t.whatsapp.split(" ").slice(-1)[0] === "WhatsApp" ? "WhatsApp" : t.whatsapp, href: wa }} />
 
       {/* ---------- Hero ---------- */}
-      <section className="relative overflow-hidden bg-[#041820] text-white">
+      <section data-theme="dark" className="relative overflow-hidden bg-noche text-crema">
         <div className="absolute inset-0">
-          <Caustics deep="#041820" mid="#0b3a48" light="#3db1d3" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(4_24_32/0.6),rgb(4_24_32/0.92))]" />
+          <Caustics />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(9_8_7/0.6),rgb(9_8_7/0.92))]" />
         </div>
         <div className="relative mx-auto max-w-3xl px-5 pt-24 pb-14 text-center sm:px-6 sm:pt-28 sm:pb-20">
-          <div className="fade-up inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[13px] text-white/80 backdrop-blur">
-            <span aria-hidden="true" className="size-1.5 rounded-full bg-[#25d366]" />
+          <div className="fade-up inline-flex items-center gap-2 rounded-full border border-crema/15 bg-crema/5 px-3 py-1 text-[13px] text-crema/80 backdrop-blur">
+            <span aria-hidden="true" className="size-1.5 rounded-full bg-melocoton" />
             {heroContacto.categoria}
           </div>
 
           <h1 className="fade-up mt-5 font-display text-[34px] leading-[1.05] font-semibold tracking-tight min-[400px]:text-[40px] sm:text-[54px]" style={{ animationDelay: "80ms" }}>
-            {heroContacto.titularA} <span className="text-[#8fd9ea]">{heroContacto.titularB}</span>
+            {heroContacto.titularA} <span className="text-carmesi">{heroContacto.titularB}</span>
           </h1>
 
-          <p className="fade-up mx-auto mt-4 max-w-xl text-[16px] leading-relaxed text-white/75 sm:text-[17px]" style={{ animationDelay: "0.3s" }}>
+          <p className="fade-up mx-auto mt-4 max-w-xl text-[16px] leading-relaxed text-crema/75 sm:text-[17px]" style={{ animationDelay: "0.3s" }}>
             {heroContacto.parrafo}
           </p>
 
@@ -116,26 +116,26 @@ export function ContactoPage() {
               href={wa}
               target="_blank"
               rel="noreferrer"
-              className="vibrar flex h-13 items-center justify-center gap-2 rounded-xl bg-[#1faa59] px-5 text-[16px] font-semibold text-white transition hover:brightness-110 sm:h-12 sm:text-[15px]"
+              className="vibrar flex h-13 items-center justify-center gap-2 rounded-xl bg-carmesi px-5 text-[16px] font-semibold text-crema transition hover:bg-carmesi-oscuro sm:h-12 sm:text-[15px]"
             >
               <MessageCircle className="size-5" /> {t.whatsapp}
             </a>
             <a
               href="#agendar"
-              className="flex h-13 items-center justify-center gap-2 rounded-xl border border-white/20 px-5 text-[16px] font-medium text-white transition hover:bg-white/10 sm:h-12 sm:text-[15px]"
+              className="flex h-13 items-center justify-center gap-2 rounded-xl border border-crema/20 px-5 text-[16px] font-medium text-crema transition hover:bg-crema/10 sm:h-12 sm:text-[15px]"
             >
               <CalendarClock className="size-5" /> {t.agendar}
             </a>
           </div>
 
-          <p className="fade-up mt-4 text-[13.5px] text-white/55" style={{ animationDelay: "0.55s" }}>
+          <p className="fade-up mt-4 text-[13.5px] text-crema/55" style={{ animationDelay: "0.55s" }}>
             {marca.whatsappVisible} · {t.nosotros}
           </p>
 
-          <ul className="fade-up mt-7 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[14px] text-white/70" style={{ animationDelay: "0.65s" }}>
+          <ul className="fade-up mt-7 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[14px] text-crema/70" style={{ animationDelay: "0.65s" }}>
             {t.garantias.map((g) => (
               <li key={g} className="flex items-center gap-1.5">
-                <Check className="size-4 text-[#25d366]" /> {g}
+                <Check className="size-4 text-melocoton" /> {g}
               </li>
             ))}
           </ul>
@@ -147,14 +147,14 @@ export function ContactoPage() {
         <Stagger as="ul" className="mx-auto grid max-w-7xl gap-x-6 gap-y-5 px-5 py-8 sm:px-6 lg:grid-cols-3">
           {viasContacto.map((via, i) => (
             <ItemStagger as="li" key={via.titulo} className="flex gap-3">
-              <span className={cn("grid size-10 shrink-0 place-items-center rounded-xl", i === 0 ? "bg-sun-soft text-sun" : i === 1 ? "bg-brand-soft text-brand" : "bg-ok-soft text-ok")}>
+              <span className={cn("grid size-10 shrink-0 place-items-center rounded-xl", "bg-brand-soft text-brand")}>
                 {i === 0 ? <CalendarClock className="size-5" /> : i === 1 ? <MessageCircle className="size-5" /> : <Mail className="size-5" />}
               </span>
               <span className="min-w-0">
                 <span className="flex flex-wrap items-center gap-2">
                   <span className="text-[15px] font-semibold">{via.titulo}</span>
                   {via.destacado && (
-                    <span className="rounded bg-sun-soft px-1.5 py-0.5 text-[11px] font-semibold text-warn">{t.rapido}</span>
+                    <span className="rounded bg-brand-soft px-1.5 py-0.5 text-[11px] font-semibold text-brand">{t.rapido}</span>
                   )}
                 </span>
                 <span className="mt-0.5 block text-[14px] leading-relaxed text-fg-2">{via.texto}</span>

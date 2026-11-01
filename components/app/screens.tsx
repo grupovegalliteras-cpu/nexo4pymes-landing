@@ -73,9 +73,9 @@ function BigButton({ children, onClick, variant = "primary", className, disabled
       className={cn(
         "flex h-[52px] w-full items-center justify-center gap-2 rounded-2xl text-[16px] font-semibold disabled:opacity-40",
         variant === "primary" && "bg-brand text-brand-ink",
-        variant === "sun" && "bg-sun text-[#1d1300]",
+        variant === "sun" && "bg-carmesi text-crema",
         variant === "secondary" && "bg-surface text-fg shadow-e1",
-        variant === "ok" && "bg-ok text-white",
+        variant === "ok" && "bg-ok text-crema",
         variant === "bad" && "bg-bad-soft text-bad",
         className,
       )}
@@ -230,7 +230,7 @@ function Hoy() {
               const done = j.estado === "finalizado" || j.estado === "facturado";
               return (
                 <motion.button layout initial={{ opacity: 0, height: 0, backgroundColor: "var(--sun-soft)" }} animate={{ opacity: 1, height: "auto", backgroundColor: "rgba(0,0,0,0)" }} transition={{ duration: 0.6 }} key={j.id} onClick={() => push({ screen: "trabajo", params: { id: j.id } })} className="flex w-full items-center gap-3 border-b border-line/70 px-3.5 py-3 text-left last:border-0">
-                  <span className={cn("grid size-7 shrink-0 place-items-center rounded-full border-2", done ? "border-ok bg-ok text-white" : j.estado === "en-curso" ? "border-brand" : "border-line-strong")}>
+                  <span className={cn("grid size-7 shrink-0 place-items-center rounded-full border-2", done ? "border-ok bg-ok text-crema" : j.estado === "en-curso" ? "border-brand" : "border-line-strong")}>
                     {done ? <Check className="size-3.5" /> : j.estado === "en-curso" ? <span className="size-2.5 animate-pulse rounded-full bg-brand" /> : null}
                   </span>
                   <span className="min-w-0 flex-1">
@@ -286,7 +286,7 @@ function Ruta() {
       <Group className="mt-4">
         {stops.map((s, i) => (
           <div key={s.job.id} className="flex items-center gap-3 border-b border-line/70 px-3.5 py-3 last:border-0">
-            <span className="grid size-7 place-items-center rounded-full text-[12px] font-bold text-white" style={{ background: me.color, opacity: s.job.estado === "finalizado" ? 0.4 : 1 }}>
+            <span className="grid size-7 place-items-center rounded-full text-[12px] font-bold text-crema" style={{ background: me.color, opacity: s.job.estado === "finalizado" ? 0.4 : 1 }}>
               {i + 1}
             </span>
             <button onClick={() => push({ screen: "trabajo", params: { id: s.job.id } })} className="min-w-0 flex-1 text-left">
@@ -479,20 +479,20 @@ function Qr() {
   return (
     <div className="pb-6">
       <AppHeader title={trad("Escanear código")} />
-      <div className="relative mx-4 aspect-square overflow-hidden rounded-3xl bg-[#0b1115]">
+      <div className="relative mx-4 aspect-square overflow-hidden rounded-3xl bg-[#090807]">
         <FakePhoto seed="qr-scene" className="absolute inset-0 rounded-none opacity-60" tint={sector.color} />
-        <div className="absolute inset-[18%] rounded-3xl border-[3px] border-white/80" />
+        <div className="absolute inset-[18%] rounded-3xl border-[3px] border-crema/80" />
         {!found && <motion.div className="absolute inset-x-[18%] h-0.5 bg-sun shadow-[0_0_12px_var(--sun)]" initial={{ top: "18%" }} animate={{ top: "82%" }} transition={{ duration: 1.1, repeat: Infinity, repeatType: "reverse" }} />}
         <AnimatePresence>
           {found && (
             <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="absolute inset-0 grid place-items-center">
-              <span className="grid size-16 place-items-center rounded-full bg-ok text-white">
+              <span className="grid size-16 place-items-center rounded-full bg-ok text-crema">
                 <Check className="size-8" />
               </span>
             </motion.div>
           )}
         </AnimatePresence>
-        <div className="absolute inset-x-0 bottom-3 text-center text-[13px] text-white/80">{found ? tradf("Código {0}", inst.codigo) : trad("Apunta al código del equipo")}</div>
+        <div className="absolute inset-x-0 bottom-3 text-center text-[13px] text-crema/80">{found ? tradf("Código {0}", inst.codigo) : trad("Apunta al código del equipo")}</div>
       </div>
       <AnimatePresence>
         {found && (
@@ -579,7 +579,7 @@ function Gasto() {
         )}
         {step === 3 && (
           <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="grid place-items-center gap-3 py-16 text-center">
-            <span className="grid size-16 place-items-center rounded-full bg-ok text-white">
+            <span className="grid size-16 place-items-center rounded-full bg-ok text-crema">
               <Check className="size-8" />
             </span>
             <div className="text-[17px] font-semibold">{trad("Gasto enviado a la oficina")}</div>
@@ -638,9 +638,9 @@ function Docs() {
             <div className="grid gap-2 rounded-xl border border-line bg-white p-4 text-[11px] text-[#333]">
               <div className="font-semibold">{trad("Documento de la gestoría")}</div>
               {Array.from({ length: 9 }).map((_, i) => (
-                <div key={i} className="h-2 rounded bg-[#eef2f4]" style={{ width: `${55 + ((i * 37) % 40)}%` }} />
+                <div key={i} className="h-2 rounded bg-[#fcefe1]" style={{ width: `${55 + ((i * 37) % 40)}%` }} />
               ))}
-              <div className="mt-2 text-[10px] text-[#7a8893]">{trad("Vista previa de ejemplo. Solo tú puedes ver este documento.")}</div>
+              <div className="mt-2 text-[10px] text-[#5f5a58]">{trad("Vista previa de ejemplo. Solo tú puedes ver este documento.")}</div>
             </div>
             {p && (
               <div className="mt-3 flex items-center gap-2 text-[13px] text-ok">
@@ -857,7 +857,7 @@ function Incidencia({ params }: P) {
     return (
       <div className="grid min-h-full place-items-center p-6 text-center">
         <div className="grid place-items-center gap-3">
-          <span className="grid size-16 place-items-center rounded-full bg-ok text-white">
+          <span className="grid size-16 place-items-center rounded-full bg-ok text-crema">
             <Check className="size-8" />
           </span>
           <div className="text-[17px] font-semibold">{trad("Enviado a la oficina")}</div>
@@ -947,7 +947,7 @@ function Mas() {
       </div>
       <Group>
         {items.map(([s, icon, label, tone, badge]) => (
-          <Row key={s} icon={icon} tone={tone} title={trad(label)} onClick={() => push({ screen: s })} right={badge ? <span className="flex items-center gap-2"><span className="grid h-5 min-w-5 place-items-center rounded-full bg-bad px-1.5 text-[11px] font-bold text-white">{trad(badge)}</span><ChevronRight className="size-4 text-fg-3" /></span> : undefined} />
+          <Row key={s} icon={icon} tone={tone} title={trad(label)} onClick={() => push({ screen: s })} right={badge ? <span className="flex items-center gap-2"><span className="grid h-5 min-w-5 place-items-center rounded-full bg-bad px-1.5 text-[11px] font-bold text-crema">{trad(badge)}</span><ChevronRight className="size-4 text-fg-3" /></span> : undefined} />
         ))}
       </Group>
       <Group title={trad("Demostración")} className="mt-5">

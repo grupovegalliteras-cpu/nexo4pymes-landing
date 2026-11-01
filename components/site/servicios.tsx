@@ -68,10 +68,10 @@ export function Servicios() {
                     <motion.div key={m.id} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 3) * 0.05 }}>
                       <Link href={landing ? `/modulos/${landing}` : `/panel/${m.id}`} className={cn("group flex h-full flex-col rounded-2xl border bg-surface p-5 transition hover:-translate-y-0.5 hover:shadow-e2", m.destacado ? "border-brand/30" : "border-line")}>
                         <div className="flex items-center justify-between">
-                          <span className={cn("grid size-10 place-items-center rounded-xl", m.id === "central-avisos" ? "bg-sun text-[#1d1300]" : "bg-brand-soft text-brand")}>
+                          <span className={cn("grid size-10 place-items-center rounded-xl", m.id === "central-avisos" ? "bg-carmesi text-crema" : "bg-brand-soft text-brand")}>
                             <Icon name={m.icono} className="size-5" />
                           </span>
-                          {showEstado && <span className={cn("rounded-md px-2 py-0.5 text-[11px] font-medium", m.estado === "disponible" ? "bg-ok-soft text-ok" : "bg-ai-soft text-ai")}>{m.estado === "disponible" ? tx.disponible : tx.aMedida}</span>}
+                          {showEstado && <span className={cn("rounded-md px-2 py-0.5 text-[11px] font-medium", m.estado === "disponible" ? "bg-brand-soft text-brand" : "bg-ai-soft text-ai")}>{m.estado === "disponible" ? tx.disponible : tx.aMedida}</span>}
                         </div>
                         <div className="mt-4 text-[16px] font-semibold">{m.nombre}</div>
                         <p className="mt-1 flex-1 text-[14px] leading-relaxed text-fg-2">{m.descripcion}</p>

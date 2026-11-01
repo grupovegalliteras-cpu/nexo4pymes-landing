@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
 import Link from "@/components/i18n/Enlace";
-import { Geist, Bricolage_Grotesque } from "next/font/google";
+import { Atkinson_Hyperlegible, Barlow_Semi_Condensed } from "next/font/google";
 import "./(demo)/globals.css";
 
 /* 404 de todo el sitio: la web tiene dos plantillas raíz (la demo y los apartados),
    así que Next necesita esta página propia para las direcciones que no existen. */
 
-const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
-const bricolage = Bricolage_Grotesque({ variable: "--font-bricolage", subsets: ["latin"] });
+const titular = Barlow_Semi_Condensed({ subsets: ["latin"], weight: ["600"], variable: "--fuente-titular" });
+const texto = Atkinson_Hyperlegible({ subsets: ["latin"], weight: ["400", "700"], variable: "--fuente-texto" });
 
 export const metadata: Metadata = { title: "Página no encontrada | Nexo4Pymes", robots: { index: false } };
 
 export default function GlobalNotFound() {
   return (
-    <html lang="es" data-theme="dark" className={`${geist.variable} ${bricolage.variable} antialiased`}>
+    <html lang="es" data-theme="dark" className={`${titular.variable} ${texto.variable} antialiased`}>
       <body>
         <main className="grid min-h-dvh place-items-center bg-bg p-6 text-center text-fg">
           <div>
@@ -25,7 +25,7 @@ export default function GlobalNotFound() {
               <Link href="/" className="rounded-lg border border-line px-4 py-2 text-sm font-medium">
                 Inicio
               </Link>
-              <Link href="/demo?tour=1" className="rounded-lg bg-brand px-4 py-2 text-sm font-medium text-brand-ink">
+              <Link href="/demo?tour=1" className="rounded-lg bg-carmesi px-4 py-2 text-sm font-medium text-crema hover:bg-carmesi-oscuro">
                 Ver la demo en vivo
               </Link>
               <Link href="/en" className="rounded-lg border border-line px-4 py-2 text-sm font-medium">

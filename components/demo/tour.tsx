@@ -310,7 +310,7 @@ function TourProgress({ t }: { t: ReturnType<typeof useTour> }) {
     return () => cancelAnimationFrame(raf);
   }, [t]);
   return (
-    <div className="h-1 bg-white/10">
+    <div className="h-1 bg-crema/10">
       <div ref={bar} className="h-full bg-sun" />
     </div>
   );
@@ -391,19 +391,19 @@ function TourCardGrande({ t }: { t: ReturnType<typeof useTour> }) {
   const { tx, titulo, texto } = useTxTour(t);
   const end = t.step >= STEPS.length;
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="pointer-events-auto w-[440px] overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a22]/95 text-white shadow-e3 backdrop-blur-xl" role="region" aria-label={tx.region}>
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="pointer-events-auto w-[440px] overflow-hidden rounded-2xl border border-crema/10 bg-[#1c2129]/95 text-crema shadow-e3 backdrop-blur-xl" role="region" aria-label={tx.region}>
       {!end && <TourProgress t={t} />}
       <div className="p-4">
-        <div className="flex items-center justify-between text-xs text-white/50">
+        <div className="flex items-center justify-between text-xs text-crema/50">
           <span className="tabular">{end ? tx.fin : tx.paso(t.step + 1, STEPS.length)}</span>
-          <button onClick={t.stop} className="grid size-6 place-items-center rounded-md hover:bg-white/10" aria-label={tx.cerrar}>
+          <button onClick={t.stop} className="grid size-6 place-items-center rounded-md hover:bg-crema/10" aria-label={tx.cerrar}>
             <X className="size-3.5" />
           </button>
         </div>
         <AnimatePresence mode="wait">
           <motion.div key={t.step} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.25 }}>
             <div className="mt-1 font-display text-xl font-semibold">{end ? tx.finTitulo : titulo}</div>
-            <p className="mt-1.5 text-[14px] leading-relaxed text-white/75">
+            <p className="mt-1.5 text-[14px] leading-relaxed text-crema/75">
               {end ? tx.finTexto : texto}
             </p>
           </motion.div>
@@ -411,26 +411,26 @@ function TourCardGrande({ t }: { t: ReturnType<typeof useTour> }) {
         <div className="mt-4 flex items-center gap-2">
           {end ? (
             <>
-              <button onClick={t.start} className="h-10 rounded-lg px-3 text-[13px] text-white/80 hover:bg-white/10">
+              <button onClick={t.start} className="h-10 rounded-lg px-3 text-[13px] text-crema/80 hover:bg-crema/10">
                 {tx.otraVez}
               </button>
-              <a href={whatsappLink(tx.wa)} target="_blank" rel="noreferrer" className="ml-auto flex h-10 items-center gap-2 rounded-lg bg-sun px-4 text-[14px] font-semibold text-[#1d1300]">
+              <a href={whatsappLink(tx.wa)} target="_blank" rel="noreferrer" className="ml-auto flex h-10 items-center gap-2 rounded-lg bg-carmesi px-4 text-[14px] font-semibold text-crema">
                 <MessageCircle className="size-4" /> {tx.quiero}
               </a>
             </>
           ) : (
             <>
-              <button onClick={() => t.go(t.step - 1)} disabled={t.step === 0} className="grid size-9 place-items-center rounded-lg hover:bg-white/10 disabled:opacity-30" aria-label={tx.anterior}>
+              <button onClick={() => t.go(t.step - 1)} disabled={t.step === 0} className="grid size-9 place-items-center rounded-lg hover:bg-crema/10 disabled:opacity-30" aria-label={tx.anterior}>
                 <ChevronLeft className="size-4" />
               </button>
-              <button onClick={() => t.setPlaying(!t.playing)} className="flex h-9 items-center gap-1.5 rounded-lg bg-white/10 px-3 text-[13px] font-medium hover:bg-white/15" aria-label={t.playing ? tx.pausar : tx.reanudar}>
+              <button onClick={() => t.setPlaying(!t.playing)} className="flex h-9 items-center gap-1.5 rounded-lg bg-crema/10 px-3 text-[13px] font-medium hover:bg-crema/15" aria-label={t.playing ? tx.pausar : tx.reanudar}>
                 {t.playing ? <Pause className="size-3.5" /> : <Play className="size-3.5" />}
                 {t.playing ? tx.pausar : tx.seguir}
               </button>
-              <button onClick={() => t.go(t.step + 1)} className="flex h-9 items-center gap-1 rounded-lg px-3 text-[13px] font-medium hover:bg-white/10" aria-label={tx.siguientePaso}>
+              <button onClick={() => t.go(t.step + 1)} className="flex h-9 items-center gap-1 rounded-lg px-3 text-[13px] font-medium hover:bg-crema/10" aria-label={tx.siguientePaso}>
                 {tx.siguiente} <ChevronRight className="size-4" />
               </button>
-              <span className="ml-auto text-[11px] text-white/40">{tx.espacio}</span>
+              <span className="ml-auto text-[11px] text-crema/40">{tx.espacio}</span>
             </>
           )}
         </div>
@@ -447,19 +447,19 @@ function TourCardCompact({ t }: { t: ReturnType<typeof useTour> }) {
   const lado = s ? (s.mobile ?? (s.side === "app" ? "app" : "panel")) : "panel";
   const btn = "grid size-9 shrink-0 place-items-center rounded-lg";
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="overflow-hidden rounded-2xl border border-white/10 bg-[#0c1a22] text-white shadow-e3" role="region" aria-label={tx.region}>
+    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="overflow-hidden rounded-2xl border border-crema/10 bg-[#1c2129] text-crema shadow-e3" role="region" aria-label={tx.region}>
       {!end && <TourProgress t={t} />}
       <div className="px-3 pt-2 pb-3">
         <div className="flex items-center gap-2">
           {end ? (
-            <span className="text-[12px] text-white/50">Fin del recorrido</span>
+            <span className="text-[12px] text-crema/50">Fin del recorrido</span>
           ) : (
             <>
-              <span className={cn("flex h-6 items-center gap-1 rounded-md px-1.5 text-[11px] font-semibold", lado === "app" ? "bg-sun/15 text-sun" : "bg-white/10 text-white/80")}>
+              <span className={cn("flex h-6 items-center gap-1 rounded-md px-1.5 text-[11px] font-semibold", lado === "app" ? "bg-sun/15 text-sun" : "bg-crema/10 text-crema/80")}>
                 {lado === "app" ? <Smartphone className="size-3" /> : <Monitor className="size-3" />}
                 {lado === "app" ? tx.movil : tx.oficina}
               </span>
-              <span className="text-[12px] text-white/45 tabular">
+              <span className="text-[12px] text-crema/45 tabular">
                 {t.step + 1}/{STEPS.length}
               </span>
             </>
@@ -467,30 +467,30 @@ function TourCardCompact({ t }: { t: ReturnType<typeof useTour> }) {
           <div className="ml-auto flex items-center gap-1">
             {!end && (
               <>
-                <button onClick={() => t.go(t.step - 1)} disabled={t.step === 0} className={cn(btn, "bg-white/5 disabled:opacity-30")} aria-label={tx.anterior}>
+                <button onClick={() => t.go(t.step - 1)} disabled={t.step === 0} className={cn(btn, "bg-crema/5 disabled:opacity-30")} aria-label={tx.anterior}>
                   <ChevronLeft className="size-4" />
                 </button>
-                <button onClick={() => t.setPlaying(!t.playing)} className={cn(btn, "bg-white/10")} aria-label={t.playing ? tx.pausar : tx.reanudar}>
+                <button onClick={() => t.setPlaying(!t.playing)} className={cn(btn, "bg-crema/10")} aria-label={t.playing ? tx.pausar : tx.reanudar}>
                   {t.playing ? <Pause className="size-4" /> : <Play className="size-4" />}
                 </button>
-                <button onClick={() => t.go(t.step + 1)} className={cn(btn, "bg-white text-[#0c1a22]")} aria-label={tx.siguientePaso}>
+                <button onClick={() => t.go(t.step + 1)} className={cn(btn, "bg-white text-[#1c2129]")} aria-label={tx.siguientePaso}>
                   <ChevronRight className="size-4" />
                 </button>
               </>
             )}
-            <button onClick={t.stop} className={cn(btn, "text-white/60")} aria-label={tx.cerrar}>
+            <button onClick={t.stop} className={cn(btn, "text-crema/60")} aria-label={tx.cerrar}>
               <X className="size-4" />
             </button>
           </div>
         </div>
         <div className="mt-1.5 font-display text-[17px] leading-tight font-semibold">{end ? tx.finTitulo : titulo}</div>
-        <p className="mt-1 line-clamp-3 text-[13px] leading-snug text-white/70">{end ? tx.finCorto : texto}</p>
+        <p className="mt-1 line-clamp-3 text-[13px] leading-snug text-crema/70">{end ? tx.finCorto : texto}</p>
         {end && (
           <div className="mt-3 grid grid-cols-[auto_1fr] gap-2">
-            <button onClick={t.start} className="h-11 rounded-xl bg-white/10 px-4 text-[14px] font-medium">
+            <button onClick={t.start} className="h-11 rounded-xl bg-crema/10 px-4 text-[14px] font-medium">
               {tx.otraCorto}
             </button>
-            <a href={whatsappLink(tx.wa)} target="_blank" rel="noreferrer" className="flex h-11 items-center justify-center gap-2 rounded-xl bg-sun text-[14px] font-semibold text-[#1d1300]">
+            <a href={whatsappLink(tx.wa)} target="_blank" rel="noreferrer" className="flex h-11 items-center justify-center gap-2 rounded-xl bg-carmesi text-[14px] font-semibold text-crema">
               <MessageCircle className="size-4" /> {tx.quiero}
             </a>
           </div>
@@ -564,7 +564,7 @@ export function Spotlight() {
           animate={{ opacity: 1, scale: 1, left: rect.x - 6, top: rect.y - 6, width: rect.width + 12, height: rect.height + 12 }}
           exit={{ opacity: 0 }}
           transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
-          className="pointer-events-none fixed z-[95] rounded-2xl border-2 border-sun shadow-[0_0_0_4px_rgb(245_171_46/0.25),0_0_40px_rgb(245_171_46/0.35)]"
+          className="pointer-events-none fixed z-[95] rounded-2xl border-2 border-sun shadow-[0_0_0_4px_rgb(190_18_60/0.25),0_0_40px_rgb(190_18_60/0.35)]"
           style={{ left: rect.x - 6, top: rect.y - 6, width: rect.width + 12, height: rect.height + 12 }}
         />
       )}

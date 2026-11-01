@@ -110,21 +110,21 @@ function leerTema(): Tema {
     /* La letra de la web. Si el canvas pinta antes de que esté cargada, sale
        con la del sistema y ya no repinta: por eso crearPantallas() la espera. */
     letra: getComputedStyle(document.body).fontFamily || "system-ui, sans-serif",
-    /* El fondo de la pantalla NO es el negro de la web (#020306). Una app a
+    /* El fondo de la pantalla NO es la noche de la web (#090807). Una app a
        pantalla completa con el negro del fondo de la página se funde con él y
        el móvil deja de leerse como una pantalla encendida. Un punto por
        encima basta. */
-    fondo: "#070a10",
-    superficie: "#0d1119",
-    superficie2: "#131925",
-    linea: "rgba(255,255,255,.085)",
-    tinta: "#eef2f7",
-    tinta2: "#9aa6b8",
-    apagado: "#5a6677",
-    cian: v("--dt-cian", "#38e1ff"),
-    menta: v("--dt-menta", "#2cf5b0"),
-    violeta: v("--dt-violeta", "#9d7bff"),
-    urgente: "#ff5d6c",
+    fondo: "#110f0e",
+    superficie: "#1a1715",
+    superficie2: "#24201d",
+    linea: "rgba(255,247,237,.09)",
+    tinta: v("--crema", "#fff7ed"),
+    tinta2: "#b9afa6",
+    apagado: "#7d7268",
+    cian: "#f0607f",
+    menta: v("--melocoton", "#fdba74"),
+    violeta: v("--arena", "#b8a48f"),
+    urgente: "#f0607f",
   };
 }
 
@@ -443,8 +443,8 @@ function pintarPedido(c: Lienzo, t: Tema): Punto {
   // El precio, calculado con sus reglas. Es lo que señala la nota.
   caja(c, 22, 388, 346, 104, 18);
   const fondo = c.createLinearGradient(22, 388, 368, 492);
-  fondo.addColorStop(0, "rgba(56,225,255,.14)");
-  fondo.addColorStop(1, "rgba(44,245,176,.08)");
+  fondo.addColorStop(0, "rgba(190,18,60,.18)");
+  fondo.addColorStop(1, "rgba(253,186,116,.08)");
   rellenar(c, fondo);
   caja(c, 22, 388, 346, 104, 18);
   trazar(c, t.cian, 1, 0.35);
@@ -463,10 +463,10 @@ function pintarPedido(c: Lienzo, t: Tema): Punto {
   // Botón de siempre, abajo.
   caja(c, 22, 582, 346, 54, 16);
   const boton = c.createLinearGradient(22, 582, 368, 636);
-  boton.addColorStop(0, t.cian);
-  boton.addColorStop(1, t.menta);
+  boton.addColorStop(0, "#be123c");
+  boton.addColorStop(1, "#be123c");
   rellenar(c, boton);
-  escribir(c, t, "Enviar al cliente", ANCHO / 2, 616, { tam: 15.5, peso: 700, color: "#04121a", alinear: "center" });
+  escribir(c, t, "Enviar al cliente", ANCHO / 2, 616, { tam: 15.5, peso: 700, color: t.tinta, alinear: "center" });
 
   return { x: 196, y: 440 };
 }
@@ -725,9 +725,9 @@ export function pintarEspalda(): HTMLCanvasElement {
     alto,
     (c) => {
       const fondo = c.createLinearGradient(0, 0, ancho, alto);
-      fondo.addColorStop(0, "#161b24");
-      fondo.addColorStop(0.5, "#0d1118");
-      fondo.addColorStop(1, "#1a2029");
+      fondo.addColorStop(0, "#1c1917");
+      fondo.addColorStop(0.5, "#110f0e");
+      fondo.addColorStop(1, "#211d1a");
       c.fillStyle = fondo;
       c.fillRect(0, 0, ancho, alto);
       c.save();

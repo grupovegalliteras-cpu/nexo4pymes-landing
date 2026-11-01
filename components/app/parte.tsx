@@ -16,7 +16,7 @@ function Section({ n, title, ok, children }: { n: number; title: string; ok?: bo
   return (
     <section className="px-4">
       <div className="mb-1.5 flex items-center gap-2 px-1">
-        <span className={cn("grid size-5 place-items-center rounded-full text-[11px] font-bold", ok ? "bg-ok text-white" : "bg-surface-3 text-fg-2")}>{ok ? <Check className="size-3" /> : trad(n)}</span>
+        <span className={cn("grid size-5 place-items-center rounded-full text-[11px] font-bold", ok ? "bg-ok text-crema" : "bg-surface-3 text-fg-2")}>{ok ? <Check className="size-3" /> : trad(n)}</span>
         <h2 className="text-[14px] font-semibold">{trad(title)}</h2>
       </div>
       {children}
@@ -122,7 +122,7 @@ export function Parte({ params }: { params: Record<string, string> }) {
             </>
           ) : (
             <>
-              <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", bounce: 0.5 }} className="grid size-20 place-items-center rounded-full bg-ok text-white">
+              <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", bounce: 0.5 }} className="grid size-20 place-items-center rounded-full bg-ok text-crema">
                 <Check className="size-10" />
               </motion.span>
               <div className="font-display text-[24px] font-semibold">{trad("Parte cerrado")}</div>
@@ -160,7 +160,7 @@ export function Parte({ params }: { params: Record<string, string> }) {
           <div className="overflow-hidden rounded-2xl bg-surface shadow-e1">
             {sector.checklist.map((item, i) => (
               <button key={item} onClick={() => setCheck((c0) => c0.map((v, k) => (k === i ? !v : v)))} className="flex w-full items-center gap-3 border-b border-line/70 px-3.5 py-3 text-left last:border-0">
-                <motion.span animate={{ scale: check[i] ? [1, 1.25, 1] : 1 }} className={cn("grid size-6 shrink-0 place-items-center rounded-full border-2 transition-colors", check[i] ? "border-ok bg-ok text-white" : "border-line-strong")}>
+                <motion.span animate={{ scale: check[i] ? [1, 1.25, 1] : 1 }} className={cn("grid size-6 shrink-0 place-items-center rounded-full border-2 transition-colors", check[i] ? "border-ok bg-ok text-crema" : "border-line-strong")}>
                   {check[i] && <Check className="size-3.5" />}
                 </motion.span>
                 <span className={cn("text-[15px]", check[i] && "text-fg-3")}>{trad(item)}</span>
@@ -235,7 +235,7 @@ export function Parte({ params }: { params: Record<string, string> }) {
                   <FakePhoto seed={job.id + f.id} after={f.after} label={f.after ? trad("Después") : trad("Antes")} stamp={fmt.time(now)} tint={sector.color} className="aspect-square" />
                   {!f.after && (
                     <svg viewBox="0 0 100 100" className="pointer-events-none absolute inset-0 size-full">
-                      <motion.ellipse cx="55" cy="62" rx="22" ry="15" fill="none" stroke="#f5ab2e" strokeWidth="3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.3 }} />
+                      <motion.ellipse cx="55" cy="62" rx="22" ry="15" fill="none" stroke="#fdba74" strokeWidth="3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.3 }} />
                     </svg>
                   )}
                 </motion.div>
@@ -283,7 +283,7 @@ export function Parte({ params }: { params: Record<string, string> }) {
         </Section>
 
         <div className="px-4" ref={bottom}>
-          <motion.button whileTap={{ scale: 0.97 }} onClick={submit} disabled={!canSubmit} className="flex h-[54px] w-full items-center justify-center gap-2 rounded-2xl bg-ok text-[17px] font-semibold text-white shadow-e2 disabled:bg-surface-3 disabled:text-fg-3 disabled:shadow-none" data-tour="app-cerrar-parte">
+          <motion.button whileTap={{ scale: 0.97 }} onClick={submit} disabled={!canSubmit} className="flex h-[54px] w-full items-center justify-center gap-2 rounded-2xl bg-ok text-[17px] font-semibold text-crema shadow-e2 disabled:bg-surface-3 disabled:text-fg-3 disabled:shadow-none" data-tour="app-cerrar-parte">
             <Check className="size-5" />{" "}{trad("Cerrar parte y enviar informe")}
           </motion.button>
           {!canSubmit && <p className="mt-2 text-center text-[12px] text-fg-3">{trad("Completa la checklist, añade una foto y pide la firma.")}</p>}

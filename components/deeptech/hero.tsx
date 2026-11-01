@@ -5,8 +5,6 @@ import { MessageCircle, PlayCircle } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { useIdioma } from "@/components/i18n/idioma";
 import type { Idioma } from "@/lib/i18n";
-import type { ControlNucleo } from "./nucleo-escena";
-import { Nucleo } from "./nucleo";
 import { MovilErp } from "./movil";
 import { PANTALLAS } from "@/lib/pantallas-erp";
 import { quietoPorPreferencia } from "./decision-movimiento";
@@ -96,10 +94,7 @@ export function HeroNucleo({
 }) {
   const lang = useIdioma();
   const hx = HX[lang];
-  const seccion = useRef<HTMLElement>(null);
-  const anclaNucleo = useRef<HTMLDivElement>(null);
   const huecoMovil = useRef<HTMLDivElement>(null);
-  const control = useRef<ControlNucleo | null>(null);
   const palabras = a.split(" ");
 
   const [activa, setActiva] = useState(0);
@@ -113,7 +108,6 @@ export function HeroNucleo({
     const id = window.setInterval(() => {
       if (document.hidden) return;
       setActiva((x) => (x + 1) % PANTALLAS.length);
-      control.current?.onda();
     }, CADA);
     return () => window.clearInterval(id);
   }, [manual]);
@@ -121,13 +115,12 @@ export function HeroNucleo({
   const elegir = useCallback((i: number) => {
     setManual(true);
     setActiva(i);
-    control.current?.onda();
   }, []);
 
   const pieza = PANTALLAS[activa]!;
 
   return (
-    <section ref={seccion} className="dt-hero relative isolate flex min-h-[100svh] flex-col overflow-hidden">
+    <section className="dt-hero relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg text-fg">
       {/* ---------------------------------------------------------- el fondo */}
       <div className="absolute inset-0 -z-20" aria-hidden="true">
         <div className="dt-rejilla absolute inset-0" />
@@ -135,24 +128,7 @@ export function HeroNucleo({
             pasa todo. Es lo que ata la mano, el móvil y el texto a una misma
             escena en vez de dejarlos flotando sobre un fondo oscuro. */}
         <div className="dt-columna" />
-        <Nucleo ancla={anclaNucleo} seccion={seccion} control={control} />
-        <div className="dt-velo absolute inset-0" />
       </div>
-
-      {/* EL ANCLA DEL NÚCLEO: dónde se concentran las partículas, y por tanto
-          dónde cae el resplandor. Va ARRIBA DEL TODO, en la boca del haz, no
-          detrás del móvil.
-
-          Centrada en el hero —que es donde estaba— el núcleo dejaba su punto
-          de luz justo encima de la pantalla del móvil y se comía las cifras
-          del ERP, que es lo único que hay que ver ahí. Puesta arriba hace de
-          foco: parece la lámpara de la que sale la columna de luz, y la
-          pantalla se lee. */}
-      <div
-        ref={anclaNucleo}
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-[-10%] -z-20 h-[34%] lg:top-[-8%] lg:h-[38%]"
-      />
 
       {/* ------------------------------------------------- la mano y el móvil */}
       <MovilErp
@@ -162,29 +138,25 @@ export function HeroNucleo({
         className="pointer-events-none absolute inset-0 -z-10"
       />
       {/* Solo marca dónde va el móvil y cuánto mide; no pinta nada. En el móvil
-          ocupa la mitad de arriba, con el texto debajo; en escritorio va
+          va arriba con su alto fijo, y el texto empieza debajo; en escritorio va
           centrado y alto, y el texto se le monta encima por abajo. */}
       <div
         ref={huecoMovil}
         aria-hidden="true"
-        className="pointer-events-none absolute top-[12%] left-1/2 h-[44%] w-[56%] max-w-[250px] -translate-x-1/2 lg:top-[11%] lg:h-[58%] lg:w-[33%] lg:max-w-[360px]"
+        className="pointer-events-none absolute top-[76px] left-1/2 h-[350px] w-[56%] max-w-[250px] -translate-x-1/2 lg:top-[11%] lg:h-[58%] lg:w-[33%] lg:max-w-[360px]"
       />
 
-      {/* El velo de abajo: sin esto, el texto se pelea con la mano y con el
-          brillo de la pantalla justo donde hay que leerlo. */}
-      <div className="dt-pie-velo pointer-events-none absolute inset-x-0 bottom-0 -z-[5] h-[62%]" aria-hidden="true" />
-
       {/* -------------------------------------------------------- el contenido */}
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pt-20 pb-8 sm:px-6 lg:pb-12">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pt-[440px] pb-8 sm:px-6 lg:pt-20 lg:pb-12">
         <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12">
           {/* --- abajo a la izquierda: lo que decimos --- */}
           <div data-scrub="salida-hero" className="dt-sobre-escena relative z-10">
-            <div className="dt-entra inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-[#070a10]/80 py-1.5 pr-3.5 pl-2.5 text-[13px] font-medium text-fg-2 backdrop-blur-sm sm:text-[14px]">
-              <i className="size-2 shrink-0 rounded-full bg-[var(--dt-menta)] shadow-[0_0_12px_var(--dt-menta)]" />
+            <div className="dt-entra inline-flex items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pr-3.5 pl-2.5 text-[13px] font-medium text-fg-2 backdrop-blur-sm sm:text-[14px]">
+              <i className="size-2 shrink-0 rounded-full bg-melocoton" />
               {kicker}
             </div>
 
-            <h1 className="mt-5 font-display text-[40px] leading-[0.97] font-semibold tracking-[-0.045em] text-fg min-[400px]:text-[44px] sm:text-[56px] lg:text-[58px] xl:text-[66px]">
+            <h1 className="mt-5 font-display text-[46px] leading-[0.97] font-semibold tracking-[-0.01em] text-fg min-[400px]:text-[50px] sm:text-[64px] lg:text-[68px] xl:text-[78px]">
               {/* EL ESPACIO VA FUERA DEL SPAN, y no es una manía.
 
                   Cada palabra entra con su propio retraso, así que necesita
@@ -249,7 +221,7 @@ export function HeroNucleo({
                   rel="noreferrer"
                   className="dt-boton dt-boton-cristal h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]"
                 >
-                  <MessageCircle className="size-5 text-[#25d366]" /> <span>{escribenos}</span>
+                  <MessageCircle className="size-5 text-carmesi" /> <span>{escribenos}</span>
                 </a>
               </Magnetico>
             </div>
@@ -289,13 +261,13 @@ export function HeroNucleo({
                       aria-pressed={viva}
                       className={`dt-pieza group flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors ${
                         viva
-                          ? "border-white/15 bg-white/[0.06] text-fg"
-                          : "border-transparent text-fg-3 hover:border-white/10 hover:bg-white/[0.03] hover:text-fg-2"
+                          ? "border-line bg-surface text-fg"
+                          : "border-transparent text-fg-3 hover:border-line hover:bg-surface/60 hover:text-fg-2"
                       }`}
                     >
                       <span
                         className={`h-7 w-[3px] shrink-0 rounded-full transition-colors ${
-                          viva ? "bg-[var(--dt-cian)] shadow-[0_0_10px_var(--dt-cian)]" : "bg-white/12"
+                          viva ? "bg-carmesi" : "bg-arena/40"
                         }`}
                         aria-hidden="true"
                       />

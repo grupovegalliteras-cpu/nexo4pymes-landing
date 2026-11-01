@@ -1,9 +1,9 @@
 /* Escena WebGL del núcleo que flota en el hero de la portada.
 
    Cuenta el producto en una imagen: por la izquierda entra el caos (motas
-   violeta que llegan en desorden, como las llamadas, los WhatsApp y los
+   melocotón que llegan en desorden, como las llamadas, los WhatsApp y los
    emails), el núcleo los ordena (una red de nodos con señales que corren
-   por las sinapsis) y por la derecha sale el orden (paquetes verde menta
+   por las sinapsis) y por la derecha sale el orden (paquetes crema
    en carriles paralelos, como las órdenes que llegan a cada técnico).
    Tres anillos orbitales con paquetes equidistantes rematan el aire de
    giroscopio.
@@ -50,9 +50,9 @@ type Opciones = {
 };
 
 const COLORES = {
-  cian: new Color("#38e1ff"),
-  violeta: new Color("#9d7bff"),
-  menta: new Color("#2cf5b0"),
+  carmesi: new Color("#be123c"),
+  melocoton: new Color("#fdba74"),
+  crema: new Color("#fff7ed"),
 };
 
 const RADIO = 1.75; // radio de la red
@@ -70,9 +70,9 @@ const GLSL_COMUN = /* glsl */ `
   uniform float uAspecto;
   uniform float uPixel;
   uniform float uOpacidad;
-  uniform vec3 uCian;
-  uniform vec3 uVioleta;
-  uniform vec3 uMenta;
+  uniform vec3 uCarmesi;
+  uniform vec3 uMelocoton;
+  uniform vec3 uCrema;
 
   float hash13(vec3 p) {
     p = fract(p * 0.1031);
@@ -121,8 +121,8 @@ const NODOS_VERT = /* glsl */ `
     // la cara de atrás de la esfera, más apagada: da volumen sin luces
     float frente = smoothstep(-1.0, 1.0, frenteDe(mv, ${RADIO.toFixed(2)}));
     vBrillo = (titila + cerca * 1.8 + onda * 1.5) * mix(0.28, 1.0, frente);
-    vColor = mix(uCian, uVioleta, smoothstep(-0.9, 0.9, position.y / ${RADIO.toFixed(2)} + (aFase - 0.5) * 0.9));
-    vColor = mix(vColor, uMenta, clamp(onda * 1.4, 0.0, 1.0));
+    vColor = mix(uCarmesi, uMelocoton, smoothstep(-0.9, 0.9, position.y / ${RADIO.toFixed(2)} + (aFase - 0.5) * 0.9));
+    vColor = mix(vColor, uCrema, clamp(onda * 1.4, 0.0, 1.0));
     gl_PointSize = aTam * uPixel * (1.0 + cerca * 1.5 + onda * 0.8) * (62.0 / -mv.z);
   }
 `;
@@ -159,13 +159,13 @@ const SINAPSIS_VERT = /* glsl */ `
     float frente = smoothstep(-1.0, 1.0, frenteDe(mv, ${RADIO.toFixed(2)}));
     float cerca = cercaRaton(gl_Position);
     vBrillo = mix(0.25, 1.0, frente) * (1.0 + cerca * 2.2 + ondaEn(position) * 2.0);
-    vColor = mix(uCian, uVioleta, fract(aSemilla * 3.17));
+    vColor = mix(uCarmesi, uMelocoton, fract(aSemilla * 3.17));
   }
 `;
 
 const SINAPSIS_FRAG = /* glsl */ `
   uniform float uOpacidad;
-  uniform vec3 uMenta;
+  uniform vec3 uCrema;
   varying float vLado;
   varying float vCabeza;
   varying float vActiva;
@@ -174,7 +174,7 @@ const SINAPSIS_FRAG = /* glsl */ `
   void main() {
     float d = vLado - vCabeza;
     float pulso = smoothstep(0.16, 0.0, abs(d)) * step(d, 0.02) * vActiva;
-    vec3 col = mix(vColor, uMenta, pulso * 0.6);
+    vec3 col = mix(vColor, uCrema, pulso * 0.6);
     float a = (0.12 + pulso * 0.95) * vBrillo;
     gl_FragColor = vec4(col, a * uOpacidad);
   }
@@ -583,9 +583,9 @@ export function montarNucleo(canvas: HTMLCanvasElement, { ancla, seccion, reduci
     uAspecto: { value: 1 },
     uPixel: { value: dpr },
     uOpacidad: { value: 1 },
-    uCian: { value: COLORES.cian },
-    uVioleta: { value: COLORES.violeta },
-    uMenta: { value: COLORES.menta },
+    uCarmesi: { value: COLORES.carmesi },
+    uMelocoton: { value: COLORES.melocoton },
+    uCrema: { value: COLORES.crema },
   };
 
   const mundo = new Group();
@@ -606,8 +606,8 @@ export function montarNucleo(canvas: HTMLCanvasElement, { ancla, seccion, reduci
 
   // halo de fondo y núcleo caliente
   const plano = new PlaneGeometry(1, 1);
-  add(new Mesh(plano, material(HALO_VERT, HALO_FRAG, { uEscala: { value: 9.5 }, uColorA: { value: new Color("#2a7dff") }, uColorB: { value: COLORES.violeta }, uIntensidad: { value: 0.32 }, uDureza: { value: 4.5 } })));
-  add(new Mesh(plano.clone(), material(HALO_VERT, HALO_FRAG, { uEscala: { value: 2.4 }, uColorA: { value: new Color("#e8fdff") }, uColorB: { value: COLORES.cian }, uIntensidad: { value: 0.55 }, uDureza: { value: 9 } })));
+  add(new Mesh(plano, material(HALO_VERT, HALO_FRAG, { uEscala: { value: 9.5 }, uColorA: { value: new Color("#be123c") }, uColorB: { value: COLORES.melocoton }, uIntensidad: { value: 0.32 }, uDureza: { value: 4.5 } })));
+  add(new Mesh(plano.clone(), material(HALO_VERT, HALO_FRAG, { uEscala: { value: 2.4 }, uColorA: { value: new Color("#fff7ed") }, uColorB: { value: COLORES.carmesi }, uIntensidad: { value: 0.55 }, uDureza: { value: 9 } })));
 
   // la red
   const red = crearRed(movil ? 420 : 760);
@@ -630,7 +630,7 @@ export function montarNucleo(canvas: HTMLCanvasElement, { ancla, seccion, reduci
       const t = (s / 160) * Math.PI * 2;
       circ.push(new Vector3(Math.cos(t) * radio, Math.sin(t) * radio, 0));
     }
-    add(new LineSegments(geometriaGuias([circ], true), material(GUIA_VERT, GUIA_FRAG, { uSalida: u.uSalida, uColor: { value: k === 1 ? COLORES.violeta : COLORES.cian }, uIntensidad: { value: 0.2 } })), o);
+    add(new LineSegments(geometriaGuias([circ], true), material(GUIA_VERT, GUIA_FRAG, { uSalida: u.uSalida, uColor: { value: k === 1 ? COLORES.melocoton : COLORES.carmesi }, uIntensidad: { value: 0.2 } })), o);
     const n = [18, 26, 34][k];
     const g = new BufferGeometry();
     const idx = new Float32Array(n), rad = new Float32Array(n), vel = new Float32Array(n);
@@ -643,21 +643,21 @@ export function montarNucleo(canvas: HTMLCanvasElement, { ancla, seccion, reduci
     g.setAttribute("aIndice", new BufferAttribute(idx, 1));
     g.setAttribute("aRadio", new BufferAttribute(rad, 1));
     g.setAttribute("aVel", new BufferAttribute(vel, 1));
-    add(new Points(g, material(ANILLO_VERT, ANILLO_FRAG, { uTiempo: u.uTiempo, uPixel: u.uPixel, uSalida: u.uSalida, uAparicion: u.uAparicion, uColor: { value: k === 1 ? COLORES.violeta : COLORES.menta } })), o);
+    add(new Points(g, material(ANILLO_VERT, ANILLO_FRAG, { uTiempo: u.uTiempo, uPixel: u.uPixel, uSalida: u.uSalida, uAparicion: u.uAparicion, uColor: { value: k === 1 ? COLORES.melocoton : COLORES.crema } })), o);
     anillos.push({ o, giro: [0.04, -0.03, 0.022][k] });
   });
 
   // corriente de entrada (caos)
   const entrada = crearCorriente(tramosEntrada(movil ? 420 : 900, movil));
-  const uEntrada = { ...u, uCaos: { value: 1 }, uColorA: { value: COLORES.violeta }, uColorB: { value: COLORES.cian } };
+  const uEntrada = { ...u, uCaos: { value: 1 }, uColorA: { value: COLORES.melocoton }, uColorB: { value: COLORES.carmesi } };
   add(new LineSegments(entrada.cola, material(CORRIENTE_COLA_VERT, CORRIENTE_COLA_FRAG, uEntrada)));
   add(new Points(entrada.cab, material(CORRIENTE_PUNTOS_VERT, CORRIENTE_PUNTOS_FRAG, uEntrada)));
 
   // carriles de salida (orden)
   const salida = tramosSalida(movil);
   const corrSalida = crearCorriente(salida.tramos);
-  const uSalidaC = { ...u, uCaos: { value: 0 }, uColorA: { value: COLORES.menta }, uColorB: { value: COLORES.menta } };
-  add(new LineSegments(geometriaGuias(salida.guias, false), material(GUIA_VERT, GUIA_FRAG, { uSalida: u.uSalida, uColor: { value: COLORES.menta }, uIntensidad: { value: 0.16 } })));
+  const uSalidaC = { ...u, uCaos: { value: 0 }, uColorA: { value: COLORES.crema }, uColorB: { value: COLORES.crema } };
+  add(new LineSegments(geometriaGuias(salida.guias, false), material(GUIA_VERT, GUIA_FRAG, { uSalida: u.uSalida, uColor: { value: COLORES.crema }, uIntensidad: { value: 0.16 } })));
   add(new LineSegments(corrSalida.cola, material(CORRIENTE_COLA_VERT, CORRIENTE_COLA_FRAG, uSalidaC)));
   add(new Points(corrSalida.cab, material(CORRIENTE_PUNTOS_VERT, CORRIENTE_PUNTOS_FRAG, uSalidaC)));
 

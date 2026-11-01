@@ -3,43 +3,38 @@
 
 
 /* ============================================================
-   TOKENS DE MARCA NEXO4PYMES — REDISEÑO PREMIUM
-   Paleta oscura azul/violeta del rediseño. Sustituye a la paleta
-   verde botella + coral de la web anterior. Se mantienen los
-   NOMBRES de variable donde el rol se parece (mint, coral, exito,
-   aviso...) para no reescribir cada clase Tailwind del proyecto,
-   aunque el valor hexadecimal cambie. bottle/bottle-900 pasan a
-   ser el fondo oscuro principal del sitio (antes verde, ahora casi
-   negro azulado): todo el sitio es oscuro, ya no hay secciones
-   "claro"/"alt" con fondo crema.
+   TOKENS DE MARCA NEXO4PYMES
+   Nombres que vienen de paletas anteriores (bottle, mint, coral,
+   azul, violeta...). Se mantienen para no reescribir cada clase
+   Tailwind del proyecto, pero todos apuntan ya a la paleta de marca
+   de globals.css: noche, crema, grafito, carmesí, melocotón y arena.
    ============================================================ */
 @theme {
-  --color-bottle: #05060c;
-  --color-bottle-900: #030308;
-  --color-bottle-800: #0b0e1a;
-  --color-bottle-700: #12162a;
-  --color-teal: #2ee0c4;
-  --color-teal-claro: #e4f0ed;
-  --color-mint: #4ce0b3;
-  --color-coral: #ff6b4c;
-  --color-coral-dark: #e8552f;
-  --color-cream: #f7f5f1;
-  --color-cream-2: #efebe3;
-  --color-ink: #e9ebf4;
-  --color-suave: #55605c;
-  --color-linea: #e2ddd3;
-  --color-exito: #4ce0b3;
-  --color-error: #ff6b4c;
-  --color-aviso: #ffa98f;
-
-  /* Los dos acentos nuevos del rediseño: degradado azul → violeta en
-     CTAs, insignias, iconos y textos destacados. */
-  --color-azul: #4c7dff;
-  --color-violeta: #b06bf5;
+  --color-bottle: #090807;
+  --color-bottle-900: #090807;
+  --color-bottle-800: #151311;
+  --color-bottle-700: #1d1a18;
+  --color-teal: #be123c;
+  --color-teal-claro: #fbe3e1;
+  --color-mint: #be123c;
+  --color-coral: #be123c;
+  --color-coral-dark: #a00f33;
+  --color-cream: #fff7ed;
+  --color-cream-2: #fcefe1;
+  --color-ink: #1c2129;
+  --color-suave: #5f5a58;
+  --color-linea: #b8a48f;
+  --color-exito: #13845a;
+  --color-error: #be123c;
+  --color-aviso: #fdba74;
+  --color-azul: #be123c;
+  --color-violeta: #a00f33;
 
   --font-titular: var(--fuente-titular), system-ui, sans-serif;
   --font-texto: var(--fuente-texto), system-ui, sans-serif;
-  --font-mono: var(--fuente-mono), ui-monospace, monospace;
+  /* Solo hay dos tipografías: los rótulos que iban en monoespaciada llevan
+     la de texto. */
+  --font-mono: var(--fuente-texto), system-ui, sans-serif;
 
   /* RADIOS — tres valores, no trece.
      El sitio llegó a tener rounded-[7|10|11|16|18|20|22|24|26|28|30|34|36px]
@@ -62,19 +57,18 @@
 }
 
 @layer components {
-  /* Rejilla técnica de fondo, ahora blanca y muy tenue: así se ve
-     igual de bien detrás de cualquier acento de color. */
+  /* Rejilla técnica de fondo, crema y muy tenue: para zonas noche. */
   .malla {
     background-image:
-      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+      linear-gradient(to right, rgb(255 247 237 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 247 237 / 0.045) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 
   .malla-clara {
     background-image:
-      linear-gradient(to right, rgb(14 59 54 / 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(14 59 54 / 0.04) 1px, transparent 1px);
+      linear-gradient(to right, rgb(184 164 143 / 0.14) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(184 164 143 / 0.14) 1px, transparent 1px);
     background-size: 56px 56px;
   }
 
@@ -83,13 +77,10 @@
     mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
   }
 
-  /* Texto en degradado azul → violeta: antetítulos, la "4" del logo,
-     cifras destacadas. */
+  /* Palabras clave y cifras destacadas. Se llamaba así por el degradado
+     azul → violeta; ahora es carmesí liso. */
   .texto-degradado {
-    background: linear-gradient(90deg, var(--color-azul), var(--color-violeta));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--carmesi);
   }
 
   /* Aquí vivía .texto-degradado-sheen: el titular del hero con un

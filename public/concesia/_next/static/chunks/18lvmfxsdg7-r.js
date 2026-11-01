@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,31767,e=>{"use strict";var t=e.i(87093),o=e.i(92493),i=e.i(42832);e.s(["DemoPageForm",0,function(){let[e,r]=(0,o.useState)("directo");return(0,o.useEffect)(()=>{r((0,i.O)(new URLSearchParams(location.search).get("origen")))},[]),(0,t.jsx)(i.M,{origin:e})}])}]);

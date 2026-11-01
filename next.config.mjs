@@ -50,6 +50,11 @@ const nextConfig = {
         source: "/assets/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=604800" }],
       },
+      {
+        // Los 192 fotogramas del coche de la landing de Concesia.
+        source: "/concesia/hero/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=604800" }],
+      },
     ];
   },
   async rewrites() {
@@ -59,7 +64,13 @@ const nextConfig = {
     return {
       // Nexo Pádel: la demo interactiva es un HTML propio en public/padel/demo.html.
       // Se sirve en /padel/demo, antes de que la reescritura de idiomas la mande a /es/….
-      beforeFiles: [{ source: "/padel/demo", destination: "/padel/demo.html" }],
+      // Concesia: la landing es una web estática en public/concesia, generada en su propio
+      // repositorio. Va antes de la reescritura de idiomas por el mismo motivo.
+      beforeFiles: [
+        { source: "/padel/demo", destination: "/padel/demo.html" },
+        { source: "/concesia", destination: "/concesia/index.html" },
+        { source: "/concesia/demo", destination: "/concesia/demo.html" },
+      ],
       afterFiles: [
         { source: "/", destination: "/es" },
         { source: "/:path((?!(?:es|en|de)(?:/|$)).+)", destination: "/es/:path" },

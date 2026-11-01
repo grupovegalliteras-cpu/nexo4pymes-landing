@@ -80,5 +80,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
        suelta y sin hreflang. Con fecha fija por lo mismo que las de
        arriba: un lastmod que cambia en cada despliegue no se cree nadie. */
     { url: `${marca.dominio}/padel`, lastModified: new Date("2026-10-02"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${marca.dominio}/concesia`, lastModified: new Date("2026-11-01"), changeFrequency: "monthly", priority: 0.8 },
   ];
 }

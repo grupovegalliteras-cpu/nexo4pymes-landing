@@ -317,8 +317,19 @@ export function fechaHito(h: Hito, lang: Idioma): string | null {
   );
 }
 
-/** La primera fecha que obliga de verdad y todavía no ha pasado. */
-export function proximoHito(o: Obligacion, hoy = new Date()): Hito | undefined {
+/* La primera fecha que obliga de verdad y todavía no ha pasado.
+
+   POR QUÉ LA REFERENCIA ES COMPROBADO Y NO new Date(). La portada es
+   una página estática: el HTML se genera al desplegar y el navegador
+   lo vuelve a calcular al hidratar. Con `new Date()` por defecto, el día
+   que un plazo se pasa el servidor sigue diciendo una cosa y el
+   navegador dice otra, y React avisa de que no coinciden. Con una
+   fecha fija no puede pasar.
+
+   Y además es más honesto: lo que se enseña es la situación en la
+   fecha en que una persona leyó el BOE, que es lo que la página dice
+   un poco más abajo. */
+export function proximoHito(o: Obligacion, hoy = new Date(`${COMPROBADO}T12:00:00Z`)): Hito | undefined {
   return o.hitos
     .filter((h) => h.estado === "en-vigor" && h.fecha.length === 10)
     .sort((a, b) => a.fecha.localeCompare(b.fecha))

@@ -43,7 +43,7 @@ export function AntesDespues() {
   return (
     <section id="antes-despues" className="relative scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <div className="max-w-3xl">
+        <div className="mx-auto max-w-3xl text-center">
           <Etiqueta>{d.categoria}</Etiqueta>
           <Titulo className="mt-4 text-[32px] sm:text-[48px]">{d.titular}</Titulo>
           <p data-revelar className="mt-4 text-[17px] leading-relaxed text-fg-2">

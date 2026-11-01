@@ -3,7 +3,7 @@
 import Link from "@/components/i18n/Enlace";
 import { AnimatePresence, motion } from "motion/react";
 import {
-  ArrowRight, BadgeCheck, Check, ChevronDown, Clock, Globe, ListChecks, Mail, MessageCircle, Monitor, PlayCircle, Workflow,
+  ArrowRight, BadgeCheck, Check, Clock, Globe, ListChecks, Mail, MessageCircle, Monitor, PlayCircle, Plus, Workflow,
 } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { sectoresDe } from "@/data/sectors-i18n";
@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { useFmt, useIdioma } from "@/components/i18n/idioma";
 import { Icon } from "@/components/icon";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { FAQ_PORTADA } from "@/content/faq-portada";
 import { LANDINGS_PUBLICADAS, textoLanding, tituloLanding } from "@/content/landings-seo-i18n";
 import { colaboradores, textosColaboradores } from "@/content/colaboradores";
@@ -348,9 +349,10 @@ function useT() {
   return { ...T[lang], ...TD[lang] };
 }
 
-/* La portada va en crema con tarjetas blancas, hero incluido; el cierre
-   (Contacto y pie) es zona noche con data-theme="dark". El data-theme="light" del
-   envoltorio la deja en crema aunque el visitante venga del panel en oscuro.
+/* La portada abre y cierra en noche y va en crema con tarjetas blancas por en
+   medio: el hero y el cierre (Contacto y pie) son zonas con data-theme="dark".
+   El data-theme="light" del envoltorio deja el centro en crema aunque el
+   visitante venga del panel en oscuro.
 
    LO PRIMERO QUE TIENE QUE ENTENDERSE ES QUE HACEMOS SOFTWARE A MEDIDA.
    El programa para empresas de servicios (panel + app) es el ejemplo que
@@ -387,7 +389,7 @@ export function Landing() {
   useMovimientoPortada();
   return (
     <div data-theme="light" className="deeptech text-fg">
-      <SiteNav />
+      <SiteNav dark />
       {/* ============================================================
           EL ORDEN DE LA PORTADA, Y POR QUÉ SE CAMBIÓ
 
@@ -484,7 +486,7 @@ function Obligaciones() {
   return (
     <section id="obligaciones" className="scroll-mt-20 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <div className="max-w-2xl">
+        <div className="mx-auto max-w-3xl text-center">
           <Etiqueta>{t.kObl}</Etiqueta>
           <Titulo className="mt-5 text-[28px] sm:text-[40px]">{t.oblH}</Titulo>
           <p data-revelar className="mt-3 text-[17px] leading-relaxed text-fg-2">{t.oblP}</p>
@@ -511,7 +513,7 @@ function Obligaciones() {
             );
           })}
         </ul>
-        <div className="mt-6">
+        <div className="mt-8 text-center">
           <Link href="/obligaciones" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
             {t.oblEnlace} <ArrowRight className="size-4" />
           </Link>
@@ -535,6 +537,37 @@ const PIEZAS = { es: serviciosEs, en: serviciosEn, de: serviciosDe };
 const ICONO_PIEZA = { lista: ListChecks, globo: Globe, reloj: Clock, engranaje: Workflow } as const;
 const TONO_PIEZA = { azul: "var(--carmesi)", violeta: "var(--carmesi-oscuro)", mint: "var(--grafito)" } as const;
 
+/* EL MOSAICO. Cuatro tarjetas iguales en fila se leen como un folleto; con dos
+   anchas en diagonal, el ojo tiene por dónde entrar. El dibujo de las anchas es
+   adorno y a propósito no lleva datos: ni cifras ni nombres que parezcan de un
+   cliente. */
+const ANCHO_PIEZA = ["lg:col-span-4", "lg:col-span-2", "lg:col-span-2", "lg:col-span-4"];
+
+function DibujoPieza({ i }: { i: number }) {
+  if (i === 0) {
+    return (
+      <div aria-hidden="true" className="mt-6 grid gap-2 rounded-2xl border border-line bg-bg p-3 lg:mt-0">
+        {[72, 54, 86, 44].map((ancho, n) => (
+          <div key={ancho} className="flex items-center gap-2.5 rounded-lg border border-line bg-surface px-3 py-2">
+            <i className={cn("size-2 rounded-full", n === 0 ? "bg-carmesi" : "bg-melocoton")} />
+            <i className="h-1.5 rounded-full bg-arena/45" style={{ width: `${ancho}%` }} />
+          </div>
+        ))}
+      </div>
+    );
+  }
+  return (
+    <div aria-hidden="true" className="relative mt-6 flex items-center justify-between rounded-2xl border border-line bg-bg px-6 py-8 lg:mt-0">
+      <i className="absolute inset-x-10 top-1/2 h-px bg-arena/60" />
+      {[Globe, Workflow, ListChecks].map((Ico, n) => (
+        <span key={n} className={cn("relative grid size-12 place-items-center rounded-xl border bg-surface", n === 1 ? "border-carmesi text-carmesi" : "border-line text-fg-3")}>
+          <Ico className="size-5" />
+        </span>
+      ))}
+    </div>
+  );
+}
+
 function QueConstruimos() {
   const t = useT();
   const lang = useIdioma();
@@ -542,19 +575,21 @@ function QueConstruimos() {
   return (
     <section id="que-construimos" className="relative scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <div className="max-w-3xl">
+        <div className="mx-auto max-w-3xl text-center">
           <Etiqueta>{d.categoria}</Etiqueta>
           <Titulo className="mt-4 text-[32px] sm:text-[48px]">{d.titular}</Titulo>
           <p data-revelar className="mt-4 text-[17px] leading-relaxed text-fg-2">
             {d.intro}
           </p>
         </div>
-        <ul className="dt-foco-grupo mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" onPointerMove={moverFoco}>
+        <ul className="dt-foco-grupo mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-6" onPointerMove={moverFoco}>
           {d.tarjetas.map((p, i) => {
             const Ico = ICONO_PIEZA[p.icono];
             const color = TONO_PIEZA[p.tono];
+            const ancha = i === 0 || i === 3;
             return (
-              <li key={p.titulo} data-revelar className="dt-foco dt-cristal flex flex-col rounded-[24px] p-6" style={{ "--d": `${i * 60}ms` } as CSSProperties}>
+              <li key={p.titulo} data-revelar className={cn("dt-foco dt-cristal gap-6 rounded-[24px] p-6 sm:p-7", ANCHO_PIEZA[i], ancha ? "lg:grid lg:grid-cols-2 lg:items-center" : "flex flex-col")} style={{ "--d": `${i * 60}ms` } as CSSProperties}>
+                <div>
                 <span className="relative grid size-11 place-items-center rounded-xl border border-line bg-bg" style={{ color }}>
                   <Ico className="size-5" />
                   <i className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-melocoton" aria-hidden="true" />
@@ -569,11 +604,13 @@ function QueConstruimos() {
                 <p className="mt-5 text-[11.5px] font-semibold tracking-[0.1em] text-fg-3 uppercase">{p.titulo}</p>
                 <h3 className="mt-2 font-display text-[19px] leading-snug font-semibold tracking-[-0.01em] text-fg">{p.gancho}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-fg-2">{p.texto}</p>
+                </div>
+                {ancha ? <DibujoPieza i={i} /> : null}
               </li>
             );
           })}
         </ul>
-        <div className="mt-6">
+        <div className="mt-8 text-center">
           <Link href="/servicios" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
             {t.piezasEnlace} <ArrowRight className="size-4" />
           </Link>
@@ -823,8 +860,8 @@ function SoftwareReal() {
     <section className="relative overflow-hidden py-16 sm:py-24">
       <div className="pointer-events-none absolute inset-x-0 top-1/3 -z-10 h-[70%] bg-[radial-gradient(ellipse_55%_50%_at_50%_50%,rgb(190_18_60/0.06),transparent_70%)]" />
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div className="max-w-2xl">
+        <div className="grid justify-items-center gap-5 text-center">
+          <div className="max-w-3xl">
             <Etiqueta>{t.kReal}</Etiqueta>
             <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.realH}</Titulo>
             <p className="mt-3 text-[16px] text-fg-2 sm:text-[17px]">
@@ -910,7 +947,7 @@ function PiezasYaHechas() {
   return (
     <section id="modulos" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <div className="max-w-2xl">
+        <div className="mx-auto max-w-3xl text-center">
           <Etiqueta>{t.kModulos}</Etiqueta>
           <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.modH}</Titulo>
           <p data-revelar className="mt-3 text-[17px] text-fg-2">{t.modP}</p>
@@ -937,7 +974,7 @@ function PiezasYaHechas() {
           ))}
         </ul>
 
-        <div className="mt-6">
+        <div className="mt-8 text-center">
           <Link href="/modulos" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
             {t.catalogo}
           </Link>
@@ -953,8 +990,10 @@ function Como() {
   return (
     <section id="como" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
-        <Etiqueta>{t.kComo}</Etiqueta>
-        <Titulo className="mt-5 max-w-2xl text-[30px] sm:text-[46px]">{t.comoH}</Titulo>
+        <div className="mx-auto max-w-3xl text-center">
+          <Etiqueta>{t.kComo}</Etiqueta>
+          <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.comoH}</Titulo>
+        </div>
         <div className="dt-foco-grupo relative mt-12 grid gap-5 md:grid-cols-3" onPointerMove={moverFoco}>
           {t.como.map(([titulo, desc], i) => (
             <div key={i} data-revelar className="dt-foco dt-cristal relative rounded-[24px] p-6" style={{ "--d": `${i * 110}ms` } as CSSProperties}>
@@ -975,15 +1014,15 @@ function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
     <section id="preguntas" className="scroll-mt-20 py-16 sm:py-24">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.4fr]">
-        <div>
+      <div className="mx-auto grid max-w-3xl gap-10 px-5 sm:px-6">
+        <div className="text-center">
           <Etiqueta>{t.kFaq}</Etiqueta>
           <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.faqH}</Titulo>
           <p className="mt-3 text-[17px] text-fg-2">{t.faqP}</p>
         </div>
-        <div data-revelar className="dt-cristal divide-y divide-line overflow-hidden rounded-[24px]">
+        <div data-revelar className="divide-y divide-line border-y border-line">
           {t.faq.map(([q, a], i) => (
-            <div key={i} className={cn("transition-colors", open === i && "bg-surface-2/50")}>
+            <div key={i}>
               {/* ============================================================
                   LA RESPUESTA SE PINTA SIEMPRE, AUNQUE EL ACORDEÓN ESTÉ CERRADO
 
@@ -1002,13 +1041,13 @@ function Faq() {
                   SI ALGUIEN VUELVE A METER UN «&&» AQUÍ, rompe los datos
                   estructurados de la portada sin que se note. */}
               <h3>
-                <button onClick={() => setOpen(open === i ? null : i)} className={cn("flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[16px] font-semibold transition-colors", open === i && "text-carmesi")} aria-expanded={open === i}>
+                <button onClick={() => setOpen(open === i ? null : i)} className={cn("flex w-full items-center justify-between gap-4 py-5 text-left text-[17px] font-semibold transition-colors hover:text-carmesi", open === i && "text-carmesi")} aria-expanded={open === i}>
                   {q}
-                  <ChevronDown className={cn("size-5 shrink-0 text-fg-3 transition-transform", open === i && "rotate-180 text-carmesi")} />
+                  <Plus className={cn("size-5 shrink-0 text-fg-3 transition-transform duration-300", open === i && "rotate-45 text-carmesi")} />
                 </button>
               </h3>
               <motion.div initial={false} animate={{ height: open === i ? "auto" : 0, opacity: open === i ? 1 : 0 }} className="overflow-hidden" aria-hidden={open !== i}>
-                <p className="px-5 pb-5 text-[15px] leading-relaxed text-fg-2">{a}</p>
+                <p className="pb-5 text-[15.5px] leading-relaxed text-fg-2">{a}</p>
               </motion.div>
             </div>
           ))}
@@ -1027,15 +1066,20 @@ function Contacto() {
   const msg = t.msg(f, sector.nombre);
   const input = "h-12 w-full rounded-xl border border-line bg-surface-2 px-3.5 text-[16px] text-fg outline-none transition placeholder:text-fg-3 focus:border-melocoton focus:shadow-[0_0_0_4px_rgb(253_186_116/0.14)]";
   return (
-    <section id="contacto" data-theme="dark" className="relative scroll-mt-20 overflow-hidden bg-bg py-20 text-fg sm:py-28">
-      <div className="dt-rejilla pointer-events-none absolute inset-0 opacity-60" />
-      <div className="dt-luz-cierre pointer-events-none" />
-      <div className="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2">
-        <div>
+    <section id="contacto" data-theme="dark" className="relative scroll-mt-20 bg-bg px-4 py-10 text-fg sm:px-6 sm:py-16">
+      {/* El cierre va enmarcado: una sola pieza, con el icono de la marca
+          encima y la luz subiendo desde abajo, como el amanecer del hero. */}
+      <div className="dt-marco relative mx-auto grid max-w-7xl justify-items-center gap-10 overflow-hidden rounded-[32px] px-5 py-14 sm:px-10 sm:py-20">
+        <div className="dt-rejilla pointer-events-none absolute inset-0 opacity-60" />
+        <div className="dt-luz-cierre pointer-events-none" />
+        <div className="relative max-w-3xl text-center">
+          <span className="dt-ficha mx-auto mb-7 grid size-20 place-items-center rounded-[22px]">
+            <Image src="/brand/marca-oscuro.png" alt="" width={48} height={47} />
+          </span>
           <Etiqueta>{t.kContacto}</Etiqueta>
           <Titulo className="mt-5 text-[34px] leading-[1.02] sm:text-[56px]">{t.ctH}</Titulo>
-          <p className="mt-4 max-w-lg text-[17px] text-fg-2">{t.ctP}</p>
-          <div className="mt-8 grid gap-3 text-[15px]">
+          <p className="mx-auto mt-4 max-w-xl text-[17px] text-fg-2">{t.ctP}</p>
+          <div className="mt-8 grid gap-3 text-left text-[15px] sm:grid-cols-3">
             {t.ctPuntos.map((x, i) => (
               <div key={x} data-revelar className="flex items-center gap-3" style={{ "--d": `${i * 90}ms` } as CSSProperties}>
                 <span className="grid size-6 shrink-0 place-items-center rounded-full bg-carmesi text-crema">
@@ -1046,7 +1090,7 @@ function Contacto() {
             ))}
           </div>
         </div>
-        <div onPointerMove={moverFoco} className="dt-foco dt-cristal dt-cristal-blur rounded-[30px] p-5 sm:p-7">
+        <div onPointerMove={moverFoco} className="dt-foco dt-cristal dt-cristal-blur relative w-full max-w-2xl rounded-[28px] p-5 sm:p-7">
           <AnimatePresence mode="wait">
             {sent ? (
               <motion.div key="ok" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="grid place-items-center gap-3 py-12 text-center">

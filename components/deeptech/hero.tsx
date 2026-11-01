@@ -13,17 +13,14 @@ import { Magnetico } from "./interaccion";
 /* ===========================================================================
    HERO DE LA PORTADA
 
-   LA COMPOSICIÓN. Una sola imagen a sangre: un haz de luz que baja desde
-   arriba, y dentro del haz una mano que sube desde abajo con un móvil
-   flotando encima en el que va pasando un ERP. El texto, abajo a la
-   izquierda, encima de la imagen; y abajo a la derecha, las cuatro piezas
-   que se pueden tocar para cambiar lo que se ve en el móvil.
+   LA COMPOSICIÓN. Zona noche con todo centrado: rótulo, titular, botones y las
+   cuatro piezas, y debajo un amanecer carmesí del que sube el móvil, cortado
+   por la tira de sellos. El móvil asoma en la primera pantalla y eso invita a
+   bajar.
 
-   DE DÓNDE SALE. De una referencia que trajo el cliente (un hero de
-   Craftfolio: mano a contraluz subiendo dentro de un haz, texto abajo a la
-   izquierda, dos bloques abajo a la derecha) y del móvil 3D de la web de
-   Priora, que ya existía. Lo que no venía de ningún sitio es la mano, que se
-   construye aquí (./mano.ts).
+   DE DÓNDE SALE. El gesto de abrir centrado sobre una luz de horizonte con el
+   producto subiendo viene de wope.com, que trajo el cliente como referencia
+   en noviembre de 2026. El móvil 3D es el que ya había, de la web de Priora.
 
    POR QUÉ HAY MUCHO MENOS TEXTO QUE ANTES. El hero anterior tenía rótulo,
    titular, línea, párrafo, dos botones, cuatro sellos, tres pasos flotando
@@ -47,21 +44,9 @@ import { Magnetico } from "./interaccion";
    =========================================================================== */
 
 const HX = {
-  es: {
-    piezas: "Lo que construimos",
-    desliza: "Qué construimos, aquí debajo",
-    tocar: "Tocad una para verla",
-  },
-  en: {
-    piezas: "What we build",
-    desliza: "What we build, just below",
-    tocar: "Tap one to see it",
-  },
-  de: {
-    piezas: "Was wir bauen",
-    desliza: "Was wir bauen, hier darunter",
-    tocar: "Tippen Sie eine an",
-  },
+  es: { piezas: "Lo que construimos" },
+  en: { piezas: "What we build" },
+  de: { piezas: "Was wir bauen" },
 } satisfies Record<Idioma, unknown>;
 
 /* Cada cuánto pasa sola a la siguiente pieza. Cuatro segundos y medio: lo
@@ -120,178 +105,145 @@ export function HeroNucleo({
   const pieza = PANTALLAS[activa]!;
 
   return (
-    <section className="dt-hero relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-bg text-fg">
+    <section data-theme="dark" className="dt-hero relative isolate overflow-hidden bg-bg text-fg">
       {/* ---------------------------------------------------------- el fondo */}
       <div className="absolute inset-0 -z-20" aria-hidden="true">
         <div className="dt-rejilla absolute inset-0" />
-        {/* El haz: la columna de luz que baja desde arriba y dentro de la cual
-            pasa todo. Es lo que ata la mano, el móvil y el texto a una misma
-            escena en vez de dejarlos flotando sobre un fondo oscuro. */}
-        <div className="dt-columna" />
+        {/* El amanecer: la luz detrás del móvil. Es lo que ata el móvil al
+            fondo en vez de dejarlo flotando sobre el negro. */}
+        <div className="dt-amanecer" />
       </div>
 
-      {/* ------------------------------------------------- la mano y el móvil */}
+      {/* --------------------------------------------------------- el móvil */}
       <MovilErp
         pantalla={activa}
         nota={pieza.nota}
         hueco={huecoMovil}
         className="pointer-events-none absolute inset-0 -z-10"
       />
-      {/* Solo marca dónde va el móvil y cuánto mide; no pinta nada. En el móvil
-          va arriba con su alto fijo, y el texto empieza debajo; en escritorio va
-          centrado y alto, y el texto se le monta encima por abajo. */}
-      <div
-        ref={huecoMovil}
-        aria-hidden="true"
-        className="pointer-events-none absolute top-[76px] left-1/2 h-[350px] w-[56%] max-w-[250px] -translate-x-1/2 lg:top-[11%] lg:h-[58%] lg:w-[33%] lg:max-w-[360px]"
-      />
 
-      {/* -------------------------------------------------------- el contenido */}
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pt-[440px] pb-8 sm:px-6 lg:pt-20 lg:pb-12">
-        <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12">
-          {/* --- abajo a la izquierda: lo que decimos --- */}
-          <div data-scrub="salida-hero" className="dt-sobre-escena relative z-10">
-            <div className="dt-entra inline-flex items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pr-3.5 pl-2.5 text-[13px] font-medium text-fg-2 backdrop-blur-sm sm:text-[14px]">
-              <i className="size-2 shrink-0 rounded-full bg-melocoton" />
-              {kicker}
-            </div>
+      {/* ------------------------------------------------------ el contenido */}
+      <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 pt-24 text-center sm:px-6 lg:pt-24">
+        <div data-scrub="salida-hero" className="relative z-10 flex flex-col items-center">
+          <div className="dt-entra inline-flex items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pr-3.5 pl-2.5 text-[13px] font-medium text-fg-2 sm:text-[14px]">
+            <i className="size-2 shrink-0 rounded-full bg-melocoton" />
+            {kicker}
+          </div>
 
-            <h1 className="mt-5 font-display text-[46px] leading-[0.97] font-semibold tracking-[-0.01em] text-fg min-[400px]:text-[50px] sm:text-[64px] lg:text-[68px] xl:text-[78px]">
-              {/* EL ESPACIO VA FUERA DEL SPAN, y no es una manía.
+          <h1 className="mt-6 font-display text-[46px] leading-[0.97] font-semibold tracking-[-0.01em] text-fg min-[400px]:text-[52px] sm:text-[72px] lg:text-[80px]">
+            {/* EL ESPACIO VA FUERA DEL SPAN, y no es una manía.
 
-                  Cada palabra entra con su propio retraso, así que necesita
-                  ser un elemento aparte, y para poder desplazarla hacia
-                  arriba tiene que ser inline-block. Y un inline-block recorta
-                  el espacio que queda al final de su contenido: con el
-                  espacio dentro, el titular se leía «Vuestronegocio». Pasaba
-                  desapercibido mientras el titular fue «La llamada entra.»,
-                  donde el punto final separaba igual. */}
-              <span className="block">
-                {palabras.map((w, i) => (
-                  <span key={i}>
-                    <span className="dt-palabra" style={{ "--d": `${40 + i * 50}ms` } as CSSProperties}>
-                      {w}
-                    </span>
-                    {i < palabras.length - 1 ? " " : ""}
+                Cada palabra entra con su propio retraso, así que necesita
+                ser un elemento aparte, y para poder desplazarla hacia
+                arriba tiene que ser inline-block. Y un inline-block recorta
+                el espacio que queda al final de su contenido: con el
+                espacio dentro, el titular se leía «Vuestronegocio». Pasaba
+                desapercibido mientras el titular fue «La llamada entra.»,
+                donde el punto final separaba igual. */}
+            <span className="block">
+              {palabras.map((w, i) => (
+                <span key={i}>
+                  <span className="dt-palabra" style={{ "--d": `${40 + i * 50}ms` } as CSSProperties}>
+                    {w}
                   </span>
-                ))}
-              </span>
-              <span
-                className="dt-palabra dt-texto-luz block pb-1"
-                style={{ "--d": `${80 + palabras.length * 50}ms` } as CSSProperties}
-              >
-                {b}
-              </span>
-            </h1>
-
-            <p
-              className="dt-entra mt-5 max-w-[520px] text-[16px] leading-relaxed text-fg-2 sm:text-[17px]"
-              style={{ "--d": "200ms" } as CSSProperties}
-            >
-              {linea}
-            </p>
-            {/* La frase que de verdad nos separa de una agencia («si no os
-                hace falta, os lo decimos») se queda, pero en una línea y más
-                floja: en esta composición el texto comparte sitio con la
-                imagen, y cada línea que crece aquí es una línea que se le come
-                al móvil por arriba. */}
-            <p
-              className="dt-entra mt-2.5 max-w-[460px] text-[14.5px] leading-relaxed text-fg-3"
-              style={{ "--d": "230ms" } as CSSProperties}
-            >
-              {p}
-            </p>
-
-            <div
-              className="dt-entra mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
-              style={{ "--d": "260ms" } as CSSProperties}
-            >
-              <Magnetico className="max-sm:w-full">
-                <Link
-                  href="/demo?tour=1"
-                  className="dt-boton dt-boton-primario h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]"
-                >
-                  <PlayCircle className="size-5" /> <span>{verDemo}</span>
-                </Link>
-              </Magnetico>
-              <Magnetico className="max-sm:w-full">
-                <a
-                  href={waHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="dt-boton dt-boton-cristal h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]"
-                >
-                  <MessageCircle className="size-5 text-carmesi" /> <span>{escribenos}</span>
-                </a>
-              </Magnetico>
-            </div>
-
-            {/* Los cuatro sellos, en una línea fina. Antes ocupaban una rejilla
-                de dos columnas con sus iconos; aquí estorbaban a la imagen. */}
-            <ul
-              className="dt-entra mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-fg-3"
-              style={{ "--d": "320ms" } as CSSProperties}
-            >
-              {sellos.map((x, i) => (
-                <li key={x} className="flex items-center gap-3">
-                  {i > 0 && <span className="size-[3px] rounded-full bg-fg-3/60" aria-hidden="true" />}
-                  {x}
-                </li>
+                  {i < palabras.length - 1 ? " " : ""}
+                </span>
               ))}
-            </ul>
-          </div>
+            </span>
+            <span
+              className="dt-palabra dt-texto-luz block pb-1"
+              style={{ "--d": `${80 + palabras.length * 50}ms` } as CSSProperties}
+            >
+              {b}
+            </span>
+          </h1>
 
-          {/* --- abajo a la derecha: las cuatro piezas --- */}
-          <div
-            className="dt-entra relative z-10 lg:w-[290px]"
-            style={{ "--d": "420ms" } as CSSProperties}
+          <p
+            className="dt-entra mt-6 max-w-[600px] text-[16px] leading-relaxed text-fg-2 sm:text-[18px]"
+            style={{ "--d": "200ms" } as CSSProperties}
           >
-            <div className="flex items-baseline justify-between gap-3">
-              <span className="font-mono text-[11px] tracking-[0.14em] text-fg-3 uppercase">{hx.piezas}</span>
-              <span className="text-[11px] text-fg-3 max-lg:hidden">{hx.tocar}</span>
-            </div>
-            <ul className="mt-3 grid gap-1">
-              {PANTALLAS.map((p, i) => {
-                const viva = i === activa;
-                return (
-                  <li key={p.pieza}>
-                    <button
-                      type="button"
-                      onClick={() => elegir(i)}
-                      aria-pressed={viva}
-                      className={`dt-pieza group flex w-full items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors ${
-                        viva
-                          ? "border-line bg-surface text-fg"
-                          : "border-transparent text-fg-3 hover:border-line hover:bg-surface/60 hover:text-fg-2"
-                      }`}
-                    >
-                      <span
-                        className={`h-7 w-[3px] shrink-0 rounded-full transition-colors ${
-                          viva ? "bg-carmesi" : "bg-arena/40"
-                        }`}
-                        aria-hidden="true"
-                      />
-                      <span className="min-w-0">
-                        <span className="block text-[14px] leading-tight font-semibold">{p.pieza}</span>
-                        <span className="mt-0.5 block truncate text-[12.5px] leading-tight text-fg-3">{p.nombre}</span>
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
+            {linea}
+          </p>
+          {/* La frase que de verdad nos separa de una agencia («si no os hace
+              falta, os lo decimos») se queda, en una línea y más floja. */}
+          <p
+            className="dt-entra mt-2.5 max-w-[520px] text-[14.5px] leading-relaxed text-fg-3"
+            style={{ "--d": "230ms" } as CSSProperties}
+          >
+            {p}
+          </p>
+
+          <div
+            className="dt-entra mt-8 flex w-full flex-col justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+            style={{ "--d": "260ms" } as CSSProperties}
+          >
+            <Magnetico className="max-sm:w-full">
+              <Link
+                href="/demo?tour=1"
+                className="dt-boton dt-boton-primario h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]"
+              >
+                <PlayCircle className="size-5" /> <span>{verDemo}</span>
+              </Link>
+            </Magnetico>
+            <Magnetico className="max-sm:w-full">
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noreferrer"
+                className="dt-boton dt-boton-cristal h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]"
+              >
+                <MessageCircle className="size-5 text-melocoton" /> <span>{escribenos}</span>
+              </a>
+            </Magnetico>
           </div>
         </div>
 
-        <div
-          className="dt-entra mt-8 hidden items-center lg:flex"
-          style={{ "--d": "520ms" } as CSSProperties}
+        {/* Las cuatro piezas, en una barra. Tocar una cambia el móvil de abajo. */}
+        <ul
+          aria-label={hx.piezas}
+          className="dt-entra relative z-10 mt-8 grid w-full max-w-3xl grid-cols-2 gap-1 rounded-2xl border border-line bg-surface p-1 sm:grid-cols-4"
+          style={{ "--d": "420ms" } as CSSProperties}
         >
-          <span className="flex items-center gap-3 text-[13px] text-fg-3">
-            <span className="dt-raton" aria-hidden="true" />
-            {hx.desliza}
-          </span>
-        </div>
+          {PANTALLAS.map((p, i) => {
+            const viva = i === activa;
+            return (
+              <li key={p.pieza} className="min-w-0">
+                <button
+                  type="button"
+                  onClick={() => elegir(i)}
+                  aria-pressed={viva}
+                  className={`dt-pieza w-full rounded-xl border px-3 py-2.5 transition-colors ${
+                    viva ? "border-carmesi bg-carmesi text-crema" : "border-transparent text-fg-2 hover:bg-crema/8 hover:text-fg"
+                  }`}
+                >
+                  <span className="block text-[14px] leading-tight font-semibold">{p.pieza}</span>
+                  <span className={`mt-0.5 block truncate text-[12.5px] leading-tight ${viva ? "text-crema/85" : "text-fg-3"}`}>{p.nombre}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* Solo marca dónde va el móvil y cuánto mide; no pinta nada. El margen
+            negativo hace que la tira de sellos le corte la parte de abajo. */}
+        <div
+          ref={huecoMovil}
+          aria-hidden="true"
+          className="pointer-events-none mt-8 -mb-20 h-[430px] w-[64%] max-w-[260px] lg:-mb-28 lg:h-[620px] lg:w-[33%] lg:max-w-[360px]"
+        />
+      </div>
+
+      {/* Los cuatro sellos, en una tira que cierra el hero. No van logos de
+          clientes: no los tenemos y aquí no se inventa ninguno. */}
+      <div className="relative z-10 border-t border-line bg-bg">
+        <ul className="mx-auto grid max-w-7xl grid-cols-2 px-5 sm:px-6 lg:grid-cols-4">
+          {sellos.map((x) => (
+            <li key={x} className="flex items-center justify-center gap-2 px-2 py-5 text-center text-[13.5px] font-medium text-fg-2">
+              <i className="size-1.5 shrink-0 rounded-full bg-melocoton" aria-hidden="true" />
+              {x}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

@@ -1,0 +1,200 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_ELEGIR } from "@/content/blog-faq";
+
+<nav aria-label="Brotkrümelnavigation" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Start</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Software wählen
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Software wählen · 8 Min. Lesezeit</div>
+
+<FechaArticulo ruta="/blog/holded-odoo-o-software-a-medida" />
+
+# Holded, Odoo oder eine Eigenentwicklung: wie man richtig wählt
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Sie werden zwanzig Vergleiche finden, und alle sagen etwas anderes. Dies ist nicht der
+  einundzwanzigste: Es ist die Frage, die keiner von ihnen stellt. Sie lautet nicht, welches der
+  beiden besser ist, sondern wie viel Ihrer Arbeit in einen Katalog passt.
+</div>
+
+## Warum ist kein Vergleich, den Sie lesen werden, neutral?
+
+Suchen Sie „Odoo vs Holded“ und zählen Sie: Fast jedes Ergebnis stammt von einer Beratung, die
+Odoo einführt, oder von einem Händler, der Holded verkauft. Man muss niemandem Unredlichkeit
+unterstellen. Wer seit sechs Jahren Odoo einführt, hat Odoo Probleme lösen sehen, die ein
+Holded-Händler mit Holded gelöst gesehen hat, und jeder schreibt aus dem, was er funktionieren
+sah.
+
+Das Problem ist nicht, dass sie lügen: **Keiner von beiden kann den ehrlichen Schluss
+schreiben**, der oft lautet „mit dem, was Sie haben, sind Sie gut bedient“ oder „das löst keines
+von beiden“. Auch wir sind nicht neutral — wir bauen Individualsoftware — also sagen wir es
+vorweg und schreiben weiter unten hin, woran Sie erkennen, dass unser Angebot **nicht** das
+richtige für Sie ist.
+
+<Nota>
+  <p>
+    Diese Seite enthält bewusst keine Funktionstabelle und keine Preise. Beide Plattformen ändern
+    sich jedes Quartal, und das halbe Internet wiederholt veraltete Tabellen, die das Produkt
+    längst nicht mehr beschreiben. Ein Preis veraltet; eine Entscheidungsregel nicht.
+  </p>
+</Nota>
+
+## Was passt in eine Standardlösung und was nicht?
+
+Es gibt einen Test, der fünf Minuten dauert und fast immer stimmt. **Schauen Sie, wie Sie einen
+Preis ermitteln.**
+
+Ergibt sich eines Ihrer Angebote aus Menge mal Preis, einem Rabatt und der Umsatzsteuer obendrauf,
+passen Sie in fast jedes Produkt am Markt, und es gibt nichts weiter zu besprechen: Nehmen Sie
+das, das Ihnen am besten gefällt, und geben Sie das Geld für etwas anderes aus.
+
+Ergibt es sich aus einer Regel, die Gebiet, Anlagentyp, den Sondersatz für diesen Kunden seit neun
+Jahren, die Dauer beim letzten Einsatz oder den Zuschlag für Arbeiten auf dem Dach mischt, dann
+passt es nicht. Und entscheidend ist: **Es passt auf eine Weise nicht, die sich nicht durch
+Konfiguration beheben lässt.** Behoben wird es dadurch, dass jemand die Lücke jeden Monat von Hand
+füllt.
+
+<Senales items={[
+  { fuerte: "Es gibt eine parallele Tabelle.", texto: "Das System übernimmt die Fakturierung, und jemand pflegt daneben eine Tabelle, weil „das System das nicht so macht“. Diese Tabelle ist die Lücke, und sie sagt Ihnen genau, was fehlt." },
+  { fuerte: "Ein Bericht wird jeden Monat von Hand neu gebaut.", texto: "Exportieren, woanders einfügen, zwei Spalten abgleichen, verschicken. Passiert das, sind die Daten im System, aber nicht in der Form, die Sie brauchen." },
+  { fuerte: "Dieselbe Zahl wird zweimal eingetippt.", texto: "Der Techniker schreibt sie in den Bericht, und jemand tippt sie zum Fakturieren erneut ein. Jedes Mal entsteht eine dritte Version der Wahrheit, und das ist die falsche." },
+  { fuerte: "Ein Feld wird zweckentfremdet.", texto: "„Das Bemerkungsfeld nutzen wir für das Gebiet.“ Das deutlichste Symptom eines erzwungenen Katalogs: Das System hat keinen Platz für etwas, das für Sie zentral ist." },
+]} />
+
+## Was sollte man niemals selbst bauen?
+
+Diesen Teil sagt fast niemand, der Individualentwicklung verkauft, und er spart das meiste Geld.
+
+Buchhaltung, Steuern, Bankabgleich, die einzureichenden Meldungen und die Erfüllung von VeriFactu
+und der verpflichtenden E-Rechnung **sind in jedem Unternehmen in Spanien exakt gleich**. Sie
+unterscheiden Sie von niemandem, sie gewinnen Ihnen keinen Kunden, und sie aktuell zu halten ist
+Arbeit ohne Ende: Bei jeder Regeländerung muss wieder angefasst werden.
+
+Das kauft man fertig. Immer.
+
+<Destacado titulo="Wenn Ihnen jemand anbietet, die Fakturierung von Grund auf zu bauen">
+  Lassen Sie sich erklären, was jedes Mal passiert, wenn die Steuerverwaltung das Format eines
+  Datensatzes ändert, und wer das bezahlt. Die anstehenden Fristen stehen auf unserer Seite <Link
+  href="/obligaciones">was das Gesetz verlangt</Link>, jede mit Link zum Gesetzblatt. Ein
+  Rechnungssystem auf dem Stand der spanischen Vorschriften zu halten ist Daueraufgabe, und ein
+  kleines Studio, das sie übernimmt, verspricht Stunden, die es später nicht hat.
+</Destacado>
+
+## Was wird dann gebaut?
+
+Das, was Sie vom Nachbarbetrieb unterscheidet. Und das ist fast immer das Tagesgeschäft und fast
+nie die Buchhaltung:
+
+- **Ihre eigenen Preisregeln**, die kein Katalog mitbringt, weil Sie sie über Jahre selbst
+  entwickelt haben.
+- **Der Arbeitsbericht** in der Form, die Ihr Kunde braucht — nicht in der, die der Kunde des
+  Nachbarn braucht.
+- **Der Weg einer Meldung**: wer sie annimmt, wie sie priorisiert wird, wer sie bekommt und wie
+  daraus ein Auftrag und eine Rechnung wird.
+- **Die Stunden**, wenn Menschen auswärts arbeiten und die Erfassung auch ohne Empfang
+  funktionieren muss.
+
+Und dann wird es mit dem Übrigen verbunden, sodass eine Zahl einmal eingetippt wird und an beiden
+Stellen ankommt. Das ist die Antwort, die fast kein Vergleich gibt, denn **es ist nicht „eines von
+beiden“: es ist beides**, jedes für das, was es gut kann.
+
+## Woran merkt man, dass man zu viel baut?
+
+Die spiegelbildliche Falle, und auf uns fällt es, sie zu benennen.
+
+Wenn das, was Sie bauen wollen, bereits fertig existiert und Ihre Version nur „ähnlich, aber
+unsere“ wäre, bauen Sie es nicht. Wenn der Grund für die Eigenentwicklung ist, dass Ihnen das
+aktuelle System „nicht gefällt“, und dahinter kein konkreter Prozess steht, der nicht passt,
+ebenso wenig. Und wenn der Betrieb aus drei Personen besteht und das eigentliche Problem ist, dass
+niemand aufschreibt, was er tut, löst ein neues System das nicht: Es verstärkt es — darum geht es
+in <Link href="/blog/por-que-diagnosticar-antes-de-automatizar">dem Artikel über die Analyse vor
+der Automatisierung</Link>.
+
+## Welche Kosten stehen auf keiner Preisliste?
+
+Die, die nach zwei bis drei Jahren die Rechnung entscheiden. Eine Lizenz lässt sich leicht
+vergleichen, es sind zwei Zahlen; was nicht verglichen wird, ist Zeit.
+
+Wenn jemand vier Stunden im Monat für die parallele Tabelle, den neu gebauten Bericht und das
+doppelte Eintippen aufwendet, sind das achtundvierzig Stunden im Jahr einer Person, die Gehalt
+bezieht. Multiplizieren Sie das mit den Jahren, die der Behelf schon läuft. Diese Zahl taucht in
+keinem Vergleich auf, **weil sie nicht der Softwareanbieter zahlt**, sondern Sie, über Löhne — und
+deshalb steht sie nie in der Tabelle.
+
+Die ehrliche Rechnung lautet nicht „Lizenz gegen Entwicklung“. Sie lautet „Lizenz plus
+Behelfsstunden“ gegen „Lizenz plus Entwicklung, ohne die Behelfsstunden“.
+
+## Und wenn Sie schon eines der beiden nutzen?
+
+Wegwerfen muss man es fast nie, und seien Sie misstrauisch gegenüber jedem, der etwas anderes
+sagt, bevor er sich angesehen hat, wie Sie arbeiten.
+
+Üblicherweise deckt Ihr System Buchhaltung und Steuern gut ab — den Teil, den man nicht anfassen
+sollte — und greift draußen zu kurz: Arbeitsberichte, Stunden, Meldungen und Angebote mit
+eigenwilligen Regeln. Das lässt sich daneben bauen und verbinden. Eine vollständige Migration ist
+die teure Option, die am häufigsten verkaufte und die am seltensten nötige.
+
+## Häufige Fragen
+
+{FAQ_ELEGIR.de.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Wollen Sie wissen, auf welche Seite Ihr Fall fällt?"
+  boton="Schreiben Sie uns per WhatsApp"
+  href={waLink("GENERAL", undefined, "de")}
+  externo
+>
+  <p>
+    Sagen Sie uns, womit Sie heute fakturieren und wie Sie ein Angebot berechnen. Damit zeigt sich
+    meist schnell, ob Ihr Fall in eine Standardlösung passt, ob daneben eine Lücke zu füllen ist
+    oder ob gar nichts bewegt werden muss.
+  </p>
+  <p>
+    Und wenn die Antwort lautet, dass Sie mit dem Vorhandenen gut bedient sind, **sagen wir auch
+    das**: Es ist das kürzeste Gespräch und das, das wir am häufigsten führen.
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  Wenn Sie die anstehenden Fristen umtreiben: Sie stehen alle auf <Link href="/obligaciones">was
+  spanisches Recht von Betrieben wirklich verlangt</Link>, jede Vorschrift mit Link zum Gesetzblatt
+  und das Veröffentlichte getrennt vom bloß Angekündigten. Und wenn Sie sehen wollen, wie eine
+  maßgeschneiderte Lösung von innen aussieht, ist eine in <Link href="/demo">der Demo</Link>
+  geöffnet.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "de",
+          titulo: "Holded, Odoo oder eine Eigenentwicklung: wie man richtig wählt",
+          descripcion:
+            "Die Frage, die kein Vergleich stellt: Wie viel Ihrer Arbeit passt in einen Katalog? Der Preistest, was man nie selbst bauen sollte, und die Kosten, die in keiner Tabelle stehen.",
+          url: `${marca.dominio}/de/blog/holded-odoo-o-software-a-medida`,
+          fecha: fechaPublicacion("/blog/holded-odoo-o-software-a-medida"),
+          actualizado: fechaRevision("/blog/holded-odoo-o-software-a-medida"),
+        }),
+        esquemaFaq(
+          FAQ_ELEGIR.de.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/de/blog/holded-odoo-o-software-a-medida#faq`,
+          "de",
+        ),
+      ]),
+    ),
+  }}
+/>

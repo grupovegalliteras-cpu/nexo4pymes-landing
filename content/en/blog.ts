@@ -8,6 +8,13 @@ export const blogHome = {
     "We write this from Palma, working with service companies across Mallorca: maintenance, cleaning, pools, HVAC, landscaping, pest control, solar and renovations. The examples come from real cases, the figures are the ones we actually work with, and when the honest answer is \"you don't need software\", we say that too.",
   publicados: [
     {
+      etiqueta: "Choosing software · 8 min",
+      titulo: "Holded, Odoo or software built for you: how to choose without getting it wrong",
+      resumen:
+        "Why no comparison you will read is neutral, the five-minute test that says whether your case fits a catalogue, and the cost that appears on no price list.",
+      href: "/blog/holded-odoo-o-software-a-medida",
+    },
+    {
       etiqueta: "Job reports · 6 min",
       titulo: "Job reports on a phone: why the ones that fail, fail",
       resumen:
@@ -52,6 +59,5 @@ export const blogHome = {
   ],
   proximos: [
     "What a process diagnosis is and what you get out of it",
-    "Custom CRM or off-the-shelf software: how to choose without getting it wrong",
   ],
 };

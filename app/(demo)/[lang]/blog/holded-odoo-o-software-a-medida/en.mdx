@@ -1,0 +1,198 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, esquemaFaq, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { FAQ_ELEGIR } from "@/content/blog-faq";
+
+<nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Home</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Choosing software
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Choosing software · 8 min read</div>
+
+<FechaArticulo ruta="/blog/holded-odoo-o-software-a-medida" />
+
+# Holded, Odoo or software built for you: how to choose without getting it wrong
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  You will find twenty comparisons and all of them say something different. This is not the
+  twenty-first: it is the question none of them asks, which is not which of the two is better but
+  how much of your work fits inside a catalogue.
+</div>
+
+## Why is no comparison you will read neutral?
+
+Search for "Odoo vs Holded" and count: nearly every result is signed by a consultancy that
+implements Odoo or a reseller who sells Holded. You do not have to assume bad faith. Someone who
+has spent six years implementing Odoo has watched Odoo solve problems that a Holded reseller has
+watched Holded solve, and each writes from what they have seen work.
+
+The problem is not that they lie: it is that **neither of them can write the honest conclusion**,
+which is often "what you already have is fine" or "neither of these solves this". We are not
+neutral either — we build custom software — so we say so up front, and further down we spell out
+the signal that what we sell is **not** what you need.
+
+<Nota>
+  <p>
+    This page carries no feature table and no prices, deliberately. Both platforms change every
+    quarter, and half the internet repeats stale tables that no longer describe the product. A
+    price goes out of date; a rule for deciding does not.
+  </p>
+</Nota>
+
+## What fits in an off-the-shelf system, and what does not?
+
+There is a test that takes five minutes and is right nearly every time. **Look at how you work out
+a price.**
+
+If one of your quotes comes from quantity times price, a discount and VAT on top, you fit almost
+any product on the market and there is nothing more to discuss: buy the one you like best and
+spend the money on something else.
+
+If it comes from a rule that mixes the area, the type of installation, the special rate you have
+given that client for nine years, how long it took the last time you went, or the surcharge for
+working on a roof, then it does not fit. And here is the part that matters: **it does not fit in a
+way that configuration will not fix**. It gets fixed by someone filling the gap by hand every
+month.
+
+<Senales items={[
+  { fuerte: "There is a parallel spreadsheet.", texto: "The system handles invoicing and someone maintains a sheet on the side because “the system doesn’t do it that way”. That spreadsheet is the gap, and it is telling you exactly what is missing." },
+  { fuerte: "A report is rebuilt by hand every month.", texto: "Export, paste somewhere else, cross two columns, send. When that happens, the data is in the system but not in the shape you need it." },
+  { fuerte: "The same figure is typed twice.", texto: "The engineer writes it on the job sheet and someone types it again to invoice. Every time a figure is typed twice there is a third version of the truth, and that is the one that is wrong." },
+  { fuerte: "A field is being used for something else.", texto: "“We use the notes field for the area.” It is the clearest symptom of a forced catalogue: the system has nowhere to keep something that is central to you." },
+]} />
+
+## What should never be built from scratch?
+
+This is the part almost nobody says while selling custom development, and it is the part that
+saves the most money.
+
+Accounting, tax, bank reconciliation, the returns you file and compliance with VeriFactu and
+mandatory e-invoicing **are exactly the same in every company in Spain**. They do not set you
+apart from anyone, they will not win you a client, and keeping them current is endless work: every
+time a rule changes, they have to be touched again.
+
+You buy that ready-made. Always.
+
+<Destacado titulo="If someone offers to build your invoicing from scratch">
+  Ask them to explain what happens each time the tax agency changes the format of a record, and who
+  pays for it. The dates ahead are on our page about <Link href="/obligaciones">what the law
+  requires</Link>, each one linked to the official gazette. Keeping an invoicing system current
+  with Spanish rules is permanent work, and a small studio that takes it on is committing hours it
+  will not have later.
+</Destacado>
+
+## So what does get built?
+
+What makes you different from the firm next door. Which is almost always daily operations and
+almost never the accounts:
+
+- **The pricing rules that are yours**, which no catalogue ships, because you invented them over
+  years.
+- **The job report** in the shape your client needs, which is not the shape the neighbour's client
+  needs.
+- **The path of an incoming request**: who takes it, how it is prioritised, who it goes to and how
+  it ends up as a job and an invoice.
+- **The hours**, when people work away from the office and clocking in has to work where there is
+  no signal.
+
+And then it is connected to the rest, so a figure is typed once and reaches both places. That is
+the answer almost no comparison gives, because **it is not "one of the two": it is both**, each
+doing what it does well.
+
+## How do you know you are overbuilding?
+
+The mirror-image trap, and the one it falls to us to flag.
+
+If what you want to build already exists and your version would only be "similar but ours", do not
+build it. If the reason for going custom is that you "don't like" the current system and there is
+no specific process behind it that does not fit, likewise. And if the company is three people and
+the real problem is that nobody writes down what they do, a new system will not fix that: it will
+amplify it, which is what <Link href="/blog/por-que-diagnosticar-antes-de-automatizar">the article
+on diagnosing before automating</Link> is about.
+
+## Which cost never appears on the price list?
+
+The one that decides the sum after two or three years. A licence is easy to compare because it is
+two numbers; what does not get compared is time.
+
+If someone spends four hours a month on the parallel spreadsheet, the report that gets rebuilt and
+typing the same figure twice, that is forty-eight hours a year of a person who draws a salary.
+Multiply it by the years you have had the workaround. That number appears in no comparison
+**because the company selling the software does not pay it**, you do, in wages, which is why it
+never makes the table.
+
+The honest sum is not "licence versus development". It is "licence plus workaround hours" versus
+"licence plus development, without the workaround hours".
+
+## What if you already run one of them?
+
+You almost never have to throw it out, and be wary of anyone who says otherwise before looking at
+how you work.
+
+Typically the system you have handles the accounting and tax side well — the side you should not
+touch — and falls short out on the road: job reports, hours, incoming requests and quotes with
+awkward rules. That can be built alongside and connected. Migrating wholesale is the expensive
+option, it is the one most often sold, and it is the one least often needed.
+
+## Frequently asked questions
+
+{FAQ_ELEGIR.en.map(([p, r]) => (
+  <div key={p} className="mt-8">
+    <h3 className="font-display text-[18px] font-semibold text-fg">{p}</h3>
+    <p className="mt-2 text-[16px] leading-relaxed text-fg-2">{r}</p>
+  </div>
+))}
+
+<CtaPost
+  titulo="Want to know which side your case falls on?"
+  boton="Message us on WhatsApp"
+  href={waLink("GENERAL", undefined, "en")}
+  externo
+>
+  <p>
+    Tell us what you invoice with today and how you work out a quote. That is usually enough to see
+    quickly whether your case fits an off-the-shelf system, whether there is a gap to fill
+    alongside it, or whether nothing needs to move at all.
+  </p>
+  <p>
+    And if the answer is that what you already have is fine, **we will say so**: it is the shortest
+    conversation and the one we have most often.
+  </p>
+</CtaPost>
+
+<p className="mt-10 text-[15.5px] leading-relaxed text-fg-2">
+  If what worries you is the deadlines ahead, they are all on <Link href="/obligaciones">what
+  Spanish law actually requires of a business</Link>, each rule linked to the official gazette and
+  with what is published kept apart from what is only announced. And if you want to see what
+  software built for a company looks like from the inside, there is one open in <Link
+  href="/demo">the demo</Link>.
+</p>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "en",
+          titulo: "Holded, Odoo or software built for you: how to choose without getting it wrong",
+          descripcion:
+            "The question no comparison asks: how much of your work fits in a catalogue. The pricing test, what should never be built from scratch, and the cost that never makes the table.",
+          url: `${marca.dominio}/en/blog/holded-odoo-o-software-a-medida`,
+          fecha: fechaPublicacion("/blog/holded-odoo-o-software-a-medida"),
+          actualizado: fechaRevision("/blog/holded-odoo-o-software-a-medida"),
+        }),
+        esquemaFaq(
+          FAQ_ELEGIR.en.map(([p, r]) => ({ p, r })),
+          `${marca.dominio}/en/blog/holded-odoo-o-software-a-medida#faq`,
+          "en",
+        ),
+      ]),
+    ),
+  }}
+/>

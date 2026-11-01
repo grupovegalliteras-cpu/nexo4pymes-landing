@@ -17,6 +17,13 @@ export const blogHome = {
     "Lo escribimos desde Palma, trabajando con empresas de servicios de Mallorca: mantenimiento, limpieza, piscinas, climatización, jardinería, control de plagas, solar y reformas. Los ejemplos salen de casos reales, los precios que aparecen son los que manejamos, y cuando la respuesta honesta es «no hace falta software», también lo decimos.",
   publicados: [
     {
+      etiqueta: "Elegir programa · 8 min",
+      titulo: "Holded, Odoo o un programa a medida: cómo elegir sin equivocarse",
+      resumen:
+        "Por qué ninguna comparativa que vais a leer es neutral, la prueba de cinco minutos que dice si vuestro caso cabe en un catálogo, y el coste que no sale en ninguna tabla de precios.",
+      href: "/blog/holded-odoo-o-software-a-medida",
+    },
+    {
       etiqueta: "Partes de trabajo · 6 min",
       titulo: "Partes de trabajo en el móvil: por qué fallan los que fallan",
       resumen:
@@ -61,6 +68,5 @@ export const blogHome = {
   ],
   proximos: [
     "Qué es un diagnóstico de procesos y qué os lleváis de él",
-    "CRM a medida o software de catálogo: cómo elegir sin equivocarse",
   ],
 };

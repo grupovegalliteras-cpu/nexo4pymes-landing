@@ -48,6 +48,7 @@ export type Articulo = {
 };
 
 export const ARTICULOS: Articulo[] = [
+  { ruta: "/blog/holded-odoo-o-software-a-medida", publicado: "2026-11-01" },
   { ruta: "/blog/partes-de-trabajo-movil-mallorca", publicado: "2026-10-14" },
   { ruta: "/blog/control-horario-obligatorio-mallorca", publicado: "2026-10-14" },
   { ruta: "/blog/verifactu-empresas-servicios-mallorca", publicado: "2026-10-14" },

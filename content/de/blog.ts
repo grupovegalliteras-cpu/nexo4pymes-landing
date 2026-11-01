@@ -8,6 +8,13 @@ export const blogHome = {
     "Wir schreiben das aus Palma, in der Arbeit mit Dienstleistungsbetrieben auf ganz Mallorca: Wartung, Reinigung, Pools, Klimatechnik, Garten, Schädlingsbekämpfung, Solar und Renovierung. Die Beispiele stammen aus echten Fällen, die Zahlen sind die, mit denen wir arbeiten — und wenn die ehrliche Antwort «Sie brauchen keine Software» lautet, sagen wir auch das.",
   publicados: [
     {
+      etiqueta: "Software wählen · 8 Min.",
+      titulo: "Holded, Odoo oder eine Eigenentwicklung: wie man richtig wählt",
+      resumen:
+        "Warum kein Vergleich, den Sie lesen werden, neutral ist, der Fünf-Minuten-Test, ob Ihr Fall in einen Katalog passt, und die Kosten, die auf keiner Preisliste stehen.",
+      href: "/blog/holded-odoo-o-software-a-medida",
+    },
+    {
       etiqueta: "Arbeitsberichte · 6 Min.",
       titulo: "Arbeitsberichte auf dem Handy: Warum die scheitern, die scheitern",
       resumen:
@@ -52,6 +59,5 @@ export const blogHome = {
   ],
   proximos: [
     "Was eine Prozessanalyse ist und was Sie davon haben",
-    "Individuelles CRM oder Standardsoftware: richtig wählen",
   ],
 };

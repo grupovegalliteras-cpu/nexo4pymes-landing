@@ -45,6 +45,11 @@ export function GET() {
      que sale la que se ve en la página y la del sitemap. */
   const articulos: [string, string, string][] = [
     [
+      "/blog/holded-odoo-o-software-a-medida",
+      "Holded, Odoo o un programa a medida: cómo elegir sin equivocarse",
+      "por qué ninguna comparativa es neutral, la prueba del precio para saber si vuestro caso cabe en un catálogo, y lo que no hay que programar nunca.",
+    ],
+    [
       "/blog/partes-de-trabajo-movil-mallorca",
       "Partes de trabajo en el móvil: por qué fallan los que fallan",
       "qué campos hacen falta de verdad, por qué se abandonan estas apps y por qué tiene que funcionar sin cobertura.",

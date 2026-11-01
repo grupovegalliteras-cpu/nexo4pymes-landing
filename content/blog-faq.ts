@@ -411,3 +411,95 @@ export const FAQ_PARTES = {
     ],
   ],
 } as const satisfies PorIdioma;
+
+/* ============================================================
+   ELEGIR ENTRE SOFTWARE DE CATÁLOGO Y SOFTWARE A MEDIDA
+
+   OJO AL ESCRIBIR AQUÍ: no se afirma nada concreto sobre lo que hace
+   o deja de hacer Holded ni Odoo. Las dos cambian de funcionalidad
+   cada trimestre y media internet repite tablas de características
+   caducadas. Lo que sí se puede afirmar, y es lo que de verdad decide,
+   es la forma del problema: qué cabe en un catálogo y qué no.
+
+   Y NO SE DICEN PRECIOS. Un precio caduca; una regla para decidir, no.
+   ============================================================ */
+export const FAQ_ELEGIR = {
+  es: [
+    [
+      "¿Es más barato un software de catálogo que uno a medida?",
+      "De entrada sí, casi siempre. La cuenta cambia cuando se suman las horas que alguien dedica cada mes a rellenar los huecos del catálogo a mano: el Excel paralelo, el informe que se rehace, el dato que se teclea dos veces. Ese coste no aparece en ninguna tabla de precios y es el que decide a los dos o tres años.",
+    ],
+    [
+      "¿Cómo sé si mi empresa cabe en un programa de catálogo?",
+      "Mirad cómo calculáis un precio. Si vuestro presupuesto sale de multiplicar cantidad por precio y aplicar un descuento, cabe en casi cualquier catálogo. Si sale de una regla que tiene en cuenta la zona, el tipo de instalación, lo que cobráis a ese cliente en concreto o lo que se tardó la última vez, no cabe, y forzarlo cuesta más que construirlo.",
+    ],
+    [
+      "¿Por qué todas las comparativas dicen cosas distintas?",
+      "Porque casi todas las escribe alguien que implanta uno de los dos programas. No es mala fe necesariamente: quien implanta Odoo ha visto resolver con Odoo lo que quien distribuye Holded ha visto resolver con Holded. Lo que conviene mirar en cualquier comparativa es quién la firma y qué vende, y leerla sabiendo eso.",
+    ],
+    [
+      "¿Hay que elegir uno u otro, o se pueden combinar?",
+      "Lo normal es combinarlos, y casi nadie lo cuenta. La contabilidad, los impuestos, la conciliación bancaria y el cumplimiento de VeriFactu y de la factura electrónica son iguales en todas las empresas: eso se compra hecho y no se programa nunca. Lo que os distingue de la empresa de al lado —vuestras reglas de precio, vuestros partes, vuestro circuito de avisos— es lo que conviene construir y conectar con lo anterior.",
+    ],
+    [
+      "¿Y si ya estamos metidos en un programa que se nos queda corto?",
+      "Casi nunca hay que tirarlo. Lo habitual es que el programa lleve bien la parte contable y fiscal y se quede corto en la operación diaria: los partes, las horas, los avisos, los presupuestos con reglas raras. Eso se puede construir aparte y conectar, de modo que el dato se teclee una vez. Migrar entero es la opción cara y rara vez la necesaria.",
+    ],
+    [
+      "¿Un programa a medida cumple con VeriFactu y con la factura electrónica?",
+      "Tiene que cumplir igual que cualquier otro: la norma obliga al sistema de facturación, no al proveedor. Lo habitual, y lo más sensato, es no reconstruir la facturación: se conecta el desarrollo a medida con el programa de facturación que ya cumple, y la factura sigue saliendo de donde salía. Quien os ofrezca programar la facturación desde cero debería explicaros muy bien por qué.",
+    ],
+  ],
+  en: [
+    [
+      "Is off-the-shelf software cheaper than something built for you?",
+      "Up front, almost always yes. The sum changes once you add the hours someone spends every month filling the gaps by hand: the parallel spreadsheet, the report that gets rewritten, the figure typed in twice. That cost appears on no price list, and it is the one that decides the question after two or three years.",
+    ],
+    [
+      "How do I know whether my business fits an off-the-shelf system?",
+      "Look at how you work out a price. If your quote comes from quantity times price with a discount, it fits almost any catalogue product. If it comes from a rule involving the area, the type of installation, what you charge that particular client or how long it took last time, it does not fit, and forcing it costs more than building it.",
+    ],
+    [
+      "Why does every comparison say something different?",
+      "Because almost all of them are written by someone who implements one of the two systems. It is not necessarily bad faith: whoever implements Odoo has watched Odoo solve what a Holded reseller has watched Holded solve. What is worth checking in any comparison is who signed it and what they sell, and reading it knowing that.",
+    ],
+    [
+      "Do you have to pick one, or can you combine them?",
+      "Combining them is the normal answer, and almost nobody says so. Accounting, tax, bank reconciliation and meeting Spain's VeriFactu and e-invoicing rules are the same in every company: you buy that ready-made and never build it. What makes you different from the firm next door, your pricing rules, your job reports, your call handling, is what is worth building and connecting to the rest.",
+    ],
+    [
+      "What if we are already committed to a system that falls short?",
+      "You almost never have to throw it out. Typically the system handles the accounting and tax side well and falls short on daily operations: job reports, hours, incoming requests, quotes with awkward rules. That can be built alongside and connected, so a figure is typed once. Migrating wholesale is the expensive option and rarely the necessary one.",
+    ],
+    [
+      "Does custom software comply with VeriFactu and e-invoicing?",
+      "It has to comply like any other: the rule binds the invoicing system, not the supplier. The usual and most sensible route is not to rebuild invoicing at all: the custom part is connected to the invoicing software that already complies, and invoices keep coming out of where they came from. Anyone offering to build invoicing from scratch should explain very clearly why.",
+    ],
+  ],
+  de: [
+    [
+      "Ist Standardsoftware günstiger als eine Eigenentwicklung?",
+      "Zunächst fast immer ja. Die Rechnung ändert sich, sobald man die Stunden addiert, die jemand Monat für Monat aufwendet, um die Lücken der Standardlösung von Hand zu füllen: die parallele Tabelle, der neu geschriebene Bericht, die zweimal eingetippte Zahl. Diese Kosten stehen auf keiner Preisliste, und sie entscheiden die Frage nach zwei bis drei Jahren.",
+    ],
+    [
+      "Woran erkenne ich, ob mein Betrieb in eine Standardlösung passt?",
+      "Schauen Sie, wie Sie einen Preis ermitteln. Ergibt sich Ihr Angebot aus Menge mal Preis plus Rabatt, passt es in fast jede Standardlösung. Ergibt es sich aus einer Regel mit Gebiet, Anlagentyp, dem Sondersatz für genau diesen Kunden oder der Dauer beim letzten Mal, passt es nicht, und es zu erzwingen kostet mehr, als es zu bauen.",
+    ],
+    [
+      "Warum sagt jeder Vergleich etwas anderes?",
+      "Weil fast alle von jemandem stammen, der eines der beiden Systeme einführt. Das ist nicht zwangsläufig unredlich: Wer Odoo einführt, hat gesehen, wie Odoo löst, was ein Holded-Händler mit Holded gelöst hat. Prüfen Sie bei jedem Vergleich, wer ihn unterschreibt und was er verkauft, und lesen Sie ihn mit diesem Wissen.",
+    ],
+    [
+      "Muss man sich entscheiden, oder lässt sich beides verbinden?",
+      "Beides zu verbinden ist der Normalfall, und kaum jemand sagt es. Buchhaltung, Steuern, Bankabgleich und die Erfüllung von VeriFactu und E-Rechnung sind in jedem Unternehmen gleich: das kauft man fertig und baut es nie selbst. Was Sie vom Nachbarbetrieb unterscheidet, Ihre Preisregeln, Ihre Arbeitsberichte, Ihr Meldungsablauf, lohnt sich zu bauen und mit dem Übrigen zu verbinden.",
+    ],
+    [
+      "Und wenn wir schon in einem System stecken, das zu kurz greift?",
+      "Wegwerfen muss man es fast nie. Üblicherweise deckt das System Buchhaltung und Steuern gut ab und greift im Tagesgeschäft zu kurz: Arbeitsberichte, Stunden, Meldungen, Angebote mit eigenwilligen Regeln. Das lässt sich daneben bauen und verbinden, sodass eine Zahl einmal eingetippt wird. Eine vollständige Migration ist die teure Option und selten die nötige.",
+    ],
+    [
+      "Erfüllt eine Eigenentwicklung VeriFactu und die E-Rechnung?",
+      "Sie muss es wie jede andere Lösung: Die Vorschrift bindet das Rechnungssystem, nicht den Anbieter. Üblich und am sinnvollsten ist, die Fakturierung gar nicht neu zu bauen: Die Eigenentwicklung wird mit der bereits konformen Rechnungssoftware verbunden, und die Rechnung kommt weiter von dort, wo sie herkam. Wer anbietet, die Fakturierung von Grund auf zu programmieren, sollte sehr genau erklären, warum.",
+    ],
+  ],
+} as const satisfies PorIdioma;

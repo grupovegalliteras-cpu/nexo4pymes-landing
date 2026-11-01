@@ -32,7 +32,7 @@ const T = {
          —la plantilla que se repite en todas las páginas— gastaba sus
          enlaces en direcciones que Google no indexa. Ahora llevan a las
          landings, que es donde hay texto que posicionar. */
-      ["Programa de servicios", [["Todos los módulos", "/modulos"], ["Facturación con VeriFactu", "/modulos/facturacion-verifactu"], ["Control horario y fichaje", "/modulos/control-horario"], ["Partes de trabajo", "/modulos/partes-de-trabajo"], ["Central Avisos", "/panel/central-avisos"]]],
+      ["Programa de servicios", [["Todos los módulos", "/modulos"], ["Facturación con VeriFactu", "/modulos/facturacion-verifactu"], ["Control horario y fichaje", "/modulos/control-horario"], ["Partes de trabajo", "/modulos/partes-de-trabajo"], ["Presupuestos", "/modulos/presupuestos"], ["Asistente de WhatsApp", "/modulos/chatbot-whatsapp"]]],
       ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"], ["Jardinería", "/sectores/jardineria"], ["Control de plagas", "/sectores/plagas"], ["Instalaciones solares", "/sectores/solar"], ["Reformas", "/sectores/reformas"], ["Clubes de pádel", "/padel"]]],
       ["Empresa", [["Qué obliga por ley", "/obligaciones"], ["Plantilla de registro de jornada", "/plantillas/registro-de-jornada"], ["Servicios", "/servicios"], ["Nosotros", "/nosotros"], ["Blog", "/blog"], ["Contacto", "/contacto"]]],
     ],
@@ -53,7 +53,7 @@ const T = {
     pie: "Custom software for small businesses: management systems, web configurators, time clocking and AI automations. From",
     columnas: [
       ["Demo", [["Presentation mode", "/demo"], ["Office dashboard", "/panel"], ["Technician app", "/app"], ["Guided tour", "/demo?tour=1"]]],
-      ["Service software", [["All modules", "/modulos"], ["Invoicing with VeriFactu", "/modulos/facturacion-verifactu"], ["Time clock", "/modulos/control-horario"], ["Job reports", "/modulos/partes-de-trabajo"], ["Central Avisos", "/panel/central-avisos"]]],
+      ["Service software", [["All modules", "/modulos"], ["Invoicing with VeriFactu", "/modulos/facturacion-verifactu"], ["Time clock", "/modulos/control-horario"], ["Job reports", "/modulos/partes-de-trabajo"], ["Quotes", "/modulos/presupuestos"], ["WhatsApp assistant", "/modulos/chatbot-whatsapp"]]],
       ["Industries", [["Building maintenance", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["HVAC", "/sectores/climatizacion"], ["Cleaning", "/sectores/limpieza"], ["Landscaping", "/sectores/jardineria"], ["Pest control", "/sectores/plagas"], ["Solar", "/sectores/solar"], ["Renovations", "/sectores/reformas"]]],
       ["Company", [["What the law requires", "/obligaciones"], ["Working-time record template", "/plantillas/registro-de-jornada"], ["Services", "/servicios"], ["About us", "/nosotros"], ["Blog", "/blog"], ["Contact", "/contacto"]]],
     ],
@@ -74,7 +74,7 @@ const T = {
     pie: "Individuelle Software für kleine Unternehmen: Verwaltungssysteme, Web-Konfiguratoren, Zeiterfassung und KI-Automatisierungen. Aus",
     columnas: [
       ["Demo", [["Präsentationsmodus", "/demo"], ["Büro-Dashboard", "/panel"], ["Techniker-App", "/app"], ["Geführte Tour", "/demo?tour=1"]]],
-      ["Dienstleister-Software", [["Alle Module", "/modulos"], ["Rechnungen mit VeriFactu", "/modulos/facturacion-verifactu"], ["Zeiterfassung", "/modulos/control-horario"], ["Arbeitsberichte", "/modulos/partes-de-trabajo"], ["Central Avisos", "/panel/central-avisos"]]],
+      ["Dienstleister-Software", [["Alle Module", "/modulos"], ["Rechnungen mit VeriFactu", "/modulos/facturacion-verifactu"], ["Zeiterfassung", "/modulos/control-horario"], ["Arbeitsberichte", "/modulos/partes-de-trabajo"], ["Angebote", "/modulos/presupuestos"], ["WhatsApp-Assistent", "/modulos/chatbot-whatsapp"]]],
       ["Branchen", [["Gebäudetechnik", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["Klimatechnik", "/sectores/climatizacion"], ["Reinigung", "/sectores/limpieza"], ["Garten", "/sectores/jardineria"], ["Schädlingsbekämpfung", "/sectores/plagas"], ["Solaranlagen", "/sectores/solar"], ["Renovierungen", "/sectores/reformas"]]],
       ["Unternehmen", [["Was das Gesetz verlangt", "/obligaciones"], ["Vorlage zur Arbeitszeiterfassung", "/plantillas/registro-de-jornada"], ["Leistungen", "/servicios"], ["Über uns", "/nosotros"], ["Blog", "/blog"], ["Kontakt", "/contacto"]]],
     ],

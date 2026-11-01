@@ -3,6 +3,8 @@ import Link from "@/components/i18n/Enlace";
 import { Reveal } from "@/components/motion/Reveal";
 import { TarjetaGlow } from "@/components/ui/TarjetaGlow";
 import { contenido } from "@/content/i18n";
+import { FechaEntrada } from "@/components/blog/Bloques";
+import { articuloDe, fechaSitemap } from "@/content/articulos";
 import { alternativas, idiomaOBase, tr } from "@/lib/i18n";
 import { esquemaMigas, grafoPagina, urlAbsoluta } from "@/lib/esquema";
 import { marca } from "@/content/marca";
@@ -62,9 +64,15 @@ export default async function PaginaBlog({ params }: { params: Promise<{ lang: s
         {blogHome.publicados.map((entrada, i) => (
           <Reveal key={entrada.href} retraso={0.1 + i * 0.05}>
             <TarjetaGlow className="group relative">
-              <span className="inline-flex rounded-full border border-line bg-surface-2 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-2">
-                {entrada.etiqueta}
-              </span>
+              {/* La etiqueta y la fecha. La fecha solo estaba dentro
+                  del artículo, y aquí es donde más falta hacía: seis
+                  titulares sin fecha no dicen cuál es el último. */}
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                <span className="inline-flex rounded-full border border-line bg-surface-2 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-2">
+                  {entrada.etiqueta}
+                </span>
+                <FechaEntrada ruta={entrada.href} />
+              </div>
               <h2 className="mt-4 text-[22px] leading-snug text-fg sm:text-[26px]">
                 <Link href={entrada.href} className="after:absolute after:inset-0 after:content-['']">
                   {entrada.titulo}
@@ -120,13 +128,22 @@ export default async function PaginaBlog({ params }: { params: Promise<{ lang: s
                 /* Los artículos que cuelgan de este blog. Sin esto, un
                    buscador tiene que deducir del HTML cuáles son entradas
                    y cuáles enlaces cualesquiera. */
-                blogPost: blogHome.publicados.map((entrada) => ({
- "@type": "BlogPosting",
- "@id": urlAbsoluta(lang, entrada.href) + "#articulo",
-                  headline: entrada.titulo,
-                  description: entrada.resumen,
-                  url: urlAbsoluta(lang, entrada.href),
-                })),
+                blogPost: blogHome.publicados.map((entrada) => {
+                  /* La ficha de content/articulos.ts. El mismo @id que
+                     emite el artículo, así que las fechas de los dos
+                     tienen que salir del mismo sitio o se contradicen. */
+                  const ficha = articuloDe(entrada.href);
+                  return {
+                    "@type": "BlogPosting",
+                    "@id": urlAbsoluta(lang, entrada.href) + "#articulo",
+                    headline: entrada.titulo,
+                    description: entrada.resumen,
+                    url: urlAbsoluta(lang, entrada.href),
+                    ...(ficha
+                      ? { datePublished: ficha.publicado, dateModified: fechaSitemap(ficha) }
+                      : {}),
+                  };
+                }),
               },
             ]),
           ),

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { alternativas, idiomaOBase, tr } from "@/lib/i18n";
+import { ogArticulo } from "@/content/articulos";
 import { fijarIdioma } from "@/lib/idioma-servidor";
 import { esquemaMigas, grafoPagina } from "@/lib/esquema";
 import ArticuloEs from "./es.mdx";
@@ -31,6 +32,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     title: { absolute: `${titulo} | Nexo4Pymes` },
     description: descripcion,
     alternates: alternativas(lang, RUTA),
+    /* La fecha de publicación, para quien no lee el JSON-LD: WhatsApp,
+       LinkedIn, Discover y los buscadores de respuestas. Sale de
+       content/articulos.ts, el mismo sitio que la fecha visible. */
+    openGraph: ogArticulo(lang, RUTA, { titulo, descripcion }),
   };
 }
 

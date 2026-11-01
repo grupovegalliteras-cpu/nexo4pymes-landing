@@ -1,6 +1,7 @@
 import { marca } from "@/content/marca";
 import { SECTORES } from "@/data/sectors";
 import { colaboradores } from "@/content/colaboradores";
+import { fechaPublicacion } from "@/content/articulos";
 
 /* ============================================================
    /llms.txt — LA WEB RESUMIDA PARA QUIEN NO LA VA A LEER ENTERA
@@ -33,6 +34,48 @@ export function GET() {
 
   const socios = colaboradores
     .map((c) => `- ${c.nombre}${c.web ? ` (${c.web})` : ""} — ${c.papel.es}.${c.texto.es ? " " + c.texto.es : ""}`)
+    .join("\n");
+
+  /* LOS ARTÍCULOS, CON SU FECHA. Un modelo que resume esta web decide
+     con lo que lee aquí si un artículo sobre VeriFactu sigue valiendo, y
+     sin una fecha escrita se la inventa a partir de cuándo descargó el
+     archivo: de ahí que un artículo de octubre se cite como recién
+     salido. La fecha sale de content/articulos.ts, el mismo sitio del
+     que sale la que se ve en la página y la del sitemap. */
+  const articulos: [string, string, string][] = [
+    [
+      "/blog/partes-de-trabajo-movil-mallorca",
+      "Partes de trabajo en el móvil: por qué fallan los que fallan",
+      "qué campos hacen falta de verdad, por qué se abandonan estas apps y por qué tiene que funcionar sin cobertura.",
+    ],
+    [
+      "/blog/control-horario-obligatorio-mallorca",
+      "Control horario: qué obliga de verdad y qué os están vendiendo",
+      "registrar la jornada es obligatorio desde 2019; hacerlo digitalmente no lo es.",
+    ],
+    [
+      "/blog/verifactu-empresas-servicios-mallorca",
+      "VeriFactu: qué tiene que hacer una empresa de servicios de Mallorca",
+      "qué obliga hoy y qué es solo un anuncio sin publicar, qué cambia en la factura y qué hacer ahora.",
+    ],
+    [
+      "/blog/centralizar-avisos-llamadas-whatsapp-mallorca",
+      "Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca",
+      "los cuatro pasos para centralizar los avisos y qué hace CentralAvisos.",
+    ],
+    [
+      "/blog/automatizar-presupuestos-pymes-mallorca",
+      "Cómo dejar de hacer presupuestos a mano en una pyme de Mallorca",
+      "plantilla, integración o configurador web, y cuándo no compensa.",
+    ],
+    [
+      "/blog/por-que-diagnosticar-antes-de-automatizar",
+      "Por qué automatizar sin diagnosticar antes puede hundiros el negocio",
+      "la automatización amplifica el proceso que ya tenéis, y cuándo la respuesta correcta es no automatizar.",
+    ],
+  ];
+  const blog = articulos
+    .map(([ruta, titulo, resumen]) => `- [${titulo}](${marca.dominio}${ruta}), publicado el ${fechaPublicacion(ruta)}: ${resumen}`)
     .join("\n");
 
   const texto = `# Nexo4Pymes
@@ -101,12 +144,7 @@ ${socios}
 - [Quiénes somos](${marca.dominio}/nosotros): las dos personas, cómo se trabaja y qué pasa con los datos de los clientes.
 - [Contacto](${marca.dominio}/contacto): videollamada de 15 minutos o formulario.
 - [Blog](${marca.dominio}/blog)
-- [Partes de trabajo en el móvil: por qué fallan los que fallan](${marca.dominio}/blog/partes-de-trabajo-movil-mallorca): qué campos hacen falta de verdad, por qué se abandonan estas apps y por qué tiene que funcionar sin cobertura.
-- [Control horario: qué obliga de verdad y qué os están vendiendo](${marca.dominio}/blog/control-horario-obligatorio-mallorca): registrar la jornada es obligatorio desde 2019; hacerlo digitalmente no lo es.
-- [VeriFactu: qué tiene que hacer una empresa de servicios de Mallorca](${marca.dominio}/blog/verifactu-empresas-servicios-mallorca): qué obliga hoy y qué es solo un anuncio sin publicar, qué cambia en la factura y qué hacer ahora.
-- [Cómo organizar llamadas, WhatsApp y avisos de clientes en una empresa de Mallorca](${marca.dominio}/blog/centralizar-avisos-llamadas-whatsapp-mallorca): los cuatro pasos para centralizar los avisos y qué hace CentralAvisos.
-- [Cómo dejar de hacer presupuestos a mano en una pyme de Mallorca](${marca.dominio}/blog/automatizar-presupuestos-pymes-mallorca): plantilla, integración o configurador web, y cuándo no compensa.
-- [Por qué automatizar sin diagnosticar antes puede hundiros el negocio](${marca.dominio}/blog/por-que-diagnosticar-antes-de-automatizar)
+${blog}
 - [Aviso legal, privacidad y cookies](${marca.dominio}/legal)
 
 ## Por sector

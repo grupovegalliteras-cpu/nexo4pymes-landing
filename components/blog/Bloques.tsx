@@ -142,3 +142,18 @@ export function FechaArticulo({ ruta }: { ruta: string }) {
     </p>
   );
 }
+
+/* La misma fecha, en el listado del blog. Seis titulares sin fecha no
+   dicen cual es el ultimo ni si esto sigue vivo, y es justo lo que
+   mira quien llega a un blog por primera vez. Va suelta y sin margen
+   porque en la tarjeta se coloca al lado de la etiqueta. */
+export function FechaEntrada({ ruta }: { ruta: string }) {
+  const lang = idiomaServidor();
+  const a = articuloDe(ruta);
+  if (!a) return null;
+  return (
+    <time dateTime={a.publicado} className="font-mono text-[10px] uppercase tracking-[0.14em] text-fg-3">
+      {fechaLegible(a.publicado, lang)}
+    </time>
+  );
+}

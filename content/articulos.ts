@@ -1,3 +1,8 @@
+import type { Metadata } from "next";
+import { marca } from "@/content/marca";
+import { urlAbsoluta } from "@/lib/esquema";
+import { OG_LOCALE, type Idioma } from "@/lib/i18n";
+
 /* ============================================================
    LAS FECHAS DE LOS ARTÍCULOS, EN UN SOLO SITIO
 
@@ -89,4 +94,46 @@ export function fechaPublicacion(ruta: string): string {
 
 export function fechaRevision(ruta: string): string | undefined {
   return articuloDe(ruta)?.actualizado;
+}
+
+/* ============================================================
+   LA MISMA FECHA, PERO PARA QUIEN NO LEE EL JSON-LD
+
+   El artículo ya declaraba sus fechas en los datos estructurados
+   (BlogPosting) y en el sitemap. Lo que faltaba es la etiqueta que
+   leen WhatsApp, LinkedIn, Facebook, Google Discover y los
+   buscadores de respuestas: `article:published_time`. Sin ella, y
+   con el og:type heredado en "website", un artículo no es un
+   artículo para nadie de fuera, y cada uno de ellos se inventa la
+   fecha a partir de cuándo lo descargó. De ahí que un artículo de
+   octubre se compartiera como recién publicado.
+
+   OJO CON LO QUE ESTO SUSTITUYE. Next no fusiona `openGraph` campo a
+   campo: lo que una página define reemplaza entero el bloque del
+   layout. Por eso aquí van también `siteName`, `locale` y la imagen:
+   si se quitan, el artículo se comparte sin vista previa.
+   ============================================================ */
+export function ogArticulo(
+  lang: Idioma,
+  ruta: string,
+  { titulo, descripcion }: { titulo: string; descripcion: string },
+): NonNullable<Metadata["openGraph"]> {
+  const a = articuloDe(ruta);
+  if (!a) throw new Error(`articulos.ts: falta la ficha de ${ruta}`);
+  /* Mediodía UTC, el mismo instante del que sale la fecha que se ve
+     escrita arriba del artículo (ver fechaLegible). Con la medianoche
+     las dos podrían no coincidir según el huso del lector. */
+  const instante = (iso: string) => `${iso}T12:00:00.000Z`;
+  return {
+    type: "article",
+    locale: OG_LOCALE[lang],
+    siteName: marca.nombre,
+    title: titulo,
+    description: descripcion,
+    url: urlAbsoluta(lang, ruta),
+    publishedTime: instante(a.publicado),
+    modifiedTime: instante(a.actualizado ?? a.publicado),
+    authors: ["Alejandro Vega", "Jaume Lliteras"],
+    images: [{ url: "/assets/og-nexo4pymes.jpg", width: 1200, height: 630, alt: marca.nombre }],
+  };
 }

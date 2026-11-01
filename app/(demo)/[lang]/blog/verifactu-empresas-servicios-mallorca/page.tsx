@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { alternativas, idiomaOBase, tr } from "@/lib/i18n";
+import { ogArticulo } from "@/content/articulos";
 import { esquemaMigas, grafoPagina } from "@/lib/esquema";
 import { fijarIdioma } from "@/lib/idioma-servidor";
 import ArticuloEs from "./es.mdx";
@@ -20,23 +21,27 @@ const ARTICULO = { es: ArticuloEs, en: ArticuloEn, de: ArticuloDe };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const lang = idiomaOBase((await params).lang);
+  /* Sin "| Nexo4Pymes" detrás: el titular ya ocupa 66 caracteres y
+     Google corta sobre los 70. La marca sale igualmente encima del
+     resultado, que la saca del WebSite. */
+  const titulo = tr(lang, {
+    es: "VeriFactu: qué tiene que hacer una empresa de servicios",
+    en: "VeriFactu: what a service company in Mallorca has to do",
+    de: "VeriFactu: Was ein Dienstleistungsbetrieb tun muss",
+  });
+  const descripcion = tr(lang, {
+    es: "Qué obliga hoy y qué es solo un anuncio sin publicar, qué cambia en vuestras facturas y los cuatro pasos que conviene dar ahora.",
+    en: "What binds today and what is only an unpublished announcement, what changes in your invoices, the two modes, and the four steps worth taking now.",
+    de: "Was heute gilt und was nur angekündigt ist, was sich an Ihren Rechnungen ändert, die zwei Varianten und die vier Schritte, die sich jetzt lohnen.",
+  });
   return {
-    /* Sin "| Nexo4Pymes" detrás: el titular ya ocupa 66 caracteres y
-       Google corta sobre los 70. La marca sale igualmente encima del
-       resultado, que la saca del WebSite. */
-    title: {
-      absolute: tr(lang, {
-        es: "VeriFactu: qué tiene que hacer una empresa de servicios",
-        en: "VeriFactu: what a service company in Mallorca has to do",
-        de: "VeriFactu: Was ein Dienstleistungsbetrieb tun muss",
-      }),
-    },
-    description: tr(lang, {
-      es: "Qué obliga hoy y qué es solo un anuncio sin publicar, qué cambia en vuestras facturas y los cuatro pasos que conviene dar ahora.",
-      en: "What binds today and what is only an unpublished announcement, what changes in your invoices, the two modes, and the four steps worth taking now.",
-      de: "Was heute gilt und was nur angekündigt ist, was sich an Ihren Rechnungen ändert, die zwei Varianten und die vier Schritte, die sich jetzt lohnen.",
-    }),
+    title: { absolute: titulo },
+    description: descripcion,
     alternates: alternativas(lang, RUTA),
+    /* La fecha de publicación, para quien no lee el JSON-LD: WhatsApp,
+       LinkedIn, Discover y los buscadores de respuestas. Sale de
+       content/articulos.ts, el mismo sitio que la fecha visible. */
+    openGraph: ogArticulo(lang, RUTA, { titulo, descripcion }),
   };
 }
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { alternativas, idiomaOBase, tr } from "@/lib/i18n";
+import { ogArticulo } from "@/content/articulos";
 import { esquemaMigas, grafoPagina } from "@/lib/esquema";
 import { fijarIdioma } from "@/lib/idioma-servidor";
 import ArticuloEs from "./es.mdx";
@@ -20,20 +21,24 @@ const ARTICULO = { es: ArticuloEs, en: ArticuloEn, de: ArticuloDe };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const lang = idiomaOBase((await params).lang);
+  const titulo = tr(lang, {
+    es: "Control horario: qué obliga de verdad y qué os venden",
+    en: "Time tracking in Spain: what the law really requires",
+    de: "Arbeitszeiterfassung: Was wirklich Pflicht ist",
+  });
+  const descripcion = tr(lang, {
+    es: "Registrar la jornada es obligatorio desde 2019; hacerlo en digital no. Qué dice el artículo 34.9 y qué cambia cuando se ficha desde el móvil.",
+    en: "Recording working hours has been mandatory since 2019; doing it digitally is not. What article 34.9 says and what changes with a phone.",
+    de: "Die Arbeitszeiterfassung ist seit 2019 Pflicht, die digitale Führung nicht. Was Artikel 34.9 verlangt und was sich mit dem Handy ändert.",
+  });
   return {
-    title: {
-      absolute: tr(lang, {
-        es: "Control horario: qué obliga de verdad y qué os venden",
-        en: "Time tracking in Spain: what the law really requires",
-        de: "Arbeitszeiterfassung: Was wirklich Pflicht ist",
-      }),
-    },
-    description: tr(lang, {
-      es: "Registrar la jornada es obligatorio desde 2019; hacerlo en digital no. Qué dice el artículo 34.9 y qué cambia cuando se ficha desde el móvil.",
-      en: "Recording working hours has been mandatory since 2019; doing it digitally is not. What article 34.9 says and what changes with a phone.",
-      de: "Die Arbeitszeiterfassung ist seit 2019 Pflicht, die digitale Führung nicht. Was Artikel 34.9 verlangt und was sich mit dem Handy ändert.",
-    }),
+    title: { absolute: titulo },
+    description: descripcion,
     alternates: alternativas(lang, RUTA),
+    /* La fecha de publicación, para quien no lee el JSON-LD: WhatsApp,
+       LinkedIn, Discover y los buscadores de respuestas. Sale de
+       content/articulos.ts, el mismo sitio que la fecha visible. */
+    openGraph: ogArticulo(lang, RUTA, { titulo, descripcion }),
   };
 }
 

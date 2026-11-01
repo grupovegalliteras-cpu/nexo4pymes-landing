@@ -3,11 +3,9 @@
 import Link from "@/components/i18n/Enlace";
 import { AnimatePresence, motion } from "motion/react";
 import {
-  ArrowRight, BadgeCheck, Check, ChevronDown, Clock, Globe, ListChecks, Mail, MessageCircle, Monitor, PhoneIncoming, PlayCircle, Sparkles, Workflow,
+  ArrowRight, BadgeCheck, Check, ChevronDown, Clock, Globe, ListChecks, Mail, MessageCircle, Monitor, PlayCircle, Workflow,
 } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import type { ModuleGroup } from "@/data/modules";
-import { gruposDe, modulosDe } from "@/data/modules-i18n";
 import { sectoresDe } from "@/data/sectors-i18n";
 import type { SectorId } from "@/data/sectors";
 import { CONTACTO, whatsappLink } from "@/data/site";
@@ -18,16 +16,15 @@ import { useFmt, useIdioma } from "@/components/i18n/idioma";
 import { Icon } from "@/components/icon";
 import dynamic from "next/dynamic";
 import { FAQ_PORTADA } from "@/content/faq-portada";
+import { LANDINGS_PUBLICADAS, textoLanding, tituloLanding } from "@/content/landings-seo-i18n";
 import { colaboradores, textosColaboradores } from "@/content/colaboradores";
 import { servicios as serviciosEs } from "@/content/servicios";
 import { servicios as serviciosEn } from "@/content/en/servicios";
 import { servicios as serviciosDe } from "@/content/de/servicios";
-import { HeroAnim } from "./hero-anim";
 import { AntesDespues } from "./antes-despues";
 import { ContactDock, SiteFooter, SiteNav, waHola } from "./chrome";
 import type { Idioma } from "@/lib/i18n";
 import { HeroNucleo } from "@/components/deeptech/hero";
-import { CifrasModulos } from "@/components/deeptech/metricas";
 import { Magnetico, moverFoco } from "@/components/deeptech/interaccion";
 import { Etiqueta, Titulo } from "@/components/deeptech/piezas";
 import { useMovimientoPortada } from "@/components/deeptech/movimiento";
@@ -83,8 +80,8 @@ const T = {
     heroP: "Somos dos, en Palma. Si no os hace falta software a medida, os lo decimos.",
     verDemo: "Ver un programa funcionando",
     escribenos: "Escribidnos por WhatsApp",
-    sellos: ["Diagnóstico primero", "Sin contratos de 12 meses", "Datos en la UE", "Hecho en Mallorca"],
-    sectH: "Elegid vuestro sector y mirad la demo con vuestro día a día",
+    sellos: ["Primero miramos cómo trabajáis", "Sin contratos de 12 meses", "Vuestros datos, en la UE", "Hecho en Mallorca"],
+    sectH: "¿A qué os dedicáis? Mirad la demo con vuestro día a día",
     sectP: "La demo cambia la empresa, los servicios, los checklists, las mediciones y los avisos.",
     ejemplo: "Empresa de ejemplo",
     problema: "El problema de siempre: ",
@@ -101,7 +98,7 @@ const T = {
     oficinaYMovil: "Ver oficina y móvil conectados",
     abrirPanel: "Abrir el panel de oficina",
     modH: "Empezad por lo que más os duele. Añadid el resto cuando queráis.",
-    modP: (n: number) => `${n} módulos que encajan entre sí. Cada uno tiene su pantalla en la demo.`,
+    modP: "Cinco ya están construidas y tienen su propia página, con lo que hacen y lo que no.",
     caH: "Ningún aviso vuelve a quedarse en un pósit.",
     caP: "Llamadas grabadas y transcritas, WhatsApp, email y web en una bandeja. La IA clasifica por tipo, urgencia y cliente, y crea la orden de trabajo en un clic. Mantenéis vuestro número de siempre.",
     caBoton: "Verlo funcionando",
@@ -146,8 +143,8 @@ const T = {
     heroP: "There are two of us, in Palma. If you do not need custom software, we will say so.",
     verDemo: "See a system running",
     escribenos: "Message us on WhatsApp",
-    sellos: ["Diagnosis first", "No 12-month contracts", "Data stored in the EU", "Made in Mallorca"],
-    sectH: "Pick your industry and see the demo with your day-to-day",
+    sellos: ["We look at how you work first", "No 12-month contracts", "Your data, in the EU", "Made in Mallorca"],
+    sectH: "What do you do? See the demo with your day-to-day",
     sectP: "The demo changes the company, services, checklists, readings and requests.",
     ejemplo: "Sample company",
     problema: "The usual headache: ",
@@ -164,7 +161,7 @@ const T = {
     oficinaYMovil: "See office and phone connected",
     abrirPanel: "Open the office dashboard",
     modH: "Start with what hurts most. Add the rest whenever you like.",
-    modP: (n: number) => `${n} modules that fit together. Each one has its own screen in the demo.`,
+    modP: "Five of them are already built and have a page of their own, with what they do and what they do not.",
     caH: "No request ever ends up on a sticky note again.",
     caP: "Recorded and transcribed calls, WhatsApp, email and web in one inbox. AI sorts them by type, urgency and customer, and creates the work order in one click. You keep your usual number.",
     caBoton: "See it working",
@@ -209,8 +206,8 @@ const T = {
     heroP: "Wir sind zwei, in Palma. Wenn Sie keine individuelle Software brauchen, sagen wir Ihnen das.",
     verDemo: "Ein System in Betrieb ansehen",
     escribenos: "Schreiben Sie uns auf WhatsApp",
-    sellos: ["Erst die Analyse", "Keine 12-Monats-Verträge", "Daten in der EU", "Made in Mallorca"],
-    sectH: "Wählen Sie Ihre Branche und sehen Sie die Demo mit Ihrem Alltag",
+    sellos: ["Zuerst schauen wir, wie Sie arbeiten", "Keine 12-Monats-Verträge", "Ihre Daten, in der EU", "Auf Mallorca gemacht"],
+    sectH: "Was machen Sie? Sehen Sie die Demo mit Ihrem Alltag",
     sectP: "Die Demo passt Firma, Leistungen, Checklisten, Messwerte und Anfragen an.",
     ejemplo: "Beispielfirma",
     problema: "Das übliche Problem: ",
@@ -227,7 +224,7 @@ const T = {
     oficinaYMovil: "Büro und Handy verbunden ansehen",
     abrirPanel: "Büro-Dashboard öffnen",
     modH: "Beginnen Sie dort, wo es am meisten drückt. Der Rest kommt, wann Sie wollen.",
-    modP: (n: number) => `${n} Module, die zusammenpassen. Jedes hat seinen eigenen Bildschirm in der Demo.`,
+    modP: "Fünf davon sind schon gebaut und haben eine eigene Seite, mit dem, was sie können und was nicht.",
     caH: "Keine Anfrage landet mehr auf einem Zettel.",
     caP: "Aufgezeichnete und transkribierte Anrufe, WhatsApp, E-Mail und Web in einem Posteingang. Die KI ordnet nach Art, Dringlichkeit und Kunde und erstellt den Auftrag mit einem Klick. Ihre Telefonnummer bleibt.",
     caBoton: "In Aktion ansehen",
@@ -272,11 +269,11 @@ const T = {
    comparten con versiones anteriores de la portada. */
 const TD = {
   es: {
-    heroLinea: "Construimos vuestro propio programa de gestión, los configuradores de vuestra web y las automatizaciones con IA que lo conectan todo.",
+    heroLinea: "Os hacemos el programa que lleva vuestro negocio por dentro y lo conectamos con vuestra web y con lo que ya usáis. A medida, no una plantilla.",
     piezasEnlace: "Ver el detalle de cada pieza",
     kSectores: "Vuestro sector",
     kReal: "El programa por dentro",
-    kModulos: "Qué incluye el ejemplo",
+    kModulos: "Ya construido",
     kComo: "Cómo empezamos",
     kFaq: "Preguntas frecuentes",
     kContacto: "Hablemos",
@@ -290,11 +287,11 @@ const TD = {
     ],
   },
   en: {
-    heroLinea: "We build your own management software, the configurators inside your website and the AI automations that connect it all.",
+    heroLinea: "We build the software that runs your business, and connect it to your website and to whatever you already use. Built for you, not a template.",
     piezasEnlace: "See each piece in detail",
     kSectores: "Your industry",
     kReal: "Inside the software",
-    kModulos: "What the example includes",
+    kModulos: "Already built",
     kComo: "How we start",
     kFaq: "Frequently asked questions",
     kContacto: "Let's talk",
@@ -308,11 +305,11 @@ const TD = {
     ],
   },
   de: {
-    heroLinea: "Wir bauen Ihre eigene Verwaltungssoftware, die Konfiguratoren in Ihrer Website und die KI-Automatisierungen, die alles verbinden.",
+    heroLinea: "Wir bauen die Software, die Ihren Betrieb führt, und verbinden sie mit Ihrer Website und dem, was Sie schon nutzen. Für Sie gebaut, keine Vorlage.",
     piezasEnlace: "Jeden Baustein im Detail ansehen",
     kSectores: "Ihre Branche",
     kReal: "Die Software von innen",
-    kModulos: "Was das Beispiel umfasst",
+    kModulos: "Schon gebaut",
     kComo: "So starten wir",
     kFaq: "Häufige Fragen",
     kContacto: "Sprechen wir",
@@ -405,12 +402,11 @@ export function Landing() {
           se mete.
           ============================================================ */}
       <Hero />
-      <QueConstruimos />
       <AntesDespues />
-      <Escaparate />
+      <QueConstruimos />
       <SectorPicker />
       <SoftwareReal />
-      <Modulos />
+      <PiezasYaHechas />
       <Como />
       <Colaboradores />
       <AvisoPadel />
@@ -498,41 +494,6 @@ function QueConstruimos() {
           <Link href="/servicios" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
             {t.piezasEnlace} <ArrowRight className="size-4" />
           </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- En directo ----------------
-   La animación de la llamada que antes iba a la derecha del hero. Llega
-   inclinada en 3D y se endereza con el scroll. */
-function Escaparate() {
-  const t = useT();
-  return (
-    <section id="recorrido" className="relative scroll-mt-20 py-16 sm:py-24">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
-        <div>
-          <Etiqueta>{t.escK}</Etiqueta>
-          <Titulo className="mt-5 text-[32px] sm:text-[46px]">{t.escH}</Titulo>
-          <p data-revelar className="mt-4 text-[17px] leading-relaxed text-fg-2">
-            {t.escP}
-          </p>
-          <ol className="mt-8 grid gap-4">
-            {t.escPuntos.map(([titulo, desc], i) => (
-              <li key={titulo} data-revelar className="flex gap-4" style={{ "--d": `${120 + i * 100}ms` } as CSSProperties}>
-                <span className="grid size-9 shrink-0 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-[14px] font-semibold text-[var(--dt-cian)]">{i + 1}</span>
-                <span>
-                  <span className="block font-semibold text-fg">{titulo}</span>
-                  <span className="mt-0.5 block text-[15px] leading-relaxed text-fg-2">{desc}</span>
-                </span>
-              </li>
-            ))}
-          </ol>
-        </div>
-        <div data-scrub="inclinar" className="dt-cristal relative rounded-[30px] p-3 sm:p-6">
-          <div className="pointer-events-none absolute -inset-px rounded-[30px] bg-[radial-gradient(ellipse_at_70%_0%,rgb(56_225_255/0.14),transparent_55%),radial-gradient(ellipse_at_10%_100%,rgb(157_123_255/0.12),transparent_55%)]" />
-          <HeroAnim />
         </div>
       </div>
     </section>
@@ -842,66 +803,57 @@ function SoftwareReal() {
 }
 
 /* ---------------- Módulos ---------------- */
-function Modulos() {
+/* ---------------- Las piezas ya construidas ----------------
+
+   ANTES AQUÍ HABÍA UN CATÁLOGO. Cifras en barras 3D, una tarjeta grande
+   de Central Avisos y una rejilla con los cuarenta módulos agrupados en
+   seis familias. Era la parte más larga de la portada y la que más se
+   parecía a un folleto de software: alguien que lleva una empresa de
+   limpieza no necesita saber que tenemos «informes automáticos» y
+   «rentabilidad por trabajo» antes de habernos llamado.
+
+   AHORA ES UNA TIRA. Las cinco piezas que tienen página propia, con su
+   nombre y la línea que ya está escrita en content/landings-seo.ts. El
+   catálogo entero sigue existiendo en /modulos, que es donde tiene
+   sentido: quien quiere la lista larga la va a buscar.
+
+   POR QUÉ NO SE BORRÓ DEL TODO. Estos cinco enlaces son los únicos que
+   la portada le daba a /modulos/*, que son las páginas que se posicionan
+   por el nombre del producto («control horario», «partes de trabajo»).
+   Quitarlos habría dejado esas cinco páginas colgando solo del menú. */
+function PiezasYaHechas() {
   const t = useT();
   const lang = useIdioma();
-  const grupos = gruposDe(lang);
-  const modulos = modulosDe(lang);
-  const groups = Object.keys(grupos) as ModuleGroup[];
-  const showEstado = useUi((s) => s.showEstado);
   return (
     <section id="modulos" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6">
         <div className="max-w-2xl">
           <Etiqueta>{t.kModulos}</Etiqueta>
           <Titulo className="mt-5 text-[30px] sm:text-[46px]">{t.modH}</Titulo>
-          <p data-revelar className="mt-3 text-[17px] text-fg-2">
-            {t.modP(modulos.length)}
-          </p>
+          <p data-revelar className="mt-3 text-[17px] text-fg-2">{t.modP}</p>
         </div>
 
-        <div className="mt-10">
-          <CifrasModulos />
-        </div>
-
-        <Link href="/panel/central-avisos" onPointerMove={moverFoco} className="dt-foco group relative mt-10 block overflow-hidden rounded-[30px] border border-white/10 bg-[#04070c] p-6 sm:p-8">
-          <div className="dt-rejilla pointer-events-none absolute inset-0 opacity-70" />
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_90%_at_100%_50%,rgb(44_245_176/0.16),transparent_70%),radial-gradient(ellipse_40%_80%_at_0%_100%,rgb(157_123_255/0.14),transparent_70%)]" />
-          <div className="relative grid items-center gap-6 md:grid-cols-[1fr_auto]">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-sun px-2.5 py-1 text-[12px] font-semibold text-[#00170f] shadow-[0_0_24px_-6px_var(--dt-menta)]">
-                <PhoneIncoming className="size-3.5" /> Central Avisos
-              </div>
-              <div className="mt-3 max-w-2xl font-display text-[28px] leading-tight font-semibold tracking-[-0.03em]">{t.caH}</div>
-              <p className="mt-2 max-w-2xl text-fg-2">{t.caP}</p>
-            </div>
-            <span className="dt-boton dt-boton-primario h-11 px-5 text-[14px]">
-              <Sparkles className="size-4" /> {t.caBoton}
-            </span>
-          </div>
-        </Link>
-
-        <div className="dt-foco-grupo mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" onPointerMove={moverFoco}>
-          {groups.map((g, gi) => (
-            <div key={g} data-revelar className="dt-foco dt-cristal rounded-[24px] p-5" style={{ "--d": `${(gi % 3) * 80}ms` } as CSSProperties}>
-              <div className="font-display text-lg font-semibold tracking-[-0.02em]">{grupos[g].nombre}</div>
-              <div className="text-[13px] text-fg-3">{grupos[g].lema}</div>
-              <ul className="mt-4 grid gap-0.5">
-                {modulos
-                  .filter((m) => m.grupo === g)
-                  .map((m) => (
-                    <li key={m.id}>
-                      <Link href={`/panel/${m.id}`} className="group flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-[14px] transition-colors hover:bg-white/[0.05]">
-                        <Icon name={m.icono} className="size-4 shrink-0 text-brand" />
-                        <span className="flex-1">{m.nombre}</span>
-                        {showEstado && <span className={cn("rounded px-1.5 text-[10px]", m.estado === "disponible" ? "bg-ok-soft text-ok" : "bg-ai-soft text-ai")}>{m.estado === "disponible" ? t.disponible : t.aMedida}</span>}
-                      </Link>
-                    </li>
-                  ))}
-              </ul>
-            </div>
+        <ul className="dt-foco-grupo mt-10 grid gap-3 sm:grid-cols-2" onPointerMove={moverFoco}>
+          {LANDINGS_PUBLICADAS.map((slug, i) => (
+            <li key={slug} data-revelar style={{ "--d": `${(i % 2) * 70}ms` } as CSSProperties}>
+              <Link
+                href={`/modulos/${slug}`}
+                className="dt-foco dt-cristal group flex h-full items-start gap-3 rounded-[20px] p-5 transition-colors hover:bg-white/[0.04]"
+              >
+                <div className="flex-1">
+                  <div className="font-display text-[17px] leading-snug font-semibold tracking-[-0.02em]">
+                    {tituloLanding(lang, slug)}
+                  </div>
+                  <p className="mt-1.5 text-[14.5px] leading-relaxed text-fg-2">
+                    {textoLanding(lang, slug).entradilla}
+                  </p>
+                </div>
+                <ArrowRight className="mt-1 size-4 shrink-0 text-fg-3 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
+
         <div className="mt-6">
           <Link href="/modulos" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
             {t.catalogo}

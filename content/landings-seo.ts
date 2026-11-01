@@ -190,7 +190,7 @@ export const LANDINGS_SEO: Partial<Record<LandingSlug, TextoLanding>> = {
   presupuestos: {
     h1: ["Software de", "presupuestos"],
     entradilla:
-      "Presupuestos con tus precios y tus partidas, enviados por WhatsApp o correo, con aviso cuando el cliente los abre y aceptación con un clic.",
+      "Presupuestos con vuestros precios y vuestras partidas, enviados por WhatsApp o correo, con aviso cuando el cliente los abre y aceptación con un clic.",
     intro: [
       "En una empresa de servicios los presupuestos se hacen dos veces: una en la cabeza, delante del cliente, y otra por la noche en casa, delante del ordenador, intentando acordarse de las medidas. La segunda vez es la que se pierde, y con ella la mitad de los trabajos que se iban a cerrar.",
       "Luego está lo que pasa después de enviarlo. Se manda un PDF y empieza el silencio. No se sabe si lo abrió, si lo está comparando o si se le fue de la bandeja. A la semana se llama preguntando, con esa incomodidad de parecer que se persigue al cliente.",

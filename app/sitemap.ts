@@ -34,6 +34,11 @@ const PAGINAS: { ruta: string; prioridad: number; frecuencia: "monthly" | "yearl
      despliegue. En una página de plazos legales eso es exactamente lo
      que Google necesita saber para decidir si volver a pasar. */
   { ruta: "/obligaciones", prioridad: 0.9, frecuencia: "monthly", fecha: OBLIGACIONES_COMPROBADO },
+  /* La plantilla gratis. Prioridad 0.8: trae gente de arriba del
+     embudo —quien busca una plantilla todavía no busca un proveedor—
+     pero trae mucha, y desde aquí se llega a /obligaciones y a la
+     landing del fichaje. */
+  { ruta: "/plantillas/registro-de-jornada", prioridad: 0.8, frecuencia: "yearly", fecha: OBLIGACIONES_COMPROBADO },
   { ruta: "/contacto", prioridad: 0.8, frecuencia: "yearly", fecha: "2026-10-02" },
   { ruta: "/nosotros", prioridad: 0.7, frecuencia: "yearly", fecha: "2026-10-02" },
   ...SECTORES.map((s) => ({ ruta: `/sectores/${s.id}`, prioridad: 0.7, frecuencia: "monthly" as const, fecha: "2026-10-08" })),

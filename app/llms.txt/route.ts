@@ -142,6 +142,7 @@ ${socios}
 - [Demo en vivo](${marca.dominio}/demo): el panel y la app lado a lado, sincronizados, con recorrido guiado.
 - [Servicios](${marca.dominio}/servicios): qué se construye, con qué alcance y qué límites, y el método en cuatro pasos.
 - [Qué obliga a una empresa en España](${marca.dominio}/obligaciones): factura electrónica, VeriFactu y registro de jornada, con las fechas que están publicadas en el BOE separadas de las que solo están anunciadas, y el enlace a cada norma. Comprobado el ${OBLIGACIONES_COMPROBADO}.
+- [Plantilla de registro de jornada en Excel](${marca.dominio}/plantillas/registro-de-jornada): hoja descargable y gratuita con las columnas que exige el artículo 34.9 del Estatuto de los Trabajadores y el total de horas calculado. Sin registro ni correo.
 - [Todos los módulos](${marca.dominio}/modulos): los cuarenta módulos agrupados por área.
 - [Facturación con VeriFactu](${marca.dominio}/modulos/facturacion-verifactu): huella encadenada, registro de alta y el calendario legal al día.
 - [Control horario y fichaje](${marca.dominio}/modulos/control-horario): fichaje desde el móvil, con la obligación del artículo 34.9 del Estatuto de los Trabajadores explicada.

@@ -12,6 +12,10 @@ import { useIdioma } from "@/components/i18n/idioma";
 import { SelectorIdioma } from "@/components/i18n/SelectorIdioma";
 import type { Idioma } from "@/lib/i18n";
 
+/* Webs estáticas servidas desde public/ por una reescritura (ver
+   next.config.mjs). No son rutas de Next, así que se enlazan con <a>. */
+const ESTATICAS = ["/concesia", "/concesia/demo", "/padel/demo"];
+
 const T = {
   es: {
     links: [["Qué hacemos", "/#que-construimos"], ["Sectores", "/#sectores"], ["Servicios", "/servicios"], ["Nosotros", "/nosotros"], ["Blog", "/blog"], ["Contacto", "/contacto"]],
@@ -33,7 +37,7 @@ const T = {
          enlaces en direcciones que Google no indexa. Ahora llevan a las
          landings, que es donde hay texto que posicionar. */
       ["Programa de servicios", [["Todos los módulos", "/modulos"], ["Facturación con VeriFactu", "/modulos/facturacion-verifactu"], ["Control horario y fichaje", "/modulos/control-horario"], ["Partes de trabajo", "/modulos/partes-de-trabajo"], ["Presupuestos", "/modulos/presupuestos"], ["Asistente de WhatsApp", "/modulos/chatbot-whatsapp"]]],
-      ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"], ["Jardinería", "/sectores/jardineria"], ["Control de plagas", "/sectores/plagas"], ["Instalaciones solares", "/sectores/solar"], ["Reformas", "/sectores/reformas"], ["Clubes de pádel", "/padel"]]],
+      ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"], ["Jardinería", "/sectores/jardineria"], ["Control de plagas", "/sectores/plagas"], ["Instalaciones solares", "/sectores/solar"], ["Reformas", "/sectores/reformas"], ["Clubes de pádel", "/padel"], ["Concesionarios", "/concesia"]]],
       ["Empresa", [["Qué obliga por ley", "/obligaciones"], ["Plantilla de registro de jornada", "/plantillas/registro-de-jornada"], ["Servicios", "/servicios"], ["Nosotros", "/nosotros"], ["Blog", "/blog"], ["Contacto", "/contacto"]]],
     ],
     ficticias: "Todas las empresas, personas y cifras de esta demo son ficticias.",
@@ -399,9 +403,18 @@ export function SiteFooter() {
             <ul className="mt-3 grid gap-2">
               {ls.map(([l, h]) => (
                 <li key={h}>
-                  <Link href={h} className="text-[14px] text-fg-2 hover:text-fg">
-                    {l}
-                  </Link>
+                  {/* Las landings estáticas (public/concesia, public/padel) no son
+                      rutas de Next: con el Link no se abrirían bien. Para Google
+                      da igual, un <a href> es un enlace exactamente igual. */}
+                  {ESTATICAS.includes(h) ? (
+                    <a href={h} className="text-[14px] text-fg-2 hover:text-fg">
+                      {l}
+                    </a>
+                  ) : (
+                    <Link href={h} className="text-[14px] text-fg-2 hover:text-fg">
+                      {l}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

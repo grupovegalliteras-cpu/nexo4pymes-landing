@@ -29,13 +29,13 @@ const RUTA = "/obligaciones";
 
 const TITULO = {
   es: "Qué obliga a una empresa en España: fechas reales",
-  en: "What Spanish law requires of a business: the real dates",
-  de: "Was spanisches Recht von Betrieben verlangt: die echten Fristen",
+  en: "What Spanish law requires: the real dates",
+  de: "Pflichten für Betriebe in Spanien: echte Fristen",
 };
 const DESCRIPCION = {
-  es: "Factura electrónica, VeriFactu y registro de jornada: qué está publicado en el BOE, qué solo está anunciado y desde qué día obliga cada cosa. Con el enlace a cada norma.",
-  en: "E-invoicing, VeriFactu and working-time records: what is published in Spain's official gazette, what is only announced, and the day each duty starts. With a link to every rule.",
-  de: "E-Rechnung, VeriFactu und Arbeitszeiterfassung: was im spanischen Gesetzblatt steht, was nur angekündigt ist und ab wann jede Pflicht gilt. Mit Link zu jeder Vorschrift.",
+  es: "Factura electrónica, VeriFactu y registro de jornada: qué está publicado en el BOE, qué solo está anunciado y desde qué día obliga cada cosa.",
+  en: "E-invoicing, VeriFactu and working-time records: what is actually published in Spain, what is only announced, and when each duty starts.",
+  de: "E-Rechnung, VeriFactu und Arbeitszeiterfassung: was wirklich im Gesetzblatt steht, was nur angekündigt ist und ab wann es gilt.",
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {

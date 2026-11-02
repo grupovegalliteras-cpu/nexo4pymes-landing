@@ -16,8 +16,8 @@ const sinMovimiento = () => quietoPorPreferencia();
 
 /* ---------------- Botón magnético ----------------
    Envuelve un botón: el envoltorio se desplaza hacia el ratón y el
-   contenido un poco más, como si tuviera dos capas. Al salir vuelve con un
-   pequeño rebote (la transición está en CSS: .dt-magnetico). */
+   contenido un poco más, como si tuviera dos capas. Al salir vuelve a su
+   sitio sin rebote (la transición está en CSS: .dt-magnetico). */
 export function Magnetico({ children, className, fuerza = 0.32 }: { children: ReactNode; className?: string; fuerza?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const activo = useRef(false);

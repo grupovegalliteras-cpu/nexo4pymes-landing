@@ -329,7 +329,24 @@ html:has(.deeptech) {
     box-shadow 0.35s ease,
     background-color 0.35s ease,
     border-color 0.35s ease,
-    color 0.35s ease;
+    color 0.35s ease,
+    scale 0.12s ease-out;
+}
+
+/* RESPUESTA AL DEDO. Lo que se pulsa se hunde un poco en el momento de
+   apretar, no al soltar: es lo que hace que un botón se sienta tocado y no
+   solo pinchado. Se usa `scale` y no `transform` para no pisar el
+   desplazamiento del botón magnético. En el móvil se quita el recuadro gris
+   del navegador, porque ya hay respuesta propia. */
+.deeptech {
+  -webkit-tap-highlight-color: transparent;
+}
+.deeptech :is(.dt-pieza, #sectores [aria-pressed]) {
+  transition-property: color, background-color, border-color, scale;
+  transition-duration: 0.15s;
+}
+.deeptech :is(.dt-boton, .dt-pieza, #sectores [aria-pressed]):active {
+  scale: 0.97;
 }
 /* Botón principal: fondo carmesí con letra crema, en crema y en noche. */
 .dt-boton-primario {
@@ -375,17 +392,20 @@ html:has(.deeptech) {
   border-color: var(--melocoton);
 }
 
-/* botón magnético: el envoltorio sigue al ratón y el contenido algo más */
+/* botón magnético: el envoltorio sigue al ratón y el contenido algo más.
+   AL SOLTARLO VUELVE SIN REBOTE. Antes pasaba de largo y volvía (una curva
+   con sobrepaso), pero aquí no hay ningún gesto con impulso que lo justifique:
+   el rebote se reserva para lo que se lanza con el dedo. */
 .dt-magnetico {
   display: inline-flex;
   transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
-  transition: transform 0.7s cubic-bezier(0.25, 1.6, 0.4, 1);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .dt-magnetico[data-encima] {
   transition: transform 0.18s ease-out;
 }
 .dt-magnetico > * > :is(span, svg) {
-  transition: transform 0.7s cubic-bezier(0.25, 1.6, 0.4, 1);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .dt-magnetico[data-encima] > * > :is(span, svg) {
   transform: translate3d(calc(var(--mx, 0px) * 0.35), calc(var(--my, 0px) * 0.35), 0);
@@ -702,6 +722,15 @@ html:has(.deeptech) {
 
 .dt-numero-paso {
   color: var(--carmesi);
+}
+
+/* La cabecera y la barra de abajo son cristal translúcido. Quien pide menos
+   transparencia o más contraste en su sistema las recibe macizas. */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .deeptech .backdrop-blur-xl {
+    backdrop-filter: none !important;
+    background-color: var(--bg) !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

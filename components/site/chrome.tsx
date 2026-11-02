@@ -242,9 +242,13 @@ export function SiteNav({
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, pointerEvents: "none" }}
-            animate={{ opacity: 1, pointerEvents: "auto" }}
-            exit={{ opacity: 0, pointerEvents: "none" }}
+            initial={{ opacity: 0, scale: 0.97, pointerEvents: "none" }}
+            animate={{ opacity: 1, scale: 1, pointerEvents: "auto" }}
+            exit={{ opacity: 0, scale: 0.97, pointerEvents: "none" }}
+            /* Nace del botón que lo abre (arriba a la derecha) y vuelve a él
+               al cerrarse: mismo camino de ida y de vuelta. */
+            transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+            style={{ transformOrigin: "calc(100% - 2rem) 2rem" }}
             className="fixed inset-0 z-50 flex flex-col bg-bg p-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:hidden"
           >
             <div className="flex items-center justify-between">

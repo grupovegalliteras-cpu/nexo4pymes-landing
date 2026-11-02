@@ -728,8 +728,12 @@ function SectorPicker() {
               </button>
             ))}
           </div>
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div key={sector.id} initial={{ opacity: 0, y: 8, filter: "blur(6px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -8, filter: "blur(6px)" }} transition={{ duration: 0.3 }} className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_1fr_1fr]">
+          {/* popLayout Y NO wait: con «wait», el sector nuevo esperaba a que el
+              viejo terminara de irse, y pulsar dos sectores seguidos se notaba
+              atascado. Ahora el nuevo entra en el acto y el viejo se va por
+              encima. */}
+          <AnimatePresence mode="popLayout" initial={false}>
+            <motion.div key={sector.id} initial={{ opacity: 0, y: 8, filter: "blur(6px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} exit={{ opacity: 0, y: -8, filter: "blur(6px)" }} transition={{ type: "spring", bounce: 0, duration: 0.3 }} className="mt-6 grid gap-6 lg:grid-cols-[1.1fr_1fr_1fr]">
               <div>
                 <div className="flex items-center gap-3">
                   <span className="grid size-11 place-items-center rounded-xl font-display text-lg font-bold text-crema" style={{ background: sector.color }}>
@@ -1046,7 +1050,7 @@ function Faq() {
                   <Plus className={cn("size-5 shrink-0 text-fg-3 transition-transform duration-300", open === i && "rotate-45 text-carmesi")} />
                 </button>
               </h3>
-              <motion.div initial={false} animate={{ height: open === i ? "auto" : 0, opacity: open === i ? 1 : 0 }} className="overflow-hidden" aria-hidden={open !== i}>
+              <motion.div initial={false} animate={{ height: open === i ? "auto" : 0, opacity: open === i ? 1 : 0 }} transition={{ type: "spring", bounce: 0, duration: 0.35 }} className="overflow-hidden" aria-hidden={open !== i}>
                 <p className="pb-5 text-[15.5px] leading-relaxed text-fg-2">{a}</p>
               </motion.div>
             </div>

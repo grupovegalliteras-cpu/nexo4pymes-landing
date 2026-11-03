@@ -3,7 +3,7 @@
   -------
   Todo lo de este archivo cuelga de .deeptech, la clase que lleva el
   envoltorio de la portada (components/site/landing.tsx). El resto de la
-  web (panel, app, /padel, las páginas de app/(web)) no se entera.
+  web (panel, app, las páginas de app/(web)) no se entera.
 
   La portada va en crema con tarjetas blancas; el hero y el cierre son zonas
   noche (data-theme="dark"). Sus acentos:

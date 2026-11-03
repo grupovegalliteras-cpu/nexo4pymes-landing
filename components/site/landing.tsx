@@ -368,7 +368,7 @@ function useT() {
      — un ejemplo, a fondo: el programa de empresas de servicios —
      Un ejemplo       la animación de la llamada, el ejemplo en marcha
      Tu sector        el visitante elige su sector y todo lo demás cambia
-                      Pádel y colaboradores
+                      Colaboradores
      Pruébalo         escribe un aviso y mira lo que pasa
      Por dentro       el panel y la app de verdad, incrustados
      Qué incluye      los módulos, con sus cifras (barras 3D y anillos)
@@ -430,7 +430,6 @@ export function Landing() {
       <PiezasYaHechas />
       <Como />
       <Colaboradores />
-      <AvisoPadel />
       <Faq />
       <Contacto />
       <SiteFooter />
@@ -621,7 +620,7 @@ function QueConstruimos() {
 }
 
 /* ---------------- Empresas colaboradoras ----------------
-   Va detrás del aviso de Nexo Pádel y antes del recorrido del día: el
+   Va detrás de «cómo trabajamos» y antes de las preguntas: el
    visitante acaba de ver los sectores y el producto, y es justo ahí
    donde se pregunta quién está detrás de todo esto.
 
@@ -667,28 +666,6 @@ function Colaboradores() {
             })}
           </ul>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- Nexo Pádel ----------------
-   Producto propio para clubes y escuelas de pádel, con página en /padel.
-   Solo en español: los clientes son clubes de Mallorca. */
-function AvisoPadel() {
-  const lang = useIdioma();
-  if (lang !== "es") return null;
-  return (
-    <section className="pb-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <Link href="/padel" onPointerMove={moverFoco} className="dt-foco group flex flex-col gap-3 rounded-[22px] border border-sun/35 bg-sun/[0.06] p-5 transition-colors hover:bg-sun/10 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-          <span>
-            <span className="block text-[13px] font-semibold text-sun">🎾 Nuevo: Nexo Pádel</span>
-            <span className="mt-1 block font-display text-[20px] font-semibold tracking-[-0.01em] sm:text-[22px]">¿Tenéis un club o una escuela de pádel?</span>
-            <span className="mt-1 block text-[15px] text-fg-2">Un WhatsApp que contesta por vosotros, faltas y recuperaciones automáticas y partidos que se completan solos.</span>
-          </span>
-          <span className="dt-boton dt-boton-primario h-11 shrink-0 px-5 text-[15px]">Ver Nexo Pádel →</span>
-        </Link>
       </div>
     </section>
   );

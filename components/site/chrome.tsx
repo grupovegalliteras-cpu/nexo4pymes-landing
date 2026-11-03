@@ -14,7 +14,7 @@ import type { Idioma } from "@/lib/i18n";
 
 /* Webs estáticas servidas desde public/ por una reescritura (ver
    next.config.mjs). No son rutas de Next, así que se enlazan con <a>. */
-const ESTATICAS = ["/concesia", "/concesia/demo", "/padel/demo"];
+const ESTATICAS = ["/concesia", "/concesia/demo"];
 
 const T = {
   es: {
@@ -37,7 +37,7 @@ const T = {
          enlaces en direcciones que Google no indexa. Ahora llevan a las
          landings, que es donde hay texto que posicionar. */
       ["Programa de servicios", [["Todos los módulos", "/modulos"], ["Facturación con VeriFactu", "/modulos/facturacion-verifactu"], ["Control horario y fichaje", "/modulos/control-horario"], ["Partes de trabajo", "/modulos/partes-de-trabajo"], ["Presupuestos", "/modulos/presupuestos"], ["Asistente de WhatsApp", "/modulos/chatbot-whatsapp"]]],
-      ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"], ["Jardinería", "/sectores/jardineria"], ["Control de plagas", "/sectores/plagas"], ["Instalaciones solares", "/sectores/solar"], ["Reformas", "/sectores/reformas"], ["Clubes de pádel", "/padel"], ["Concesionarios", "/concesia"]]],
+      ["Sectores", [["Mantenimiento", "/sectores/mantenimiento"], ["Piscinas", "/sectores/piscinas"], ["Climatización", "/sectores/climatizacion"], ["Limpieza", "/sectores/limpieza"], ["Jardinería", "/sectores/jardineria"], ["Control de plagas", "/sectores/plagas"], ["Instalaciones solares", "/sectores/solar"], ["Reformas", "/sectores/reformas"], ["Concesionarios", "/concesia"]]],
       ["Empresa", [["Qué obliga por ley", "/obligaciones"], ["VeriFactu: fechas y multas", "/verifactu"], ["Plantilla de registro de jornada", "/plantillas/registro-de-jornada"], ["Servicios", "/servicios"], ["Nosotros", "/nosotros"], ["Blog", "/blog"], ["Contacto", "/contacto"]]],
     ],
     ficticias: "Todas las empresas, personas y cifras de esta demo son ficticias.",
@@ -97,7 +97,7 @@ export function waHola(lang: Idioma) {
 }
 
 /**
- * Cabecera de la web. Las páginas de producto (como /padel) pueden pasar su propio menú:
+ * Cabecera de la web. Las páginas de producto pueden pasar su propio menú:
  * `enlaces` a secciones de la misma página, `demo` a su propia demo y `cta` para el botón
  * principal. Esos tres van con <a> normal y no con el Link con idioma, porque apuntan a
  * anclas, a un HTML aparte o fuera de la web.
@@ -348,8 +348,8 @@ export function ContactDock({ demoHref = "/demo?tour=1", mensaje }: { demoHref?:
             className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/90 px-3 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden"
           >
             <div className="mx-auto flex max-w-md gap-2">
-              {/* La demo de pádel es un HTML aparte (public/padel/demo.html): con el Link de Next no se abriría bien */}
-              {demoHref === "/padel/demo" ? (
+              {/* Una demo que es un HTML aparte (ver ESTATICAS): con el Link de Next no se abriría bien */}
+              {ESTATICAS.includes(demoHref) ? (
                 <a href={demoHref} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-fg text-[15px] font-semibold text-bg">
                   <PlayCircle className="size-5" /> {t.verDemo}
                 </a>
@@ -403,7 +403,7 @@ export function SiteFooter() {
             <ul className="mt-3 grid gap-2">
               {ls.map(([l, h]) => (
                 <li key={h}>
-                  {/* Las landings estáticas (public/concesia, public/padel) no son
+                  {/* Las landings estáticas (public/concesia) no son
                       rutas de Next: con el Link no se abrirían bien. Para Google
                       da igual, un <a href> es un enlace exactamente igual. */}
                   {ESTATICAS.includes(h) ? (

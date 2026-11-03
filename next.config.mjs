@@ -62,12 +62,9 @@ const nextConfig = {
     // sirve sin prefijo, así que /servicios se contesta desde /es/servicios sin que
     // cambie la dirección. afterFiles: antes se atienden public/, la API, el sitemap…
     return {
-      // Nexo Pádel: la demo interactiva es un HTML propio en public/padel/demo.html.
-      // Se sirve en /padel/demo, antes de que la reescritura de idiomas la mande a /es/….
       // Concesia: la landing es una web estática en public/concesia, generada en su propio
-      // repositorio. Va antes de la reescritura de idiomas por el mismo motivo.
+      // repositorio. Se sirve antes de que la reescritura de idiomas la mande a /es/….
       beforeFiles: [
-        { source: "/padel/demo", destination: "/padel/demo.html" },
         { source: "/concesia", destination: "/concesia/index.html" },
         { source: "/concesia/demo", destination: "/concesia/demo.html" },
       ],
@@ -120,6 +117,12 @@ const nextConfig = {
       { source: "/veterinarias", destination: "/", permanent: true },
       { source: "/veterinarias.html", destination: "/", permanent: true },
       { source: "/sectores/veterinarias", destination: "/", permanent: true },
+      // Nexo Pádel se retiró de la web en noviembre de 2026. Su página y su
+      // demo estuvieron indexadas y se mandaron a clubes: mismo motivo que
+      // las de arriba para llevarlas a la home y no a un 404.
+      { source: "/padel", destination: "/", permanent: true },
+      { source: "/padel/:path*", destination: "/", permanent: true },
+      { source: "/:lang(en|de)/padel", destination: "/:lang", permanent: true },
 
       // Enlaces antiguos a /sectores (sin más): al selector de sectores
       // de la home, que es donde vive ahora esa información.

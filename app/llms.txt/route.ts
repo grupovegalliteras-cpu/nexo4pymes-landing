@@ -124,13 +124,6 @@ español, inglés y alemán.
   convierte en órdenes de trabajo. Producto propio, en colaboración con
   Multiservicios Mallorca. Se contrata y se pone en marcha sin diagnóstico
   previo, a diferencia del resto.
-- [Nexo Pádel](${marca.dominio}/padel): programa para clubes y escuelas de pádel.
-  Asistente de WhatsApp con IA que contesta por el club, escuela que reorganiza
-  sola las faltas y las recuperaciones, partidos que se completan sin perseguir
-  al cuarto jugador, americanas y cierre de mes. Desde 89 € al mes (plan
-  Escuela) y 179 € (plan Club), sin IVA y sin permanencia. En piloto con cinco
-  clubes de Mallorca entre octubre de 2026 y enero de 2027. Es el único producto
-  con precio público: todo lo demás se presupuesta tras el diagnóstico.
 
 ## Empresas colaboradoras
 
@@ -139,7 +132,6 @@ ${socios}
 ## Páginas
 
 - [Portada](${marca.dominio}/): el panel de oficina y la app de técnicos, con demo navegable.
-- [Nexo Pádel](${marca.dominio}/padel): el producto para clubes y escuelas de pádel, con precios.
 - [Demo en vivo](${marca.dominio}/demo): el panel y la app lado a lado, sincronizados, con recorrido guiado.
 - [Servicios](${marca.dominio}/servicios): qué se construye, con qué alcance y qué límites, y el método en cuatro pasos.
 - [Qué obliga a una empresa en España](${marca.dominio}/obligaciones): factura electrónica, VeriFactu y registro de jornada, con las fechas que están publicadas en el BOE separadas de las que solo están anunciadas, y el enlace a cada norma. Comprobado el ${OBLIGACIONES_COMPROBADO}.

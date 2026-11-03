@@ -92,10 +92,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
         alternates: { languages: Object.fromEntries(IDIOMAS.map((l) => [l, url(l, p.ruta)])) },
       })),
     ),
-    /* Nexo Pádel solo existe en español (clubes de Mallorca), así que va
-       suelta y sin hreflang. Con fecha fija por lo mismo que las de
-       arriba: un lastmod que cambia en cada despliegue no se cree nadie. */
-    { url: `${marca.dominio}/padel`, lastModified: new Date("2026-10-02"), changeFrequency: "monthly", priority: 0.8 },
+    /* Concesia solo existe en español, así que va suelta y sin hreflang.
+       Con fecha fija por lo mismo que las de arriba: un lastmod que
+       cambia en cada despliegue no se cree nadie. */
     { url: `${marca.dominio}/concesia`, lastModified: new Date("2026-11-01"), changeFrequency: "monthly", priority: 0.8 },
   ];
 }

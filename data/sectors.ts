@@ -378,7 +378,15 @@ export const SECTORES: Sector[] = [
       resumen: "Cucarachas en la cocina del restaurante, con inspección sanitaria la semana que viene.",
       lineas: [
         ["oficina", "Plagues Illa, le atiende Marga."],
-        ["cliente", "Hola, soy Jaume, del Restaurante Es Moll Vell, en Alcúdia."],
+        /* SIN EL PUEBLO, Y A PROPÓSITO. Los otros sectores sí lo dicen
+           —Calvià, Manacor, Sóller— porque es parte del acento de la
+           demo. Aquí no: "control de plagas alcudia" es una búsqueda
+           de consumidor con mucha demanda, y esta página era lo único
+           del sitio que la pescaba. 212 impresiones y cero clics en
+           tres meses, el 28 % de todo el sitio, gente buscando quien
+           le mate las cucarachas. El restaurante sigue estando en
+           Alcúdia en data/seed.ts, que es lo que ve el panel. */
+        ["cliente", "Hola, soy Jaume, del Restaurante Es Moll Vell."],
         ["cliente", "Anoche vimos cucarachas en la cocina, detrás de los fogones."],
         ["cliente", "La semana que viene tenemos inspección de sanidad y necesito el certificado."],
         ["oficina", "Hacemos un tratamiento de choque hoy y le dejamos el certificado en su portal."],

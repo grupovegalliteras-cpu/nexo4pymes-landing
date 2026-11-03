@@ -54,7 +54,10 @@ const PAGINAS: { ruta: string; prioridad: number; frecuencia: "monthly" | "yearl
   { ruta: "/plantillas/registro-de-jornada", prioridad: 0.8, frecuencia: "yearly", fecha: OBLIGACIONES_COMPROBADO },
   { ruta: "/contacto", prioridad: 0.8, frecuencia: "yearly", fecha: "2026-10-02" },
   { ruta: "/nosotros", prioridad: 0.7, frecuencia: "yearly", fecha: "2026-10-02" },
-  ...SECTORES.map((s) => ({ ruta: `/sectores/${s.id}`, prioridad: 0.7, frecuencia: "monthly" as const, fecha: "2026-10-08" })),
+  /* 03/11/2026: los ocho h1 pasaron a empezar por "Software". Es un
+     cambio de lo que la página dice SER, no de lo que cuenta, así que
+     interesa que Google vuelva a pasar pronto por las ocho. */
+  ...SECTORES.map((s) => ({ ruta: `/sectores/${s.id}`, prioridad: 0.7, frecuencia: "monthly" as const, fecha: "2026-11-03" })),
   { ruta: "/modulos", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-14" },
   /* LAS LANDINGS DE MÓDULO. Salen de la lista de publicadas, no de una
      lista escrita aquí: una landing cuenta como publicada cuando está

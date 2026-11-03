@@ -184,7 +184,7 @@ const EN: Record<SectorId, Textos> = {
       resumen: "Cockroaches in the restaurant kitchen, with a health inspection next week.",
       lineas: [
         "Plagues Illa, Marga speaking.",
-        "Hi, it's Jaume from Restaurante Es Moll Vell, in Alcúdia.",
+        "Hi, it's Jaume from Restaurante Es Moll Vell.",
         "Last night we saw cockroaches in the kitchen, behind the hobs.",
         "We have a health inspection next week and I need the certificate.",
         "We'll do an intensive treatment today and leave the certificate in your portal.",
@@ -414,7 +414,7 @@ const DE: Record<SectorId, Textos> = {
       resumen: "Kakerlaken in der Restaurantküche, nächste Woche ist Hygienekontrolle.",
       lineas: [
         "Plagues Illa, Sie sprechen mit Marga.",
-        "Hallo, hier ist Jaume vom Restaurante Es Moll Vell in Alcúdia.",
+        "Hallo, hier ist Jaume vom Restaurante Es Moll Vell.",
         "Gestern Abend haben wir Kakerlaken in der Küche gesehen, hinter dem Herd.",
         "Nächste Woche haben wir eine Hygienekontrolle und ich brauche das Zertifikat.",
         "Wir machen heute eine Intensivbehandlung und stellen Ihnen das Zertifikat ins Portal.",

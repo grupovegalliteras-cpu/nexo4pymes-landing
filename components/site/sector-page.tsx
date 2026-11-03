@@ -48,10 +48,44 @@ const TX2 = {
   },
 };
 
+/* El nombre del sector va en minúscula dentro de la frase, pero las
+   siglas no: con toLowerCase() a secas, "HVAC and refrigeration" salía
+   como "hvac". Se respeta cualquier palabra que ya venga entera en
+   mayúsculas. */
+const enMinuscula = (n: string) =>
+  n
+    .split(" ")
+    .map((p) => (p.length > 1 && p === p.toUpperCase() ? p : p.toLowerCase()))
+    .join(" ");
+
+/* EL H1 EMPIEZA POR "SOFTWARE", Y NO ES UN CAPRICHO.
+
+   Antes decía "Vuestra empresa de control de plagas, sin papeles ni
+   llamadas perdidas". Para una persona se entiende; para un buscador,
+   esa página DICE SER una empresa de control de plagas. Y como el
+   cuerpo lo rellena la demo —cucarachas, desratización, legionela,
+   certificados, un restaurante de Alcúdia—, el vocabulario de gremio
+   le ganaba al de producto por 21 a 6 en la página servida.
+
+   Lo que pasó, medido en Search Console el 3 de noviembre de 2026:
+   /sectores/plagas se llevaba 212 impresiones —el 28 % de todo el
+   sitio— y CERO clics, en posición 38, por "control de plagas
+   alcudia", "empresa desratizacon alcudia" y "desratización alcudia".
+   Son vecinos buscando quien les mate las cucarachas, no empresas
+   buscando programa. El cero de clics es lo correcto; el problema es
+   que la página estaba archivada en el cajón equivocado, y mientras
+   tanto no salía en "software para empresas de control de plagas".
+
+   El <title> siempre dijo "Software para empresas de… en Mallorca".
+   Era el h1 el que lo contradecía. Ahora dicen lo mismo.
+
+   LOS DATOS DE LA DEMO NO SE TOCAN: su realismo es lo que vende, y
+   son los mismos que alimentan el panel. Lo que cambia es qué dice la
+   página que ES, no de qué habla. */
 const TX = {
-  es: { h1: (n: string) => `Vuestra empresa de ${n.toLowerCase()}, sin papeles ni llamadas perdidas`, asi: "Así lo resolvemos para empresas como la vuestra.", verDemo: "Ver la demo", de: (e: string) => ` de ${e}`, enVivo: " en vivo", pide: "Pedid la vuestra por WhatsApp", tipico: "Un aviso típico", parte: "El parte del técnico", mediciones: "Mediciones propias del sector", a: "a", servicios: "Servicios y precios de ejemplo en la demo", desde: "Desde", otros: "Otros sectores", msg: (n: string) => `Hola, tengo una empresa de ${n.toLowerCase()} y he visto vuestra demo. Me gustaría verla con los datos de mi empresa.` },
-  en: { h1: (n: string) => `Your ${n.toLowerCase()} business, with no paperwork and no missed calls`, asi: "This is how we solve it for companies like yours.", verDemo: "See the demo", de: (e: string) => ` of ${e}`, enVivo: " live", pide: "Get yours via WhatsApp", tipico: "A typical request", parte: "The technician's job report", mediciones: "Industry-specific readings", a: "to", servicios: "Sample services and prices in the demo", desde: "From", otros: "Other industries", msg: (n: string) => `Hi, I run a ${n.toLowerCase()} business and I've seen your demo. I'd like to see it with my company's data.` },
-  de: { h1: (n: string) => `Ihr Betrieb (${n}) ohne Papierkram und verpasste Anrufe`, asi: "So lösen wir das für Firmen wie Ihre.", verDemo: "Demo ansehen", de: (e: string) => `: ${e}`, enVivo: " live", pide: "Ihre Version per WhatsApp anfragen", tipico: "Eine typische Anfrage", parte: "Der Arbeitsbericht des Technikers", mediciones: "Branchenspezifische Messwerte", a: "bis", servicios: "Beispielleistungen und -preise in der Demo", desde: "Ab", otros: "Weitere Branchen", msg: (n: string) => `Hallo, ich habe einen Betrieb im Bereich ${n} und habe eure Demo gesehen. Ich würde sie gern mit den Daten meiner Firma sehen.` },
+  es: { h1: (n: string) => `Software para vuestra empresa de ${enMinuscula(n)}, sin papeles ni llamadas perdidas`, asi: "Un panel para la oficina y una app para el técnico: así lo resolvemos para empresas como la vuestra.", verDemo: "Ver la demo", de: (e: string) => ` de ${e}`, enVivo: " en vivo", pide: "Pedid la vuestra por WhatsApp", tipico: "Un aviso típico", parte: "El parte del técnico", mediciones: "Mediciones propias del sector", a: "a", servicios: "Servicios y precios de ejemplo en la demo", desde: "Desde", otros: "Otros sectores", msg: (n: string) => `Hola, tengo una empresa de ${n.toLowerCase()} y he visto vuestra demo. Me gustaría verla con los datos de mi empresa.` },
+  en: { h1: (n: string) => `Software for your ${enMinuscula(n)} business, with no paperwork and no missed calls`, asi: "An office dashboard and an app for the technician: this is how we solve it for companies like yours.", verDemo: "See the demo", de: (e: string) => ` of ${e}`, enVivo: " live", pide: "Get yours via WhatsApp", tipico: "A typical request", parte: "The technician's job report", mediciones: "Industry-specific readings", a: "to", servicios: "Sample services and prices in the demo", desde: "From", otros: "Other industries", msg: (n: string) => `Hi, I run a ${n.toLowerCase()} business and I've seen your demo. I'd like to see it with my company's data.` },
+  de: { h1: (n: string) => `Software für Ihren Betrieb im Bereich ${n} — ohne Papierkram und verpasste Anrufe`, asi: "Ein Panel fürs Büro und eine App für den Techniker: so lösen wir das für Firmen wie Ihre.", verDemo: "Demo ansehen", de: (e: string) => `: ${e}`, enVivo: " live", pide: "Ihre Version per WhatsApp anfragen", tipico: "Eine typische Anfrage", parte: "Der Arbeitsbericht des Technikers", mediciones: "Branchenspezifische Messwerte", a: "bis", servicios: "Beispielleistungen und -preise in der Demo", desde: "Ab", otros: "Weitere Branchen", msg: (n: string) => `Hallo, ich habe einen Betrieb im Bereich ${n} und habe eure Demo gesehen. Ich würde sie gern mit den Daten meiner Firma sehen.` },
 };
 import { useDemo } from "@/store/demo";
 import { useHydrated } from "@/components/providers";

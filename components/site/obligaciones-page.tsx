@@ -50,6 +50,7 @@ const TX = {
     nadieCuenta: "Lo que no suele contarse",
     calendario: "Fechas",
     fuentes: "Fuentes",
+    verFicha: "Todo sobre esta norma: fechas, multas y a quién obliga",
     nuestra: "Lo que hacemos nosotros sobre esto",
     comprobado: (f: string) => `Textos consolidados del BOE leídos el ${f}. Si veis una fecha distinta en otra web, comprobadla en el enlace al BOE antes de creerla, venga de donde venga.`,
     faqH: "Lo que nos preguntan",
@@ -69,6 +70,7 @@ const TX = {
     nadieCuenta: "What usually goes unsaid",
     calendario: "Dates",
     fuentes: "Sources",
+    verFicha: "Everything on this rule: dates, fines and who it binds",
     nuestra: "What we do about this",
     comprobado: (f: string) => `Consolidated texts read in the Spanish official gazette on ${f}. If another site shows a different date, check it against the gazette link before believing it, whoever it comes from.`,
     faqH: "What people ask us",
@@ -88,6 +90,7 @@ const TX = {
     nadieCuenta: "Was meist verschwiegen wird",
     calendario: "Fristen",
     fuentes: "Quellen",
+    verFicha: "Alles zu dieser Vorschrift: Fristen, Bußgelder, Geltung",
     nuestra: "Was wir dazu machen",
     comprobado: (f: string) => `Konsolidierte Texte am ${f} im spanischen Gesetzblatt gelesen. Zeigt eine andere Seite ein abweichendes Datum, prüfen Sie es über den Link zum Gesetzblatt — ganz gleich, von wem es kommt.`,
     faqH: "Was man uns fragt",
@@ -175,8 +178,18 @@ export function ObligacionesPage({ lang }: { lang: Idioma }) {
                   ))}
                 </ul>
 
-                {o.ruta ? (
+                {/* Primero la página profunda de la norma, si la tiene, y
+                    después la nuestra: el orden va de lo útil a lo
+                    comercial, igual que en el resto de esta página. */}
+                {o.paginaPropia ? (
                   <p className="mt-6 text-[15px]">
+                    <Link href={o.paginaPropia} className="text-brand">
+                      {tx.verFicha} →
+                    </Link>
+                  </p>
+                ) : null}
+                {o.ruta ? (
+                  <p className={`${o.paginaPropia ? "mt-2" : "mt-6"} text-[15px]`}>
                     <Link href={o.ruta} className="text-brand">
                       {tx.nuestra} →
                     </Link>

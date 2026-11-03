@@ -27,15 +27,28 @@ import { fijarIdioma } from "@/lib/idioma-servidor";
 
 const RUTA = "/obligaciones";
 
+/* EL TÍTULO YA NO VA A POR "QUÉ OBLIGA A UNA EMPRESA". Medido el 3 de
+   noviembre de 2026: el término paraguas autocompleta casi entero a
+   Latinoamérica —"obligaciones de una empresa sas", "en Bolivia", "en
+   Colombia", "ante el SAT"— y "obligaciones fiscales 2027" no devuelve
+   ni una sugerencia. Esta página llevaba tres meses con cero
+   impresiones no por el contenido, que es el correcto, sino porque su
+   título iba a por una frase que en España nadie teclea.
+
+   LO QUE SÍ SE TECLEA son las normas por su nombre, y ahí VeriFactu ya
+   tiene su propia página. Así que el hub se queda con las dos que no
+   la tienen todavía y que sí tienen demanda medida: "factura
+   electrónica obligatoria" y "registro de jornada obligatorio". El día
+   que esas dos tengan página propia, este título vuelve a cambiar. */
 const TITULO = {
-  es: "Qué obliga a una empresa en España: fechas reales",
-  en: "What Spanish law requires: the real dates",
-  de: "Pflichten für Betriebe in Spanien: echte Fristen",
+  es: "Factura electrónica y registro de jornada: fechas",
+  en: "E-invoicing and working-time records in Spain",
+  de: "E-Rechnung und Arbeitszeiterfassung in Spanien",
 };
 const DESCRIPCION = {
-  es: "Factura electrónica, VeriFactu y registro de jornada: qué está publicado en el BOE, qué solo está anunciado y desde qué día obliga cada cosa.",
-  en: "E-invoicing, VeriFactu and working-time records: what is actually published in Spain, what is only announced, and when each duty starts.",
-  de: "E-Rechnung, VeriFactu und Arbeitszeiterfassung: was wirklich im Gesetzblatt steht, was nur angekündigt ist und ab wann es gilt.",
+  es: "Desde cuándo obliga la factura electrónica entre empresas y qué exige ya el registro de jornada: lo publicado en el BOE, separado de lo que solo está anunciado.",
+  en: "When business-to-business e-invoicing starts to bind you and what working-time records already require: what is published in Spain, not what is only announced.",
+  de: "Ab wann die E-Rechnung zwischen Unternehmen gilt und was die Arbeitszeiterfassung schon verlangt: was im Gesetzblatt steht, getrennt vom bloß Angekündigten.",
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {

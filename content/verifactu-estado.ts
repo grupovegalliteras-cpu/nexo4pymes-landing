@@ -43,7 +43,7 @@ export type HitoVerifactu = {
 };
 
 /** Último día en que una persona miró la sede de la AEAT y lo confirmó. */
-export const COMPROBADO = "2026-10-13";
+export const COMPROBADO = "2026-11-03";
 
 export const HITOS: HitoVerifactu[] = [
   {

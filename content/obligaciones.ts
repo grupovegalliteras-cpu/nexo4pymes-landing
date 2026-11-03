@@ -54,13 +54,22 @@ export type Obligacion = {
   hitos: Hito[];
   /** Identificadores del BOE, para poder comprobarlo sin buscar. */
   fuentes: { nombre: string; boe: string; url: string }[];
+  /* LA PÁGINA PROFUNDA DE ESTA NORMA, cuando la tiene. Esta página es
+     el hub —las tres normas juntas, para quien aún no sabe qué le
+     toca— y no puede posicionar por sí sola: «obligaciones de una
+     empresa» autocompleta casi entero a Latinoamérica, medido el 3 de
+     noviembre de 2026. Quien posiciona es la página de cada norma, que
+     va a por el término que sí se teclea. De momento solo VeriFactu
+     tiene la suya; factura electrónica y registro de jornada son las
+     dos siguientes. */
+  paginaPropia?: string;
   /** Nuestra página sobre el tema, si la hay. */
   ruta?: string;
 };
 
 /* Último día en que una persona abrió el BOE y leyó los textos
    consolidados uno por uno. No es la fecha del despliegue. */
-export const COMPROBADO = "2026-11-01";
+export const COMPROBADO = "2026-11-03";
 
 /* ------------------------------------------------------------------
    1. VERIFACTU
@@ -130,6 +139,7 @@ const verifactu: Obligacion = {
       url: "https://www.boe.es/buscar/doc.php?id=BOE-A-2025-24446",
     },
   ],
+  paginaPropia: "/verifactu",
   ruta: "/modulos/facturacion-verifactu",
 };
 

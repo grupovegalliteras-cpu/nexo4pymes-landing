@@ -3,6 +3,7 @@ import { marca } from "@/content/marca";
 import { SECTORES } from "@/data/sectors";
 import { ARTICULOS, fechaSitemap } from "@/content/articulos";
 import { COMPROBADO as OBLIGACIONES_COMPROBADO } from "@/content/obligaciones";
+import { COMPROBADO as VERIFACTU_COMPROBADO } from "@/content/verifactu-estado";
 import { LANDINGS_PUBLICADAS } from "@/content/landings-seo-i18n";
 import { IDIOMAS, conIdioma } from "@/lib/i18n";
 
@@ -34,6 +35,18 @@ const PAGINAS: { ruta: string; prioridad: number; frecuencia: "monthly" | "yearl
      despliegue. En una página de plazos legales eso es exactamente lo
      que Google necesita saber para decidir si volver a pasar. */
   { ruta: "/obligaciones", prioridad: 0.9, frecuencia: "monthly", fecha: OBLIGACIONES_COMPROBADO },
+  /* LA PRIMERA PÁGINA PROFUNDA DE UNA SOLA NORMA. /obligaciones es el
+     hub y no puede posicionar por sí solo: su término paraguas
+     autocompleta casi entero a Latinoamérica. Esta va a por
+     "verifactu" a secas y sus variantes de fecha, que es el grupo con
+     más demanda de todo lo nuestro y el único cuyo top 10 son
+     gestorías e informáticas pequeñas en vez de Holded y la AEAT.
+
+     Prioridad 1 junto con la portada, y lastmod = fecha de
+     comprobación de las fuentes: Hacienda ha movido este calendario
+     tres veces y cada vez que lo mueva, esta página tiene que ser la
+     primera por la que Google vuelva a pasar. */
+  { ruta: "/verifactu", prioridad: 1, frecuencia: "monthly", fecha: VERIFACTU_COMPROBADO },
   /* La plantilla gratis. Prioridad 0.8: trae gente de arriba del
      embudo —quien busca una plantilla todavía no busca un proveedor—
      pero trae mucha, y desde aquí se llega a /obligaciones y a la

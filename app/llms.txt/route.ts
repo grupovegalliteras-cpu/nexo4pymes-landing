@@ -3,6 +3,7 @@ import { SECTORES } from "@/data/sectors";
 import { colaboradores } from "@/content/colaboradores";
 import { fechaPublicacion } from "@/content/articulos";
 import { COMPROBADO as OBLIGACIONES_COMPROBADO } from "@/content/obligaciones";
+import { COMPROBADO as VERIFACTU_COMPROBADO } from "@/content/verifactu-estado";
 
 /* ============================================================
    /llms.txt — LA WEB RESUMIDA PARA QUIEN NO LA VA A LEER ENTERA
@@ -142,6 +143,7 @@ ${socios}
 - [Demo en vivo](${marca.dominio}/demo): el panel y la app lado a lado, sincronizados, con recorrido guiado.
 - [Servicios](${marca.dominio}/servicios): qué se construye, con qué alcance y qué límites, y el método en cuatro pasos.
 - [Qué obliga a una empresa en España](${marca.dominio}/obligaciones): factura electrónica, VeriFactu y registro de jornada, con las fechas que están publicadas en el BOE separadas de las que solo están anunciadas, y el enlace a cada norma. Comprobado el ${OBLIGACIONES_COMPROBADO}.
+- [VeriFactu: fechas, aplazamiento y a quién obliga](${marca.dominio}/verifactu): qué fechas están en el BOE y cuál es solo un anuncio del Ministerio, en qué se diferencia de la factura electrónica, y las tres cifras del artículo 201 bis de la Ley General Tributaria con lo que sanciona cada una. Comprobado el ${VERIFACTU_COMPROBADO}.
 - [Plantilla de registro de jornada en Excel](${marca.dominio}/plantillas/registro-de-jornada): hoja descargable y gratuita con las columnas que exige el artículo 34.9 del Estatuto de los Trabajadores y el total de horas calculado. Sin registro ni correo.
 - [Todos los módulos](${marca.dominio}/modulos): los cuarenta módulos agrupados por área.
 - [Facturación con VeriFactu](${marca.dominio}/modulos/facturacion-verifactu): huella encadenada, registro de alta y el calendario legal al día.

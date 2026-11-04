@@ -19,6 +19,6 @@ export default async function Image({ params }: { params: Promise<{ lang: string
     kicker: s.nombre,
     title: tr(lang, { es: `Vuestra empresa de ${s.nombre.toLowerCase()}, sin papeles`, en: `Your ${s.nombre.toLowerCase()} business, paperless`, de: `${s.nombre} ohne Papierkram` }),
     sub: s.dolor,
-    chips: [tr(lang, { es: "Mirad la demo de vuestro sector", en: "See the demo for your industry", de: "Demo für Ihre Branche ansehen" }), "Made in Mallorca"],
+    chips: [tr(lang, { es: "Software para vuestro sector", en: "Software for your industry", de: "Software für Ihre Branche" }), "Made in Mallorca"],
   });
 }

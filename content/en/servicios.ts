@@ -10,8 +10,8 @@ export const navServicios = [
 
 export const heroServicios = {
   volver: { texto: "← Back to home", href: "/" },
-  titularA: "We don't sell software.",
-  titularB: "First we check whether you really need it.",
+  titularA: "Custom software development in Mallorca.",
+  titularB: "But first we check whether you really need it.",
   parrafo:
     "We're Nexo4Pymes, a small team in Mallorca. We build custom digital solutions for small businesses in any industry: bespoke CRMs, web configurators and integrations. Here's the full detail of what we build, how we work and how to get started.",
   cta: "Message us on WhatsApp",

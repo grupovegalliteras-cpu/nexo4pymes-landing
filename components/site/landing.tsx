@@ -71,15 +71,15 @@ const PhoneFrame = dynamic(() => import("@/components/app/shell").then((m) => m.
    ============================================================ */
 const T = {
   es: {
-    heroKicker: "Software a medida para pymes · Mallorca",
+    heroKicker: "Equipo propio en Mallorca",
     /* «VUESTRO» Y NO «TU», aunque se pidiera así de palabra.
        Toda la web trata de vosotros a la empresa y de tú solo en /legal y en
        el banner de cookies, donde se le habla a la persona cuyos datos se
        tratan. El hero fue durante meses la única parte en «tú» y costó
        unificarlo; volver a meterlo aquí lo rompe otra vez. La idea del
        titular es la que se pidió, el pronombre es el de la casa. */
-    heroA: "Vuestro negocio,",
-    heroB: "en el bolsillo.",
+    heroA: "Software a medida para pymes en Mallorca.",
+    heroB: "Vuestro negocio, en el bolsillo.",
     heroP: "Somos dos, en Palma. Si no os hace falta software a medida, os lo decimos.",
     verDemo: "Ver un programa funcionando",
     escribenos: "Escribidnos por WhatsApp",
@@ -90,7 +90,7 @@ const T = {
     oblDesde: "Desde",
     oblSinFecha: "Sin fecha publicada",
     oblEnlace: "Ver qué os obliga y desde cuándo",
-    sectH: "¿A qué os dedicáis? Mirad la demo con vuestro día a día",
+    sectH: "¿A qué os dedicáis? Lo adaptamos a vuestro día a día",
     sectP: "La demo cambia la empresa, los servicios, los checklists, las mediciones y los avisos.",
     ejemplo: "Empresa de ejemplo",
     problema: "El problema de siempre: ",
@@ -147,9 +147,9 @@ const T = {
       `Hola, soy ${f.nombre || "…"} de ${f.empresa || "…"} (${sector.toLowerCase()}, ${f.tecnicos} técnicos). He visto la demo de Nexo4Pymes y quiero verla con los datos de mi empresa.${f.tel ? ` Mi teléfono: ${f.tel}.` : ""}`,
   },
   en: {
-    heroKicker: "Custom software for small businesses · Mallorca",
-    heroA: "Your business,",
-    heroB: "in your pocket.",
+    heroKicker: "Our own team in Mallorca",
+    heroA: "Custom software for small businesses in Mallorca.",
+    heroB: "Your business, in your pocket.",
     heroP: "There are two of us, in Palma. If you do not need custom software, we will say so.",
     verDemo: "See a system running",
     escribenos: "Message us on WhatsApp",
@@ -160,7 +160,7 @@ const T = {
     oblDesde: "From",
     oblSinFecha: "No published date",
     oblEnlace: "See what binds you, and from when",
-    sectH: "What do you do? See the demo with your day-to-day",
+    sectH: "What do you do? We fit it to your day-to-day",
     sectP: "The demo changes the company, services, checklists, readings and requests.",
     ejemplo: "Sample company",
     problema: "The usual headache: ",
@@ -217,9 +217,9 @@ const T = {
       `Hi, I'm ${f.nombre || "…"} from ${f.empresa || "…"} (${sector.toLowerCase()}, ${f.tecnicos} technicians). I've seen the Nexo4Pymes demo and I'd like to see it with my company's data.${f.tel ? ` My phone: ${f.tel}.` : ""}`,
   },
   de: {
-    heroKicker: "Individuelle Software für kleine Unternehmen · Mallorca",
-    heroA: "Ihr Betrieb,",
-    heroB: "in der Hosentasche.",
+    heroKicker: "Eigenes Team auf Mallorca",
+    heroA: "Individuelle Software für kleine Unternehmen auf Mallorca.",
+    heroB: "Ihr Betrieb, in der Hosentasche.",
     heroP: "Wir sind zwei, in Palma. Wenn Sie keine individuelle Software brauchen, sagen wir Ihnen das.",
     verDemo: "Ein System in Betrieb ansehen",
     escribenos: "Schreiben Sie uns auf WhatsApp",
@@ -230,7 +230,7 @@ const T = {
     oblDesde: "Ab",
     oblSinFecha: "Kein Datum veröffentlicht",
     oblEnlace: "Sehen, was gilt und ab wann",
-    sectH: "Was machen Sie? Sehen Sie die Demo mit Ihrem Alltag",
+    sectH: "Was machen Sie? Wir passen es an Ihren Alltag an",
     sectP: "Die Demo passt Firma, Leistungen, Checklisten, Messwerte und Anfragen an.",
     ejemplo: "Beispielfirma",
     problema: "Das übliche Problem: ",

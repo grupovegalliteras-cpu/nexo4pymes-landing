@@ -36,7 +36,7 @@ export default async function Image({ params }: { params: Promise<{ lang: string
     title: tituloLanding(lang, slug),
     sub: textoLanding(lang, slug).entradilla,
     chips: [
-      tr(lang, { es: "Mirad la demo", en: "See the demo", de: "Demo ansehen" }),
+      tr(lang, { es: "Pedid una demo", en: "Ask for a demo", de: "Demo anfragen" }),
       "Made in Mallorca",
     ],
   });

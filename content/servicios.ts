@@ -33,8 +33,8 @@ export const navServicios = [
 
 export const heroServicios = {
   volver: { texto: "← Volver al inicio", href: "/" },
-  titularA: "No vendemos software.",
-  titularB: "Primero miramos si de verdad os hace falta.",
+  titularA: "Desarrollo de software a medida en Mallorca.",
+  titularB: "Pero primero miramos si de verdad os hace falta.",
   parrafo:
     "Somos Nexo4Pymes, un equipo pequeño de Mallorca. Desarrollamos soluciones digitales a medida para pymes de cualquier sector: CRMs propios, configuradores web e integraciones. Aquí está el detalle completo de qué construimos, cómo trabajamos y cómo se empieza.",
   cta: "Escribidnos por WhatsApp",

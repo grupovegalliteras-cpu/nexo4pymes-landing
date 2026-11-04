@@ -50,7 +50,13 @@ export type Articulo = {
 export const ARTICULOS: Articulo[] = [
   { ruta: "/blog/holded-odoo-o-software-a-medida", publicado: "2026-11-01" },
   { ruta: "/blog/partes-de-trabajo-movil-mallorca", publicado: "2026-10-14" },
-  { ruta: "/blog/control-horario-obligatorio-mallorca", publicado: "2026-10-14" },
+  /* 04/11/2026: se le añadió la comprobación fechada del BOE (el 34.9
+     intacto, ningún 34 bis) y las cuantías reales de la sanción. Es la
+     página que va a por "registro de jornada digital obligatorio cuando
+     entra en vigor", la consulta más fuerte de todo el nicho, y lo que
+     la distingue es precisamente que la fecha de comprobación está
+     escrita. Ver content/jornada-estado.ts. */
+  { ruta: "/blog/control-horario-obligatorio-mallorca", publicado: "2026-10-14", actualizado: "2026-11-04" },
   { ruta: "/blog/verifactu-empresas-servicios-mallorca", publicado: "2026-10-14" },
   { ruta: "/blog/centralizar-avisos-llamadas-whatsapp-mallorca", publicado: "2026-10-09" },
   { ruta: "/blog/automatizar-presupuestos-pymes-mallorca", publicado: "2026-10-09" },

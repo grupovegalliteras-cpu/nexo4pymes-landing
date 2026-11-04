@@ -5,6 +5,7 @@ import { marca } from "@/content/marca";
 import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_CONTROL_HORARIO } from "@/content/blog-faq";
+import { comprobadoTexto } from "@/content/jornada-estado";
 
 <nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
   <Link href="/" className="text-brand">Home</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Time tracking
@@ -47,6 +48,16 @@ A regulation has indeed been drafted to require records to be digital and remote
 the Inspectorate. That draft received an **unfavourable opinion from the Council of State** and has
 not been published in the official gazette.
 
+<Nota>
+  <p>
+    **Checked on {comprobadoTexto("en")}** against the consolidated text of the Workers' Statute:
+    article 34.9 still carries its 2019 wording, word for word, and **there is no article 34 bis**.
+    Until that regulation appears in the official gazette there is no commencement date for digital
+    clocking in, whatever date you may have been shown. What binds you today is keeping the record;
+    the medium is your choice.
+  </p>
+</Nota>
+
 <Destacado titulo="How do you spot the sales argument?">
   If somebody tells you that "clocking in through an app is already compulsory", or that "you will
   be fined without a digital system", they are presenting as law something that is not.
@@ -55,6 +66,24 @@ not been published in the official gazette.
   that paper does not do the job you need it to do. And that is a different conversation, one where
   you can choose calmly instead of buying out of fear.
 </Destacado>
+
+## So how big is the fine?
+
+The fine is real, and it is worth knowing its size, because the sales argument leans on not saying
+it. Article 7.5 of the Spanish infringements act lists working-time records among **serious**
+infringements, and article 40.1.b) sets three bands:
+
+<Senales
+  items={[
+    { fuerte: "Lower band", texto: "€751 to €1,500" },
+    { fuerte: "Middle band", texto: "€1,501 to €3,750" },
+    { fuerte: "Upper band", texto: "€3,751 to €7,500" },
+  ]}
+/>
+
+What is penalised is **not keeping the record**, or keeping one that does not reflect the hours
+actually worked. There is no penalty for keeping it on paper: that is the part left out when the
+fine is used as a sales argument.
 
 ## Why does paper break in a service company?
 

@@ -5,6 +5,7 @@ import { marca } from "@/content/marca";
 import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_CONTROL_HORARIO } from "@/content/blog-faq";
+import { comprobadoTexto } from "@/content/jornada-estado";
 
 <nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
   <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Control horario
@@ -46,6 +47,16 @@ Sí se ha tramitado un reglamento para exigir que el registro sea digital y acce
 la Inspección. Ese reglamento recibió **dictamen desfavorable del Consejo de Estado** y no está
 publicado en el BOE.
 
+<Nota>
+  <p>
+    **Comprobado el {comprobadoTexto("es")}** en el texto consolidado del Estatuto de los
+    Trabajadores: el artículo 34.9 sigue con la redacción de 2019, palabra por palabra, y **no existe
+    ningún artículo 34 bis**. Mientras ese reglamento no salga en el BOE no hay fecha de entrada en
+    vigor del fichaje digital, por mucho que circule una. Lo que obliga hoy es registrar la jornada;
+    el medio lo elegís vosotros.
+  </p>
+</Nota>
+
 <Destacado titulo="¿Cómo se reconoce el argumento de venta?">
   Si alguien os dice que «ya es obligatorio fichar con una app» o que «os van a multar si no tenéis
   un sistema digital», está contando como norma algo que no lo es.
@@ -54,6 +65,24 @@ publicado en el BOE.
   multa**: es que el papel no os sirve para lo que lo necesitáis. Y ésa es una conversación distinta,
   en la que podéis elegir con calma en vez de comprar con miedo.
 </Destacado>
+
+## ¿De cuánto es la multa, entonces?
+
+La multa existe y conviene saber de cuánto es, porque el argumento de venta se apoya en no decirlo.
+El artículo 7.5 de la LISOS nombra el registro de jornada entre las infracciones **graves**, y el
+artículo 40.1.b) fija tres grados:
+
+<Senales
+  items={[
+    { fuerte: "Grado mínimo", texto: "de 751 a 1.500 €" },
+    { fuerte: "Grado medio", texto: "de 1.501 a 3.750 €" },
+    { fuerte: "Grado máximo", texto: "de 3.751 a 7.500 €" },
+  ]}
+/>
+
+Lo que se sanciona es **no llevar el registro**, o llevarlo de forma que no refleje la jornada real.
+No hay ninguna sanción por llevarlo en papel: ésa es la parte que se omite cuando se usa la multa
+como argumento comercial.
 
 ## ¿Por qué el papel se rompe en una empresa de servicios?
 

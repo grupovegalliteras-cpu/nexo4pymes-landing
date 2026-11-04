@@ -5,6 +5,7 @@ import { marca } from "@/content/marca";
 import { fechaPublicacion, fechaRevision } from "@/content/articulos";
 import { waLink } from "@/lib/whatsapp";
 import { FAQ_CONTROL_HORARIO } from "@/content/blog-faq";
+import { comprobadoTexto } from "@/content/jornada-estado";
 
 <nav aria-label="Brotkrumennavigation" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
   <Link href="/" className="text-brand">Start</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Zeiterfassung
@@ -48,6 +49,16 @@ Eine Verordnung, die die Erfassung digital und aus der Ferne abrufbar machen sol
 entworfen. Sie erhielt ein **ablehnendes Gutachten des Staatsrats** und ist nicht im Gesetzblatt
 veröffentlicht.
 
+<Nota>
+  <p>
+    **Geprüft am {comprobadoTexto("de")}** in der konsolidierten Fassung des Arbeitnehmerstatuts:
+    Artikel 34.9 trägt weiterhin Wort für Wort die Fassung von 2019, und **einen Artikel 34 bis gibt
+    es nicht**. Solange diese Verordnung nicht im Gesetzblatt steht, gibt es kein Datum für das
+    Inkrafttreten der digitalen Zeiterfassung — gleich welches Datum Ihnen genannt wurde.
+    Verpflichtend ist heute die Erfassung selbst; das Mittel wählen Sie.
+  </p>
+</Nota>
+
 <Destacado titulo="Wie erkennen Sie das Verkaufsargument?">
   Wenn Ihnen jemand sagt, Stempeln per App sei „schon Pflicht" oder ohne digitales System drohe ein
   Bußgeld, dann gibt er als Gesetz aus, was keines ist.
@@ -56,6 +67,24 @@ veröffentlicht.
   Bußgeld**, sondern dass Papier nicht leistet, wofür Sie es brauchen. Und das ist ein anderes
   Gespräch — eines, in dem Sie in Ruhe wählen statt aus Angst zu kaufen.
 </Destacado>
+
+## Wie hoch ist das Bußgeld denn?
+
+Das Bußgeld gibt es, und es lohnt sich, seine Höhe zu kennen — denn das Verkaufsargument lebt davon,
+sie nicht zu nennen. Artikel 7.5 des spanischen Sanktionsgesetzes führt die Arbeitszeiterfassung
+unter den **schweren** Verstößen, und Artikel 40.1.b) setzt drei Stufen:
+
+<Senales
+  items={[
+    { fuerte: "Mindeststufe", texto: "751 bis 1.500 €" },
+    { fuerte: "Mittelstufe", texto: "1.501 bis 3.750 €" },
+    { fuerte: "Höchststufe", texto: "3.751 bis 7.500 €" },
+  ]}
+/>
+
+Geahndet wird, **die Erfassung nicht zu führen** oder sie so zu führen, dass sie die tatsächliche
+Arbeitszeit nicht abbildet. Für die Führung auf Papier gibt es keine Sanktion: genau dieser Teil
+fehlt, wenn das Bußgeld als Verkaufsargument dient.
 
 ## Warum zerbricht Papier in einem Dienstleistungsbetrieb?
 

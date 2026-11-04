@@ -302,6 +302,13 @@ const registroJornada: Obligacion = {
       url: "https://www.boe.es/buscar/act.php?id=BOE-A-2019-3481",
     },
   ],
+  /* LA PÁGINA PROFUNDA DE ESTA NORMA. Aquí no es una página nueva como
+     en VeriFactu: es el artículo del blog, que ya está en el #1 y cuyo
+     título y ángulo ya son los correctos. Crear una cuarta página de
+     control horario habría partido la misma intención en dos y nos
+     habría puesto a competir contra nuestra propia página mejor
+     posicionada. Medido el 4 de noviembre de 2026. */
+  paginaPropia: "/blog/control-horario-obligatorio-mallorca",
   ruta: "/modulos/control-horario",
 };
 

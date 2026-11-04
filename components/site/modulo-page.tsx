@@ -2,7 +2,7 @@
 
 import Link from "@/components/i18n/Enlace";
 import { motion } from "motion/react";
-import { Check, FileCheck2, MessageCircle, PlayCircle, ShieldCheck } from "lucide-react";
+import { Check, FileCheck2, MessageCircle, ShieldCheck } from "lucide-react";
 import { whatsappLink } from "@/data/site";
 import { landingDe, type LandingSlug } from "@/data/landings";
 import { moduloDe } from "@/data/modules-i18n";
@@ -178,17 +178,6 @@ export function ModuloPage({ slug }: { slug: LandingSlug }) {
             {seo.entradilla}
           </p>
           <div className="fade-up mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap" style={{ animationDelay: "240ms" }}>
-            {/* LA DEMO SE ABRE EN ESTE MÓDULO, no por el principio.
-                Quien ha leído esta página quiere ver ESTO; que la demo
-                arrancara por Dirección le obligaba a buscarlo en el
-                menú lateral, que en el móvil ni se ve. El parámetro lo
-                lee components/demo/demo-page.tsx. */}
-            <Link
-              href={`/demo?modulo=${landing.modulo}`}
-              className="group flex h-13 items-center justify-center gap-2 rounded-xl bg-carmesi px-5 text-[16px] font-semibold text-crema transition hover:bg-carmesi-oscuro sm:h-12 sm:text-[15px]"
-            >
-              <PlayCircle className="size-5" /> {tx.verDemo}
-            </Link>
             <a
               href={whatsappLink(mensaje)}
               target="_blank"
@@ -306,7 +295,7 @@ export function ModuloPage({ slug }: { slug: LandingSlug }) {
       </section>
 
       <SiteFooter />
-      <ContactDock demoHref={`/demo?modulo=${landing.modulo}`} mensaje={mensaje} />
+      <ContactDock mensaje={mensaje} />
     </div>
   );
 }

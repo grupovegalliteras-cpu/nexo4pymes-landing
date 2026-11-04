@@ -2,7 +2,7 @@
 
 import Link from "@/components/i18n/Enlace";
 import { motion } from "motion/react";
-import { Check, MessageCircle, PhoneIncoming, PlayCircle, Smartphone } from "lucide-react";
+import { Check, MessageCircle, PhoneIncoming, Smartphone } from "lucide-react";
 import { whatsappLink } from "@/data/site";
 import { useEffect } from "react";
 import type { SectorId } from "@/data/sectors";
@@ -128,11 +128,6 @@ export function SectorPage({ id }: { id: SectorId }) {
             </h1>
             <p className="mt-4 max-w-xl text-[16px] text-crema/70 sm:text-[17px]">{s.dolor} {tx.asi}</p>
             <div className="mt-7 grid gap-3 sm:mt-8 sm:flex sm:flex-wrap">
-              <Link href={`/demo?sector=${s.id}&tour=1`} className="flex h-13 items-center justify-center gap-2 rounded-xl bg-carmesi px-5 text-[16px] font-semibold text-crema sm:h-12 sm:text-[15px]">
-                <PlayCircle className="size-5" /> {tx.verDemo}
-                <span className="-ml-2 max-sm:hidden">{tx.de(s.empresa)}</span>
-                <span className="-ml-2 sm:hidden">{tx.enVivo}</span>
-              </Link>
               <a href={whatsappLink(mensaje)} target="_blank" rel="noreferrer" className="vibrar flex h-13 items-center justify-center gap-2 rounded-xl bg-carmesi px-5 text-[16px] font-semibold text-crema hover:bg-carmesi-oscuro sm:h-12 sm:text-[15px]">
                 <MessageCircle className="size-5" /> {tx.pide}
               </a>
@@ -275,7 +270,7 @@ export function SectorPage({ id }: { id: SectorId }) {
         </div>
       </section>
       <SiteFooter />
-      <ContactDock demoHref={`/demo?sector=${s.id}&tour=1`} mensaje={mensaje} />
+      <ContactDock mensaje={mensaje} />
     </div>
   );
 }

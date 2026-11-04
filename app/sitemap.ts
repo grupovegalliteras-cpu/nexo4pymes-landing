@@ -24,7 +24,6 @@ import { IDIOMAS, conIdioma } from "@/lib/i18n";
    es lo que hace que Google vuelva a pasar por ella pronto. */
 const PAGINAS: { ruta: string; prioridad: number; frecuencia: "monthly" | "yearly"; fecha: string }[] = [
   { ruta: "/", prioridad: 1, frecuencia: "monthly", fecha: "2026-10-08" },
-  { ruta: "/demo", prioridad: 0.9, frecuencia: "monthly", fecha: "2026-10-02" },
   { ruta: "/servicios", prioridad: 0.9, frecuencia: "monthly", fecha: "2026-10-08" },
   /* LA PUERTA. Prioridad 0.9 y por encima de las landings de módulo:
      es la página que va a por "qué obliga", que es lo más buscado de

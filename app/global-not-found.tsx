@@ -25,8 +25,8 @@ export default function GlobalNotFound() {
               <Link href="/" className="rounded-lg border border-line px-4 py-2 text-sm font-medium">
                 Inicio
               </Link>
-              <Link href="/demo?tour=1" className="rounded-lg bg-carmesi px-4 py-2 text-sm font-medium text-crema hover:bg-carmesi-oscuro">
-                Ver la demo en vivo
+              <Link href="/contacto" className="rounded-lg bg-carmesi px-4 py-2 text-sm font-medium text-crema hover:bg-carmesi-oscuro">
+                Contacto
               </Link>
               <Link href="/en" className="rounded-lg border border-line px-4 py-2 text-sm font-medium">
                 English

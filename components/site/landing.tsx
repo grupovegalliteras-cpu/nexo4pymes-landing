@@ -3,7 +3,7 @@
 import Link from "@/components/i18n/Enlace";
 import { AnimatePresence, motion } from "motion/react";
 import {
-  ArrowRight, BadgeCheck, Check, Clock, Globe, ListChecks, Mail, MessageCircle, Monitor, PlayCircle, Plus, Workflow,
+  ArrowRight, BadgeCheck, Check, Clock, Globe, ListChecks, Mail, MessageCircle, Plus, Workflow,
 } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { sectoresDe } from "@/data/sectors-i18n";
@@ -26,6 +26,7 @@ import { AntesDespues } from "./antes-despues";
 import { ContactDock, SiteFooter, SiteNav, waHola } from "./chrome";
 import type { Idioma } from "@/lib/i18n";
 import { HeroNucleo } from "@/components/deeptech/hero";
+import { waLink } from "@/lib/whatsapp";
 import { Magnetico, moverFoco } from "@/components/deeptech/interaccion";
 import { Etiqueta, Titulo } from "@/components/deeptech/piezas";
 import { OBLIGACIONES, fechaHito, proximoHito } from "@/content/obligaciones";
@@ -93,7 +94,7 @@ const T = {
     sectP: "La demo cambia la empresa, los servicios, los checklists, las mediciones y los avisos.",
     ejemplo: "Empresa de ejemplo",
     problema: "El problema de siempre: ",
-    verDemoCorta: "Ver la demo",
+    verDemoCorta: "Pedir la demo",
     verDemoDe: (s: string) => ` de ${s.toLowerCase()}`,
     masSector: "Más sobre el sector",
     checklist: "Checklist del parte",
@@ -102,7 +103,8 @@ const T = {
     realH: "No es una maqueta. Tocadlo.",
     realMovil: "Esta es la app que llevarían vuestros técnicos, funcionando con datos de ejemplo. Tocad un trabajo, fichad o abrid el menú Más.",
     realPc: "Esto que veis abajo es el panel de oficina funcionando, con datos de ejemplo. Navegad, abrid fichas, emitid una factura. Y el móvil del técnico está conectado.",
-    pantallaCompleta: "Abrir a pantalla completa",
+    pedirDemo: "Pedid una demo por WhatsApp",
+    heroDemo: "Pedid una demo",
     oficinaYMovil: "Ver oficina y móvil conectados",
     abrirPanel: "Abrir el panel de oficina",
     modH: "Empezad por lo que más os duele. Añadid el resto cuando queráis.",
@@ -162,7 +164,7 @@ const T = {
     sectP: "The demo changes the company, services, checklists, readings and requests.",
     ejemplo: "Sample company",
     problema: "The usual headache: ",
-    verDemoCorta: "See the demo",
+    verDemoCorta: "Ask for the demo",
     verDemoDe: (s: string) => ` for ${s.toLowerCase()}`,
     masSector: "More about this industry",
     checklist: "Job report checklist",
@@ -171,7 +173,8 @@ const T = {
     realH: "It's not a mock-up. Try it.",
     realMovil: "This is the app your technicians would carry, running with sample data. Tap a job, clock in or open the More menu.",
     realPc: "What you see below is the office dashboard, running with sample data. Browse, open records, issue an invoice. And the technician's phone is connected.",
-    pantallaCompleta: "Open full screen",
+    pedirDemo: "Ask for a demo on WhatsApp",
+    heroDemo: "Ask for a demo",
     oficinaYMovil: "See office and phone connected",
     abrirPanel: "Open the office dashboard",
     modH: "Start with what hurts most. Add the rest whenever you like.",
@@ -231,7 +234,7 @@ const T = {
     sectP: "Die Demo passt Firma, Leistungen, Checklisten, Messwerte und Anfragen an.",
     ejemplo: "Beispielfirma",
     problema: "Das übliche Problem: ",
-    verDemoCorta: "Demo ansehen",
+    verDemoCorta: "Demo anfragen",
     verDemoDe: (s: string) => `: ${s}`,
     masSector: "Mehr zur Branche",
     checklist: "Checkliste im Arbeitsbericht",
@@ -240,7 +243,8 @@ const T = {
     realH: "Kein Mock-up. Probieren Sie es aus.",
     realMovil: "Das ist die App, die Ihre Techniker nutzen würden, mit Beispieldaten. Tippen Sie auf einen Auftrag, stempeln Sie ein oder öffnen Sie das Menü Mehr.",
     realPc: "Unten sehen Sie das Büro-Dashboard in Aktion, mit Beispieldaten. Klicken Sie sich durch, öffnen Sie Akten, stellen Sie eine Rechnung aus. Und das Handy des Technikers ist verbunden.",
-    pantallaCompleta: "Im Vollbild öffnen",
+    pedirDemo: "Demo per WhatsApp anfragen",
+    heroDemo: "Demo anfragen",
     oficinaYMovil: "Büro und Handy verbunden ansehen",
     abrirPanel: "Büro-Dashboard öffnen",
     modH: "Beginnen Sie dort, wo es am meisten drückt. Der Rest kommt, wann Sie wollen.",
@@ -451,7 +455,8 @@ function Hero() {
       b={t.heroB}
       linea={t.heroLinea}
       p={t.heroP}
-      verDemo={t.verDemo}
+      verDemo={t.heroDemo}
+      demoHref={waLink("DEMO", undefined, lang)}
       escribenos={t.escribenos}
       waHref={whatsappLink(waHola(lang))}
       sellos={t.sellos}
@@ -726,10 +731,15 @@ function SectorPicker() {
                   {sector.dolor}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
-                  <Link href={`/demo?sector=${sector.id}&tour=1`} className="dt-boton dt-boton-primario h-10 px-4 text-[14px]">
-                    <PlayCircle className="size-4" /> {t.verDemoCorta}
+                  <a
+                    href={waLink("DEMO", `${lang === "de" ? "Branche" : lang === "en" ? "Industry" : "Sector"}: ${sector.nombre}`, lang)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="dt-boton dt-boton-primario h-10 px-4 text-[14px]"
+                  >
+                    <MessageCircle className="size-4" /> {t.verDemoCorta}
                     <span className="-ml-[0.25rem] max-sm:hidden">{t.verDemoDe(sector.nombre)}</span>
-                  </Link>
+                  </a>
                   <Link href={`/sectores/${sector.id}`} className="dt-boton dt-boton-cristal h-10 px-4 text-[14px] font-medium">
                     {t.masSector}
                   </Link>
@@ -820,6 +830,7 @@ function useWide() {
 
 function SoftwareReal() {
   const t = useT();
+  const lang = useIdioma();
   const { wide, vw } = useWide();
   useEffect(() => {
     useUi.getState().setPanelSection("direccion");
@@ -851,9 +862,9 @@ function SoftwareReal() {
             </p>
           </div>
           <Magnetico className="hidden lg:inline-flex">
-            <Link href="/demo" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
-              <span>{t.pantallaCompleta}</span>
-            </Link>
+            <a href={waLink("DEMO", undefined, lang)} target="_blank" rel="noreferrer" className="dt-boton dt-boton-cristal h-11 px-5 text-[14px]">
+              <span>{t.pedirDemo}</span>
+            </a>
           </Magnetico>
         </div>
         {/* el envoltorio está siempre: GSAP lo encuentra aunque el contenido se decida después */}
@@ -887,12 +898,9 @@ function SoftwareReal() {
                 </PhoneFrame>
               </div>
               <div className="mx-auto mt-6 grid max-w-md gap-2">
-                <Link href="/demo?tour=1" className="dt-boton dt-boton-primario h-12 text-[15px]">
-                  <PlayCircle className="size-5" /> {t.oficinaYMovil}
-                </Link>
-                <Link href="/panel" className="dt-boton dt-boton-cristal h-12 text-[15px] font-medium">
-                  <Monitor className="size-5 text-brand" /> {t.abrirPanel}
-                </Link>
+                <a href={waLink("DEMO", undefined, lang)} target="_blank" rel="noreferrer" className="dt-boton dt-boton-primario h-12 text-[15px]">
+                  <MessageCircle className="size-5" /> {t.pedirDemo}
+                </a>
               </div>
             </>
           )}

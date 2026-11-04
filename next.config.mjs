@@ -124,6 +124,13 @@ const nextConfig = {
       { source: "/padel/:path*", destination: "/", permanent: true },
       { source: "/:lang(en|de)/padel", destination: "/:lang", permanent: true },
 
+      // La demo de pantalla completa se retiró de la web en noviembre de 2026:
+      // quien la quiera la pide por WhatsApp o por el formulario, que es donde
+      // se consigue el contacto. Estuvo indexada (sitemap, prioridad 0.9) y la
+      // enlazaban el blog y los módulos, así que va a la home con un 301.
+      { source: "/demo", destination: "/", permanent: true },
+      { source: "/:lang(en|de)/demo", destination: "/:lang", permanent: true },
+
       // Enlaces antiguos a /sectores (sin más): al selector de sectores
       // de la home, que es donde vive ahora esa información.
       // Permanente: era una dirección indexada, y un 307 no le traslada

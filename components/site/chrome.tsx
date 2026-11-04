@@ -30,7 +30,6 @@ const T = {
     hablamos: "¿Hablamos?",
     pie: "Software a medida para pymes: sistemas de gestión, configuradores web, fichaje y automatizaciones con IA. Desde",
     columnas: [
-      ["Demo", [["Modo presentación", "/demo"], ["Panel de oficina", "/panel"], ["App de operarios", "/app"], ["Ver recorrido guiado", "/demo?tour=1"]]],
       /* EL PIE APUNTA A LAS PÁGINAS, NO A LA DEMO. Estos enlaces iban a
          /panel/…, que es la demo y es noindex: el pie del sitio entero
          —la plantilla que se repite en todas las páginas— gastaba sus
@@ -56,7 +55,6 @@ const T = {
     hablamos: "Let's talk",
     pie: "Custom software for small businesses: management systems, web configurators, time clocking and AI automations. From",
     columnas: [
-      ["Demo", [["Presentation mode", "/demo"], ["Office dashboard", "/panel"], ["Technician app", "/app"], ["Guided tour", "/demo?tour=1"]]],
       ["Service software", [["All modules", "/modulos"], ["Invoicing with VeriFactu", "/modulos/facturacion-verifactu"], ["Time clock", "/modulos/control-horario"], ["Job reports", "/modulos/partes-de-trabajo"], ["Quotes", "/modulos/presupuestos"], ["WhatsApp assistant", "/modulos/chatbot-whatsapp"]]],
       ["Industries", [["Building maintenance", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["HVAC", "/sectores/climatizacion"], ["Cleaning", "/sectores/limpieza"], ["Landscaping", "/sectores/jardineria"], ["Pest control", "/sectores/plagas"], ["Solar", "/sectores/solar"], ["Renovations", "/sectores/reformas"]]],
       ["Company", [["What the law requires", "/obligaciones"], ["VeriFactu: dates and fines", "/verifactu"], ["Working-time record template", "/plantillas/registro-de-jornada"], ["Services", "/servicios"], ["About us", "/nosotros"], ["Blog", "/blog"], ["Contact", "/contacto"]]],
@@ -77,7 +75,6 @@ const T = {
     hablamos: "Sprechen wir?",
     pie: "Individuelle Software für kleine Unternehmen: Verwaltungssysteme, Web-Konfiguratoren, Zeiterfassung und KI-Automatisierungen. Aus",
     columnas: [
-      ["Demo", [["Präsentationsmodus", "/demo"], ["Büro-Dashboard", "/panel"], ["Techniker-App", "/app"], ["Geführte Tour", "/demo?tour=1"]]],
       ["Dienstleister-Software", [["Alle Module", "/modulos"], ["Rechnungen mit VeriFactu", "/modulos/facturacion-verifactu"], ["Zeiterfassung", "/modulos/control-horario"], ["Arbeitsberichte", "/modulos/partes-de-trabajo"], ["Angebote", "/modulos/presupuestos"], ["WhatsApp-Assistent", "/modulos/chatbot-whatsapp"]]],
       ["Branchen", [["Gebäudetechnik", "/sectores/mantenimiento"], ["Pools", "/sectores/piscinas"], ["Klimatechnik", "/sectores/climatizacion"], ["Reinigung", "/sectores/limpieza"], ["Garten", "/sectores/jardineria"], ["Schädlingsbekämpfung", "/sectores/plagas"], ["Solaranlagen", "/sectores/solar"], ["Renovierungen", "/sectores/reformas"]]],
       ["Unternehmen", [["Was das Gesetz verlangt", "/obligaciones"], ["VeriFactu: Fristen und Bußgelder", "/verifactu"], ["Vorlage zur Arbeitszeiterfassung", "/plantillas/registro-de-jornada"], ["Leistungen", "/servicios"], ["Über uns", "/nosotros"], ["Blog", "/blog"], ["Kontakt", "/contacto"]]],
@@ -204,14 +201,13 @@ export function SiteNav({
         </nav>
         <div className="ml-auto flex items-center gap-2">
           {!enlaces && <SelectorIdioma tono={onDark ? "oscuro" : "tema"} className="hidden md:flex" />}
-          {demo ? (
+          {/* SIN DEMO PROPIA: la demo de la web se retiró (quien la quiera la pide
+              por WhatsApp o por el formulario). Solo se conserva este enlace para
+              las landings que traen la suya, como Concesia, que pasa `demo`. */}
+          {demo && (
             <a href={demo} className={cn("hidden h-9 items-center rounded-lg px-3.5 text-[14px] font-medium whitespace-nowrap xl:flex", onDark ? "text-crema hover:bg-crema/10" : "text-fg hover:bg-surface-2")}>
               {t.abrirDemo}
             </a>
-          ) : (
-            <Link href="/demo" className={cn("hidden h-9 items-center rounded-lg px-3.5 text-[14px] font-medium whitespace-nowrap xl:flex", onDark ? "text-crema hover:bg-crema/10" : "text-fg hover:bg-surface-2")}>
-              {t.abrirDemo}
-            </Link>
           )}
           {cta ? (
             <a href={cta.href} target="_blank" rel="noreferrer" className="flex h-9 items-center rounded-lg bg-carmesi px-3.5 text-[14px] font-semibold whitespace-nowrap text-crema transition-colors hover:bg-carmesi-oscuro">
@@ -282,7 +278,7 @@ export function SiteNav({
                       </a>
                     ),
                   )
-                : [...t.links, [t.abrirDemo, "/demo"] as const].map(([l, h]) => (
+                : t.links.map(([l, h]) => (
                     <Link key={h} href={h} onClick={() => { navegando.current = true; setOpen(false); }} className="rounded-xl px-3 py-2.5 font-display text-[22px] font-semibold">
                       {l}
                     </Link>
@@ -308,7 +304,7 @@ export function SiteNav({
  * Acceso fijo a la demo y a WhatsApp. En móvil es una barra abajo, al alcance del pulgar;
  * en escritorio, un botón flotante. Aparece al bajar y se aparta al llegar al formulario.
  */
-export function ContactDock({ demoHref = "/demo?tour=1", mensaje }: { demoHref?: string; mensaje?: string }) {
+export function ContactDock({ demoHref = "", mensaje }: { demoHref?: string; mensaje?: string }) {
   const lang = useIdioma();
   const t = T[lang];
   const msg = mensaje ?? waHola(lang);
@@ -348,15 +344,12 @@ export function ContactDock({ demoHref = "/demo?tour=1", mensaje }: { demoHref?:
             className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/90 px-3 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden"
           >
             <div className="mx-auto flex max-w-md gap-2">
-              {/* Una demo que es un HTML aparte (ver ESTATICAS): con el Link de Next no se abriría bien */}
-              {ESTATICAS.includes(demoHref) ? (
+              {/* Solo Concesia trae demo propia (un HTML aparte, ver ESTATICAS).
+                  En el resto de la web la demo se retiró: queda WhatsApp. */}
+              {ESTATICAS.includes(demoHref) && (
                 <a href={demoHref} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-fg text-[15px] font-semibold text-bg">
                   <PlayCircle className="size-5" /> {t.verDemo}
                 </a>
-              ) : (
-                <Link href={demoHref} className="flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-fg text-[15px] font-semibold text-bg">
-                  <PlayCircle className="size-5" /> {t.verDemo}
-                </Link>
               )}
               <a href={whatsappLink(msg)} target="_blank" rel="noreferrer" className="vibrar flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-carmesi text-[15px] font-semibold text-crema">
                 <MessageCircle className="size-5" /> WhatsApp
@@ -386,7 +379,7 @@ export function SiteFooter() {
   const t = T[lang];
   return (
     <footer data-theme="dark" className="border-t border-line bg-bg pb-20 text-fg lg:pb-0">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Logo className="h-7 text-[17px]" />
           <p className="mt-3 max-w-xs text-[14px] text-fg-2">

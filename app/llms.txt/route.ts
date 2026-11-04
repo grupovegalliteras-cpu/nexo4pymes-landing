@@ -131,8 +131,7 @@ ${socios}
 
 ## Páginas
 
-- [Portada](${marca.dominio}/): el panel de oficina y la app de técnicos, con demo navegable.
-- [Demo en vivo](${marca.dominio}/demo): el panel y la app lado a lado, sincronizados, con recorrido guiado.
+- [Portada](${marca.dominio}/): el panel de oficina y la app de técnicos, con la interfaz funcionando dentro de la propia página.
 - [Servicios](${marca.dominio}/servicios): qué se construye, con qué alcance y qué límites, y el método en cuatro pasos.
 - [Qué obliga a una empresa en España](${marca.dominio}/obligaciones): factura electrónica, VeriFactu y registro de jornada, con las fechas que están publicadas en el BOE separadas de las que solo están anunciadas, y el enlace a cada norma. Comprobado el ${OBLIGACIONES_COMPROBADO}.
 - [VeriFactu: fechas, aplazamiento y a quién obliga](${marca.dominio}/verifactu): qué fechas están en el BOE y cuál es solo un anuncio del Ministerio, en qué se diferencia de la factura electrónica, y las tres cifras del artículo 201 bis de la Ley General Tributaria con lo que sanciona cada una. Comprobado el ${VERIFACTU_COMPROBADO}.

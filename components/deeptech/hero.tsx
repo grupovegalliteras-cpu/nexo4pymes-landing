@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "@/components/i18n/Enlace";
-import { MessageCircle, PlayCircle } from "lucide-react";
+import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { useIdioma } from "@/components/i18n/idioma";
 import type { Idioma } from "@/lib/i18n";
@@ -61,6 +60,7 @@ export function HeroNucleo({
   linea,
   p,
   verDemo,
+  demoHref,
   escribenos,
   waHref,
   sellos,
@@ -73,6 +73,7 @@ export function HeroNucleo({
   /** Y debajo, más floja y más corta, quiénes somos y la promesa incómoda. */
   p: string;
   verDemo: string;
+  demoHref: string;
   escribenos: string;
   waHref: string;
   sellos: readonly string[];
@@ -178,12 +179,14 @@ export function HeroNucleo({
             style={{ "--d": "260ms" } as CSSProperties}
           >
             <Magnetico className="max-sm:w-full">
-              <Link
-                href="/demo?tour=1"
+              <a
+                href={demoHref}
+                target="_blank"
+                rel="noreferrer"
                 className="dt-boton dt-boton-primario h-13 w-full px-6 text-[16px] sm:h-12 sm:w-auto sm:text-[15px]"
               >
-                <PlayCircle className="size-5" /> <span>{verDemo}</span>
-              </Link>
+                <ArrowUpRight className="size-5" /> <span>{verDemo}</span>
+              </a>
             </Magnetico>
             <Magnetico className="max-sm:w-full">
               <a

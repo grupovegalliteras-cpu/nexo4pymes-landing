@@ -41,7 +41,7 @@ const RUTA = "/obligaciones";
    electrónica obligatoria" y "registro de jornada obligatorio". El día
    que esas dos tengan página propia, este título vuelve a cambiar. */
 const TITULO = {
-  es: "Factura electrónica y registro de jornada: fechas",
+  es: "Factura electrónica y registro de jornada",
   en: "E-invoicing and working-time records in Spain",
   de: "E-Rechnung und Arbeitszeiterfassung in Spanien",
 };

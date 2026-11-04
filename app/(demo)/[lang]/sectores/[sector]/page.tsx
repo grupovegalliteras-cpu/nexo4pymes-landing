@@ -11,6 +11,13 @@ export function generateStaticParams() {
   return SECTORES.map((s) => ({ sector: s.id }));
 }
 
+/* Minúsculas SIN romper las siglas: «HVAC and refrigeration» se quedaba
+   en «hvac and refrigeration» con toLowerCase a secas. Mismo defecto que
+   tenían los h1 (ver components/site/sector-page.tsx), pero aquí en el
+   <title>, en la descripción y en los datos estructurados. */
+const minus = (n: string) =>
+  n.split(" ").map((p) => (p.length > 1 && p === p.toUpperCase() ? p : p.toLowerCase())).join(" ");
+
 export async function generateMetadata({ params }: PageProps<"/[lang]/sectores/[sector]">): Promise<Metadata> {
   const { sector, lang: l } = await params;
   if (!isSectorId(sector)) return {};
@@ -33,16 +40,20 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/sectores/[
      Se prueba la forma natural y, si no cabe, se cae a la corta sin
      «empresas de». No se recorta con puntos suspensivos: un título
      cortado a mitad de palabra se lee peor que uno más seco. */
-  const nombre = s.nombre.toLowerCase();
+  const nombre = minus(s.nombre);
+  /* En inglés el título dice «Software for X companies», y con un nombre
+     en plural sale «pools companies» o «renovations companies». Se pasa
+     al singular solo en esos tres, que son los que suenan mal. */
+  const nombreEn = ({ pools: "pool", renovations: "renovation", "solar installations": "solar installation" } as Record<string, string>)[nombre] ?? nombre;
   const cabe = (s: string) => s.length <= 60;
   const largo = tr(lang, {
     es: `Software para empresas de ${nombre} en Mallorca`,
-    en: `Software for ${nombre} companies in Mallorca`,
+    en: `Software for ${nombreEn} companies in Mallorca`,
     de: `${s.nombre}: Branchensoftware auf Mallorca`,
   });
   const corto = tr(lang, {
     es: `Software para ${nombre} en Mallorca`,
-    en: `Software for ${nombre} in Mallorca`,
+    en: `Software for ${nombreEn} in Mallorca`,
     de: `${s.nombre}: Software auf Mallorca`,
   });
   const title = cabe(largo) ? largo : corto;
@@ -52,8 +63,8 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/sectores/[
      corta para todos: el sector de lema breve se lleva la frase completa.
      En alemán pasaba con jardinería (161) y en inglés con climatización. */
   const cola = tr(lang, {
-    es: [`Panel y app para empresas de ${s.nombre.toLowerCase()} en Mallorca: avisos, partes con firma, rutas y facturación.`, `Panel y app para empresas de ${s.nombre.toLowerCase()} en Mallorca: avisos, partes con firma y facturación.`],
-    en: [`Dashboard and app for ${s.nombre.toLowerCase()} firms in Mallorca: jobs, signed reports, invoicing.`, `Dashboard and app for ${s.nombre.toLowerCase()} firms in Mallorca.`],
+    es: [`Panel y app para empresas de ${minus(s.nombre)} en Mallorca: avisos, partes con firma, rutas y facturación.`, `Panel y app para empresas de ${minus(s.nombre)} en Mallorca: avisos, partes con firma y facturación.`],
+    en: [`Dashboard and app for ${minus(s.nombre)} firms in Mallorca: jobs, signed reports, invoicing.`, `Dashboard and app for ${minus(s.nombre)} firms in Mallorca.`],
     de: [`Dashboard und Techniker-App für Ihren Betrieb auf Mallorca: Aufträge, unterschriebene Berichte, Routen und Rechnungen.`, `Dashboard und Techniker-App für Ihren Betrieb auf Mallorca: Aufträge, Berichte und Rechnungen.`],
   });
   const descLarga = `${s.lema}. ${cola[0]}`;
@@ -99,8 +110,8 @@ export default async function Page({ params }: PageProps<"/[lang]/sectores/[sect
               esquemaServicio({
                 lang,
                 nombre: tr(lang, {
-                  es: `Software de gestión para empresas de ${s.nombre.toLowerCase()}`,
-                  en: `Management software for ${s.nombre.toLowerCase()} companies`,
+                  es: `Software de gestión para empresas de ${minus(s.nombre)}`,
+                  en: `Management software for ${minus(s.nombre)} companies`,
                   de: `Branchensoftware für ${s.nombre}`,
                 }),
                 descripcion: `${s.lema}. ${s.dolor}`,

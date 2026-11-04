@@ -24,7 +24,7 @@ import { fijarIdioma } from "@/lib/idioma-servidor";
 const RUTA = "/verifactu";
 
 const TITULO = {
-  es: "VeriFactu: fechas, aplazamiento y a quién obliga",
+  es: "VeriFactu: fechas, aplazamiento y quién obliga",
   en: "VeriFactu: dates, postponement and who it binds",
   de: "VeriFactu: Fristen, Verschiebung und für wen",
 };

@@ -322,6 +322,14 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opa
   .stat b{font-size:27px}
   .stat span{font-size:11.5px}
 }
+
+/* Precios en móvil: planes en horizontal, se desliza de lado */
+@media (max-width:960px){
+  .tabla{position:relative;display:flex;grid-template-columns:none;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-inline:calc(var(--gutter)*-1);padding:22px var(--gutter) 20px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .tabla::-webkit-scrollbar{display:none}
+  .pl{flex:0 0 min(82%,340px);scroll-snap-align:center;padding:26px 22px}
+  .pl .imp b{font-size:48px}
+}
 </style>
 </head>
 <body>
@@ -676,6 +684,8 @@ body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opa
   });
   pinta('servicios');
 })();
+// En móvil los planes van en fila: arrancamos centrados en el plan que se anuncia (Citas).
+(function(){var t=document.querySelector('.tabla');if(!t)return;function c(){if(innerWidth>960)return;var p=t.querySelector('.pl.top');if(p)t.scrollLeft=p.offsetLeft-(t.clientWidth-p.offsetWidth)/2}c();addEventListener('load',c)})();
 </script>
 </body>
 </html>

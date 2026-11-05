@@ -67,6 +67,8 @@ const nextConfig = {
       beforeFiles: [
         { source: "/concesia", destination: "/concesia/index.html" },
         { source: "/concesia/demo", destination: "/concesia/demo.html" },
+        // Nexo Recepción: landing estática en public/recepcionia (misma fórmula que Concesia).
+        { source: "/recepcionia", destination: "/recepcionia/index.html" },
       ],
       afterFiles: [
         { source: "/", destination: "/es" },

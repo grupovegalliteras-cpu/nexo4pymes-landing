@@ -76,7 +76,7 @@ const PREGUNTAS: [string, string][] = [
   ],
   [
     "¿Me sale rentable?",
-    "Depende de cuánto valga para ti un cliente. Si un trabajo medio te deja 300 € y el agente te recupera uno al mes que antes se perdía, el plan de 149 € ya se ha pagado dos veces. Si tu ticket medio son 20 € y recibes tres mensajes a la semana, probablemente no te compense: te lo diremos nosotros antes de venderte nada.",
+    "Depende de cuánto valga para ti un cliente. Si un trabajo medio te deja 300 € y el agente te recupera uno al mes que antes se perdía, el plan de 169 € ya se ha pagado dos veces. Si tu ticket medio son 20 € y recibes tres mensajes a la semana, probablemente no te compense: te lo diremos nosotros antes de venderte nada.",
   ],
   [
     "¿Cuánto tarda en estar funcionando?",

@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import { ContactDock, SiteFooter, SiteNav } from "@/components/site/chrome";
-import { PLANES, AYUDA, entraEnLaAyuda } from "@/content/producto";
+import { PLANES, AYUDA, REACTIVACION, entraEnLaAyuda } from "@/content/producto";
 import { conIdioma, type Idioma } from "@/lib/i18n";
 import { waLink } from "@/lib/whatsapp";
 import { marca } from "@/content/marca";
@@ -26,8 +26,8 @@ import { marca } from "@/content/marca";
 type Props = { lang: Idioma };
 
 const SECTORES = [
-  "Fontanería", "Electricidad", "Clínicas", "Peluquerías", "Estética", "Talleres",
-  "Reformas", "Limpieza", "Fisioterapia", "Cerrajería", "Climatización", "Mantenimiento",
+  "Fontanería", "Electricidad", "Calderas", "Aire acondicionado", "Reformas", "Limpieza",
+  "Cerrajería", "Climatización", "Mantenimiento", "Pintura", "Albañilería", "Desatascos",
 ];
 
 /* La conversación de ejemplo. Es un caso de servicios a domicilio:
@@ -54,22 +54,22 @@ const DOLOR = [
 ];
 
 const FUNCIONES = [
-  { plan: "Desde Recepción", t: "Atiende 24 horas", p: "Contesta por WhatsApp de noche, en festivos y fines de semana, con la información de tu negocio." },
-  { plan: "Desde Recepción", t: "Recoge los datos", p: "Nombre, teléfono, qué necesita y con qué urgencia. Cada contacto queda ordenado." },
-  { plan: "Desde Recepción", t: "Te avisa al instante", p: "Una notificación por cada contacto, y otra distinta cuando es urgente." },
-  { plan: "Desde Agenda", t: "Apunta la cita", p: "Propone huecos libres de tu calendario y reserva. Recuerda la visita el día antes para evitar plantones." },
-  { plan: "Desde Agenda", t: "Persigue al que no contesta", p: "Si un cliente se queda a medias, le vuelve a escribir a los 1, 3 y 7 días con un mensaje normal, no un recordatorio robótico." },
-  { plan: "Desde Agenda", t: "Pide la reseña", p: "Cuando el trabajo ya está hecho, que es el único momento en que la gente la deja." },
-  { plan: "En Empleado", t: "Fichaje por WhatsApp", p: "Tu equipo ficha escribiendo un mensaje. Sin app que instalar y sin reloj en la pared." },
-  { plan: "En Empleado", t: "Los tickets, ordenados", p: "Le mandas la foto del ticket y la guarda clasificada para tu gestor. La contabilidad la sigue haciendo él." },
-  { plan: "Siempre", t: "Pasa a una persona", p: "Cuando la conversación lo necesita, te avisa y tú sigues desde ahí. No hay bucle del que no se salga." },
+  { plan: "Desde Atiende", t: "Atiende 24 horas", p: "Contesta por WhatsApp de noche, en festivos y fines de semana, con la información de tu negocio." },
+  { plan: "Desde Atiende", t: "Sabe qué es una urgencia", p: "Si sale agua, le dice que cierre la llave de paso y avisa al de guardia. Si huele a gas, le manda salir de casa y llamar al 112." },
+  { plan: "Desde Atiende", t: "Comprueba que estás en zona", p: "Antes de prometer nada mira si la dirección entra en tu radio de trabajo. Se acabó ir a un aviso a cuarenta kilómetros." },
+  { plan: "Desde Atiende", t: "Recoge los datos y te avisa", p: "Nombre, teléfono, dirección y qué pasa, siempre en el mismo formato. Y una notificación distinta cuando es urgente." },
+  { plan: "Desde Agenda", t: "Apunta la visita", p: "Ofrece dos o tres horas reales de tu agenda y reserva. Recuerda la visita el día antes, y la cambia o la anula si al cliente no le va bien." },
+  { plan: "Desde Agenda", t: "Persigue al que no contesta", p: "Vuelve a escribirle a los 3 y a los 7 días con un mensaje normal. Nunca de noche y nunca en domingo." },
+  { plan: "En Cierra", t: "Reactiva a los antiguos", p: "«Hace un año de la revisión de tu caldera, ¿te la hacemos?». Contesta, apunta la visita y te llena huecos del mes que viene." },
+  { plan: "En Cierra", t: "Fichaje por WhatsApp", p: "Tu equipo escribe «entro» y «salgo». Sin app que instalar y sin reloj en la pared." },
+  { plan: "Siempre", t: "Pasa a una persona", p: "Una queja, un presupuesto cerrado o alguien que pide hablar contigo: te avisa y se calla. No hay bucle del que no se salga." },
 ];
 
 const PARA_QUIEN = [
-  { t: "Servicios a domicilio", p: "Fontanería, electricidad, reformas, limpieza, mantenimiento.", ej: "Avería a las 22:00: recoge la dirección, confirma que el agua está cortada y cita para la mañana siguiente." },
-  { t: "Clínicas", p: "Dentistas, fisioterapeutas, centros de estética médica.", ej: "Petición de primera cita, hueco propuesto y recordatorio el día antes." },
-  { t: "Estética y peluquería", p: "Reservas por servicio, duraciones distintas y cambios de última hora.", ej: "Reserva para el sábado y aviso al cliente cuando hay que mover la hora." },
-  { t: "Despachos y asesorías", p: "Gestorías, abogados, arquitectos, ingenierías.", ej: "Filtra quién pregunta por un servicio que dais y quién se ha equivocado de puerta." },
+  { t: "Fontanería y desatascos", p: "Donde la mitad de los avisos entran rotos y con prisa.", ej: "Fuga a las 22:00: le dice que cierre la llave de paso, recoge la dirección y cita para las 9:30." },
+  { t: "Electricidad", p: "Averías, cuadros, instalaciones y boletines.", ej: "Se ha ido la luz de media casa: comprueba que no es el diferencial del vecino antes de mover a nadie." },
+  { t: "Calderas y aire acondicionado", p: "Instalación, averías y las revisiones que tocan cada año.", ej: "Si huele a gas, sale de casa y llama al 112. Lo demás, cita y presupuesto." },
+  { t: "Limpieza y reformas", p: "Presupuestos que tardan en decidirse y clientes que repiten.", ej: "Pide metros y fotos, manda el presupuesto y vuelve a escribir a los tres días." },
 ];
 
 export const PREGUNTAS: [string, string][] = [
@@ -122,9 +122,9 @@ export function Portada({ lang }: Props) {
             </h1>
 
             <p className="mt-6 max-w-[58ch] text-[17px] leading-[1.6] text-fg-2 sm:text-[19px]">
-              Atiende el WhatsApp de tu negocio a cualquier hora, resuelve las dudas de siempre,
-              apunta la cita y persigue al cliente hasta que decide. Tú solo hablas con quien ya
-              quiere comprar.
+              Contesta el WhatsApp a cualquier hora, sabe qué hacer cuando la avería es urgente,
+              apunta la visita en tu agenda y persigue al que no contesta. Tú solo hablas con quien
+              ya quiere que vayas.
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] text-fg-2">
@@ -400,6 +400,25 @@ export function Portada({ lang }: Props) {
                 </a>
               </div>
             ))}
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-dashed border-line-strong px-6 py-6">
+            <span className="text-[12px] font-medium tracking-wide text-brand uppercase">
+              Extra · se paga por resultado
+            </span>
+            <h3 className="mt-2 font-display text-[21px] font-semibold">{REACTIVACION.nombre}</h3>
+            <p className="mt-2 max-w-[62ch] text-[15px] leading-[1.55] text-fg-2">
+              {REACTIVACION.para} {REACTIVACION.explicacion}
+            </p>
+            <p className="mt-4 flex flex-wrap items-baseline gap-2">
+              <b className="font-display text-[32px] leading-none font-semibold">
+                {REACTIVACION.minimoPorVisita}–{REACTIVACION.maximoPorVisita} €
+              </b>
+              <span className="text-[14px] text-fg-3">por visita conseguida, no por mes</span>
+            </p>
+            <p className="mt-3 text-[13.5px] text-fg-3">
+              Incluida en {PLANES[2].nombre}. En los otros dos planes se paga solo cuando entra la visita.
+            </p>
           </div>
 
           <p className="mt-6 text-[14px] text-fg-3">

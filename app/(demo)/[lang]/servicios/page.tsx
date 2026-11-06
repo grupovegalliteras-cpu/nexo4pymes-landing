@@ -68,11 +68,11 @@ const PARA_QUIEN: [string, string, string][] = [
   ["Fontanería y desatascos", "Donde la mitad de los avisos entran rotos y con prisa.", "Fuga a las 22:00: le dice que cierre la llave de paso, recoge la dirección y cita para las 9:30."],
   ["Electricidad", "Averías, cuadros, instalaciones y boletines.", "Se ha ido la luz de media casa: comprueba que no sea el diferencial antes de mover a nadie."],
   ["Calderas y aire acondicionado", "Instalación, averías y las revisiones que tocan cada año.", "Si huele a gas, sale de casa y llama al 112. Lo demás, cita y presupuesto."],
-  ["Limpieza y reformas", "Presupuestos que tardan en decidirse y clientes que repiten.", "Pide metros y fotos, manda el presupuesto y vuelve a escribir a los tres días."],
+  ["Limpieza y reformas", "Presupuestos que tardan en decidirse y clientes que repiten.", "Pide metros y fotos, apunta la visita para el presupuesto y, si se queda a medias, vuelve a escribir a los tres días."],
 ];
 
 const QUE_NO: [string, string][] = [
-  ["No lleva tu contabilidad", "Guarda los tickets ordenados para tu gestor. Contabilizar es otra cosa y tiene responsabilidad fiscal: eso lo sigue haciendo él."],
+  ["No lleva tu contabilidad", "Contabilizar tiene responsabilidad fiscal: eso lo sigue haciendo tu gestor."],
   ["No se inventa respuestas", "Si no sabe algo, dice que lo consulta y te pasa la pregunta. Preferimos un «te confirmo en un momento» a un precio inventado."],
   ["No sustituye a nadie", "Hace lo repetido para que las personas hagan lo que requiere criterio. Un negocio que ya contesta rápido gana mucho menos con esto."],
   ["No es magia instantánea", "Hay que contarle cómo funciona tu negocio. En el plan de 39 € lo haces tú con una ficha; en los otros dos lo hacemos nosotros."],
@@ -82,7 +82,7 @@ const PASOS = [
   { n: "01", t: "Nos cuentas el negocio", p: "Qué vendes, a qué precio, en qué zona, qué preguntan más y qué no quieres que conteste nunca. Media hora, por WhatsApp o por videollamada." },
   { n: "02", t: "Lo montamos", p: "Conectamos tu WhatsApp, cargamos tu información, enlazamos el calendario y escribimos el tono. Entre tres y siete días según el plan." },
   { n: "03", t: "Lo pruebas 14 días", p: "Funciona de verdad, con clientes de verdad. Si no te convence, se apaga y no pagas la cuota." },
-  { n: "04", t: "Lo vamos afinando", p: "Cada semana revisas lo que ha contestado. Lo que corriges, se queda aprendido. A partir del segundo mes casi no hay que tocarlo." },
+  { n: "04", t: "Lo vamos afinando", p: "Cada semana revisas lo que ha contestado. Lo que corriges lo cambiamos en lo que sabe, y a partir de ahí lo contesta bien. A partir del segundo mes casi no hay que tocarlo." },
 ];
 
 const PREGUNTAS: [string, string][] = [
@@ -96,15 +96,15 @@ const PREGUNTAS: [string, string][] = [
   ],
   [
     "¿Cuánto tarda en estar funcionando?",
-    "El plan de 39 € lo tienes el mismo día, porque se configura solo. Los otros dos, entre tres y siete días desde que nos pasas la información del negocio.",
+    "El plan de 39 €, en uno o dos días: rellenas tú la ficha del negocio y conectamos tu WhatsApp contigo. Los otros dos, entre tres y siete días desde que nos pasas la información del negocio.",
   ],
   [
     "¿Hace falta cambiar de programa de gestión?",
-    "No. Se conecta a lo que ya usas. Si no usas nada, funciona igual: lo que recoge queda ordenado en un sitio y te llega a ti.",
+    "No. Si llevas la agenda en Google Calendar, apunta las visitas ahí y no da horas que ya tienes ocupadas. Si usas otro programa, lo miramos contigo. Y si no usas nada, funciona igual: lo que recoge queda ordenado en un sitio y te llega a ti.",
   ],
   [
     "¿Esto cumple el reglamento europeo de IA?",
-    "La obligación que afecta a un asistente como este es la de transparencia: quien habla con él tiene que saber que es una máquina. Por eso se identifica en la primera respuesta y no se puede quitar. Los datos se tratan bajo contrato de encargado del tratamiento y se quedan en la Unión Europea.",
+    "La obligación que afecta a un asistente como este es la de transparencia: quien habla con él tiene que saber que es una máquina. Por eso se identifica en la primera respuesta y no se puede quitar. Los datos se tratan bajo contrato de encargado del tratamiento, y nuestro servidor está en la Unión Europea.",
   ],
   [
     "¿También hacéis automatizaciones e integraciones a medida?",

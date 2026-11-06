@@ -264,6 +264,69 @@ export function LegalEs() {
                   Los servicios de Nexo4Pymes están dirigidos a empresas y profesionales. No recabamos
                   conscientemente datos de menores de edad.
                 </p>
+
+                {/* Lo pide Google para dejar que los negocios conecten su
+                    Google Calendar al asistente (pantalla de permiso de
+                    Google Cloud). Si el motor empieza a pedir otro permiso
+                    de Google, hay que contarlo aquí antes. */}
+                <h3 id="google-calendar" className="mt-8 scroll-mt-24 text-[18px] text-fg">
+                  8. El asistente Nexo y Google Calendar
+                </h3>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-fg-2">
+                  Los negocios clientes de Nexo pueden conectar su cuenta de Google Calendar desde el
+                  panel del asistente. Solo lo hace el propio negocio, con su cuenta de Google y dando
+                  permiso en la pantalla de Google. Con ese permiso, Nexo:
+                </p>
+                <ul className="mt-4 list-disc space-y-2 pl-5 text-[15.5px] leading-relaxed text-fg-2">
+                  <li>
+                    <strong className="font-medium text-fg">Lee cuándo está ocupado</strong>: la hora de
+                    inicio y de fin de los eventos de los próximos días y si están marcados como
+                    «Disponible». Sirve para que el asistente no ofrezca a sus clientes horas que el
+                    negocio ya tiene ocupadas. Del título, la descripción o los invitados de esos
+                    eventos no se guarda nada.
+                  </li>
+                  <li>
+                    <strong className="font-medium text-fg">Crea, cambia y quita los eventos de las
+                    visitas</strong> que apunta el asistente (cliente, servicio, dirección, teléfono y
+                    hora), para que el negocio las tenga en su calendario. Los demás eventos no se tocan.
+                  </li>
+                  <li>
+                    <strong className="font-medium text-fg">Guarda el correo de la cuenta</strong>, para
+                    enseñar en el panel qué cuenta está conectada.
+                  </li>
+                </ul>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-fg-2">
+                  Esos datos solo se usan para lo anterior. No se venden, no se usan para publicidad, no
+                  se usan para entrenar modelos de inteligencia artificial y no se ceden a nadie. Ninguna
+                  persona de Nexo4Pymes los lee, salvo que el negocio lo pida para resolver una
+                  incidencia o lo exija la ley. El permiso de Google se guarda cifrado en nuestro
+                  servidor, en la Unión Europea.
+                </p>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-fg-2">
+                  El uso que hace Nexo de la información recibida de las API de Google se ajusta a la{" "}
+                  <a
+                    href="https://developers.google.com/terms/api-services-user-data-policy"
+                    target="_blank"
+                    rel="noopener"
+                    className="text-brand underline underline-offset-4 hover:text-fg"
+                  >
+                    Política de Datos de Usuario de los Servicios de API de Google
+                  </a>
+                  , incluidos los requisitos de Uso Limitado.
+                </p>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-fg-2">
+                  El negocio puede quitar el permiso cuando quiera: con «Desconectar» en el panel o en{" "}
+                  <a
+                    href="https://myaccount.google.com/permissions"
+                    target="_blank"
+                    rel="noopener"
+                    className="text-brand underline underline-offset-4 hover:text-fg"
+                  >
+                    myaccount.google.com/permissions
+                  </a>
+                  . Al desconectar, borramos el permiso y lo que habíamos leído de su calendario. Las
+                  visitas ya puestas se quedan en su calendario, porque son suyas.
+                </p>
               </section>
             </Reveal>
 

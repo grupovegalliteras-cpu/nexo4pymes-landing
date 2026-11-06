@@ -44,6 +44,8 @@ export type Plan = {
   conversaciones: number;
   /** Lo que hace, en orden de importancia. */
   incluye: string[];
+  /** De lo de «incluye», lo que aún no está construido: sale con «Próximamente». */
+  pronto?: string[];
   destacado?: boolean;
   /** Etiqueta sobre la tarjeta destacada. */
   etiqueta?: string;
@@ -62,7 +64,7 @@ export const PLANES: Plan[] = [
       "Protocolo de urgencia: corta el agua, avisa al de guardia, 112 si huele a gas",
       "Responde las dudas de siempre: zona, horarios, precios, qué hacéis",
       "Recoge nombre, teléfono, dirección y qué necesita",
-      "Se configura solo: rellenas la ficha de tu negocio y funciona",
+      "La ficha de tu negocio la rellenas tú, en un formulario",
     ],
   },
   {
@@ -93,6 +95,14 @@ export const PLANES: Plan[] = [
       "Todo lo de Agenda",
       "Persigue los presupuestos hasta que el cliente decide",
       "Reactivación de clientes antiguos incluida",
+      "Fichaje por WhatsApp: tu equipo escribe «entro» y «salgo»",
+      "Le mandas la foto del ticket y la guarda ordenada para tu gestor",
+    ],
+    /* Aún no construidos en el motor (06/11/2026): se venden como
+       «Próximamente» y se hacen cuando los pilotos los pidan. Al
+       construir uno, se quita de aquí. */
+    pronto: [
+      "Persigue los presupuestos hasta que el cliente decide",
       "Fichaje por WhatsApp: tu equipo escribe «entro» y «salgo»",
       "Le mandas la foto del ticket y la guarda ordenada para tu gestor",
     ],

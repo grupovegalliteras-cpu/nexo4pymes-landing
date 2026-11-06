@@ -183,6 +183,50 @@ export function LegalEn() {
 
           <h3 className={H3}>7. Minors</h3>
           <p className={P}>Nexo4Pymes&apos; services are aimed at businesses and professionals. We do not knowingly collect data from minors.</p>
+
+          <h3 id="google-calendar" className={`${H3} scroll-mt-24`}>8. The Nexo assistant and Google Calendar</h3>
+          <p className={P}>
+            Businesses that use Nexo can connect their Google Calendar account from the assistant&apos;s dashboard. Only the
+            business itself does this, with its own Google account and by granting permission on Google&apos;s consent screen.
+            With that permission, Nexo:
+          </p>
+          <ul className={LISTA}>
+            <li>
+              <strong className={FUERTE}>Reads when the business is busy</strong>: the start and end time of upcoming events
+              and whether they are marked as &quot;Free&quot;. This keeps the assistant from offering customers times the
+              business already has booked. Nothing from the title, description or guests of those events is stored.
+            </li>
+            <li>
+              <strong className={FUERTE}>Creates, updates and removes events for the visits</strong> the assistant books
+              (customer, service, address, phone and time), so the business has them in its calendar. Other events are never
+              changed.
+            </li>
+            <li>
+              <strong className={FUERTE}>Stores the account&apos;s email address</strong>, to show in the dashboard which
+              account is connected.
+            </li>
+          </ul>
+          <p className={P}>
+            This data is used only for the above. It is not sold, not used for advertising, not used to train artificial
+            intelligence models and not shared with anyone. No one at Nexo4Pymes reads it unless the business asks us to in
+            order to solve a problem, or the law requires it. The Google permission is stored encrypted on our server, in the
+            European Union.
+          </p>
+          <p className={P}>
+            Nexo&apos;s use and transfer of information received from Google APIs will adhere to the{" "}
+            <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener" className={ENLACE}>
+              Google API Services User Data Policy
+            </a>
+            , including the Limited Use requirements.
+          </p>
+          <p className={P}>
+            The business can revoke the permission at any time: with &quot;Disconnect&quot; in the dashboard or at{" "}
+            <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener" className={ENLACE}>
+              myaccount.google.com/permissions
+            </a>
+            . When it disconnects, we delete the permission and what we had read from its calendar. Visits already added stay
+            in its calendar, because they belong to the business.
+          </p>
         </section>
       </Reveal>
 

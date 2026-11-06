@@ -189,6 +189,49 @@ export function LegalDe() {
 
           <h3 className={H3}>7. Minderjährige</h3>
           <p className={P}>Die Leistungen von Nexo4Pymes richten sich an Unternehmen und Selbstständige. Wir erheben wissentlich keine Daten von Minderjährigen.</p>
+
+          <h3 id="google-calendar" className={`${H3} scroll-mt-24`}>8. Der Assistent Nexo und Google Calendar</h3>
+          <p className={P}>
+            Unternehmen, die Nexo nutzen, können ihr Google-Calendar-Konto im Dashboard des Assistenten verbinden. Das tut nur
+            das Unternehmen selbst, mit seinem eigenen Google-Konto und über die Zustimmungsseite von Google. Mit dieser
+            Berechtigung:
+          </p>
+          <ul className={LISTA}>
+            <li>
+              <strong className={FUERTE}>liest Nexo, wann das Unternehmen belegt ist</strong>: Beginn und Ende der kommenden
+              Termine und ob sie als „Verfügbar“ markiert sind. So bietet der Assistent keine Zeiten an, die schon belegt sind.
+              Titel, Beschreibung oder Gäste dieser Termine werden nicht gespeichert.
+            </li>
+            <li>
+              <strong className={FUERTE}>legt Nexo die Termine der Besuche an, ändert und entfernt sie</strong>, die der
+              Assistent vereinbart (Kunde, Leistung, Adresse, Telefon und Uhrzeit). Andere Termine werden nie verändert.
+            </li>
+            <li>
+              <strong className={FUERTE}>speichert Nexo die E-Mail-Adresse des Kontos</strong>, um im Dashboard anzuzeigen,
+              welches Konto verbunden ist.
+            </li>
+          </ul>
+          <p className={P}>
+            Diese Daten werden nur dafür verwendet. Sie werden nicht verkauft, nicht für Werbung und nicht zum Training von
+            KI-Modellen genutzt und an niemanden weitergegeben. Niemand bei Nexo4Pymes liest sie, außer das Unternehmen bittet
+            darum, um ein Problem zu lösen, oder das Gesetz verlangt es. Die Google-Berechtigung wird verschlüsselt auf unserem
+            Server in der Europäischen Union gespeichert.
+          </p>
+          <p className={P}>
+            Die Nutzung und Weitergabe von Informationen, die Nexo von Google-APIs erhält, entspricht der{" "}
+            <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener" className={ENLACE}>
+              Google API Services User Data Policy
+            </a>
+            , einschließlich der Anforderungen zur eingeschränkten Nutzung („Limited Use“).
+          </p>
+          <p className={P}>
+            Das Unternehmen kann die Berechtigung jederzeit widerrufen: mit „Trennen“ im Dashboard oder unter{" "}
+            <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener" className={ENLACE}>
+              myaccount.google.com/permissions
+            </a>
+            . Beim Trennen löschen wir die Berechtigung und das, was wir aus dem Kalender gelesen hatten. Bereits eingetragene
+            Besuche bleiben im Kalender, weil sie dem Unternehmen gehören.
+          </p>
         </section>
       </Reveal>
 

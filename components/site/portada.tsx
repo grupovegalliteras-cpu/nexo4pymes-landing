@@ -77,11 +77,11 @@ export const PREGUNTAS: [string, string][] = [
   ],
   [
     "¿Y si le preguntan algo que no sabe?",
-    "No se lo inventa. Dice que lo consulta y te pasa la pregunta entera a ti. Cada vez que contestas, esa respuesta queda aprendida.",
+    "No se lo inventa. Dice que lo consulta y te pasa la pregunta entera a ti. Si es algo que preguntan a menudo, lo añadimos a lo que sabe y la próxima vez lo contesta él.",
   ],
   [
     "¿Tengo que cambiar de número?",
-    "No. Funciona sobre el WhatsApp del negocio que ya usas y que tus clientes ya tienen guardado.",
+    "No hace falta: puede contestar en el número que tus clientes ya tienen guardado. Lo conectamos contigo el primer día y te explicamos cómo queda el WhatsApp de tu móvil.",
   ],
 ];
 
@@ -264,7 +264,7 @@ export function Portada({ lang }: Props) {
                   <span className="text-[14px] text-fg-3">/mes + IVA</span>
                 </p>
                 <p className="mt-2 text-[13.5px] text-fg-3">
-                  {plan.alta === 0 ? "Sin alta: se configura solo" : `Alta única de ${plan.alta} €`}
+                  {plan.alta === 0 ? "Sin alta: la ficha la rellenas tú" : `Alta única de ${plan.alta} €`}
                   {" · "}
                   {miles(plan.conversaciones)} conversaciones al mes
                 </p>
@@ -272,7 +272,14 @@ export function Portada({ lang }: Props) {
                   {plan.incluye.map((i) => (
                     <li key={i} className="flex gap-2.5 text-[14.5px] leading-[1.5] text-fg-2">
                       <span aria-hidden="true" className="mt-[7px] size-1.5 shrink-0 rounded-full bg-brand" />
-                      {i}
+                      <span>
+                        {i}
+                        {plan.pronto?.includes(i) ? (
+                          <span className="ml-2 inline-block rounded-full border border-line-strong px-2 py-px align-[1px] text-[11.5px] font-medium whitespace-nowrap text-fg-3">
+                            Próximamente
+                          </span>
+                        ) : null}
+                      </span>
                     </li>
                   ))}
                 </ul>

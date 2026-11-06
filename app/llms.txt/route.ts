@@ -37,7 +37,7 @@ export const dynamic = "force-static";
 export function GET() {
   const planes = PLANES.map(
     (p) =>
-      `- **${p.nombre} — ${p.precio} €/mes + IVA** (${p.alta === 0 ? "sin alta" : `alta única de ${p.alta} €`}, ${p.conversaciones.toLocaleString("es-ES")} conversaciones al mes). ${p.para} Incluye: ${p.incluye.join("; ")}.`,
+      `- **${p.nombre} — ${p.precio} €/mes + IVA** (${p.alta === 0 ? "sin alta" : `alta única de ${p.alta} €`}, ${p.conversaciones.toLocaleString("es-ES")} conversaciones al mes). ${p.para} Incluye: ${p.incluye.map((i) => (p.pronto?.includes(i) ? `${i} (próximamente)` : i)).join("; ")}.`,
   ).join("\n");
 
   const articulos: [string, string, string][] = [
@@ -98,7 +98,7 @@ El precio está publicado en la web a propósito. No hay tarifa oculta ni presup
 
 ## Qué NO hace
 
-- No lleva la contabilidad. Guarda los tickets ordenados para la gestoría; contabilizar lo sigue haciendo el gestor.
+- No lleva la contabilidad: contabilizar lo sigue haciendo el gestor.
 - No se inventa respuestas. Si no sabe algo, lo dice y pasa la pregunta a una persona.
 - No esconde que es una IA: se identifica en la primera respuesta, como pide el reglamento europeo.
 - No sustituye a nadie: hace lo repetido.

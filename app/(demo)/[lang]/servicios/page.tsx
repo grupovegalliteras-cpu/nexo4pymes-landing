@@ -46,13 +46,29 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   };
 }
 
+/* LAS NUEVE. La portada enseña cuatro y dice «hace cinco cosas más»,
+   con un enlace aquí. Si se toca una lista hay que tocar la otra, o
+   la frase de la portada deja de ser verdad. */
 const QUE_SI: [string, string][] = [
   ["Contestar a cualquier hora", "Un mensaje a las 23:40 recibe respuesta a las 23:40, no a las 9:00 del día siguiente."],
-  ["Resolver lo repetido", "Precio, horario, zona, qué servicios dais, si hay hueco. Es el 70 u 80 % de lo que entra por WhatsApp en un negocio de servicios."],
-  ["Recoger y ordenar", "Nombre, teléfono, qué necesita y con qué urgencia, siempre en el mismo formato. Deja de haber datos en seis conversaciones distintas."],
-  ["Apuntar la cita", "Mira tu calendario, propone huecos reales y reserva. Sin la ida y vuelta de «¿te va bien el martes?»."],
-  ["Insistir sin ser pesado", "Al que se queda a medias le escribe a los 1, 3 y 7 días. Esto es lo que casi nadie hace a mano, y es donde está el dinero."],
-  ["Saber cuándo apartarse", "Si la conversación se complica o el cliente pide una persona, te avisa y para."],
+  ["Saber qué es una urgencia", "Si sale agua, le dice que cierre la llave de paso y avisa al técnico de guardia. Si huele a gas, le manda salir de casa y llamar al 112. Esto se configura contigo, oficio por oficio."],
+  ["Comprobar que estás en zona", "Antes de prometer nada mira si la dirección entra en tu radio de trabajo."],
+  ["Resolver lo repetido", "Precio, horario, zona, qué servicios das, si hay hueco. Es el grueso de lo que entra por WhatsApp en un negocio de servicios."],
+  ["Recoger y ordenar", "Nombre, teléfono, dirección, qué necesita y con qué urgencia, siempre en el mismo formato."],
+  ["Apuntar la visita", "Mira tu calendario, ofrece dos o tres horas reales y reserva. Recuerda la visita el día antes, y la cambia o la anula si al cliente no le va bien."],
+  ["Insistir sin ser pesado", "Al que se queda a medias le escribe a los 3 y a los 7 días, nunca de noche ni en domingo. Es lo que casi nadie hace a mano, y es donde está el dinero."],
+  ["Reactivar a los antiguos", "«Hace un año de la revisión de tu caldera, ¿te la hacemos?». Contesta y apunta la visita. Se paga por visita conseguida, no por mes."],
+  ["Saber cuándo apartarse", "Una queja, un presupuesto cerrado o alguien que pide hablar contigo: te avisa y para."],
+];
+
+/* Los cuatro oficios. Estaban en la portada con su caso de ejemplo y
+   se bajaron aquí al acortarla: en la portada eran cuatro tarjetas
+   grandes que nadie leía antes de llegar al precio. */
+const PARA_QUIEN: [string, string, string][] = [
+  ["Fontanería y desatascos", "Donde la mitad de los avisos entran rotos y con prisa.", "Fuga a las 22:00: le dice que cierre la llave de paso, recoge la dirección y cita para las 9:30."],
+  ["Electricidad", "Averías, cuadros, instalaciones y boletines.", "Se ha ido la luz de media casa: comprueba que no sea el diferencial antes de mover a nadie."],
+  ["Calderas y aire acondicionado", "Instalación, averías y las revisiones que tocan cada año.", "Si huele a gas, sale de casa y llama al 112. Lo demás, cita y presupuesto."],
+  ["Limpieza y reformas", "Presupuestos que tardan en decidirse y clientes que repiten.", "Pide metros y fotos, manda el presupuesto y vuelve a escribir a los tres días."],
 ];
 
 const QUE_NO: [string, string][] = [
@@ -161,6 +177,30 @@ export default async function Servicios({ params }: { params: Promise<{ lang: st
               <li key={t} className="rounded-2xl border border-line bg-surface px-5 py-5">
                 <h3 className="font-display text-[19px] font-semibold">{t}</h3>
                 <p className="mt-2 text-[15px] leading-[1.55] text-fg-2">{p}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="px-5 pb-16 sm:px-8 lg:pb-20">
+        <div className="mx-auto max-w-[900px]">
+          <h2 className="font-display text-[clamp(28px,4.2vw,42px)] leading-[1.1] font-semibold tracking-tight">
+            Para qué oficios, <em className="text-brand not-italic">y con qué ejemplo.</em>
+          </h2>
+          <p className="mt-4 max-w-[62ch] text-[16.5px] leading-[1.6] text-fg-2">
+            Estos cuatro, y no por casualidad: son los que reciben avisos rotos, con prisa y fuera
+            de horario. En un negocio donde nadie llama a las once de la noche, esto vale mucho menos.
+          </p>
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+            {PARA_QUIEN.map(([t, p, ej]) => (
+              <li key={t} className="rounded-2xl border border-line bg-surface px-6 py-6">
+                <h3 className="font-display text-[20px] font-semibold">{t}</h3>
+                <p className="mt-2 text-[15px] leading-[1.55] text-fg-2">{p}</p>
+                <p className="mt-4 rounded-xl bg-surface-2 px-4 py-3 text-[14px] leading-[1.5] text-fg-2">
+                  <b className="mb-1 block text-[11.5px] tracking-wide text-fg-3 uppercase">Un caso típico</b>
+                  {ej}
+                </p>
               </li>
             ))}
           </ul>

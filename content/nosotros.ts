@@ -34,18 +34,11 @@ export const heroNosotros = {
   micro: "15 min · sin compromiso · sin tarjeta",
 };
 
-/* TODO(HUMANO): CONFIRMAR EL NOMBRE DE LA ACADEMIA.
-   "Vixeo" está escrito tal y como se dictó y no he podido verificarlo.
-   En una página de "quiénes somos", una formación mal escrita hace el
-   efecto contrario al que busca: si no es exactamente así, corrígelo
-   aquí, y si no se puede acreditar, bórralo. Lo mismo vale para
-   cualquier otra formación que se añada: solo va lo que se pueda
-   enseñar si alguien lo pide. */
 export const historia = {
   categoria: "La idea",
   titular: "No vendemos programas: montamos la parte digital de tu empresa",
   parrafos: [
-    "Somos dos desarrolladores especializados en inteligencia artificial aplicada y en aplicaciones de gestión. Nos formamos en academias del sector, como Vixeo, y seguimos formándonos en las herramientas con las que construimos: Supabase, automatización de procesos y modelos de lenguaje. En este oficio, el que deja de estudiar seis meses está vendiendo lo de antes de ayer.",
+    "Somos dos desarrolladores especializados en inteligencia artificial aplicada y en aplicaciones de gestión. Nos formamos en Big SEO y seguimos formándonos en las herramientas con las que construimos: Supabase, automatización de procesos y modelos de lenguaje. En este oficio, el que deja de estudiar seis meses está vendiendo lo de antes de ayer.",
     "Lo que hacemos es la gestión digital de una empresa: pasar de las libretas y los grupos de WhatsApp a un CRM donde el cliente no se pierde, montar los sistemas que faltan y conectar los que ya hay. El agente de IA que atiende el WhatsApp es la puerta de entrada, porque es la pieza que se nota el primer día, pero detrás hay lo mismo de siempre: ordenar cómo trabaja un negocio.",
     "Somos pocos y llevamos pocos clientes a la vez. No es escasez de escaparate: es la única forma de estar encima las semanas siguientes a la puesta en marcha, que es cuando de verdad se decide si un sistema se usa o se abandona.",
     "Hablamos en lenguaje de negocio, no en jerga técnica. Si en algún momento no entendéis algo de lo que os contamos, es culpa nuestra, no vuestra.",

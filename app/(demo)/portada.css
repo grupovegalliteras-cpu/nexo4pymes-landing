@@ -78,6 +78,26 @@
     0 30px 80px -30px rgb(0 0 0 / 0.8);
 }
 
+/* Quien pide menos transparencias (macOS, iOS, Windows) o más
+   contraste ve el cristal macizo, con un borde que se distingue. */
+@media (prefers-reduced-transparency: reduce) {
+  .cristal,
+  .cristal-top {
+    background: var(--color-surface, #0d1424);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+@media (prefers-contrast: more) {
+  .cristal,
+  .cristal-top {
+    background: var(--color-surface, #0d1424);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: rgb(255 255 255 / 0.6);
+  }
+}
+
 /* El plan recomendado: mismo cristal, encendido. */
 .cristal-top {
   background: linear-gradient(165deg, rgb(120 170 255 / 0.22), rgb(255 255 255 / 0.04) 55%, rgb(77 141 255 / 0.14));
@@ -120,6 +140,12 @@
 @keyframes portada-cinta {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+/* Los sectores entran y salen difuminándose por los lados, en vez
+   de cortarse a media palabra contra el borde. */
+.cinta {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
 .cinta-pista {
   display: flex;

@@ -239,10 +239,28 @@
     translate: 0 0;
   }
 }
+/* 06/11/2026: tiembla DOS veces al entrar y se para. En bucle, con
+   varios botones a la vez (el del principio, el de abajo y el flotante),
+   el ojo aprende a no hacerle caso: un aviso que no para deja de avisar. */
 .vibrar {
-  animation: vibrar 3.4s ease-in-out 1.2s infinite;
+  animation: vibrar 3.4s ease-in-out 1.2s 2;
 }
 .vibrar:hover,
 .vibrar:focus-visible {
   animation-play-state: paused;
+}
+
+/* RESPUESTA AL PULSAR. El botón se hunde un poco en cuanto el dedo
+   lo toca (al bajar, no al soltar), así se nota que ha cogido el
+   toque. Usa la propiedad scale, no transform, para no pisar el
+   temblor de .vibrar ni los botones magnéticos. */
+.pulsar {
+  transition-property: color, background-color, border-color, scale;
+  transition-duration: 200ms, 200ms, 200ms, 120ms;
+  transition-timing-function: ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+.pulsar:active {
+  scale: 0.97;
+  transition-duration: 200ms, 200ms, 200ms, 60ms;
 }

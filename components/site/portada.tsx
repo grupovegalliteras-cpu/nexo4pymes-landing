@@ -6,6 +6,9 @@ import { conIdioma, type Idioma } from "@/lib/i18n";
 import { waLink } from "@/lib/whatsapp";
 import { marca } from "@/content/marca";
 
+/** 6000 → «6.000». toLocaleString("es-ES") deja sin punto los números de cuatro cifras. */
+const miles = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
 /* ============================================================
    LA PORTADA
 
@@ -105,7 +108,9 @@ export function Portada({ lang }: Props) {
 
             <p className="mt-6 max-w-[52ch] text-[17px] leading-[1.6] text-fg-2 sm:text-[19px]">
               Contesta el WhatsApp de tu negocio a cualquier hora, sabe qué hacer cuando la avería
-              es urgente y te apunta la visita en la agenda. Míralo aquí al lado.
+              es urgente y te apunta la visita en la agenda.{" "}
+              <span className="lg:hidden">Míralo aquí abajo.</span>
+              <span className="hidden lg:inline">Míralo aquí al lado.</span>
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] text-fg-2">
@@ -119,13 +124,13 @@ export function Portada({ lang }: Props) {
                 href={waLink("GENERAL", undefined, lang)}
                 target="_blank"
                 rel="noreferrer"
-                className="vibrar inline-flex h-12 items-center gap-2 rounded-xl bg-carmesi px-6 text-[15px] font-semibold text-crema transition-colors hover:bg-carmesi-oscuro"
+                className="vibrar pulsar inline-flex h-12 items-center gap-2 rounded-xl bg-carmesi px-6 text-[15px] font-semibold text-crema transition-colors hover:bg-carmesi-oscuro"
               >
                 Pruébalo por WhatsApp
               </a>
               <NextLink
                 href={L("/#precios")}
-                className="inline-flex h-12 items-center gap-2 rounded-xl border border-line-strong px-6 text-[15px] font-semibold text-fg transition-colors hover:bg-surface-2"
+                className="pulsar inline-flex h-12 items-center gap-2 rounded-xl border border-line-strong px-6 text-[15px] font-semibold text-fg transition-colors hover:bg-surface-2"
               >
                 Ver los precios
               </NextLink>
@@ -165,20 +170,20 @@ export function Portada({ lang }: Props) {
         >
           <span>
             <b className="block font-display text-[21px] font-semibold text-fg sm:text-[24px]">
-              Hasta {AYUDA.importeMaximo.toLocaleString("es-ES")} € del Govern, y cubre el {AYUDA.porcentaje} %
+              Hasta {miles(AYUDA.importeMaximo)} € del Govern, y cubre el {AYUDA.porcentaje} %
             </b>
             <span className="mt-1 block text-[14.5px] text-fg-2">
               Si tu empresa está en Baleares, se pide del {AYUDA.abreTexto} al {AYUDA.cierraTexto}. Va por orden de entrada.
             </span>
           </span>
-          <span className="shrink-0 rounded-xl bg-carmesi px-5 py-3 text-center text-[14.5px] font-semibold text-crema">
+          <span className="pulsar shrink-0 rounded-xl bg-carmesi px-5 py-3 text-center text-[14.5px] font-semibold text-crema">
             Ver si te toca
           </span>
         </NextLink>
       </section>
 
       {/* ==================== CINTA DE SECTORES ==================== */}
-      <div className="overflow-hidden border-y border-line py-4">
+      <div className="cinta overflow-hidden border-y border-line py-4">
         <p className="mb-3 text-center text-[12.5px] tracking-wide text-fg-3 uppercase">
           Hecho para quien vive del teléfono
         </p>
@@ -255,13 +260,13 @@ export function Portada({ lang }: Props) {
                 <h3 className="font-display text-[23px] font-semibold">{plan.nombre}</h3>
                 <p className="mt-1.5 text-[14px] leading-[1.5] text-fg-3">{plan.para}</p>
                 <p className="mt-5 flex items-baseline gap-1.5">
-                  <b className="font-display text-[48px] leading-none font-semibold">{plan.precio} €</b>
+                  <b className="font-display text-[48px] leading-none font-semibold tracking-[-0.02em] tabular-nums">{plan.precio} €</b>
                   <span className="text-[14px] text-fg-3">/mes + IVA</span>
                 </p>
                 <p className="mt-2 text-[13.5px] text-fg-3">
                   {plan.alta === 0 ? "Sin alta: se configura solo" : `Alta única de ${plan.alta} €`}
                   {" · "}
-                  {plan.conversaciones.toLocaleString("es-ES")} conversaciones al mes
+                  {miles(plan.conversaciones)} conversaciones al mes
                 </p>
                 <ul className="mt-6 flex flex-1 flex-col gap-2.5">
                   {plan.incluye.map((i) => (
@@ -283,7 +288,7 @@ export function Portada({ lang }: Props) {
                   href={waLink("GENERAL", undefined, lang)}
                   target="_blank"
                   rel="noreferrer"
-                  className={`mt-6 flex h-12 items-center justify-center rounded-xl text-[15px] font-semibold transition-colors ${
+                  className={`pulsar mt-6 flex h-12 items-center justify-center rounded-xl text-[15px] font-semibold transition-colors ${
                     plan.destacado
                       ? "bg-carmesi text-crema hover:bg-carmesi-oscuro"
                       : "border border-line-strong text-fg hover:bg-surface-2"
@@ -354,7 +359,7 @@ export function Portada({ lang }: Props) {
               href={waLink("GENERAL", undefined, lang)}
               target="_blank"
               rel="noreferrer"
-              className="vibrar inline-flex h-12 items-center rounded-xl bg-carmesi px-7 text-[15px] font-semibold text-crema transition-colors hover:bg-carmesi-oscuro"
+              className="vibrar pulsar inline-flex h-12 items-center rounded-xl bg-carmesi px-7 text-[15px] font-semibold text-crema transition-colors hover:bg-carmesi-oscuro"
             >
               Escribir por WhatsApp
             </a>
@@ -362,7 +367,7 @@ export function Portada({ lang }: Props) {
               href={marca.calendly}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-12 items-center rounded-xl border border-line-strong px-7 text-[15px] font-semibold transition-colors hover:bg-surface-2"
+              className="pulsar inline-flex h-12 items-center rounded-xl border border-line-strong px-7 text-[15px] font-semibold transition-colors hover:bg-surface-2"
             >
               Demo de 15 minutos
             </a>

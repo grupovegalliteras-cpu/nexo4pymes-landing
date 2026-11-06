@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import { ContactDock, SiteFooter, SiteNav } from "@/components/site/chrome";
 import { PLANES, AYUDA, entraEnLaAyuda } from "@/content/producto";
 import { conIdioma, type Idioma } from "@/lib/i18n";
 import { waLink } from "@/lib/whatsapp";
@@ -103,6 +104,9 @@ export function Portada({ lang }: Props) {
 
   return (
     <div data-theme="dark" className="portada bg-bg text-fg">
+      {/* La cabecera va en modo oscuro: esta página es noche entera. */}
+      <SiteNav dark />
+
       {/* ========================= HERO ========================= */}
       <section className="relative px-5 pt-28 pb-10 sm:px-8 lg:pt-32">
         <div className="mx-auto grid max-w-[1200px] items-center gap-12 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-16">
@@ -455,6 +459,9 @@ export function Portada({ lang }: Props) {
           </p>
         </div>
       </section>
+
+      <SiteFooter />
+      <ContactDock />
     </div>
   );
 }

@@ -1,0 +1,202 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Qué es un agente de IA
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Agentes de IA · 7 min de lectura</div>
+
+<FechaArticulo ruta="/blog/que-es-un-agente-de-ia" />
+
+# Qué es un agente de IA (y en qué se diferencia de un chatbot)
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Si has llegado aquí después de ver un anuncio, la pregunta que tienes es legítima: ¿esto
+  qué es exactamente, y en qué se diferencia del bot de aquella web que te hizo elegir entre
+  las opciones 1, 2 y 3 y acabó mandándote un correo? Se diferencia en una cosa, y es
+  importante: un agente no responde, actúa.
+</div>
+
+## La diferencia en una frase
+
+Un **chatbot** sigue un guion. Alguien escribió de antemano las preguntas posibles y las
+respuestas posibles, y el bot va por ese árbol. Cuando te sales del árbol, se pierde.
+
+Un **agente de IA** entiende la frase que le escribes y decide qué hacer con ella. Puede
+buscar en la información de tu negocio, mirar tu calendario, reservar una cita, mandarte un
+aviso o concluir que esto lo tiene que ver una persona. No hay árbol: hay un objetivo y unas
+herramientas.
+
+La diferencia práctica es que a un chatbot le escribes «hola, ¿cuánto cuesta arreglar una
+persiana?» y te contesta el menú principal. A un agente le escribes eso y te da el precio, te
+pregunta si es de lamas o de cajón, y te ofrece hueco el jueves.
+
+## Las tres cosas que lo hacen funcionar
+
+Un agente no es un modelo de lenguaje suelto. Son tres piezas, y las tres hacen falta:
+
+1. **El modelo**, que entiende lo que le escriben y redacta la respuesta. Es la parte que ha
+   cambiado en los últimos tres años y la razón de que esto ahora funcione y antes no.
+2. **El conocimiento del negocio**: tus precios, tus horarios, tu zona, qué haces y qué no
+   haces, qué dices cuando alguien pregunta por algo que no ofreces. Sin esto, el agente es un
+   recepcionista que acaba de llegar y no sabe dónde está el baño.
+3. **Las herramientas**: acceso a tu calendario para ver huecos reales, la capacidad de crear
+   la cita, de avisarte a ti, de registrar el contacto. Esto es lo que lo convierte en un
+   empleado y no en una conversación agradable que no deja nada.
+
+<Nota>
+  Si alguien te ofrece un «agente de IA» que solo tiene la pieza 1 y la 2, lo que te está
+  vendiendo es un buscador de tu web con buenos modales. Pregunta siempre qué puede *hacer*,
+  no qué puede contestar.
+</Nota>
+
+## Qué hace de verdad en una pyme
+
+En un negocio de servicios —fontanería, una clínica, una peluquería, un taller— el trabajo
+que hace un agente es casi siempre el mismo:
+
+- **Contesta a cualquier hora.** El mensaje de las 23:40 recibe respuesta a las 23:40. Esto,
+  por sí solo, es la mitad del valor: el cliente que no recibe respuesta escribe al siguiente.
+- **Resuelve lo repetido.** Precio, horario, zona, si hay hueco, si hacéis tal cosa. En la
+  mayoría de negocios de servicios esto es el grueso de lo que entra por WhatsApp.
+- **Recoge los datos en el mismo formato.** Nombre, teléfono, qué necesita, con qué urgencia.
+  Se acabó el reconstruir una dirección leyendo seis mensajes hacia atrás.
+- **Apunta la cita.** Mira el calendario, propone huecos de verdad y reserva.
+- **Insiste.** Al que dijo «me lo pienso» le vuelve a escribir a los tres días. Esta es la
+  parte que casi nadie hace a mano y donde está el dinero.
+- **Se aparta.** Cuando la conversación se complica o el cliente pide una persona, avisa y
+  deja de contestar.
+
+## Qué no hace, aunque te lo cuenten
+
+Esta parte la preguntan poco y es la que evita los disgustos.
+
+**No sabe lo que no le has contado.** Un agente no adivina tus precios. Si no le dices que el
+desplazamiento fuera de Palma son 20 € más, no lo dirá, o peor: si está mal configurado, se
+lo inventará.
+
+**No debería inventarse nada.** Un agente bien montado, cuando no sabe algo, dice que lo
+consulta y te pasa la pregunta. Esto se configura, y es la primera cosa que hay que exigir.
+Un sistema que prefiere quedar bien antes que decir «no lo sé» te acabará prometiendo un
+precio que no haces.
+
+**No sustituye a una persona.** Hace lo repetido para que las personas hagan lo que requiere
+criterio. Si tu negocio ya contesta rápido y tiene a alguien en recepción, ganarás mucho
+menos con esto que si estás tú con el móvil en la furgoneta.
+
+**No se esconde.** Y además no puede: el Reglamento Europeo de Inteligencia Artificial obliga
+a que una persona sepa que está hablando con una máquina cuando habla con una. Un proveedor
+que te ofrezca «que no se note» te está ofreciendo un problema.
+
+## Cómo saber si te sirve a ti
+
+La pregunta no es si la tecnología funciona —funciona—, sino si tu negocio tiene el problema
+que resuelve. Tres señales de que sí:
+
+<Senales
+  items={[
+    {
+      fuerte: "Te entran mensajes fuera de horario.",
+      texto:
+ "Y los contestas al día siguiente, o no los contestas. Ese cliente ya ha escrito a otros tres.",
+    },
+    {
+      fuerte: "Contestas lo mismo varias veces al día.",
+      texto:
+ "Precio, horario, zona, disponibilidad. Es tiempo que no vuelve y que no vende.",
+    },
+    {
+      fuerte: "Mandas presupuestos y ahí se quedan.",
+      texto:
+ "Sin seguimiento, la mitad se enfrían. Es la parte más rentable y la que nadie hace a mano.",
+    },
+    {
+      fuerte: "Tu ticket medio aguanta la cuenta.",
+      texto:
+ "Si recuperar un cliente al mes ya paga la cuota, los números salen solos.",
+    },
+  ]}
+/>
+
+Y dos de que no: si recibes tres mensajes a la semana, el problema no es la atención. Y si tu
+ticket medio son quince euros, los números no dan, por muy bien que funcione.
+
+## Cuánto tarda en estar funcionando
+
+Depende de quién lo monte y de cuánto haya que contarle. Las dos cifras honestas:
+
+- **Configurándolo tú**, rellenando una ficha con la información del negocio: el mismo día.
+  Esto es lo que ofrecen los planes baratos, el nuestro incluido.
+- **Montado por alguien**, con tu tono, tu calendario conectado y los casos raros previstos:
+  entre tres días y dos semanas, según lo enredado que sea el negocio.
+
+Lo que no es realista es «en una hora lo tienes funcionando como un empleado que lleva dos
+años contigo». Un agente es tan bueno como la información que le has dado, y recopilarla
+lleva una tarde como mínimo.
+
+<Destacado>
+  La parte difícil de un agente de IA no es la IA. Es sentarte a escribir, por primera vez,
+  cómo funciona tu negocio: qué cobras, en qué casos, qué contestas cuando te preguntan algo
+  que no haces. Mucha gente descubre ahí que ni ellos lo tenían claro.
+</Destacado>
+
+## Lo que deberías preguntar antes de contratar
+
+Si estás comparando proveedores, estas cinco preguntas separan bastante:
+
+1. **¿Qué pasa cuando no sabe algo?** La respuesta correcta es «lo escala a una persona», no
+   «lo resuelve igualmente».
+2. **¿Puedo leer las conversaciones y entrar a escribir yo?** Si no, no es tu agente.
+3. **¿Dónde se guardan los datos de mis clientes y con qué contrato?** Debe haber contrato de
+   encargado del tratamiento y los datos deberían quedarse en la Unión Europea.
+4. **¿El precio incluye el consumo?** Algunos cobran aparte por mensaje o por conversación, y
+   la factura del tercer mes no se parece a la del primero.
+5. **¿Qué pasa si me voy?** Si te vas, te tienes que poder llevar los contactos y las
+   conversaciones.
+
+## Y cuánto cuesta
+
+Eso da para otro artículo, y lo tiene:{" "}
+<Link href="/blog/cuanto-cuesta-un-agente-de-ia" className="text-brand">cuánto cuesta un agente de IA en España</Link>,
+con los precios que se publican hoy en el mercado y por qué varían tanto. Nuestros tres
+planes están{" "}
+<Link href="/#precios" className="text-brand">publicados en la portada</Link>, que ya dice
+bastante: una web que esconde el precio detrás de un formulario te está diciendo que el
+precio depende de la cara que pongas.
+
+<CtaPost
+  titulo="¿Quieres ver qué contestaría en tu negocio?"
+  boton="Escribirnos por WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  Cuéntanos a qué te dedicas y montamos el ejemplo con los datos reales de tu empresa, para que
+  veas qué diría. Si vemos que no te compensa, te lo decimos: nos interesa menos vender una
+  cuota que quitárnosla dos meses después.
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+      esquemaArticulo({
+        lang: "es",
+        titulo: "Qué es un agente de IA (y en qué se diferencia de un chatbot)",
+        descripcion:
+ "Un chatbot sigue un guion; un agente entiende y actúa. Qué hace de verdad en una pyme, qué no hace y qué preguntar antes de contratar.",
+        url: `${marca.dominio}/blog/que-es-un-agente-de-ia`,
+        fecha: fechaPublicacion("/blog/que-es-un-agente-de-ia"),
+        actualizado: fechaRevision("/blog/que-es-un-agente-de-ia"),
+      }),
+      ]),
+    ),
+  }}
+/>

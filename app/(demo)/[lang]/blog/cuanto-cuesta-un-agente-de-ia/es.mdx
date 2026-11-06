@@ -1,0 +1,193 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { PLANES, AYUDA } from "@/content/producto";
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Cuánto cuesta un agente de IA
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">Precios · 8 min de lectura</div>
+
+<FechaArticulo ruta="/blog/cuanto-cuesta-un-agente-de-ia" />
+
+# Cuánto cuesta un agente de IA para una pyme en España
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Entre 39 € al mes y 3.500 € de golpe. Esa es la horquilla real del mercado español hoy, y
+  la diferencia no es que unos sean caros y otros baratos: es que están vendiendo tres cosas
+  distintas con el mismo nombre. Aquí está qué es cada una y cuál te conviene.
+</div>
+
+## Los tres modelos de precio que vas a encontrar
+
+### 1. Cuota mensual, producto cerrado
+
+Pagas entre 39 y 300 € al mes y usas un sistema que ya existe, configurado con los datos de
+tu negocio. No es tuyo: lo alquilas. Si dejas de pagar, deja de funcionar.
+
+A noviembre de 2026, los precios publicados en las webs de proveedores españoles se mueven
+sobre todo entre los 99 y los 300 € al mes para un agente con atención por WhatsApp. Los
+planes de menos de 50 € suelen ser de autoservicio: te dan una ficha para rellenar y lo
+montas tú.
+
+**Cuándo tiene sentido:** casi siempre, si tu caso es el normal. Atender WhatsApp, dar
+precios, coger citas y hacer seguimiento es el mismo problema en una fontanería que en una
+clínica, y pagar por construirlo desde cero es pagar dos veces.
+
+### 2. Pago único, agente «en propiedad»
+
+Pagas entre 1.500 y 4.000 € una vez y el agente es tuyo. Es el modelo que anuncian varias
+agencias españolas: lo hemos visto publicado desde 1.500 € en pago único para un chatbot de
+WhatsApp, y desde 3.500 € en proyectos presentados como a medida.
+
+Aquí hay que leer la letra pequeña y son siempre las mismas tres líneas:
+
+- **El consumo casi nunca está incluido.** El modelo de lenguaje y la mensajería de WhatsApp
+  los pagas aparte, cada mes, y escalan con el uso.
+- **El mantenimiento tampoco.** Un agente no se queda quieto: los modelos cambian, WhatsApp
+  cambia sus reglas y tu negocio cambia precios. Pregunta cuánto cuesta el soporte a partir
+  del mes tres.
+- **«En propiedad» rara vez significa que te lo puedas llevar.** Suele significar que la
+  licencia es tuya mientras sigas con ellos. Pregunta qué pasa exactamente si te vas.
+
+**Cuándo tiene sentido:** cuando tienes un proceso raro de verdad y necesitas algo que no
+existe. No para contestar WhatsApp.
+
+### 3. Proyecto a medida
+
+Desde 4.000 € hacia arriba, con un presupuesto que depende del alcance. Es desarrollo, no
+producto.
+
+**Cuándo tiene sentido:** cuando el agente tiene que meterse dentro de un sistema que ya
+tienes y que es tuyo, con integraciones que nadie vende de catálogo.
+
+<Nota>
+  Las cifras de este artículo salen de precios publicados en webs de proveedores españoles y
+  de nuestras propias tarifas, consultados en noviembre de 2026. Los precios de este sector
+  se mueven rápido: si estás leyendo esto mucho después, compruébalos.
+</Nota>
+
+## Lo que casi nadie te cuenta del precio
+
+### El consumo existe y se paga
+
+Un agente consume dos cosas: el modelo de lenguaje que redacta las respuestas y las
+plantillas de WhatsApp, que Meta cobra aparte cuando el negocio inicia la conversación.
+Responder a un cliente que te escribe primero es, hoy, mucho más barato que escribirle tú.
+
+Por eso la pregunta «¿el precio incluye el consumo?» separa tanto. Un plan de 99 € con
+consumo incluido puede salir más barato que uno de 79 € sin incluirlo.
+
+### El alta no es un capricho
+
+Montar un agente serio es sentarse a recopilar cómo funciona tu negocio: precios, casos,
+excepciones, qué contesta cuando le preguntan algo que no haces. Eso lleva una tarde como
+mínimo. Si alguien no te cobra alta, o lo haces tú con una ficha, o te lo está metiendo en
+la cuota de los primeros meses.
+
+### El límite de conversaciones
+
+Casi todos los planes tienen uno. Lo que importa no es el número: es qué pasa cuando lo
+pasas. Que te lo avisen antes y puedas subir de plan es razonable; que te llegue una factura
+con el exceso a final de mes, no.
+
+## Cómo se calcula si te sale a cuenta
+
+La cuenta es más sencilla de lo que parece y solo hace falta un número: **cuánto te deja
+limpio un cliente nuevo.**
+
+<Destacado titulo="La regla de los dos clientes">
+  Si el agente te recupera al mes dos clientes que antes se perdían, y cada uno te deja
+  limpio más que la mitad de la cuota, el resto del año es ganancia. En un negocio de
+  servicios con ticket de 200 o 300 €, eso significa que una cuota de 149 € se paga con un
+  solo trabajo recuperado.
+</Destacado>
+
+Dónde está el cliente recuperado, en orden de importancia:
+
+1. **El mensaje de fuera de horario.** Es el más fácil de contar: mira cuántos WhatsApp te
+   entran entre las 20:00 y las 9:00 en una semana normal.
+2. **El presupuesto que no se siguió.** Si mandas diez al mes y haces seguimiento de cero,
+   ahí hay al menos uno.
+3. **El que llamó mientras estabas con otro cliente.**
+
+Y dónde no está: si ya contestas en cinco minutos y tienes a alguien en recepción, el agente
+te quita trabajo repetido, pero no te trae clientes nuevos. Sigue valiendo la pena, pero la
+cuenta es otra.
+
+<Senales
+  items={[
+    {
+      fuerte: "No te compensa si tu ticket medio es bajo.",
+      texto:
+ "Con trabajos de 15 o 20 €, haría falta recuperar diez clientes al mes solo para cubrir la cuota.",
+    },
+    {
+      fuerte: "No te compensa si recibes pocos mensajes.",
+      texto:
+ "Tres consultas a la semana las contestas tú. El problema que resuelve esto es de volumen.",
+    },
+    {
+      fuerte: "Sí te compensa si vives del WhatsApp.",
+      texto:
+ "Si el canal por el que te llegan los clientes es un móvil que a veces no puedes mirar, aquí es donde está el dinero.",
+    },
+  ]}
+/>
+
+## Nuestros precios, por si estás comparando
+
+Están publicados y no hay otra tarifa debajo:
+
+- **{PLANES[0].nombre}, {PLANES[0].precio} € al mes**, sin alta, {PLANES[0].conversaciones} conversaciones. Se configura solo: rellenas una ficha y funciona.
+- **{PLANES[1].nombre}, {PLANES[1].precio} € al mes**, con alta de {PLANES[1].alta} € y {PLANES[1].conversaciones.toLocaleString("es-ES")} conversaciones. Lo montamos nosotros y apunta citas en tu calendario.
+- **{PLANES[2].nombre}, {PLANES[2].precio} € al mes**, con alta de {PLANES[2].alta} € y {PLANES[2].conversaciones.toLocaleString("es-ES")} conversaciones. Suma fichaje, captura de tickets y seguimiento de presupuestos.
+
+Todos sin permanencia, con el consumo incluido y con 14 días gratis. Lo que ves en{" "}
+<Link href="/#precios" className="text-brand">la página de precios</Link> es lo que se paga.
+
+## Y si tu empresa está en Baleares, puede costarte cero
+
+El Govern de les Illes Balears tiene abierta una línia de ayudas que cubre hasta el{" "}
+{AYUDA.porcentaje} % de un proyecto de digitalización, de {AYUDA.importeMinimo.toLocaleString("es-ES")} a{" "}
+{AYUDA.importeMaximo.toLocaleString("es-ES")} € por empresa, y la convocatoria nombra
+expresamente implantar inteligencia artificial y CRM entre lo que paga.
+
+Se pide del {AYUDA.abreTexto} al {AYUDA.cierraTexto} y va por orden de entrada. Lo hemos
+explicado entero, con sus exclusiones, en{" "}
+<Link href="/ayudas" className="text-brand">la página de ayudas</Link>.
+
+<CtaPost
+  titulo="¿Te salen los números o no te salen?"
+  boton="Escribirnos por WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  Dinos cuántos mensajes recibes a la semana y cuánto te deja limpio un cliente, y te hacemos
+  la cuenta delante. Si sale que no te compensa, te lo decimos y ya está.
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "es",
+          titulo: "Cuánto cuesta un agente de IA para una pyme en España",
+          descripcion:
+ "Entre 39 € al mes y 3.500 € de golpe: los tres modelos de precio del mercado español, lo que no te cuentan del consumo y la cuenta para saber si te compensa.",
+          url: `${marca.dominio}/blog/cuanto-cuesta-un-agente-de-ia`,
+          fecha: fechaPublicacion("/blog/cuanto-cuesta-un-agente-de-ia"),
+          actualizado: fechaRevision("/blog/cuanto-cuesta-un-agente-de-ia"),
+        }),
+      ]),
+    ),
+  }}
+/>

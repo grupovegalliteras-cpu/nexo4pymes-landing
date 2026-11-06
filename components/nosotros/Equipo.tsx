@@ -29,7 +29,7 @@ const TX = {
     categoria: "Las personas",
     titular: "Esto somos, literalmente",
     intro:
- "No hay un departamento comercial que os atienda y luego os pase con otro que programa. Hablaréis con quien escribe el código, desde la primera conversación hasta el día que algo falle un martes por la tarde.",
+ "Somos dos y no hay un tercero. Jaume coge el teléfono y lleva la cuenta; Alex construye el sistema. No hay departamento comercial que os atienda y luego os pase con otro, ni cuenta que pase de mano en mano.",
   },
   en: {
     categoria: "The people",
@@ -79,6 +79,7 @@ export function Equipo() {
               <figcaption className="mt-5">
                 <div className="text-[19px] text-fg sm:text-[20px]">{nombreCompleto(p)}</div>
                 <div className="mt-1 text-[14.5px] text-fg-2">{tr(lang, p.rol)}</div>
+                <p className="mx-auto mt-2 max-w-[28ch] text-[14px] leading-[1.5] text-fg-3">{tr(lang, p.perfil)}</p>
               </figcaption>
             </figure>
           </ItemStagger>

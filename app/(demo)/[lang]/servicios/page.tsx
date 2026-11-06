@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import NextLink from "next/link";
+import { ContactDock, SiteFooter, SiteNav } from "@/components/site/chrome";
 import { PLANES, AYUDA } from "@/content/producto";
 import { alternativas, conIdioma, idiomaOBase, type Idioma } from "@/lib/i18n";
 import { esquemaFaq, grafoPagina, urlAbsoluta } from "@/lib/esquema";
@@ -101,6 +102,8 @@ export default async function Servicios({ params }: { params: Promise<{ lang: st
 
   return (
     <div data-theme="dark" className="portada bg-bg text-fg">
+      <SiteNav dark />
+
       <section className="relative px-5 pt-28 pb-12 sm:px-8 lg:pt-32">
         <div className="mx-auto max-w-[900px]">
           <span className="text-[13px] font-medium tracking-wide text-brand uppercase">Qué hacemos</span>
@@ -248,6 +251,9 @@ export default async function Servicios({ params }: { params: Promise<{ lang: st
           <p className="mt-6 text-[13.5px] text-fg-3">{marca.whatsappVisible}</p>
         </div>
       </section>
+
+      <SiteFooter />
+      <ContactDock />
 
       <script
         type="application/ld+json"

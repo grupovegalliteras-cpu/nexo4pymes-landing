@@ -4,7 +4,7 @@
 
 export const blogHome = {
   categoria: "Blog",
-  titular: "Tecnología para pymes, explicada sin tecnicismos",
+  titular: "Inteligencia artificial para pymes, explicada sin tecnicismos",
   entradilla:
     "Artículos sobre qué software necesita de verdad un negocio pequeño, en qué orden conviene montarlo y qué errores salen caros.",
   /* ORDEN: el más reciente arriba. Al publicar uno nuevo se añade aquí,
@@ -17,18 +17,18 @@ export const blogHome = {
     "Lo escribimos desde Palma, trabajando con empresas de servicios de Mallorca: mantenimiento, limpieza, piscinas, climatización, jardinería, control de plagas, solar y reformas. Los ejemplos salen de casos reales, los precios que aparecen son los que manejamos, y cuando la respuesta honesta es «no hace falta software», también lo decimos.",
   publicados: [
     {
-      etiqueta: "Elegir programa · 8 min",
-      titulo: "Holded, Odoo o un programa a medida: cómo elegir sin equivocarse",
+      etiqueta: "Agentes de IA · 7 min",
+      titulo: "Qué es un agente de IA (y en qué se diferencia de un chatbot)",
       resumen:
-        "Por qué ninguna comparativa que vais a leer es neutral, la prueba de cinco minutos que dice si vuestro caso cabe en un catálogo, y el coste que no sale en ninguna tabla de precios.",
-      href: "/blog/holded-odoo-o-software-a-medida",
+        "Un chatbot sigue un guion; un agente entiende y actúa. Qué hace de verdad en una pyme, qué no hace aunque te lo cuenten, cuánto tarda en funcionar y las cinco preguntas que separan a los proveedores.",
+      href: "/blog/que-es-un-agente-de-ia",
     },
     {
-      etiqueta: "Partes de trabajo · 6 min",
-      titulo: "Partes de trabajo en el móvil: por qué fallan los que fallan",
+      etiqueta: "Precios · 8 min",
+      titulo: "Cuánto cuesta un agente de IA para una pyme en España",
       resumen:
-        "Qué se pierde con el parte en papel, por qué se abandonan las apps de partes, qué campos hacen falta de verdad y por qué tiene que funcionar sin cobertura.",
-      href: "/blog/partes-de-trabajo-movil-mallorca",
+        "Entre 39 € al mes y 3.500 € de golpe. Los tres modelos de precio que vas a encontrar, lo que no te cuentan del consumo de WhatsApp, y la cuenta de dos líneas para saber si te compensa.",
+      href: "/blog/cuanto-cuesta-un-agente-de-ia",
     },
     {
       etiqueta: "Control horario · 6 min",

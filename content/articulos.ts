@@ -48,8 +48,13 @@ export type Articulo = {
 };
 
 export const ARTICULOS: Articulo[] = [
-  { ruta: "/blog/holded-odoo-o-software-a-medida", publicado: "2026-11-01" },
-  { ruta: "/blog/partes-de-trabajo-movil-mallorca", publicado: "2026-10-14" },
+  /* Noviembre de 2026: los dos primeros son el blog nuevo, el que
+     responde a quien ha visto un anuncio y viene a Google a comprobar
+     qué es esto antes de escribirnos. Es SEO de reputación, no de
+     captación: nadie busca "agente de IA" y nos encuentra, pero el que
+     nos ha visto sí busca "qué es un agente de IA". */
+  { ruta: "/blog/que-es-un-agente-de-ia", publicado: "2026-11-06" },
+  { ruta: "/blog/cuanto-cuesta-un-agente-de-ia", publicado: "2026-11-06" },
   /* 04/11/2026: se le añadió la comprobación fechada del BOE (el 34.9
      intacto, ningún 34 bis) y las cuantías reales de la sanción. Es la
      página que va a por "registro de jornada digital obligatorio cuando

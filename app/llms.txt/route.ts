@@ -42,9 +42,14 @@ export function GET() {
 
   const articulos: [string, string, string][] = [
     [
-      "/blog/holded-odoo-o-software-a-medida",
-      "Holded, Odoo o un programa a medida: cómo elegir sin equivocarse",
-      "por qué ninguna comparativa es neutral, la prueba del precio para saber si vuestro caso cabe en un catálogo, y lo que no hay que programar nunca.",
+      "/blog/que-es-un-agente-de-ia",
+      "Qué es un agente de IA (y en qué se diferencia de un chatbot)",
+      "la diferencia entre un bot de guion y un agente que actúa, qué hace de verdad en una pyme, qué no hace y las cinco preguntas que separan a los proveedores.",
+    ],
+    [
+      "/blog/cuanto-cuesta-un-agente-de-ia",
+      "Cuánto cuesta un agente de IA para una pyme en España",
+      "los tres modelos de precio del mercado español (cuota mensual, pago único y proyecto a medida), el coste de consumo que casi nadie menciona, y cómo calcular si compensa.",
     ],
     [
       "/blog/control-horario-obligatorio-mallorca",
@@ -70,11 +75,6 @@ export function GET() {
       "/blog/por-que-diagnosticar-antes-de-automatizar",
       "Por qué diagnosticar antes de automatizar",
       "automatizar un proceso roto lo rompe más rápido; qué mirar antes de tocar nada.",
-    ],
-    [
-      "/blog/partes-de-trabajo-movil-mallorca",
-      "Partes de trabajo en el móvil: por qué fallan los que fallan",
-      "qué campos hacen falta de verdad, por qué se abandonan estas apps y por qué tienen que funcionar sin cobertura.",
     ],
   ];
 

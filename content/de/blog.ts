@@ -8,18 +8,18 @@ export const blogHome = {
     "Wir schreiben das aus Palma, in der Arbeit mit Dienstleistungsbetrieben auf ganz Mallorca: Wartung, Reinigung, Pools, Klimatechnik, Garten, Schädlingsbekämpfung, Solar und Renovierung. Die Beispiele stammen aus echten Fällen, die Zahlen sind die, mit denen wir arbeiten — und wenn die ehrliche Antwort «Sie brauchen keine Software» lautet, sagen wir auch das.",
   publicados: [
     {
-      etiqueta: "Software wählen · 8 Min.",
-      titulo: "Holded, Odoo oder eine Eigenentwicklung: wie man richtig wählt",
+      etiqueta: "KI-Agenten · 7 Min.",
+      titulo: "Was ein KI-Agent ist (und wie er sich vom Chatbot unterscheidet)",
       resumen:
-        "Warum kein Vergleich, den Sie lesen werden, neutral ist, der Fünf-Minuten-Test, ob Ihr Fall in einen Katalog passt, und die Kosten, die auf keiner Preisliste stehen.",
-      href: "/blog/holded-odoo-o-software-a-medida",
+        "Ein Chatbot folgt einem Skript; ein Agent versteht und handelt. Auf Spanisch verfasst: die englische und deutsche Fassung werden nicht mehr gepflegt.",
+      href: "/blog/que-es-un-agente-de-ia",
     },
     {
-      etiqueta: "Arbeitsberichte · 6 Min.",
-      titulo: "Arbeitsberichte auf dem Handy: Warum die scheitern, die scheitern",
+      etiqueta: "Preise · 8 Min.",
+      titulo: "Was ein KI-Agent für ein KMU in Spanien kostet",
       resumen:
-        "Was der Papierbericht kostet, warum Berichts-Apps aufgegeben werden, welche Felder wirklich nötig sind und warum es ohne Empfang funktionieren muss.",
-      href: "/blog/partes-de-trabajo-movil-mallorca",
+        "Von 39 EUR im Monat bis 3.500 EUR einmalig: die drei Preismodelle, die verschwiegenen Verbrauchskosten und die Rechnung. Auf Spanisch verfasst.",
+      href: "/blog/cuanto-cuesta-un-agente-de-ia",
     },
     {
       etiqueta: "Zeiterfassung · 6 Min.",

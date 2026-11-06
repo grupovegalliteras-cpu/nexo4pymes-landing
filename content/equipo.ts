@@ -19,10 +19,11 @@ import type { Idioma } from "@/lib/i18n";
    entidad que Google puede reconocer y cruzar con LinkedIn; sin él,
    es un nombre de pila. Es una línea cada uno.
 
-   TODO(HUMANO): REVISAR LOS ROLES. Están puestos como "socio
-   fundador" porque es cierto para los dos y no inventa una jerarquía
-   que no me consta. Si os repartís el trabajo de otra forma
-   —producto y desarrollo, por ejemplo— dice más y conviene cambiarlo.
+   LOS ROLES SON REALES Y ESTÁN REPARTIDOS. Los dos son cofundadores
+   y co-CEO; lo que cambia es de qué responde cada uno. Decirlo vale
+   más que un "socio fundador" repetido dos veces: a un cliente le
+   dice con quién va a hablar de qué, y a Google le da dos entidades
+   distinguibles en vez de dos nombres intercambiables.
    ============================================================ */
 
 export type Persona = {
@@ -36,19 +37,31 @@ export type Persona = {
   foto: string;
   /** Perfil público para el sameAs de Person. Vacío hasta que exista. */
   linkedin?: string;
+  /** De qué responde, en una frase. Sale bajo el cargo en /nosotros. */
+  perfil: Record<Idioma, string>;
 };
 
 export const EQUIPO: Persona[] = [
   {
     nombre: "Alex",
     apellidos: "",
-    rol: { es: "Socio fundador", en: "Founding partner", de: "Gründer" },
+    rol: { es: "Cofundador y co-CEO", en: "Co-founder and co-CEO", de: "Mitgründer und Co-CEO" },
+    perfil: {
+      es: "Lleva el desarrollo: diseña y construye los sistemas, las integraciones y los agentes de IA.",
+      en: "Leads development: designs and builds the systems, the integrations and the AI agents.",
+      de: "Verantwortet die Entwicklung: Systeme, Integrationen und KI-Agenten.",
+    },
     foto: "/assets/equipo/alex.webp",
   },
   {
     nombre: "Jaume",
     apellidos: "",
-    rol: { es: "Socio fundador", en: "Founding partner", de: "Gründer" },
+    rol: { es: "Cofundador y co-CEO", en: "Co-founder and co-CEO", de: "Mitgründer und Co-CEO" },
+    perfil: {
+      es: "Lleva el mantenimiento, el marketing y la parte comercial: es con quien hablas antes y después de contratar.",
+      en: "Leads maintenance, marketing and sales: the person you speak to before and after signing.",
+      de: "Verantwortet Wartung, Marketing und Vertrieb: der Ansprechpartner vor und nach dem Vertrag.",
+    },
     foto: "/assets/equipo/jaume.webp",
   },
 ];

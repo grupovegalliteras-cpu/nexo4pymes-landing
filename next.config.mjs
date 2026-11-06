@@ -151,6 +151,13 @@ const nextConfig = {
          CADA UNA AL SITIO QUE HACE SU TRABAJO HOY, que es lo que Google
          premia: un 301 masivo a la portada se trata como un 404 blando. */
       { source: "/recepcionia", destination: "/", permanent: true },
+
+      /* Los dos artículos del blog que hablaban del producto anterior.
+         Al artículo nuevo que mejor sustituye a cada uno, no a /blog:
+         un 301 al listado es casi lo mismo que un 404. */
+      { source: "/blog/holded-odoo-o-software-a-medida", destination: "/blog/cuanto-cuesta-un-agente-de-ia", permanent: true },
+      { source: "/blog/partes-de-trabajo-movil-mallorca", destination: "/blog/que-es-un-agente-de-ia", permanent: true },
+      { source: "/blog/por-que-diagnosticar-antes-de-automatizar.html", destination: "/blog/por-que-diagnosticar-antes-de-automatizar", permanent: true },
       { source: "/modulos", destination: "/#funciones", permanent: true },
       { source: "/modulos/control-horario", destination: "/obligaciones", permanent: true },
       { source: "/modulos/facturacion-verifactu", destination: "/verifactu", permanent: true },

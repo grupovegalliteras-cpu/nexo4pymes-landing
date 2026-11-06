@@ -8,18 +8,18 @@ export const blogHome = {
     "We write this from Palma, working with service companies across Mallorca: maintenance, cleaning, pools, HVAC, landscaping, pest control, solar and renovations. The examples come from real cases, the figures are the ones we actually work with, and when the honest answer is \"you don't need software\", we say that too.",
   publicados: [
     {
-      etiqueta: "Choosing software · 8 min",
-      titulo: "Holded, Odoo or software built for you: how to choose without getting it wrong",
+      etiqueta: "AI agents · 7 min",
+      titulo: "What an AI agent is (and how it differs from a chatbot)",
       resumen:
-        "Why no comparison you will read is neutral, the five-minute test that says whether your case fits a catalogue, and the cost that appears on no price list.",
-      href: "/blog/holded-odoo-o-software-a-medida",
+        "A chatbot follows a script; an agent understands and acts. Written in Spanish: the English and German versions of the site are no longer maintained.",
+      href: "/blog/que-es-un-agente-de-ia",
     },
     {
-      etiqueta: "Job reports · 6 min",
-      titulo: "Job reports on a phone: why the ones that fail, fail",
+      etiqueta: "Pricing · 8 min",
+      titulo: "What an AI agent costs for a small business in Spain",
       resumen:
-        "What paper job reports cost you, why job report apps get abandoned, which fields are genuinely needed, and why it has to work without a signal.",
-      href: "/blog/partes-de-trabajo-movil-mallorca",
+        "From EUR 39 a month to EUR 3,500 up front: the three pricing models, the usage costs nobody mentions, and the maths. Written in Spanish.",
+      href: "/blog/cuanto-cuesta-un-agente-de-ia",
     },
     {
       etiqueta: "Time tracking · 6 min",

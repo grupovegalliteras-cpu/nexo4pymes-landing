@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ContactDock, SiteFooter, SiteNav } from "@/components/site/chrome";
 import { AYUDA, PLANES, primerAno, entraEnLaAyuda } from "@/content/producto";
 import { alternativas, idiomaOBase, type Idioma } from "@/lib/i18n";
 import { esquemaFaq, grafoPagina, urlAbsoluta } from "@/lib/esquema";
@@ -72,6 +73,8 @@ export default async function Ayudas({ params }: { params: Promise<{ lang: strin
 
   return (
     <div data-theme="dark" className="portada bg-bg text-fg">
+      <SiteNav dark />
+
       {/* ========================= HERO ========================= */}
       <section className="relative px-5 pt-28 pb-12 sm:px-8 lg:pt-32">
         <div className="mx-auto max-w-[900px]">
@@ -281,6 +284,9 @@ export default async function Ayudas({ params }: { params: Promise<{ lang: strin
           en la resolución ni podemos garantizar ningún resultado.
         </p>
       </section>
+
+      <SiteFooter />
+      <ContactDock />
 
       <script
         type="application/ld+json"

@@ -1,0 +1,131 @@
+/* ============================================================
+   PORTADA — EL ASPECTO «TECH»
+
+   Lo que no se puede escribir con clases de Tailwind sin convertir
+   el componente en una sopa: los haces de luz del fondo, la rejilla
+   enmascarada, el cristal de las tarjetas y el titular con degradado.
+
+   Todo está limitado a .portada, así que ninguna otra página
+   hereda nada de aquí. El resto de la web sigue con sus tokens.
+   ============================================================ */
+
+.portada {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+
+/* HACES DE LUZ. Tres manchas radiales fijas: una arriba a la derecha
+   (la principal), una a media altura a la izquierda y otra abajo.
+   Van en ::before para que no entren en el flujo ni capturen clics. */
+.portada::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1700px;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 620px at 85% -5%, rgb(40 100 255 / 0.38), transparent 65%),
+    radial-gradient(700px 600px at -5% 38%, rgb(30 70 200 / 0.22), transparent 65%),
+    radial-gradient(800px 500px at 60% 78%, rgb(60 140 255 / 0.2), transparent 65%);
+}
+
+/* REJILLA. Se desvanece hacia abajo con una máscara elíptica: sin
+   ella, las líneas llegan al pie y la página parece un cuaderno. */
+.portada::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1400px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 55% at 50% 18%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 55% at 50% 18%, #000 20%, transparent 75%);
+}
+
+/* TITULAR CON DEGRADADO. El trozo en <em> va de blanco a azul.
+   Si el navegador no soporta background-clip:text, el color de
+   respaldo deja el texto legible en blanco. */
+.portada-h1 em {
+  display: block;
+  font-style: normal;
+  color: #fff;
+  background: linear-gradient(95deg, #fff 0%, #fff 28%, #a9c8ff 62%, #5f9bff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .portada-h1 em {
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* CRISTAL. Las tarjetas de precios y las cifras flotantes. */
+.cristal {
+  background: linear-gradient(165deg, rgb(255 255 255 / 0.12), rgb(255 255 255 / 0.03) 55%, rgb(255 255 255 / 0.07));
+  border: 1px solid rgb(255 255 255 / 0.18);
+  backdrop-filter: blur(26px) saturate(1.3);
+  -webkit-backdrop-filter: blur(26px) saturate(1.3);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.16) inset,
+    0 30px 80px -30px rgb(0 0 0 / 0.8);
+}
+
+/* El plan recomendado: mismo cristal, encendido. */
+.cristal-top {
+  background: linear-gradient(165deg, rgb(120 170 255 / 0.22), rgb(255 255 255 / 0.04) 55%, rgb(77 141 255 / 0.14));
+  border: 1px solid rgb(140 185 255 / 0.7);
+  box-shadow:
+    0 0 0 4px rgb(77 141 255 / 0.1),
+    0 0 70px -10px rgb(77 141 255 / 0.5),
+    0 1px 0 rgb(255 255 255 / 0.28) inset;
+}
+
+/* HALO DEL MÓVIL. El resplandor azul de detrás del teléfono. */
+.halo-tel::before {
+  content: "";
+  position: absolute;
+  inset: -12% -32% -8% -32%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgb(77 141 255 / 0.65), rgb(77 141 255 / 0.2) 55%, transparent 75%);
+  filter: blur(24px);
+}
+
+/* LA MARCA DE AGUA DETRÁS DE LOS PRECIOS. Decorativa: va en ::after
+   con aria oculto por estar en CSS, no en el DOM. */
+.marca-agua::after {
+  content: attr(data-agua);
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+  font-family: var(--fuente-impacto), var(--fuente-titular), sans-serif;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  font-size: clamp(110px, 22vw, 280px);
+  color: rgb(77 141 255 / 0.1);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* CINTA DE SECTORES. Se desplaza sola; con movimiento reducido, se para. */
+@keyframes portada-cinta {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.cinta-pista {
+  display: flex;
+  width: max-content;
+  animation: portada-cinta 42s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinta-pista { animation: none; }
+}

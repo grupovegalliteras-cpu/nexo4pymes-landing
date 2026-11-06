@@ -1,102 +1,83 @@
 import type { MetadataRoute } from "next";
 import { marca } from "@/content/marca";
-import { SECTORES } from "@/data/sectors";
 import { ARTICULOS, fechaSitemap } from "@/content/articulos";
 import { COMPROBADO as OBLIGACIONES_COMPROBADO } from "@/content/obligaciones";
 import { COMPROBADO as VERIFACTU_COMPROBADO } from "@/content/verifactu-estado";
-import { LANDINGS_PUBLICADAS } from "@/content/landings-seo-i18n";
-import { IDIOMAS, conIdioma } from "@/lib/i18n";
 
-/* Sitemap de la web en sus tres idiomas. Cada página sale en español, inglés y
-   alemán, y cada entrada lleva sus versiones hermanas (hreflang) para que Google
-   enseñe a cada visitante la de su idioma.
+/* ============================================================
+   SITEMAP
 
-   Al publicar un artículo nuevo del blog, basta con añadir su ruta a PAGINAS. */
+   NOVIEMBRE DE 2026: SOLO ESPAÑOL, Y ES UNA DECISIÓN, NO UN OLVIDO.
+   El sitio sigue sirviendo /en y /de, pero no se mandan a indexar.
+   Dos razones, las dos medidas:
 
-/* CADA PÁGINA CON SU FECHA, NO CON LA DEL DESPLIEGUE.
-   Antes, la que no llevaba `fecha` se iba con `new Date()`: cada vez
-   que se subía cualquier cambio, el sitemap le juraba a Google que las
-   catorce páginas se habían modificado ese día. Google aprende rápido
-   a no creerse un `lastmod` que siempre miente, y entonces deja de
-   servir también para la página que sí ha cambiado de verdad.
+     · En 90 días de Search Console, las versiones inglesa y alemana
+       sumaron 1 clic entre las dos, y era la portada inglesa.
+     · El contenido nuevo (portada, /ayudas, /servicios) está escrito
+       en español. Publicar en Google una versión inglesa a medio
+       traducir es peor que no tenerla.
 
-   AL TOCAR UNA PÁGINA DE VERDAD, cambia su fecha aquí. Es una línea, y
-   es lo que hace que Google vuelva a pasar por ella pronto. */
+   Como solo se indexa un idioma, tampoco hay hreflang que declarar:
+   el hreflang existe para decirle a Google cuál de las versiones
+   enseñar, y aquí solo hay una candidata. El noindex de /en y /de
+   se pone en app/(demo)/[lang]/layout.tsx.
+
+   SI ALGÚN DÍA SE RECUPERAN LOS IDIOMAS: hay que volver a recorrer
+   IDIOMAS aquí, devolver los `alternates.languages` y quitar el
+   noindex del layout. Las tres cosas, o no sirve de nada.
+
+   CADA PÁGINA CON SU FECHA, NO CON LA DEL DESPLIEGUE. Un lastmod que
+   cambia cada vez que se sube cualquier cosa deja de creérselo nadie,
+   y entonces tampoco sirve para la página que sí cambió.
+   ============================================================ */
+
+const HOY = "2026-11-06";
+
 const PAGINAS: { ruta: string; prioridad: number; frecuencia: "monthly" | "yearly"; fecha: string }[] = [
-  { ruta: "/", prioridad: 1, frecuencia: "monthly", fecha: "2026-10-08" },
-  { ruta: "/servicios", prioridad: 0.9, frecuencia: "monthly", fecha: "2026-10-08" },
-  /* LA PUERTA. Prioridad 0.9 y por encima de las landings de módulo:
-     es la página que va a por "qué obliga", que es lo más buscado de
-     todo lo nuestro y lo único que no se puede aprender en YouTube ni
-     comprar barato fuera de España.
+  /* La portada ya no es un catálogo: es la página de producto, y es
+     la que tiene que ganar la búsqueda de marca después del anuncio. */
+  { ruta: "/", prioridad: 1, frecuencia: "monthly", fecha: HOY },
 
-     SU lastmod ES LA FECHA DE COMPROBACIÓN DE LAS FUENTES, no la del
-     despliegue. En una página de plazos legales eso es exactamente lo
-     que Google necesita saber para decidir si volver a pasar. */
-  { ruta: "/obligaciones", prioridad: 0.9, frecuencia: "monthly", fecha: OBLIGACIONES_COMPROBADO },
-  /* LA PRIMERA PÁGINA PROFUNDA DE UNA SOLA NORMA. /obligaciones es el
-     hub y no puede posicionar por sí solo: su término paraguas
-     autocompleta casi entero a Latinoamérica. Esta va a por
-     "verifactu" a secas y sus variantes de fecha, que es el grupo con
-     más demanda de todo lo nuestro y el único cuyo top 10 son
-     gestorías e informáticas pequeñas en vez de Holded y la AEAT.
+  /* LA CAMPAÑA. Prioridad 1 hasta el 5 de enero de 2027: es la única
+     página del sitio con fecha de caducidad y la que sostiene la
+     publicidad de diciembre. Cuando cierre el plazo, baja a 0.6. */
+  { ruta: "/ayudas", prioridad: 1, frecuencia: "monthly", fecha: HOY },
 
-     Prioridad 1 junto con la portada, y lastmod = fecha de
-     comprobación de las fuentes: Hacienda ha movido este calendario
-     tres veces y cada vez que lo mueva, esta página tiene que ser la
-     primera por la que Google vuelva a pasar. */
-  { ruta: "/verifactu", prioridad: 1, frecuencia: "monthly", fecha: VERIFACTU_COMPROBADO },
-  /* La plantilla gratis. Prioridad 0.8: trae gente de arriba del
-     embudo —quien busca una plantilla todavía no busca un proveedor—
-     pero trae mucha, y desde aquí se llega a /obligaciones y a la
-     landing del fichaje. */
-  { ruta: "/plantillas/registro-de-jornada", prioridad: 0.8, frecuencia: "yearly", fecha: OBLIGACIONES_COMPROBADO },
-  { ruta: "/contacto", prioridad: 0.8, frecuencia: "yearly", fecha: "2026-10-02" },
-  { ruta: "/nosotros", prioridad: 0.7, frecuencia: "yearly", fecha: "2026-10-02" },
-  /* 03/11/2026: los ocho h1 pasaron a empezar por "Software". Es un
-     cambio de lo que la página dice SER, no de lo que cuenta, así que
-     interesa que Google vuelva a pasar pronto por las ocho. */
-  ...SECTORES.map((s) => ({ ruta: `/sectores/${s.id}`, prioridad: 0.7, frecuencia: "monthly" as const, fecha: "2026-11-03" })),
-  { ruta: "/modulos", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-14" },
-  /* LAS LANDINGS DE MÓDULO. Salen de la lista de publicadas, no de una
-     lista escrita aquí: una landing cuenta como publicada cuando está
-     escrita en los tres idiomas (ver content/landings-seo-i18n.ts), y
-     hasta entonces no tiene por qué estar en el sitemap.
+  /* La página de «qué es un agente de IA». No va a captar en frío:
+     va a convencer a quien ya vio el vídeo y viene a comprobar. */
+  { ruta: "/servicios", prioridad: 0.9, frecuencia: "monthly", fecha: HOY },
 
-     Prioridad 0.8, por encima de /modulos y de los artículos: son las
-     páginas que van a por las consultas con demanda medida
-     (facturación VeriFactu, control horario, partes de trabajo), y
-     eso es exactamente lo que esta web necesita que Google rastree
-     primero. */
-  ...LANDINGS_PUBLICADAS.map((slug) => ({ ruta: `/modulos/${slug}`, prioridad: 0.8, frecuencia: "monthly" as const, fecha: "2026-10-14" })),
-  { ruta: "/blog", prioridad: 0.6, frecuencia: "monthly", fecha: "2026-10-09" },
-  /* Los articulos ya no llevan la fecha escrita aqui: sale de
-     content/articulos.ts, que es donde esta la de publicacion y la de
-     revision. Antes estaban en dos sitios y se contradecian. */
+  /* Las dos de obligaciones se quedan. Son las únicas informativas
+     con demanda medida (verifactu, fichaje) y su lastmod es la fecha
+     en que se comprobaron las fuentes, no la del despliegue: en una
+     página de plazos legales, eso es justo lo que Google necesita. */
+  { ruta: "/verifactu", prioridad: 0.8, frecuencia: "monthly", fecha: VERIFACTU_COMPROBADO },
+  { ruta: "/obligaciones", prioridad: 0.8, frecuencia: "monthly", fecha: OBLIGACIONES_COMPROBADO },
+
+  /* La plantilla gratis: el único imán de correos que tenemos. */
+  { ruta: "/plantillas/registro-de-jornada", prioridad: 0.7, frecuencia: "yearly", fecha: OBLIGACIONES_COMPROBADO },
+
+  { ruta: "/blog", prioridad: 0.7, frecuencia: "monthly", fecha: HOY },
   ...ARTICULOS.map((a) => ({ ruta: a.ruta, prioridad: 0.6, frecuencia: "yearly" as const, fecha: fechaSitemap(a) })),
-  /* /legal se queda en el sitemap y ahora además se indexa: es la
-     página que acredita quién está detrás. Ver app/(web)/[lang]/legal. */
+
+  { ruta: "/contacto", prioridad: 0.6, frecuencia: "yearly", fecha: "2026-10-02" },
+  { ruta: "/nosotros", prioridad: 0.6, frecuencia: "yearly", fecha: HOY },
+
+  /* /legal se indexa a propósito: es la página que acredita quién
+     está detrás, y eso pesa cuando alguien llega desde un anuncio. */
   { ruta: "/legal", prioridad: 0.3, frecuencia: "yearly", fecha: "2026-09-19" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const url = (lang: (typeof IDIOMAS)[number], ruta: string) => `${marca.dominio}${conIdioma(lang, ruta) === "/" ? "/" : conIdioma(lang, ruta)}`;
   return [
-    ...PAGINAS.flatMap((p) =>
-      IDIOMAS.map((lang) => ({
-        url: url(lang, p.ruta),
-        lastModified: new Date(p.fecha),
-        changeFrequency: p.frecuencia,
-        priority: lang === "es" ? p.prioridad : Math.round(p.prioridad * 0.9 * 10) / 10,
-        alternates: { languages: Object.fromEntries(IDIOMAS.map((l) => [l, url(l, p.ruta)])) },
-      })),
-    ),
-    /* Concesia solo existe en español, así que va suelta y sin hreflang.
-       Con fecha fija por lo mismo que las de arriba: un lastmod que
-       cambia en cada despliegue no se cree nadie. */
-    { url: `${marca.dominio}/concesia`, lastModified: new Date("2026-11-01"), changeFrequency: "monthly", priority: 0.8 },
-    /* Nexo, el empleado de IA: landing estática en public/recepcionia, igual que Concesia.
-       Es la página de producto, así que va con la prioridad más alta de las sueltas. */
-    { url: `${marca.dominio}/recepcionia`, lastModified: new Date("2026-11-06"), changeFrequency: "monthly", priority: 0.9 },
+    ...PAGINAS.map((p) => ({
+      url: `${marca.dominio}${p.ruta}`,
+      lastModified: new Date(p.fecha),
+      changeFrequency: p.frecuencia,
+      priority: p.prioridad,
+    })),
+    /* Concesia es de otro cliente y vive en public/concesia por una
+       reescritura, no como ruta de Next. Se queda tal cual. */
+    { url: `${marca.dominio}/concesia`, lastModified: new Date("2026-11-01"), changeFrequency: "monthly" as const, priority: 0.8 },
   ];
 }

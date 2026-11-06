@@ -218,7 +218,7 @@ export function VerifactuPage({ lang }: { lang: Idioma }) {
             <Link href="/obligaciones" className="text-brand">
               {tx.verHub} →
             </Link>
-            <Link href="/modulos/facturacion-verifactu" className="text-brand">
+            <Link href="/servicios" className="text-brand">
               {tx.verModulo} →
             </Link>
           </nav>

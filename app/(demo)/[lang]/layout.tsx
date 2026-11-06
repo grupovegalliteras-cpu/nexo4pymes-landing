@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Atkinson_Hyperlegible, Barlow_Semi_Condensed } from "next/font/google";
+import { Anton, Atkinson_Hyperlegible, Barlow_Semi_Condensed } from "next/font/google";
 import Script from "next/script";
 import "../globals.css";
 import { Providers } from "@/components/providers";
@@ -31,6 +31,11 @@ import { fijarIdioma } from "@/lib/idioma-servidor";
 
 // Las dos tipografías de la marca: titulares y texto. No hay más.
 const titular = Barlow_Semi_Condensed({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--fuente-titular", display: "swap" });
+/* LA TERCERA FUENTE, Y HAY MOTIVO. Anton es la condensada gorda de los
+   titulares de la portada y de /ayudas: el golpe visual que no da Barlow,
+   que es una semicondensada de texto. Solo se usa en .font-impacto, en dos
+   paginas, y por eso pesa lo que pesa: un unico peso, 400. */
+const impacto = Anton({ subsets: ["latin"], weight: ["400"], variable: "--fuente-impacto", display: "swap" });
 const texto = Atkinson_Hyperlegible({ subsets: ["latin"], weight: ["400", "700"], style: ["normal", "italic"], variable: "--fuente-texto", display: "swap" });
 
 export function generateStaticParams() {
@@ -63,16 +68,16 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
          "software a medida" + Mallorca, que es lo que somos, y las
          landings se quedan con las consultas de producto. */
       default: tr(lang, {
-        es: "Software a medida para pymes en Mallorca",
-        en: "Custom software for small businesses in Mallorca",
-        de: "Individuelle Software für KMU auf Mallorca",
+        es: "Un empleado de IA que atiende el WhatsApp de tu negocio",
+        en: "An AI employee that answers your business WhatsApp",
+        de: "Ein KI-Mitarbeiter, der das WhatsApp Ihres Betriebs betreut",
       }),
       template: "%s | Nexo4Pymes",
     },
     description: tr(lang, {
-      es: "Estudio de software a medida en Palma de Mallorca: sistemas de gestión, configuradores web, fichaje e integraciones con IA. El diagnóstico va primero.",
-      en: "Custom software studio in Palma de Mallorca: management systems, web configurators, time clocking and AI integrations. The diagnosis comes first.",
-      de: "Softwarestudio in Palma de Mallorca: Verwaltungssysteme, Web-Konfiguratoren, Zeiterfassung und KI-Integrationen. Erst die Analyse, dann der Bau.",
+      es: "Contesta tu WhatsApp 24 h, resuelve las dudas de siempre y apunta la cita. Desde 39 €/mes, sin permanencia y con 14 días gratis. Hecho en Mallorca.",
+      en: "Answers your WhatsApp 24/7, handles the usual questions and books the appointment. From EUR 39/month, no lock-in, 14 days free. Made in Mallorca.",
+      de: "Beantwortet Ihr WhatsApp rund um die Uhr, klärt die üblichen Fragen und bucht den Termin. Ab 39 EUR/Monat, ohne Bindung, 14 Tage gratis.",
     }),
     applicationName: "Nexo4Pymes",
     authors: [{ name: "Nexo4Pymes" }],
@@ -107,7 +112,23 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       shortcut: "/favicon.ico",
       apple: [{ url: "/assets/favicon-180.png", sizes: "180x180" }],
     },
-    robots: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" },
+    /* SOLO SE INDEXA EL ESPAÑOL, Y ES UNA DECISIÓN MEDIDA.
+       En 90 días de Search Console, /en y /de sumaron 1 clic entre las
+       dos. Y el contenido nuevo —portada, /ayudas, /servicios— está
+       escrito en español: lo que verían esos idiomas es una traducción
+       a medias, que posiciona peor que no estar.
+
+       follow: true a propósito. Las páginas siguen existiendo y sus
+       enlaces siguen contando hacia las españolas; lo que no queremos
+       es que compitan en el índice con ellas.
+
+       PARA RECUPERARLOS hay que traducir de verdad, quitar esto y
+       devolver los idiomas al sitemap (app/sitemap.ts). Las tres
+       cosas, o no sirve de nada. */
+    robots:
+      lang === "es"
+        ? { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" }
+        : { index: false, follow: true },
     // lo que se ve al pegar el enlace en WhatsApp
     openGraph: {
       type: "website",
@@ -157,7 +178,7 @@ export default async function RootLayout({ children, params }: { children: React
   const lang = idiomaOBase((await params).lang);
   fijarIdioma(lang);
   return (
-    <html lang={lang} suppressHydrationWarning className={`${titular.variable} ${texto.variable} antialiased`}>
+    <html lang={lang} suppressHydrationWarning className={`${titular.variable} ${impacto.variable} ${texto.variable} antialiased`}>
       <body className="min-h-dvh">
         <Script id="nexo-theme" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeScript }} />
         {/* Sin JavaScript, Framer Motion deja escrito opacity:0 en el HTML y

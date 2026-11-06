@@ -183,7 +183,9 @@ export function PlantillaJornadaPage({ lang }: { lang: Idioma }) {
             <h2 className="font-display text-[22px] leading-snug font-semibold">{tx.ctaH}</h2>
             <p className="mt-3 text-[16px] leading-relaxed text-fg-2">{tx.ctaP}</p>
             <p className="mt-5">
-              <Link href="/modulos/control-horario" className="text-[15px] font-semibold text-brand">
+              {/* Iba a /modulos/control-horario, retirada en la poda de noviembre.
+                  Ahora al hub de obligaciones, que es donde se explica el fichaje. */}
+              <Link href="/obligaciones" className="text-[15px] font-semibold text-brand">
                 {tx.ctaBoton} →
               </Link>
             </p>

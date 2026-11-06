@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./tema-web.css";
 @import "./deeptech.css";
+@import "./portada.css";
 
 @source inline("{bg,text,border}-{brand,ok,warn,bad,ai,info,sun,fg-3}");
 @source inline("bg-{brand,ok,warn,bad,ai,info,sun}-soft");
@@ -28,16 +29,17 @@
   panel de la demo (al día, pendiente, vencido) y solo se entienden con su
   verde, su ámbar y su rojo de siempre.
 */
+/* NOVIEMBRE DE 2026: LA PALETA PASA DE CARMESI CALIDO A AZUL TECH.   Los NOMBRES de las nueve variables no cambian, y es a proposito: los usan   cientos de clases (bg-carmesi, text-crema, bg-noche) por toda la web, y   renombrarlos era un diff de miles de lineas sin nada a cambio. Cambia el   VALOR, asi que la web entera cambia de aspecto tocando este bloque y el   de [data-theme="dark"]. Leido literal, ahora "carmesi" es azul y   "melocoton" es cian: feo de leer, barato de mantener. */
 :root {
-  --noche: #090807;
-  --crema: #fff7ed;
+  --noche: #02040a;
+  --crema: #f4f6fb;
   --blanco: #ffffff;
-  --grafito: #1c2129;
-  --grafito-suave: #5f5a58;
-  --carmesi: #be123c;
-  --carmesi-oscuro: #a00f33;
-  --melocoton: #fdba74;
-  --arena: #b8a48f;
+  --grafito: #0e1626;
+  --grafito-suave: #58627a;
+  --carmesi: #1d4fd8;
+  --carmesi-oscuro: #1740b0;
+  --melocoton: #7dd3fc;
+  --arena: #c2cadb;
 }
 
 /* El tema se puede poner en cualquier elemento, no solo en <html>: una sección
@@ -46,9 +48,9 @@
 [data-theme="light"] {
   --bg: var(--crema);
   --surface: var(--blanco);
-  --surface-2: #fcefe1;
-  --surface-3: #f6e5d4;
-  --border: #eadccc;
+  --surface-2: #eef2fa;
+  --surface-3: #e3eaf6;
+  --border: #dde4f0;
   --border-strong: var(--arena);
   --text: var(--grafito);
   --text-2: var(--grafito-suave);
@@ -56,7 +58,7 @@
 
   --brand: var(--carmesi);
   --brand-strong: var(--carmesi-oscuro);
-  --brand-soft: #fbe3e1;
+  --brand-soft: #e4ecff;
   --brand-ink: var(--crema);
 
   /* Sobre crema el melocotón no se lee: aquí «sun» es el carmesí. */
@@ -81,9 +83,9 @@
 
 [data-theme="dark"] {
   --bg: var(--noche);
-  --surface: #151311;
-  --surface-2: #1d1a18;
-  --surface-3: #292522;
+  --surface: #0a1020;
+  --surface-2: #111a2e;
+  --surface-3: #1a2540;
   --border: rgb(255 247 237 / 0.12);
   --border-strong: rgb(255 247 237 / 0.24);
   --text: var(--crema);
@@ -93,9 +95,9 @@
   /* El carmesí sobre noche se queda en 3,2:1: vale para un titular grande y
      para un botón, no para un enlace pequeño. Lo que va en texto usa este
      tono más claro; los botones llevan bg-carmesi directamente. */
-  --brand: #f0607f;
-  --brand-strong: #f58ba2;
-  --brand-soft: rgb(190 18 60 / 0.22);
+  --brand: #6aa3ff;
+  --brand-strong: #a9c8ff;
+  --brand-soft: rgb(77 141 255 / 0.20);
   --brand-ink: var(--noche);
 
   --sun: var(--melocoton);
@@ -155,6 +157,7 @@
 
   --font-sans: var(--fuente-texto), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--fuente-titular), ui-sans-serif, sans-serif;
+  --font-impacto: var(--fuente-impacto), "Impact", var(--fuente-titular), sans-serif;
 
   --shadow-e1: var(--shadow-1);
   --shadow-e2: var(--shadow-2);

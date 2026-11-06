@@ -67,8 +67,6 @@ const nextConfig = {
       beforeFiles: [
         { source: "/concesia", destination: "/concesia/index.html" },
         { source: "/concesia/demo", destination: "/concesia/demo.html" },
-        // Nexo Recepción: landing estática en public/recepcionia (misma fórmula que Concesia).
-        { source: "/recepcionia", destination: "/recepcionia/index.html" },
       ],
       afterFiles: [
         { source: "/", destination: "/es" },
@@ -137,7 +135,44 @@ const nextConfig = {
       // de la home, que es donde vive ahora esa información.
       // Permanente: era una dirección indexada, y un 307 no le traslada
       // a la portada lo que tuviera ganado. Un 301 sí.
-      { source: "/sectores", destination: "/#sectores", permanent: true },
+      { source: "/sectores", destination: "/#para-quien", permanent: true },
+
+      /* ===== LA PODA DE NOVIEMBRE DE 2026 =====
+         Search Console midió el catálogo: 104 páginas indexadas y 0
+         clics comerciales en 90 días. Se retiraron los 5 módulos, los
+         8 sectores, la demo del panel y la landing estática de
+         /recepcionia, cuyo contenido es ahora la portada.
+
+         VAN CON 301 Y NO SE BORRAN NUNCA. Google tardará semanas en
+         dejar de pedirlas, y /sectores/plagas era la página con más
+         impresiones de todo el sitio (269 en 90 días): lo poco que
+         tuviera ganado se traslada, no se tira.
+
+         CADA UNA AL SITIO QUE HACE SU TRABAJO HOY, que es lo que Google
+         premia: un 301 masivo a la portada se trata como un 404 blando. */
+      { source: "/recepcionia", destination: "/", permanent: true },
+      { source: "/modulos", destination: "/#funciones", permanent: true },
+      { source: "/modulos/control-horario", destination: "/obligaciones", permanent: true },
+      { source: "/modulos/facturacion-verifactu", destination: "/verifactu", permanent: true },
+      { source: "/modulos/:slug*", destination: "/#funciones", permanent: true },
+      { source: "/sectores/:slug*", destination: "/#para-quien", permanent: true },
+      { source: "/:lang(en|de)/modulos/:slug*", destination: "/:lang", permanent: true },
+      { source: "/:lang(en|de)/modulos", destination: "/:lang", permanent: true },
+      { source: "/:lang(en|de)/sectores/:slug*", destination: "/:lang", permanent: true },
+
+      /* EL PANEL Y LA APP ERAN LA DEMO DEL PRODUCTO ANTERIOR. Se
+         colaron en el índice de Google: unas cuarenta URLs de
+         pantallas vacías (/panel/nominas, /panel/contabilidad…), con
+         /panel/direccion sacando 41 impresiones en la posición 61.
+         Eso es presupuesto de rastreo gastado en nada. */
+      { source: "/panel", destination: "/", permanent: true },
+      { source: "/panel/:slug*", destination: "/", permanent: true },
+      { source: "/app", destination: "/", permanent: true },
+      { source: "/app/:slug*", destination: "/", permanent: true },
+      { source: "/:lang(en|de)/panel/:slug*", destination: "/:lang", permanent: true },
+      { source: "/:lang(en|de)/panel", destination: "/:lang", permanent: true },
+      { source: "/:lang(en|de)/app/:slug*", destination: "/:lang", permanent: true },
+      { source: "/:lang(en|de)/app", destination: "/:lang", permanent: true },
 
       // La demo tenía su propia página de privacidad; en la web conjunta manda /legal.
       { source: "/privacidad", destination: "/legal", permanent: true },

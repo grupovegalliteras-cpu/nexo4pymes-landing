@@ -13,17 +13,19 @@ export default async function Image({ params }: { params: Promise<{ lang: string
   const lang = idiomaOBase((await params).lang);
   return await ogImage({
     /* ESTA IMAGEN ES LA PORTADA PEGADA EN UN WHATSAPP, así que dice lo
-       mismo que la portada: lo que hacemos nosotros. Decía «La llamada
-       entra. El trabajo sale solo.», que es el programa de servicios —uno
-       de los ejemplos— y no el estudio. Ver el aviso del principio de
-       components/site/landing.tsx. */
-    kicker: tr(lang, { es: "Software a medida · Mallorca", en: "Custom software · Mallorca", de: "Individuelle Software · Mallorca" }),
-    title: tr(lang, { es: "Vuestro negocio, en el bolsillo.", en: "Your business, in your pocket.", de: "Ihr Betrieb, in der Hosentasche." }),
+       mismo que la portada (noviembre de 2026): el empleado de IA que
+       atiende el WhatsApp, desde 39 € al mes. */
+    kicker: tr(lang, { es: "Empleado de IA · Mallorca", en: "AI employee · Mallorca", de: "KI-Mitarbeiter · Mallorca" }),
+    title: tr(lang, { es: "Tu primer empleado que no duerme.", en: "Your first employee who never sleeps.", de: "Dein erster Mitarbeiter, der nie schläft." }),
     sub: tr(lang, {
-      es: "Sistemas de gestión, configuradores para la web, fichaje y automatizaciones con IA. Dos socios en Palma, y el diagnóstico antes de construir nada.",
-      en: "Management systems, web configurators, time clocking and AI automations. Two partners in Palma, and a diagnosis before anything gets built.",
-      de: "Verwaltungssysteme, Web-Konfiguratoren, Zeiterfassung und KI-Automatisierungen. Zwei Partner in Palma, und erst die Analyse, dann der Bau.",
+      es: "Contesta el WhatsApp de tu negocio a cualquier hora, sabe qué hacer cuando la avería es urgente y te apunta la visita en la agenda.",
+      en: "It answers your business WhatsApp at any hour, knows what to do when a breakdown is urgent and books the visit in your calendar.",
+      de: "Es beantwortet das WhatsApp deines Betriebs rund um die Uhr, weiß, was bei einem dringenden Schaden zu tun ist, und trägt den Termin in deinen Kalender ein.",
     }),
-    chips: [tr(lang, { es: "Diagnóstico primero", en: "Diagnosis first", de: "Erst die Analyse" }), "Made in Mallorca"],
+    chips: [
+      tr(lang, { es: "Desde 39 € al mes", en: "From €39 a month", de: "Ab 39 € im Monat" }),
+      tr(lang, { es: "Sin permanencia", en: "No lock-in", de: "Ohne Mindestlaufzeit" }),
+      tr(lang, { es: "14 días gratis", en: "14 days free", de: "14 Tage gratis" }),
+    ],
   });
 }

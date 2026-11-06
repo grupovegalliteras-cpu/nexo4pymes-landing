@@ -42,21 +42,22 @@ export async function ogImage({ kicker, title, sub, chips }: { kicker: string; t
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "64px 72px",
-          color: "#fff7ed",
-          background: "radial-gradient(circle at 85% 0%, #5c0a20 0%, #2b0a14 40%, #090807 75%)",
+          color: "#f4f6fb",
+          background: "radial-gradient(circle at 88% 0%, #1b3f9e 0%, #0a1430 40%, #02040a 75%)",
 
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           {/* logo real, el mismo que en la web */}
           <img src={pieza("marca")} height={64} width={Math.round((64 * MARCA.w) / MARCA.h)} alt="" />
-          <img src={pieza("nombre")} height={38} width={Math.round((38 * NOMBRE.w) / NOMBRE.h)} alt="" />
-          <div style={{ display: "flex", marginLeft: "auto", fontSize: 24, color: "rgba(255,247,237,0.6)" }}>{kicker}</div>
+          {/* el nombre mide lo mismo que la N: el 47 % del símbolo */}
+          <img src={pieza("nombre")} height={30} width={Math.round((30 * NOMBRE.w) / NOMBRE.h)} alt="" />
+          <div style={{ display: "flex", marginLeft: "auto", fontSize: 24, color: "rgba(244,246,251,0.6)" }}>{kicker}</div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", fontSize: 88, fontWeight: 700, lineHeight: 1.02, letterSpacing: -0.5, maxWidth: 1000, fontFamily: bold ? "Barlow" : undefined }}>{title}</div>
-          <div style={{ display: "flex", marginTop: 22, fontSize: 30, lineHeight: 1.35, color: "rgba(255,247,237,0.75)", maxWidth: 960 }}>{sub}</div>
+          <div style={{ display: "flex", marginTop: 22, fontSize: 30, lineHeight: 1.35, color: "rgba(244,246,251,0.78)", maxWidth: 960 }}>{sub}</div>
         </div>
 
         <div style={{ display: "flex", gap: 14 }}>
@@ -70,9 +71,9 @@ export async function ogImage({ kicker, title, sub, chips }: { kicker: string; t
                 borderRadius: 16,
                 fontSize: 24,
                 fontWeight: 600,
-                background: i === 0 ? "#be123c" : "rgba(255,247,237,0.09)",
-                color: "#fff7ed",
-                border: i === 0 ? "none" : "1px solid rgba(255,247,237,0.18)",
+                background: i === 0 ? "#1d4fd8" : "rgba(244,246,251,0.08)",
+                color: "#f4f6fb",
+                border: i === 0 ? "none" : "1px solid rgba(244,246,251,0.24)",
               }}
             >
               {c}

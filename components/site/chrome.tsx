@@ -185,7 +185,7 @@ export function SiteNav({
     <header className={cn("fixed inset-x-0 top-0 z-50 transition-[background,box-shadow,border-color] duration-300", scrolled ? "border-b border-line bg-bg/85 backdrop-blur-xl" : "border-b border-transparent")}>
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-5 px-4 sm:px-6">
         <Link href="/" aria-label={t.inicio} className="h-7 shrink-0 text-[17px]">
-          <Logo light={onDark} className="h-7" />
+          <Logo light={onDark} className="h-8" />
         </Link>
         <nav className="hidden items-center gap-0.5 lg:flex" aria-label={t.principal}>
           {enlaces
@@ -253,7 +253,7 @@ export function SiteNav({
             className="fixed inset-0 z-50 flex flex-col bg-bg p-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:hidden"
           >
             <div className="flex items-center justify-between">
-              <Logo className="h-7" />
+              <Logo className="h-8" />
               {/* Cerrar NO es navegar: aqui si hay que devolver al
                   usuario a donde estaba leyendo. */}
               <button onClick={() => setOpen(false)} className="grid size-9 place-items-center" aria-label={t.cerrarMenu}>
@@ -382,7 +382,7 @@ export function SiteFooter() {
     <footer data-theme="dark" className="border-t border-line bg-bg pb-20 text-fg lg:pb-0">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
-          <Logo className="h-7 text-[17px]" />
+          <Logo className="h-8 text-[17px]" />
           <p className="mt-3 max-w-xs text-[14px] text-fg-2">
             {t.pie} {CONTACTO.ciudad}.
           </p>

@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Nexo4Pymes"><title>Nexo4Pymes</title><defs><mask id="p" maskUnits="userSpaceOnUse" x="0" y="0" width="512" height="512"><rect width="512" height="512" fill="#fff"/><circle cx="422" cy="90" r="68" fill="#000"/></mask></defs>
+<g mask="url(#p)"><path d="M133.12 0H378.88C461.4144 0 512 50.5856 512 133.12V378.88C512 461.4144 461.4144 512 378.88 512H133.12C50.5856 512 0 461.4144 0 378.88V133.12C0 50.5856 50.5856 0 133.12 0Z" fill="#1d4fd8"/><path d="M128 376V136h84l88 112V136h84v240h-84l-88-112v112z" fill="#fff"/></g>
+<circle cx="422" cy="90" r="48" fill="#0284c7"/></svg>

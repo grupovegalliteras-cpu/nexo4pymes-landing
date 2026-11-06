@@ -95,5 +95,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
        Con fecha fija por lo mismo que las de arriba: un lastmod que
        cambia en cada despliegue no se cree nadie. */
     { url: `${marca.dominio}/concesia`, lastModified: new Date("2026-11-01"), changeFrequency: "monthly", priority: 0.8 },
+    /* Nexo, el empleado de IA: landing estática en public/recepcionia, igual que Concesia.
+       Es la página de producto, así que va con la prioridad más alta de las sueltas. */
+    { url: `${marca.dominio}/recepcionia`, lastModified: new Date("2026-11-06"), changeFrequency: "monthly", priority: 0.9 },
   ];
 }

@@ -15,7 +15,8 @@ import { fijarIdioma } from "@/lib/idioma-servidor";
    ganable por dos personas siendo exactas. El razonamiento largo está
    en el comentario de components/site/obligaciones-page.tsx.
 
-   HACE PAREJA CON /modulos/facturacion-verifactu y /modulos/control-horario,
+   HACÍA PAREJA CON /modulos/facturacion-verifactu y /modulos/control-horario,
+   dos páginas de producto que se retiraron con el giro del 6/11/2026;
    y no compite con ellas: esas páginas son para quien ya busca un
    programa; esta es para quien todavía está averiguando si le obliga
    algo. Son dos intenciones distintas, y por eso son páginas distintas.

@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     de: "Was ein KI-Agent ist und wie er sich vom Chatbot unterscheidet",
   });
   const descripcion = tr(lang, {
-    es: "Un chatbot sigue un guion; un agente entiende y actúa. Qué hace de verdad en una pyme, qué no hace, cuánto tarda en funcionar y las cinco preguntas que hay que hacer antes de contratar.",
+    es: "Un chatbot sigue un guion; un agente entiende y actúa. Qué hace de verdad en una pyme, qué no hace y las cinco preguntas antes de contratar.",
     en: "A chatbot follows a script; an agent understands and acts. What it really does in a small business, what it does not do, and what to ask before you buy.",
     de: "Ein Chatbot folgt einem Skript; ein Agent versteht und handelt. Was er in einem KMU wirklich leistet, was nicht, und was Sie vorher fragen sollten.",
   });

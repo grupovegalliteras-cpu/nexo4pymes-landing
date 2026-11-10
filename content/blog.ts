@@ -5,8 +5,11 @@
 export const blogHome = {
   categoria: "Blog",
   titular: "Inteligencia artificial para pymes, explicada sin tecnicismos",
+  /* Es también la meta descripción del listado (ver blog/page.tsx),
+     así que se queda por debajo de 160 caracteres: a partir de ahí
+     Google la corta a media frase. */
   entradilla:
-    "Artículos sobre qué software necesita de verdad un negocio pequeño, en qué orden conviene montarlo y qué errores salen caros.",
+    "Qué hace de verdad un agente de IA en una pyme, qué cuesta, qué obliga la ley y qué no hace falta comprar.",
   /* ORDEN: el más reciente arriba. Al publicar uno nuevo se añade aquí,
      en app/sitemap.ts y en app/llms.txt/route.ts, y se quita de `proximos`
      si estaba anunciado. */

@@ -63,7 +63,17 @@ export type Obligacion = {
      tiene la suya; factura electrónica y registro de jornada son las
      dos siguientes. */
   paginaPropia?: string;
-  /** Nuestra página sobre el tema, si la hay. */
+  /** Nuestra página de producto sobre el tema, si la hay.
+   *
+   * 10/11/2026 — HOY NO LA TIENE NINGUNA, y el campo se queda vacío a
+   * propósito. Apuntaba a /modulos/facturacion-verifactu y a
+   * /modulos/control-horario, que eran páginas de producto del
+   * catálogo anterior y ya no existen. El producto de ahora es un
+   * agente que contesta el WhatsApp: no factura ni fichaba, así que
+   * mandar a /servicios desde «nuestra página sobre VeriFactu» sería
+   * prometer algo que no hay. El campo se queda porque el día que
+   * exista una página de producto que de verdad resuelva una de estas
+   * normas, va aquí. */
   ruta?: string;
 };
 
@@ -74,7 +84,7 @@ export const COMPROBADO = "2026-11-03";
 /* ------------------------------------------------------------------
    1. VERIFACTU
    Las fechas salen de content/verifactu-estado.ts, que ya existía y es
-   el que pinta el calendario de /modulos/facturacion-verifactu. Aquí se
+   el que pintaba el calendario de la antigua página de facturación. Aquí se
    traducen a la forma de este archivo en vez de copiarse: dos listas de
    fechas que digan lo mismo acaban diciendo cosas distintas.
 
@@ -140,7 +150,6 @@ const verifactu: Obligacion = {
     },
   ],
   paginaPropia: "/verifactu",
-  ruta: "/modulos/facturacion-verifactu",
 };
 
 /* ------------------------------------------------------------------
@@ -303,13 +312,18 @@ const registroJornada: Obligacion = {
     },
   ],
   /* LA PÁGINA PROFUNDA DE ESTA NORMA. Aquí no es una página nueva como
-     en VeriFactu: es el artículo del blog, que ya está en el #1 y cuyo
-     título y ángulo ya son los correctos. Crear una cuarta página de
-     control horario habría partido la misma intención en dos y nos
-     habría puesto a competir contra nuestra propia página mejor
-     posicionada. Medido el 4 de noviembre de 2026. */
+     en VeriFactu: es el artículo del blog, que ya tiene el título y el
+     ángulo correctos. Crear una cuarta página de control horario
+     habría partido la misma intención en dos.
+
+     CORRECCIÓN DEL 10/11/2026. Esto decía que el artículo «ya está en
+     el #1» y la decisión se apoyaba en no competir contra él. No era
+     cierto: Search Console, consultado el 4 de noviembre, daba 0
+     clics, 6 impresiones y posición media 7,2 para esa página. La
+     decisión sigue siendo la buena —dos páginas para la misma
+     intención se estorban— pero el motivo es ése, no un primer puesto
+     que no existía. */
   paginaPropia: "/blog/control-horario-obligatorio-mallorca",
-  ruta: "/modulos/control-horario",
 };
 
 export const OBLIGACIONES: Obligacion[] = [facturaElectronica, verifactu, registroJornada];

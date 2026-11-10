@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     de: "Was ein KI-Agent für ein KMU in Spanien kostet",
   });
   const descripcion = tr(lang, {
-    es: "Entre 39 € al mes y 3.500 € de golpe: los tres modelos de precio del mercado español, lo que no te cuentan del consumo de WhatsApp y la cuenta para saber si te compensa.",
+    es: "Entre 39 € al mes y 3.500 € de golpe: los tres modelos de precio, lo que no te cuentan del consumo de WhatsApp y la cuenta que lo decide.",
     en: "From EUR 39 a month to EUR 3,500 up front: the three pricing models in the Spanish market, the usage costs nobody mentions, and how to work out if it pays off.",
     de: "Von 39 EUR im Monat bis 3.500 EUR einmalig: die drei Preismodelle im spanischen Markt, die verschwiegenen Verbrauchskosten und die Rechnung dazu.",
   });

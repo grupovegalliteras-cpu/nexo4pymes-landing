@@ -3,7 +3,7 @@
 export const blogHome = {
   categoria: "Blog",
   titular: "Technik für kleine Unternehmen, ohne Fachchinesisch erklärt",
-  entradilla: "Artikel darüber, welche Software ein kleiner Betrieb wirklich braucht, in welcher Reihenfolge man sie einführt und welche Fehler teuer werden.",
+  entradilla: "Was ein KI-Agent in einem kleinen Betrieb wirklich leistet, was er kostet, was das Gesetz verlangt und was man nicht kaufen muss.",
   desde:
     "Wir schreiben das aus Palma, in der Arbeit mit Dienstleistungsbetrieben auf ganz Mallorca: Wartung, Reinigung, Pools, Klimatechnik, Garten, Schädlingsbekämpfung, Solar und Renovierung. Die Beispiele stammen aus echten Fällen, die Zahlen sind die, mit denen wir arbeiten — und wenn die ehrliche Antwort «Sie brauchen keine Software» lautet, sagen wir auch das.",
   publicados: [

@@ -131,11 +131,14 @@ const nextConfig = {
       { source: "/demo", destination: "/", permanent: true },
       { source: "/:lang(en|de)/demo", destination: "/:lang", permanent: true },
 
-      // Enlaces antiguos a /sectores (sin más): al selector de sectores
-      // de la home, que es donde vive ahora esa información.
-      // Permanente: era una dirección indexada, y un 307 no le traslada
-      // a la portada lo que tuviera ganado. Un 301 sí.
-      { source: "/sectores", destination: "/#para-quien", permanent: true },
+      /* Enlaces antiguos a /sectores. Iban a /#para-quien, que era el
+         selector de sectores de la portada anterior; la portada del
+         6/11/2026 ya no tiene esa sección, así que el ancla no existe y
+         el 301 acababa en lo alto de la home. Un 301 a la portada es
+         justo lo que Google trata como un 404 blando. Van a /servicios,
+         que es donde se explica hoy qué hace el agente en una empresa
+         de servicios, con sus preguntas. */
+      { source: "/sectores", destination: "/servicios", permanent: true },
 
       /* ===== LA PODA DE NOVIEMBRE DE 2026 =====
          Search Console midió el catálogo: 104 páginas indexadas y 0
@@ -162,7 +165,7 @@ const nextConfig = {
       { source: "/modulos/control-horario", destination: "/obligaciones", permanent: true },
       { source: "/modulos/facturacion-verifactu", destination: "/verifactu", permanent: true },
       { source: "/modulos/:slug*", destination: "/#funciones", permanent: true },
-      { source: "/sectores/:slug*", destination: "/#para-quien", permanent: true },
+      { source: "/sectores/:slug*", destination: "/servicios", permanent: true },
       { source: "/:lang(en|de)/modulos/:slug*", destination: "/:lang", permanent: true },
       { source: "/:lang(en|de)/modulos", destination: "/:lang", permanent: true },
       { source: "/:lang(en|de)/sectores/:slug*", destination: "/:lang", permanent: true },

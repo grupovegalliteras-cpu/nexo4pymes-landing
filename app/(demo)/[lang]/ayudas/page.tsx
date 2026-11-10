@@ -35,7 +35,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const lang = idiomaOBase((await params).lang);
   return {
     title: `Hasta ${AYUDA.importeMaximo.toLocaleString("es-ES")} € del Govern para digitalizar tu pyme en Baleares`,
-    description: `La línia 3.1 cubre el ${AYUDA.porcentaje} % del proyecto, de ${AYUDA.importeMinimo.toLocaleString("es-ES")} a ${AYUDA.importeMaximo.toLocaleString("es-ES")} €. Se pide del ${AYUDA.abreTexto} al ${AYUDA.cierraTexto}, por orden de entrada. Te dejamos el presupuesto y la memoria listos.`,
+    /* Por debajo de 160 caracteres: con las fechas y los importes
+       metidos, la frase del presupuesto se quedaba fuera del
+       resultado de búsqueda. */
+    description: `El Govern cubre el ${AYUDA.porcentaje} % del proyecto, de ${AYUDA.importeMinimo.toLocaleString("es-ES")} a ${AYUDA.importeMaximo.toLocaleString("es-ES")} €. Se pide del ${AYUDA.abreTexto} al ${AYUDA.cierraTexto}, por orden de entrada.`,
     alternates: alternativas(lang, "/ayudas"),
   };
 }

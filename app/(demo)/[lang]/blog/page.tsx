@@ -17,9 +17,9 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: {
       absolute: tr(lang, {
-        es: "Blog de software para pymes en Mallorca | Nexo4Pymes",
-        en: "Blog: software for small businesses in Mallorca | Nexo4Pymes",
-        de: "Blog: Software für kleine Betriebe auf Mallorca | Nexo4Pymes",
+        es: "Blog: inteligencia artificial para pymes | Nexo4Pymes",
+        en: "Blog: artificial intelligence for small businesses | Nexo4Pymes",
+        de: "Blog: künstliche Intelligenz für kleine Betriebe | Nexo4Pymes",
       }),
     },
     description: contenido(lang).blog.blogHome.entradilla,

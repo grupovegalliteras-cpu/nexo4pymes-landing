@@ -43,8 +43,13 @@ export function Providers({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  /* reducedMotion="never", no "user": con "user" los componentes de
+     motion se quedaban solo con la opacidad en cuanto el sistema pedía
+     menos movimiento, y en Windows eso pasa casi siempre sin que nadie
+     lo haya pedido. Es la misma decisión que el resto de la web; está
+     explicada, con lo que se pierde, en lib/movimiento.ts. */
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionConfig reducedMotion="never">
       <Fragment key={lang}>{children}</Fragment>
     </MotionConfig>
   );

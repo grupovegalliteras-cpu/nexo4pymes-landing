@@ -260,7 +260,7 @@ body {
 }
 
 /* ============================================================
-   MOVIMIENTO REDUCIDO: SIN MOVIMIENTO, PERO NO SIN NADA
+   MOVIMIENTO REDUCIDO: SE RESPETA, SALVO DONDE NO
 
    EL PROBLEMA. Esto cortaba TODO a una milésima, así que en un
    equipo que pide movimiento reducido la web aparecía de golpe,
@@ -286,26 +286,47 @@ body {
 
    LO QUE SIGUE CORTADO: todo lo que se repite en bucle
    (iteration-count: 1) y todo lo que anima transform, porque esas
-   entradas pasan a usar el fundido de abajo, que no lo toca. */
+   entradas pasan a usar el fundido de abajo, que no lo toca.
+
+   10/11/2026 — Y AUN ASÍ NO BASTABA. Con el fundido solo, la portada
+   nueva seguía siendo una foto en Windows: no usa .fade-up, usa
+   [data-revelar] y animaciones de JavaScript, y el interruptor de
+   arriba las apagaba todas. Así que lo que lleve .mueve-siempre queda
+   fuera de este bloque. La decisión, entera, en lib/movimiento.ts. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  /* ---- LA EXCEPCIÓN (10/11/2026): .mueve-siempre ----
+     Lo que lleva esa clase, y todo lo que haya dentro, conserva sus
+     animaciones aunque el sistema pida movimiento reducido. La lleva
+     la portada y las páginas que comparten su diseño, que son las
+     que se ven como una foto sin ella. El porqué entero, lo que se
+     pierde con esto y cómo revertirlo: lib/movimiento.ts. */
+  *:not(.mueve-siempre, .mueve-siempre *),
+  *:not(.mueve-siempre, .mueve-siempre *)::before,
+  *:not(.mueve-siempre, .mueve-siempre *)::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+
+  /* El scroll suave se corta para TODO EL MUNDO, también dentro de
+     .mueve-siempre. Es la única pieza que no entra en la excepción, y
+     a propósito: un desplazamiento largo en marcha es justo lo que
+     peor le sienta a quien pidió esto, y no aporta nada a nadie. */
+  * {
     scroll-behavior: auto !important;
   }
 
   /* Las entradas se quedan en un fundido, sin desplazamiento.
-     Gana al bloque de arriba por especificidad: una clase pesa más
-     que el selector universal, y las dos reglas son !important.
+     Gana al bloque de arriba por orden: las dos reglas pesan lo
+     mismo y ésta va después.
 
      SI SE AÑADE UNA ENTRADA NUEVA, hay que apuntarla aquí; si no,
      volverá a aparecer de golpe en estos equipos. */
-  .fade-up,
-  .dt-entra,
-  .dt-linea-nueva,
-  .dt-palabra,
-  .dt-texto-luz {
+  .fade-up:not(.mueve-siempre *),
+  .dt-entra:not(.mueve-siempre *),
+  .dt-linea-nueva:not(.mueve-siempre *),
+  .dt-palabra:not(.mueve-siempre *),
+  .dt-texto-luz:not(.mueve-siempre *) {
     animation-name: solo-aparece !important;
     animation-duration: 450ms !important;
     animation-timing-function: ease-out !important;

@@ -78,26 +78,6 @@
     0 30px 80px -30px rgb(0 0 0 / 0.8);
 }
 
-/* Quien pide menos transparencias (macOS, iOS, Windows) o más
-   contraste ve el cristal macizo, con un borde que se distingue. */
-@media (prefers-reduced-transparency: reduce) {
-  .cristal,
-  .cristal-top {
-    background: var(--color-surface, #0d1424);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-}
-@media (prefers-contrast: more) {
-  .cristal,
-  .cristal-top {
-    background: var(--color-surface, #0d1424);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    border-color: rgb(255 255 255 / 0.6);
-  }
-}
-
 /* El plan recomendado: mismo cristal, encendido. */
 .cristal-top {
   background: linear-gradient(165deg, rgb(120 170 255 / 0.22), rgb(255 255 255 / 0.04) 55%, rgb(77 141 255 / 0.14));
@@ -106,6 +86,50 @@
     0 0 0 4px rgb(77 141 255 / 0.1),
     0 0 70px -10px rgb(77 141 255 / 0.5),
     0 1px 0 rgb(255 255 255 / 0.28) inset;
+}
+
+/* ------------------------------------------------------------
+   EL CRISTAL MACIZO, PARA QUIEN PIDE MENOS TRANSPARENCIAS
+
+   10/11/2026 — AQUÍ HABÍA UN FALLO QUE DEJABA LOS PRECIOS EN BLANCO.
+   Este bloque ponía `background: var(--color-surface, #0d1424)`
+   contando con el color de respaldo oscuro. Pero --color-surface SÍ
+   existe: es el token de la web clara y vale #fff. Así que la tarjeta
+   se volvía blanca maciza con el texto blanco encima, y los tres
+   precios y el cierre de la portada desaparecían.
+
+   Se veía en Windows y no en Mac ni en el móvil, y no es casualidad:
+   macOS e iOS solo encienden «reducir transparencia» si alguien entra
+   en Accesibilidad y lo activa, mientras que en Windows va dentro de
+   «Efectos de transparencia», que se apaga por rendimiento o batería y
+   viene apagado de fábrica en muchos equipos.
+
+   LA REGLA QUE QUEDA: dentro de .portada el tema es oscuro siempre
+   (data-theme="dark"), así que el color macizo tiene que salir de
+   --surface, que es el token del tema oscuro, no de --color-surface,
+   que es el de la web clara. Si algún día .cristal se usa fuera de
+   .portada, hay que revisar esto.
+
+   Y VA DESPUÉS DE .cristal-top A PROPÓSITO. Antes iba antes, y como
+   las dos reglas pesan lo mismo ganaba la última: el plan destacado se
+   quedaba translúcido y se saltaba la preferencia entera.
+   ------------------------------------------------------------ */
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .cristal {
+    background: var(--surface, #0a1020);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  /* El destacado conserva el tinte azul, ya mezclado sobre el fondo:
+     los mismos colores que el degradado translúcido, pero opacos. */
+  .cristal-top {
+    background: linear-gradient(165deg, #1c2840, #0a0e18 55%, #0d172c);
+  }
+}
+@media (prefers-contrast: more) {
+  .cristal {
+    border-color: rgb(255 255 255 / 0.6);
+  }
 }
 
 /* HALO DEL MÓVIL. El resplandor azul de detrás del teléfono. */
@@ -152,6 +176,41 @@
   width: max-content;
   animation: portada-cinta 42s linear infinite;
 }
+/* La cinta sigue andando aunque el sistema pida movimiento reducido,
+   porque la portada lleva .mueve-siempre: el porqué está en
+   lib/movimiento.ts. Da la vuelta en 42 s —un sector cruza la pantalla
+   en unos 20— y se difumina por los lados, así que es de lo más suave
+   que hay aquí. Si algún día .cinta-pista se usa fuera de .mueve-siempre,
+   ahí sí se para. */
 @media (prefers-reduced-motion: reduce) {
-  .cinta-pista { animation: none; }
+  .cinta-pista:not(.mueve-siempre *) { animation: none; }
+}
+
+/* ------------------------------------------------------------
+   LA ENTRADA DEL HERO, SIN ESPERAR A JAVASCRIPT
+
+   El resto de la portada entra con [data-revelar], que necesita que
+   el observador de intersección haya montado. Para lo que está en lo
+   alto de la página eso no vale: entre el primer pintado y la
+   hidratación pueden pasar cientos de milisegundos en una conexión
+   mala, y durante ese rato el titular estaría en opacidad 0. Es el
+   contenido más importante de la web; no se arriesga.
+
+   Así que el hero entra con una animación CSS normal, que arranca
+   cuando el navegador pinta y no depende de nada. `both` mantiene el
+   estado inicial durante el retardo, que es lo que permite
+   escalonarlo con --d sin que las piezas parpadeen antes de empezar.
+   ------------------------------------------------------------ */
+@keyframes portada-entra {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.entra {
+  animation: portada-entra 0.62s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms) both;
 }

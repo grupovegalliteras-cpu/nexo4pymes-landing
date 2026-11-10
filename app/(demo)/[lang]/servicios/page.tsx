@@ -117,7 +117,7 @@ export default async function Servicios({ params }: { params: Promise<{ lang: st
   const L = (href: string) => conIdioma(lang, href);
 
   return (
-    <div data-theme="dark" className="portada bg-bg text-fg">
+    <div data-theme="dark" className="portada mueve-siempre bg-bg text-fg">
       <SiteNav dark />
 
       <section className="relative px-5 pt-28 pb-12 sm:px-8 lg:pt-32">

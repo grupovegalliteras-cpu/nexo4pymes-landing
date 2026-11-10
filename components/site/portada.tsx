@@ -1,5 +1,7 @@
+import type { CSSProperties } from "react";
 import NextLink from "next/link";
 import { ContactDock, SiteFooter, SiteNav } from "@/components/site/chrome";
+import { Revelar } from "@/components/site/revelar";
 import { ChatDemo, type Mensaje } from "@/components/site/chat-demo";
 import { PLANES, AYUDA, REACTIVACION, entraEnLaAyuda } from "@/content/producto";
 import { conIdioma, type Idioma } from "@/lib/i18n";
@@ -30,6 +32,16 @@ const miles = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
    tres pasos, cuatro funciones, los precios y tres preguntas. El
    detalle entero se fue a /servicios, que es la página de quien SÍ
    quiere leer antes de escribir.
+
+   10 DE NOVIEMBRE DE 2026 — Y ADEMÁS SE MUEVE.
+   La página no tenía ni una entrada: todo estaba ya colocado en el
+   primer fotograma. Leída en un PC con los efectos de Windows
+   apagados —que es como viene la mitad— era un folleto impreso: la
+   conversación del hero tampoco se escribía y la cinta estaba
+   parada. Ahora el hero entra con CSS (.entra, en portada.css, sin
+   esperar a JavaScript porque es lo primero que se ve) y el resto
+   con [data-revelar] + <Revelar/>. Que esto ocurra también con
+   «movimiento reducido» es una decisión: lib/movimiento.ts.
 
    Y MIRÉ LO QUE HACE LA COMPETENCIA ANTES DE DECIDIRLO. Las webs
    de agencias de IA de Mallorca y de España que revisé no tienen
@@ -89,37 +101,38 @@ export function Portada({ lang }: Props) {
   const L = (href: string) => conIdioma(lang, href);
 
   return (
-    <div data-theme="dark" className="portada bg-bg text-fg">
+    <div data-theme="dark" className="portada mueve-siempre bg-bg text-fg">
       <SiteNav dark />
+      <Revelar />
 
       {/* ========================= HERO ========================= */}
       <section className="relative px-5 pt-28 pb-12 sm:px-8 lg:pt-32">
         <div className="mx-auto grid max-w-[1200px] items-center gap-12 lg:grid-cols-[minmax(0,1fr)_380px] lg:gap-16">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface-2/60 px-3 py-1.5 text-[13px] font-medium text-fg-2">
+            <span className="entra inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface-2/60 px-3 py-1.5 text-[13px] font-medium text-fg-2">
               <span aria-hidden="true" className="size-1.5 rounded-full bg-brand" />
               Nexo · tu primer empleado de IA
             </span>
 
-            <h1 className="portada-h1 mt-5 font-impacto text-[clamp(52px,8.4vw,120px)] leading-[0.9] font-normal tracking-[-0.01em] uppercase">
+            <h1 style={{ "--d": "70ms" } as CSSProperties} className="entra portada-h1 mt-5 font-impacto text-[clamp(52px,8.4vw,120px)] leading-[0.9] font-normal tracking-[-0.01em] uppercase">
               Tu primer empleado
               <em>que no duerme.</em>
             </h1>
 
-            <p className="mt-6 max-w-[52ch] text-[17px] leading-[1.6] text-fg-2 sm:text-[19px]">
+            <p style={{ "--d": "150ms" } as CSSProperties} className="entra mt-6 max-w-[52ch] text-[17px] leading-[1.6] text-fg-2 sm:text-[19px]">
               Contesta el WhatsApp de tu negocio a cualquier hora, sabe qué hacer cuando la avería
               es urgente y te apunta la visita en la agenda.{" "}
               <span className="lg:hidden">Míralo aquí abajo.</span>
               <span className="hidden lg:inline">Míralo aquí al lado.</span>
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] text-fg-2">
+            <div style={{ "--d": "220ms" } as CSSProperties} className="entra mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-[15px] text-fg-2">
               <span>Desde</span>
               <b className="font-display text-[34px] leading-none font-semibold text-fg">{PLANES[0].precio} €</b>
               <span>al mes + IVA · sin permanencia · 14 días gratis</span>
             </div>
 
-            <div className="mt-7 flex flex-wrap items-center gap-3">
+            <div style={{ "--d": "290ms" } as CSSProperties} className="entra mt-7 flex flex-wrap items-center gap-3">
               <a
                 href={waLink("GENERAL", undefined, lang)}
                 target="_blank"
@@ -139,7 +152,7 @@ export function Portada({ lang }: Props) {
 
           {/* EL MÓVIL. La conversación se escribe sola; si no hay JS,
               se ve entera. Ver components/site/chat-demo.tsx. */}
-          <div className="relative mx-auto w-full max-w-[380px]">
+          <div style={{ "--d": "200ms" } as CSSProperties} className="entra relative mx-auto w-full max-w-[380px]">
             <div className="halo-tel relative isolate">
               <div className="overflow-hidden rounded-[34px] border border-line-strong bg-surface shadow-[0_50px_90px_-30px_#000] lg:rotate-[3deg]">
                 <div className="flex items-center gap-3 border-b border-line bg-surface-2 px-4 py-3">
@@ -166,6 +179,7 @@ export function Portada({ lang }: Props) {
       <section className="px-5 py-6 sm:px-8">
         <NextLink
           href={L("/ayudas")}
+          data-revelar
           className="mx-auto flex max-w-[1200px] flex-col gap-3 rounded-2xl border border-dashed border-brand/60 bg-brand-soft/40 px-6 py-5 transition-colors hover:bg-brand-soft/60 sm:flex-row sm:items-center sm:justify-between"
         >
           <span>
@@ -197,12 +211,17 @@ export function Portada({ lang }: Props) {
       {/* ====================== CÓMO FUNCIONA ====================== */}
       <section id="como-funciona" className="scroll-mt-24 px-5 py-20 sm:px-8 lg:py-24">
         <div className="mx-auto max-w-[1200px]">
-          <h2 className="max-w-[20ch] font-display text-[clamp(30px,4.4vw,46px)] leading-[1.08] font-semibold tracking-tight">
+          <h2 data-revelar className="max-w-[20ch] font-display text-[clamp(30px,4.4vw,46px)] leading-[1.08] font-semibold tracking-tight">
             Del mensaje a la visita, <em className="text-brand not-italic">sin que toques nada.</em>
           </h2>
           <ol className="mt-10 grid gap-5 md:grid-cols-3">
-            {PASOS.map((p) => (
-              <li key={p.n} className="rounded-2xl border border-line bg-surface px-6 py-7">
+            {PASOS.map((p, i) => (
+              <li
+                key={p.n}
+                data-revelar
+                style={{ "--d": `${i * 90}ms` } as CSSProperties}
+                className="rounded-2xl border border-line bg-surface px-6 py-7"
+              >
                 <span aria-hidden="true" className="font-impacto text-[40px] leading-none text-brand/50">{p.n}</span>
                 <h3 className="mt-3 font-display text-[21px] font-semibold">{p.t}</h3>
                 <p className="mt-2 text-[15px] leading-[1.55] text-fg-2">{p.p}</p>
@@ -215,12 +234,17 @@ export function Portada({ lang }: Props) {
       {/* ======================== FUNCIONES ======================== */}
       <section id="funciones" className="scroll-mt-24 px-5 pb-20 sm:px-8 lg:pb-24">
         <div className="mx-auto max-w-[1200px]">
-          <h2 className="max-w-[20ch] font-display text-[clamp(30px,4.4vw,46px)] leading-[1.08] font-semibold tracking-tight">
+          <h2 data-revelar className="max-w-[20ch] font-display text-[clamp(30px,4.4vw,46px)] leading-[1.08] font-semibold tracking-tight">
             Un empleado completo, <em className="text-brand not-italic">no un bot de menú.</em>
           </h2>
           <ul className="mt-10 grid gap-4 sm:grid-cols-2">
-            {FUNCIONES.map((f) => (
-              <li key={f.t} className="rounded-2xl border border-line bg-surface px-5 py-5">
+            {FUNCIONES.map((f, i) => (
+              <li
+                key={f.t}
+                data-revelar
+                style={{ "--d": `${i * 70}ms` } as CSSProperties}
+                className="rounded-2xl border border-line bg-surface px-5 py-5"
+              >
                 <h3 className="font-display text-[19px] font-semibold">{f.t}</h3>
                 <p className="mt-2 text-[14.5px] leading-[1.55] text-fg-2">{f.p}</p>
               </li>
@@ -239,7 +263,7 @@ export function Portada({ lang }: Props) {
       {/* ========================= PRECIOS ========================= */}
       <section id="precios" className="marca-agua relative scroll-mt-24 px-5 pb-20 sm:px-8 lg:pb-24" data-agua="Precios">
         <div className="mx-auto max-w-[1200px]">
-          <h2 className="max-w-[22ch] font-display text-[clamp(30px,4.4vw,46px)] leading-[1.08] font-semibold tracking-tight">
+          <h2 data-revelar className="max-w-[22ch] font-display text-[clamp(30px,4.4vw,46px)] leading-[1.08] font-semibold tracking-tight">
             Tres planes. <em className="text-brand not-italic">Ninguno con permanencia.</em>
           </h2>
           <p className="mt-4 max-w-[62ch] text-[16.5px] leading-[1.6] text-fg-2">
@@ -247,9 +271,11 @@ export function Portada({ lang }: Props) {
           </p>
 
           <div className="mt-12 grid gap-5 lg:grid-cols-3">
-            {PLANES.map((plan) => (
+            {PLANES.map((plan, i) => (
               <div
                 key={plan.id}
+                data-revelar
+                style={{ "--d": `${i * 90}ms` } as CSSProperties}
                 className={`cristal relative flex flex-col rounded-3xl p-7 ${plan.destacado ? "cristal-top lg:-mt-5 lg:pb-9" : ""}`}
               >
                 {plan.etiqueta ? (
@@ -307,7 +333,7 @@ export function Portada({ lang }: Props) {
             ))}
           </div>
 
-          <div className="mt-6 rounded-2xl border border-dashed border-line-strong px-6 py-6">
+          <div data-revelar className="mt-6 rounded-2xl border border-dashed border-line-strong px-6 py-6">
             <span className="text-[12px] font-medium tracking-wide text-brand uppercase">
               Extra · se paga por resultado
             </span>
@@ -331,12 +357,12 @@ export function Portada({ lang }: Props) {
       {/* ======================== PREGUNTAS ======================== */}
       <section id="preguntas" className="scroll-mt-24 px-5 pb-20 sm:px-8 lg:pb-24">
         <div className="mx-auto max-w-[840px]">
-          <h2 className="font-display text-[clamp(30px,4.4vw,46px)] leading-[1.08] font-semibold tracking-tight">
+          <h2 data-revelar className="font-display text-[clamp(30px,4.4vw,46px)] leading-[1.08] font-semibold tracking-tight">
             Las tres de <em className="text-brand not-italic">siempre.</em>
           </h2>
           <dl className="mt-9 divide-y divide-line border-y border-line">
-            {PREGUNTAS.map(([p, r]) => (
-              <div key={p} className="py-5">
+            {PREGUNTAS.map(([p, r], i) => (
+              <div key={p} data-revelar style={{ "--d": `${i * 70}ms` } as CSSProperties} className="py-5">
                 <dt className="font-display text-[19px] font-semibold">{p}</dt>
                 <dd className="mt-2 text-[15.5px] leading-[1.6] text-fg-2">{r}</dd>
               </div>
@@ -353,7 +379,7 @@ export function Portada({ lang }: Props) {
 
       {/* ========================= CIERRE ========================= */}
       <section id="contacto" className="scroll-mt-24 px-5 pb-24 sm:px-8">
-        <div className="cristal mx-auto max-w-[1200px] rounded-3xl px-7 py-12 text-center sm:px-12 lg:py-16">
+        <div data-revelar className="cristal mx-auto max-w-[1200px] rounded-3xl px-7 py-12 text-center sm:px-12 lg:py-16">
           <h2 className="mx-auto max-w-[18ch] font-impacto text-[clamp(32px,5.4vw,62px)] leading-[0.95] font-normal tracking-tight uppercase">
             Pruébalo con tu propio negocio
           </h2>

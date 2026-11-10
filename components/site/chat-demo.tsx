@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, type Transition } from "motion/react";
+import { motion, type Transition } from "motion/react";
+import { quietoPorPreferencia } from "@/lib/movimiento";
 
 /* ============================================================
    LA CONVERSACIÓN QUE SE ESCRIBE SOLA
@@ -36,8 +37,14 @@ import { motion, useReducedMotion, type Transition } from "motion/react";
    Los muelles van sin rebote: aquí nadie ha lanzado nada con el
    dedo, así que no tiene sentido que nada se pase de su sitio.
 
-   CON prefers-reduced-motion NO SE ANIMA NADA. Se queda la
-   conversación entera, que es el estado final de todas formas.
+   SE MUEVE TAMBIÉN CON «MOVIMIENTO REDUCIDO» (10/11/2026). Antes
+   no: bastaba con que el sistema pidiera menos movimiento para que
+   esto se rindiera en la primera línea del efecto y dejara los seis
+   mensajes puestos y quietos. En Windows eso ocurre casi siempre sin
+   que nadie lo haya pedido, así que el hero —lo único de la web que
+   enseña el producto funcionando, y la única razón por la que esto
+   existe— era un pantallazo. El porqué de la decisión y cómo
+   revertirla, en lib/movimiento.ts.
    ============================================================ */
 
 export type Mensaje = { de: "cliente" | "nexo"; texto: string; hora: string };
@@ -63,10 +70,10 @@ export function ChatDemo({ mensajes }: { mensajes: Mensaje[] }) {
   const [fundido, setFundido] = useState(false);
   const [animado, setAnimado] = useState(false);
   const temporizador = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const quieto = useReducedMotion();
+  const quieto = quietoPorPreferencia();
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (quietoPorPreferencia()) return;
 
     let cancelado = false;
     setVisibles(0);

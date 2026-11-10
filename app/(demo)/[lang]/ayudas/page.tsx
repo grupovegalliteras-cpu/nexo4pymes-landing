@@ -72,7 +72,7 @@ export default async function Ayudas({ params }: { params: Promise<{ lang: strin
   const planes = PLANES.filter(entraEnLaAyuda);
 
   return (
-    <div data-theme="dark" className="portada bg-bg text-fg">
+    <div data-theme="dark" className="portada mueve-siempre bg-bg text-fg">
       <SiteNav dark />
 
       {/* ========================= HERO ========================= */}

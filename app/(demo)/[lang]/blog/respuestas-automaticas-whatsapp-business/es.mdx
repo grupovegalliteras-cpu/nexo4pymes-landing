@@ -1,0 +1,164 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Respuestas automáticas
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">WhatsApp · 7 min de lectura</div>
+
+<FechaArticulo ruta="/blog/respuestas-automaticas-whatsapp-business" />
+
+# Respuestas automáticas en WhatsApp Business: cómo se ponen
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Se configuran en diez minutos, son gratis y casi nadie las tiene bien puestas. Aquí van los
+  pasos, lo que conviene escribir dentro —que es la parte que de verdad cambia algo— y los
+  cuatro sitios por donde se rompen, para que sepas de antemano hasta dónde vas a llegar.
+</div>
+
+## Las tres herramientas, y cuál hace qué
+
+La app de WhatsApp Business trae tres cosas distintas que la gente mezcla:
+
+<Senales items={[
+  { fuerte: "Mensaje de bienvenida.", texto: "Se manda solo la primera vez que alguien te escribe, o si lleva 14 días sin hablar contigo. Es la primera impresión." },
+  { fuerte: "Mensaje de ausencia.", texto: "Se manda fuera del horario que tú marcas. Es el más usado y el que más daño hace mal escrito." },
+  { fuerte: "Respuestas rápidas.", texto: "No son automáticas: son textos tuyos guardados con un atajo. Escribes /precio y sale el párrafo entero. Las mandas tú." },
+]}/>
+
+La diferencia importa: las dos primeras salen solas, la tercera la disparas tú. Si lo que
+quieres es dejar de teclear lo mismo veinte veces al día, la que buscas es la tercera.
+
+## Cómo se configuran
+
+Están todas en el mismo sitio: **Ajustes → Herramientas para la empresa**. El nombre exacto
+baila un poco entre Android, iPhone y la versión de escritorio, pero siempre cuelga de
+Ajustes y siempre están las tres juntas.
+
+### Mensaje de ausencia
+
+1. Entra en **Herramientas para la empresa → Mensaje de ausencia** y actívalo.
+2. Escribe el texto.
+3. Elige **cuándo**: siempre, fuera de tu horario, o en un intervalo personalizado. Si eliges
+   «fuera del horario», primero tienes que tener el horario puesto en tu perfil de empresa.
+4. Elige **a quién**: a todos, a los que no están en tu agenda, o solo a los que tú marques.
+
+### Mensaje de bienvenida
+
+Mismo menú, misma mecánica. Un detalle que descoloca a mucha gente: **no se repite**. Si
+alguien ya te escribió el mes pasado, no lo vuelve a ver (salvo que pasen 14 días sin
+contacto). Así que no metas ahí información que necesites que vea todo el mundo siempre.
+
+### Respuestas rápidas
+
+1. **Herramientas para la empresa → Respuestas rápidas → Añadir**.
+2. Escribe el mensaje y asígnale un atajo corto: `/precio`, `/zona`, `/horario`, `/ubicacion`.
+3. En cualquier conversación, teclea `/` y te salen todas.
+
+Esta es la de mejor relación entre lo que cuesta y lo que devuelve. Dedica media hora a
+guardar las ocho respuestas que más repites y recuperas esa media hora en tres días.
+
+## Qué escribir dentro (la parte que importa)
+
+Lo de activarlas es mecánico. Lo que decide si suman o restan es el texto.
+
+<Destacado titulo="El error que cuesta clientes">
+  Son las 23:40 y a un fontanero le escriben «tengo una fuga y no para de salir agua». El
+  mensaje de ausencia contesta: «Gracias por tu mensaje. Te responderemos en horario
+  comercial, de 9:00 a 18:00».
+
+  Ese cliente acaba de enterarse de dos cosas: que nadie va a ir, y que le toca escribir al
+  siguiente. **Antes de la respuesta automática al menos quedaba la duda.**
+</Destacado>
+
+Un mensaje de ausencia que no espanta hace tres cosas:
+
+1. **Dice cuándo contestas de verdad**, no cuándo abres. «Te contesto mañana antes de las
+   10:00» vale más que «horario de 9:00 a 18:00».
+2. **Da una salida para lo urgente.** Un teléfono de guardia, o una instrucción útil: «si
+   sale agua, cierra la llave de paso; suele estar bajo el fregadero o en la entrada».
+3. **Pide lo que vas a necesitar igual.** «Mándame el pueblo y una foto y mañana te digo
+   precio» te ahorra la primera media conversación del día siguiente.
+
+Y en el de bienvenida, lo mismo pero al revés: como sale una sola vez, úsalo para lo que no
+cambia nunca —qué haces, qué zona cubres y qué datos necesitas— y no para una promoción que
+caduca en marzo.
+
+<Nota>
+  Si pones un teléfono de urgencias en el mensaje de ausencia, asegúrate de que alguien lo
+  coge. Un número que suena y nadie contesta es peor que no ponerlo: el cliente ha hecho un
+  esfuerzo extra y encima se ha quedado igual.
+</Nota>
+
+## Los cuatro sitios por donde se rompen
+
+Esto no es para desanimarte: es para que sepas dónde está el techo antes de llegar a él.
+
+<Senales items={[
+  { fuerte: "No leen el mensaje.", texto: "Mandan el mismo texto a quien pregunta el precio, a quien tiene una fuga y a quien se equivocó de número." },
+  { fuerte: "No contestan nada.", texto: "Acusan recibo. La pregunta de «¿cuánto cuesta cambiar un termo?» sigue sin respuesta a la mañana siguiente." },
+  { fuerte: "No apuntan la visita.", texto: "No miran tu agenda, no proponen hueco y no reservan. El trabajo de cuadrar el día sigue siendo tuyo." },
+  { fuerte: "No insisten.", texto: "Al que dijo «me lo pienso» no le vuelve a escribir nadie. Y ahí es donde se queda el dinero." },
+]}/>
+
+Los dos primeros son molestos. **Los dos últimos son los que cuestan dinero**, y ninguna
+herramienta gratuita de WhatsApp los cubre, porque no son un problema de mensajería: son un
+problema de que alguien entienda lo que le están pidiendo y haga algo con ello.
+
+## ¿Y cuándo doy el paso siguiente?
+
+Cuando te reconozcas en tres de estas cuatro frases:
+
+- Te escriben de noche y en fin de semana, y es cuando entra lo urgente.
+- Repites la misma respuesta de precio o de zona más de diez veces al día.
+- Pierdes visitas porque tardas horas en contestar.
+- Tienes una lista mental de gente que dijo «me lo pienso» y a la que nunca volviste a
+  escribir.
+
+Hasta ahí, las respuestas automáticas bien escritas te sobran, y lo decimos nosotros, que
+vendemos lo otro. A partir de ahí la pregunta ya no es cuánto cuesta dar el paso, sino cuánto
+te está costando no darlo.
+
+Si quieres ver qué hay en el escalón siguiente y cuánto de eso es gratis,{" "}
+<Link href="/blog/chatbot-whatsapp-gratis" className="text-brand">lo desglosamos aquí</Link>.
+Y la diferencia entre un bot de menú y algo que de verdad entiende está en{" "}
+<Link href="/blog/que-es-un-agente-de-ia" className="text-brand">qué es un agente de IA</Link>.
+
+<CtaPost
+  titulo="¿Te escribimos los textos?"
+  boton="Escribirnos por WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Dinos a qué te dedicas y a qué horas te escriben, y te mandamos el mensaje de ausencia, el
+    de bienvenida y seis respuestas rápidas listos para copiar. Gratis y sin contratar nada:
+    si con eso te apañas, mejor para ti.
+  </p>
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "es",
+          titulo: "Respuestas automáticas en WhatsApp Business: cómo se ponen",
+          descripcion:
+            "Mensaje de bienvenida, de ausencia y respuestas rápidas: dónde están, qué escribir dentro para no espantar clientes y los cuatro sitios por donde se quedan cortas.",
+          url: `${marca.dominio}/blog/respuestas-automaticas-whatsapp-business`,
+          fecha: fechaPublicacion("/blog/respuestas-automaticas-whatsapp-business"),
+          actualizado: fechaRevision("/blog/respuestas-automaticas-whatsapp-business"),
+        }),
+      ]),
+    ),
+  }}
+/>

@@ -20,6 +20,27 @@ export const blogHome = {
     "Lo escribimos desde Palma, trabajando con empresas de servicios de Mallorca: mantenimiento, limpieza, piscinas, climatización, jardinería, control de plagas, solar y reformas. Los ejemplos salen de casos reales, los precios que aparecen son los que manejamos, y cuando la respuesta honesta es «no hace falta software», también lo decimos.",
   publicados: [
     {
+      etiqueta: "WhatsApp · 8 min",
+      titulo: "Chatbot de WhatsApp gratis: hasta dónde llega sin pagar",
+      resumen:
+        "Los tres escalones de lo gratuito, por qué la mensajería casi no cuesta —Meta regala 1.000 mensajes de servicio al mes— y qué se paga de verdad.",
+      href: "/blog/chatbot-whatsapp-gratis",
+    },
+    {
+      etiqueta: "WhatsApp · 7 min",
+      titulo: "Respuestas automáticas en WhatsApp Business: cómo se ponen",
+      resumen:
+        "Bienvenida, ausencia y respuestas rápidas: dónde están, qué escribir dentro para no espantar clientes y los cuatro sitios por donde se rompen.",
+      href: "/blog/respuestas-automaticas-whatsapp-business",
+    },
+    {
+      etiqueta: "WhatsApp · 6 min",
+      titulo: "¿Meta ha prohibido los bots de IA en WhatsApp?",
+      resumen:
+        "Lo prohibido son los asistentes de propósito general, no el de tu negocio. Y la prueba está en la propia lista de precios de Meta.",
+      href: "/blog/meta-bots-ia-whatsapp",
+    },
+    {
       etiqueta: "Agentes de IA · 7 min",
       titulo: "Qué es un agente de IA (y en qué se diferencia de un chatbot)",
       resumen:

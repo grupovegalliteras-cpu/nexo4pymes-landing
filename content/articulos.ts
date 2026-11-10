@@ -48,6 +48,20 @@ export type Articulo = {
 };
 
 export const ARTICULOS: Articulo[] = [
+  /* 10/11/2026 — LOS TRES DE WHATSAPP. Salen de medir el
+     autocompletado de Google el mismo día: de 674 consultas del
+     nicho, 415 llevan la palabra «whatsapp». La demanda no está en
+     la inteligencia artificial, está en que te contesten el móvil.
+
+     - «gratis» es el que más volumen tiene de todo el nicho (53
+       consultas del grupo de precio, y casi todas piden no pagar).
+     - «respuestas automáticas» es el de más intención: quien lo
+       busca está configurando la función nativa en ese momento.
+     - El de Meta no sale de una medición, sale de un titular: hay
+       que desmontar el «han prohibido los bots de IA». */
+  { ruta: "/blog/chatbot-whatsapp-gratis", publicado: "2026-11-10" },
+  { ruta: "/blog/respuestas-automaticas-whatsapp-business", publicado: "2026-11-10" },
+  { ruta: "/blog/meta-bots-ia-whatsapp", publicado: "2026-11-10" },
   /* Noviembre de 2026: los dos primeros son el blog nuevo, el que
      responde a quien ha visto un anuncio y viene a Google a comprobar
      qué es esto antes de escribirnos. Es SEO de reputación, no de

@@ -8,6 +8,27 @@ export const blogHome = {
     "Wir schreiben das aus Palma, in der Arbeit mit Dienstleistungsbetrieben auf ganz Mallorca: Wartung, Reinigung, Pools, Klimatechnik, Garten, Schädlingsbekämpfung, Solar und Renovierung. Die Beispiele stammen aus echten Fällen, die Zahlen sind die, mit denen wir arbeiten — und wenn die ehrliche Antwort «Sie brauchen keine Software» lautet, sagen wir auch das.",
   publicados: [
     {
+      etiqueta: "WhatsApp · 8 Min.",
+      titulo: "Ein kostenloser WhatsApp-Chatbot: wie weit er reicht",
+      resumen:
+        "Die drei Stufen des Kostenlosen und was wirklich Geld kostet. Auf Spanisch verfasst: die englische und deutsche Fassung werden nicht mehr gepflegt.",
+      href: "/blog/chatbot-whatsapp-gratis",
+    },
+    {
+      etiqueta: "WhatsApp · 7 Min.",
+      titulo: "Automatische Antworten in WhatsApp Business: so geht es",
+      resumen:
+        "Begrüßung, Abwesenheit und Schnellantworten — und wo sie an Grenzen stoßen. Auf Spanisch verfasst.",
+      href: "/blog/respuestas-automaticas-whatsapp-business",
+    },
+    {
+      etiqueta: "WhatsApp · 6 Min.",
+      titulo: "Hat Meta KI-Bots auf WhatsApp verboten?",
+      resumen:
+        "Verboten sind Allzweck-Assistenten, nicht der eigene Assistent Ihres Betriebs. Auf Spanisch verfasst.",
+      href: "/blog/meta-bots-ia-whatsapp",
+    },
+    {
       etiqueta: "KI-Agenten · 7 Min.",
       titulo: "Was ein KI-Agent ist (und wie er sich vom Chatbot unterscheidet)",
       resumen:

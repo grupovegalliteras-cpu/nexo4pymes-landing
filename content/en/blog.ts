@@ -8,6 +8,27 @@ export const blogHome = {
     "We write this from Palma, working with service companies across Mallorca: maintenance, cleaning, pools, HVAC, landscaping, pest control, solar and renovations. The examples come from real cases, the figures are the ones we actually work with, and when the honest answer is \"you don't need software\", we say that too.",
   publicados: [
     {
+      etiqueta: "WhatsApp · 8 min",
+      titulo: "A free WhatsApp chatbot: how far it gets you",
+      resumen:
+        "The three tiers of free, and what actually costs money. Written in Spanish: the English and German versions of the site are no longer maintained.",
+      href: "/blog/chatbot-whatsapp-gratis",
+    },
+    {
+      etiqueta: "WhatsApp · 7 min",
+      titulo: "Automatic replies in WhatsApp Business: how to set them up",
+      resumen:
+        "Greeting, away message and quick replies, and where they fall short. Written in Spanish.",
+      href: "/blog/respuestas-automaticas-whatsapp-business",
+    },
+    {
+      etiqueta: "WhatsApp · 6 min",
+      titulo: "Has Meta banned AI bots on WhatsApp?",
+      resumen:
+        "What was banned is general-purpose assistants, not your business's own. Written in Spanish.",
+      href: "/blog/meta-bots-ia-whatsapp",
+    },
+    {
       etiqueta: "AI agents · 7 min",
       titulo: "What an AI agent is (and how it differs from a chatbot)",
       resumen:

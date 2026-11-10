@@ -1,0 +1,155 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Meta y los bots de IA
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">WhatsApp · 6 min de lectura</div>
+
+<FechaArticulo ruta="/blog/meta-bots-ia-whatsapp" />
+
+# ¿Meta ha prohibido los bots de IA en WhatsApp?
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  En enero de 2026 entró en vigor un cambio en las condiciones de WhatsApp que la prensa contó
+  como «Meta prohíbe los chatbots de IA». Si tienes un negocio y estabas pensando en poner un
+  asistente que te conteste el WhatsApp, la pregunta es legítima y la respuesta corta es
+  **no, lo tuyo no está prohibido**. Lo largo, que es lo que importa, va abajo.
+</div>
+
+## Qué prohibió exactamente
+
+En octubre de 2025 Meta añadió a las condiciones de su plataforma para empresas una sección
+nueva dedicada a los «proveedores de IA». Lo que queda fuera de WhatsApp son los asistentes
+de **propósito general**: los que son IA y punto, sin negocio detrás. ChatGPT, Copilot,
+Perplexity y compañía, distribuidos como producto a través de WhatsApp.
+
+El criterio que usa Meta es si la IA es **la funcionalidad principal** de lo que se ofrece. Si
+lo que vendes es el asistente, estás fuera. Si lo que vendes es fontanería y el asistente es
+quien coge el teléfono, no.
+
+<Destacado titulo="La prueba está en la lista de precios de Meta">
+  No hace falta interpretar nada. Desde el 1 de julio de 2026 la plataforma de WhatsApp
+  Business tiene cinco categorías de mensaje, y una de ellas se llama **«servicio»**. Meta la
+  define, con estas palabras, como cualquier mensaje sin plantilla que no use su propia
+  tecnología y que puede estar **«impulsado por una solución de IA de terceros o por
+  personas»**.
+
+  O sea: Meta tiene una categoría, con su tarifa publicada, para los mensajes que un negocio
+  manda a sus clientes usando una IA que no es la de Meta. Difícilmente lo cobraría si
+  estuviera prohibido.
+</Destacado>
+
+<Nota>
+  <p>
+    **Comprobado el 10 de noviembre de 2026** en la documentación de precios de la plataforma
+    de WhatsApp Business de Meta, actualizada el 30 de septiembre de 2026. La fecha de enero y
+    el cambio de condiciones de octubre de 2025 vienen de la prensa del sector, no de un
+    documento de Meta que hayamos podido leer entero: si te juegas algo importante, míralo en
+    las condiciones para empresas antes de decidir.
+  </p>
+</Nota>
+
+## Lo que sí sigue permitido
+
+Dicho en la práctica, y con ejemplos de lo que hace un negocio de servicios:
+
+<Senales items={[
+  { fuerte: "Contestar a tus clientes.", texto: "Precio, horario, zona, si hacéis tal cosa, qué llevar el día de la cita." },
+  { fuerte: "Recoger el aviso.", texto: "Qué pasa, dónde, con qué urgencia, y pasártelo ordenado." },
+  { fuerte: "Apuntar la visita.", texto: "Mirar el hueco, proponerlo y reservarlo." },
+  { fuerte: "Hacer seguimiento.", texto: "Al que pidió presupuesto y no contestó, con las reglas de siempre." },
+  { fuerte: "Pasarte la conversación.", texto: "Cuando se complica o el cliente pide una persona." },
+]}/>
+
+Todo eso es un asistente **acotado a tu negocio**, que es exactamente lo que Meta sigue
+cobrando por la categoría de servicio.
+
+## La parte interesante: Meta ahora compite
+
+Aquí está lo que casi no se ha contado, y es más relevante para ti que la prohibición.
+
+En el mismo movimiento, Meta ha metido su propio agente de IA en la plataforma: el **Meta
+Business Agent**, que es la quinta categoría de mensaje. Y lo cobra de otra manera: **2
+dólares por cada millón de tokens**, que a Meta le salen entre 4 y 5 céntimos por mensaje. Una
+consulta simple de cuatro mensajes, unos 16-20 céntimos; una conversación complicada de diez,
+entre 40 y 50.
+
+Meta publica además una comparativa propia en la que estima que una solución de IA de terceros
+cuesta unos 9-10 céntimos por mensaje frente a sus 4-5. Es su comparativa, con sus números y
+su interés, y conviene leerla como lo que es.
+
+<Destacado titulo="Qué significa esto para un negocio pequeño">
+  Que el dueño del canal ha pasado a vender también el producto que se mueve por el canal. No
+  es ilegal ni sorprendente —pasa en todas las plataformas—, pero sí es algo que conviene
+  tener en la cabeza cuando elijas:
+
+  Un agente de Meta será barato y estará integrado. A cambio, **sabe lo que Meta le deje
+  saber, hace lo que Meta le deje hacer, y lo que aprenda de tus clientes es una conversación
+  distinta.** Un asistente propio cuesta más por mensaje y hay que montarlo, pero conoce tus
+  precios, entra en tu agenda y se va contigo si cambias de proveedor.
+</Destacado>
+
+## Las tres preguntas que conviene hacerle a quien te lo venda
+
+1. **¿Mi asistente entra por la categoría de servicio o por la de Meta Business Agent?** Son
+   dos productos y dos facturas distintas. Que te lo digan por escrito.
+2. **¿Quién es el titular de la cuenta de WhatsApp Business?** Si el número y la cuenta están
+   a nombre del proveedor, el día que te vayas no te llevas ni el historial ni el número.
+3. **¿Qué pasa con las conversaciones si me doy de baja?** Los contactos y lo hablado son
+   tuyos, y tiene que haber una forma de exportarlos.
+
+## En resumen
+
+- **No, no han prohibido que tengas un asistente de IA en el WhatsApp de tu negocio.**
+- Lo prohibido son los asistentes de propósito general distribuidos por WhatsApp, que es otra
+  cosa y no tiene nada que ver contigo.
+- Meta ha lanzado el suyo y lo cobra por tokens, así que ahora es plataforma y competidor a la
+  vez.
+- El titular de la cuenta y la portabilidad de las conversaciones son más importantes que el
+  céntimo por mensaje.
+
+Si quieres los precios del mercado español y los tres modelos con los que se vende esto, están
+en{" "}
+<Link href="/blog/cuanto-cuesta-un-agente-de-ia" className="text-brand">cuánto cuesta un agente de IA para una pyme</Link>.
+Y lo que de verdad sale gratis en WhatsApp, con las tarifas oficiales de Meta,{" "}
+<Link href="/blog/chatbot-whatsapp-gratis" className="text-brand">lo desglosamos aquí</Link>.
+
+<CtaPost
+  titulo="¿Te lo han vendido y no sabes qué has firmado?"
+  boton="Escribirnos por WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Mándanos lo que te han ofrecido y te decimos por qué categoría va, quién queda como titular
+    del número y qué pasa si te vas. Aunque sea de otro proveedor y aunque la respuesta sea que
+    está bien.
+  </p>
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "es",
+          titulo: "¿Meta ha prohibido los bots de IA en WhatsApp?",
+          descripcion:
+            "Qué prohibió Meta en enero de 2026, por qué el asistente de tu propio negocio sigue permitido y qué cambia ahora que Meta vende el suyo.",
+          url: `${marca.dominio}/blog/meta-bots-ia-whatsapp`,
+          fecha: fechaPublicacion("/blog/meta-bots-ia-whatsapp"),
+          actualizado: fechaRevision("/blog/meta-bots-ia-whatsapp"),
+        }),
+      ]),
+    ),
+  }}
+/>

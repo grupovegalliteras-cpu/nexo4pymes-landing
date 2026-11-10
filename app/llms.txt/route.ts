@@ -42,6 +42,21 @@ export function GET() {
 
   const articulos: [string, string, string][] = [
     [
+      "/blog/chatbot-whatsapp-gratis",
+      "Chatbot de WhatsApp gratis: hasta dónde llega sin pagar",
+      "los tres escalones de lo gratuito en WhatsApp, por qué la mensajería casi no cuesta (Meta no cobra los mensajes entrantes y da 1.000 mensajes de servicio gratis al mes por número) y qué se paga de verdad.",
+    ],
+    [
+      "/blog/respuestas-automaticas-whatsapp-business",
+      "Respuestas automáticas en WhatsApp Business: cómo se ponen",
+      "cómo se configuran el mensaje de bienvenida, el de ausencia y las respuestas rápidas, qué escribir dentro para no espantar clientes, y los cuatro límites de la función nativa.",
+    ],
+    [
+      "/blog/meta-bots-ia-whatsapp",
+      "¿Meta ha prohibido los bots de IA en WhatsApp?",
+      "qué prohibió Meta en enero de 2026 (los asistentes de propósito general, no el de un negocio), por qué su propia lista de precios tiene una categoría para la IA de terceros, y qué es el Meta Business Agent.",
+    ],
+    [
       "/blog/que-es-un-agente-de-ia",
       "Qué es un agente de IA (y en qué se diferencia de un chatbot)",
       "la diferencia entre un bot de guion y un agente que actúa, qué hace de verdad en una pyme, qué no hace y las cinco preguntas que separan a los proveedores.",

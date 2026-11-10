@@ -1,0 +1,203 @@
+import Link from "@/components/i18n/Enlace";
+import { Destacado, Nota, Senales, CtaPost, VolverAlBlog, FechaArticulo } from "@/components/blog/Bloques";
+import { esquemaArticulo, grafoPagina } from "@/lib/esquema";
+import { marca } from "@/content/marca";
+import { fechaPublicacion, fechaRevision } from "@/content/articulos";
+import { waLink } from "@/lib/whatsapp";
+import { PLANES } from "@/content/producto";
+
+<nav aria-label="Ruta de navegación" className="font-mono text-[11px] uppercase tracking-[0.12em] text-fg-3">
+  <Link href="/" className="text-brand">Inicio</Link> › <Link href="/blog" className="text-brand">Blog</Link> › Chatbot de WhatsApp gratis
+</nav>
+
+<div className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-brand">WhatsApp · 8 min de lectura</div>
+
+<FechaArticulo ruta="/blog/chatbot-whatsapp-gratis" />
+
+# Chatbot de WhatsApp gratis: hasta dónde llega sin pagar
+
+<div className="mt-6 border-l-2 border-brand pl-5 text-[18px] leading-relaxed text-fg">
+  Es, con diferencia, lo más buscado de todo este asunto: la gente no busca «agente de IA»,
+  busca que le contesten el WhatsApp sin que le cueste. La respuesta honesta tiene tres
+  escalones, y el segundo sorprende: **mandar los mensajes es casi gratis**. Lo que cuesta
+  dinero es otra cosa.
+</div>
+
+## Escalón 0: la app de WhatsApp Business
+
+Es gratis de verdad, la descargas hoy y trae tres herramientas que mucha gente no ha llegado
+a activar nunca:
+
+<Senales items={[
+  { fuerte: "Mensaje de bienvenida.", texto: "Sale solo la primera vez que alguien te escribe, o después de 14 días sin hablar." },
+  { fuerte: "Mensaje de ausencia.", texto: "Sale fuera del horario que tú marques. Es el que más se usa y el que peor suele estar escrito." },
+  { fuerte: "Respuestas rápidas.", texto: "Textos tuyos guardados con un atajo: escribes /precio y sale el párrafo entero." },
+  { fuerte: "Etiquetas y catálogo.", texto: "Para ordenar las conversaciones y enseñar lo que vendes sin tener web." },
+]}/>
+
+Están en **Ajustes → Herramientas para la empresa** (el nombre baila un poco entre versiones
+de Android y iPhone, pero siempre cuelga de Ajustes). Si no tienes nada de esto puesto,
+ponlo hoy: es media hora y se nota.
+
+Ahora el límite, que es duro y conviene saberlo antes de perder una tarde:
+
+**Esto no es un chatbot. Es un contestador.** No lee el mensaje. Manda el mismo texto a quien
+pregunta el precio, a quien tiene una fuga y a quien se ha equivocado de número. Y ahí está el
+problema de verdad:
+
+<Destacado titulo="El mensaje de ausencia puede hacer daño">
+  Son las 23:40 y a un fontanero le escriben «tengo una fuga, no para de salir agua». El
+  mensaje de ausencia contesta «Gracias por tu mensaje. Te responderemos en horario comercial,
+  de 9:00 a 18:00».
+
+  Ese cliente ya sabe dos cosas: que nadie va a ir, y que tiene que escribir al siguiente.
+  Antes de la respuesta automática al menos quedaba la duda. **Un contestador mal escrito
+  cierra la puerta más rápido que el silencio.**
+</Destacado>
+
+Si te quedas en este escalón —y para mucha gente es lo correcto—, al menos escribe el mensaje
+de ausencia de forma que no espante: di cuándo contestas de verdad, da una salida para lo
+urgente y no prometas un horario que no cumples.
+
+## Escalón 1: los constructores de bots con plan gratuito
+
+El siguiente paso son las plataformas que te dejan dibujar un flujo: «si escribe 1, contesta
+esto; si escribe 2, contesta aquello». Casi todas tienen un plan gratuito con un tope de
+conversaciones al mes.
+
+Funcionan, y para un negocio con preguntas muy repetidas y muy cerradas —horarios, dirección,
+tarifa única— pueden bastar. Lo que tienes que saber antes de montarlo:
+
+- **Es un árbol, no entiende.** Cuando el cliente se sale de las opciones, el bot se pierde o
+  repite el menú. Y el cliente se sale casi siempre, porque la gente escribe como habla.
+- **El plan gratuito suele ser la demo.** El tope se agota el día que te va bien, que es
+  justo el día que no quieres que deje de contestar.
+- **Los menús numerados envejecen mal.** En 2019 eran normales; hoy la gente que ha hablado
+  con una IA los reconoce al segundo mensaje y se le cae la confianza en el negocio.
+
+## Escalón 2: montarlo tú por la API, y lo que de verdad cuesta
+
+Aquí es donde casi todo lo que se publica está mal, así que vamos con lo que dice Meta en su
+propia documentación de precios, que es pública.
+
+<Nota>
+  <p>
+    **Comprobado el 10 de noviembre de 2026** en la página de precios de la plataforma de
+    WhatsApp Business de Meta, actualizada el 30 de septiembre de 2026 y vigente desde el 1 de
+    octubre. Meta solo puede cambiar precios el primer día de cada trimestre y avisando con un
+    mes como mínimo, así que esto no se mueve la semana que viene.
+  </p>
+</Nota>
+
+Las tres cosas que cambian la cuenta:
+
+<Senales items={[
+  { fuerte: "Lo que te escriben tus clientes no se paga.", texto: "Meta solo cobra los mensajes que salen de la empresa hacia el usuario, y solo cuando se entregan." },
+  { fuerte: "Los primeros 1.000 mensajes de servicio del mes son gratis.", texto: "Por cada número de empresa, se reinician cada mes y no se acumulan. Se cobra a partir del 1.001." },
+  { fuerte: "Se paga por mensaje, no por conversación.", texto: "Desde el 1 de julio de 2025. La tarifa depende de la categoría del mensaje y del país del destinatario." },
+]}/>
+
+Haz la cuenta con tu negocio. «Mensaje de servicio» es cualquier respuesta que mandas dentro
+de las 24 horas siguientes a que te escriban, que es el 100 % de lo que hace un asistente que
+atiende. **Mil al mes son unas treinta respuestas al día, todos los días.** Un fontanero, una
+clínica pequeña o un taller no llegan ahí.
+
+Así que, para un negocio pequeño, **el coste de mensajería de WhatsApp es prácticamente
+cero**. Si alguien te presenta el gasto de WhatsApp como el grueso de la factura, o no ha
+mirado las tarifas o te está vendiendo humo.
+
+### Entonces, ¿qué se paga?
+
+Lo que se paga es lo otro, y por eso «gratis» acaba no siendo gratis:
+
+1. **El acceso a la API.** No se contrata directamente con Meta: se pasa por un proveedor
+   (un BSP) o te lo monta quien te hace el desarrollo. Ahí hay cuota.
+2. **El cerebro.** Cada respuesta de una IA consume tokens, y los tokens se pagan. Para que
+   te hagas idea del orden de magnitud: el propio agente de IA de Meta, que es de los baratos
+   porque es suyo, cobra 2 dólares por millón de tokens, y a Meta le sale entre 4 y 5 céntimos
+   por mensaje. Una conversación simple de cuatro mensajes, unos 16-20 céntimos.
+3. **El montaje.** Contarle tu negocio: precios, zona, horarios, qué haces y qué no, qué dice
+   cuando no sabe algo. Esto no lo hace solo, y es lo que separa un asistente que ayuda de uno
+   que inventa.
+4. **Tu tiempo**, si lo montas tú. Es la partida que nadie apunta y la más cara de todas.
+
+## Cuándo lo gratis es la respuesta correcta
+
+Esta parte va en serio, aunque vendamos lo contrario.
+
+<Destacado titulo="No compres nada si estás en este caso">
+  Si te entran menos de diez mensajes a la semana y los contestas todos el mismo día, **no
+  necesitas un chatbot.** Pon el mensaje de ausencia bien escrito, guarda cuatro respuestas
+  rápidas con el atajo y sigue con lo tuyo.
+
+  Automatizar diez mensajes a la semana no te devuelve tiempo: te añade una cosa más que
+  mantener, y encima pone una máquina entre tú y los pocos clientes que tienes.
+</Destacado>
+
+## Cuándo deja de serlo
+
+Lo gratis se rompe siempre por el mismo sitio, y no es por el volumen: es por **la hora**.
+
+- Te escriben de noche y en fin de semana, y es cuando entra lo urgente.
+- Repites veinte veces al día la misma respuesta de precio o de zona.
+- Pierdes visitas porque tardas cuatro horas en contestar y el cliente ya ha llamado a otro.
+- Nadie persigue al que dijo «me lo pienso». Ahí es donde está el dinero que se escapa, y es
+  lo único de esta lista que ninguna herramienta gratuita hace.
+
+El día que te reconozcas en tres de esas cuatro, la pregunta deja de ser «cuánto cuesta» y
+pasa a ser «cuánto me está costando no tenerlo».
+
+## En resumen
+
+<Senales items={[
+  { fuerte: "Gratis de verdad:", texto: "la app de WhatsApp Business, con bienvenida, ausencia y respuestas rápidas. Contesta, pero no entiende." },
+  { fuerte: "Gratis con asterisco:", texto: "los constructores de flujos. Son árboles de opciones y el plan gratuito es el escaparate." },
+  { fuerte: "Casi gratis sin que se sepa:", texto: "la mensajería de la API. Los primeros 1.000 mensajes de servicio al mes no se cobran." },
+  { fuerte: "Lo que se paga:", texto: "el acceso, el cerebro que entiende, y el trabajo de contarle tu negocio." },
+]}/>
+
+Si quieres los números del mercado español con los tres modelos de precio que te vas a
+encontrar, están en{" "}
+<Link href="/blog/cuanto-cuesta-un-agente-de-ia" className="text-brand">cuánto cuesta un agente de IA para una pyme</Link>.
+Y si lo que no tienes claro es qué es esto exactamente, empieza por{" "}
+<Link href="/blog/que-es-un-agente-de-ia" className="text-brand">qué es un agente de IA</Link>.
+
+Nuestros planes empiezan en {PLANES[0].precio} € al mes y están{" "}
+<Link href="/#precios" className="text-brand">publicados en la portada</Link>, sin formulario
+de por medio.
+
+<CtaPost
+  titulo="¿No sabes en qué escalón estás?"
+  boton="Escribirnos por WhatsApp"
+  href={waLink("GENERAL")}
+  externo
+>
+  <p>
+    Cuéntanos cuántos mensajes te entran y a qué horas. Te decimos en cuál de los tres
+    escalones encajas, aunque sea el de «con la app gratis te sobra».
+  </p>
+  <p>
+    Nos interesa menos vender una cuota que quitárnosla dos meses después.
+  </p>
+</CtaPost>
+
+<VolverAlBlog />
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify(
+      grafoPagina([
+        esquemaArticulo({
+          lang: "es",
+          titulo: "Chatbot de WhatsApp gratis: hasta dónde llega sin pagar",
+          descripcion:
+            "Los tres escalones de lo gratuito en WhatsApp, por qué la mensajería casi no cuesta (1.000 mensajes de servicio gratis al mes) y qué se paga de verdad.",
+          url: `${marca.dominio}/blog/chatbot-whatsapp-gratis`,
+          fecha: fechaPublicacion("/blog/chatbot-whatsapp-gratis"),
+          actualizado: fechaRevision("/blog/chatbot-whatsapp-gratis"),
+        }),
+      ]),
+    ),
+  }}
+/>
